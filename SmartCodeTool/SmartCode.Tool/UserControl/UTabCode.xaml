@@ -1,0 +1,100 @@
+﻿<UserControl
+    x:Class="SmartCode.Tool.UserControl.UTabCode"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+    xmlns:local="clr-namespace:SmartCode.Tool.UserControl"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl
+            Name="TabCode"
+            Margin="5"
+            Loaded="TabCode_OnLoaded"
+            Style="{StaticResource TabControlBaseStyle}"
+            TabStripPlacement="Top">
+            <TabItem Name="TabParentSql" Header="SQL脚本">
+                <Grid>
+                    <TabControl
+                        Name="TabSql"
+                        Margin="5"
+                        Style="{StaticResource TabControlBaseStyle}"
+                        TabStripPlacement="Left">
+                        <TabItem
+                            Name="TabTableSql"
+                            Header="新建数据表代码"
+                            IsSelected="True">
+                            <Grid>
+                                <!--
+                                    Background="#272822"
+                                    FontSize="12"
+                                    Foreground="White"
+                                -->
+                                <avalonedit:TextEditor
+                                    x:Name="TextTableEditor"
+                                    Margin="0,0,0,0"
+                                    Padding="5,0,0,0"
+                                    WordWrap="True">
+                                    <avalonedit:TextEditor.Options>
+                                        <avalonedit:TextEditorOptions ShowSpaces="False">
+                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                                <system:Int32>10</system:Int32>
+                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                        </avalonedit:TextEditorOptions>
+                                    </avalonedit:TextEditor.Options>
+                                </avalonedit:TextEditor>
+                            </Grid>
+                        </TabItem>
+                        <TabItem Name="TabColumnSql" Header="   新建字段代码">
+                            <Grid>
+                                <avalonedit:TextEditor
+                                    x:Name="TextColumnsEditor"
+                                    Margin="0,0,0,45"
+                                    Padding="5,0,0,0"
+                                    WordWrap="True">
+                                    <avalonedit:TextEditor.Options>
+                                        <avalonedit:TextEditorOptions ShowSpaces="False">
+                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                                <system:Int32>10</system:Int32>
+                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                        </avalonedit:TextEditorOptions>
+                                    </avalonedit:TextEditor.Options>
+                                </avalonedit:TextEditor>
+                            </Grid>
+                        </TabItem>
+                    </TabControl>
+                </Grid>
+            </TabItem>
+            <TabItem Name="TabParentCsharp" Header="C#实体类">
+                <TabControl
+                    Margin="5,5,0,5"
+                    Style="{StaticResource TabControlBaseStyle}"
+                    TabStripPlacement="Left">
+                    <TabItem Header="基础代码" IsSelected="True">
+                        <Grid>
+                            <avalonedit:TextEditor
+                                x:Name="TextCsharpEditor"
+                                Margin="0,0,0,5"
+                                Padding="5,0,0,0"
+                                WordWrap="True">
+                                <avalonedit:TextEditor.Options>
+                                    <avalonedit:TextEditorOptions ShowSpaces="False">
+                                        <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                            <system:Int32>10</system:Int32>
+                                        </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                    </avalonedit:TextEditorOptions>
+                                </avalonedit:TextEditor.Options>
+                            </avalonedit:TextEditor>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</UserControl>

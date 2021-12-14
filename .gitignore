@@ -1,18 +1,18 @@
-# Build and Release Folders
-bin-debug/
-bin-release/
-[Oo]bj/
-[Bb]in/
+/packages
+*.suo
+*.user
+/.vs
+/TSTool/bin
+/TSTool/obj
+/PasswordToolsWpf/bin/*
+/PasswordToolsWpf/obj/*
+/RemoteAppWpf/bin/*
+/RemoteAppWpf/obj/*
+/SmartCodeTool/SmartCode.Framework/bin/*
+/SmartCodeTool/SmartCode.Framework/obj/*
+/SmartCodeTool/SmartCode.Tool/obj/*
+/SmartCodeTool/SmartCode.Tool/bin/*
+/TSToolWPF/bin/*
+/TSToolWPF/obj/*
 
-# Other files and folders
-.settings/
 
-# Executables
-*.swf
-*.air
-*.ipa
-*.apk
-
-# Project files, i.e. `.project`, `.actionScriptProperties` and `.flexProperties`
-# should NOT be excluded as they contain compiler settings and other important
-# information for Eclipse / Flash Builder.

@@ -1,0 +1,97 @@
+﻿<UserControl
+    x:Class="SmartCode.Tool.UserControl.MainW"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:baseControl="clr-namespace:SmartCode.Tool.UserControl"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartCode.Tool.UserControl"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Grid>
+        <hc:TransitioningContentControl Margin="0,5,5,5">
+            <hc:SimplePanel>
+                <Border
+                    Name="BorderRootEffect"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="10"
+                    Effect="{StaticResource EffectShadow4}"
+                    Visibility="Collapsed" />
+                <Border Name="BorderRoot" Style="{StaticResource BorderClip}">
+                    <Grid
+                        Name="GridSubMain"
+                        MinWidth="200"
+                        MinHeight="300"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Border
+                            Name="BorderEffect"
+                            Grid.RowSpan="2"
+                            Background="{DynamicResource RegionBrush}"
+                            CornerRadius="10"
+                            Effect="{StaticResource EffectShadow4}" />
+                        <Border
+                            Name="BorderTitle"
+                            Grid.Row="0"
+                            Height="32"
+                            Background="{DynamicResource TitleBrush}"
+                            CornerRadius="10,10,0,0"
+                            Style="{StaticResource BorderClip}">
+                            <hc:SimplePanel>
+                                <hc:Watermark
+                                    FontSize="20"
+                                    FontWeight="Bold"
+                                    Mark="{Binding MainTitle}"
+                                    MarkBrush="#0F000000"
+                                    MarkMargin="3,0" />
+                                <TextBlock
+                                    Foreground="White"
+                                    Style="{StaticResource TextBlockDefault}"
+                                    Text="{Binding MainTitle}" />
+                                <!--  IsChecked="{Binding IsOpen, ElementName=DrawerCode}"  -->
+                                <ToggleButton
+                                    Margin="0,0,6,0"
+                                    Padding="5"
+                                    HorizontalAlignment="Right"
+                                    hc:IconElement.Geometry="{StaticResource CodeGeometry}"
+                                    Foreground="{DynamicResource TextIconBrush}"
+                                    IsEnabled="False"
+                                    Style="{StaticResource ToggleButtonIconTransparent}" />
+                                <!--  Command="{Binding OpenDocCmd}"  -->
+                                <Button
+                                    Width="30"
+                                    Height="26"
+                                    Margin="6,0,0,0"
+                                    Padding="5"
+                                    HorizontalAlignment="Left"
+                                    hc:IconElement.Geometry="{StaticResource DocumentGeometry}"
+                                    Cursor="Hand"
+                                    Foreground="{DynamicResource TextIconBrush}"
+                                    Style="{StaticResource ButtonIcon}" />
+                                <hc:Drawer Name="DrawerCode">
+                                    <Border
+                                        Name="BorderCode"
+                                        Width="800"
+                                        Margin="32,32,0,32"
+                                        Background="{DynamicResource RegionBrush}"
+                                        CornerRadius="10,0,0,10"
+                                        Style="{StaticResource BorderClip}" />
+                                </hc:Drawer>
+                            </hc:SimplePanel>
+                        </Border>
+                        <Border Grid.Row="1" ClipToBounds="True">
+                            <Grid>
+                                <baseControl:MainColumns x:Name="MainColumns" />
+                                <baseControl:MainObjects x:Name="MainObjects" Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
+            </hc:SimplePanel>
+        </hc:TransitioningContentControl>
+    </Grid>
+</UserControl>
