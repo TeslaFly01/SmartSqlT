@@ -158,5 +158,16 @@ namespace SmartCode.Tool.UserControl
             }
             ObjectsViewData = searchData;
         }
+
+        private void DisplayToolTip_MouseEnter(object sender, MouseEventArgs e)
+        {
+            var currCell = (DataGridCell)sender;
+            List<string> colList = new List<string> { "表名称", "视图名称", "存储过程名称" };
+            if (currCell.Column.SortMemberPath.Equals("DisplayName"))
+            {
+                var currObject = (PropertyNodeItem)currCell.DataContext;
+                currCell.ToolTip = currObject.DisplayName;
+            }
+        }
     }
 }

@@ -49,6 +49,14 @@ namespace SmartCode.Tool.Models
         /// </summary>
         public string Comment { get; set; }
         /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 修改时间
+        /// </summary>
+        public DateTime ModifyDate { get; set; }
+        /// <summary>
         /// 是否展开
         /// </summary>
         public bool IsExpanded { get; set; } = false;

@@ -31,10 +31,22 @@
             hc:DataGridAttach.ShowRowNumber="True"
             AutoGenerateColumns="False"
             Background="Transparent"
+            ColumnWidth="*"
             HeadersVisibility="All"
             ItemsSource="{Binding ObjectsViewData, Mode=TwoWay}"
             RowHeaderWidth="60"
             SelectionUnit="CellOrRowHeader">
+            <DataGrid.CellStyle>
+                <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
+                    <Setter Property="VerticalAlignment" Value="Center" />
+                    <EventSetter Event="MouseEnter" Handler="DisplayToolTip_MouseEnter" />
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="BorderThickness" Value="0" />
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </DataGrid.CellStyle>
             <DataGrid.Columns>
                 <DataGridTextColumn
                     x:Name="ObjHead"
@@ -42,9 +54,19 @@
                     Header="对象名"
                     IsReadOnly="True" />
                 <DataGridTextColumn
-                    Width="*"
                     Binding="{Binding Comment}"
+                    CanUserSort="False"
                     Header="备注说明"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding CreateDate, StringFormat='yyyy-MM-dd HH:mm:ss'}"
+                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                    Header="创建时间"
+                    IsReadOnly="True" />
+                <DataGridTextColumn
+                    Binding="{Binding ModifyDate, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                    Header="最后修改时间"
                     IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>

@@ -210,6 +210,8 @@ namespace SmartCode.Tool
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeProc);
+
+                #region 分组业务处理
                 //是否业务分组
                 if (isGroup)
                 {
@@ -274,13 +276,14 @@ namespace SmartCode.Tool
                                        GroupName = a.GroupName,
                                        ObjectName = b.ObjectName
                                    }).ToList();
-
-                }
+                } 
+                #endregion
 
                 IExporter exporter = new SqlServer2008Exporter();
                 Model model = exporter.Export(ConnectionString);
                 dataSource = model;
                 var textColor = "Black";
+                #region 数据表
                 foreach (var table in model.Tables)
                 {
                     if (isCompare)
@@ -295,6 +298,8 @@ namespace SmartCode.Tool
                                 DisplayName = table.Key,
                                 Name = table.Key,
                                 Comment = table.Value.Comment,
+                                CreateDate = table.Value.CreateDate,
+                                ModifyDate = table.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = TABLEICON,
                                 Type = ObjType.Table
@@ -323,6 +328,8 @@ namespace SmartCode.Tool
                                             DisplayName = table.Key,
                                             Name = table.Key,
                                             Comment = table.Value.Comment,
+                                            CreateDate = table.Value.CreateDate,
+                                            ModifyDate = table.Value.ModifyDate,
                                             TextColor = textColor,
                                             Icon = TABLEICON,
                                             Type = ObjType.Table
@@ -339,6 +346,8 @@ namespace SmartCode.Tool
                                 DisplayName = table.Key,
                                 Name = table.Key,
                                 Comment = table.Value.Comment,
+                                CreateDate = table.Value.CreateDate,
+                                ModifyDate = table.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = TABLEICON,
                                 Type = ObjType.Table
@@ -346,7 +355,9 @@ namespace SmartCode.Tool
                         }
                     }
                 }
+                #endregion
 
+                #region 视图
                 foreach (var view in model.Views)
                 {
                     if (isCompare)
@@ -360,6 +371,9 @@ namespace SmartCode.Tool
                                 ObejcetId = view.Value.Id,
                                 DisplayName = view.Key,
                                 Name = view.Key,
+                                Comment = view.Value.Comment,
+                                CreateDate = view.Value.CreateDate,
+                                ModifyDate = view.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = VIEWICON,
                                 Type = ObjType.View
@@ -387,6 +401,9 @@ namespace SmartCode.Tool
                                             ObejcetId = view.Value.Id,
                                             DisplayName = view.Key,
                                             Name = view.Key,
+                                            Comment = view.Value.Comment,
+                                            CreateDate = view.Value.CreateDate,
+                                            ModifyDate = view.Value.ModifyDate,
                                             TextColor = textColor,
                                             Icon = VIEWICON,
                                             Type = ObjType.View
@@ -402,6 +419,9 @@ namespace SmartCode.Tool
                                 ObejcetId = view.Value.Id,
                                 DisplayName = view.Key,
                                 Name = view.Key,
+                                Comment = view.Value.Comment,
+                                CreateDate = view.Value.CreateDate,
+                                ModifyDate = view.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = VIEWICON,
                                 Type = ObjType.View
@@ -409,7 +429,9 @@ namespace SmartCode.Tool
                         }
                     }
                 }
+                #endregion
 
+                #region 存储过程
                 foreach (var proc in model.Procedures)
                 {
                     if (isCompare)
@@ -423,6 +445,9 @@ namespace SmartCode.Tool
                                 ObejcetId = proc.Value.Id,
                                 DisplayName = proc.Key,
                                 Name = proc.Key,
+                                Comment = proc.Value.Comment,
+                                CreateDate = proc.Value.CreateDate,
+                                ModifyDate = proc.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = PROCICON,
                                 Type = ObjType.Proc
@@ -450,6 +475,9 @@ namespace SmartCode.Tool
                                             ObejcetId = proc.Value.Id,
                                             DisplayName = proc.Key,
                                             Name = proc.Key,
+                                            Comment = proc.Value.Comment,
+                                            CreateDate = proc.Value.CreateDate,
+                                            ModifyDate = proc.Value.ModifyDate,
                                             TextColor = textColor,
                                             Icon = PROCICON,
                                             Type = ObjType.Proc
@@ -465,6 +493,9 @@ namespace SmartCode.Tool
                                 ObejcetId = proc.Value.Id,
                                 DisplayName = proc.Key,
                                 Name = proc.Key,
+                                Comment = proc.Value.Comment,
+                                CreateDate = proc.Value.CreateDate,
+                                ModifyDate = proc.Value.ModifyDate,
                                 TextColor = textColor,
                                 Icon = PROCICON,
                                 Type = ObjType.Proc
@@ -472,7 +503,9 @@ namespace SmartCode.Tool
                         }
                     }
                 }
+                #endregion
 
+                #region 数据比较
                 if (isCompare)
                 {
                     foreach (var compareTable in compareData.Tables)
@@ -523,7 +556,9 @@ namespace SmartCode.Tool
                             });
                         }
                     }
-                }
+                } 
+                #endregion
+
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     LoadingLine.Visibility = Visibility.Hidden;
@@ -632,6 +667,7 @@ namespace SmartCode.Tool
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
             var itemParentList = new List<PropertyNodeItem>();
+            #region 分组业务处理
             if (isGroup)
             {
                 currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
@@ -699,9 +735,10 @@ namespace SmartCode.Tool
                                    GroupName = a.GroupName,
                                    ObjectName = b.ObjectName
                                }).ToList();
+            } 
+            #endregion
 
-
-            }
+            #region 数据表
             if (dataSource.Tables != null)
             {
                 foreach (var table in dataSource.Tables)
@@ -729,6 +766,9 @@ namespace SmartCode.Tool
                                         ObejcetId = table.Value.Id,
                                         DisplayName = table.Key,
                                         Name = table.Key,
+                                        Comment = table.Value.Comment,
+                                        CreateDate = table.Value.CreateDate,
+                                        ModifyDate = table.Value.ModifyDate,
                                         Icon = TABLEICON,
                                         Type = ObjType.Table
                                     });
@@ -743,12 +783,18 @@ namespace SmartCode.Tool
                             ObejcetId = table.Value.Id,
                             DisplayName = table.Key,
                             Name = table.Key,
+                            Comment = table.Value.Comment,
+                            CreateDate = table.Value.CreateDate,
+                            ModifyDate = table.Value.ModifyDate,
                             Icon = TABLEICON,
                             Type = ObjType.Table
                         });
                     }
                 }
-            }
+            } 
+            #endregion
+
+            #region 视图
             if (dataSource.Views != null)
             {
                 foreach (var view in dataSource.Views)
@@ -776,6 +822,9 @@ namespace SmartCode.Tool
                                         ObejcetId = view.Value.Id,
                                         DisplayName = view.Key,
                                         Name = view.Key,
+                                        Comment = view.Value.Comment,
+                                        CreateDate = view.Value.CreateDate,
+                                        ModifyDate = view.Value.ModifyDate,
                                         Icon = VIEWICON,
                                         Type = ObjType.View
                                     });
@@ -790,12 +839,18 @@ namespace SmartCode.Tool
                             ObejcetId = view.Value.Id,
                             DisplayName = view.Key,
                             Name = view.Key,
+                            Comment = view.Value.Comment,
+                            CreateDate = view.Value.CreateDate,
+                            ModifyDate = view.Value.ModifyDate,
                             Icon = VIEWICON,
                             Type = ObjType.View
                         });
                     }
                 }
-            }
+            } 
+            #endregion
+
+            #region 存储过程
             if (dataSource.Procedures != null)
             {
                 foreach (var proc in dataSource.Procedures)
@@ -823,6 +878,9 @@ namespace SmartCode.Tool
                                         ObejcetId = proc.Value.Id,
                                         DisplayName = proc.Key,
                                         Name = proc.Key,
+                                        Comment = proc.Value.Comment,
+                                        CreateDate = proc.Value.CreateDate,
+                                        ModifyDate = proc.Value.ModifyDate,
                                         Icon = PROCICON,
                                         Type = ObjType.Proc
                                     });
@@ -837,12 +895,17 @@ namespace SmartCode.Tool
                             ObejcetId = proc.Value.Id,
                             DisplayName = proc.Key,
                             Name = proc.Key,
+                            Comment = proc.Value.Comment,
+                            CreateDate = proc.Value.CreateDate,
+                            ModifyDate = proc.Value.ModifyDate,
                             Icon = PROCICON,
                             Type = ObjType.Proc
                         });
                     }
                 }
-            }
+            } 
+            #endregion
+
             if (isGroup)
             {
                 itemParentList.ForEach(group =>

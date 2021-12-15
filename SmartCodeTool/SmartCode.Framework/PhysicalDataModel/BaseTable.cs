@@ -75,6 +75,14 @@ namespace SmartCode.Framework.PhysicalDataModel
         {
             get { return this._mataTypeName; }
         }
+        /// <summary>
+        /// 创建时间
+        /// </summary>
+        public DateTime CreateDate { get; set; }
+        /// <summary>
+        /// 最后修改时间
+        /// </summary>
+        public DateTime ModifyDate { get; set; }
 
         public Columns Columns
         {

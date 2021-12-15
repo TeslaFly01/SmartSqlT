@@ -67,11 +67,14 @@ namespace SmartCode.Framework.Exporter
                                      CASE
 			                              WHEN st.name='MS_Description' THEN ISNULL(st.value,'')
 			                              ELSE '' 
-	                                 END AS descript
+	                                 END AS descript,
+									 sy.create_date,
+									 sy.modify_date
                               FROM sys.tables sy
                               LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
                               AND minor_id = 0
-                              WHERE sy.type = 'U'; ";
+                              WHERE sy.type = 'U'
+                              ORDER BY sy.name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
@@ -81,20 +84,16 @@ namespace SmartCode.Framework.Exporter
                     string displayName = dr.GetString(0);
                     string name = dr.GetString(0);
                     int objectId = dr.GetInt32(1);
-                    string comment="";
-                    try
-                    {
-                         comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                    }
-                    catch (Exception ex)
-                    {
-                        
-                    }
+                    string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                    DateTime createDate = dr.GetDateTime(3);
+                    DateTime modifyDate = dr.GetDateTime(4);
 
                     Table table = new Table(id, displayName, name, comment);
                     table.OriginalName = name;
                     table.Id = objectId.ToString();
                     table.Comment = comment;
+                    table.CreateDate = createDate;
+                    table.ModifyDate = modifyDate;
                     if (!tables.ContainsKey(id))
                     {
                         tables.Add(id, table);
@@ -102,7 +101,7 @@ namespace SmartCode.Framework.Exporter
                 }
                 catch (Exception ex)
                 {
-                    
+
                 }
             }
             dr.Close();
@@ -114,20 +113,44 @@ namespace SmartCode.Framework.Exporter
         {
             Views views = new Views(10);
 
-            string sqlCmd = "select [name],[object_id] from sys.views where type='V'";
+            //string sqlCmd = "select [name],[object_id] from sys.views where type='V'";
+            string sqlCmd = @"SELECT sy.[name],
+                                     [object_id],
+                                     CASE
+                                         WHEN st.name = 'MS_Description' THEN
+                                             ISNULL(st.value, '')
+                                         ELSE
+                                             ''
+                                     END AS descript,
+									 sy.create_date,
+									 sy.modify_date
+                              FROM sys.views sy
+                              LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                                                                      AND minor_id = 0
+                              WHERE sy.type = 'V'
+                                    AND
+                                    (
+                                        st.name IS NULL
+                                        OR st.name IN('MS_Description', 'MS_DiagramPaneCount')
+                                     )
+                              ORDER BY sy.name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 string id = dr.GetString(0);
                 string displayName = dr.GetString(0);
                 string name = dr.GetString(0);
-                string comment = string.Empty;
                 int objectId = dr.GetInt32(1);
+                string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                DateTime createDate = dr.GetDateTime(3);
+                DateTime modifyDate = dr.GetDateTime(4);
 
                 View view = new View(id, displayName, name, comment);
                 view.OriginalName = name;
                 view.Id = objectId.ToString();
-                //view.Columns = this.GetColumns(objectId, connectionString);
+                view.Comment = comment;
+                view.CreateDate = createDate;
+                view.ModifyDate = modifyDate;
                 if (!views.ContainsKey(id))
                 {
                     views.Add(id, view);
@@ -141,19 +164,37 @@ namespace SmartCode.Framework.Exporter
         {
             Procedures procs = new Procedures(10);
 
-            string sqlCmd = "select [name],[object_id] from sys.procedures";
+            //string sqlCmd = "select [name],[object_id] from sys.procedures";
+            string sqlCmd = @"SELECT sy.[name],
+                                    [object_id],
+                                    CASE
+                                        WHEN st.name = 'MS_Description' THEN
+                                            ISNULL(st.value, '')
+                                        ELSE
+                                            ''
+                                    END AS descript,
+                                    sy.create_date,
+                                    sy.modify_date
+                              FROM sys.procedures sy
+                              LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                              WHERE sy.is_ms_shipped = 0 AND st.class IS NULL ORDER BY sy.name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 string id = dr.GetString(0);
                 string displayName = dr.GetString(0);
                 string name = dr.GetString(0);
-                string comment = string.Empty;
                 int objectId = dr.GetInt32(1);
+                string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                DateTime createDate = dr.GetDateTime(3);
+                DateTime modifyDate = dr.GetDateTime(4);
 
                 Procedure proc = new Procedure(id, displayName, name, comment);
                 proc.OriginalName = name;
                 proc.Id = objectId.ToString();
+                proc.Comment = comment;
+                proc.CreateDate = createDate;
+                proc.ModifyDate = modifyDate;
                 if (!procs.ContainsKey(id))
                 {
                     procs.Add(id, proc);
