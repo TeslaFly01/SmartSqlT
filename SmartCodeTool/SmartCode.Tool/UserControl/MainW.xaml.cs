@@ -23,7 +23,7 @@ namespace SmartCode.Tool.UserControl
     /// <summary>
     /// MainW.xaml 的交互逻辑
     /// </summary>
-    public partial class MainW : UserControlE
+    public partial class MainW : BaseUserControl
     {
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
@@ -74,8 +74,6 @@ namespace SmartCode.Tool.UserControl
         {
             InitializeComponent();
             DataContext = this;
-            HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
-            MainColumns.TextSqlEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
         }
 
         public void LoadPage(List<PropertyNodeItem> objectsViewData)
@@ -85,6 +83,8 @@ namespace SmartCode.Tool.UserControl
             {
                 MainColumns.Visibility = Visibility.Collapsed;
                 MainObjects.Visibility = Visibility.Visible;
+                MainObjects.SelectedConnection = SelectedConnection;
+                MainObjects.SelectedDataBase = SelectedDataBase;
                 MainObjects.SelectedObject = SelectedObject;
                 MainObjects.ObjectsViewData = objectsViewData;
                 MainObjects.LoadPageData();

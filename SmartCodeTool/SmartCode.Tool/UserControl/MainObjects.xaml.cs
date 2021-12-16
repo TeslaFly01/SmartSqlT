@@ -15,25 +15,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
+using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Tool.Annotations;
 using SmartCode.Tool.Models;
+using TextBox = System.Windows.Controls.TextBox;
 using UserControlE = System.Windows.Controls.UserControl;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace SmartCode.Tool.UserControl
 {
     /// <summary>
     /// MainObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class MainObjects : UserControlE, INotifyPropertyChanged
+    public partial class MainObjects : BaseUserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #region Filds
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(PropertyNodeItem), typeof(MainObjects), new PropertyMetadata(default(PropertyNodeItem)));
@@ -149,12 +145,21 @@ namespace SmartCode.Tool.UserControl
         /// <param name="e"></param>
         private void SearchObject_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            NoDataText.Visibility = Visibility.Collapsed;
             var searchText = SearchObject.Text.Trim();
             var searchData = ObjItems;
             if (!string.IsNullOrEmpty(searchText))
             {
                 var obj = ObjItems.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || (!string.IsNullOrEmpty(x.Comment) && x.Comment.ToLower().Contains(searchText.ToLower())));
-                searchData = obj.Any() ? obj.ToList() : new List<PropertyNodeItem>();
+                if (!obj.Any())
+                {
+                    NoDataText.Visibility = Visibility.Visible;
+                    searchData = new List<PropertyNodeItem>();
+                }
+                else
+                {
+                    searchData = obj.ToList();
+                }
             }
             ObjectsViewData = searchData;
         }
@@ -168,6 +173,60 @@ namespace SmartCode.Tool.UserControl
                 var currObject = (PropertyNodeItem)currCell.DataContext;
                 currCell.ToolTip = currObject.DisplayName;
             }
+        }
+
+        private string _cellEditValue = string.Empty;
+        private void TableGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
+        {
+            if (((DataGrid)sender).SelectedCells.Any())
+            {
+                //获取选中单元格(仅限单选)
+                var selectedCell = ((DataGrid)sender).SelectedCells[0];
+                //获取选中单元格数据
+                var selectedData = selectedCell.Column.GetCellContent(selectedCell.Item);
+                if (selectedData is TextBlock)
+                {
+                    var selectedText = (TextBlock)selectedData;
+                    _cellEditValue = selectedText.Text;
+                }
+            }
+        }
+
+        private void TableGrid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
+        {
+            #region MyRegion
+            if (e.EditingElement != null && e.EditingElement is TextBox)
+            {
+                string newValue = (e.EditingElement as TextBox).Text;
+                if (!_cellEditValue.Equals(newValue))
+                {
+                    if (SelectedObject.Type == ObjType.View)
+                    {
+                        ((TextBox)e.EditingElement).Text = _cellEditValue;
+                        return;
+                    }
+                    var selectItem = (PropertyNodeItem)e.Row.Item;
+                    var msgResult = MessageBox.Show($"确认修改{SelectedObject.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                    if (msgResult == MessageBoxResult.OK)
+                    {
+                        var type = "";
+                        switch (selectItem.Type)
+                        {
+                            case ObjType.Table: type = "table"; break;
+                            case ObjType.View: type = "view"; break;
+                            case ObjType.Proc: type = "procedure"; break;
+                        }
+                        var dbConnectionString = SelectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
+                        IExporter exporter = new SqlServer2008Exporter();
+                        exporter.UpdateComment(dbConnectionString, type, selectItem.DisplayName, newValue, "");
+                    }
+                    else
+                    {
+                        ((TextBox)e.EditingElement).Text = _cellEditValue;
+                    }
+                }
+            }
+            #endregion
         }
     }
 }

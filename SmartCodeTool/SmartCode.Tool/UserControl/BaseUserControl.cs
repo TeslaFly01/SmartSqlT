@@ -1,17 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
 using SmartCode.Tool.Annotations;
 
-namespace SmartCode.Tool.ViewModels
+namespace SmartCode.Tool.UserControl
 {
-	class ViewModelBase : INotifyPropertyChanged
-	{
-
-		protected virtual void RaisePropertyChanged(string propertyName)
-		{
-			if (PropertyChanged != null)
-				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
+    public abstract class BaseUserControl : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
@@ -19,6 +19,5 @@ namespace SmartCode.Tool.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+    }
 }

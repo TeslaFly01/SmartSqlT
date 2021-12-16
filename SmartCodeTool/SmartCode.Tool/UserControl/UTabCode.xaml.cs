@@ -24,7 +24,7 @@ namespace SmartCode.Tool.UserControl
     /// <summary>
     /// UTabCode.xaml 的交互逻辑
     /// </summary>
-    public partial class UTabCode : UserControlE
+    public partial class UTabCode : BaseUserControl
     {
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(PropertyNodeItem), typeof(UTabCode), new PropertyMetadata(default(PropertyNodeItem)));

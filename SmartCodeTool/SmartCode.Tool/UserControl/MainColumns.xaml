@@ -1,12 +1,12 @@
-﻿<UserControl
+﻿<local:BaseUserControl
     x:Class="SmartCode.Tool.UserControl.MainColumns"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
-    xmlns:baseControl="clr-namespace:SmartCode.Tool.UserControl"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartCode.Tool.UserControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d">
@@ -45,7 +45,7 @@
                         BeginningEdit="TableGrid_OnBeginningEdit"
                         CellEditEnding="TableGrid_OnCellEditEnding"
                         HeadersVisibility="All"
-                        ItemsSource="{Binding ColunmData, Mode=TwoWay}"
+                        ItemsSource="{Binding ColunmData}"
                         RowHeaderWidth="60"
                         SelectedCellsChanged="TableGrid_OnSelectedCellsChanged"
                         SelectionChanged="Handled_OnSelectionChanged"
@@ -264,10 +264,10 @@
                 Cursor="Hand"
                 Header="代码">
                 <Grid>
-                    <baseControl:UTabCode x:Name="UTabCode" />
+                    <local:UTabCode x:Name="UTabCode" />
                 </Grid>
             </TabItem>
         </TabControl>
 
     </Grid>
-</UserControl>
+</local:BaseUserControl>

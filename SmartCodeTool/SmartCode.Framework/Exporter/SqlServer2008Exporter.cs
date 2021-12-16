@@ -99,7 +99,7 @@ namespace SmartCode.Framework.Exporter
                         tables.Add(id, table);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                 }
@@ -114,26 +114,45 @@ namespace SmartCode.Framework.Exporter
             Views views = new Views(10);
 
             //string sqlCmd = "select [name],[object_id] from sys.views where type='V'";
-            string sqlCmd = @"SELECT sy.[name],
-                                     [object_id],
-                                     CASE
-                                         WHEN st.name = 'MS_Description' THEN
-                                             ISNULL(st.value, '')
-                                         ELSE
-                                             ''
-                                     END AS descript,
-									 sy.create_date,
-									 sy.modify_date
-                              FROM sys.views sy
-                              LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                                                                      AND minor_id = 0
-                              WHERE sy.type = 'V'
-                                    AND
-                                    (
-                                        st.name IS NULL
-                                        OR st.name IN('MS_Description', 'MS_DiagramPaneCount')
-                                     )
-                              ORDER BY sy.name ASC";
+            string sqlCmd = @"SELECT a.name,
+                                     a.object_id,
+                                     b.descript,
+                                     a.create_date,
+                                     a.modify_date
+                              FROM sys.views a
+                              LEFT JOIN
+                              (
+                                   SELECT sy.name,
+                                          sy.object_id,
+                                          CASE
+                                              WHEN st.name = 'MS_Description' THEN
+                                                   ISNULL(st.value, '')
+                                              ELSE
+                                                   ''
+                                          END AS descript,
+                                          sy.create_date,
+                                          sy.modify_date
+                                  FROM sys.views sy
+                                  LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                                                                       AND minor_id = 0
+                                  WHERE sy.type = 'V'
+                                        AND
+                                        (
+                                            st.name IS NULL
+                                            OR st.name IN ( 'MS_Description' )
+                                        )
+                                 GROUP BY sy.name,
+                                          sy.object_id,
+                                          sy.create_date,
+                                          sy.modify_date,
+                                          CASE
+                                              WHEN st.name = 'MS_Description' THEN
+                                                   ISNULL(st.value, '')
+                                              ELSE
+                                                   ''
+                                          END
+                              ) b ON a.object_id = b.object_id
+                                ORDER BY a.name;";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
@@ -165,19 +184,46 @@ namespace SmartCode.Framework.Exporter
             Procedures procs = new Procedures(10);
 
             //string sqlCmd = "select [name],[object_id] from sys.procedures";
-            string sqlCmd = @"SELECT sy.[name],
-                                    [object_id],
-                                    CASE
-                                        WHEN st.name = 'MS_Description' THEN
-                                            ISNULL(st.value, '')
-                                        ELSE
-                                            ''
-                                    END AS descript,
-                                    sy.create_date,
-                                    sy.modify_date
-                              FROM sys.procedures sy
-                              LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                              WHERE sy.is_ms_shipped = 0 AND st.class IS NULL ORDER BY sy.name ASC";
+            string sqlCmd = @"SELECT a.name,
+                                     a.object_id,
+                                     b.descript,
+                                     a.create_date,
+                                     a.modify_date
+                              FROM sys.procedures a
+                              LEFT JOIN
+                              (
+                                  SELECT sy.name,
+                                         sy.object_id,
+                                         CASE
+                                              WHEN st.name = 'MS_Description' THEN
+                                                   ISNULL(st.value, '')
+                                              ELSE
+                                                   ''
+                                         END AS descript,
+                                         sy.create_date,
+                                         sy.modify_date
+                                  FROM sys.procedures sy
+                                  LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                                                                        AND minor_id = 0
+                                  WHERE sy.type = 'P'
+                                        AND
+                                        (
+                                            st.name IS NULL
+                                            OR st.name IN ( 'MS_Description' )
+                                        )
+                                  GROUP BY sy.name,
+                                           sy.object_id,
+                                           sy.create_date,
+                                           sy.modify_date,
+                                           CASE
+                                               WHEN st.name = 'MS_Description' THEN
+                                                    ISNULL(st.value, '')
+                                           ELSE
+                                                ''
+                                           END
+                            ) b ON a.object_id = b.object_id
+                            WHERE a.is_ms_shipped = 0  
+                            ORDER BY a.name;";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
@@ -289,7 +335,6 @@ namespace SmartCode.Framework.Exporter
                     case "numeric":
                     case "decimal":
                         column.Length = $"({length},{length_dot})"; break;
-                    defaul: break;
                 }
 
                 column.ObjectId = objectId.ToString();
@@ -405,21 +450,45 @@ namespace SmartCode.Framework.Exporter
             return dataSet;
         }
 
-        public override void UpdateComment(string connection, string tableName, string columnName, string comment)
+        /// <summary>
+        /// 修改字段备注说明
+        /// </summary>
+        /// <param name="connection"></param>
+        /// <param name="objectName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="comment"></param>
+        /// <returns></returns>
+        public override bool UpdateComment(string connection, string type, string objectName, string comment, string columnName)
         {
-            var procTextAdd = $"EXEC sp_addextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'table', @level1name=N'{tableName}',@level2type=N'column',@level2name= N'{columnName}'";
-            var procTextUpdata = $"EXEC sp_updateextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'table', @level1name=N'{tableName}',@level2type=N'column',@level2name= N'{columnName}'";
+            var sb = new StringBuilder();
+            sb.Append(
+                $"EXEC sp_updateextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'{type}', @level1name=N'{objectName}'");
+            if (!string.IsNullOrEmpty(columnName))
+            {
+                sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
+            }
             try
             {
-                var t = SqlHelper.ExecuteNonQuery(connection, CommandType.Text, procTextUpdata);
+                SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
             }
             catch (Exception ex)
             {
-                if (ex.Message.StartsWith("Property cannot be updated or deleted"))
+                try
                 {
-                    var t = SqlHelper.ExecuteNonQuery(connection, CommandType.Text, procTextAdd);
+                    sb.Clear();
+                    sb.Append($"EXEC sp_addextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'{type}', @level1name=N'{objectName}'");
+                    if (!string.IsNullOrEmpty(columnName))
+                    {
+                        sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
+                    }
+                    SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
+                }
+                catch (Exception exx)
+                {
+                    return false;
                 }
             }
+            return true;
         }
         #endregion
     }

@@ -36,15 +36,8 @@ namespace SmartCode.Tool.UserControl
     /// <summary>
     /// Main.xaml 的交互逻辑
     /// </summary>
-    public partial class MainColumns : UserControlE, INotifyPropertyChanged
+    public partial class MainColumns : BaseUserControl
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
@@ -236,11 +229,16 @@ namespace SmartCode.Tool.UserControl
         private void SearchColumns_OnTextChanged(object sender, TextChangedEventArgs e)
         {
             #region MyRegion
+            NoDataText.Visibility = Visibility.Collapsed;
             var searchText = SearchColumns.Text.Trim();
             var searchData = ColList;
             if (!string.IsNullOrEmpty(searchText))
             {
                 searchData = ColList.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || x.Comment.ToLower().Contains(searchText.ToLower())).ToList();
+                if (!searchData.Any())
+                {
+                    NoDataText.Visibility = Visibility.Visible;
+                }
             }
             ColunmData = searchData;
             #endregion
@@ -288,14 +286,17 @@ namespace SmartCode.Tool.UserControl
                     }
                     var selectItem = (Column)e.Row.Item;
                     var msgResult = MessageBox.Show($"确认修改{SelectedObject.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                    if (msgResult == MessageBoxResult.OK)
-                    {
-                        IExporter exporter = new SqlServer2008Exporter();
-                        exporter.UpdateComment(SelectedConnection.DbConnectString, SelectedObject.Name, selectItem.Name, newValue);
-                    }
-                    else
+                    if (msgResult != MessageBoxResult.OK)
                     {
                         ((TextBox)e.EditingElement).Text = _cellEditValue;
+                        return;
+                    }
+                    var dbConnectionString = SelectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
+                    IExporter exporter = new SqlServer2008Exporter();
+                    var flag = exporter.UpdateComment(dbConnectionString,"table", SelectedObject.Name, selectItem.Name, newValue);
+                    if (!flag)
+                    {
+                        Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
                     }
                 }
             }

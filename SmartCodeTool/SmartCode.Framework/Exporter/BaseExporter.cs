@@ -21,6 +21,6 @@ namespace SmartCode.Framework.Exporter
 
         public abstract DataSet GetDataSet(string connectionString, string tbName, string strWhere);
 
-        public abstract void UpdateComment(string connection, string tableName, string columnName, string comment);
+        public abstract bool UpdateComment(string connection,string  type, string tableName, string columnName, string comment);
     }
 }
