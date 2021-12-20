@@ -15,18 +15,6 @@ namespace SmartCode.Tool.ViewModels
 		#region fields
 
 		private static Workspace _this = new Workspace();
-		private ToolViewModel[] _tools;
-		private ObservableCollection<FileViewModel> _files = new ObservableCollection<FileViewModel>();
-		private ReadOnlyObservableCollection<FileViewModel> _readonyFiles;
-		private FileViewModel _activeDocument;
-		private ErrorViewModel _errors;
-		private PropertiesViewModel _props;
-		private ExplorerViewModel _explorer;
-		private OutputViewModel _output;
-		private GitChangesViewModel _git;
-		private ToolboxViewModel _toolbox;
-		private RelayCommand _openCommand;
-		private RelayCommand _newCommand;
 		private Tuple<string, Theme> _selectedTheme;
 
 		#endregion fields
@@ -48,135 +36,8 @@ namespace SmartCode.Tool.ViewModels
 		#region properties
 
 		public static Workspace This => _this;
-
-		public ReadOnlyObservableCollection<FileViewModel> Files
-		{
-			get
-			{
-				if (_readonyFiles == null)
-					_readonyFiles = new ReadOnlyObservableCollection<FileViewModel>(_files);
-
-				return _readonyFiles;
-			}
-		}
-
-		public IEnumerable<ToolViewModel> Tools
-		{
-			get
-            {
-                if (_tools == null)
-                    Explorer.IsActive = true;
-					_tools = new ToolViewModel[] { Explorer, Props, Errors, Output, Git, Toolbox };
-				return _tools;
-			}
-		}
-
-		public ExplorerViewModel Explorer
-		{
-			get
-			{
-				if (_explorer == null)
-					_explorer = new ExplorerViewModel();
-
-				return _explorer;
-			}
-		}
-
-		public PropertiesViewModel Props
-		{
-			get
-			{
-				if (_props == null)
-					_props = new PropertiesViewModel();
-
-				return _props;
-			}
-		}
-
-		public ErrorViewModel Errors
-		{
-			get
-			{
-				if (_errors == null)
-					_errors = new ErrorViewModel();
-
-				return _errors;
-			}
-		}
-
-		public OutputViewModel Output
-		{
-			get
-			{
-				if (_output == null)
-					_output = new OutputViewModel();
-
-				return _output;
-			}
-		}
-
-		public GitChangesViewModel Git
-		{
-			get
-			{
-				if (_git == null)
-					_git = new GitChangesViewModel();
-
-				return _git;
-			}
-		}
-
-		public ToolboxViewModel Toolbox
-		{
-			get
-			{
-				if (_toolbox == null)
-					_toolbox = new ToolboxViewModel();
-
-				return _toolbox;
-			}
-		}
-
-		public ICommand OpenCommand
-		{
-			get
-			{
-				if (_openCommand == null)
-				{
-					_openCommand = new RelayCommand((p) => OnOpen(p), (p) => CanOpen(p));
-				}
-
-				return _openCommand;
-			}
-		}
-
-		public ICommand NewCommand
-		{
-			get
-			{
-				if (_newCommand == null)
-				{
-					_newCommand = new RelayCommand((p) => OnNew(p), (p) => CanNew(p));
-				}
-
-				return _newCommand;
-			}
-		}
-
-		public FileViewModel ActiveDocument
-		{
-			get => _activeDocument;
-			set
-			{
-				if (_activeDocument != value)
-				{
-					_activeDocument = value;
-					RaisePropertyChanged(nameof(ActiveDocument));
-					if (ActiveDocumentChanged != null)
-						ActiveDocumentChanged(this, EventArgs.Empty);
-				}
-			}
-		}
+        
+		
 
 		public List<Tuple<string, Theme>> Themes { get; set; } = new List<Tuple<string, Theme>>
 		{
@@ -192,7 +53,7 @@ namespace SmartCode.Tool.ViewModels
 			{
 				_selectedTheme = value;
 				SwitchExtendedTheme();
-				RaisePropertyChanged(nameof(SelectedTheme));
+				OnPropertyChanged(nameof(SelectedTheme));
 			}
 		}
 
@@ -221,73 +82,8 @@ namespace SmartCode.Tool.ViewModels
 					break;
 			}
 		}
-
-		internal void Close(FileViewModel fileToClose)
-		{
-			if (fileToClose.IsDirty)
-			{
-				var res = MessageBox.Show(string.Format("Save changes for file '{0}'?", fileToClose.FileName), "AvalonDock Test App", MessageBoxButton.YesNoCancel);
-				if (res == MessageBoxResult.Cancel)
-					return;
-				if (res == MessageBoxResult.Yes)
-				{
-					Save(fileToClose);
-				}
-			}
-
-			_files.Remove(fileToClose);
-		}
-
-		internal void Save(FileViewModel fileToSave, bool saveAsFlag = false)
-		{
-			string newTitle = string.Empty;
-
-			if (fileToSave.FilePath == null || saveAsFlag)
-			{
-				var dlg = new SaveFileDialog();
-				if (dlg.ShowDialog().GetValueOrDefault())
-				{
-					fileToSave.FilePath = dlg.FileName;
-					newTitle = dlg.SafeFileName;
-				}
-			}
-			if (fileToSave.FilePath == null)
-			{
-				return;
-			}
-			File.WriteAllText(fileToSave.FilePath, fileToSave.TextContent);
-			ActiveDocument.IsDirty = false;
-
-			if (string.IsNullOrEmpty(newTitle)) return;
-			ActiveDocument.Title = newTitle;
-		}
-
-		internal FileViewModel Open(string filepath)
-		{
-			var fileViewModel = _files.FirstOrDefault(fm => fm.FilePath == filepath);
-			if (fileViewModel != null)
-				return fileViewModel;
-
-			fileViewModel = new FileViewModel(filepath);
-			_files.Add(fileViewModel);
-			return fileViewModel;
-		}
-
-		#region OpenCommand
-
-		private bool CanOpen(object parameter) => true;
-
-		private void OnOpen(object parameter)
-		{
-			var dlg = new OpenFileDialog();
-			if (dlg.ShowDialog().GetValueOrDefault())
-			{
-				var fileViewModel = Open(dlg.FileName);
-				ActiveDocument = fileViewModel;
-			}
-		}
-
-		#endregion OpenCommand
+		
+		
 
 		#region NewCommand
 
@@ -295,12 +91,7 @@ namespace SmartCode.Tool.ViewModels
 		{
 			return true;
 		}
-
-		private void OnNew(object parameter)
-		{
-			_files.Add(new FileViewModel());
-			ActiveDocument = _files.Last();
-		}
+		
 
 		#endregion NewCommand
 

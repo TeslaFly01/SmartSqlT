@@ -1,6 +1,7 @@
 ﻿using SmartCode.Framework.Exporter;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Windows;
@@ -18,6 +19,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Configuration;
 using System.Runtime.CompilerServices;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml;
@@ -29,6 +31,7 @@ using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
 using SmartCode.Tool.Annotations;
 using SmartCode.Tool.Helper;
+using SmartCode.Tool.UserControl;
 using SmartCode.Tool.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
 using MessageBox = HandyControl.Controls.MessageBox;
@@ -86,6 +89,8 @@ namespace SmartCode.Tool
             }
         }
 
+        public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -100,14 +105,14 @@ namespace SmartCode.Tool
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = dataBasesConfigs;
             CbTargetConnect.ItemsSource = dataBasesConfigs;
-            var isGroup = false;
             var sqLiteHelper = new SQLiteHelper();
-            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals("IsGroup"));
-            if (sysSet != null)
-            {
-                isGroup = Convert.ToBoolean(sysSet.Value);
-            }
+            var isGroup = sqLiteHelper.GetSys("IsGroup");
             CheckIsGroup.IsChecked = isGroup;
+            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
+            MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
+            MainTabW.DataContext = TabItemData;
+            MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
         }
 
         /// <summary>
@@ -172,13 +177,8 @@ namespace SmartCode.Tool
             var selectConnection = SelectendConnection;
             Task.Run(() =>
             {
-                var isGroup = false;
                 var sqLiteHelper = new SQLiteHelper();
-                var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals("IsGroup"));
-                if (sysSet != null)
-                {
-                    isGroup = Convert.ToBoolean(sysSet.Value);
-                }
+                var isGroup = sqLiteHelper.GetSys("IsGroup");
                 var currObjects = new List<SObjectDTO>();
                 var currGroups = new List<ObjectGroup>();
                 var itemParentList = new List<PropertyNodeItem>();
@@ -276,7 +276,7 @@ namespace SmartCode.Tool
                                        GroupName = a.GroupName,
                                        ObjectName = b.ObjectName
                                    }).ToList();
-                } 
+                }
                 #endregion
 
                 IExporter exporter = new SqlServer2008Exporter();
@@ -556,7 +556,7 @@ namespace SmartCode.Tool
                             });
                         }
                     }
-                } 
+                }
                 #endregion
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
@@ -655,13 +655,8 @@ namespace SmartCode.Tool
                 IsExpanded = true
             };
             itemList.Add(nodeProc);
-            var isGroup = false;
             var sqLiteHelper = new SQLiteHelper();
-            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals("IsGroup"));
-            if (sysSet != null)
-            {
-                isGroup = Convert.ToBoolean(sysSet.Value);
-            }
+            var isGroup = sqLiteHelper.GetSys("IsGroup");
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectendConnection;
             var currObjects = new List<SObjectDTO>();
@@ -735,7 +730,7 @@ namespace SmartCode.Tool
                                    GroupName = a.GroupName,
                                    ObjectName = b.ObjectName
                                }).ToList();
-            } 
+            }
             #endregion
 
             #region 数据表
@@ -791,7 +786,7 @@ namespace SmartCode.Tool
                         });
                     }
                 }
-            } 
+            }
             #endregion
 
             #region 视图
@@ -847,7 +842,7 @@ namespace SmartCode.Tool
                         });
                     }
                 }
-            } 
+            }
             #endregion
 
             #region 存储过程
@@ -903,7 +898,7 @@ namespace SmartCode.Tool
                         });
                     }
                 }
-            } 
+            }
             #endregion
 
             if (isGroup)
@@ -949,7 +944,7 @@ namespace SmartCode.Tool
         }
 
         /// <summary>
-        /// 选中表加载对应数据
+        /// 选中表加载主内容对应数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -962,12 +957,58 @@ namespace SmartCode.Tool
             {
                 return;
             }
-            MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
-            MainW.SelectedConnection = SelectendConnection;
-            MainW.SelectedDataBase = selectDatabase;
-            MainW.SelectedObject = objects;
-            MainW.LoadPage(TreeViewData);
+            var sqLiteHelper = new SQLiteHelper();
+            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            if (!isMultipleTab)
+            {
+                MainW.Visibility = Visibility.Visible;
+                MainTabW.Visibility = Visibility.Collapsed;
+                MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
+                MainW.SelectedConnection = SelectendConnection;
+                MainW.SelectedDataBase = selectDatabase;
+                MainW.SelectedObject = objects;
+                MainW.LoadPage(TreeViewData);
+                return;
+            }
+            MainW.Visibility = Visibility.Collapsed;
+            MainTabW.Visibility = Visibility.Visible;
+            var curItem = TabItemData.FirstOrDefault(x => x.DisplayName == objects.DisplayName);
+            if (curItem != null)
+            {
+                MainTabW.SelectedItem = curItem;
+                return;
+            }
+            var mainW = new MainW
+            {
+                SelectedConnection = SelectendConnection,
+                SelectedDataBase = selectDatabase,
+                SelectedObject = objects,
+            };
+            mainW.LoadPage(TreeViewData);
+            var tabItem = new MainTabWModel
+            {
+                DisplayName = objects.DisplayName,
+                MainW = mainW
+            };
+            TabItemData.Insert(0, tabItem);
+            MainTabW.SelectedItem = TabItemData.First();
             #endregion
+        }
+
+        private void TabItem_Closed(object sender, EventArgs e)
+        {
+            MainTabW.ItemsSource = null;
+            if (TabItemData.Any())
+            {
+                MainTabW.SelectedItem = TabItemData.First();
+            }
+            MainTabW.ItemsSource = TabItemData;
+        }
+
+        private void TabItem_Closing(object sender, EventArgs e)
+        {
+            var curTabItem = (MainTabWModel)sender;
+            TabItemData.Remove(curTabItem);
         }
 
         /// <summary>
@@ -1105,6 +1146,17 @@ namespace SmartCode.Tool
                 return;
             }
             Clipboard.SetDataObject(selectedObjects.DisplayName);
+        }
+
+        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            var searchText = SearchMenu.Text.Trim();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                SearchMenuBind();
+                return;
+            }
+            MenuBind(false, null);
         }
     }
 }

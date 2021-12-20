@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
-        <hc:TransitioningContentControl Margin="0,5,5,5">
+        <hc:TransitioningContentControl Name="GridSigle">
             <hc:SimplePanel>
                 <Border
                     Name="BorderRootEffect"
@@ -84,13 +84,17 @@
                         </Border>
                         <Border Grid.Row="1" ClipToBounds="True">
                             <Grid>
-                                <local:MainColumns x:Name="MainColumns" />
-                                <local:MainObjects x:Name="MainObjects" Visibility="Collapsed" />
+                                <local:MainColumns x:Name="MainColumn" />
+                                <local:MainObjects x:Name="MainObject" Visibility="Collapsed" />
                             </Grid>
                         </Border>
                     </Grid>
                 </Border>
             </hc:SimplePanel>
         </hc:TransitioningContentControl>
+        <Grid Name="GridMultiple">
+            <local:MainColumns x:Name="MainColumns" />
+            <local:MainObjects x:Name="MainObjects" Visibility="Collapsed" />
+        </Grid>
     </Grid>
 </local:BaseUserControl>

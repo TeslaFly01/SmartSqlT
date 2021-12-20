@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
+using SmartCode.Framework;
 using SmartCode.Framework.PhysicalDataModel;
+using SmartCode.Framework.SqliteModel;
 using SmartCode.Tool.Models;
 using SmartCode.Tool.Views;
 using UserControlE = System.Windows.Controls.UserControl;
@@ -61,8 +64,14 @@ namespace SmartCode.Tool.UserControl
         public DataBasesConfig SelectedConnection
         {
             get => (DataBasesConfig)GetValue(SelectedConnectionProperty);
-            set => SetValue(SelectedConnectionProperty, value);
+            set
+            {
+                SetValue(SelectedConnectionProperty, value);
+                OnPropertyChanged(nameof(SelectedConnection));
+
+            }
         }
+
         public string MainTitle
         {
             get => (string)GetValue(MainTitleProperty);
@@ -78,26 +87,58 @@ namespace SmartCode.Tool.UserControl
 
         public void LoadPage(List<PropertyNodeItem> objectsViewData)
         {
-            MainTitle = SelectedObject.DisplayName;
-            if (SelectedObject.Type == ObjType.Type)
+            var sqLiteHelper = new SQLiteHelper();
+            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            if (isMultipleTab)
             {
-                MainColumns.Visibility = Visibility.Collapsed;
-                MainObjects.Visibility = Visibility.Visible;
-                MainObjects.SelectedConnection = SelectedConnection;
-                MainObjects.SelectedDataBase = SelectedDataBase;
-                MainObjects.SelectedObject = SelectedObject;
-                MainObjects.ObjectsViewData = objectsViewData;
-                MainObjects.LoadPageData();
+                GridMultiple.Visibility = Visibility.Visible;
+                GridSigle.Visibility = Visibility.Collapsed;
+                if (SelectedObject.Type == ObjType.Type)
+                {
+                    MainColumns.Visibility = Visibility.Collapsed;
+                    MainObjects.Visibility = Visibility.Visible;
+                    MainObjects.SelectedConnection = SelectedConnection;
+                    MainObjects.SelectedDataBase = SelectedDataBase;
+                    MainObjects.SelectedObject = SelectedObject;
+                    MainObjects.ObjectsViewData = objectsViewData;
+                    MainObjects.LoadPageData();
+                }
+                else
+                {
+                    MainColumns.Visibility = Visibility.Visible;
+                    MainObjects.Visibility = Visibility.Collapsed;
+                    MainColumns.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+                    MainColumns.SelectedConnection = SelectedConnection;
+                    MainColumns.SelectedDataBase = SelectedDataBase;
+                    MainColumns.SelectedObject = SelectedObject;
+                    MainColumns.LoadPageData();
+                }
             }
             else
             {
-                MainColumns.Visibility = Visibility.Visible;
-                MainObjects.Visibility = Visibility.Collapsed;
-                MainColumns.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
-                MainColumns.SelectedConnection = SelectedConnection;
-                MainColumns.SelectedDataBase = SelectedDataBase;
-                MainColumns.SelectedObject = SelectedObject;
-                MainColumns.LoadPageData();
+                GridMultiple.Visibility = Visibility.Collapsed;
+                GridSigle.Visibility = Visibility.Visible;
+                MainTitle = SelectedObject.DisplayName;
+                if (SelectedObject.Type == ObjType.Type)
+                {
+                    MainColumn.Visibility = Visibility.Collapsed;
+                    MainObject.Visibility = Visibility.Visible;
+                    MainObject.SelectedConnection = SelectedConnection;
+                    MainObject.SelectedDataBase = SelectedDataBase;
+                    MainObject.SelectedObject = SelectedObject;
+                    MainObject.ObjectsViewData = objectsViewData;
+                    MainObject.LoadPageData();
+                }
+                else
+                {
+                    MainColumn.Visibility = Visibility.Visible;
+                    MainObject.Visibility = Visibility.Collapsed;
+                    MainColumn.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+                    MainColumn.SelectedConnection = SelectedConnection;
+                    MainColumn.SelectedDataBase = SelectedDataBase;
+                    MainColumn.SelectedObject = SelectedObject;
+                    MainColumn.LoadPageData();
+                }
             }
         }
     }

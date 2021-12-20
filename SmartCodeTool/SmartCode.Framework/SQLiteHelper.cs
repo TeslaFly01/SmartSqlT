@@ -31,14 +31,14 @@ namespace SmartCode.Framework
         private void Init()
         {
             var sysList = db.Table<SystemSet>().ToList();
-            var initValue = new List<string> { "IsGroup" };
+            var initValue = new List<string> { "IsGroup", "IsMultipleTab" };
             initValue.ForEach(x =>
             {
                 if (!sysList.Any(m => m.Name.Equals(x)))
                 {
                     db.Insert(new SystemSet
                     {
-                        Name = "IsGroup",
+                        Name = x,
                         Value = "false"
                     });
                 }
@@ -66,6 +66,18 @@ namespace SmartCode.Framework
         public int Execute(string sql)
         {
             return db.Execute(sql);
+        }
+
+        public bool GetSys(string name)
+        {
+            var defaultV = false;
+            var sqLiteHelper = new SQLiteHelper();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name));
+            if (sysSet != null)
+            {
+                defaultV = Convert.ToBoolean(sysSet.Value);
+            }
+            return defaultV;
         }
     }
 }

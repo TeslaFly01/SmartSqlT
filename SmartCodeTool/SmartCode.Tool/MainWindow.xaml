@@ -3,13 +3,11 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:Controls="clr-namespace:SmartCode.Tool.UserControl.Controls"
-    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modelHelper="clr-namespace:SmartCode.Tool"
     xmlns:models="clr-namespace:SmartCode.Tool.Models"
-    xmlns:system="clr-namespace:System;assembly=mscorlib"
     xmlns:userControl="clr-namespace:SmartCode.Tool.UserControl"
     Title="SmartSQL-数据库工具 v1.0.1"
     Width="850"
@@ -116,6 +114,7 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
                                 <ColumnDefinition Width="2*" MinWidth="90" />
+                                <ColumnDefinition Width="1*" MinWidth="30" />
                             </Grid.ColumnDefinitions>
                             <ComboBox
                                 x:Name="SelectDatabase"
@@ -153,6 +152,19 @@
                                 Click="CheckIsGroup_OnClick"
                                 Content="业务分组"
                                 Cursor="Hand" />
+                            <Button
+                                Name="BtnFresh"
+                                Grid.Column="2"
+                                Margin="0"
+                                Padding="7"
+                                VerticalAlignment="Top"
+                                hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                                BorderThickness="0"
+                                Click="BtnFresh_OnClick"
+                                Cursor="Hand"
+                                Foreground="{DynamicResource PrimaryTextBrush}"
+                                Style="{StaticResource ButtonIconCircular}"
+                                ToolTip="刷新" />
                         </Grid>
                         <hc:SearchBar
                             x:Name="SearchMenu"
@@ -296,7 +308,29 @@
 
         <!--  主内容  -->
         <DockPanel Grid.Row="0" Grid.Column="2">
-            <userControl:MainW x:Name="MainW" />
+            <Grid Margin="0,5,5,5">
+                <userControl:MainW x:Name="MainW" />
+
+                <hc:TabControl
+                    Name="MainTabW"
+                    IsAnimationEnabled="True"
+                    IsDraggable="True"
+                    IsTabFillEnabled="False"
+                    ItemsSource="{Binding TabItemData}"
+                    ShowCloseButton="True"
+                    Visibility="Visible">
+                    <hc:TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Height="20" Text="{Binding DisplayName}" />
+                        </DataTemplate>
+                    </hc:TabControl.ItemTemplate>
+                    <hc:TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <UserControl Content="{Binding MainW}" />
+                        </DataTemplate>
+                    </hc:TabControl.ContentTemplate>
+                </hc:TabControl>
+            </Grid>
         </DockPanel>
     </Grid>
 </hc:GlowWindow>

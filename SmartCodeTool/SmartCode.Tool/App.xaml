@@ -2,7 +2,6 @@
     x:Class="SmartCode.Tool.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:converters="clr-namespace:SmartCode.Tool.Converters"
     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
     StartupUri="MainWindow.xaml">
     <Application.Resources>

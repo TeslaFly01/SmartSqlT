@@ -254,7 +254,6 @@
                                 Style="{StaticResource ButtonPrimary}" />
                         </hc:UniformSpacingPanel>
                     </hc:SimpleStackPanel>
-
                 </Grid>
             </TabItem>
 
