@@ -71,6 +71,20 @@
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem
+                    Name="MenuSetting"
+                    Click="MenuSetting_OnClick"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="设置">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource AlignRightGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
                     Name="MenuAbout"
                     Click="MenuAbout_OnClick"
                     Cursor="Hand"
@@ -321,7 +335,10 @@
                     Visibility="Visible">
                     <hc:TabControl.ItemTemplate>
                         <DataTemplate>
-                            <TextBlock Height="20" Text="{Binding DisplayName}" />
+                            <TextBlock
+                                Height="20"
+                                Text="{Binding DisplayName}"
+                                ToolTip="{Binding DisplayName}" />
                         </DataTemplate>
                     </hc:TabControl.ItemTemplate>
                     <hc:TabControl.ContentTemplate>

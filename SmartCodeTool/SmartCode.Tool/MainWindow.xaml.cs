@@ -1147,7 +1147,12 @@ namespace SmartCode.Tool
             }
             Clipboard.SetDataObject(selectedObjects.DisplayName);
         }
-
+        
+        /// <summary>
+        /// 刷新菜单列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
         {
             var searchText = SearchMenu.Text.Trim();
@@ -1157,6 +1162,18 @@ namespace SmartCode.Tool
                 return;
             }
             MenuBind(false, null);
+        }
+
+        /// <summary>
+        /// 全局设置
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuSetting_OnClick(object sender, RoutedEventArgs e)
+        {
+            var set = new SettingWindow();
+            set.Owner = this;
+            set.ShowDialog();
         }
     }
 }
