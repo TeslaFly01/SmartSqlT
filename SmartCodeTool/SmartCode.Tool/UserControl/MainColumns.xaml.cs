@@ -49,8 +49,11 @@ namespace SmartCode.Tool.UserControl
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(DataBasesConfig), typeof(MainColumns), new PropertyMetadata(default(DataBasesConfig)));
 
-        public static readonly DependencyProperty ColunmDataProperty = DependencyProperty.Register(
-            "ColunmData", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
+        public static readonly DependencyProperty SourceColunmDataProperty = DependencyProperty.Register(
+            "SourceColunmData", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
+
+        public static readonly DependencyProperty ObjectColumnsProperty = DependencyProperty.Register(
+            "ObjectColumns", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
 
         /// <summary>
         /// 当前选中对象
@@ -79,13 +82,23 @@ namespace SmartCode.Tool.UserControl
         /// <summary>
         /// 当前选中表列数据
         /// </summary>
-        public List<Column> ColunmData
+        public List<Column> SourceColunmData
         {
-            get => (List<Column>)GetValue(ColunmDataProperty);
+            get => (List<Column>)GetValue(SourceColunmDataProperty);
             set
             {
-                SetValue(ColunmDataProperty, value);
-                OnPropertyChanged(nameof(ColunmData));
+                SetValue(SourceColunmDataProperty, value);
+                OnPropertyChanged(nameof(SourceColunmData));
+            }
+        }
+
+        public List<Column> ObjectColumns
+        {
+            get => (List<Column>)GetValue(ObjectColumnsProperty);
+            set
+            {
+                SetValue(ObjectColumnsProperty, value);
+                OnPropertyChanged(nameof(ObjectColumns));
             }
         }
         #endregion
@@ -126,7 +139,8 @@ namespace SmartCode.Tool.UserControl
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        ColunmData = list;
+                        SourceColunmData = list;
+                        ObjectColumns = list;
                         ColList = list;
                         LoadingLineTable.Visibility = Visibility.Collapsed;
                         if (!list.Any())
@@ -215,7 +229,7 @@ namespace SmartCode.Tool.UserControl
                 UTabCode.SelectedDataBase = SelectedDataBase.DbName;
                 UTabCode.ConnString = SelectedConnection.DbConnectString;
                 UTabCode.SelectedObject = SelectedObject;
-                UTabCode.SelectedTableColunms = ColunmData;
+                UTabCode.SelectedTableColunms = SourceColunmData;
             }
             #endregion
         }
@@ -240,7 +254,7 @@ namespace SmartCode.Tool.UserControl
                     NoDataText.Visibility = Visibility.Visible;
                 }
             }
-            ColunmData = searchData;
+            ObjectColumns = searchData;
             #endregion
         }
 
@@ -293,7 +307,7 @@ namespace SmartCode.Tool.UserControl
                     }
                     var dbConnectionString = SelectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
                     IExporter exporter = new SqlServer2008Exporter();
-                    var flag = exporter.UpdateComment(dbConnectionString,"table", SelectedObject.Name, selectItem.Name, newValue);
+                    var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, selectItem.Name, newValue);
                     if (!flag)
                     {
                         Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
@@ -421,7 +435,7 @@ namespace SmartCode.Tool.UserControl
                     }
                     else
                     {
-                        sb.Append($"({column.Length}) ");
+                        sb.Append($"{column.Length} ");
                     }
                 }
                 var isNull = column.IsNullable ? "NULL " : "NOT NULL ";
@@ -479,7 +493,7 @@ namespace SmartCode.Tool.UserControl
                 return;
             }
             var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.DisplayName}.cs");
-            StrUtil.CreateClass(filePath, SelectedObject.DisplayName, ColunmData);
+            StrUtil.CreateClass(filePath, SelectedObject.DisplayName, SourceColunmData);
 
             Growl.SuccessGlobal(new GrowlInfo { Message = "实体生成成功", WaitTime = 1, ShowDateTime = false });
             Process.Start(baseDirectoryPath);

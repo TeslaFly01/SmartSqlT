@@ -45,7 +45,7 @@
                         BeginningEdit="TableGrid_OnBeginningEdit"
                         CellEditEnding="TableGrid_OnCellEditEnding"
                         HeadersVisibility="All"
-                        ItemsSource="{Binding ColunmData}"
+                        ItemsSource="{Binding ObjectColumns}"
                         RowHeaderWidth="60"
                         SelectedCellsChanged="TableGrid_OnSelectedCellsChanged"
                         SelectionChanged="Handled_OnSelectionChanged"
