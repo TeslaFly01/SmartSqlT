@@ -471,7 +471,7 @@ namespace SmartCode.Framework.Exporter
             {
                 SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 try
                 {
@@ -483,7 +483,7 @@ namespace SmartCode.Framework.Exporter
                     }
                     SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
                 }
-                catch (Exception exx)
+                catch (Exception)
                 {
                     return false;
                 }

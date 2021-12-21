@@ -93,22 +93,15 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                try
+                IExporter exporter = new SqlServer2008Exporter();
+                var list = exporter.GetDatabases(dbConnectionString);
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    IExporter exporter = new SqlServer2008Exporter();
-                    var lsit = exporter.GetDatabases(dbConnectionString);
-                    Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        var DBase = lsit;
-                        SelectDatabase.ItemsSource = DBase;
-                        SelectDatabase.SelectedItem = lsit.FirstOrDefault(x => x.DbName == SelectedDataBase);
+                    var DBase = list;
+                    SelectDatabase.ItemsSource = DBase;
+                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase);
 
-                    }));
-                }
-                catch (Exception ex)
-                {
-
-                }
+                }));
             });
         }
 
