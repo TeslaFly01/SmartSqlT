@@ -161,7 +161,7 @@
                             <CheckBox
                                 Name="CheckIsGroup"
                                 Grid.Column="1"
-                                Margin="5,5,0,0"
+                                Margin="5,7,0,0"
                                 VerticalAlignment="Top"
                                 Click="CheckIsGroup_OnClick"
                                 Content="业务分组"
@@ -205,7 +205,7 @@
                                     <Setter Property="FontWeight" Value="{Binding FontWeight}" />
                                     <Setter Property="FontSize" Value="12" />
                                     <Setter Property="Visibility" Value="{Binding Visibility}" />
-                                    <Setter Property="Foreground" Value="#333444" />
+                                    <Setter Property="Foreground" Value="{Binding TextColor}" />
                                     <Setter Property="Cursor" Value="Hand" />
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">

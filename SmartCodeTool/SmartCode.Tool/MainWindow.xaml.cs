@@ -282,7 +282,7 @@ namespace SmartCode.Tool
                 IExporter exporter = new SqlServer2008Exporter();
                 Model model = exporter.Export(ConnectionString);
                 dataSource = model;
-                var textColor = "Black";
+                var textColor = "#333444";
                 #region 数据表
                 foreach (var table in model.Tables)
                 {
@@ -586,8 +586,13 @@ namespace SmartCode.Tool
                     }
                     else
                     {
-                        if (!itemList.Any())
+                        if (!itemList.Any(x => x.Children.Count > 0))
                         {
+                            NoDataAreaText.TipText = "暂无数据";
+                            if (isCompare)
+                            {
+                                NoDataAreaText.TipText = "暂无差异数据";
+                            }
                             NoDataText.Visibility = Visibility.Visible;
                         }
                         itemList.ForEach(obj =>
@@ -1020,7 +1025,13 @@ namespace SmartCode.Tool
                 {
                     CbTargetDatabase.ItemsSource = list;
                     CbTargetDatabase.DisplayMemberPath = "DbName";
-                    CbTargetDatabase.SelectedItem = SelectDatabase.SelectedItem;
+                    list.ForEach(x =>
+                    {
+                        if (x.DbName == ((DataBase)SelectDatabase.SelectedItem).DbName)
+                        {
+                            CbTargetDatabase.SelectedItem = x;
+                        }
+                    });
                 }));
             });
         }
