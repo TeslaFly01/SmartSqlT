@@ -1024,7 +1024,8 @@ namespace SmartCode.Tool
                     CbTargetDatabase.DisplayMemberPath = "DbName";
                     list.ForEach(x =>
                     {
-                        if (x.DbName == ((DataBase)SelectDatabase.SelectedItem).DbName)
+                        if (!(SelectDatabase.SelectedItem is DataBase selectDatabase)) return;
+                        if (x.DbName == selectDatabase.DbName)
                         {
                             CbTargetDatabase.SelectedItem = x;
                         }
@@ -1153,6 +1154,10 @@ namespace SmartCode.Tool
         /// <param name="e"></param>
         private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(ConnectionString))
+            {
+                return;
+            }
             var searchText = SearchMenu.Text.Trim();
             if (!string.IsNullOrEmpty(searchText))
             {

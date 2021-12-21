@@ -161,7 +161,7 @@
                             <CheckBox
                                 Name="CheckIsGroup"
                                 Grid.Column="1"
-                                Margin="5,7,0,0"
+                                Margin="13,7,0,0"
                                 VerticalAlignment="Top"
                                 Click="CheckIsGroup_OnClick"
                                 Content="业务分组"
@@ -242,7 +242,8 @@
                                         <TextBlock
                                             VerticalAlignment="Center"
                                             FontSize="12"
-                                            Text="{Binding DisplayName}" />
+                                            Text="{Binding DisplayName}"
+                                            ToolTip="{Binding DisplayName}" />
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
