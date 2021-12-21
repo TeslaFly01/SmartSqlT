@@ -32,7 +32,6 @@ namespace SmartCode.Tool.Views
     /// </summary>
     public partial class GroupManage : INotifyPropertyChanged
     {
-        private string _defaultDatabase = ConfigurationManager.AppSettings["defaultDatabase"];
         public event ChangeRefreshHandler ChangeRefreshEvent;
         public GroupManage()
         {
@@ -291,8 +290,7 @@ namespace SmartCode.Tool.Views
                 return;
             }
             //查找元数据
-            var sourceGroup = e.Data.GetData(typeof(ObjectGroup)) as ObjectGroup;
-            if (sourceGroup == null)
+            if (!(e.Data.GetData(typeof(ObjectGroup)) is ObjectGroup sourceGroup))
             {
                 return;
             }

@@ -101,7 +101,6 @@ namespace SmartCode.Tool
         public void LoadConnects()
         {
             dataBasesConfigs = ConfigurationManager.GetSection("dataBasesConfig") as List<DataBasesConfig>;
-            var list = new List<string>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = dataBasesConfigs;
             CbTargetConnect.ItemsSource = dataBasesConfigs;
@@ -579,7 +578,7 @@ namespace SmartCode.Tool
                                 {
                                     obj.Visibility = nameof(Visibility.Collapsed);
                                 }
-                                obj.DisplayName = obj.DisplayName + $"（{obj.Children.Count}）";
+                                obj.DisplayName += $"（{obj.Children.Count}）";
                             });
                         });
                         TreeViewData = itemParentList;
@@ -601,7 +600,7 @@ namespace SmartCode.Tool
                             {
                                 obj.Visibility = nameof(Visibility.Collapsed);
                             }
-                            obj.DisplayName = obj.DisplayName + $"（{obj.Children.Count}）";
+                            obj.DisplayName += $"（{obj.Children.Count}）";
                         });
                         TreeViewData = itemList;
                     }
@@ -957,8 +956,7 @@ namespace SmartCode.Tool
         {
             #region MyRegion
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            var objects = TreeViewTables.SelectedItem as PropertyNodeItem;
-            if (objects == null || objects.Type == ObjType.Group || objects.TextColor.Equals("Red"))
+            if (!(TreeViewTables.SelectedItem is PropertyNodeItem objects) || objects.Type == ObjType.Group || objects.TextColor.Equals("Red"))
             {
                 return;
             }
@@ -984,11 +982,10 @@ namespace SmartCode.Tool
                 return;
             }
 
-            var dic = new Dictionary<string, string>();
-            dic.Add("Type", "\ue605");
-            dic.Add("Table", "\ue6ac");
-            dic.Add("View", "\ue601");
-            dic.Add("Proc", "\ue6d2");
+            var dic = new Dictionary<string, string>
+            {
+                {"Type", "\ue605"}, {"Table", "\ue6ac"}, {"View", "\ue601"}, {"Proc", "\ue6d2"}
+            };
             var mainW = new MainW
             {
                 SelectedConnection = SelectendConnection,
@@ -1142,8 +1139,7 @@ namespace SmartCode.Tool
 
         private void MenuSelectedItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedObjects = TreeViewTables.SelectedItem as PropertyNodeItem;
-            if (selectedObjects == null || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
+            if (!(TreeViewTables.SelectedItem is PropertyNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
             {
                 return;
             }
@@ -1176,6 +1172,16 @@ namespace SmartCode.Tool
             var set = new SettingWindow();
             set.Owner = this;
             set.ShowDialog();
+        }
+
+        /// <summary>
+        /// 禁止水平滚动条自动滚动
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void EventSetter_OnHandler(object sender, RequestBringIntoViewEventArgs e)
+        {
+            e.Handled = true;
         }
     }
 }

@@ -330,9 +330,8 @@ namespace SmartCode.Tool.UserControl
                 var selectedCell = ((DataGrid)sender).SelectedCells[0];
                 //获取选中单元格数据
                 var selectedData = selectedCell.Column.GetCellContent(selectedCell.Item);
-                if (selectedData is TextBlock)
+                if (selectedData is TextBlock selectedText)
                 {
-                    var selectedText = (TextBlock)selectedData;
                     Clipboard.SetDataObject(selectedText.Text);
                 }
             }
@@ -377,8 +376,7 @@ namespace SmartCode.Tool.UserControl
         /// <param name="e"></param>
         private void Pagination_OnPageUpdated(object sender, FunctionEventArgs<int> e)
         {
-            var pageIndex = PaginationTable.PageIndex;
-            int sd = pageIndex;
+            //var pageIndex = PaginationTable.PageIndex;
         }
 
         /// <summary>

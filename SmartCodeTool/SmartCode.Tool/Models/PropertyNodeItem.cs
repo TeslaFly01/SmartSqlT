@@ -117,9 +117,6 @@ namespace SmartCode.Tool.Models
         /// </summary>
         private void CheckParentCheckState()
         {
-            List<PropertyNodeItem> checkedItems = new List<PropertyNodeItem>();
-            string checkedNames = string.Empty;
-            bool? _currentState = this.IsSelected;
             bool? _firstState = null;
             for (int i = 0; i < this.Children.Count(); i++)
             {
@@ -133,7 +130,6 @@ namespace SmartCode.Tool.Models
                     _firstState = null;
                 }
             }
-            if (_firstState != null) _currentState = _firstState;
             SetIsChecked(_firstState, false, true);
         }
     }

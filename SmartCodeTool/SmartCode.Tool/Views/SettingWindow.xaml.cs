@@ -41,7 +41,7 @@ namespace SmartCode.Tool.Views
             });
         }
 
-        private List<string> KeyList = new List<string> { "IsMultipleTab" };
+        private readonly List<string> KeyList = new List<string> { "IsMultipleTab" };
         /// <summary>
         /// 保存
         /// </summary>

@@ -20,9 +20,7 @@ namespace SmartCode.Framework.Exporter
             if (connectionString == null)
                 throw new ArgumentNullException("connectionString");
 
-            Model model = new Model();
-            model.Database = "SqlServer2008";
-
+            var model = new Model {Database = "SqlServer2008"};
             try
             {
                 model.Tables = this.GetTables(connectionString);
@@ -80,20 +78,22 @@ namespace SmartCode.Framework.Exporter
             {
                 try
                 {
-                    string id = dr.GetString(0);
-                    string displayName = dr.GetString(0);
-                    string name = dr.GetString(0);
-                    int objectId = dr.GetInt32(1);
-                    string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                    DateTime createDate = dr.GetDateTime(3);
-                    DateTime modifyDate = dr.GetDateTime(4);
+                    var id = dr.GetString(0);
+                    var displayName = dr.GetString(0);
+                    var name = dr.GetString(0);
+                    var objectId = dr.GetInt32(1);
+                    var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                    var createDate = dr.GetDateTime(3);
+                    var modifyDate = dr.GetDateTime(4);
 
-                    Table table = new Table(id, displayName, name, comment);
-                    table.OriginalName = name;
-                    table.Id = objectId.ToString();
-                    table.Comment = comment;
-                    table.CreateDate = createDate;
-                    table.ModifyDate = modifyDate;
+                    var table = new Table(id, displayName, name, comment)
+                    {
+                        OriginalName = name,
+                        Id = objectId.ToString(),
+                        Comment = comment,
+                        CreateDate = createDate,
+                        ModifyDate = modifyDate
+                    };
                     if (!tables.ContainsKey(id))
                     {
                         tables.Add(id, table);
@@ -156,20 +156,22 @@ namespace SmartCode.Framework.Exporter
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
-                string id = dr.GetString(0);
-                string displayName = dr.GetString(0);
-                string name = dr.GetString(0);
-                int objectId = dr.GetInt32(1);
-                string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                DateTime createDate = dr.GetDateTime(3);
-                DateTime modifyDate = dr.GetDateTime(4);
+                var id = dr.GetString(0);
+                var displayName = dr.GetString(0);
+                var name = dr.GetString(0);
+                var objectId = dr.GetInt32(1);
+                var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                var createDate = dr.GetDateTime(3);
+                var modifyDate = dr.GetDateTime(4);
 
-                View view = new View(id, displayName, name, comment);
-                view.OriginalName = name;
-                view.Id = objectId.ToString();
-                view.Comment = comment;
-                view.CreateDate = createDate;
-                view.ModifyDate = modifyDate;
+                var view = new View(id, displayName, name, comment)
+                {
+                    OriginalName = name,
+                    Id = objectId.ToString(),
+                    Comment = comment,
+                    CreateDate = createDate,
+                    ModifyDate = modifyDate
+                };
                 if (!views.ContainsKey(id))
                 {
                     views.Add(id, view);
@@ -235,12 +237,14 @@ namespace SmartCode.Framework.Exporter
                 DateTime createDate = dr.GetDateTime(3);
                 DateTime modifyDate = dr.GetDateTime(4);
 
-                Procedure proc = new Procedure(id, displayName, name, comment);
-                proc.OriginalName = name;
-                proc.Id = objectId.ToString();
-                proc.Comment = comment;
-                proc.CreateDate = createDate;
-                proc.ModifyDate = modifyDate;
+                var proc = new Procedure(id, displayName, name, comment)
+                {
+                    OriginalName = name,
+                    Id = objectId.ToString(),
+                    Comment = comment,
+                    CreateDate = createDate,
+                    ModifyDate = modifyDate
+                };
                 if (!procs.ContainsKey(id))
                 {
                     procs.Add(id, proc);
@@ -365,11 +369,6 @@ namespace SmartCode.Framework.Exporter
             return this.GetScripts(connectionString, sqlBuilder.ToString());
         }
 
-        private Columns GetKeys(int objectId, string connectionString)
-        {
-            return null;
-        }
-
         public Columns GetPrimaryKeys(int objectId, string connectionString, Columns columns)
         {
             StringBuilder sqlBuilder = new StringBuilder();
@@ -397,26 +396,26 @@ namespace SmartCode.Framework.Exporter
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
-                int id = dr.IsDBNull(1) ? 0 : dr.GetInt32(1);
-                string displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-                string name = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-                int length = dr.IsDBNull(3) ? 0 : dr.GetInt32(3);
-                bool identity = dr.IsDBNull(4) ? false : dr.GetBoolean(4);
-                bool isNullable = dr.IsDBNull(5) ? false : dr.GetBoolean(5);
-                //bool isComputed = dr.IsDBNull(6) ? false : dr.GetBoolean(6);
-                string dataType = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
-                string comment = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
-                string defaultValue = dr.IsDBNull(9) ? string.Empty : dr.GetString(9);
+                var id = dr.IsDBNull(1) ? 0 : dr.GetInt32(1);
+                var displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
+                var name = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
+                var length = dr.IsDBNull(3) ? 0 : dr.GetInt32(3);
+                var identity = !dr.IsDBNull(4) && dr.GetBoolean(4);
+                var isNullable = !dr.IsDBNull(5) && dr.GetBoolean(5);
+                var dataType = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
+                var comment = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
+                var defaultValue = dr.IsDBNull(9) ? string.Empty : dr.GetString(9);
 
-                Column column = new Column(id.ToString(), displayName, name, dataType, comment);
-                column.Length = length.ToString();
-                column.IsAutoIncremented = identity;
-                column.IsNullable = isNullable;
-                column.DefaultValue = defaultValue;
-                column.DataType = dataType;
-                column.OriginalName = name;
-                //column.IsComputed = isComputed;
-                column.Comment = comment;
+                var column = new Column(id.ToString(), displayName, name, dataType, comment)
+                {
+                    Length = length.ToString(),
+                    IsAutoIncremented = identity,
+                    IsNullable = isNullable,
+                    DefaultValue = defaultValue,
+                    DataType = dataType,
+                    OriginalName = name,
+                    Comment = comment
+                };
                 columns.Add(id.ToString(), column);
             }
             dr.Close();

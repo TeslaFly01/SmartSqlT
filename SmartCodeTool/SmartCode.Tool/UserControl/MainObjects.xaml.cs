@@ -167,7 +167,6 @@ namespace SmartCode.Tool.UserControl
         private void DisplayToolTip_MouseEnter(object sender, MouseEventArgs e)
         {
             var currCell = (DataGridCell)sender;
-            List<string> colList = new List<string> { "表名称", "视图名称", "存储过程名称" };
             if (currCell.Column.SortMemberPath.Equals("DisplayName"))
             {
                 var currObject = (PropertyNodeItem)currCell.DataContext;
@@ -184,9 +183,8 @@ namespace SmartCode.Tool.UserControl
                 var selectedCell = ((DataGrid)sender).SelectedCells[0];
                 //获取选中单元格数据
                 var selectedData = selectedCell.Column.GetCellContent(selectedCell.Item);
-                if (selectedData is TextBlock)
+                if (selectedData is TextBlock selectedText)
                 {
-                    var selectedText = (TextBlock)selectedData;
                     _cellEditValue = selectedText.Text;
                 }
             }
