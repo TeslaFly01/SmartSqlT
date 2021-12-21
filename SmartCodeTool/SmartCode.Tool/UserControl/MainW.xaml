@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
     <Grid>
+        <!--  单页面展示  -->
         <hc:TransitioningContentControl Name="GridSigle">
             <hc:SimplePanel>
                 <Border
@@ -92,6 +93,7 @@
                 </Border>
             </hc:SimplePanel>
         </hc:TransitioningContentControl>
+        <!--  多选项卡  -->
         <Grid Name="GridMultiple">
             <local:MainColumns x:Name="MainColumns" />
             <local:MainObjects x:Name="MainObjects" Visibility="Collapsed" />

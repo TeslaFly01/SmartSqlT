@@ -978,6 +978,12 @@ namespace SmartCode.Tool
                 MainTabW.SelectedItem = curItem;
                 return;
             }
+
+            var dic = new Dictionary<string, string>();
+            dic.Add("Type", "\ue605");
+            dic.Add("Table", "\ue6ac");
+            dic.Add("View", "\ue601");
+            dic.Add("Proc", "\ue6d2");
             var mainW = new MainW
             {
                 SelectedConnection = SelectendConnection,
@@ -988,27 +994,12 @@ namespace SmartCode.Tool
             var tabItem = new MainTabWModel
             {
                 DisplayName = objects.DisplayName,
+                Icon = dic[objects.Type],
                 MainW = mainW
             };
             TabItemData.Insert(0, tabItem);
             MainTabW.SelectedItem = TabItemData.First();
             #endregion
-        }
-
-        private void TabItem_Closed(object sender, EventArgs e)
-        {
-            MainTabW.ItemsSource = null;
-            if (TabItemData.Any())
-            {
-                MainTabW.SelectedItem = TabItemData.First();
-            }
-            MainTabW.ItemsSource = TabItemData;
-        }
-
-        private void TabItem_Closing(object sender, EventArgs e)
-        {
-            var curTabItem = (MainTabWModel)sender;
-            TabItemData.Remove(curTabItem);
         }
 
         /// <summary>
@@ -1147,7 +1138,7 @@ namespace SmartCode.Tool
             }
             Clipboard.SetDataObject(selectedObjects.DisplayName);
         }
-        
+
         /// <summary>
         /// 刷新菜单列表
         /// </summary>
