@@ -964,6 +964,10 @@ namespace SmartCode.Tool
             var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
             if (!isMultipleTab)
             {
+                if (TabItemData.Any())
+                {
+                    TabItemData.Clear();
+                }
                 MainW.Visibility = Visibility.Visible;
                 MainTabW.Visibility = Visibility.Collapsed;
                 MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;

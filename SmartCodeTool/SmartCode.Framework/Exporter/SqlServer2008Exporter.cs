@@ -72,6 +72,7 @@ namespace SmartCode.Framework.Exporter
                               LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
                               AND minor_id = 0
                               WHERE sy.type = 'U'
+							  AND sy.name <> 'sysdiagrams'
                               ORDER BY sy.name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
@@ -192,6 +193,7 @@ namespace SmartCode.Framework.Exporter
                                      a.create_date,
                                      a.modify_date
                               FROM sys.procedures a
+							  LEFT JOIN sys.sql_modules m ON m.object_id=a.object_id
                               LEFT JOIN
                               (
                                   SELECT sy.name,
@@ -225,6 +227,8 @@ namespace SmartCode.Framework.Exporter
                                            END
                             ) b ON a.object_id = b.object_id
                             WHERE a.is_ms_shipped = 0  
+							AND m.execute_as_principal_id IS NULL
+							AND a.name <> 'sp_upgraddiagrams'
                             ORDER BY a.name;";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
