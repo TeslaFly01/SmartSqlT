@@ -81,9 +81,6 @@
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
-    <Compile Include="Test.xaml.cs">
-      <DependentUpon>Test.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\BaseUserControl.cs" />
     <Compile Include="UserControl\Controls\NoDataArea.xaml.cs">
       <DependentUpon>NoDataArea.xaml</DependentUpon>
@@ -104,6 +101,9 @@
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectManage.xaml.cs">
+      <DependentUpon>ConnectManage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupManage.xaml.cs">
       <DependentUpon>GroupManage.xaml</DependentUpon>
@@ -176,10 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Test.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Themes\BlueBrushsExtended.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -221,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\AboutWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ConnectManage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -280,11 +280,16 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="favicon.ico" />
-    <Resource Include="Img\dataBase.ico">
+    <Resource Include="Resources\Img\dataBase.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Resources\cloud.png" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Img\mssql.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

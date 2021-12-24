@@ -42,7 +42,7 @@
                             <Image
                                 Width="11"
                                 Height="15"
-                                Source="/SmartCode.Tool;component/Img/dataBase.ico" />
+                                Source="/SmartCode.Tool;component/Resources/Img/dataBase.ico" />
                             <TextBlock
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Center"

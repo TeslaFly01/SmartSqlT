@@ -95,6 +95,7 @@
     <Compile Include="SQLite.cs" />
     <Compile Include="SQLiteAsync.cs" />
     <Compile Include="SQLiteHelper.cs" />
+    <Compile Include="SqliteModel\Connects.cs" />
     <Compile Include="SqliteModel\ObjectGroup.cs" />
     <Compile Include="SqliteModel\SObjects.cs" />
     <Compile Include="SqliteModel\SystemSet.cs" />

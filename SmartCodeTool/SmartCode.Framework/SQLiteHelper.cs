@@ -22,7 +22,9 @@ namespace SmartCode.Framework
                 Directory.CreateDirectory(BasePath);
             }
             db = new SQLiteConnection(connstr);
-            db.CreateTable<ObjectGroup>();//表已存在不会重复创建
+            //表已存在不会重复创建
+            db.CreateTable<Connects>();
+            db.CreateTable<ObjectGroup>();
             db.CreateTable<SObjects>();
             db.CreateTable<SystemSet>();
             Init();

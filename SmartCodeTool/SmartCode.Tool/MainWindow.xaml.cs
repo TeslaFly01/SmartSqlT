@@ -1192,5 +1192,17 @@ namespace SmartCode.Tool
         {
             e.Handled = true;
         }
+
+        /// <summary>
+        /// 新建连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            var connect = new ConnectManage();
+            connect.Owner = this;
+            connect.ShowDialog();
+        }
     }
 }
