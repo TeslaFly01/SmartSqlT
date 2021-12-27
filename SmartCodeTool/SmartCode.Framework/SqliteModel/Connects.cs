@@ -44,9 +44,14 @@ namespace SmartCode.Framework.SqliteModel
         /// </summary>
         public string DefaultDatabase { get; set; }
         /// <summary>
-        /// 根据当前连接信息生成连接字符串（不映射数据库)
+        /// Master数据库连接，查询系统库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={Password};";
+        public string DbMasterConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={Password};";
+        /// <summary>
+        /// 默认数据库连接，查询默认数据库相关信息（不映射数据库)
+        /// </summary>
+        [Ignore]
+        public string DbDefaultConnectString => $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={Password};";
     }
 }

@@ -58,7 +58,6 @@ namespace SmartCode.Tool
         private static readonly string PROCICON = "\ue6d2";
         private string ConnectionString = "";
         private ConnectConfigs SelectendConnection = null;
-        private string _defaultDatabase = ConfigurationManager.AppSettings["defaultDatabase"];
 
         public Model dataSource = new Model();
         public List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
@@ -101,7 +100,6 @@ namespace SmartCode.Tool
         {
             var sqLiteHelper = new SQLiteHelper();
             var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
-            //dataBasesConfigs = ConfigurationManager.GetSection("dataBasesConfig") as List<DataBasesConfig>;
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
             CbTargetConnect.ItemsSource = connectConfigs;
@@ -123,20 +121,34 @@ namespace SmartCode.Tool
         {
             var menuItem = (MenuItem)sender;
             var connectConfig = (ConnectConfigs)menuItem.DataContext;
+            SwitchConnect(connectConfig);
+        }
+
+        /// <summary>
+        /// 切换连接
+        /// </summary>
+        /// <param name="connectConfig"></param>
+        public void SwitchConnect(ConnectConfigs connectConfig)
+        {
             LoadingLine.Visibility = Visibility.Visible;
-            ConnectionString = connectConfig.DbConnectString;
+            ConnectionString = connectConfig.DbMasterConnectString;
             SwitchMenu.Header = connectConfig.ConnectName;
             SelectendConnection = connectConfig;
             try
             {
                 IExporter exporter = new SqlServer2008Exporter();
-                var lsit = exporter.GetDatabases(ConnectionString);
-                DBase = lsit;
+                var list = exporter.GetDatabases(ConnectionString);
+                DBase = list;
                 SelectDatabase.ItemsSource = DBase;
-                ConnectionString = ConnectionString.Replace("master", _defaultDatabase);
-                HidSelectDatabase.Text = _defaultDatabase;
-                SelectDatabase.SelectedItem = lsit.FirstOrDefault(x => x.DbName == _defaultDatabase);
+                ConnectionString = connectConfig.DbDefaultConnectString;
+                HidSelectDatabase.Text = connectConfig.DefaultDatabase;
+                SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
                 SearchMenu.Text = string.Empty;
+                var sqLiteHelper = new SQLiteHelper();
+                var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+                SwitchMenu.ItemsSource = null;
+                SwitchMenu.ItemsSource = connectConfigs;
+                CbTargetConnect.ItemsSource = connectConfigs;
             }
             catch (Exception ex)
             {
@@ -1202,6 +1214,7 @@ namespace SmartCode.Tool
         {
             var connect = new ConnectManage();
             connect.Owner = this;
+            connect.ChangeRefreshEvent += SwitchConnect;
             connect.ShowDialog();
         }
     }

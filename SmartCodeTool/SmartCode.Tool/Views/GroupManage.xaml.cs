@@ -82,7 +82,7 @@ namespace SmartCode.Tool.Views
             Title = $"{Connection.ConnectName} - 分组管理";
             var conn = Connection;
             var selectDataBase = SelectedDataBase;
-            var dbConnectionString = conn.DbConnectString.Replace(selectDataBase, "master");
+            var dbConnectionString = conn.DbMasterConnectString;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();

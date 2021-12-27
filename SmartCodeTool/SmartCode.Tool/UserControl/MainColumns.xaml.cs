@@ -117,7 +117,7 @@ namespace SmartCode.Tool.UserControl
             NoDataText.Visibility = Visibility.Collapsed;
             var selectedObjct = SelectedObject;
             var selectedConnection = SelectedConnection;
-            var dbConnectionString = selectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
+            var dbConnectionString = selectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
             if (selectedObjct.Type == ObjType.Table || selectedObjct.Type == ObjType.View)
             {
                 SearchColumns.Text = string.Empty;
@@ -228,7 +228,7 @@ namespace SmartCode.Tool.UserControl
             if (selectedItem == TabCode)
             {
                 UTabCode.SelectedDataBase = SelectedDataBase.DbName;
-                UTabCode.ConnString = SelectedConnection.DbConnectString;
+                UTabCode.ConnString = SelectedConnection.DbMasterConnectString;
                 UTabCode.SelectedObject = SelectedObject;
                 UTabCode.SelectedTableColunms = SourceColunmData;
             }
@@ -306,7 +306,7 @@ namespace SmartCode.Tool.UserControl
                         ((TextBox)e.EditingElement).Text = _cellEditValue;
                         return;
                     }
-                    var dbConnectionString = SelectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
+                    var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
                     IExporter exporter = new SqlServer2008Exporter();
                     var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, selectItem.Name, newValue);
                     if (!flag)
@@ -509,7 +509,7 @@ namespace SmartCode.Tool.UserControl
         {
             LoadingLineTableData.Visibility = Visibility.Visible;
             NoDataTextExt.Visibility = Visibility.Collapsed;
-            var connectionString = SelectedConnection.DbConnectString;
+            var connectionString = SelectedConnection.DbMasterConnectString;
             Task.Run(() =>
             {
                 DataSet dataSet = exporter.GetDataSet(connectionString, objects.DisplayName, strWhere);

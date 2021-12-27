@@ -215,7 +215,7 @@ namespace SmartCode.Tool.UserControl
                             case ObjType.View: type = "view"; break;
                             case ObjType.Proc: type = "procedure"; break;
                         }
-                        var dbConnectionString = SelectedConnection.DbConnectString.Replace("master", SelectedDataBase.DbName);
+                        var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
                         IExporter exporter = new SqlServer2008Exporter();
                         exporter.UpdateComment(dbConnectionString, type, selectItem.DisplayName, newValue, "");
                     }

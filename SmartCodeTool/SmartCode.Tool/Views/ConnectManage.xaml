@@ -173,8 +173,7 @@
                             Padding="20,0,20,0"
                             Click="BtnTestConnect_OnClick"
                             Content="测试连接"
-                            Cursor="Hand"
-                            Style="{StaticResource ButtonPrimary}" />
+                            Cursor="Hand" />
                     </hc:UniformSpacingPanel>
                 </hc:SimpleStackPanel>
                 <hc:SimpleStackPanel

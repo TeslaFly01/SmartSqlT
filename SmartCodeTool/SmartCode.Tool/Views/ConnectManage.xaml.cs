@@ -26,7 +26,7 @@ using SmartCode.Tool.Annotations;
 namespace SmartCode.Tool.Views
 {
     //定义委托
-    public delegate void ConnectChangeRefreshHandler();
+    public delegate void ConnectChangeRefreshHandler(ConnectConfigs connectConfig);
     /// <summary>
     /// GroupManage.xaml 的交互逻辑
     /// </summary>
@@ -130,10 +130,11 @@ namespace SmartCode.Tool.Views
             var password = TextServerPassword.Password.Trim();
             var defaultDataBase = TextDefaultDataBase.Text.Trim();
             var sqLiteHelper = new SQLiteHelper();
+            var connectConfig = new ConnectConfigs();
             if (connectId > 0)
             {
-                var selConnect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                if (selConnect == null)
+                connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                if (connectConfig == null)
                 {
                     Growl.Warning(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
                     return;
@@ -144,14 +145,14 @@ namespace SmartCode.Tool.Views
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
-                selConnect.ConnectName = connectName;
-                selConnect.ServerAddress = serverAddress;
-                selConnect.ServerPort = Convert.ToInt32(serverPort);
-                selConnect.UserName = userName;
-                selConnect.Password = password;
-                selConnect.DefaultDatabase = defaultDataBase;
-                selConnect.Authentication = authentication;
-                sqLiteHelper.db.Update(selConnect);
+                connectConfig.ConnectName = connectName;
+                connectConfig.ServerAddress = serverAddress;
+                connectConfig.ServerPort = Convert.ToInt32(serverPort);
+                connectConfig.UserName = userName;
+                connectConfig.Password = password;
+                connectConfig.DefaultDatabase = defaultDataBase;
+                connectConfig.Authentication = authentication;
+                sqLiteHelper.db.Update(connectConfig);
             }
             else
             {
@@ -161,7 +162,7 @@ namespace SmartCode.Tool.Views
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
-                sqLiteHelper.db.Insert(new ConnectConfigs()
+                connectConfig = new ConnectConfigs()
                 {
                     ConnectName = connectName,
                     ServerAddress = serverAddress,
@@ -171,12 +172,9 @@ namespace SmartCode.Tool.Views
                     Password = password,
                     CreateDate = 1212,
                     DefaultDatabase = defaultDataBase
-                });
+                };
+                sqLiteHelper.db.Insert(connectConfig);
             }
-            //BtnDelete.Visibility = Visibility.Collapsed;
-            //HidId.Text = "0";
-            //TextGourpName.Text = "";
-            //BtnSave.IsEnabled = false;
             Task.Run(() =>
             {
                 var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
@@ -184,10 +182,11 @@ namespace SmartCode.Tool.Views
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
-                    //if (ChangeRefreshEvent != null)
-                    //{
-                    //    ChangeRefreshEvent();
-                    //}
+                    if (ChangeRefreshEvent != null)
+                    {
+                        ChangeRefreshEvent(connectConfig);
+                        this.Close();
+                    }
                 });
             });
         }
@@ -218,7 +217,6 @@ namespace SmartCode.Tool.Views
             Task.Run(() =>
             {
                 sqLiteHelper.db.Delete<ConnectConfigs>(connectId);
-
                 var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
                    ToList();
                 Dispatcher.Invoke(() =>
