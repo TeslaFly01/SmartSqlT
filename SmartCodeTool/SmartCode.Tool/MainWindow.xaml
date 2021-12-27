@@ -297,9 +297,9 @@
                                     HorizontalContentAlignment="Left"
                                     hc:InfoElement.Placeholder="目标连接"
                                     Cursor="Hand"
-                                    DisplayMemberPath="DbName"
+                                    DisplayMemberPath="ConnectName"
                                     IsTextSearchEnabled="True"
-                                    SelectedValuePath="DbConnectString"
+                                    SelectedValuePath="DbMassterConnectString"
                                     SelectionChanged="CbTargetConnect_OnSelectionChanged"
                                     Style="{StaticResource ComboBoxExtend}" />
                             </Grid>

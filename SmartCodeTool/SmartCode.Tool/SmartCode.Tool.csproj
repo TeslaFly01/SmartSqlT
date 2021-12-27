@@ -127,7 +127,6 @@
     </Compile>
     <Compile Include="Helper\ExportModelHelper.cs" />
     <Compile Include="Helper\HighlightingProvider.cs" />
-    <Compile Include="Helper\SynchroConfigSerializerSectionHandler.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

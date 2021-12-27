@@ -40,29 +40,6 @@ namespace SmartCode.Tool.Views
         }
 
         #region DependencyProperty
-        public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(DataBasesConfig), typeof(ConnectManage), new PropertyMetadata(default(DataBasesConfig)));
-        public DataBasesConfig Connection
-        {
-            get => (DataBasesConfig)GetValue(ConnectionProperty);
-            set => SetValue(ConnectionProperty, value);
-        }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(ConnectManage), new PropertyMetadata(default(string)));
-        public string SelectedDataBase
-        {
-            get => (string)GetValue(SelectedDataBaseProperty);
-            set => SetValue(SelectedDataBaseProperty, value);
-        }
-
-        public new static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-            "Title", typeof(string), typeof(ConnectManage), new PropertyMetadata(default(string)));
-        public new string Title
-        {
-            get => (string)GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
-        }
 
         public static readonly DependencyProperty DataListProperty = DependencyProperty.Register(
             "DataList", typeof(List<ConnectConfigs>), typeof(ConnectManage), new PropertyMetadata(default(List<ConnectConfigs>)));

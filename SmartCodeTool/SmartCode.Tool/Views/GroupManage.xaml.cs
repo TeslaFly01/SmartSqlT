@@ -72,7 +72,7 @@ namespace SmartCode.Tool.Views
             set
             {
                 SetValue(DataListProperty, value);
-                OnPropertyChanged("DataList");
+                OnPropertyChanged(nameof(DataList));
             }
         }
         #endregion

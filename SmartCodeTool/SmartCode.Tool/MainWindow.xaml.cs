@@ -1028,11 +1028,11 @@ namespace SmartCode.Tool
         private void CbTargetConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var comboBoxItem = (ComboBox)sender;
-            var dataBase = (DataBasesConfig)comboBoxItem.SelectedItem;
+            var dataBase = (ConnectConfigs)comboBoxItem.SelectedItem;
             Task.Run(() =>
             {
                 IExporter exporter = new SqlServer2008Exporter();
-                var list = exporter.GetDatabases(dataBase.DbConnectString);
+                var list = exporter.GetDatabases(dataBase.DbMasterConnectString);
 
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -1063,7 +1063,7 @@ namespace SmartCode.Tool
                 Growl.Warning(new GrowlInfo { Message = $"请选择源数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var targetConnect = (DataBasesConfig)CbTargetConnect.SelectedItem;
+            var targetConnect = (ConnectConfigs)CbTargetConnect.SelectedItem;
             var targetData = (DataBase)CbTargetDatabase.SelectedItem;
             if (targetConnect == null || targetData == null || string.IsNullOrEmpty(targetData.DbName))
             {
@@ -1073,7 +1073,7 @@ namespace SmartCode.Tool
             IExporter exporter = new SqlServer2008Exporter();
             LoadingLine.Visibility = Visibility.Visible;
 
-            Model model = exporter.Export(targetConnect.DbConnectString.Replace("master", targetData.DbName));
+            Model model = exporter.Export(targetConnect.DbMasterConnectString.Replace("master", targetData.DbName));
             MenuBind(true, model);
 
             #endregion
