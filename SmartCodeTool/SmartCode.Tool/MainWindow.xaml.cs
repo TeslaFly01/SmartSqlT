@@ -227,7 +227,7 @@ namespace SmartCode.Tool
                 if (isGroup)
                 {
                     currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
-                        a.ConnectionName == selectConnection.ConnectName &&
+                        a.ConnectId == selectConnection.ID &&
                         a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                     if (currGroups.Any())
                     {
@@ -280,7 +280,7 @@ namespace SmartCode.Tool
                     }
                     currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
                                    join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
-                                   where a.ConnectionName == selectConnection.ConnectName &&
+                                   where a.ConnectId == selectConnection.ID &&
                                          a.DataBaseName == selectDataBase
                                    select new SObjectDTO
                                    {
@@ -682,7 +682,7 @@ namespace SmartCode.Tool
             if (isGroup)
             {
                 currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
-                    a.ConnectionName == selectConnection.ConnectName &&
+                    a.ConnectId == selectConnection.ID &&
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
                 {
@@ -739,7 +739,7 @@ namespace SmartCode.Tool
                 }
                 currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
                                join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
-                               where a.ConnectionName == selectConnection.ConnectName &&
+                               where a.ConnectId == selectConnection.ID &&
                                      a.DataBaseName == selectDataBase
                                select new SObjectDTO
                                {

@@ -24,9 +24,9 @@ namespace SmartCode.Framework.SqliteModel
         /// </summary>
         public string ObjectName { get; set; }
         /// <summary>
-        /// 所属连接名称
+        /// 所属连接ID
         /// </summary>
-        public string ConnectionName { get; set; }
+        public int ConnectId { get; set; }
         /// <summary>
         /// 所属数据库名称
         /// </summary>

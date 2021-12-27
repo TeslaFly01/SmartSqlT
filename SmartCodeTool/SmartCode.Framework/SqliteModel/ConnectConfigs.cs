@@ -35,10 +35,11 @@ namespace SmartCode.Framework.SqliteModel
         /// 密码
         /// </summary>
         public string Password { get; set; }
+
         /// <summary>
         /// 创建时间
         /// </summary>
-        public int CreateDate { get; set; }
+        public DateTime CreateDate { get; set; } = DateTime.Now;
         /// <summary>
         /// 默认数据库
         /// </summary>

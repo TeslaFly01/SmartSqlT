@@ -147,7 +147,7 @@ namespace SmartCode.Tool.Views
                     Authentication = authentication,
                     UserName = userName,
                     Password = password,
-                    CreateDate = 1212,
+                    CreateDate = DateTime.Now,
                     DefaultDatabase = defaultDataBase
                 };
                 sqLiteHelper.db.Insert(connectConfig);

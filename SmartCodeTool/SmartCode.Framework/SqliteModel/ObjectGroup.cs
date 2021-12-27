@@ -12,9 +12,9 @@ namespace SmartCode.Framework.SqliteModel
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         /// <summary>
-        /// 所属连接名称
+        /// 连接ID
         /// </summary>
-        public string ConnectionName { get; set; }
+        public int ConnectId { get; set; }
         /// <summary>
         /// 所属数据库名
         /// </summary>
