@@ -37,7 +37,7 @@ namespace SmartCode.Tool.UserControl
             "SelectedDataBase", typeof(DataBase), typeof(MainW), new PropertyMetadata(default(DataBase)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(DataBasesConfig), typeof(MainW), new PropertyMetadata(default(DataBasesConfig)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(MainW), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty MainTitleProperty = DependencyProperty.Register(
             "MainTitle", typeof(string), typeof(MainW), new PropertyMetadata(default(string)));
@@ -61,9 +61,9 @@ namespace SmartCode.Tool.UserControl
         /// <summary>
         /// 当前数据连接
         /// </summary>
-        public DataBasesConfig SelectedConnection
+        public ConnectConfigs SelectedConnection
         {
-            get => (DataBasesConfig)GetValue(SelectedConnectionProperty);
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set
             {
                 SetValue(SelectedConnectionProperty, value);

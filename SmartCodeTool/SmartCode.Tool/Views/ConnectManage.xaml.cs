@@ -41,7 +41,7 @@ namespace SmartCode.Tool.Views
 
         #region DependencyProperty
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(DataBasesConfig), typeof(GroupManage), new PropertyMetadata(default(DataBasesConfig)));
+            "Connection", typeof(DataBasesConfig), typeof(ConnectManage), new PropertyMetadata(default(DataBasesConfig)));
         public DataBasesConfig Connection
         {
             get => (DataBasesConfig)GetValue(ConnectionProperty);
@@ -49,7 +49,7 @@ namespace SmartCode.Tool.Views
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(GroupManage), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(ConnectManage), new PropertyMetadata(default(string)));
         public string SelectedDataBase
         {
             get => (string)GetValue(SelectedDataBaseProperty);
@@ -57,7 +57,7 @@ namespace SmartCode.Tool.Views
         }
 
         public new static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
-            "Title", typeof(string), typeof(GroupManage), new PropertyMetadata(default(string)));
+            "Title", typeof(string), typeof(ConnectManage), new PropertyMetadata(default(string)));
         public new string Title
         {
             get => (string)GetValue(TitleProperty);
@@ -65,10 +65,10 @@ namespace SmartCode.Tool.Views
         }
 
         public static readonly DependencyProperty DataListProperty = DependencyProperty.Register(
-            "DataList", typeof(List<Connects>), typeof(ConnectManage), new PropertyMetadata(default(List<Connects>)));
-        public List<Connects> DataList
+            "DataList", typeof(List<ConnectConfigs>), typeof(ConnectManage), new PropertyMetadata(default(List<ConnectConfigs>)));
+        public List<ConnectConfigs> DataList
         {
-            get => (List<Connects>)GetValue(DataListProperty);
+            get => (List<ConnectConfigs>)GetValue(DataListProperty);
             set
             {
                 SetValue(DataListProperty, value);
@@ -82,7 +82,7 @@ namespace SmartCode.Tool.Views
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<Connects>().ToList();
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
@@ -96,11 +96,11 @@ namespace SmartCode.Tool.Views
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
-                var connect = (Connects)listBox.SelectedItems[0];
+                var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 HidId.Text = connect.ID.ToString();
                 TextConnectName.Text = connect.ConnectName;
                 TextServerAddress.Text = connect.ServerAddress;
-                TextServerPort.Text = connect.ServerPort.ToString();
+                TextServerPort.Value = connect.ServerPort;
                 TextServerName.Text = connect.UserName;
                 TextServerPassword.Password = connect.Password;
                 ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
@@ -117,53 +117,55 @@ namespace SmartCode.Tool.Views
         /// <param name="e"></param>
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
-            //var groupName = TextGourpName.Text.Trim();
-            //if (string.IsNullOrEmpty(groupName))
-            //{
-            //    Growl.Warning(new GrowlInfo { Message = $"请填写分组名", WaitTime = 1, ShowDateTime = false });
-            //    return;
-            //}
-            //var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
-            var sqLiteHelper = new SQLiteHelper();
+            if (!CheckConnectForm())
+            {
+                return;
+            }
             var connectId = Convert.ToInt32(HidId.Text);
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = Convert.ToInt32(TextServerPort.Text.Trim());
+            var serverPort = TextServerPort.Value;
             var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
             var userName = TextServerName.Text.Trim();
             var password = TextServerPassword.Password.Trim();
             var defaultDataBase = TextDefaultDataBase.Text.Trim();
+            var sqLiteHelper = new SQLiteHelper();
             if (connectId > 0)
             {
-                var connect = sqLiteHelper.db.Table<Connects>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
-                if (connect != null)
+                var selConnect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                if (selConnect == null)
+                {
+                    Growl.Warning(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
+                    return;
+                }
+                var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
+                if (connectAny != null)
                 {
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
-                var selectedConnect = (Connects)ListConnects.SelectedItems[0];
-                selectedConnect.ConnectName = connectName;
-                selectedConnect.ServerAddress = serverAddress;
-                selectedConnect.ServerPort = serverPort;
-                selectedConnect.UserName = userName;
-                selectedConnect.Password = password;
-                selectedConnect.DefaultDatabase = defaultDataBase;
-                selectedConnect.Authentication = authentication;
-                sqLiteHelper.db.Update(selectedConnect);
+                selConnect.ConnectName = connectName;
+                selConnect.ServerAddress = serverAddress;
+                selConnect.ServerPort = Convert.ToInt32(serverPort);
+                selConnect.UserName = userName;
+                selConnect.Password = password;
+                selConnect.DefaultDatabase = defaultDataBase;
+                selConnect.Authentication = authentication;
+                sqLiteHelper.db.Update(selConnect);
             }
             else
             {
-                var connect = sqLiteHelper.db.Table<Connects>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
+                var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
                 if (connect != null)
                 {
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
-                sqLiteHelper.db.Insert(new Connects()
+                sqLiteHelper.db.Insert(new ConnectConfigs()
                 {
                     ConnectName = connectName,
                     ServerAddress = serverAddress,
-                    ServerPort = serverPort,
+                    ServerPort = Convert.ToInt32(serverPort),
                     Authentication = authentication,
                     UserName = userName,
                     Password = password,
@@ -177,7 +179,7 @@ namespace SmartCode.Tool.Views
             //BtnSave.IsEnabled = false;
             Task.Run(() =>
             {
-                var datalist = sqLiteHelper.db.Table<Connects>().
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
                     ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -215,9 +217,9 @@ namespace SmartCode.Tool.Views
             }
             Task.Run(() =>
             {
-                sqLiteHelper.db.Delete<Connects>(connectId);
-                
-                var datalist = sqLiteHelper.db.Table<Connects>().
+                sqLiteHelper.db.Delete<ConnectConfigs>(connectId);
+
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
                    ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -259,7 +261,7 @@ namespace SmartCode.Tool.Views
             HidId.Text = "0";
             TextConnectName.Text = "";
             TextServerAddress.Text = "";
-            TextServerPort.Text = "1433";
+            TextServerPort.Value = 1433;
             TextServerName.Text = "";
             TextServerPassword.Password = "";
             ComboAuthentication.SelectedItem = SQLServer;
@@ -269,20 +271,6 @@ namespace SmartCode.Tool.Views
             BtnTestConnect.IsEnabled = false;
         }
 
-        private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            BtnDelete.Visibility = Visibility.Collapsed;
-            Task.Run(() =>
-            {
-                var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<Connects>().ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    DataList = datalist;
-                });
-            });
-        }
-
         /// <summary>
         /// 文本框实时监测
         /// </summary>
@@ -290,7 +278,7 @@ namespace SmartCode.Tool.Views
         /// <param name="e"></param>
         private void Text_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(TextConnectName.Text.Trim())&&!string.IsNullOrEmpty(TextServerAddress.Text.Trim())&&!string.IsNullOrEmpty(TextServerPort.Text)&&!string.IsNullOrEmpty(TextServerName.Text.Trim())&&!string.IsNullOrEmpty(TextServerPassword.Password.Trim())&&!string.IsNullOrEmpty(TextDefaultDataBase.Text.Trim()))
+            if (!string.IsNullOrEmpty(TextConnectName.Text.Trim()) && !string.IsNullOrEmpty(TextServerAddress.Text.Trim()) && !string.IsNullOrEmpty(TextServerName.Text.Trim()) && !string.IsNullOrEmpty(TextServerPassword.Password.Trim()) && !string.IsNullOrEmpty(TextDefaultDataBase.Text.Trim()))
             {
                 BtnConnect.IsEnabled = true;
                 BtnTestConnect.IsEnabled = true;
@@ -304,11 +292,97 @@ namespace SmartCode.Tool.Views
         /// <param name="e"></param>
         private void TextServerPassword_OnPasswordChanged(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(TextConnectName.Text.Trim()) && !string.IsNullOrEmpty(TextServerAddress.Text.Trim()) && !string.IsNullOrEmpty(TextServerPort.Text) && !string.IsNullOrEmpty(TextServerName.Text.Trim()) && !string.IsNullOrEmpty(TextServerPassword.Password.Trim()) && !string.IsNullOrEmpty(TextDefaultDataBase.Text.Trim()))
+            if (!string.IsNullOrEmpty(TextConnectName.Text.Trim()) && !string.IsNullOrEmpty(TextServerAddress.Text.Trim()) && !string.IsNullOrEmpty(TextServerName.Text.Trim()) && !string.IsNullOrEmpty(TextServerPassword.Password.Trim()) && !string.IsNullOrEmpty(TextDefaultDataBase.Text.Trim()))
             {
                 BtnConnect.IsEnabled = true;
                 BtnTestConnect.IsEnabled = true;
             }
+        }
+
+        /// <summary>
+        /// 校验表单数据
+        /// </summary>
+        private bool CheckConnectForm()
+        {
+            #region MyRegion
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
+            var defaultDataBase = TextDefaultDataBase.Text.Trim();
+            if (string.IsNullOrEmpty(connectName))
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
+                return false;
+            }
+            if (string.IsNullOrEmpty(serverAddress))
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
+                return false;
+            }
+            if (serverPort < 1)
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
+                return false;
+            }
+            if (string.IsNullOrEmpty(userName))
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
+                return false;
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
+                return false;
+            }
+            if (string.IsNullOrEmpty(defaultDataBase))
+            {
+                Growl.Warning(new GrowlInfo {Message = $"请填写默认数据库", WaitTime = 1, ShowDateTime = false});
+                return false;
+            }
+            return true;
+            #endregion
+        }
+
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnTestConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!CheckConnectForm())
+            {
+                return;
+            }
+            var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
+            PageLoading.Visibility = Visibility.Visible;
+            BtnTestConnect.IsEnabled = false;
+            Task.Run(() =>
+            {
+                try
+                {
+                    IExporter exporter = new SqlServer2008Exporter();
+                    exporter.GetDatabases(connectionString);
+                    Dispatcher.Invoke(() =>
+                    {
+                        PageLoading.Visibility = Visibility.Collapsed;
+                        BtnTestConnect.IsEnabled = true;
+                        Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        PageLoading.Visibility = Visibility.Collapsed;
+                        BtnTestConnect.IsEnabled = true;
+                        Growl.Warning(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
+                    });
+                }
+            });
         }
     }
 }

@@ -7,7 +7,7 @@ using SQLite;
 
 namespace SmartCode.Framework.SqliteModel
 {
-    public class Connects
+    public class ConnectConfigs
     {
         [PrimaryKey, AutoIncrement]
         public int ID { get; set; }
@@ -43,5 +43,10 @@ namespace SmartCode.Framework.SqliteModel
         /// 默认数据库
         /// </summary>
         public string DefaultDatabase { get; set; }
+        /// <summary>
+        /// 根据当前连接信息生成连接字符串（不映射数据库)
+        /// </summary>
+        [Ignore]
+        public string DbConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={Password};";
     }
 }

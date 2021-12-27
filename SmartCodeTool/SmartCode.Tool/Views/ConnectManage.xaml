@@ -118,14 +118,15 @@
                             Grid.Column="1"
                             Margin="0,65,0,20"
                             Text="端口" />
-                        <TextBox
+                        <hc:NumericUpDown
                             Name="TextServerPort"
                             Grid.Column="2"
                             Height="30"
                             Margin="0,60,20,20"
                             VerticalAlignment="Top"
-                            Text="1433"
-                            TextChanged="Text_OnTextChanged" />
+                            Maximum="65536"
+                            Minimum="0"
+                            Value="1433" />
                     </Grid>
                     <ComboBox
                         Name="ComboAuthentication"
@@ -156,19 +157,31 @@
                         TextChanged="Text_OnTextChanged" />
                 </Grid>
             </Grid>
+            <hc:LoadingCircle
+                x:Name="PageLoading"
+                Margin="10"
+                Visibility="Collapsed" />
             <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
                 <hc:SimpleStackPanel
                     Margin="5"
-                    HorizontalAlignment="Right"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Bottom">
                     <hc:UniformSpacingPanel Spacing="10">
                         <Button
                             x:Name="BtnTestConnect"
                             Height="25"
                             Padding="20,0,20,0"
+                            Click="BtnTestConnect_OnClick"
                             Content="测试连接"
                             Cursor="Hand"
                             Style="{StaticResource ButtonPrimary}" />
+                    </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+                <hc:SimpleStackPanel
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+                    <hc:UniformSpacingPanel Spacing="10">
                         <Button
                             x:Name="BtnConnect"
                             Height="25"

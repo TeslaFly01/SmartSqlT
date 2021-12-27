@@ -34,7 +34,7 @@
                             Stretch="Uniform" />
                     </MenuItem.Icon>
                     <MenuItem.ItemTemplate>
-                        <HierarchicalDataTemplate DataType="{x:Type modelHelper:DataBasesConfig}">
+                        <HierarchicalDataTemplate>
                             <MenuItem
                                 Width="150"
                                 Margin="0"
@@ -43,7 +43,7 @@
                                 Click="SwitchMenu_Click"
                                 Cursor="Hand"
                                 FontWeight="Normal"
-                                Header="{Binding DbName}">
+                                Header="{Binding ConnectName}">
                                 <MenuItem.Icon>
                                     <Path
                                         x:Name="MeIcon"

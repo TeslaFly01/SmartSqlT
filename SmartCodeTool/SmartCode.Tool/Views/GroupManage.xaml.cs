@@ -41,10 +41,10 @@ namespace SmartCode.Tool.Views
 
         #region DependencyProperty
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(DataBasesConfig), typeof(GroupManage), new PropertyMetadata(default(DataBasesConfig)));
-        public DataBasesConfig Connection
+            "Connection", typeof(ConnectConfigs), typeof(GroupManage), new PropertyMetadata(default(ConnectConfigs)));
+        public ConnectConfigs Connection
         {
-            get => (DataBasesConfig)GetValue(ConnectionProperty);
+            get => (ConnectConfigs)GetValue(ConnectionProperty);
             set => SetValue(ConnectionProperty, value);
         }
 
@@ -79,7 +79,7 @@ namespace SmartCode.Tool.Views
 
         private void GroupManage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            Title = $"{Connection.DbName} - 分组管理";
+            Title = $"{Connection.ConnectName} - 分组管理";
             var conn = Connection;
             var selectDataBase = SelectedDataBase;
             var dbConnectionString = conn.DbConnectString.Replace(selectDataBase, "master");
@@ -87,7 +87,7 @@ namespace SmartCode.Tool.Views
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                    Where(x => x.ConnectionName == conn.DbName && x.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
+                    Where(x => x.ConnectionName == conn.ConnectName && x.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
@@ -135,7 +135,7 @@ namespace SmartCode.Tool.Views
             var groupId = Convert.ToInt32(HidId.Text);
             if (groupId > 0)
             {
-                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectionName == Connection.DbName && x.DataBaseName == selectedDatabase.DbName && x.Id != groupId && x.GroupName == groupName);
+                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectionName == Connection.ConnectName && x.DataBaseName == selectedDatabase.DbName && x.Id != groupId && x.GroupName == groupName);
                 if (groupO != null)
                 {
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
@@ -147,7 +147,7 @@ namespace SmartCode.Tool.Views
             }
             else
             {
-                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectionName == Connection.DbName && x.DataBaseName == selectedDatabase.DbName && x.GroupName == groupName);
+                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectionName == Connection.ConnectName && x.DataBaseName == selectedDatabase.DbName && x.GroupName == groupName);
                 if (groupO != null)
                 {
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
@@ -155,7 +155,7 @@ namespace SmartCode.Tool.Views
                 }
                 sqLiteHelper.db.Insert(new ObjectGroup()
                 {
-                    ConnectionName = Connection.DbName,
+                    ConnectionName = Connection.ConnectName,
                     DataBaseName = selectedDatabase.DbName,
                     GroupName = groupName,
                     OrderFlag = DateTime.Now
@@ -165,7 +165,7 @@ namespace SmartCode.Tool.Views
             HidId.Text = "0";
             TextGourpName.Text = "";
             BtnSave.IsEnabled = false;
-            var connKey = Connection.DbName;
+            var connKey = Connection.ConnectName;
             Task.Run(() =>
             {
                 var datalist = sqLiteHelper.db.Table<ObjectGroup>().
@@ -205,7 +205,7 @@ namespace SmartCode.Tool.Views
                 return;
             }
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
-            var connKey = Connection.DbName;
+            var connKey = Connection.ConnectName;
             Task.Run(() =>
             {
                 sqLiteHelper.db.Delete<ObjectGroup>(groupId);
@@ -263,7 +263,7 @@ namespace SmartCode.Tool.Views
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                    Where(x => x.ConnectionName == conn.DbName && x.DataBaseName == selectedDatabase.DbName).OrderBy(x => x.OrderFlag).ToList();
+                    Where(x => x.ConnectionName == conn.ConnectName && x.DataBaseName == selectedDatabase.DbName).OrderBy(x => x.OrderFlag).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
@@ -317,7 +317,7 @@ namespace SmartCode.Tool.Views
             };
             sqLiteHelper.db.UpdateAll(listG);
             var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                Where(x => x.ConnectionName == conn.DbName && x.DataBaseName == selectedDatabase.DbName).
+                Where(x => x.ConnectionName == conn.ConnectName && x.DataBaseName == selectedDatabase.DbName).
                 OrderBy(x => x.OrderFlag).ToList();
             Dispatcher.Invoke(() =>
             {

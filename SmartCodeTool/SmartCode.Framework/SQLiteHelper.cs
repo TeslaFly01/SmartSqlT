@@ -23,7 +23,7 @@ namespace SmartCode.Framework
             }
             db = new SQLiteConnection(connstr);
             //表已存在不会重复创建
-            db.CreateTable<Connects>();
+            db.CreateTable<ConnectConfigs>();
             db.CreateTable<ObjectGroup>();
             db.CreateTable<SObjects>();
             db.CreateTable<SystemSet>();

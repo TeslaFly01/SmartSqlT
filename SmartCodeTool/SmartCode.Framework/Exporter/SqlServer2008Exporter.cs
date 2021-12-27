@@ -40,7 +40,7 @@ namespace SmartCode.Framework.Exporter
 
         public override List<DataBase> GetDatabases(string connectionString)
         {
-            var sqlCmd = "SELECT * FROM sysdatabases ORDER BY name ASC";
+            var sqlCmd = "SELECT name FROM sysdatabases ORDER BY name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             var list = new List<DataBase>();
             while (dr.Read())

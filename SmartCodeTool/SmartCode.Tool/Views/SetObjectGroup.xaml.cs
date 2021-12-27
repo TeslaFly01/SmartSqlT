@@ -39,10 +39,10 @@ namespace SmartCode.Tool.Views
             DataContext = this;
         }
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(DataBasesConfig), typeof(SetObjectGroup), new PropertyMetadata(default(DataBasesConfig)));
-        public DataBasesConfig Connection
+            "Connection", typeof(ConnectConfigs), typeof(SetObjectGroup), new PropertyMetadata(default(ConnectConfigs)));
+        public ConnectConfigs Connection
         {
-            get => (DataBasesConfig)GetValue(ConnectionProperty);
+            get => (ConnectConfigs)GetValue(ConnectionProperty);
             set => SetValue(ConnectionProperty, value);
         }
 
@@ -80,7 +80,7 @@ namespace SmartCode.Tool.Views
         {
             var sqLiteHelper = new SQLiteHelper();
             var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
-                  x.ConnectionName == Connection.DbName && x.DataBaseName == SelectedDataBase).ToList();
+                  x.ConnectionName == Connection.ConnectName && x.DataBaseName == SelectedDataBase).ToList();
             if (!list.Any())
             {
                 SelectAllBtn.Visibility = Visibility.Collapsed;
@@ -107,7 +107,7 @@ namespace SmartCode.Tool.Views
             bool flag = SelectAllBtn.IsChecked == true ? true : false;
             var sqLiteHelper = new SQLiteHelper();
             var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
-                x.ConnectionName == Connection.DbName && x.DataBaseName == SelectedDataBase).ToList();
+                x.ConnectionName == Connection.ConnectName && x.DataBaseName == SelectedDataBase).ToList();
             if (!list.Any())
             {
                 return;
@@ -132,7 +132,7 @@ namespace SmartCode.Tool.Views
             if (!selectedGroup.Any())
             {
                 var list = sqLiteHelper.db.Table<SObjects>().Where(x =>
-                   x.ConnectionName == Connection.DbName &&
+                   x.ConnectionName == Connection.ConnectName &&
                    x.DatabaseName == SelectedDataBase &&
                    x.ObjectName == SelectedObject).ToList();
                 foreach (var sobj in list)
@@ -156,7 +156,7 @@ namespace SmartCode.Tool.Views
                 {
                     var newGroup = new SObjects
                     {
-                        ConnectionName = Connection.DbName,
+                        ConnectionName = Connection.ConnectName,
                         DatabaseName = SelectedDataBase,
                         GroupId = objectGroup.Id,
                         ObjectName = SelectedObject

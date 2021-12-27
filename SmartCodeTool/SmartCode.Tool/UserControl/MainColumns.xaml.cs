@@ -21,6 +21,7 @@ using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
+using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
 using SmartCode.Tool.Annotations;
 using SmartCode.Tool.Helper;
@@ -47,7 +48,7 @@ namespace SmartCode.Tool.UserControl
             "SelectedDataBase", typeof(DataBase), typeof(MainColumns), new PropertyMetadata(default(DataBase)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(DataBasesConfig), typeof(MainColumns), new PropertyMetadata(default(DataBasesConfig)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(MainColumns), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty SourceColunmDataProperty = DependencyProperty.Register(
             "SourceColunmData", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
@@ -74,9 +75,9 @@ namespace SmartCode.Tool.UserControl
         /// <summary>
         /// 当前数据连接
         /// </summary>
-        public DataBasesConfig SelectedConnection
+        public ConnectConfigs SelectedConnection
         {
-            get => (DataBasesConfig)GetValue(SelectedConnectionProperty);
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
         /// <summary>

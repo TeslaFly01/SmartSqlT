@@ -57,12 +57,11 @@ namespace SmartCode.Tool
         private static readonly string VIEWICON = "\ue601";
         private static readonly string PROCICON = "\ue6d2";
         private string ConnectionString = "";
-        private DataBasesConfig SelectendConnection = null;
+        private ConnectConfigs SelectendConnection = null;
         private string _defaultDatabase = ConfigurationManager.AppSettings["defaultDatabase"];
 
         public Model dataSource = new Model();
         public List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
-        public List<DataBasesConfig> dataBasesConfigs = new List<DataBasesConfig>();
 
 
         public static readonly DependencyProperty DBaseProperty = DependencyProperty.Register(
@@ -100,11 +99,12 @@ namespace SmartCode.Tool
 
         public void LoadConnects()
         {
-            dataBasesConfigs = ConfigurationManager.GetSection("dataBasesConfig") as List<DataBasesConfig>;
-            SwitchMenu.ItemsSource = null;
-            SwitchMenu.ItemsSource = dataBasesConfigs;
-            CbTargetConnect.ItemsSource = dataBasesConfigs;
             var sqLiteHelper = new SQLiteHelper();
+            var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+            //dataBasesConfigs = ConfigurationManager.GetSection("dataBasesConfig") as List<DataBasesConfig>;
+            SwitchMenu.ItemsSource = null;
+            SwitchMenu.ItemsSource = connectConfigs;
+            CbTargetConnect.ItemsSource = connectConfigs;
             var isGroup = sqLiteHelper.GetSys("IsGroup");
             CheckIsGroup.IsChecked = isGroup;
             var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
@@ -122,11 +122,11 @@ namespace SmartCode.Tool
         private void SwitchMenu_Click(object sender, RoutedEventArgs e)
         {
             var menuItem = (MenuItem)sender;
-            var dataBase = (DataBasesConfig)menuItem.DataContext;
+            var connectConfig = (ConnectConfigs)menuItem.DataContext;
             LoadingLine.Visibility = Visibility.Visible;
-            ConnectionString = dataBase.DbConnectString;
-            SwitchMenu.Header = dataBase.DbName;
-            SelectendConnection = dataBase;
+            ConnectionString = connectConfig.DbConnectString;
+            SwitchMenu.Header = connectConfig.ConnectName;
+            SelectendConnection = connectConfig;
             try
             {
                 IExporter exporter = new SqlServer2008Exporter();
@@ -142,7 +142,7 @@ namespace SmartCode.Tool
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Growl.Error(new GrowlInfo { Message = $"无法连接到 {dataBase.DbName},原因：" + ex.Message, WaitTime = 1, ShowDateTime = false, Type = InfoType.Error });
+                    Growl.Error(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName},原因：" + ex.Message, WaitTime = 1, ShowDateTime = false, Type = InfoType.Error });
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
             }
@@ -215,7 +215,7 @@ namespace SmartCode.Tool
                 if (isGroup)
                 {
                     currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
-                        a.ConnectionName == selectConnection.DbName &&
+                        a.ConnectionName == selectConnection.ConnectName &&
                         a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                     if (currGroups.Any())
                     {
@@ -268,7 +268,7 @@ namespace SmartCode.Tool
                     }
                     currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
                                    join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
-                                   where a.ConnectionName == selectConnection.DbName &&
+                                   where a.ConnectionName == selectConnection.ConnectName &&
                                          a.DataBaseName == selectDataBase
                                    select new SObjectDTO
                                    {
@@ -670,7 +670,7 @@ namespace SmartCode.Tool
             if (isGroup)
             {
                 currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
-                    a.ConnectionName == selectConnection.DbName &&
+                    a.ConnectionName == selectConnection.ConnectName &&
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
                 {
@@ -727,7 +727,7 @@ namespace SmartCode.Tool
                 }
                 currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
                                join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
-                               where a.ConnectionName == selectConnection.DbName &&
+                               where a.ConnectionName == selectConnection.ConnectName &&
                                      a.DataBaseName == selectDataBase
                                select new SObjectDTO
                                {
