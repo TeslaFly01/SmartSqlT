@@ -1029,6 +1029,10 @@ namespace SmartCode.Tool
         {
             var comboBoxItem = (ComboBox)sender;
             var dataBase = (ConnectConfigs)comboBoxItem.SelectedItem;
+            if (dataBase==null)
+            {
+                return;
+            }
             Task.Run(() =>
             {
                 IExporter exporter = new SqlServer2008Exporter();

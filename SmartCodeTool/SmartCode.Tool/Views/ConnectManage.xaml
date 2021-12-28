@@ -61,6 +61,7 @@
                         Style="{StaticResource ButtonIcon}"
                         ToolTip="删除" />
                     <Button
+                        x:Name="BtnAdd"
                         Width="25"
                         Height="25"
                         Margin="0,0,0,0"
@@ -91,29 +92,29 @@
                     <TextBlock Margin="0,185,20,20" Text="密码" />
                     <TextBlock Margin="0,225,20,20" Text="默认数据库" />
                 </Grid>
-                <Grid Grid.Column="1">
+                <Grid x:Name="ConnectForm" Grid.Column="1">
                     <TextBox
                         Name="HidId"
                         Text="0"
                         Visibility="Collapsed" />
-                    <TextBox
+                    <hc:TextBox
                         Name="TextConnectName"
                         Height="30"
                         Margin="0,20,20,20"
                         VerticalAlignment="Top"
-                        TextChanged="Text_OnTextChanged" />
+                        ShowClearButton="True" />
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="6*" />
                             <ColumnDefinition Width="45" />
                             <ColumnDefinition Width="3*" />
                         </Grid.ColumnDefinitions>
-                        <TextBox
+                        <hc:TextBox
                             Name="TextServerAddress"
                             Height="30"
                             Margin="0,60,15,20"
                             VerticalAlignment="Top"
-                            TextChanged="Text_OnTextChanged" />
+                            ShowClearButton="True" />
                         <TextBlock
                             Grid.Column="1"
                             Margin="0,65,0,20"
@@ -136,25 +137,26 @@
                         <ComboBoxItem Name="SQLServer" IsSelected="True">SQL Server 身份验证</ComboBoxItem>
                         <ComboBoxItem Name="Windows" Visibility="Collapsed">Windows 身份验证</ComboBoxItem>
                     </ComboBox>
-                    <TextBox
+                    <hc:TextBox
                         Name="TextServerName"
                         Height="0"
                         Margin="0,140,20,20"
                         VerticalAlignment="Top"
-                        TextChanged="Text_OnTextChanged" />
-                    <PasswordBox
+                        ShowClearButton="True" />
+                    <hc:PasswordBox
                         Name="TextServerPassword"
                         Height="30"
                         Margin="0,180,20,20"
                         VerticalAlignment="Top"
-                        PasswordChanged="TextServerPassword_OnPasswordChanged" />
-                    <TextBox
+                        ShowClearButton="True"
+                        ShowEyeButton="True" />
+                    <hc:TextBox
                         Name="TextDefaultDataBase"
                         Height="0"
                         Margin="0,220,20,20"
                         VerticalAlignment="Top"
-                        Text="master"
-                        TextChanged="Text_OnTextChanged" />
+                        ShowClearButton="True"
+                        Text="master" />
                 </Grid>
             </Grid>
             <hc:LoadingCircle
