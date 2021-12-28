@@ -243,6 +243,7 @@ namespace SmartCode.Tool.Views
             var connectId = Convert.ToInt32(HidId.Text);
             if (connectId < 1)
             {
+                Growl.Warning(new GrowlInfo { Message = $"请选择需要删除的连接", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             Task.Run(() =>

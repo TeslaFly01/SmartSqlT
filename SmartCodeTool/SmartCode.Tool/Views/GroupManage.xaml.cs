@@ -113,7 +113,6 @@ namespace SmartCode.Tool.Views
 
                 HidId.Text = group.Id.ToString();
                 TextGourpName.Text = group.GroupName;
-                BtnDelete.Visibility = Visibility.Visible;
             }
         }
 
@@ -161,7 +160,6 @@ namespace SmartCode.Tool.Views
                     OrderFlag = DateTime.Now
                 });
             }
-            BtnDelete.Visibility = Visibility.Collapsed;
             HidId.Text = "0";
             TextGourpName.Text = "";
             BtnSave.IsEnabled = false;
@@ -202,6 +200,7 @@ namespace SmartCode.Tool.Views
             var groupId = Convert.ToInt32(HidId.Text);
             if (groupId < 1)
             {
+                Growl.Warning(new GrowlInfo { Message = $"请选择需要删除的分组", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
@@ -225,7 +224,6 @@ namespace SmartCode.Tool.Views
                     Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
-                    BtnDelete.Visibility = Visibility.Collapsed;
                     HidId.Text = "0";
                     TextGourpName.Text = "";
                     BtnSave.IsEnabled = false;
@@ -248,7 +246,6 @@ namespace SmartCode.Tool.Views
 
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
-            BtnDelete.Visibility = Visibility.Collapsed;
             HidId.Text = "0";
             TextGourpName.Text = "";
             BtnSave.IsEnabled = false;
@@ -256,7 +253,6 @@ namespace SmartCode.Tool.Views
 
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            BtnDelete.Visibility = Visibility.Collapsed;
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
             var conn = Connection;
             Task.Run(() =>
