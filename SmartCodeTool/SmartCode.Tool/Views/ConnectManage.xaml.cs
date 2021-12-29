@@ -21,7 +21,9 @@ using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
+using SmartCode.Framework.Util;
 using SmartCode.Tool.Annotations;
+using SmartCode.Tool.Helper;
 
 namespace SmartCode.Tool.Views
 {
@@ -74,15 +76,16 @@ namespace SmartCode.Tool.Views
             if (listBox.SelectedItems.Count > 0)
             {
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
+                var pwd=EncryptHelper.Decode(connect.Password);
                 HidId.Text = connect.ID.ToString();
                 TextConnectName.Text = connect.ConnectName;
                 TextServerAddress.Text = connect.ServerAddress;
                 TextServerPort.Value = connect.ServerPort;
                 TextServerName.Text = connect.UserName;
-                TextServerPassword.Password = connect.Password;
                 ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
                 TextDefaultDataBase.Text = connect.DefaultDatabase;
                 BtnDelete.Visibility = Visibility.Visible;
+                TextServerPassword.Password = pwd;
                 BtnConnect.IsEnabled = true;
             }
         }
@@ -140,7 +143,7 @@ namespace SmartCode.Tool.Views
                             connectConfig.ServerAddress = serverAddress;
                             connectConfig.ServerPort = Convert.ToInt32(serverPort);
                             connectConfig.UserName = userName;
-                            connectConfig.Password = password;
+                            connectConfig.Password = EncryptHelper.Encode(password);
                             connectConfig.DefaultDatabase = defaultDataBase;
                             connectConfig.Authentication = authentication;
                             sqLiteHelper.db.Update(connectConfig);
@@ -160,7 +163,7 @@ namespace SmartCode.Tool.Views
                                 ServerPort = Convert.ToInt32(serverPort),
                                 Authentication = authentication,
                                 UserName = userName,
-                                Password = password,
+                                Password = EncryptHelper.Encode(password),
                                 CreateDate = DateTime.Now,
                                 DefaultDatabase = defaultDataBase
                             };
@@ -341,7 +344,7 @@ namespace SmartCode.Tool.Views
             }
             if (string.IsNullOrEmpty(defaultDataBase))
             {
-                Growl.Warning(new GrowlInfo {Message = $"请填写默认数据库", WaitTime = 1, ShowDateTime = false});
+                Growl.Warning(new GrowlInfo { Message = $"请填写默认数据库", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             return true;

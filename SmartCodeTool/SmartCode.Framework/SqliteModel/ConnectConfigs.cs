@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SmartCode.Framework.Util;
 using SQLite;
 
 namespace SmartCode.Framework.SqliteModel
@@ -48,11 +49,11 @@ namespace SmartCode.Framework.SqliteModel
         /// Master数据库连接，查询系统库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbMasterConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={Password};";
+        public string DbMasterConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
         /// <summary>
         /// 默认数据库连接，查询默认数据库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbDefaultConnectString => $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={Password};";
+        public string DbDefaultConnectString => $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
     }
 }

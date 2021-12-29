@@ -101,6 +101,7 @@
     <Compile Include="SqliteModel\SystemSet.cs" />
     <Compile Include="Util\AssemblyHelper.cs" />
     <Compile Include="Util\ConvertHelper.cs" />
+    <Compile Include="Util\EncryptHelper.cs" />
     <Compile Include="Util\Logging\InternalTrace.cs" />
     <Compile Include="Util\Logging\InternalTraceWriter.cs" />
     <Compile Include="Util\Logging\Logger.cs" />

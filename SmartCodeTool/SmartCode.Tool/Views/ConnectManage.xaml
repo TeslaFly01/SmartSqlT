@@ -143,13 +143,11 @@
                         Margin="0,140,20,20"
                         VerticalAlignment="Top"
                         ShowClearButton="True" />
-                    <hc:PasswordBox
+                    <PasswordBox
                         Name="TextServerPassword"
                         Height="30"
                         Margin="0,180,20,20"
-                        VerticalAlignment="Top"
-                        ShowClearButton="True"
-                        ShowEyeButton="True" />
+                        VerticalAlignment="Top" />
                     <hc:TextBox
                         Name="TextDefaultDataBase"
                         Height="0"

@@ -79,6 +79,17 @@
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Name="ExportDoc"
+                        FontWeight="Normal"
+                        Header="导出文档">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="{StaticResource DocGeometry}"
+                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
                 <MenuItem
                     Name="MenuGroup"
