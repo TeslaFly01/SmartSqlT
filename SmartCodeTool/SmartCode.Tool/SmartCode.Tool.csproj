@@ -51,14 +51,6 @@
     <Reference Include="AduSkin">
       <HintPath>..\..\Lib\AduSkin.dll</HintPath>
     </Reference>
-    <Reference Include="MindFusion.Barcodes, Version=1.0.3.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Common.Wpf, Version=1.0.2.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Diagramming.Wpf, Version=3.8.0.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Graphs, Version=2.3.2.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Licensing, Version=1.0.6.400, Culture=neutral, PublicKeyToken=9d02e21d957ddaef, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Scripting, Version=1.0.2.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Svg.Wpf, Version=1.2.2.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
-    <Reference Include="MindFusion.Vsx, Version=1.0.3.450, Culture=neutral, PublicKeyToken=dd7449df9ffcc455, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
@@ -105,11 +97,17 @@
     <Compile Include="Views\ConnectManage.xaml.cs">
       <DependentUpon>ConnectManage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExportDoc.xaml.cs">
+      <DependentUpon>ExportDoc.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupManage.xaml.cs">
       <DependentUpon>GroupManage.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\MainColumns.xaml.cs">
       <DependentUpon>MainColumns.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Controls\Loading.xaml.cs">
+      <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SetObjectGroup.xaml.cs">
       <DependentUpon>SetObjectGroup.xaml</DependentUpon>
@@ -223,11 +221,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ExportDoc.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GroupManage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MainColumns.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Controls\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -252,6 +258,10 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\SmartCode.DocUtils\SmartCode.DocUtils.csproj">
+      <Project>{84e6e445-cfe0-4f01-b815-14f69f682eb9}</Project>
+      <Name>SmartCode.DocUtils</Name>
+    </ProjectReference>
     <ProjectReference Include="..\SmartCode.Framework\SmartCode.Framework.csproj">
       <Project>{8F686DD2-388C-4D61-A077-3A769059D547}</Project>
       <Name>SmartCode.Framework</Name>

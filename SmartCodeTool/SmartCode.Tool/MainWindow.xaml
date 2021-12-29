@@ -2,9 +2,9 @@
     x:Class="SmartCode.Tool.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modelHelper="clr-namespace:SmartCode.Tool"
     xmlns:models="clr-namespace:SmartCode.Tool.Models"
@@ -81,6 +81,7 @@
                     </MenuItem>
                     <MenuItem
                         Name="ExportDoc"
+                        Click="ExportDoc_OnClick"
                         FontWeight="Normal"
                         Header="导出文档">
                         <MenuItem.Icon>
@@ -137,7 +138,6 @@
         </StackPanel>
     </hc:GlowWindow.NonClientAreaContent>
     <Grid x:Name="GridMain" Background="{StaticResource CloudDrawingBrush}">
-
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -289,7 +289,7 @@
                             HorizontalAlignment="Stretch"
                             Background="White"
                             Cursor="Arrow">
-                            <Controls:NoDataArea
+                            <local:NoDataArea
                                 x:Name="NoDataAreaText"
                                 Margin="0"
                                 HorizontalAlignment="Center" />

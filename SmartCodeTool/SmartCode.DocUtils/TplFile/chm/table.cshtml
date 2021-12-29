@@ -1,0 +1,134 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
+    <title>@Model.TableName</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-size: 9pt;
+            font-family: "Cascadia Code","lucida console","Consolas",'Microsoft YaHei' !important;
+        }
+
+
+        table {
+            margin: 20px auto;
+        }
+
+        table td {
+            text-align: center;
+            line-height: 30px
+        }
+
+        .styledb {
+            font-size: 16px;
+        }
+
+        .styletab {
+            font-size: 18px;
+            padding-top: 15px;
+            font-weight: bold;
+        }
+
+        a {
+            color: #015FB6;
+        }
+
+        a:link, a:visited, a:active {
+            color: #015FB6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #E33E06;
+        }
+
+        .other-bg-color {
+            background-color: #FCFCFC;
+        }
+
+        .check-bg-color {
+            background-color: #E6E6FA;
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+            var trs = document.getElementById('tab-struct').getElementsByTagName('tr');
+            for (var i = 0; i < trs.length; i++) {
+                if (i == 0) { continue; }
+                trs[i].onclick = function () {
+                    for (var j = 0; j < trs.length; j++) {
+                        if (j == 0) { continue; }
+                        trs[j].className = 'other-bg-color';
+                    }
+                    this.className = 'check-bg-color';
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: center">
+        <div>
+            <table border="0" cellpadding="5" cellspacing="0" width="90%">
+                <tr>
+                    <td bgcolor="#FBFBFB">
+                        <table id='tab-struct' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+                            <caption>
+                                <div class="styletab">@Model.TableName</div>
+                                <span style='float: left; margin-top: 6px;font-size:16px;'>@Model.Comment</span>
+                                <a href='../数据库目录.html' style='float: right; margin-top: 6px;font-size:16px;'>
+                                    返回目录
+                                </a>
+                            </caption>
+                            <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                                <td>序号</td>
+                                <td>列名</td>
+                                <td>数据类型</td>
+                                <td>长度</td>
+                                <td>小数位数</td>
+                                <td>主键</td>
+                                @if (!Model.DBType.StartsWith("Oracle"))
+                                {
+                                    <td>自增</td>
+                                }
+                                <td>允许空</td>
+                                <td>默认值</td>
+                                <td>列说明</td>
+                            </tr>
+                            @{
+                                var index = 1;
+                            }
+                            @foreach (var item in Model.Columns)
+                            {
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@item.ColumnName</td>
+                                    <td>@item.ColumnTypeName</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.Scale)? "&nbsp;":item.Scale)</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
+
+                                    @if (!Model.DBType.StartsWith("Oracle"))
+                                    {
+                                        <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+                                    }
+
+                                    <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
+                                    <td>@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
+                                </tr>
+                                index++;
+                            }
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

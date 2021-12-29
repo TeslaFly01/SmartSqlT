@@ -12,7 +12,7 @@ namespace SmartCode.DocUtils.DBDoc
     public abstract class Doc
     {
         /// <summary>
-        /// 当前应用程序的名称 => DBCHM
+        /// 当前应用程序的名称 => SmartSQL
         /// </summary>
         private static string ConfigFileName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName).Replace(".vshost", "");
 

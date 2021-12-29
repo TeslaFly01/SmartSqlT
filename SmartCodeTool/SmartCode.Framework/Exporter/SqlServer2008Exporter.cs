@@ -327,6 +327,7 @@ namespace SmartCode.Framework.Exporter
                 int isPrimaryKey = dr.IsDBNull(12) ? 0 : dr.GetInt32(12);
 
                 Column column = new Column(id.ToString(), displayName, name, dataType, comment);
+                column.Length = "";
                 switch (dataType)
                 {
                     case "char":

@@ -1,0 +1,84 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HTML>
+<HEAD>
+    <meta name="GENERATOR" content="DBCHM.exe by zfluok">
+    <!-- Sitemap 1.0 -->
+    <!-- hhk文件渲染后，需 Replace("</LI>", "") -->
+</HEAD>
+<BODY>
+<OBJECT type="text/site properties">
+    <param name="ExWindow Styles" value="0x200">
+    <param name="Window Styles" value="0x800025">
+    <param name="Font" value="MS Sans Serif,9,0">
+</OBJECT>
+    <UL>
+        <LI><OBJECT type="text/sitemap">
+                <param name="Name" value="数据库目录">
+                <param name="Local" value="数据库目录.html">
+                <param name="ImageNumber" value="11">
+            </OBJECT>
+        </LI>
+        @if (Model.Tables != null && Model.Tables.Count > 0)
+        {
+            <LI><OBJECT type="text/sitemap">
+                    <param name="Name" value="表结构">
+                    <param name="ImageNumber" value="1">
+                </OBJECT>
+                <UL>
+                    @foreach (var table in Model.Tables)
+                    {
+                        <LI><OBJECT type="text/sitemap">
+                                <param name="Name" value="@(table.TableName+" "+table.Comment)">
+                                <param name="Local" value="表结构\@(table.TableName+" "+table.Comment).html">
+                                <param name="ImageNumber" value="11">
+                            </OBJECT>
+                        </LI>
+                    }
+                </UL>
+            </LI>
+        }
+
+        @if (Model.Views != null && Model.Views.Count > 0)
+        {
+            <LI><OBJECT type="text/sitemap">
+                    <param name="Name" value="视图">
+                    <param name="ImageNumber" value="1">
+                </OBJECT>
+                <UL>
+                    @foreach (var item in Model.Views)
+                    {
+                        <LI><OBJECT type="text/sitemap">
+                                <param name="Name" value="@(item.Key)">
+                                <param name="Local" value="视图\@(item.Key).html">
+                                <param name="ImageNumber" value="11">
+                            </OBJECT>
+                        </LI>
+                    }
+                </UL>
+            </LI>
+
+        }
+
+
+        @if (Model.Procs != null && Model.Procs.Count > 0)
+        {
+            <LI><OBJECT type="text/sitemap">
+                    <param name="Name" value="存储过程">
+                    <param name="ImageNumber" value="1">
+                </OBJECT>
+                <UL>
+                    @foreach (var item in Model.Procs)
+                    {
+                        <LI><OBJECT type="text/sitemap">
+                                <param name="Name" value="@(item.Key)">
+                                <param name="Local" value="存储过程\@(item.Key).html">
+                                <param name="ImageNumber" value="11">
+                            </OBJECT>
+                        </LI>
+                    }
+                </UL>
+            </LI>
+        }
+    </UL>
+</BODY>
+</HTML>

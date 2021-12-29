@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
+    <title>数据库目录</title>
+    <style type="text/css">
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            font-size: 9pt;
+            font-family: "Cascadia Code","lucida console","Consolas",'Microsoft YaHei' !important;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 90%;
+            height: 100%;
+            margin: 0 auto;
+            padding-bottom: 60px;
+        }
+
+        table {
+            margin: 20px auto;
+        }
+
+        table td {
+            text-align: center;
+            line-height:30px
+        }
+
+        .tab tr td:first-child {
+            width: 16.66666%;
+        }
+
+        caption {
+            font-size: 22px;
+            padding: 15px 0 5px 0;
+        }
+
+        a {
+            color: #015FB6;
+        }
+
+        a:link, a:visited, a:active {
+            color: #015FB6;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #E33E06;
+        }
+
+        .other-bg-color {
+            background-color: #FCFCFC;
+        }
+
+        .check-bg-color {
+            background-color: #E6E6FA;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        @if (Model.Tables != null && Model.Tables.Count > 0)
+        {
+            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+                <caption>
+                    表
+                </caption>
+                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                    <td>序号</td>
+                    <td colspan="3">表名</td>
+                    <td colspan="2">表说明</td>
+                </tr>
+
+                @foreach (var item in Model.Tables)
+                {
+                    <tr>
+                        <td>@item.TableOrder</td>
+                        <td colspan="3">
+                            <a href="表结构/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                        </td>
+                        <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+                    </tr>
+                }
+            </table>
+        }
+
+        @if (Model.Views != null && Model.Views.Count > 0)
+        {
+            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+                <caption>
+                    视图
+                </caption>
+                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                    <td>序号</td>
+                    <td colspan="5">视图名称</td>
+                </tr>
+
+                @{ var vwIndex = 1; }
+                @foreach (var item in Model.Views)
+                {
+                    <tr>
+                        <td>@vwIndex</td>
+                        <td colspan="5">
+                            <a href="视图/@(item.Key).html">@item.Key</a>
+                        </td>
+                    </tr>
+                    vwIndex++;
+                }
+
+            </table>
+        }
+
+        @if (Model.Procs != null && Model.Procs.Count > 0)
+        {
+            <table class='tab' cellspacing="0" cellpadding="5" border="1" width="100%" bordercolorlight="#D7D7E5" bordercolordark="#D3D8E0">
+                <caption>
+                    存储过程
+                </caption>
+                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                    <td>序号</td>
+                    <td colspan="5">存储过程名称</td>
+                </tr>
+
+                @{ var procIndex = 1; }
+                @foreach (var item in Model.Procs)
+                {
+                    <tr>
+                        <td>@procIndex</td>
+                        <td colspan="5">
+                            <a href="存储过程/@(item.Key).html">@item.Key</a>
+                        </td>
+                    </tr>
+                    procIndex++;
+                }
+
+            </table>
+        }
+    </div>
+    <script type="text/javascript" src="resources/js/jQuery.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            for (var j = 0; j < $(".tab").length; j++) {
+                var tab = $($(".tab")[j]);
+                tab.find("tr:not(:first)").click(function () {
+                    $(".tab tr").removeClass("check-bg-color");
+                    $(this).removeClass("other-bg-color").addClass("check-bg-color");
+                });
+            }
+        });
+    </script>
+</body>
+</html>

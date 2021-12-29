@@ -42,18 +42,18 @@ namespace SmartCode.DocUtils.DBDoc
             doc.BuiltInDocumentProperties.Subject = "设计文档";
             doc.BuiltInDocumentProperties.ContentType = "数据库字典";
             doc.BuiltInDocumentProperties.Title = "数据库字典文档";
-            doc.BuiltInDocumentProperties.Author = doc.BuiltInDocumentProperties.LastSavedBy = doc.BuiltInDocumentProperties.Manager = "trycache";
-            doc.BuiltInDocumentProperties.Company = "51Try.Top";
+            doc.BuiltInDocumentProperties.Author = doc.BuiltInDocumentProperties.LastSavedBy = doc.BuiltInDocumentProperties.Manager = "zfluok";
+            doc.BuiltInDocumentProperties.Company = "Isoftstone.com";
             doc.BuiltInDocumentProperties.Version = doc.BuiltInDocumentProperties.RevisionNumber = 1;
             doc.BuiltInDocumentProperties.ContentStatus = "初稿";
-            doc.BuiltInDocumentProperties.NameOfApplication = "DBCHM";
+            doc.BuiltInDocumentProperties.NameOfApplication = "SamrtSQL";
             doc.BuiltInDocumentProperties.LastSavedTime = doc.BuiltInDocumentProperties.CreatedTime = System.DateTime.Now;
 
             // TODO header and footer setting
             Aspose.Words.HeaderFooter header = new Aspose.Words.HeaderFooter(doc, Aspose.Words.HeaderFooterType.HeaderPrimary);
             doc.FirstSection.HeadersFooters.Add(header);
             // Add a paragraph with text to the header.
-            header.AppendParagraph("51Try.Top数据库字典文档").ParagraphFormat.Alignment =
+            header.AppendParagraph("Isoftstone数据库字典文档").ParagraphFormat.Alignment =
                 Aspose.Words.ParagraphAlignment.Right;
 
             Aspose.Words.DocumentBuilder builder = new Aspose.Words.DocumentBuilder(doc);
@@ -235,7 +235,7 @@ namespace SmartCode.DocUtils.DBDoc
             AutoGenPageNum(doc, builder);
 
             // TODO 添加水印
-            //InsertWatermarkText(doc, "DBCHM-51Try.Top");
+            //InsertWatermarkText(doc, "SmartSQL");
 
             doc.Save(fileName);
         }

@@ -26,6 +26,9 @@ using System.Xml;
 using HandyControlDemo.Window;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
+using Microsoft.Win32;
+using SmartCode.DocUtils;
+using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
@@ -1220,6 +1223,92 @@ namespace SmartCode.Tool
             connect.Owner = this;
             connect.ChangeRefreshEvent += SwitchConnect;
             connect.ShowDialog();
+        }
+
+        private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+
+            ExportDoc exportDoc = new ExportDoc();
+            exportDoc.Owner = this;
+            exportDoc.ShowDialog();
+            //var dbDto = new DBDto(selectDatabase.DbName)
+            //{
+            //    DBType = "SqlServer",
+            //    Tables = Trans2Table(TreeViewData),
+            //    Procs = new Dictionary<string, string>(),
+            //    Views = new Dictionary<string, string>()
+            //};
+            ////chm、html、xml生成目前有问题
+            //var doc = DocFactory.CreateInstance(DocType.xml, dbDto);
+            //SaveFileDialog saveDia = new SaveFileDialog();
+            //saveDia.Filter = doc.Filter;
+            //saveDia.Title = "另存文件为";
+            //saveDia.CheckPathExists = true;
+            //saveDia.AddExtension = true;
+            ////saveDia.AutoUpgradeEnabled = true;
+            //saveDia.DefaultExt = doc.Ext;
+            //saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            //saveDia.OverwritePrompt = true;
+            //saveDia.ValidateNames = true;
+            //saveDia.FileName = doc.Dto.DBName + "表结构信息" + doc.Ext;
+            //var diaResult = saveDia.ShowDialog();
+            //doc.Build(saveDia.FileName);
+        }
+
+        private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData)
+        {
+            List<TableDto> tables = new List<TableDto>();
+            foreach (var group in treeViewData)
+            {
+                if (!group.Name.Equals("treeTable"))
+                {
+                    continue;
+                }
+                int orderNo = 1;
+                foreach (var node in group.Children)
+                {
+                    TableDto tbDto = new TableDto();
+                    tbDto.TableOrder = orderNo.ToString();
+                    tbDto.TableName = node.DisplayName;
+                    tbDto.Comment = node.Comment;
+                    tbDto.DBType = "SQL Server";
+
+                    var lst_col_dto = new List<ColumnDto>();
+                    var objectId = Convert.ToInt32(node.ObejcetId);
+                    IExporter exporter = new SqlServer2008Exporter();
+                    var columns = exporter.GetColumnsExt(objectId, SelectendConnection.DbMasterConnectString.Replace("master",((DataBase)SelectDatabase.SelectedItem).DbName));
+                    foreach (var col in columns)
+                    {
+                        ColumnDto colDto = new ColumnDto();
+                        colDto.ColumnOrder = col.Key.ToString();
+                        colDto.ColumnName = col.Value.DisplayName;
+                        // 数据类型
+                        colDto.ColumnTypeName = col.Value.DataType;
+                        // 长度
+                        colDto.Length = col.Value.Length;
+                        // 小数位
+                        colDto.Scale = "0";//(col.Scale.HasValue ? col.Scale.Value.ToString() : "");
+                        // 主键
+                        colDto.IsPK = (col.Value.IsPrimaryKey ? "√" : "");
+                        // 自增
+                        colDto.IsIdentity = (col.Value.IsAutoIncremented ? "√" : "");
+                        // 允许空
+                        colDto.CanNull = (col.Value.IsNullable ? "√" : "");
+                        // 默认值
+                        colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
+                        // 列注释（说明）
+                        colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment : "");
+
+                        lst_col_dto.Add(colDto);
+                    }
+                    tbDto.Columns = lst_col_dto;
+                    tables.Add(tbDto);
+                    orderNo++;
+                }
+                
+            }
+            return tables;
         }
     }
 }

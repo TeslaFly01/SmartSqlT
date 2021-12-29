@@ -1,0 +1,30 @@
+[OPTIONS]
+Auto Index=Yes
+CITATION=Made by lztkdr
+Compatibility=1.1 or later
+Compiled file=@Model.ChmFile
+Contents file=chm.HHC
+COPYRIGHT=www.51try.top
+Default topic=@Model.DefaultFile
+Default Window=Main
+Display compile notes=Yes
+Display compile progress=Yes
+Full-text search=Yes
+Language=0x804 中文(中国)
+Index file=chm.HHK
+Title=@Model.Title
+Enhanced decompilation=yes
+
+[WINDOWS]
+Main="@Model.Title","chm.hhc","chm.hhk","@Model.DefaultFile","@Model.DefaultFile",,,,20000,0x63520,180,0x104E, [0,0,745,509],0x0,0x0,,,,,0
+
+[MERGE FILES]
+
+[FILES]
+@if (Model.Files != null && Model.Files.Count > 0)
+{
+    foreach (var filePath in Model.Files)
+    {
+        @(filePath + "\r\n")
+    }
+}
