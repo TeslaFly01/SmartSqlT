@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Framework", "Smar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Tool", "SmartCodeTool\SmartCode.Tool\SmartCode.Tool.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.DocUtils", "SmartCodeTool\SmartCode.DocUtils\SmartCode.DocUtils.csproj", "{84E6E445-CFE0-4F01-B815-14F69F682EB9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,6 +25,10 @@ Global
 		{12909642-6A41-43B5-B2F8-1ED0E6FF132B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{12909642-6A41-43B5-B2F8-1ED0E6FF132B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{12909642-6A41-43B5-B2F8-1ED0E6FF132B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{84E6E445-CFE0-4F01-B815-14F69F682EB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{84E6E445-CFE0-4F01-B815-14F69F682EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{84E6E445-CFE0-4F01-B815-14F69F682EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{84E6E445-CFE0-4F01-B815-14F69F682EB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -30,6 +36,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{8F686DD2-388C-4D61-A077-3A769059D547} = {484A0F15-A8E0-413A-870B-B339B6A82946}
 		{12909642-6A41-43B5-B2F8-1ED0E6FF132B} = {484A0F15-A8E0-413A-870B-B339B6A82946}
+		{84E6E445-CFE0-4F01-B815-14F69F682EB9} = {484A0F15-A8E0-413A-870B-B339B6A82946}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {525DD6C3-B859-4F91-B726-A4EC98DC2C9C}
