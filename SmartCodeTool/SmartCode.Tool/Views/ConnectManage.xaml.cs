@@ -112,8 +112,7 @@ namespace SmartCode.Tool.Views
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
             var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
-            PageLoading.Visibility = Visibility.Visible;
-            ConnectControlIsEnable(false);
+            LoadingG.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
                 try
@@ -122,8 +121,7 @@ namespace SmartCode.Tool.Views
                     exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {
-                        ConnectControlIsEnable(true);
-                        PageLoading.Visibility = Visibility.Collapsed;
+                        LoadingG.Visibility = Visibility.Collapsed;
                         Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                         if (connectId > 0)
                         {
@@ -189,8 +187,7 @@ namespace SmartCode.Tool.Views
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        ConnectControlIsEnable(true);
-                        PageLoading.Visibility = Visibility.Collapsed;
+                        LoadingG.Visibility = Visibility.Collapsed;
                         Growl.Warning(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }
@@ -199,6 +196,14 @@ namespace SmartCode.Tool.Views
 
         private void ConnectControlIsEnable(bool isEnable)
         {
+            if (isEnable)
+            {
+                LoadingG.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                LoadingG.Visibility = Visibility.Visible;
+            }
             ListConnects.IsEnabled = isEnable;
             BtnAdd.IsEnabled = isEnable;
             BtnDelete.IsEnabled = isEnable;
@@ -363,8 +368,7 @@ namespace SmartCode.Tool.Views
                 return;
             }
             var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
-            PageLoading.Visibility = Visibility.Visible;
-            ConnectControlIsEnable(false);
+            LoadingG.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
                 try
@@ -373,8 +377,7 @@ namespace SmartCode.Tool.Views
                     exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {
-                        PageLoading.Visibility = Visibility.Collapsed;
-                        ConnectControlIsEnable(true);
+                        LoadingG.Visibility = Visibility.Collapsed;
                         Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                     });
                 }
@@ -382,8 +385,7 @@ namespace SmartCode.Tool.Views
                 {
                     Dispatcher.Invoke(() =>
                     {
-                        PageLoading.Visibility = Visibility.Collapsed;
-                        ConnectControlIsEnable(true);
+                        LoadingG.Visibility = Visibility.Collapsed;
                         Growl.Warning(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }

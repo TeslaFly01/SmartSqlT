@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="连接管理"
     Width="680"
@@ -157,10 +158,6 @@
                         Text="master" />
                 </Grid>
             </Grid>
-            <hc:LoadingCircle
-                x:Name="PageLoading"
-                Margin="10"
-                Visibility="Collapsed" />
             <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
                 <hc:SimpleStackPanel
                     Margin="5"
@@ -200,5 +197,10 @@
                 </hc:SimpleStackPanel>
             </Grid>
         </Grid>
+        <local:Loading
+            x:Name="LoadingG"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Visibility="Collapsed" />
     </Grid>
 </hc:Window>

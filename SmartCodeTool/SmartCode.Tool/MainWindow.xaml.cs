@@ -157,7 +157,7 @@ namespace SmartCode.Tool
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Growl.Error(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName},原因：" + ex.Message, WaitTime = 1, ShowDateTime = false, Type = InfoType.Error });
+                    Growl.Warning(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName}，原因：" + ex.Message, ShowDateTime = false, Type = InfoType.Error });
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
             }

@@ -10,48 +10,152 @@
     Width="540"
     Height="330"
     BorderThickness="0"
+    ResizeMode="NoResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Margin="5" Background="White">
-        <Grid Margin="20">
-            <TextBlock VerticalAlignment="Top" Text="目标数据" />
-            <RadioButton
-                Margin="110,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="当前数据库"
-                IsChecked="True" />
-            <RadioButton
-                Margin="210,0,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="当前菜单结果集" />
+    <Window.Resources>
+        <Style x:Key="ArrowToggleStyle1" TargetType="ToggleButton">
+            <Setter Property="Background" Value="Beige" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Border Background="{TemplateBinding Background}">
+                            <Grid>
+                                <Image
+                                    x:Name="leftArrowImg"
+                                    Width="25"
+                                    Height="25"
+                                    Margin="3"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Source="{TemplateBinding Tag}" />
+                                <Image
+                                    x:Name="rightArrowImg"
+                                    Width="25"
+                                    Height="25"
+                                    Margin="3"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Source="{TemplateBinding Tag}" />
+                                <ContentPresenter
+                                    x:Name="content1"
+                                    Margin="30,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}" />
+                                <ContentPresenter
+                                    x:Name="content2"
+                                    Margin="30,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                    Content="{TemplateBinding Content}" />
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
+                                <Setter TargetName="leftArrowImg" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="rightArrowImg" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="content1" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="content2" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="leftArrowImg" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="rightArrowImg" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="content1" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="content2" Property="Visibility" Value="Hidden" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="DarkGray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid Margin="5,5,5,35" Background="White">
+            <Grid Margin="20">
+                <TextBlock VerticalAlignment="Top" Text="目标数据" />
+                <RadioButton
+                    Margin="110,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="当前数据库"
+                    IsChecked="True" />
+                <RadioButton
+                    Margin="210,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="当前菜单结果集" />
+            </Grid>
+            <Grid Margin="20,25,20,20">
+                <TextBlock
+                    Margin="0,50,0,0"
+                    VerticalAlignment="Top"
+                    Text="导出路径" />
+                <TextBox Margin="110,45,125,0" VerticalAlignment="Top" />
+                <Button
+                    Width="100"
+                    Margin="0,45,20,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Content="浏览..." />
+            </Grid>
+            <Grid Margin="20,125,20,20">
+                <TextBlock
+                    Margin="0,15,0,0"
+                    VerticalAlignment="Top"
+                    Text="文档类型" />
+                <ToggleButton
+                    Width="80"
+                    Margin="110,5,5,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="EXCEL"
+                    Style="{StaticResource ArrowToggleStyle1}"
+                    Tag="../Resources/Img/doc/EXCEL.png" />
+                <ToggleButton
+                    Width="80"
+                    Margin="200,5,5,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="WORD"
+                    Style="{StaticResource ArrowToggleStyle1}"
+                    Tag="../Resources/Img/doc/WORD.png" />
+                <ToggleButton
+                    Width="80"
+                    Margin="290,5,5,5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Content="PDF"
+                    IsChecked="True"
+                    Style="{StaticResource ArrowToggleStyle1}"
+                    Tag="../Resources/Img/doc/PDF.png" />
+            </Grid>
         </Grid>
-        <Grid Margin="20">
-            <TextBlock
-                Margin="0,50,0,0"
-                VerticalAlignment="Top"
-                Text="导出路径" />
-            <TextBox Margin="110,40,125,0" VerticalAlignment="Top" />
-            <Button
-                Margin="0,40,60,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Content="浏览..." />
-        </Grid>
-        <Grid Margin="20">
-            <TextBlock
-                Margin="0,105,0,0"
-                VerticalAlignment="Top"
-                Text="文档类型" />
-            <hc:ButtonGroup Margin="110,100,0,0" Style="{StaticResource ButtonGroupSolid}">
-                <RadioButton hc:IconElement.Geometry="{StaticResource CalendarGeometry}" Content="CHM" />
-                <RadioButton hc:IconElement.Geometry="{StaticResource CalendarGeometry}" Content="Word" />
-                <RadioButton hc:IconElement.Geometry="{StaticResource CalendarGeometry}" Content="PDF" />
-                <RadioButton hc:IconElement.Geometry="{StaticResource CalendarGeometry}" Content="Excel" />
-            </hc:ButtonGroup>
-        </Grid>
+        <hc:SimpleStackPanel
+            Margin="5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
+            <hc:UniformSpacingPanel Spacing="10">
+                <Button
+                    x:Name="BtnExport"
+                    Height="25"
+                    Padding="20,0,20,0"
+                    Content="导出"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    x:Name="BtnCancel"
+                    Height="25"
+                    Padding="20,0,20,0"
+                    Content="取消"
+                    Cursor="Hand" />
+            </hc:UniformSpacingPanel>
+        </hc:SimpleStackPanel>
 
     </Grid>
 </hc:Window>
