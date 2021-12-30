@@ -4,14 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace SmartCode.Tool.Views
 {
@@ -23,6 +16,37 @@ namespace SmartCode.Tool.Views
         public ExportDoc()
         {
             InitializeComponent();
+        }
+
+        private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            CommonFileDialogResult result = dialog.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
+            {
+                TxtPath.Text = dialog.FileName;
+            }
+        }
+
+        /// <summary>
+        /// 导出数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        /// <summary>
+        /// 取消
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

@@ -13,6 +13,14 @@ namespace SmartCode.DocUtils.Dtos
         public string CodeName { get; set; }
 
         public string Content { get; set; }
-        
+
+        public string StyleContent
+        {
+            get
+            {
+                return JS.RunStyleSql(Content?.Trim(), DBType);
+            }
+        }
+
     }
 }

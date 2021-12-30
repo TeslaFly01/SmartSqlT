@@ -201,6 +201,7 @@
             x:Name="LoadingG"
             Grid.Column="0"
             Grid.ColumnSpan="2"
+            BackgroundOpacity="0.2"
             Visibility="Collapsed" />
     </Grid>
 </hc:Window>

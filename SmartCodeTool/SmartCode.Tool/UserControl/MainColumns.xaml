@@ -2,11 +2,11 @@
     x:Class="SmartCode.Tool.UserControl.MainColumns"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Controls="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartCode.Tool.UserControl"
+    xmlns:localBase="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     mc:Ignorable="d">
@@ -92,7 +92,7 @@
                         HorizontalAlignment="Stretch"
                         Background="White"
                         Cursor="Arrow">
-                        <Controls:NoDataArea Margin="0" HorizontalAlignment="Center" />
+                        <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
                     </Grid>
                     <hc:SimpleStackPanel
                         Margin="5,0,5,5"
@@ -122,10 +122,6 @@
                                 Style="{StaticResource ButtonPrimary}" />
                         </hc:UniformSpacingPanel>
                     </hc:SimpleStackPanel>
-                    <hc:LoadingCircle
-                        x:Name="LoadingLineTable"
-                        Margin="0"
-                        Visibility="Hidden" />
                 </Grid>
             </TabItem>
 
@@ -176,7 +172,7 @@
                         HorizontalAlignment="Stretch"
                         Background="White"
                         Cursor="Arrow">
-                        <Controls:NoDataArea Margin="0" HorizontalAlignment="Center" />
+                        <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
                     </Grid>
                     <hc:Pagination
                         x:Name="PaginationTable"
@@ -267,6 +263,6 @@
                 </Grid>
             </TabItem>
         </TabControl>
-
+        <localBase:Loading x:Name="LoadingG" Visibility="Collapsed" />
     </Grid>
 </local:BaseUserControl>

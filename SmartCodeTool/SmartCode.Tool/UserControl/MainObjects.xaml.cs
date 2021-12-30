@@ -107,19 +107,20 @@ namespace SmartCode.Tool.UserControl
             NoDataText.Visibility = Visibility.Collapsed;
             if (SelectedObject.Type == ObjType.Type)
             {
+                var headerT = "表名称";
+                var placeHolderT = "请输入表名称或备注说明";
                 switch (SelectedObject.Name)
                 {
-                    case "treeTable":
-                        ObjHead.Header = "表名称";
-                        Placeholder = "请输入表名称或备注说明"; break;
+                    case "treeTable": break;
                     case "treeView":
-                        ObjHead.Header = "视图名称";
-                        Placeholder = "请输入视图名称或备注说明"; break;
+                        headerT = "视图名称";
+                        placeHolderT = "请输入视图名称或备注说明"; break;
                     default:
-                        ObjHead.Header = "存储过程名称";
-                        Placeholder = "请输入存储过程名称或备注说明"; break;
+                        headerT = "存储过程名称";
+                        placeHolderT = "请输入存储过程名称或备注说明"; break;
                 }
-
+                ObjHead.Header = headerT;
+                Placeholder = placeHolderT;
                 if (SelectedObject.Parent == null)
                 {
                     ObjectsViewData = ObjectsViewData.First(x => x.Name == SelectedObject.Name).Children;

@@ -153,9 +153,11 @@ namespace SmartCode.DocUtils.DBDoc
 
             ZlpIOHelper.WriteAllText(hhp_Path, hhp_tpl.RazorRender(new ChmHHP(filePath, this.WorkTmpDir)), CurrEncoding);
 
-
             string res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
-
+            if (!Directory.Exists(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log")))
+            {
+                Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log"));
+            }
             ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
         }
 

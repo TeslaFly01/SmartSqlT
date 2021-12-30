@@ -7,7 +7,7 @@
     IsVisibleChanged="HandleVisibleChanged"
     mc:Ignorable="d">
     <UserControl.Background>
-        <SolidColorBrush Opacity="0.2" Color="Black" />
+        <SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="Black" />
     </UserControl.Background>
     <UserControl.Resources>
         <SolidColorBrush x:Key="CirclesColor" Color="#FF007BE5" />

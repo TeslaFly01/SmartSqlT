@@ -40,8 +40,8 @@
     <Reference Include="EPPlus">
       <HintPath>..\..\Lib\EPPlus.dll</HintPath>
     </Reference>
-    <Reference Include="Esprima, Version=1.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Esprima.1.0.0-beta-001\lib\net45\Esprima.dll</HintPath>
+    <Reference Include="Esprima, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Esprima.2.0.0-beta-1338\lib\net461\Esprima.dll</HintPath>
     </Reference>
     <Reference Include="HandyControl, Version=3.3.0.0, Culture=neutral, PublicKeyToken=45be8712787a1e5b, processorArchitecture=MSIL">
       <HintPath>..\..\packages\HandyControl.3.3.0\lib\net461\HandyControl.dll</HintPath>

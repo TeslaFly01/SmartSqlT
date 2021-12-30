@@ -20,6 +20,7 @@ namespace SmartCode.DocUtils
             config.Language = Language.CSharp;
             config.EncodedStringFactory = new RawStringFactory();
             config.DisableTempFileLocking = true;
+            config.Namespaces.Add("RazorEngine");
             //config.EncodedStringFactory = new HtmlEncodedStringFactory();
             var service = RazorEngineService.Create(config);
             Engine.Razor = service;

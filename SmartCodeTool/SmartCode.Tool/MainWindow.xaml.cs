@@ -1032,7 +1032,7 @@ namespace SmartCode.Tool
         {
             var comboBoxItem = (ComboBox)sender;
             var dataBase = (ConnectConfigs)comboBoxItem.SelectedItem;
-            if (dataBase==null)
+            if (dataBase == null)
             {
                 return;
             }
@@ -1227,33 +1227,71 @@ namespace SmartCode.Tool
 
         private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
+            if (string.IsNullOrEmpty(ConnectionString))
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
+                return;
+            }
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            LoadingG.Visibility = Visibility.Visible;
+            //ExportDoc exportDoc = new ExportDoc();
+            //exportDoc.Owner = this;
+            //exportDoc.ShowDialog();
+            Task.Run(() =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    var dbDto = new DBDto(selectDatabase.DbName)
+                    {
+                        DBType = "SqlServer",
+                        Tables = Trans2Table(TreeViewData),
+                        Procs = Trans2Dictionary(TreeViewData, "Proc"),
+                        Views = Trans2Dictionary(TreeViewData, "View")
+                    };
+                    //chm、html、xml生成目前有问题
+                    var doc = DocFactory.CreateInstance(DocType.chm, dbDto);
+                    SaveFileDialog saveDia = new SaveFileDialog();
+                    saveDia.Filter = doc.Filter;
+                    saveDia.Title = "另存文件为";
+                    saveDia.CheckPathExists = true;
+                    saveDia.AddExtension = true;
+                    //saveDia.AutoUpgradeEnabled = true;
+                    saveDia.DefaultExt = doc.Ext;
+                    saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                    saveDia.OverwritePrompt = true;
+                    saveDia.ValidateNames = true;
+                    saveDia.FileName = doc.Dto.DBName + "表结构信息" + doc.Ext;
+                    var diaResult = saveDia.ShowDialog();
+                    if (diaResult == true)
+                    {
+                        doc.Build(saveDia.FileName);
+                    }
+                    LoadingG.Visibility = Visibility.Collapsed;
+                });
+            });
+        }
 
-            ExportDoc exportDoc = new ExportDoc();
-            exportDoc.Owner = this;
-            exportDoc.ShowDialog();
-            //var dbDto = new DBDto(selectDatabase.DbName)
-            //{
-            //    DBType = "SqlServer",
-            //    Tables = Trans2Table(TreeViewData),
-            //    Procs = new Dictionary<string, string>(),
-            //    Views = new Dictionary<string, string>()
-            //};
-            ////chm、html、xml生成目前有问题
-            //var doc = DocFactory.CreateInstance(DocType.xml, dbDto);
-            //SaveFileDialog saveDia = new SaveFileDialog();
-            //saveDia.Filter = doc.Filter;
-            //saveDia.Title = "另存文件为";
-            //saveDia.CheckPathExists = true;
-            //saveDia.AddExtension = true;
-            ////saveDia.AutoUpgradeEnabled = true;
-            //saveDia.DefaultExt = doc.Ext;
-            //saveDia.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-            //saveDia.OverwritePrompt = true;
-            //saveDia.ValidateNames = true;
-            //saveDia.FileName = doc.Dto.DBName + "表结构信息" + doc.Ext;
-            //var diaResult = saveDia.ShowDialog();
-            //doc.Build(saveDia.FileName);
+        private Dictionary<string, string> Trans2Dictionary(List<PropertyNodeItem> treeViewData, string type)
+        {
+            var dic = new Dictionary<string, string>();
+            foreach (var group in treeViewData)
+            {
+                if (group.Name.Equals("treeTable"))
+                {
+                    continue;
+                }
+                foreach (var item in group.Children)
+                {
+                    if (item.Type == type)
+                    {
+                        var objectId = Convert.ToInt32(item.ObejcetId);
+                        IExporter exporter = new SqlServer2008Exporter();
+                        var script = exporter.GetScripts(objectId, SelectendConnection.DbMasterConnectString.Replace("master", ((DataBase)SelectDatabase.SelectedItem).DbName));
+                        dic.Add(item.DisplayName, script);
+                    }
+                }
+            }
+            return dic;
         }
 
         private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData)
@@ -1272,12 +1310,12 @@ namespace SmartCode.Tool
                     tbDto.TableOrder = orderNo.ToString();
                     tbDto.TableName = node.DisplayName;
                     tbDto.Comment = node.Comment;
-                    tbDto.DBType = "SQL Server";
+                    tbDto.DBType = "SqlServer";
 
                     var lst_col_dto = new List<ColumnDto>();
                     var objectId = Convert.ToInt32(node.ObejcetId);
                     IExporter exporter = new SqlServer2008Exporter();
-                    var columns = exporter.GetColumnsExt(objectId, SelectendConnection.DbMasterConnectString.Replace("master",((DataBase)SelectDatabase.SelectedItem).DbName));
+                    var columns = exporter.GetColumnsExt(objectId, SelectendConnection.DbMasterConnectString.Replace("master", ((DataBase)SelectDatabase.SelectedItem).DbName));
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();
@@ -1306,7 +1344,7 @@ namespace SmartCode.Tool
                     tables.Add(tbDto);
                     orderNo++;
                 }
-                
+
             }
             return tables;
         }

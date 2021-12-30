@@ -84,7 +84,6 @@ namespace SmartCode.Tool.Views
                 TextServerName.Text = connect.UserName;
                 ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
                 TextDefaultDataBase.Text = connect.DefaultDatabase;
-                BtnDelete.Visibility = Visibility.Visible;
                 TextServerPassword.Password = pwd;
                 BtnConnect.IsEnabled = true;
             }
@@ -194,42 +193,6 @@ namespace SmartCode.Tool.Views
             });
         }
 
-        private void ConnectControlIsEnable(bool isEnable)
-        {
-            if (isEnable)
-            {
-                LoadingG.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                LoadingG.Visibility = Visibility.Visible;
-            }
-            ListConnects.IsEnabled = isEnable;
-            BtnAdd.IsEnabled = isEnable;
-            BtnDelete.IsEnabled = isEnable;
-            BtnTestConnect.IsEnabled = isEnable;
-            BtnConnect.IsEnabled = isEnable;
-            BtnCancel.IsEnabled = isEnable;
-            var el = ConnectForm.Children;
-            foreach (UIElement element in el)
-            {
-                if (element is HandyControl.Controls.TextBox)
-                {
-                    element.IsEnabled = isEnable;
-                }
-                if (element is HandyControl.Controls.PasswordBox)
-                {
-                    element.IsEnabled = isEnable;
-                }
-                if (element is System.Windows.Controls.ComboBox)
-                {
-                    element.IsEnabled = isEnable;
-                }
-            }
-            TextServerAddress.IsEnabled = isEnable;
-            TextServerPort.IsEnabled = isEnable;
-        }
-
         /// <summary>
         /// 取消
         /// </summary>
@@ -295,7 +258,6 @@ namespace SmartCode.Tool.Views
 
         private void ResetData()
         {
-            BtnDelete.Visibility = Visibility.Hidden;
             HidId.Text = "0";
             TextConnectName.Text = "";
             TextServerAddress.Text = "";

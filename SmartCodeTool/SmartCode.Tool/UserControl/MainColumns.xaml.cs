@@ -123,7 +123,7 @@ namespace SmartCode.Tool.UserControl
                 SearchColumns.Text = string.Empty;
                 var isView = selectedObjct.Type == ObjType.View;
                 TabTable.SelectedItem = TabStruct;
-                LoadingLineTable.Visibility = TabStruct.Visibility = Visibility.Visible;
+                LoadingG.Visibility = TabStruct.Visibility = Visibility.Visible;
                 TabData.Visibility = Visibility.Collapsed;// isView ? Visibility.Collapsed : Visibility.Visible;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
@@ -143,7 +143,7 @@ namespace SmartCode.Tool.UserControl
                         SourceColunmData = list;
                         ObjectColumns = list;
                         ColList = list;
-                        LoadingLineTable.Visibility = Visibility.Collapsed;
+                        LoadingG.Visibility = Visibility.Collapsed;
                         if (!list.Any())
                         {
                             NoDataText.Visibility = Visibility.Visible;

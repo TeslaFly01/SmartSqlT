@@ -21,10 +21,21 @@ namespace SmartCode.Tool.UserControl.Controls
     /// </summary>
     public partial class Loading : System.Windows.Controls.UserControl
     {
+        public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(
+            "BackgroundOpacity", typeof(double), typeof(Loading), new PropertyMetadata(default(double)));
+
+        /// <summary>
+        /// 当前选中对象
+        /// </summary>
+        public double BackgroundOpacity
+        {
+            get => (double) GetValue(BackgroundOpacityProperty);
+            set => SetValue(BackgroundOpacityProperty, value);
+        } 
         public Loading()
         {
             InitializeComponent();
-
+            DataContext = this;
             animationTimer = new DispatcherTimer(
                 DispatcherPriority.ContextIdle, Dispatcher);
             animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 90);
