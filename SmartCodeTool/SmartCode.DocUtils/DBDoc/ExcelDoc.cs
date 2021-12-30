@@ -182,7 +182,7 @@ namespace SmartCode.DocUtils.DBDoc
             {
                 var lstName = new List<string>
                 {
-                    "序号","列名","数据类型","长度","小数位","主键","自增","允许空","默认值","列说明"
+                    "序号","列名","数据类型","长度","主键","自增","允许空","默认值","列说明"
                 };
 
                 //oracle不显示 列是否自增
@@ -227,22 +227,21 @@ namespace SmartCode.DocUtils.DBDoc
                     tbWorksheet.Cells[rowNum, 2].Value = column.ColumnName;
                     tbWorksheet.Cells[rowNum, 3].Value = column.ColumnTypeName;
                     tbWorksheet.Cells[rowNum, 4].Value = column.Length;
-                    tbWorksheet.Cells[rowNum, 5].Value = column.Scale;
-                    tbWorksheet.Cells[rowNum, 6].Value = column.IsPK;
+                    tbWorksheet.Cells[rowNum, 5].Value = column.IsPK;
 
                     //oracle不显示 列是否自增
                     if (table.DBType.StartsWith("Oracle"))
                     {
-                        tbWorksheet.Cells[rowNum, 7].Value = column.CanNull;
-                        tbWorksheet.Cells[rowNum, 8].Value = column.DefaultVal;
-                        tbWorksheet.Cells[rowNum, 9].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 6].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 7].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.Comment;
                     }
                     else
                     {
-                        tbWorksheet.Cells[rowNum, 7].Value = column.IsIdentity;
-                        tbWorksheet.Cells[rowNum, 8].Value = column.CanNull;
-                        tbWorksheet.Cells[rowNum, 9].Value = column.DefaultVal;
-                        tbWorksheet.Cells[rowNum, 10].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 6].Value = column.IsIdentity;
+                        tbWorksheet.Cells[rowNum, 7].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 9].Value = column.Comment;
                     }
                     rowNum++; // 行号+1
                 }

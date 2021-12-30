@@ -32,11 +32,11 @@ namespace SmartCode.DocUtils.Dtos
         [Display(Name = "长度")]
         public string Length { get; set; }
 
-        /// <summary>
-        /// 小数位
-        /// </summary>
-        [Display(Name = "小数位数")]
-        public string Scale { get; set; }
+        // <summary>
+        // 小数位
+        // </summary>
+        //[Display(Name = "小数位数")]
+        //public string Scale { get; set; }
 
         /// <summary>
         /// 主键

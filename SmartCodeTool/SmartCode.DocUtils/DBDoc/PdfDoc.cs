@@ -112,7 +112,6 @@ namespace SmartCode.DocUtils.DBDoc
                 pdfTable.AddCell(CreatePdfPCell("列名", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("数据类型", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("长度", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("小数位", pdfFont));
                 pdfTable.AddCell(CreatePdfPCell("主键", pdfFont));
 
                 if (!table.DBType.StartsWith("Oracle"))
@@ -130,7 +129,6 @@ namespace SmartCode.DocUtils.DBDoc
                     pdfTable.AddCell(CreatePdfPCell(column.ColumnName, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.ColumnTypeName, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.Length, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.Scale, pdfFont));
                     pdfTable.AddCell(CreatePdfPCell(column.IsPK, pdfFont));
 
                     if (!table.DBType.StartsWith("Oracle"))
@@ -150,11 +148,11 @@ namespace SmartCode.DocUtils.DBDoc
 
                 if (!table.DBType.StartsWith("Oracle"))
                 {
-                    pdfTable.SetWidths(new float[] { 50F, 60F, 60F, 50F, 50F, 50F, 50F, 50F, 50F, 50F });
+                    pdfTable.SetWidths(new float[] { 50F, 60F, 60F, 50F, 50F, 50F, 50F, 50F, 50F });
                 }
                 else
                 {
-                    pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 50F, 70F });
+                    pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 70F });
                 }
                     
 

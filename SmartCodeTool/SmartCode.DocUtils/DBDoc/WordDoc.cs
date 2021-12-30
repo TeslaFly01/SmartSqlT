@@ -135,9 +135,9 @@ namespace SmartCode.DocUtils.DBDoc
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
                 builder.Write("长度");
 
-                builder.InsertCell();
-                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
-                builder.Write("小数位");
+                //builder.InsertCell();
+                //builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
+                //builder.Write("小数位");
 
                 builder.InsertCell();
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
@@ -190,8 +190,8 @@ namespace SmartCode.DocUtils.DBDoc
                     builder.InsertCell();
                     builder.Write(column.Length); // 长度
 
-                    builder.InsertCell();
-                    builder.Write(column.Scale); // 小数位
+                    //builder.InsertCell();
+                    //builder.Write(column.Scale); // 小数位
 
                     builder.InsertCell();
                     builder.Write(column.IsPK); // 主键

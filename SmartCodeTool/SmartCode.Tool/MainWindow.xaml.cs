@@ -1326,7 +1326,7 @@ namespace SmartCode.Tool
                         // 长度
                         colDto.Length = col.Value.Length;
                         // 小数位
-                        colDto.Scale = "0";//(col.Scale.HasValue ? col.Scale.Value.ToString() : "");
+                        //colDto.Scale = "";//(col.Scale.HasValue ? col.Scale.Value.ToString() : "");
                         // 主键
                         colDto.IsPK = (col.Value.IsPrimaryKey ? "√" : "");
                         // 自增

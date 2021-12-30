@@ -90,7 +90,6 @@
                                 <td>列名</td>
                                 <td>数据类型</td>
                                 <td>长度</td>
-                                <td>小数位数</td>
                                 <td>主键</td>
                                 @if (!Model.DBType.StartsWith("Oracle"))
                                 {
@@ -110,7 +109,6 @@
                                     <td>@item.ColumnName</td>
                                     <td>@item.ColumnTypeName</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Scale)? "&nbsp;":item.Scale)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
 
                                     @if (!Model.DBType.StartsWith("Oracle"))

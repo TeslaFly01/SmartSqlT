@@ -650,7 +650,6 @@
                                     <td>列名</td>
                                     <td>数据类型</td>
                                     <td>长度</td>
-                                    <td>小数位数</td>
                                     <td>主键</td>
 
                                     @if (!item.DBType.StartsWith("Oracle"))
@@ -670,7 +669,6 @@
                                         <td style="text-align: left">@column.ColumnName</td>
                                         <td>@column.ColumnTypeName</td>
                                         <td>@column.Length</td>
-                                        <td>@column.Scale</td>
                                         <td>@column.IsPK</td>
 
                                         @if (!item.DBType.StartsWith("Oracle"))
