@@ -20,6 +20,7 @@ using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Tool.Annotations;
 using SmartCode.Tool.Models;
+using SmartCode.Tool.Views;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControlE = System.Windows.Controls.UserControl;
 using MessageBox = HandyControl.Controls.MessageBox;
@@ -227,6 +228,22 @@ namespace SmartCode.Tool.UserControl
                 }
             }
             #endregion
+        }
+
+        /// <summary>
+        /// 导出文档
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnExport_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            ExportDoc exportDoc = new ExportDoc();
+            exportDoc.Owner = mainWindow;
+            exportDoc.SelectedConnection = SelectedConnection;
+            exportDoc.SelectedDataBase = SelectedDataBase;
+            exportDoc.ExportData = ObjectsViewData;
+            exportDoc.ShowDialog();
         }
     }
 }

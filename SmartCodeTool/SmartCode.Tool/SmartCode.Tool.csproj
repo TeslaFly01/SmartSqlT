@@ -306,6 +306,8 @@
     <Content Include="htmlhelp.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\doc.ico" />
+    <Resource Include="Resources\Img\doc\MARKDOWN.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Img\mssql.png">
@@ -313,9 +315,7 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Img\doc\CHM.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
+    <Resource Include="Resources\Img\doc\CHM.png" />
     <Resource Include="Resources\Img\doc\EXCEL.png" />
     <Resource Include="Resources\Img\doc\HTML.png" />
     <Resource Include="Resources\Img\doc\PDF.png">

@@ -100,11 +100,11 @@ namespace SmartCode.DocUtils.DBDoc
                 PdfPTable pdfTable = null;
                 if (!table.DBType.StartsWith("Oracle"))
                 {
-                    pdfTable = new PdfPTable(10);
+                    pdfTable = new PdfPTable(9);
                 }
                 else
                 {
-                    pdfTable = new PdfPTable(9);
+                    pdfTable = new PdfPTable(8);
                 }
 
                 //  添加列标题

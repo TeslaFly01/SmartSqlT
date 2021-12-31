@@ -196,7 +196,7 @@
                             <CheckBox
                                 Name="CheckIsGroup"
                                 Grid.Column="1"
-                                Margin="13,7,0,0"
+                                Margin="10,7,0,0"
                                 VerticalAlignment="Top"
                                 Click="CheckIsGroup_OnClick"
                                 Content="业务分组"
@@ -303,6 +303,7 @@
                             <Grid>
                                 <ComboBox
                                     x:Name="CbTargetConnect"
+                                    Height="26"
                                     VerticalAlignment="Bottom"
                                     HorizontalContentAlignment="Left"
                                     hc:InfoElement.Placeholder="目标连接"
@@ -399,11 +400,11 @@
                 </hc:TabControl>
             </Grid>
         </DockPanel>
-        <local:Loading
+        <!--<local:Loading
             x:Name="LoadingG"
             Grid.Column="0"
             Grid.ColumnSpan="3"
             BackgroundOpacity="0.2"
-            Visibility="Collapsed" />
+            Visibility="Collapsed" />-->
     </Grid>
 </hc:GlowWindow>

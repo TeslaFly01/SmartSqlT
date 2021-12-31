@@ -24,7 +24,7 @@
         <!--  结构数据展现框  -->
         <DataGrid
             x:Name="TableGrid"
-            Margin="0,38,0,38"
+            Margin="0,38,0,32"
             hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
             hc:DataGridAttach.ShowRowNumber="True"
             AutoGenerateColumns="False"
@@ -47,7 +47,23 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.CellStyle>
+            <DataGrid.RowHeaderTemplate>
+                <DataTemplate>
+                    <CheckBox IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridCell}}" />
+                </DataTemplate>
+            </DataGrid.RowHeaderTemplate>
             <DataGrid.Columns>
+                <DataGridTemplateColumn Width="55" Header="序号">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Header}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
                 <DataGridTextColumn
                     x:Name="ObjHead"
                     Binding="{Binding DisplayName}"
@@ -71,7 +87,7 @@
         </DataGrid>
         <Grid
             x:Name="NoDataText"
-            Margin="5,45,5,45"
+            Margin="5,45,5,32"
             HorizontalAlignment="Stretch"
             Background="White"
             Cursor="Arrow">
@@ -82,26 +98,24 @@
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom">
             <hc:UniformSpacingPanel Spacing="10">
+                <Button
+                    x:Name="BtnExport"
+                    Height="26"
+                    hc:IconElement.Geometry="{StaticResource DocGeometry}"
+                    Click="BtnExport_OnClick"
+                    Content="导出文档"
+                    Style="{StaticResource ButtonWarning}" />
                 <!--<Button
                     x:Name="BtnSetGroup"
-                    Height="30"
+                    Height="26"
                     hc:IconElement.Geometry="{StaticResource TwoPageModeGeometry}"
-                    Click="BtnSetGroup_OnClick"
                     Content="设置分组"
                     Style="{StaticResource ButtonWarning}" />
                 <Button
-                    x:Name="BtnCopyColumnScript"
-                    Height="30"
-                    hc:IconElement.Geometry="{StaticResource TwoPageModeGeometry}"
-                    Click="BtnCopyColumnScript_OnClick"
-                    Content="生成字段脚本"
-                    Style="{StaticResource ButtonPrimary}" />
-                <Button
                     x:Name="BtnCreateEntity"
-                    Height="30"
+                    Height="26"
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
-                    Click="BtnCreateEntity_OnClick"
-                    Content="生成C#实体类"
+                    Content="生成实体类"
                     Style="{StaticResource ButtonPrimary}" />-->
             </hc:UniformSpacingPanel>
         </hc:SimpleStackPanel>

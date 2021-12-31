@@ -5,11 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartCode.Tool.Views"
+    xmlns:localBase="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="导出文档"
     Width="540"
-    Height="330"
+    Height="350"
     BorderThickness="0"
+    Icon="../Resources/Img/doc.ico"
+    Loaded="ExportDoc_OnLoaded"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
@@ -102,6 +105,14 @@
                                 <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/HTML.png" />
                                 <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/HTML.png" />
                             </Trigger>
+                            <Trigger Property="Content" Value="CHM">
+                                <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/CHM.png" />
+                                <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/CHM.png" />
+                            </Trigger>
+                            <Trigger Property="Content" Value="MarkDown">
+                                <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/MARKDOWN.png" />
+                                <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/MARKDOWN.png" />
+                            </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
                 </Setter.Value>
@@ -111,11 +122,16 @@
     <Grid>
         <Grid Margin="5,5,5,35" Background="White">
             <Grid Margin="20">
-                <TextBlock VerticalAlignment="Top" Text="目标数据" />
+                <TextBlock
+                    Margin="0,2,0,0"
+                    VerticalAlignment="Top"
+                    Text="目标数据" />
                 <RadioButton
                     Margin="85,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
+                    hc:Poptip.Content="包含：表、视图、存储过程，较多时导出可能较慢"
+                    hc:Poptip.Placement="BottomLeft"
                     Content="当前数据库"
                     IsChecked="True" />
                 <RadioButton
@@ -126,7 +142,7 @@
             </Grid>
             <Grid Margin="20,25,20,20">
                 <TextBlock
-                    Margin="0,50,0,0"
+                    Margin="0,52,0,0"
                     VerticalAlignment="Top"
                     Text="导出路径" />
                 <TextBox
@@ -144,40 +160,85 @@
             </Grid>
             <Grid Margin="20,125,20,20">
                 <TextBlock
-                    Margin="0,15,0,0"
+                    Margin="0,12,0,0"
                     VerticalAlignment="Top"
                     Text="文档类型" />
-                <ToggleButton
-                    Width="80"
-                    Margin="85,5,5,5"
-                    HorizontalAlignment="Left"
+                <WrapPanel Name="ToggleWarpPanel" Margin="85,5,5,5">
+                    <ToggleButton
+                        Name="Chm"
+                        Width="80"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="CHM"
+                        IsChecked="True"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="Excel"
+                        Width="80"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="EXCEL"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="Word"
+                        Width="83"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="WORD"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="Pdf"
+                        Width="70"
+                        Margin="10,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="PDF"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="Html"
+                        Width="80"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="HTML"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="MarkDown"
+                        Width="105"
+                        Margin="10,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="MarkDown"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                </WrapPanel>
+            </Grid>
+            <Grid Margin="20,205,20,20">
+                <TextBlock
+                    Margin="0,25,0,0"
                     VerticalAlignment="Top"
-                    Content="EXCEL"
-                    IsChecked="True"
-                    Style="{StaticResource ArrowToggleStyle1}" />
-                <ToggleButton
-                    Width="83"
-                    Margin="175,5,5,5"
-                    HorizontalAlignment="Left"
+                    Text="文档名称" />
+                <hc:TextBox
+                    Name="TxtFileName"
+                    Height="30"
+                    Margin="85,10,77,0"
+                    ShowClearButton="True" />
+                <Label
+                    Name="LblFileExtend"
+                    Width="55"
+                    Height="30"
+                    Margin="0,17,20,0"
+                    HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Content="WORD"
-                    Style="{StaticResource ArrowToggleStyle1}" />
-                <ToggleButton
-                    Width="70"
-                    Margin="268,5,5,5"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="PDF"
-                    Style="{StaticResource ArrowToggleStyle1}" />
-                <ToggleButton
-                    Width="80"
-                    Margin="348,5,5,5"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Content="HTML"
-                    Style="{StaticResource ArrowToggleStyle1}" />
-
-
+                    Background="WhiteSmoke"
+                    Content=".chm" />
             </Grid>
         </Grid>
         <hc:SimpleStackPanel
@@ -202,6 +263,10 @@
                     Cursor="Hand" />
             </hc:UniformSpacingPanel>
         </hc:SimpleStackPanel>
-
+        <localBase:Loading
+            x:Name="LoadingG"
+            Grid.Column="0"
+            BackgroundOpacity="0.3"
+            Visibility="Collapsed" />
     </Grid>
 </hc:Window>
