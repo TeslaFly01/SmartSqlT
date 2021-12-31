@@ -136,14 +136,27 @@ namespace SmartCode.Tool.Views
                 {
                     continue;
                 }
-                foreach (var item in group.Children)
+                if (group.Type=="Type")
                 {
-                    if (item.Type == type)
+                    foreach (var item in group.Children)
                     {
-                        var objectId = Convert.ToInt32(item.ObejcetId);
+                        if (item.Type == type)
+                        {
+                            var objectId = Convert.ToInt32(item.ObejcetId);
+                            IExporter exporter = new SqlServer2008Exporter();
+                            var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                            dic.Add(item.DisplayName, script);
+                        }
+                    }
+                }
+                else
+                {
+                    if (group.Type == type)
+                    {
+                        var objectId = Convert.ToInt32(group.ObejcetId);
                         IExporter exporter = new SqlServer2008Exporter();
                         var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                        dic.Add(item.DisplayName, script);
+                        dic.Add(group.DisplayName, script);
                     }
                 }
             }
@@ -239,10 +252,7 @@ namespace SmartCode.Tool.Views
                     tbDto.Columns = lst_col_dto;
                     tables.Add(tbDto);
                     groupNo++;
-
                 }
-
-
             }
             return tables;
         }
