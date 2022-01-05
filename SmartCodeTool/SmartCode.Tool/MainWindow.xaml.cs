@@ -65,6 +65,14 @@ namespace SmartCode.Tool
         public Model dataSource = new Model();
         public List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
 
+        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
+            "CornerRadius", typeof(int), typeof(MainWindow), new PropertyMetadata(default(int)));
+
+        public int CornerRadius
+        {
+            get => (int)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
+        }
 
         public static readonly DependencyProperty DBaseProperty = DependencyProperty.Register(
             "DBase", typeof(List<DataBase>), typeof(MainWindow), new PropertyMetadata(default(List<DataBase>)));
@@ -109,8 +117,9 @@ namespace SmartCode.Tool
             var isGroup = sqLiteHelper.GetSys("IsGroup");
             CheckIsGroup.IsChecked = isGroup;
             var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
-            MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
-            MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
+            CornerRadius = isMultipleTab ? 0 : 10;
+            //MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
+            //MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
             MainTabW.DataContext = TabItemData;
             MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
         }
@@ -983,6 +992,7 @@ namespace SmartCode.Tool
                 {
                     TabItemData.Clear();
                 }
+                CornerRadius = 10;
                 MainW.Visibility = Visibility.Visible;
                 MainTabW.Visibility = Visibility.Collapsed;
                 MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
@@ -992,6 +1002,7 @@ namespace SmartCode.Tool
                 MainW.LoadPage(TreeViewData);
                 return;
             }
+            CornerRadius = 0;
             MainW.Visibility = Visibility.Collapsed;
             MainTabW.Visibility = Visibility.Visible;
             var curItem = TabItemData.FirstOrDefault(x => x.DisplayName == objects.DisplayName);

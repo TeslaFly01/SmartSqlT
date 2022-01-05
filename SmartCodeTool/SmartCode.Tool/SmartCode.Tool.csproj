@@ -306,6 +306,7 @@
     <Content Include="htmlhelp.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\bg.png" />
     <Resource Include="Resources\Img\doc.ico" />
     <Resource Include="Resources\Img\doc\MARKDOWN.png" />
   </ItemGroup>

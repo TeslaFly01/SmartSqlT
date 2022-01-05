@@ -18,6 +18,9 @@
     Style="{StaticResource WindowGlow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Command="Copy" Gesture="Control + C" />
+    </Window.InputBindings>
     <hc:GlowWindow.NonClientAreaContent>
         <StackPanel Height="29" Margin="25,0,0,0">
             <Menu HorizontalAlignment="Left">
@@ -153,7 +156,7 @@
                 <Border
                     Margin="5,5,0,5"
                     Background="{DynamicResource RegionBrush}"
-                    CornerRadius="10">
+                    CornerRadius="{Binding CornerRadius}">
                     <Grid
                         Height="Auto"
                         Margin="5"
@@ -362,8 +365,16 @@
         <!--  主内容  -->
         <DockPanel Grid.Row="0" Grid.Column="2">
             <Grid Margin="0,5,5,5">
-                <userControl:MainW x:Name="MainW" />
+                <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                    <Image
+                        Width="350"
+                        Height="325"
+                        Source="Resources/Img/bg.png" />
+                </Border>
+                <!--  单选项卡  -->
+                <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
 
+                <!--  多选项卡  -->
                 <hc:TabControl
                     Name="MainTabW"
                     IsAnimationEnabled="True"
@@ -371,7 +382,7 @@
                     IsTabFillEnabled="False"
                     ItemsSource="{Binding TabItemData}"
                     ShowCloseButton="True"
-                    Visibility="Visible">
+                    Visibility="Collapsed">
                     <hc:TabControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -400,11 +411,5 @@
                 </hc:TabControl>
             </Grid>
         </DockPanel>
-        <!--<local:Loading
-            x:Name="LoadingG"
-            Grid.Column="0"
-            Grid.ColumnSpan="3"
-            BackgroundOpacity="0.2"
-            Visibility="Collapsed" />-->
     </Grid>
 </hc:GlowWindow>

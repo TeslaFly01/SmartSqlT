@@ -133,12 +133,14 @@
                     hc:Poptip.Content="包含：表、视图、存储过程，较多时导出可能较慢"
                     hc:Poptip.Placement="BottomLeft"
                     Content="当前数据库"
-                    IsChecked="True" />
+                    IsChecked="True"
+                    IsEnabled="False" />
                 <RadioButton
                     Margin="185,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="当前菜单结果集" />
+                    Content="当前菜单结果集"
+                    IsEnabled="False" />
             </Grid>
             <Grid Margin="20,25,20,20">
                 <TextBlock
