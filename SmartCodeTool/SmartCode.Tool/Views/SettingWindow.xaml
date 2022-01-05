@@ -10,6 +10,7 @@
     Width="550"
     Height="330"
     BorderThickness="0"
+    ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>

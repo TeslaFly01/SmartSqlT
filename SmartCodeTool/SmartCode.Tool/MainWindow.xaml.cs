@@ -1246,6 +1246,7 @@ namespace SmartCode.Tool
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             ExportDoc exportDoc = new ExportDoc();
             exportDoc.Owner = this;
+            exportDoc.ExportType = ExportEnum.All;
             exportDoc.SelectedConnection = SelectendConnection;
             exportDoc.SelectedDataBase = selectDatabase;
             exportDoc.ExportData = TreeViewData;

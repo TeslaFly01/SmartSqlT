@@ -15,7 +15,7 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <hc:SimplePanel>
+    <hc:SimplePanel Background="White">
         <Image
             Width="40"
             Height="40"

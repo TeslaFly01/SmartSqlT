@@ -57,6 +57,17 @@ namespace SmartCode.Tool.Views
             get => (List<PropertyNodeItem>)GetValue(ExportDataProperty);
             set => SetValue(ExportDataProperty, value);
         }
+
+        public static readonly DependencyProperty ExportTypeProperty = DependencyProperty.Register(
+            "ExportType", typeof(ExportEnum), typeof(ExportDoc), new PropertyMetadata(default(ExportEnum)));
+        /// <summary>
+        /// 导出类型
+        /// </summary>
+        public ExportEnum ExportType
+        {
+            get => (ExportEnum)GetValue(ExportTypeProperty);
+            set => SetValue(ExportTypeProperty, value);
+        }
         #endregion
 
         public ExportDoc()
@@ -69,6 +80,8 @@ namespace SmartCode.Tool.Views
         {
             Title = $"{SelectedDataBase.DbName} - {Title}";
             TxtFileName.Text = SelectedDataBase.DbName + "表结构信息";
+            CheckAll.IsChecked = ExportType == ExportEnum.All;
+            CheckPart.IsChecked = ExportType == ExportEnum.Partial;
         }
 
         private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)

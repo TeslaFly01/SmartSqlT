@@ -207,7 +207,7 @@
                             <Button
                                 Name="BtnFresh"
                                 Grid.Column="2"
-                                Margin="0"
+                                Margin="-5,0,0,0"
                                 Padding="7"
                                 VerticalAlignment="Top"
                                 hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"

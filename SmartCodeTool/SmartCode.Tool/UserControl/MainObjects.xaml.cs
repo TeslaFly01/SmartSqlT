@@ -240,6 +240,7 @@ namespace SmartCode.Tool.UserControl
             var mainWindow = System.Windows.Window.GetWindow(this);
             ExportDoc exportDoc = new ExportDoc();
             exportDoc.Owner = mainWindow;
+            exportDoc.ExportType = ExportEnum.Partial;
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = SelectedDataBase;
             exportDoc.ExportData = ObjectsViewData;

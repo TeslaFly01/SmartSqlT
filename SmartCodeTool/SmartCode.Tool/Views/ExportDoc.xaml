@@ -127,6 +127,7 @@
                     VerticalAlignment="Top"
                     Text="目标数据" />
                 <RadioButton
+                    x:Name="CheckAll"
                     Margin="85,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
@@ -136,6 +137,7 @@
                     IsChecked="True"
                     IsEnabled="False" />
                 <RadioButton
+                    x:Name="CheckPart"
                     Margin="185,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
