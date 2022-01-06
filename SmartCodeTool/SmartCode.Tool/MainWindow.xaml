@@ -50,7 +50,7 @@
                                 <MenuItem.Icon>
                                     <Path
                                         x:Name="MeIcon"
-                                        Data="{StaticResource ScrollModeGeometry}"
+                                        Data="{StaticResource ConnectGeometry}"
                                         Fill="{DynamicResource DarkPrimaryBrush}"
                                         Stretch="Uniform" />
                                 </MenuItem.Icon>
@@ -66,7 +66,7 @@
                     Header="文件">
                     <MenuItem.Icon>
                         <Path
-                            Data="{StaticResource BlogGeometry}"
+                            Data="{StaticResource FileGeometry}"
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
@@ -77,7 +77,7 @@
                         Header="新建连接">
                         <MenuItem.Icon>
                             <Path
-                                Data="{StaticResource BlogGeometry}"
+                                Data="{StaticResource NewConnectGeometry}"
                                 Fill="{DynamicResource DarkPrimaryBrush}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
@@ -89,7 +89,7 @@
                         Header="导出文档">
                         <MenuItem.Icon>
                             <Path
-                                Data="{StaticResource DocGeometry}"
+                                Data="{StaticResource ExportGeometry}"
                                 Fill="{DynamicResource DarkPrimaryBrush}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
@@ -104,7 +104,7 @@
                     Header="分组">
                     <MenuItem.Icon>
                         <Path
-                            Data="{StaticResource WindowRestoreGeometry}"
+                            Data="{StaticResource GroupGeometry}"
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
@@ -118,7 +118,7 @@
                     Header="设置">
                     <MenuItem.Icon>
                         <Path
-                            Data="{StaticResource AlignRightGeometry}"
+                            Data="{StaticResource SettingGeometry}"
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
