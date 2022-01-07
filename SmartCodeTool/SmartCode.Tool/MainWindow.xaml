@@ -336,7 +336,7 @@
                                     Margin="5,5,0,0"
                                     HorizontalAlignment="Right"
                                     hc:BorderElement.CornerRadius="6"
-                                    hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                                    hc:IconElement.Geometry="{StaticResource CompareGeometry}"
                                     Click="BtnCompare_OnClick"
                                     Content="差异比较"
                                     Cursor="Hand" />
