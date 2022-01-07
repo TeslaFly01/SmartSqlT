@@ -3,17 +3,20 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Resources;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using SmartCode.DocUtils.Dtos;
+using SmartCode.DocUtils.Properties;
 using ZetaLongPaths;
 
 namespace SmartCode.DocUtils.DBDoc
 {
     public class ChmDoc : Doc
     {
+        private static string ChmPath = Path.Combine(TplPath, "chm");
         public ChmDoc(DBDto dto, string filter = "chm files (*.chm)|*.chm") : base(dto, filter)
         {
 
@@ -62,8 +65,64 @@ namespace SmartCode.DocUtils.DBDoc
                 ZlpIOHelper.CreateDirectory(tmpDir);
             }
 
-
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm\\");
+            if (!Directory.Exists(ChmPath))
+            {
+                Directory.CreateDirectory(ChmPath);
+            }
+            if (!Directory.Exists(Path.Combine(ChmPath, "embed")))
+            {
+                Directory.CreateDirectory(Path.Combine(ChmPath, "embed"));
+            }
+            if (!Directory.Exists(Path.Combine(ChmPath, "js")))
+            {
+                Directory.CreateDirectory(Path.Combine(ChmPath, "js"));
+            }
+            var highlight = Path.Combine(ChmPath, "embed", "highlight.js");
+            if (!File.Exists(highlight))
+            {
+                File.AppendAllText(highlight,Resources.highlight);
+            }
+            var sql_formatter = Path.Combine(ChmPath, "embed", "sql-formatter.js");
+            if (!File.Exists(sql_formatter))
+            {
+                File.AppendAllText(sql_formatter,Resources.sql_formatter);
+            }
+            var jQuery = Path.Combine(ChmPath, "js", "jQuery.js");
+            if (!File.Exists(jQuery))
+            {
+                File.AppendAllText(jQuery, Resources.jQuery);
+            }
+            var hhc= Path.Combine(ChmPath, "hhc.cshtml");
+            var hhk = Path.Combine(ChmPath, "hhk.cshtml");
+            var hhp = Path.Combine(ChmPath, "hhp.cshtml");
+            var list = Path.Combine(ChmPath, "list.cshtml");
+            var sqlcode = Path.Combine(ChmPath, "sqlcode.cshtml");
+            var table = Path.Combine(ChmPath, "table.cshtml");
+            if (!File.Exists(hhc))
+            {
+                File.WriteAllBytes(hhc,Resources.hhc);
+            }
+            if (!File.Exists(hhk))
+            {
+                File.WriteAllBytes(hhk, Resources.hhk);
+            }
+            if (!File.Exists(hhp))
+            {
+                File.WriteAllBytes(hhp, Resources.hhp);
+            }
+            if (!File.Exists(list))
+            {
+                File.WriteAllBytes(list, Resources.list);
+            }
+            if (!File.Exists(sqlcode))
+            {
+                File.WriteAllBytes(sqlcode, Resources.sqlcode);
+            }
+            if (!File.Exists(table))
+            {
+                File.WriteAllBytes(table, Resources.table);
+            }
+            var dir = Path.Combine(TplPath, "chm\\");
 
             var files = Directory.GetFiles(dir, "*.js", SearchOption.AllDirectories);
 
@@ -103,14 +162,14 @@ namespace SmartCode.DocUtils.DBDoc
 
             this.InitDirFiles();
 
-            var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm");
+            //var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm");
 
-            var hhc_tpl = File.ReadAllText(Path.Combine(dir, "hhc.cshtml"), CurrEncoding);
-            var hhk_tpl = File.ReadAllText(Path.Combine(dir, "hhk.cshtml"), CurrEncoding);
-            var hhp_tpl = File.ReadAllText(Path.Combine(dir, "hhp.cshtml"), CurrEncoding);
-            var list_tpl = File.ReadAllText(Path.Combine(dir, "list.cshtml"), CurrEncoding);
-            var table_tpl = File.ReadAllText(Path.Combine(dir, "table.cshtml"), CurrEncoding);
-            var sqlcode_tpl = File.ReadAllText(Path.Combine(dir, "sqlcode.cshtml"), CurrEncoding);
+            var hhc_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhc.cshtml"), CurrEncoding);
+            var hhk_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhk.cshtml"), CurrEncoding);
+            var hhp_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhp.cshtml"), CurrEncoding);
+            var list_tpl = File.ReadAllText(Path.Combine(ChmPath, "list.cshtml"), CurrEncoding);
+            var table_tpl = File.ReadAllText(Path.Combine(ChmPath, "table.cshtml"), CurrEncoding);
+            var sqlcode_tpl = File.ReadAllText(Path.Combine(ChmPath, "sqlcode.cshtml"), CurrEncoding);
 
             var hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
 

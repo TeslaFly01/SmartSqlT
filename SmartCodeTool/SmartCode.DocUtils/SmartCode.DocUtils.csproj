@@ -151,46 +151,57 @@
     <Compile Include="Extensions.cs" />
     <Compile Include="JS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="RazorTpl.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <None Include="TplFile\chm\hhc.cshtml">
+    <Resource Include="TplFile\chm\hhc.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\chm\hhk.cshtml">
+    </Resource>
+    <Resource Include="TplFile\chm\hhk.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\chm\hhp.cshtml">
+    </Resource>
+    <Resource Include="TplFile\chm\hhp.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\chm\list.cshtml">
+    </Resource>
+    <Resource Include="TplFile\chm\list.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\chm\sqlcode.cshtml">
+    </Resource>
+    <Resource Include="TplFile\chm\sqlcode.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\chm\table.cshtml">
+    </Resource>
+    <Resource Include="TplFile\chm\table.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\html\html.cshtml">
+    </Resource>
+    <Resource Include="TplFile\html\html.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TplFile\pdf\msyh.ttf">
+    </Resource>
+    <Resource Include="TplFile\pdf\msyh.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TplFile\chm\embed\highlight.js">
+    <Resource Include="TplFile\chm\embed\highlight.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TplFile\chm\embed\sql-formatter.js">
+    </Resource>
+    <Resource Include="TplFile\chm\embed\sql-formatter.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TplFile\chm\js\jQuery.js">
+    </Resource>
+    <Resource Include="TplFile\chm\js\jQuery.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

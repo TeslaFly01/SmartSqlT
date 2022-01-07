@@ -5,11 +5,18 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    d:DesignHeight="450"
-    d:DesignWidth="800"
+    Loaded="NoDataArea_OnLoaded"
     mc:Ignorable="d">
     <Grid>
+        <Image
+            x:Name="ImgNoData"
+            Width="120"
+            Height="120"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Source="../../Resources/Img/NoData2.png" />
         <TextBlock
+            x:Name="TxtNoData"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="15"

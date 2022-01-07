@@ -136,6 +136,7 @@ namespace SmartCode.Tool.UserControl
                 {
                     NoDataText.Visibility = Visibility.Visible;
                 }
+                SearchObject.Text = string.Empty;
                 ObjItems = ObjectsViewData;
             }
         }

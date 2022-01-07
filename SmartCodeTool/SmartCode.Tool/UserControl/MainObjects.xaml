@@ -87,11 +87,14 @@
         </DataGrid>
         <Grid
             x:Name="NoDataText"
-            Margin="5,45,5,32"
+            Margin="5,45,5,37"
             HorizontalAlignment="Stretch"
             Background="White"
             Cursor="Arrow">
-            <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
+            <localBase:NoDataArea
+                Margin="0"
+                HorizontalAlignment="Center"
+                ShowType="Img" />
         </Grid>
         <hc:SimpleStackPanel
             Margin="5,0,5,5"
@@ -101,7 +104,7 @@
                 <Button
                     x:Name="BtnExport"
                     Height="26"
-                    hc:IconElement.Geometry="{StaticResource DocGeometry}"
+                    hc:IconElement.Geometry="{StaticResource ExportGeometry}"
                     Click="BtnExport_OnClick"
                     Content="导出文档"
                     Style="{StaticResource ButtonWarning}" />

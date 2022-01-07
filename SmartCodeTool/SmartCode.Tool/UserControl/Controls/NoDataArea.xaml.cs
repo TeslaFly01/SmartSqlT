@@ -15,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartCode.Tool.Annotations;
+using SmartCode.Tool.Models;
 
 namespace SmartCode.Tool.UserControl.Controls
 {
@@ -32,7 +33,6 @@ namespace SmartCode.Tool.UserControl.Controls
         }
         public static readonly DependencyProperty TipTextProperty = DependencyProperty.Register(
             "TipText", typeof(string), typeof(NoDataArea), new PropertyMetadata(default(string)));
-
         /// <summary>
         /// 提示文字
         /// </summary>
@@ -46,6 +46,17 @@ namespace SmartCode.Tool.UserControl.Controls
             }
         }
 
+        public static readonly DependencyProperty ShowTypeProperty = DependencyProperty.Register(
+            "ShowType", typeof(ShowType), typeof(NoDataArea), new PropertyMetadata(default(ShowType)));
+        /// <summary>
+        /// 提示类型
+        /// </summary>
+        public ShowType ShowType
+        {
+            get => (ShowType)GetValue(ShowTypeProperty);
+            set => SetValue(ShowTypeProperty, value);
+        }
+
         public NoDataArea()
         {
             InitializeComponent();
@@ -54,6 +65,12 @@ namespace SmartCode.Tool.UserControl.Controls
             {
                 TipText = "暂无数据";
             }
+        }
+
+        private void NoDataArea_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            TxtNoData.Visibility = ShowType == ShowType.Txt ? Visibility.Visible : Visibility.Collapsed;
+            ImgNoData.Visibility = ShowType == ShowType.Img ? Visibility.Visible : Visibility.Collapsed;
         }
     }
 }

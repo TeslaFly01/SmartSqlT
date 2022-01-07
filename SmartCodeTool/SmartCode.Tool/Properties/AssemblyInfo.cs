@@ -2,11 +2,11 @@
 using System.Runtime.InteropServices;
 using System.Windows;
 
-[assembly: AssemblyTitle("SmartCode.Tool")]
+[assembly: AssemblyTitle("SmartSQL")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SmartCode.Tool")]
+[assembly: AssemblyProduct("SmartSQL")]
 [assembly: AssemblyCopyright("Copyright © zfluok 2021")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

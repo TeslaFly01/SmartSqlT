@@ -11,4 +11,16 @@ namespace SmartCode.Tool.Models
         All = 0,
         Partial = 1
     }
+
+    public enum ShowType
+    {
+        /// <summary>
+        /// 文字
+        /// </summary>
+        Txt = 0,
+        /// <summary>
+        /// 图片
+        /// </summary>
+        Img = 1,
+    }
 }

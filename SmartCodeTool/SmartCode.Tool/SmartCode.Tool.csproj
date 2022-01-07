@@ -75,7 +75,7 @@
     <Compile Include="Helper\CompletionData.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
-    <Compile Include="Models\ExportEnum.cs" />
+    <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
     <Compile Include="UserControl\BaseUserControl.cs" />
@@ -307,6 +307,9 @@
     <Content Include="htmlhelp.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\NoData2.png" />
+    <Resource Include="Resources\Img\NoData1.png" />
+    <Resource Include="Resources\Img\NoData.png" />
     <Resource Include="Resources\Img\bg.png" />
     <Resource Include="Resources\Img\doc.ico" />
     <Resource Include="Resources\Img\doc\MARKDOWN.png" />

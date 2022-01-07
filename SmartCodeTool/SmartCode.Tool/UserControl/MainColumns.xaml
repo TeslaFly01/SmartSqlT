@@ -92,7 +92,10 @@
                         HorizontalAlignment="Stretch"
                         Background="White"
                         Cursor="Arrow">
-                        <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
+                        <localBase:NoDataArea
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            ShowType="Img" />
                     </Grid>
                     <hc:SimpleStackPanel
                         Margin="5,0,5,5"

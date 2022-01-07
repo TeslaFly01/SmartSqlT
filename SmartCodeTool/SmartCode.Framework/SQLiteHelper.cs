@@ -11,7 +11,7 @@ namespace SmartCode.Framework
 {
     public class SQLiteHelper
     {
-        public static string BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+        public static string BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,Environment.SpecialFolderOption.Create),
             "SmartSQL");
         public string connstr = Path.Combine(BasePath, "SmartSQL.db");//没有数据库会创建数据库
         public SQLiteConnection db;

@@ -14,13 +14,17 @@ namespace SmartCode.DocUtils.DBDoc
         /// <summary>
         /// 当前应用程序的名称 => SmartSQL
         /// </summary>
-        private static string ConfigFileName = Path.GetFileNameWithoutExtension(AppDomain.CurrentDomain.FriendlyName).Replace(".vshost", "");
+        private static string ConfigFileName = "SmartSQL";
 
         /// <summary>
-        /// 定义配置存放的路径 => C:\Users\用户名\AppData\Local\DBCHM
+        /// 定义配置存放的路径 => C:\Users\用户名\AppData\Roaming\SmartSQL
         /// </summary>
-        public static string AppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData, Environment.SpecialFolderOption.Create), ConfigFileName);
+        public static string AppPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create), ConfigFileName);
 
+        /// <summary>
+        /// 定义模板文件存放的路径
+        /// </summary>
+        public static string TplPath = Path.Combine(AppPath, "TplFile");
 
         public Doc(DBDto dto, string filter)
         {
