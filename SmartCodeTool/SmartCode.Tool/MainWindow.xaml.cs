@@ -698,6 +698,8 @@ namespace SmartCode.Tool
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
                 {
+                    NoDataAreaText.TipText = "暂无分组，请先建分组";
+                    NoDataText.Visibility = Visibility.Visible;
                     return;
                 }
                 foreach (var group in currGroups)
@@ -948,6 +950,7 @@ namespace SmartCode.Tool
                 });
                 if (itemParentList.All(x => x.Visibility != nameof(Visibility.Visible)))
                 {
+                    NoDataAreaText.TipText = "暂无数据";
                     NoDataText.Visibility = Visibility.Visible;
                 }
                 TreeViewData = itemParentList;
@@ -964,6 +967,7 @@ namespace SmartCode.Tool
                 });
                 if (itemList.All(x => x.Visibility != nameof(Visibility.Visible)))
                 {
+                    NoDataAreaText.TipText = "暂无数据";
                     NoDataText.Visibility = Visibility.Visible;
                 }
                 TreeViewData = itemList;
