@@ -398,7 +398,7 @@ namespace SmartCode.Tool.UserControl
             group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
             group.Connection = SelectedConnection;
             group.SelectedDataBase = SelectedDataBase.DbName;
-            group.SelectedObject = SelectedObject.DisplayName;
+            group.SelectedObjects = new List<PropertyNodeItem>() { SelectedObject };
             group.Owner = mainWindow;
             group.ShowDialog();
         }

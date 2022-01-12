@@ -9,7 +9,7 @@
     Width="640"
     Height="330"
     BorderThickness="0"
-    Icon="/favicon.ico"
+    Icon="../Resources/Img/SetGroup.png"
     Loaded="GroupManage_OnLoaded"
     ResizeMode="CanResize"
     ShowInTaskbar="False"

@@ -141,7 +141,7 @@
                     Margin="185,0,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Content="当前菜单结果集"
+                    Content="选中对象"
                     IsEnabled="False" />
             </Grid>
             <Grid Margin="20,25,20,20">

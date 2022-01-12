@@ -19,6 +19,7 @@ using HandyControl.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Tool.Annotations;
+using SmartCode.Tool.Models;
 
 namespace SmartCode.Tool.Views
 {
@@ -54,12 +55,23 @@ namespace SmartCode.Tool.Views
             set => SetValue(SelectedDataBaseProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(string), typeof(SetObjectGroup), new PropertyMetadata(default(string)));
-        public string SelectedObject
+        //public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
+        //    "SelectedObject", typeof(string), typeof(SetObjectGroup), new PropertyMetadata(default(string)));
+        //public string SelectedObject
+        //{
+        //    get => (string)GetValue(SelectedObjectProperty);
+        //    set => SetValue(SelectedObjectProperty, value);
+        //}
+
+        public static readonly DependencyProperty SelectedObjectsProperty = DependencyProperty.Register(
+            "ExportData", typeof(List<PropertyNodeItem>), typeof(SetObjectGroup), new PropertyMetadata(default(List<PropertyNodeItem>)));
+        /// <summary>
+        /// 分组目标数据
+        /// </summary>
+        public List<PropertyNodeItem> SelectedObjects
         {
-            get => (string)GetValue(SelectedObjectProperty);
-            set => SetValue(SelectedObjectProperty, value);
+            get => (List<PropertyNodeItem>)GetValue(SelectedObjectsProperty);
+            set => SetValue(SelectedObjectsProperty, value);
         }
 
         public static readonly DependencyProperty ObjectGroupListProperty = DependencyProperty.Register(
@@ -70,11 +82,11 @@ namespace SmartCode.Tool.Views
             set
             {
                 SetValue(ObjectGroupListProperty, value);
-                OnPropertyChanged("ObjectGroupList");
+                OnPropertyChanged(nameof(ObjectGroupList));
             }
         }
 
-        private List<ObjectGroup> OldGroupList = null;
+        private List<ObjectGroup> OldGroupList = new List<ObjectGroup>();
 
         private void SetObjectGroup_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -86,14 +98,18 @@ namespace SmartCode.Tool.Views
                 SelectAllBtn.Visibility = Visibility.Collapsed;
                 return;
             }
-            var listGroupId = list.Select(x => x.Id);
-            var listObj = sqLiteHelper.db.Table<SObjects>().Where(x => listGroupId.Contains(x.GroupId) && x.ObjectName == SelectedObject).Select(x => x.GroupId).ToList();
-            OldGroupList = list.Where(x => listObj.Contains(x.Id)).ToList();
+            var selectedNames = SelectedObjects.Select(x => x.DisplayName);
             list.ForEach(x =>
             {
-                x.IsSelected = listObj.Contains(x.Id);
-            });
+                var listObj1 = sqLiteHelper.db.Table<SObjects>().Count(xx => xx.GroupId == x.Id && selectedNames.Contains(xx.ObjectName));
 
+                x.IsSelected = listObj1 == SelectedObjects.Count;
+                if (listObj1 == SelectedObjects.Count)
+                {
+                    x.IsSelected = true;
+                    OldGroupList.Add(x);
+                }
+            });
             ObjectGroupList = list;
         }
 
@@ -127,6 +143,7 @@ namespace SmartCode.Tool.Views
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
+            var selectedObjNames = SelectedObjects.Select(x => x.DisplayName);
             //选中的分组名
             var selectedGroup = ObjectGroupList.Where(x => x.IsSelected).ToList();
             if (!selectedGroup.Any())
@@ -134,7 +151,7 @@ namespace SmartCode.Tool.Views
                 var list = sqLiteHelper.db.Table<SObjects>().Where(x =>
                    x.ConnectId == Connection.ID &&
                    x.DatabaseName == SelectedDataBase &&
-                   x.ObjectName == SelectedObject).ToList();
+                   selectedObjNames.Contains(x.ObjectName)).ToList();
                 foreach (var sobj in list)
                 {
                     sqLiteHelper.db.Delete<SObjects>(sobj.Id);
@@ -146,25 +163,59 @@ namespace SmartCode.Tool.Views
                 this.Close();
                 return;
             }
-            var oldGroupIds = OldGroupList.Select(x => x.Id).ToList();
-            //新增加选中的分组
-            var newSelectedGroup = selectedGroup.Where(x => !oldGroupIds.Contains(x.Id)).ToList();
-            if (newSelectedGroup.Any())
+
+            if (OldGroupList != null)
+            {
+                var oldGroupIds = OldGroupList.Select(x => x.Id).ToList();
+                //新增加选中的分组
+                var newSelectedGroup = selectedGroup.Where(x => !oldGroupIds.Contains(x.Id)).ToList();
+                if (newSelectedGroup.Any())
+                {
+                    var listNewObject = new List<SObjects>();
+                    foreach (var objectGroup in newSelectedGroup)
+                    {
+                        foreach (var objName in selectedObjNames)
+                        {
+                            var newGroup = new SObjects
+                            {
+                                ConnectId = Connection.ID,
+                                DatabaseName = SelectedDataBase,
+                                GroupId = objectGroup.Id,
+                                ObjectName = objName
+                            };
+                            listNewObject.Add(newGroup);
+                        }
+                    }
+                    sqLiteHelper.db.InsertAll(listNewObject);
+                }
+            }
+            else
             {
                 var listNewObject = new List<SObjects>();
-                foreach (var objectGroup in newSelectedGroup)
+                foreach (var objectGroup in selectedGroup)
                 {
-                    var newGroup = new SObjects
+                    foreach (var objName in selectedObjNames)
                     {
-                        ConnectId = Connection.ID,
-                        DatabaseName = SelectedDataBase,
-                        GroupId = objectGroup.Id,
-                        ObjectName = SelectedObject
-                    };
-                    listNewObject.Add(newGroup);
+                        var isAny = sqLiteHelper.db.Table<SObjects>().Any(x =>
+                            x.ConnectId == Connection.ID &&
+                            x.DatabaseName == SelectedDataBase &&
+                            x.ObjectName == objName);
+                        if (!isAny)
+                        {
+                            var newGroup = new SObjects
+                            {
+                                ConnectId = Connection.ID,
+                                DatabaseName = SelectedDataBase,
+                                GroupId = objectGroup.Id,
+                                ObjectName = objName
+                            };
+                            listNewObject.Add(newGroup);
+                        }
+                    }
                 }
                 sqLiteHelper.db.InsertAll(listNewObject);
             }
+
             //取消的分组
             var selectedGroupId = selectedGroup.Select(x => x.Id).ToList();
             var cancelGroupList = OldGroupList.Where(x => !selectedGroupId.Contains(x.Id)).ToList();
@@ -172,17 +223,20 @@ namespace SmartCode.Tool.Views
             {
                 foreach (var sobj in cancelGroupList)
                 {
-                    var sObject = sqLiteHelper.db.Table<SObjects>().FirstOrDefault(x =>
-
-                        x.ObjectName == SelectedObject &&
-                        x.GroupId == sobj.Id
-                    );
-                    if (sObject != null)
+                    var objectList = sqLiteHelper.db.Table<SObjects>().Where(x =>
+                        selectedObjNames.Contains(x.ObjectName) &&
+                                               x.GroupId == sobj.Id
+                    ).ToList();
+                    if (objectList != null)
                     {
-                        sqLiteHelper.db.Delete<SObjects>(sObject.Id);
+                        foreach (var obj in objectList)
+                        {
+                            sqLiteHelper.db.Delete<SObjects>(obj.Id);
+                        }
                     }
                 }
             }
+
             if (ObjChangeRefreshEvent != null)
             {
                 ObjChangeRefreshEvent();

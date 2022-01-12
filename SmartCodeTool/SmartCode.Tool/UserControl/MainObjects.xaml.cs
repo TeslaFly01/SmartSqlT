@@ -300,5 +300,20 @@ namespace SmartCode.Tool.UserControl
                 }
             }
         }
+
+        private void BtnSetGroup_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            var group = new SetObjectGroup();
+            //group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+            group.Connection = SelectedConnection;
+            group.SelectedDataBase = SelectedDataBase.DbName;
+            var groupData = ObjectsViewData.Any(x => x.IsSelected == true)
+                ? ObjectsViewData.Where(x => x.IsSelected == true).ToList()
+                : ObjectsViewData;
+            group.SelectedObjects = groupData;
+            group.Owner = mainWindow;
+            group.ShowDialog();
+        }
     }
 }
