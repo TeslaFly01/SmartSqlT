@@ -27,6 +27,7 @@
                         x:Name="SearchColumns"
                         Height="30"
                         Margin="5,5,5,0"
+                        Padding="5,0,5,0"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
                         hc:InfoElement.Placeholder="请输入列名或备注说明"

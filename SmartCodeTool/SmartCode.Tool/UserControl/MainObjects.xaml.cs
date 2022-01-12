@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
+using HandyControl.Data;
+using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
@@ -303,6 +305,14 @@ namespace SmartCode.Tool.UserControl
 
         private void BtnSetGroup_OnClick(object sender, RoutedEventArgs e)
         {
+            var sqLiteHelper = new SQLiteHelper();
+            var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
+                x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
+            if (!list.Any())
+            {
+                Growl.WarningGlobal(new GrowlInfo { Message = $"暂无分组，请先添加分组", WaitTime = 1, ShowDateTime = false });
+                return;
+            }
             var mainWindow = System.Windows.Window.GetWindow(this);
             var group = new SetObjectGroup();
             //group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;

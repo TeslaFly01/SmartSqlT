@@ -100,6 +100,7 @@ namespace SmartCode.Tool.Views
         private void SetObjectGroup_OnLoaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = new SQLiteHelper();
+            SelectedObjects.ForEach(t => LeftObjects.Add(t));
             var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
                   x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase).ToList();
             if (!list.Any())
@@ -118,7 +119,6 @@ namespace SmartCode.Tool.Views
                     OldGroupList.Add(x);
                 }
             });
-            SelectedObjects.ForEach(t => LeftObjects.Add(t));
             ObjectGroupList = list;
         }
 

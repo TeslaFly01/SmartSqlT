@@ -155,7 +155,7 @@ namespace SmartCode.Tool
                 ConnectionString = connectConfig.DbDefaultConnectString;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
                 SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
-                SearchMenu.Text = string.Empty;
+                //SearchMenu.Text = string.Empty;
                 var sqLiteHelper = new SQLiteHelper();
                 var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
                 SwitchMenu.ItemsSource = null;
@@ -186,7 +186,6 @@ namespace SmartCode.Tool
                 SelectDatabase.SelectedItem = DBase.FirstOrDefault(x => x.DbName == ((DataBase)selectDatabase).DbName);
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
                 MenuBind(false, null);
-                SearchMenu.Text = string.Empty;
             }
         }
 
@@ -606,6 +605,7 @@ namespace SmartCode.Tool
                             });
                         });
                         TreeViewData = itemParentList;
+                        SearchMenu.Text = string.Empty;
                     }
                     else
                     {
@@ -627,9 +627,9 @@ namespace SmartCode.Tool
                             obj.DisplayName += $"（{obj.Children.Count}）";
                         });
                         TreeViewData = itemList;
+                        SearchMenu.Text = string.Empty;
                     }
                 }));
-
             });
             #endregion
         }
@@ -1141,7 +1141,6 @@ namespace SmartCode.Tool
         {
             if (CheckIsGroup.IsChecked.HasValue && CheckIsGroup.IsChecked.Value)
             {
-                SearchMenu.Text = "";
                 MenuBind(false, null);
             }
         }

@@ -86,12 +86,12 @@
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0" Margin="20,0,0,0">
-                    <TextBlock Margin="0,25,20,20" Text="连接名称" />
-                    <TextBlock Margin="0,65,20,20" Text="服务器地址" />
-                    <TextBlock Margin="0,105,20,20" Text="身份验证" />
-                    <TextBlock Margin="0,145,20,20" Text="登录名" />
-                    <TextBlock Margin="0,185,20,20" Text="密码" />
-                    <TextBlock Margin="0,225,20,20" Text="默认数据库" />
+                    <TextBlock Margin="0,28,20,20" Text="连接名称" />
+                    <TextBlock Margin="0,68,20,20" Text="服务器地址" />
+                    <TextBlock Margin="0,108,20,20" Text="身份验证" />
+                    <TextBlock Margin="0,148,20,20" Text="登录名" />
+                    <TextBlock Margin="0,188,20,20" Text="密码" />
+                    <TextBlock Margin="0,228,20,20" Text="默认数据库" />
                 </Grid>
                 <Grid x:Name="ConnectForm" Grid.Column="1">
                     <TextBox
