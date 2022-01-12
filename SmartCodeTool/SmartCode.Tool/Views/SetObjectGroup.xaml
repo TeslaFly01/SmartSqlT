@@ -24,7 +24,6 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-
             <GroupBox
                 Grid.Row="0"
                 Grid.Column="0"
@@ -34,7 +33,8 @@
                 <ListBox
                     Name="ListGroup"
                     BorderThickness="0"
-                    ItemsSource="{Binding SelectedObjects}"
+                    ItemsSource="{Binding LeftObjects}"
+                    MouseDoubleClick="ListGroup_OnMouseDoubleClick"
                     ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListBox.ItemTemplate>
                         <DataTemplate>

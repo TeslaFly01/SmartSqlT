@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -64,14 +65,18 @@ namespace SmartCode.Tool.Views
         //}
 
         public static readonly DependencyProperty SelectedObjectsProperty = DependencyProperty.Register(
-            "ExportData", typeof(List<PropertyNodeItem>), typeof(SetObjectGroup), new PropertyMetadata(default(List<PropertyNodeItem>)));
+            "SelectedObjects", typeof(List<PropertyNodeItem>), typeof(SetObjectGroup), new PropertyMetadata(default(List<PropertyNodeItem>)));
         /// <summary>
         /// 分组目标数据
         /// </summary>
         public List<PropertyNodeItem> SelectedObjects
         {
             get => (List<PropertyNodeItem>)GetValue(SelectedObjectsProperty);
-            set => SetValue(SelectedObjectsProperty, value);
+            set
+            {
+                SetValue(SelectedObjectsProperty, value);
+                OnPropertyChanged(nameof(SelectedObjects));
+            }
         }
 
         public static readonly DependencyProperty ObjectGroupListProperty = DependencyProperty.Register(
@@ -85,6 +90,10 @@ namespace SmartCode.Tool.Views
                 OnPropertyChanged(nameof(ObjectGroupList));
             }
         }
+
+        public ObservableCollection<PropertyNodeItem> LeftObjects { get; set; } =
+            new ObservableCollection<PropertyNodeItem>();
+
 
         private List<ObjectGroup> OldGroupList = new List<ObjectGroup>();
 
@@ -101,15 +110,15 @@ namespace SmartCode.Tool.Views
             var selectedNames = SelectedObjects.Select(x => x.DisplayName);
             list.ForEach(x =>
             {
-                var listObj1 = sqLiteHelper.db.Table<SObjects>().Count(xx => xx.GroupId == x.Id && selectedNames.Contains(xx.ObjectName));
-
-                x.IsSelected = listObj1 == SelectedObjects.Count;
-                if (listObj1 == SelectedObjects.Count)
+                var listObj = sqLiteHelper.db.Table<SObjects>().Count(xx => xx.GroupId == x.Id && selectedNames.Contains(xx.ObjectName));
+                x.IsSelected = listObj == SelectedObjects.Count;
+                if (listObj == SelectedObjects.Count)
                 {
                     x.IsSelected = true;
                     OldGroupList.Add(x);
                 }
             });
+            SelectedObjects.ForEach(t => LeftObjects.Add(t));
             ObjectGroupList = list;
         }
 
@@ -236,7 +245,6 @@ namespace SmartCode.Tool.Views
                     }
                 }
             }
-
             if (ObjChangeRefreshEvent != null)
             {
                 ObjChangeRefreshEvent();
@@ -255,6 +263,21 @@ namespace SmartCode.Tool.Views
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        private void ListGroup_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            if (listBox.SelectedItem != null)
+            {
+                var allItems = listBox.Items;
+                if (allItems.Count == 1)
+                {
+                    return;
+                }
+                var selectedItem = (PropertyNodeItem)listBox.SelectedItem;
+                LeftObjects.Remove(selectedItem);
+            }
         }
     }
 }
