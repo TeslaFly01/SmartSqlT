@@ -219,7 +219,16 @@
                             Click="BtnSave_OnClick"
                             Content="连接"
                             Cursor="Hand"
-                            Style="{StaticResource ButtonPrimary}" />
+                            Style="{StaticResource ButtonPrimary}"
+                            Tag="Connect" />
+                        <Button
+                            x:Name="BtnSave"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnSave_OnClick"
+                            Content="保存"
+                            Cursor="Hand"
+                            Tag="Save" />
                         <Button
                             x:Name="BtnCancel"
                             Height="25"

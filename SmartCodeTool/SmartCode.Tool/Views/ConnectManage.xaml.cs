@@ -110,6 +110,8 @@ namespace SmartCode.Tool.Views
             {
                 return;
             }
+            var tag = ((Button)sender).Tag;
+            var isConnect = tag != null && (string)tag == $"Connect";
             var connectId = Convert.ToInt32(HidId.Text);
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
@@ -126,24 +128,30 @@ namespace SmartCode.Tool.Views
             {
                 try
                 {
-                    IExporter exporter = new SqlServer2008Exporter();
-                    exporter.GetDatabases(connectionString);
+                    if (isConnect)
+                    {
+                        IExporter exporter = new SqlServer2008Exporter();
+                        exporter.GetDatabases(connectionString);
+                    }
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                        if (isConnect)
+                        {
+                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                        }
                         if (connectId > 0)
                         {
                             connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                             if (connectConfig == null)
                             {
-                                Growl.Warning(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
                             if (connectAny != null)
                             {
-                                Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             connectConfig.ConnectName = connectName;
@@ -160,7 +168,7 @@ namespace SmartCode.Tool.Views
                             var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
                             if (connect != null)
                             {
-                                Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             connectConfig = new ConnectConfigs()
@@ -183,7 +191,11 @@ namespace SmartCode.Tool.Views
                             Dispatcher.Invoke(() =>
                             {
                                 DataList = datalist;
-                                if (ChangeRefreshEvent != null)
+                                if (!isConnect)
+                                {
+                                    Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
+                                }
+                                if (isConnect && ChangeRefreshEvent != null)
                                 {
                                     ChangeRefreshEvent(connectConfig);
                                     this.Close();
@@ -197,7 +209,7 @@ namespace SmartCode.Tool.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.Warning(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
+                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });
@@ -224,7 +236,7 @@ namespace SmartCode.Tool.Views
             var connectId = Convert.ToInt32(HidId.Text);
             if (connectId < 1)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请选择需要删除的连接", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要删除的连接", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             Task.Run(() =>
@@ -286,27 +298,27 @@ namespace SmartCode.Tool.Views
             var password = TextServerPassword.Password.Trim();
             if (string.IsNullOrEmpty(connectName))
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             if (string.IsNullOrEmpty(serverAddress))
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             if (serverPort < 1)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             if (string.IsNullOrEmpty(userName))
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             if (string.IsNullOrEmpty(password))
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             return true;
@@ -361,7 +373,7 @@ namespace SmartCode.Tool.Views
                         LoadingG.Visibility = Visibility.Collapsed;
                         if (flag)
                         {
-                            Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                         }
                     });
                 }
@@ -370,7 +382,7 @@ namespace SmartCode.Tool.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.Warning(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
+                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });
