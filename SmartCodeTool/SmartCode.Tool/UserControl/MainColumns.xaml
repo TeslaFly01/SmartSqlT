@@ -37,7 +37,7 @@
                     <!--  结构数据展现框  -->
                     <DataGrid
                         x:Name="TableGrid"
-                        Margin="0,38,0,34"
+                        Margin="0,38,0,32"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
                         hc:DataGridAttach.ShowRowNumber="True"
                         AutoGenerateColumns="False"
@@ -97,34 +97,39 @@
                             HorizontalAlignment="Center"
                             ShowType="Img" />
                     </Grid>
-                    <hc:SimpleStackPanel
-                        Margin="5,0,5,5"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom">
-                        <hc:UniformSpacingPanel Spacing="10">
-                            <Button
-                                x:Name="BtnSetGroup"
-                                Height="26"
-                                hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
-                                Click="BtnSetGroup_OnClick"
-                                Content="设置分组"
-                                Style="{StaticResource ButtonWarning}" />
-                            <Button
-                                x:Name="BtnCopyColumnScript"
-                                Height="26"
-                                hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
-                                Click="BtnCopyColumnScript_OnClick"
-                                Content="字段脚本"
-                                Style="{StaticResource ButtonPrimary}" />
-                            <Button
-                                x:Name="BtnCreateEntity"
-                                Height="26"
-                                hc:IconElement.Geometry="{StaticResource EntityGeometry}"
-                                Click="BtnCreateEntity_OnClick"
-                                Content="生成实体"
-                                Style="{StaticResource ButtonPrimary}" />
-                        </hc:UniformSpacingPanel>
-                    </hc:SimpleStackPanel>
+                    <Grid
+                        Height="36"
+                        VerticalAlignment="Bottom"
+                        Background="White">
+                        <hc:SimpleStackPanel
+                            Margin="5,0,5,5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom">
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Button
+                                    x:Name="BtnSetGroup"
+                                    Height="26"
+                                    hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
+                                    Click="BtnSetGroup_OnClick"
+                                    Content="设置分组"
+                                    Style="{StaticResource ButtonWarning}" />
+                                <Button
+                                    x:Name="BtnCopyColumnScript"
+                                    Height="26"
+                                    hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
+                                    Click="BtnCopyColumnScript_OnClick"
+                                    Content="字段脚本"
+                                    Style="{StaticResource ButtonPrimary}" />
+                                <Button
+                                    x:Name="BtnCreateEntity"
+                                    Height="26"
+                                    hc:IconElement.Geometry="{StaticResource EntityGeometry}"
+                                    Click="BtnCreateEntity_OnClick"
+                                    Content="生成实体"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </hc:UniformSpacingPanel>
+                        </hc:SimpleStackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
 
@@ -204,7 +209,7 @@
                 <Grid Margin="0" Background="#f5f5f5">
                     <avalonedit:TextEditor
                         x:Name="TextSqlEditor"
-                        Margin="0,0,0,36"
+                        Margin="0,0,0,32"
                         Padding="5,0,0,0"
                         FontSize="11"
                         IsReadOnly="True"
@@ -227,32 +232,36 @@
                         AutoHiding="True"
                         Background="Transparent"
                         Target="{Binding ElementName=TextSqlEditor}" />
-                    <hc:SimpleStackPanel
-                        Margin="5,0,5,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom">
-                        <hc:UniformSpacingPanel Spacing="10">
-                            <Button
-                                x:Name="BtnSetGroupExt"
-                                Height="26"
-                                hc:IconElement.Geometry="{StaticResource TwoPageModeGeometry}"
-                                Click="BtnSetGroup_OnClick"
-                                Content="设置分组"
-                                Style="{StaticResource ButtonWarning}" />
-                            <Button
-                                x:Name="BtnCopyScript"
-                                Grid.Column="0"
-                                Height="26"
-                                Margin="5"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                                Click="BtnCopyScript_OnClick"
-                                Content="复制脚本"
-                                Cursor="Hand"
-                                Style="{StaticResource ButtonPrimary}" />
-                        </hc:UniformSpacingPanel>
-                    </hc:SimpleStackPanel>
+                    <Grid
+                        Height="36"
+                        VerticalAlignment="Bottom"
+                        Background="White">
+                        <hc:SimpleStackPanel
+                            Margin="5,0,5,5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom">
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Button
+                                    x:Name="BtnSetGroupExt"
+                                    Height="26"
+                                    hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
+                                    Click="BtnSetGroup_OnClick"
+                                    Content="设置分组"
+                                    Style="{StaticResource ButtonWarning}" />
+                                <Button
+                                    x:Name="BtnCopyScript"
+                                    Grid.Column="0"
+                                    Height="26"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                                    Click="BtnCopyScript_OnClick"
+                                    Content="复制脚本"
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </hc:UniformSpacingPanel>
+                        </hc:SimpleStackPanel>
+                    </Grid>
                 </Grid>
             </TabItem>
 

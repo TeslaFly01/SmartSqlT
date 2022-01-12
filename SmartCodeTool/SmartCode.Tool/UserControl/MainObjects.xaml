@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:local="clr-namespace:SmartCode.Tool.UserControl"
     xmlns:localBase="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -34,6 +35,8 @@
             ColumnWidth="*"
             HeadersVisibility="All"
             ItemsSource="{Binding ObjectsViewData, Mode=TwoWay}"
+            MouseDoubleClick="TableGrid_OnMouseDoubleClick"
+            MouseLeftButtonUp="TableGrid_OnMouseLeftButtonUp"
             RowHeaderWidth="60"
             SelectionUnit="CellOrRowHeader">
             <DataGrid.CellStyle>
@@ -47,23 +50,14 @@
                     </Style.Triggers>
                 </Style>
             </DataGrid.CellStyle>
-            <DataGrid.RowHeaderTemplate>
-                <DataTemplate>
-                    <CheckBox IsChecked="{Binding IsSelected, RelativeSource={RelativeSource AncestorType=DataGridCell}}" />
-                </DataTemplate>
-            </DataGrid.RowHeaderTemplate>
+
             <DataGrid.Columns>
-                <DataGridTemplateColumn Width="55" Header="序号">
-                    <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate>
-                            <TextBlock
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Text="{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type DataGridRow}}, Path=Header}" />
-                        </DataTemplate>
-                    </DataGridTemplateColumn.CellTemplate>
-                </DataGridTemplateColumn>
+                <DataGridCheckBoxColumn
+                    Width="60"
+                    Binding="{Binding IsSelected}"
+                    CanUserSort="False"
+                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                    Header="选择" />
                 <DataGridTextColumn
                     x:Name="ObjHead"
                     Binding="{Binding DisplayName}"
@@ -96,19 +90,35 @@
                 HorizontalAlignment="Center"
                 ShowType="Img" />
         </Grid>
-        <hc:SimpleStackPanel
-            Margin="5,0,5,5"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom">
-            <hc:UniformSpacingPanel Spacing="10">
-                <Button
-                    x:Name="BtnExport"
-                    Height="26"
-                    hc:IconElement.Geometry="{StaticResource ExportGeometry}"
-                    Click="BtnExport_OnClick"
-                    Content="导出文档"
-                    Style="{StaticResource ButtonWarning}" />
-                <!--<Button
+        <Grid
+            Height="36"
+            VerticalAlignment="Bottom"
+            Background="White">
+            <hc:SimpleStackPanel
+                Margin="47,0,5,10"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel Spacing="10">
+                    <CheckBox
+                        x:Name="ChkAll"
+                        Margin="39,0,0,0"
+                        Click="ChkAll_OnClick"
+                        Content="全选" />
+                </hc:UniformSpacingPanel>
+            </hc:SimpleStackPanel>
+            <hc:SimpleStackPanel
+                Margin="5,0,5,5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel Spacing="10">
+                    <Button
+                        x:Name="BtnExport"
+                        Height="26"
+                        hc:IconElement.Geometry="{StaticResource ExportGeometry}"
+                        Click="BtnExport_OnClick"
+                        Content="导出文档"
+                        Style="{StaticResource ButtonWarning}" />
+                    <!--<Button
                     x:Name="BtnSetGroup"
                     Height="26"
                     hc:IconElement.Geometry="{StaticResource TwoPageModeGeometry}"
@@ -120,7 +130,8 @@
                     hc:IconElement.Geometry="{StaticResource SaveGeometry}"
                     Content="生成实体类"
                     Style="{StaticResource ButtonPrimary}" />-->
-            </hc:UniformSpacingPanel>
-        </hc:SimpleStackPanel>
+                </hc:UniformSpacingPanel>
+            </hc:SimpleStackPanel>
+        </Grid>
     </Grid>
 </local:BaseUserControl>

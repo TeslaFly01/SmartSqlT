@@ -105,6 +105,7 @@ namespace SmartCode.Tool.UserControl
         /// </summary>
         public void LoadPageData()
         {
+            ChkAll.IsChecked = false;
             NoDataText.Visibility = Visibility.Collapsed;
             if (SelectedObject.Type == ObjType.Type)
             {
@@ -136,6 +137,10 @@ namespace SmartCode.Tool.UserControl
                 {
                     NoDataText.Visibility = Visibility.Visible;
                 }
+                ObjectsViewData.ForEach(x =>
+                {
+                    x.IsSelected = false;
+                });
                 ObjItems = ObjectsViewData;
                 SearchObject.Text = string.Empty;
             }
@@ -244,8 +249,56 @@ namespace SmartCode.Tool.UserControl
             exportDoc.ExportType = ExportEnum.Partial;
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = SelectedDataBase;
-            exportDoc.ExportData = ObjectsViewData;
+            var exportData = ObjectsViewData.Any(x => x.IsSelected == true)
+                ? ObjectsViewData.Where(x => x.IsSelected == true).ToList()
+                : ObjectsViewData;
+            exportDoc.ExportData = exportData;
             exportDoc.ShowDialog();
+        }
+
+        private void ChkAll_OnClick(object sender, RoutedEventArgs e)
+        {
+            var isChecked = ((CheckBox)sender).IsChecked;
+            ObjItems.ForEach(x =>
+            {
+                x.IsSelected = isChecked;
+            });
+            ObjectsViewData = ObjItems;
+        }
+
+        private void TableGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is DataGrid dataGrid)
+            {
+                var curItem = (PropertyNodeItem)dataGrid.CurrentItem;
+                if (curItem == null)
+                {
+                    return;
+                }
+                var curCell = dataGrid.CurrentCell.Column.Header;
+                if (curCell.Equals("备注说明"))
+                {
+                    return;
+                }
+                curItem.IsSelected = !curItem.IsSelected;
+            }
+        }
+
+        private void TableGrid_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is DataGrid dataGrid)
+            {
+                var curItem = (PropertyNodeItem)dataGrid.CurrentItem;
+                if (curItem == null)
+                {
+                    return;
+                }
+                var curCell = dataGrid.CurrentCell.Column.Header;
+                if (curCell.Equals("选择"))
+                {
+                    curItem.IsSelected = !curItem.IsSelected;
+                }
+            }
         }
     }
 }

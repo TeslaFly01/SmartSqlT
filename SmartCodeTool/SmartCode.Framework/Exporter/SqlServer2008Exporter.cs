@@ -457,10 +457,10 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 修改字段备注说明
         /// </summary>
-        /// <param name="connection"></param>
-        /// <param name="objectName"></param>
-        /// <param name="columnName"></param>
-        /// <param name="comment"></param>
+        /// <param name="connection">连接</param>
+        /// <param name="objectName">对象名</param>
+        /// <param name="comment">描述</param>
+        /// <param name="columnName">列名</param>
         /// <returns></returns>
         public override bool UpdateComment(string connection, string type, string objectName, string comment, string columnName)
         {
@@ -475,7 +475,7 @@ namespace SmartCode.Framework.Exporter
             {
                 SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 try
                 {
@@ -487,7 +487,7 @@ namespace SmartCode.Framework.Exporter
                     }
                     SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
                 }
-                catch (Exception)
+                catch (Exception ex1)
                 {
                     return false;
                 }
