@@ -34,6 +34,14 @@ namespace SmartCode.Tool.Views
     /// </summary>
     public partial class ConnectManage : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public event ConnectChangeRefreshHandler ChangeRefreshEvent;
         public ConnectManage()
         {
@@ -76,16 +84,18 @@ namespace SmartCode.Tool.Views
             if (listBox.SelectedItems.Count > 0)
             {
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
-                var pwd=EncryptHelper.Decode(connect.Password);
+                var pwd = EncryptHelper.Decode(connect.Password);
                 HidId.Text = connect.ID.ToString();
                 TextConnectName.Text = connect.ConnectName;
                 TextServerAddress.Text = connect.ServerAddress;
                 TextServerPort.Value = connect.ServerPort;
                 TextServerName.Text = connect.UserName;
                 ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
-                TextDefaultDataBase.Text = connect.DefaultDatabase;
                 TextServerPassword.Password = pwd;
                 BtnConnect.IsEnabled = true;
+                var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
+                ComboDefaultDatabase.ItemsSource = defaultBase;
+                ComboDefaultDatabase.SelectedItem = defaultBase.First();
             }
         }
 
@@ -107,7 +117,7 @@ namespace SmartCode.Tool.Views
             var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
             var userName = TextServerName.Text.Trim();
             var password = TextServerPassword.Password.Trim();
-            var defaultDataBase = TextDefaultDataBase.Text.Trim();
+            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
             var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
@@ -141,7 +151,7 @@ namespace SmartCode.Tool.Views
                             connectConfig.ServerPort = Convert.ToInt32(serverPort);
                             connectConfig.UserName = userName;
                             connectConfig.Password = EncryptHelper.Encode(password);
-                            connectConfig.DefaultDatabase = defaultDataBase;
+                            connectConfig.DefaultDatabase = defaultDataBase.DbName;
                             connectConfig.Authentication = authentication;
                             sqLiteHelper.db.Update(connectConfig);
                         }
@@ -162,7 +172,7 @@ namespace SmartCode.Tool.Views
                                 UserName = userName,
                                 Password = EncryptHelper.Encode(password),
                                 CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase
+                                DefaultDatabase = defaultDataBase.DbName
                             };
                             sqLiteHelper.db.Insert(connectConfig);
                         }
@@ -234,14 +244,6 @@ namespace SmartCode.Tool.Views
             });
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         /// <summary>
         /// 添加重置表单
         /// </summary>
@@ -265,7 +267,6 @@ namespace SmartCode.Tool.Views
             TextServerName.Text = "";
             TextServerPassword.Password = "";
             ComboAuthentication.SelectedItem = SQLServer;
-            TextDefaultDataBase.Text = "master";
             ListConnects.SelectedItem = null;
             BtnConnect.IsEnabled = false;
             BtnTestConnect.IsEnabled = false;
@@ -283,7 +284,6 @@ namespace SmartCode.Tool.Views
             var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
             var userName = TextServerName.Text.Trim();
             var password = TextServerPassword.Password.Trim();
-            var defaultDataBase = TextDefaultDataBase.Text.Trim();
             if (string.IsNullOrEmpty(connectName))
             {
                 Growl.Warning(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
@@ -309,11 +309,6 @@ namespace SmartCode.Tool.Views
                 Growl.Warning(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
                 return false;
             }
-            if (string.IsNullOrEmpty(defaultDataBase))
-            {
-                Growl.Warning(new GrowlInfo { Message = $"请填写默认数据库", WaitTime = 1, ShowDateTime = false });
-                return false;
-            }
             return true;
             #endregion
         }
@@ -324,6 +319,15 @@ namespace SmartCode.Tool.Views
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnTestConnect_OnClick(object sender, RoutedEventArgs e)
+        {
+            TestConnect(true);
+        }
+
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <param name="flag"></param>
+        private void TestConnect(bool flag)
         {
             if (!CheckConnectForm())
             {
@@ -336,11 +340,29 @@ namespace SmartCode.Tool.Views
                 try
                 {
                     IExporter exporter = new SqlServer2008Exporter();
-                    exporter.GetDatabases(connectionString);
+                    var list = exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {
+                        var connectId = Convert.ToInt32(HidId.Text);
+                        ComboDefaultDatabase.ItemsSource = list;
+                        if (connectId < 1)
+                        {
+                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+                        }
+                        else
+                        {
+                            var sqLiteHelper = new SQLiteHelper();
+                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                            if (connect != null)
+                            {
+                                ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            }
+                        }
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                        if (flag)
+                        {
+                            Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                        }
                     });
                 }
                 catch (Exception ex)
@@ -352,6 +374,11 @@ namespace SmartCode.Tool.Views
                     });
                 }
             });
+        }
+
+        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            TestConnect(false);
         }
     }
 }

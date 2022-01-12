@@ -151,16 +151,17 @@
                     Text="导出路径" />
                 <TextBox
                     Name="TxtPath"
-                    Margin="85,45,125,0"
+                    Margin="85,45,77,0"
                     VerticalAlignment="Top" />
                 <Button
                     Name="BtnLookPath"
-                    Width="100"
+                    Width="55"
                     Margin="0,45,20,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Click="BtnLookPath_OnClick"
-                    Content="浏览..." />
+                    Content="浏览..."
+                    Cursor="Hand" />
             </Grid>
             <Grid Margin="20,125,20,20">
                 <TextBlock
