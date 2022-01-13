@@ -43,7 +43,7 @@ namespace SmartCode.DocUtils.DBDoc
             doc.BuiltInDocumentProperties.ContentType = "数据库字典";
             doc.BuiltInDocumentProperties.Title = "数据库字典文档";
             doc.BuiltInDocumentProperties.Author = doc.BuiltInDocumentProperties.LastSavedBy = doc.BuiltInDocumentProperties.Manager = "zfluok";
-            doc.BuiltInDocumentProperties.Company = "Isoftstone.com";
+            doc.BuiltInDocumentProperties.Company = "samrtsql.com";
             doc.BuiltInDocumentProperties.Version = doc.BuiltInDocumentProperties.RevisionNumber = 1;
             doc.BuiltInDocumentProperties.ContentStatus = "初稿";
             doc.BuiltInDocumentProperties.NameOfApplication = "SamrtSQL";
@@ -53,7 +53,7 @@ namespace SmartCode.DocUtils.DBDoc
             Aspose.Words.HeaderFooter header = new Aspose.Words.HeaderFooter(doc, Aspose.Words.HeaderFooterType.HeaderPrimary);
             doc.FirstSection.HeadersFooters.Add(header);
             // Add a paragraph with text to the header.
-            header.AppendParagraph("Isoftstone数据库字典文档").ParagraphFormat.Alignment =
+            header.AppendParagraph($"{databaseName}数据库字典文档").ParagraphFormat.Alignment =
                 Aspose.Words.ParagraphAlignment.Right;
 
             Aspose.Words.DocumentBuilder builder = new Aspose.Words.DocumentBuilder(doc);

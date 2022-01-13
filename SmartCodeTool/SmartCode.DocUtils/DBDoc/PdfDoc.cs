@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using SmartCode.DocUtils.Dtos;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
+using SmartCode.DocUtils.Properties;
 using ZetaLongPaths;
 
 namespace SmartCode.DocUtils.DBDoc
@@ -18,10 +19,20 @@ namespace SmartCode.DocUtils.DBDoc
         }
 
         private static string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\pdf\\msyh.ttf");
-        
+
         public override void Build(string filePath)
         {
-            PdfUtils.ExportPdfByITextSharp(filePath, TTF_Path, this.Dto);
+            var pdfPath = Path.Combine(TplPath, "pdf");
+            if (!Directory.Exists(pdfPath))
+            {
+                Directory.CreateDirectory(pdfPath);
+            }
+            var pdf = Path.Combine(pdfPath, "msyh.ttf");
+            if (!File.Exists(pdf))
+            {
+                File.WriteAllBytes(pdf, Resources.msyh);
+            }
+            PdfUtils.ExportPdfByITextSharp(filePath, pdf, this.Dto);
         }
     }
 
@@ -34,8 +45,9 @@ namespace SmartCode.DocUtils.DBDoc
         /// <summary>
         /// 引用iTextSharp.dll导出pdf数据库字典文档
         /// </summary>
-        /// <param name="databaseName"></param>
-        /// <param name="tables"></param>
+        /// <param name="fileName"></param>
+        /// <param name="fontPath"></param>
+        /// <param name="dto"></param>
         public static void ExportPdfByITextSharp(string fileName, string fontPath, DBDto dto)
         {
             var databaseName = dto.DBName;
@@ -154,7 +166,7 @@ namespace SmartCode.DocUtils.DBDoc
                 {
                     pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 70F });
                 }
-                    
+
 
                 //  添加表格
                 pdfDocument.Add(pdfTable);
@@ -204,12 +216,12 @@ namespace SmartCode.DocUtils.DBDoc
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
 
-                    Paragraph pgh = new Paragraph(item.Value.Replace("`",""), pdfFont);
+                    Paragraph pgh = new Paragraph(item.Value.Replace("`", ""), pdfFont);
                     pdfDocument.Add(pgh);
 
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
-        
+
                 }
                 pdfDocument.NewPage();
             }
@@ -316,7 +328,7 @@ namespace SmartCode.DocUtils.DBDoc
         /// <param name="fontStyle"></param>
         private static Font BaseFont(string fontPath, float fontSize, int fontStyle)
         {
-            BaseFont chinese =  iTextSharp.text.pdf.BaseFont.CreateFont(fontPath, iTextSharp.text.pdf.BaseFont.IDENTITY_H, true);
+            BaseFont chinese = iTextSharp.text.pdf.BaseFont.CreateFont(fontPath, iTextSharp.text.pdf.BaseFont.IDENTITY_H, true);
             Font pdfFont = new Font(chinese, fontSize, fontStyle);
             return pdfFont;
         }
