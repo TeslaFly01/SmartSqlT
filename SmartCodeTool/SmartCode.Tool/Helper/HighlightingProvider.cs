@@ -61,7 +61,7 @@ namespace SmartCode.Tool
             Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
             {
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("XML")),
-                ["C#"] = new Lazy<IHighlightingDefinition>(() => DefaultDefinition.Value),
+                ["C#"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("C#")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("SQL"))
             };
         }
@@ -80,15 +80,15 @@ namespace SmartCode.Tool
         }
     }
 
-    internal class HighlightingProviderDefault : HighlightingProvider
-    {
-        protected override void InitDefinitions()
-        {
-            Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
-            {
-                ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp")),
-                ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL"))
-            };
-        }
-    }
+    //internal class HighlightingProviderDefault : HighlightingProvider
+    //{
+    //    protected override void InitDefinitions()
+    //    {
+    //        Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
+    //        {
+    //            ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp")),
+    //            ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL"))
+    //        };
+    //    }
+    //}
 }

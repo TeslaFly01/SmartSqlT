@@ -71,7 +71,7 @@ namespace SmartCode.Tool.UserControl
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
             TextTableEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             TextColumnsEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
-            TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "CSharp");
+            TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
         }
 
         private void TabCode_OnLoaded(object sender, RoutedEventArgs e)
