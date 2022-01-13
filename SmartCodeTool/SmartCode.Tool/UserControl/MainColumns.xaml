@@ -212,7 +212,8 @@
                         x:Name="TextSqlEditor"
                         Margin="0,0,0,32"
                         Padding="5,0,0,0"
-                        FontSize="11"
+                        FontFamily="新宋体"
+                        FontSize="12"
                         IsReadOnly="True"
                         ShowLineNumbers="True"
                         WordWrap="True">

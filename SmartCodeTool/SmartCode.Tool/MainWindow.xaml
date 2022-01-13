@@ -9,7 +9,7 @@
     xmlns:modelHelper="clr-namespace:SmartCode.Tool"
     xmlns:models="clr-namespace:SmartCode.Tool.Models"
     xmlns:userControl="clr-namespace:SmartCode.Tool.UserControl"
-    Title="SmartSQL-数据库工具 v1.0.2"
+    Title="SmartSQL"
     Width="850"
     Height="500"
     Icon="favicon.ico"
