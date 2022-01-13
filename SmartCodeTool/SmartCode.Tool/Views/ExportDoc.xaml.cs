@@ -196,7 +196,7 @@ namespace SmartCode.Tool.Views
                         var lst_col_dto = new List<ColumnDto>();
                         var objectId = Convert.ToInt32(node.ObejcetId);
                         IExporter exporter = new SqlServer2008Exporter();
-                        var columns = exporter.GetColumnsExt(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                        var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         foreach (var col in columns)
                         {
                             ColumnDto colDto = new ColumnDto();
@@ -237,7 +237,7 @@ namespace SmartCode.Tool.Views
                     var lst_col_dto = new List<ColumnDto>();
                     var objectId = Convert.ToInt32(group.ObejcetId);
                     IExporter exporter = new SqlServer2008Exporter();
-                    var columns = exporter.GetColumnsExt(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                    var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();

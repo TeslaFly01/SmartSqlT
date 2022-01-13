@@ -136,7 +136,7 @@ namespace SmartCode.Tool.UserControl
                 IExporter exporter = new SqlServer2008Exporter();
                 Task.Run(() =>
                 {
-                    var tableColumns = exporter.GetColumnsExt(objectId, dbConnectionString);
+                    var tableColumns = exporter.GetColumns(objectId, dbConnectionString);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {

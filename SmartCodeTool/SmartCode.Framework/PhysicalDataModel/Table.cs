@@ -25,17 +25,5 @@ namespace SmartCode.Framework.PhysicalDataModel
         {
             this._mataTypeName = "table";
         }
-
-        public Columns PrimaryKeys
-        {
-            get { return this._primaryKeys; }
-            set { this._primaryKeys = value; }
-        }
-
-        public Dictionary<string, Columns> Keys
-        {
-            get { return this._keys; }
-            set { this._keys = value; }
-        }
     }
 }

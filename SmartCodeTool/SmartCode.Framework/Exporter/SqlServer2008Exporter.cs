@@ -20,7 +20,7 @@ namespace SmartCode.Framework.Exporter
             if (connectionString == null)
                 throw new ArgumentNullException("connectionString");
 
-            var model = new Model {Database = "SqlServer2008"};
+            var model = new Model { Database = "SqlServer2008" };
             try
             {
                 model.Tables = this.GetTables(connectionString);
@@ -67,10 +67,12 @@ namespace SmartCode.Framework.Exporter
 			                              ELSE '' 
 	                                 END AS descript,
 									 sy.create_date,
-									 sy.modify_date
+									 sy.modify_date,
+	                                 s.name AS schemaName
                               FROM sys.tables sy
                               LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
                               AND minor_id = 0
+							  LEFT JOIN sys.schemas s ON s.schema_id=sy.schema_id
                               WHERE sy.type = 'U'
 							  AND sy.name <> 'sysdiagrams'
                               ORDER BY sy.name ASC";
@@ -79,25 +81,24 @@ namespace SmartCode.Framework.Exporter
             {
                 try
                 {
-                    var id = dr.GetString(0);
-                    var displayName = dr.GetString(0);
                     var name = dr.GetString(0);
                     var objectId = dr.GetInt32(1);
                     var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
                     var createDate = dr.GetDateTime(3);
                     var modifyDate = dr.GetDateTime(4);
-
-                    var table = new Table(id, displayName, name, comment)
+                    var schemaName = dr.GetString(5);
+                    var key = $"{schemaName}.{name}";
+                    var table = new Table(name, name, name, comment)
                     {
-                        OriginalName = name,
+                        SchemaName = schemaName,
                         Id = objectId.ToString(),
                         Comment = comment,
                         CreateDate = createDate,
                         ModifyDate = modifyDate
                     };
-                    if (!tables.ContainsKey(id))
+                    if (!tables.ContainsKey(key))
                     {
-                        tables.Add(id, table);
+                        tables.Add(key, table);
                     }
                 }
                 catch (Exception)
@@ -114,68 +115,76 @@ namespace SmartCode.Framework.Exporter
         {
             Views views = new Views(10);
 
-            //string sqlCmd = "select [name],[object_id] from sys.views where type='V'";
-            string sqlCmd = @"SELECT a.name,
-                                     a.object_id,
-                                     b.descript,
-                                     a.create_date,
-                                     a.modify_date
-                              FROM sys.views a
-                              LEFT JOIN
-                              (
-                                   SELECT sy.name,
-                                          sy.object_id,
-                                          CASE
-                                              WHEN st.name = 'MS_Description' THEN
+            string sqlCmd = @"SELECT   a.name,
+                                       a.object_id,
+                                       b.descript,
+                                       a.create_date,
+                                       a.modify_date,
+                                       s.name AS schemaName
+                                FROM sys.views a
+                                LEFT JOIN
+                                (
+                                    SELECT sy.name,
+                                           sy.object_id,
+                                           CASE
+                                               WHEN st.name = 'MS_Description' THEN
                                                    ISNULL(st.value, '')
-                                              ELSE
+                                               ELSE
                                                    ''
-                                          END AS descript,
-                                          sy.create_date,
-                                          sy.modify_date
-                                  FROM sys.views sy
-                                  LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                                                                       AND minor_id = 0
-                                  WHERE sy.type = 'V'
-                                        AND
-                                        (
-                                            st.name IS NULL
-                                            OR st.name IN ( 'MS_Description' )
-                                        )
-                                 GROUP BY sy.name,
-                                          sy.object_id,
-                                          sy.create_date,
-                                          sy.modify_date,
-                                          CASE
-                                              WHEN st.name = 'MS_Description' THEN
-                                                   ISNULL(st.value, '')
-                                              ELSE
-                                                   ''
-                                          END
-                              ) b ON a.object_id = b.object_id
+                                           END AS descript,
+                                           sy.create_date,
+                                           sy.modify_date
+                                    FROM sys.views sy
+                                    LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                                                                            AND minor_id = 0
+                                    WHERE sy.type = 'V'
+                                          AND
+                                          (
+                                              st.name IS NULL
+                                              OR st.name IN ( 'MS_Description' )
+                                          )
+                                    GROUP BY sy.name,
+                                             sy.object_id,
+                                             sy.create_date,
+                                             sy.modify_date,
+                                             CASE
+                                                 WHEN st.name = 'MS_Description' THEN
+                                                     ISNULL(st.value, '')
+                                                 ELSE
+                                                     ''
+                                             END
+                                ) b ON a.object_id = b.object_id
+                                LEFT JOIN sys.schemas s ON s.schema_id = a.schema_id
                                 ORDER BY a.name;";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
-                var id = dr.GetString(0);
-                var displayName = dr.GetString(0);
-                var name = dr.GetString(0);
-                var objectId = dr.GetInt32(1);
-                var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                var createDate = dr.GetDateTime(3);
-                var modifyDate = dr.GetDateTime(4);
+                try
+                {
+                    var name = dr.GetString(0);
+                    var objectId = dr.GetInt32(1);
+                    var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
+                    var createDate = dr.GetDateTime(3);
+                    var modifyDate = dr.GetDateTime(4);
+                    var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
+                    var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
+                    var view = new View(name, name, name, comment)
+                    {
+                        SchemaName = schemaName,
+                        Id = objectId.ToString(),
+                        Comment = comment,
+                        CreateDate = createDate,
+                        ModifyDate = modifyDate
+                    };
+                    if (!views.ContainsKey(key))
+                    {
+                        views.Add(key, view);
+                    }
+                }
+                catch (Exception ex)
+                {
 
-                var view = new View(id, displayName, name, comment)
-                {
-                    OriginalName = name,
-                    Id = objectId.ToString(),
-                    Comment = comment,
-                    CreateDate = createDate,
-                    ModifyDate = modifyDate
-                };
-                if (!views.ContainsKey(id))
-                {
-                    views.Add(id, view);
+                    throw;
                 }
             }
             dr.Close();
@@ -184,95 +193,82 @@ namespace SmartCode.Framework.Exporter
 
         private Procedures GetProcedures(string connectionString)
         {
-            Procedures procs = new Procedures(10);
+            Procedures procDic = new Procedures();
 
-            //string sqlCmd = "select [name],[object_id] from sys.procedures";
-            string sqlCmd = @"SELECT a.name,
-                                     a.object_id,
-                                     b.descript,
-                                     a.create_date,
-                                     a.modify_date
-                              FROM sys.procedures a
-							  LEFT JOIN sys.sql_modules m ON m.object_id=a.object_id
-                              LEFT JOIN
-                              (
-                                  SELECT sy.name,
-                                         sy.object_id,
-                                         CASE
-                                              WHEN st.name = 'MS_Description' THEN
-                                                   ISNULL(st.value, '')
-                                              ELSE
-                                                   ''
-                                         END AS descript,
-                                         sy.create_date,
-                                         sy.modify_date
-                                  FROM sys.procedures sy
-                                  LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                                                                        AND minor_id = 0
-                                  WHERE sy.type = 'P'
-                                        AND
-                                        (
-                                            st.name IS NULL
-                                            OR st.name IN ( 'MS_Description' )
-                                        )
-                                  GROUP BY sy.name,
+            string sqlCmd = @"SELECT   a.name,
+                                       a.object_id,
+                                       b.descript,
+                                       a.create_date,
+                                       a.modify_date,
+                                       s.name AS schemaName
+                                FROM sys.procedures a
+                                LEFT JOIN sys.sql_modules m ON m.object_id = a.object_id
+                                LEFT JOIN
+                                (
+                                    SELECT sy.name,
                                            sy.object_id,
-                                           sy.create_date,
-                                           sy.modify_date,
                                            CASE
                                                WHEN st.name = 'MS_Description' THEN
-                                                    ISNULL(st.value, '')
-                                           ELSE
-                                                ''
-                                           END
-                            ) b ON a.object_id = b.object_id
-                            WHERE a.is_ms_shipped = 0  
-							AND m.execute_as_principal_id IS NULL
-							AND a.name <> 'sp_upgraddiagrams'
-                            ORDER BY a.name;";
+                                                   ISNULL(st.value, '')
+                                               ELSE
+                                                   ''
+                                           END AS descript,
+                                           sy.create_date,
+                                           sy.modify_date
+                                    FROM sys.procedures sy
+                                    LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
+                                                                            AND minor_id = 0
+                                    WHERE sy.type = 'P'
+                                          AND
+                                          (
+                                              st.name IS NULL
+                                              OR st.name IN ( 'MS_Description' )
+                                          )
+                                    GROUP BY sy.name,
+                                             sy.object_id,
+                                             sy.create_date,
+                                             sy.modify_date,
+                                             CASE
+                                                 WHEN st.name = 'MS_Description' THEN
+                                                     ISNULL(st.value, '')
+                                                 ELSE
+                                                     ''
+                                             END
+                                ) b ON a.object_id = b.object_id
+                                LEFT JOIN sys.schemas s ON s.schema_id = a.schema_id
+                                WHERE a.is_ms_shipped = 0
+                                      AND m.execute_as_principal_id IS NULL
+                                      AND a.name <> 'sp_upgraddiagrams'
+                                ORDER BY a.name;";
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
-                string id = dr.GetString(0);
-                string displayName = dr.GetString(0);
                 string name = dr.GetString(0);
                 int objectId = dr.GetInt32(1);
                 string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
                 DateTime createDate = dr.GetDateTime(3);
                 DateTime modifyDate = dr.GetDateTime(4);
+                var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
+                var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
 
-                var proc = new Procedure(id, displayName, name, comment)
+                var proc = new Procedure(name, name, name, comment)
                 {
-                    OriginalName = name,
+                    SchemaName = schemaName,
                     Id = objectId.ToString(),
                     Comment = comment,
                     CreateDate = createDate,
                     ModifyDate = modifyDate
                 };
-                if (!procs.ContainsKey(id))
+                if (!procDic.ContainsKey(key))
                 {
-                    procs.Add(id, proc);
+                    procDic.Add(key, proc);
                 }
             }
             dr.Close();
-            return procs;
+            return procDic;
         }
 
         public override Columns GetColumns(int objectId, string connectionString)
-        {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append($@"select c.object_id,c.column_id,c.name,ISNULL((CASE WHEN t.name = 'nvarchar' THEN CEILING(c.max_length/2) ELSE c.max_length END),0) AS max_length,c.is_identity,c.is_nullable,c.is_computed,
-            t.name as type_name,p.value as description,d.definition as default_value 
-            from sys.columns as c 
-            inner join sys.types as t on c.user_type_id =  t.user_type_id 
-            left join sys.extended_properties as p on p.major_id = c.object_id and p.minor_id = c.column_id 
-            left join sys.default_constraints as d on d.parent_object_id = c.object_id and d.parent_column_id = c.column_id 
-            where c.object_id={objectId} order by c.column_id asc");
-
-            return this.GetColumns(connectionString, sqlBuilder.ToString());
-        }
-
-        public override Columns GetColumnsExt(int objectId, string connectionString)
         {
             var sql = $@"SELECT  
                                 --表名=case when a.colorder=1 then d.name else '' end, 

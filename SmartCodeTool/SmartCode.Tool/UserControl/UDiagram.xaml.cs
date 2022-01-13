@@ -26,7 +26,7 @@ namespace SmartCode.Tool.UserControl
         {
             InitializeComponent();
             IExporter exporter = new SqlServer2008Exporter();
-           var TableColumns = exporter.GetColumnsExt(165679738, "server=10.136.0.114;uid=ipsa;Pwd=ipsa@20200705;database=PSAData;");
+           var TableColumns = exporter.GetColumns(165679738, "server=10.136.0.114;uid=ipsa;Pwd=ipsa@20200705;database=PSAData;");
             var list = TableColumns.Values.ToList();
             TableGrid.ItemsSource = list;
         }

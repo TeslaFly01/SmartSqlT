@@ -15,8 +15,6 @@ namespace SmartCode.Framework.Exporter
 
         public abstract Columns GetColumns(int objectId, string connectionString);
 
-        public abstract Columns GetColumnsExt(int objectId, string connectionString);
-
         public abstract string GetScripts(int objectId, string connectionString);
 
         public abstract DataSet GetDataSet(string connectionString, string tbName, string strWhere);
