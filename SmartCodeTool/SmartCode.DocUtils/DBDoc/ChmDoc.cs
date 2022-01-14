@@ -191,9 +191,9 @@ namespace SmartCode.DocUtils.DBDoc
 
             foreach (var item in Dto.Views)
             {
-                var vw_path = Path.Combine(this.WorkTmpDir, "视图", $"{item.Key}.html");
+                var vw_path = Path.Combine(this.WorkTmpDir, "视图", $"{item.ObjectName}.html");
                 var content = sqlcode_tpl.RazorRender(
-                     new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
+                     new SqlCode() { DBType = Dto.DBType, CodeName = item.ObjectName, Content = item.Script.Trim() }
                      );
                 ZlpIOHelper.WriteAllText(vw_path, content, CurrEncoding);
             }
@@ -201,9 +201,9 @@ namespace SmartCode.DocUtils.DBDoc
 
             foreach (var item in Dto.Procs)
             {
-                var proc_path = Path.Combine(this.WorkTmpDir, "存储过程", $"{item.Key}.html");
+                var proc_path = Path.Combine(this.WorkTmpDir, "存储过程", $"{item.ObjectName}.html");
                 var content = sqlcode_tpl.RazorRender(
-                    new SqlCode() { DBType = Dto.DBType, CodeName = item.Key, Content = item.Value.Trim() }
+                    new SqlCode() { DBType = Dto.DBType, CodeName = item.ObjectName, Content = item.Script.Trim() }
                     );
                 ZlpIOHelper.WriteAllText(proc_path, content, CurrEncoding);
             }

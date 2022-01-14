@@ -147,6 +147,7 @@
     <Compile Include="Dtos\DBDto.cs" />
     <Compile Include="Dtos\SqlCode.cs" />
     <Compile Include="Dtos\TableDto.cs" />
+    <Compile Include="Dtos\ViewProDto.cs" />
     <Compile Include="Enums.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="JS.cs" />

@@ -106,7 +106,7 @@
                             {
                                 <tr>
                                     <td>@index</td>
-                                    <td>@item.ColumnName</td>
+                                    <td style="text-align: left; padding-left: 15px;">@item.ColumnName</td>
                                     <td>@item.ColumnTypeName</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
@@ -115,10 +115,9 @@
                                     {
                                         <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
                                     }
-
                                     <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
                                     <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
+                                    <td style="text-align: left; padding-left: 15px;">@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
                                 </tr>
                                 index++;
                             }

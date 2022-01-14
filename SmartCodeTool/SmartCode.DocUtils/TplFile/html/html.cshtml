@@ -560,7 +560,7 @@
                     <strong class="sidebar-title">视图</strong>
                     foreach (var item in Model.Views)
                     {
-                        <a href="#@(item.Key)" class="sidebar-link">@item.Key</a>
+                        <a href="#@(item.ObjectName)" class="sidebar-link">@item.ObjectName</a>
                     }
                 }
 
@@ -569,7 +569,7 @@
                     <strong class="sidebar-title">存储过程</strong>
                     foreach (var item in Model.Procs)
                     {
-                        <a href="#@(item.Key)" class="sidebar-link">@item.Key</a>
+                        <a href="#@(item.ObjectName)" class="sidebar-link">@item.ObjectName</a>
                     }
                 }
             </aside>
@@ -604,7 +604,7 @@
                             {
                                 <tr>
                                     <td>@index</td>
-                                    <td colspan="2"><a href="#@(item.Key)">@item.Key</a></td>
+                                    <td colspan="2"><a href="#@(item.ObjectName)">@item.ObjectName</a></td>
                                 </tr>
                                 index++;
                             }
@@ -623,7 +623,7 @@
                             {
                                 <tr>
                                     <td>@index</td>
-                                    <td colspan="2"><a href="#@(item.Key)">@item.Key</a></td>
+                                    <td colspan="2"><a href="#@(item.ObjectName)">@item.ObjectName</a></td>
                                 </tr>
                                 index++;
                             }
@@ -693,7 +693,7 @@
                 {
                     <div class="page-content snippet" id="@(item.Key)">
                         <div style="font-weight: bold">
-                            视图名称：@item.Key
+                            视图名称：@item.ObjectName
                             <a href="#dir" style="float: right;color: #33ccff;text-decoration: none;">返回目录</a>
                         </div>
                         <div class="page-entry">
@@ -709,7 +709,7 @@
                 {
                     <div class="page-content snippet" id="@(item.Key)">
                         <div style="font-weight: bold">
-                            存储过程名称：@item.Key
+                            存储过程名称：@item.ObjectName
                             <a href="#dir" style="float: right;color: #33ccff;text-decoration: none;">返回目录</a>
                         </div>
                         <div class="page-entry">

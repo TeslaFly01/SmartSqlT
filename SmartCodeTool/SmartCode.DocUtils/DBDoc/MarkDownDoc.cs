@@ -54,9 +54,9 @@ namespace SmartCode.DocUtils.DBDoc
                 foreach (var item in this.Dto.Views)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"### {item.Key}");
+                    sb.AppendLine($"### {item.ObjectName}");
                     sb.AppendLine("``` sql");
-                    var fmtSql = JS.RunFmtSql(item.Value, this.Dto.DBType);
+                    var fmtSql = JS.RunFmtSql(item.Script, this.Dto.DBType);
                     sb.Append(fmtSql);
                     sb.AppendLine("```");
                     sb.AppendLine();
@@ -69,9 +69,9 @@ namespace SmartCode.DocUtils.DBDoc
                 foreach (var item in this.Dto.Procs)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"### {item.Key}");
+                    sb.AppendLine($"### {item.ObjectName}");
                     sb.AppendLine("``` sql");
-                    var fmtSql = JS.RunFmtSql(item.Value, this.Dto.DBType);
+                    var fmtSql = JS.RunFmtSql(item.Script, this.Dto.DBType);
                     sb.Append(fmtSql);
                     sb.AppendLine("```");
                     sb.AppendLine();

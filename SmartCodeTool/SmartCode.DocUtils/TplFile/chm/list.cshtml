@@ -82,10 +82,10 @@
                 {
                     <tr>
                         <td>@item.TableOrder</td>
-                        <td colspan="3">
+                        <td colspan="3" style="text-align: left; padding-left: 15px;">
                             <a href="表结构/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
                         </td>
-                        <td colspan="2">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+                        <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>
                 }
             </table>
@@ -99,18 +99,20 @@
                 </caption>
                 <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
                     <td>序号</td>
-                    <td colspan="5">视图名称</td>
+                    <td colspan="3">视图名称</td>
+                    <td colspan="2">备注说明</td>
                 </tr>
 
                 @{ var vwIndex = 1; }
                 @foreach (var item in Model.Views)
                 {
-                    <tr>
-                        <td>@vwIndex</td>
-                        <td colspan="5">
-                            <a href="视图/@(item.Key).html">@item.Key</a>
-                        </td>
-                    </tr>
+            <tr>
+                <td>@vwIndex</td>
+                <td colspan="3" style="text-align: left; padding-left: 15px;">
+                    <a href="视图/@(item.ObjectName).html">@item.ObjectName</a>
+                </td>
+                <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+            </tr>
                     vwIndex++;
                 }
 
@@ -125,7 +127,8 @@
                 </caption>
                 <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
                     <td>序号</td>
-                    <td colspan="5">存储过程名称</td>
+                    <td colspan="3">存储过程名称</td>
+                    <td colspan="2">备注说明</td>
                 </tr>
 
                 @{ var procIndex = 1; }
@@ -133,13 +136,13 @@
                 {
                     <tr>
                         <td>@procIndex</td>
-                        <td colspan="5">
-                            <a href="存储过程/@(item.Key).html">@item.Key</a>
+                        <td colspan="3" style="text-align: left; padding-left: 15px;">
+                            <a href="存储过程/@(item.ObjectName).html">@item.ObjectName</a>
                         </td>
+                        <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>
                     procIndex++;
                 }
-
             </table>
         }
     </div>

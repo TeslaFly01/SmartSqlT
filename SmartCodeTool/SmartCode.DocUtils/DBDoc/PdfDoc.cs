@@ -186,12 +186,12 @@ namespace SmartCode.DocUtils.DBDoc
 
                 foreach (var item in dto.Views)
                 {
-                    Section selection = viewChapter.AddSection(20f, new Paragraph(item.Key, pdfFont), chapterNum);
+                    Section selection = viewChapter.AddSection(20f, new Paragraph(item.ObjectName, pdfFont), chapterNum);
                     pdfDocument.Add(selection);
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
 
-                    Paragraph pgh = new Paragraph(item.Value.Replace("`", ""), pdfFont);
+                    Paragraph pgh = new Paragraph(item.Script.Replace("`", ""), pdfFont);
                     pdfDocument.Add(pgh);
 
                     // 换行
@@ -211,12 +211,12 @@ namespace SmartCode.DocUtils.DBDoc
 
                 foreach (var item in dto.Procs)
                 {
-                    Section selection = procChapter.AddSection(20f, new Paragraph(item.Key, pdfFont), chapterNum);
+                    Section selection = procChapter.AddSection(20f, new Paragraph(item.ObjectName, pdfFont), chapterNum);
                     pdfDocument.Add(selection);
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
 
-                    Paragraph pgh = new Paragraph(item.Value.Replace("`", ""), pdfFont);
+                    Paragraph pgh = new Paragraph(item.Script.Replace("`", ""), pdfFont);
                     pdfDocument.Add(pgh);
 
                     // 换行

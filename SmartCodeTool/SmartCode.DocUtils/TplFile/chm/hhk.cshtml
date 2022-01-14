@@ -47,8 +47,8 @@
             foreach (var item in Model.Views)
             {
                 <LI><OBJECT type="text/sitemap">
-                        <param name="Name" value="@item.Key">
-                        <param name="Local" value="视图\@(item.Key).html">
+                        <param name="Name" value="@item.ObjectName">
+                        <param name="Local" value="视图\@(item.ObjectName).html">
                         <param name="ImageNumber" value="11">
                     </OBJECT>
                 </LI>
@@ -61,8 +61,8 @@
             foreach (var item in Model.Procs)
             {
                 <LI><OBJECT type="text/sitemap">
-                        <param name="Name" value="@item.Key">
-                        <param name="Local" value="存储过程\@(item.Key).html">
+                        <param name="Name" value="@item.ObjectName">
+                        <param name="Local" value="存储过程\@(item.ObjectName).html">
                         <param name="ImageNumber" value="11">
                     </OBJECT>
                 </LI>

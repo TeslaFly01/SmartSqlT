@@ -61,12 +61,12 @@ namespace SmartCode.DocUtils.Dtos
         /// <summary>
         /// 数据库视图
         /// </summary>
-        public Dictionary<string,string> Views { get; set; }
+        public List<ViewProDto> Views { get; set; }
 
         /// <summary>
         /// 数据库存储过程
         /// </summary>
-        public Dictionary<string, string> Procs { get; set; }
+        public List<ViewProDto> Procs { get; set; }
 
         /// <summary>
         /// 其他一些参数数据，用法如 winform 控件的 Tag属性

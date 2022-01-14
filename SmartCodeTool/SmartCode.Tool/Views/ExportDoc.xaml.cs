@@ -140,16 +140,16 @@ namespace SmartCode.Tool.Views
             });
         }
 
-        private Dictionary<string, string> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
+        private List<ViewProDto> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
         {
-            var dic = new Dictionary<string, string>();
+            var viewPro = new List<ViewProDto>();
             foreach (var group in treeViewData)
             {
                 if (group.Name.Equals("treeTable"))
                 {
                     continue;
                 }
-                if (group.Type=="Type")
+                if (group.Type == "Type")
                 {
                     foreach (var item in group.Children)
                     {
@@ -158,7 +158,13 @@ namespace SmartCode.Tool.Views
                             var objectId = Convert.ToInt32(item.ObejcetId);
                             IExporter exporter = new SqlServer2008Exporter();
                             var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                            dic.Add(item.DisplayName, script);
+
+                            viewPro.Add(new ViewProDto
+                            {
+                                ObjectName = item.DisplayName,
+                                Comment = item.Comment,
+                                Script = script
+                            });
                         }
                     }
                 }
@@ -169,11 +175,17 @@ namespace SmartCode.Tool.Views
                         var objectId = Convert.ToInt32(group.ObejcetId);
                         IExporter exporter = new SqlServer2008Exporter();
                         var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                        dic.Add(group.DisplayName, script);
+
+                        viewPro.Add(new ViewProDto
+                        {
+                            ObjectName = group.DisplayName,
+                            Comment = group.Comment,
+                            Script = script
+                        });
                     }
                 }
             }
-            return dic;
+            return viewPro;
         }
 
         private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
