@@ -344,6 +344,14 @@ namespace SmartCode.Tool.Views
                 DragDrop.DoDragDrop(ListGroup, dataObj, DragDropEffects.Move);
             }
         }
+
+        private void TextGourpName_OnPreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                BtnSave_OnClick(sender,e);
+            }
+        }
     }
     internal static class Utils
     {

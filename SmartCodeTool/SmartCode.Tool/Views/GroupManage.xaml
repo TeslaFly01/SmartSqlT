@@ -127,6 +127,7 @@
                 Height="30"
                 Margin="20"
                 VerticalAlignment="Top"
+                PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                 hc:InfoElement.Title="分组名"
                 hc:InfoElement.TitlePlacement="Left"
                 hc:InfoElement.TitleWidth="80"

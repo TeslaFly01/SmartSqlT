@@ -215,7 +215,7 @@ namespace SmartCode.Tool.UserControl
                         return;
                     }
                     var selectItem = (PropertyNodeItem)e.Row.Item;
-                    var msgResult = MessageBox.Show($"确认修改{SelectedObject.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                    var msgResult = MessageBox.Show($"确认修改{selectItem.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                     if (msgResult == MessageBoxResult.OK)
                     {
                         var type = "";
