@@ -9,52 +9,26 @@ namespace SmartCode.Framework.PhysicalDataModel
 
     public abstract class BaseTable : IMetaData
     {
-        protected string _name;
-        protected string _mataTypeName;
-
-        protected BaseTable() { }
-
-        protected BaseTable(string id, string displayName, string name)
-            : this(id, displayName, name, string.Empty)
-        {
-        }
-
-        protected BaseTable(string id, string displayName, string name, string comment)
-        {
-            Id = id;
-            DisplayName = displayName;
-            Name = name;
-            Comment = comment;
-        }
-
+        /// <summary>
+        /// 对象ID
+        /// </summary>
         public string Id { get; set; }
-
-        public string DisplayName { get; set; }
-
+        /// <summary>
+        /// 对象名称
+        /// </summary>
         public string Name { get; set; }
-
+        /// <summary>
+        /// 对象显示名称（架构名 + . + 对象名称）
+        /// </summary>
+        public string DisplayName { get; set; }
         /// <summary>
         /// 所属架构
         /// </summary>
         public string SchemaName { get; set; }
-
-        public string LowerCamelName
-        {
-            get
-            {
-                var name = this._name ?? string.Empty;
-                return name.LowerCamelCaseName();
-            }
-        }
         /// <summary>
         /// 注释说明
         /// </summary>
         public string Comment { get; set; }
-
-        public string MetaTypeName
-        {
-            get { return this._mataTypeName; }
-        }
         /// <summary>
         /// 创建时间
         /// </summary>

@@ -317,8 +317,9 @@ namespace SmartCode.Tool
                             nodeTable.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = table.Value.Id,
-                                DisplayName = table.Key,
-                                Name = table.Key,
+                                DisplayName = table.Value.DisplayName,
+                                Name = table.Value.Name,
+                                Schema = table.Value.SchemaName,
                                 Comment = table.Value.Comment,
                                 CreateDate = table.Value.CreateDate,
                                 ModifyDate = table.Value.ModifyDate,
@@ -347,8 +348,9 @@ namespace SmartCode.Tool
                                         ppGroup.Children.Add(new PropertyNodeItem()
                                         {
                                             ObejcetId = table.Value.Id,
-                                            DisplayName = table.Key,
-                                            Name = table.Key,
+                                            DisplayName = table.Value.DisplayName,
+                                            Name = table.Value.Name,
+                                            Schema = table.Value.SchemaName,
                                             Comment = table.Value.Comment,
                                             CreateDate = table.Value.CreateDate,
                                             ModifyDate = table.Value.ModifyDate,
@@ -365,8 +367,9 @@ namespace SmartCode.Tool
                             nodeTable.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = table.Value.Id,
-                                DisplayName = table.Key,
-                                Name = table.Key,
+                                DisplayName = table.Value.DisplayName,
+                                Name = table.Value.Name,
+                                Schema = table.Value.SchemaName,
                                 Comment = table.Value.Comment,
                                 CreateDate = table.Value.CreateDate,
                                 ModifyDate = table.Value.ModifyDate,
@@ -391,8 +394,9 @@ namespace SmartCode.Tool
                             nodeView.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = view.Value.Id,
-                                DisplayName = view.Key,
-                                Name = view.Key,
+                                DisplayName = view.Value.DisplayName,
+                                Name = view.Value.Name,
+                                Schema = view.Value.SchemaName,
                                 Comment = view.Value.Comment,
                                 CreateDate = view.Value.CreateDate,
                                 ModifyDate = view.Value.ModifyDate,
@@ -421,8 +425,9 @@ namespace SmartCode.Tool
                                         ppGroup.Children.Add(new PropertyNodeItem()
                                         {
                                             ObejcetId = view.Value.Id,
-                                            DisplayName = view.Key,
-                                            Name = view.Key,
+                                            DisplayName = view.Value.DisplayName,
+                                            Name = view.Value.Name,
+                                            Schema = view.Value.SchemaName,
                                             Comment = view.Value.Comment,
                                             CreateDate = view.Value.CreateDate,
                                             ModifyDate = view.Value.ModifyDate,
@@ -439,8 +444,9 @@ namespace SmartCode.Tool
                             nodeView.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = view.Value.Id,
-                                DisplayName = view.Key,
-                                Name = view.Key,
+                                DisplayName = view.Value.DisplayName,
+                                Name = view.Value.Name,
+                                Schema = view.Value.SchemaName,
                                 Comment = view.Value.Comment,
                                 CreateDate = view.Value.CreateDate,
                                 ModifyDate = view.Value.ModifyDate,
@@ -465,8 +471,9 @@ namespace SmartCode.Tool
                             nodeProc.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = proc.Value.Id,
-                                DisplayName = proc.Key,
-                                Name = proc.Key,
+                                DisplayName = proc.Value.DisplayName,
+                                Name = proc.Value.Name,
+                                Schema = proc.Value.SchemaName,
                                 Comment = proc.Value.Comment,
                                 CreateDate = proc.Value.CreateDate,
                                 ModifyDate = proc.Value.ModifyDate,
@@ -495,8 +502,9 @@ namespace SmartCode.Tool
                                         ppGroup.Children.Add(new PropertyNodeItem()
                                         {
                                             ObejcetId = proc.Value.Id,
-                                            DisplayName = proc.Key,
-                                            Name = proc.Key,
+                                            DisplayName = proc.Value.DisplayName,
+                                            Name = proc.Value.Name,
+                                            Schema = proc.Value.SchemaName,
                                             Comment = proc.Value.Comment,
                                             CreateDate = proc.Value.CreateDate,
                                             ModifyDate = proc.Value.ModifyDate,
@@ -513,8 +521,9 @@ namespace SmartCode.Tool
                             nodeProc.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = proc.Value.Id,
-                                DisplayName = proc.Key,
-                                Name = proc.Key,
+                                DisplayName = proc.Value.DisplayName,
+                                Name = proc.Value.Name,
+                                Schema = proc.Value.SchemaName,
                                 Comment = proc.Value.Comment,
                                 CreateDate = proc.Value.CreateDate,
                                 ModifyDate = proc.Value.ModifyDate,
@@ -538,8 +547,9 @@ namespace SmartCode.Tool
                             nodeTable.Children.Add(new PropertyNodeItem
                             {
                                 ObejcetId = compareTable.Value.Id,
-                                DisplayName = compareTable.Key,
-                                Name = compareTable.Key,
+                                DisplayName = compareTable.Value.DisplayName,
+                                Name = compareTable.Value.Name,
+                                Schema = compareTable.Value.SchemaName,
                                 TextColor = textColor,
                                 Icon = TABLEICON,
                                 Type = ObjType.Table
@@ -554,8 +564,9 @@ namespace SmartCode.Tool
                             nodeView.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = compareView.Value.Id,
-                                DisplayName = compareView.Key,
-                                Name = compareView.Key,
+                                DisplayName = compareView.Value.DisplayName,
+                                Name = compareView.Value.Name,
+                                Schema = compareView.Value.SchemaName,
                                 TextColor = textColor,
                                 Icon = VIEWICON,
                                 Type = ObjType.View
@@ -570,8 +581,9 @@ namespace SmartCode.Tool
                             nodeProc.Children.Add(new PropertyNodeItem()
                             {
                                 ObejcetId = compareProc.Value.Id,
-                                DisplayName = compareProc.Key,
-                                Name = compareProc.Key,
+                                DisplayName = compareProc.Value.DisplayName,
+                                Name = compareProc.Value.Name,
+                                Schema = compareProc.Value.SchemaName,
                                 TextColor = textColor,
                                 Icon = VIEWICON,
                                 Type = ObjType.View
@@ -789,8 +801,9 @@ namespace SmartCode.Tool
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = table.Value.Id,
-                                        DisplayName = table.Key,
-                                        Name = table.Key,
+                                        DisplayName = table.Value.DisplayName,
+                                        Name = table.Value.Name,
+                                        Schema = table.Value.SchemaName,
                                         Comment = table.Value.Comment,
                                         CreateDate = table.Value.CreateDate,
                                         ModifyDate = table.Value.ModifyDate,
@@ -806,8 +819,9 @@ namespace SmartCode.Tool
                         nodeTable.Children.Add(new PropertyNodeItem()
                         {
                             ObejcetId = table.Value.Id,
-                            DisplayName = table.Key,
-                            Name = table.Key,
+                            DisplayName = table.Value.DisplayName,
+                            Name = table.Value.Name,
+                            Schema = table.Value.SchemaName,
                             Comment = table.Value.Comment,
                             CreateDate = table.Value.CreateDate,
                             ModifyDate = table.Value.ModifyDate,
@@ -845,8 +859,9 @@ namespace SmartCode.Tool
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = view.Value.Id,
-                                        DisplayName = view.Key,
-                                        Name = view.Key,
+                                        DisplayName = view.Value.DisplayName,
+                                        Name = view.Value.Name,
+                                        Schema = view.Value.SchemaName,
                                         Comment = view.Value.Comment,
                                         CreateDate = view.Value.CreateDate,
                                         ModifyDate = view.Value.ModifyDate,
@@ -862,8 +877,9 @@ namespace SmartCode.Tool
                         nodeView.Children.Add(new PropertyNodeItem()
                         {
                             ObejcetId = view.Value.Id,
-                            DisplayName = view.Key,
-                            Name = view.Key,
+                            DisplayName = view.Value.DisplayName,
+                            Name = view.Value.Name,
+                            Schema = view.Value.SchemaName,
                             Comment = view.Value.Comment,
                             CreateDate = view.Value.CreateDate,
                             ModifyDate = view.Value.ModifyDate,
@@ -901,8 +917,9 @@ namespace SmartCode.Tool
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = proc.Value.Id,
-                                        DisplayName = proc.Key,
-                                        Name = proc.Key,
+                                        DisplayName = proc.Value.DisplayName,
+                                        Name = proc.Value.Name,
+                                        Schema = proc.Value.SchemaName,
                                         Comment = proc.Value.Comment,
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
@@ -918,8 +935,9 @@ namespace SmartCode.Tool
                         nodeProc.Children.Add(new PropertyNodeItem()
                         {
                             ObejcetId = proc.Value.Id,
-                            DisplayName = proc.Key,
-                            Name = proc.Key,
+                            DisplayName = proc.Value.DisplayName,
+                            Name = proc.Value.Name,
+                            Schema = proc.Value.SchemaName,
                             Comment = proc.Value.Comment,
                             CreateDate = proc.Value.CreateDate,
                             ModifyDate = proc.Value.ModifyDate,

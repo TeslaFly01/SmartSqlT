@@ -227,7 +227,7 @@ namespace SmartCode.Tool.UserControl
                         }
                         var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
                         IExporter exporter = new SqlServer2008Exporter();
-                        exporter.UpdateComment(dbConnectionString, type, selectItem.DisplayName, newValue, "");
+                        exporter.UpdateComment(dbConnectionString, type, selectItem.Name, newValue, "");
                     }
                     else
                     {

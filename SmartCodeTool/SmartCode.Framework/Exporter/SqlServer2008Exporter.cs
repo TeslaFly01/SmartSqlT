@@ -88,10 +88,12 @@ namespace SmartCode.Framework.Exporter
                     var modifyDate = dr.GetDateTime(4);
                     var schemaName = dr.GetString(5);
                     var key = $"{schemaName}.{name}";
-                    var table = new Table(name, name, name, comment)
+                    var table = new Table
                     {
-                        SchemaName = schemaName,
                         Id = objectId.ToString(),
+                        Name = name,
+                        DisplayName = schemaName + "." + name,
+                        SchemaName = schemaName,
                         Comment = comment,
                         CreateDate = createDate,
                         ModifyDate = modifyDate
@@ -168,10 +170,12 @@ namespace SmartCode.Framework.Exporter
                     var modifyDate = dr.GetDateTime(4);
                     var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
                     var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
-                    var view = new View(name, name, name, comment)
+                    var view = new View
                     {
-                        SchemaName = schemaName,
                         Id = objectId.ToString(),
+                        Name = name,
+                        DisplayName = schemaName + "." + name,
+                        SchemaName = schemaName,
                         Comment = comment,
                         CreateDate = createDate,
                         ModifyDate = modifyDate
@@ -251,10 +255,12 @@ namespace SmartCode.Framework.Exporter
                 var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
                 var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
 
-                var proc = new Procedure(name, name, name, comment)
+                var proc = new Procedure
                 {
-                    SchemaName = schemaName,
                     Id = objectId.ToString(),
+                    Name = name,
+                    DisplayName = schemaName + "." + name,
+                    SchemaName = schemaName,
                     Comment = comment,
                     CreateDate = createDate,
                     ModifyDate = modifyDate
@@ -300,7 +306,6 @@ namespace SmartCode.Framework.Exporter
 
             return this.GetColumnsExt(connectionString, sql);
         }
-
 
         private Columns GetColumnsExt(string connectionString, string sqlCmd)
         {
@@ -391,46 +396,13 @@ namespace SmartCode.Framework.Exporter
             return primaryKeys;
         }
 
-        private Columns GetColumns(string connectionString, string sqlCmd)
-        {
-            Columns columns = new Columns(50);
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
-            {
-                var id = dr.IsDBNull(1) ? 0 : dr.GetInt32(1);
-                var displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-                var name = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-                var length = dr.IsDBNull(3) ? 0 : dr.GetInt32(3);
-                var identity = !dr.IsDBNull(4) && dr.GetBoolean(4);
-                var isNullable = !dr.IsDBNull(5) && dr.GetBoolean(5);
-                var dataType = dr.IsDBNull(7) ? string.Empty : dr.GetString(7);
-                var comment = dr.IsDBNull(8) ? string.Empty : dr.GetString(8);
-                var defaultValue = dr.IsDBNull(9) ? string.Empty : dr.GetString(9);
-
-                var column = new Column(id.ToString(), displayName, name, dataType, comment)
-                {
-                    Length = length.ToString(),
-                    IsAutoIncremented = identity,
-                    IsNullable = isNullable,
-                    DefaultValue = defaultValue,
-                    DataType = dataType,
-                    OriginalName = name,
-                    Comment = comment
-                };
-                columns.Add(id.ToString(), column);
-            }
-            dr.Close();
-            return columns;
-        }
         private string GetScripts(string connectionString, string sqlCmd)
         {
             string script = string.Empty;
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
-                //int id = dr.IsDBNull(1) ? 0 : dr.GetInt32(1);
                 string displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-
                 script = displayName;
             }
             dr.Close();

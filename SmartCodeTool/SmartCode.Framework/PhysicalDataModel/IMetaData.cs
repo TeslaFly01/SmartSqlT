@@ -7,6 +7,6 @@ namespace SmartCode.Framework.PhysicalDataModel
 {
     public interface IMetaData
     {
-        string MetaTypeName { get;}
+
     }
 }

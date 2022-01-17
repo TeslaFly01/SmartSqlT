@@ -29,13 +29,17 @@ namespace SmartCode.Tool.Models
         /// </summary>
         public string Icon { get; set; }
         /// <summary>
-        /// 显示名称
+        /// 显示名称（'架构名称' + '.' + '英文名称'）
         /// </summary>
         public string DisplayName { get; set; }
         /// <summary>
         /// 英文名称
         /// </summary>
         public string Name { get; set; }
+        /// <summary>
+        /// 所属架构
+        /// </summary>
+        public string Schema { get; set; }
         /// <summary>
         /// 类型
         /// </summary>
