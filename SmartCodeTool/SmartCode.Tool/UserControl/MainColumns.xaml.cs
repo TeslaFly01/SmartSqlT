@@ -308,7 +308,7 @@ namespace SmartCode.Tool.UserControl
                     }
                     var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
                     IExporter exporter = new SqlServer2008Exporter();
-                    var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, newValue, selectItem.Name);
+                    var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, SelectedObject.Schema, newValue, selectItem.Name);
                     if (!flag)
                     {
                         Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });

@@ -427,14 +427,15 @@ namespace SmartCode.Framework.Exporter
         /// </summary>
         /// <param name="connection">连接</param>
         /// <param name="objectName">对象名</param>
+        /// <param name="schema">架构名</param>
         /// <param name="comment">描述</param>
         /// <param name="columnName">列名</param>
         /// <returns></returns>
-        public override bool UpdateComment(string connection, string type, string objectName, string comment, string columnName)
+        public override bool UpdateComment(string connection, string type, string objectName, string schema, string comment, string columnName)
         {
             var sb = new StringBuilder();
             sb.Append(
-                $"EXEC sp_updateextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'{type}', @level1name=N'{objectName}'");
+                $"EXEC sp_updateextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'{schema}',@level1type=N'{type}', @level1name=N'{objectName}'");
             if (!string.IsNullOrEmpty(columnName))
             {
                 sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
@@ -448,7 +449,7 @@ namespace SmartCode.Framework.Exporter
                 try
                 {
                     sb.Clear();
-                    sb.Append($"EXEC sp_addextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'dbo',@level1type=N'{type}', @level1name=N'{objectName}'");
+                    sb.Append($"EXEC sp_addextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'{schema}',@level1type=N'{type}', @level1name=N'{objectName}'");
                     if (!string.IsNullOrEmpty(columnName))
                     {
                         sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
