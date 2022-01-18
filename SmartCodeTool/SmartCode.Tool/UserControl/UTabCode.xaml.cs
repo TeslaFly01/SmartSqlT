@@ -152,11 +152,11 @@ namespace SmartCode.Tool.UserControl
             sb.Append(Environment.NewLine);
             sb.Append("{");
             sb.Append(Environment.NewLine);
-            sb.Append($"\tpublic class {objE.DisplayName}");
+            sb.Append($"\tpublic class {objE.Name}");
             sb.Append(Environment.NewLine);
             sb.Append("\t{");
             sb.Append(Environment.NewLine);
-            sb.Append($"\t\tpublic {objE.DisplayName}()");
+            sb.Append($"\t\tpublic {objE.Name}()");
             sb.Append(Environment.NewLine);
             sb.Append("\t\t{");
             sb.Append(Environment.NewLine);
