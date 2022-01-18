@@ -226,7 +226,7 @@ namespace SmartCode.Tool.UserControl
                             case ObjType.Proc: type = "procedure"; break;
                         }
                         var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
-                        IExporter exporter = new SqlServer2008Exporter();
+                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                         exporter.UpdateComment(dbConnectionString, type, selectItem.Name, selectItem.Schema, newValue, "");
                     }
                     else

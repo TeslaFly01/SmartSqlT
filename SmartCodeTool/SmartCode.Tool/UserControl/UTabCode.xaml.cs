@@ -83,9 +83,7 @@ namespace SmartCode.Tool.UserControl
             TabParentSql.IsSelected = true;
             TabTableSql.IsSelected = true;
             var objE = SelectedObject;
-
-            IExporter exporter = new SqlServer2008Exporter();
-            //var objectColumns = exporter.GetColumnsExt(Convert.ToInt32(objE.ObejcetId), connE);
+            
             var list = SelectedTableColunms;
             var sb = new StringBuilder();
 

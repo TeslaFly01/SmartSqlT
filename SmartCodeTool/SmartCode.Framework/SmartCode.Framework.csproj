@@ -73,10 +73,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Exporter\BaseExporter.cs" />
+    <Compile Include="Enum.cs" />
+    <Compile Include="ExporterFactory.cs" />
+    <Compile Include="Exporter\Exporter.cs" />
     <Compile Include="Exporter\SqlHelper.cs" />
-    <Compile Include="Exporter\SqliteExporter.cs" />
-    <Compile Include="Exporter\SqlServer2008Exporter.cs" />
+    <Compile Include="Exporter\SqlServerExporter.cs" />
     <Compile Include="Exporter\IExporter.cs" />
     <Compile Include="PhysicalDataModel\BaseTable.cs" />
     <Compile Include="PhysicalDataModel\Column.cs" />

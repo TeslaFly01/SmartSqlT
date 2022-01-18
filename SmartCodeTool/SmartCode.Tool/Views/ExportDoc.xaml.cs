@@ -12,6 +12,7 @@ using Microsoft.Win32;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SmartCode.DocUtils;
 using SmartCode.DocUtils.Dtos;
+using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
@@ -114,7 +115,7 @@ namespace SmartCode.Tool.Views
             }
             if (string.IsNullOrEmpty(TxtFileName.Text))
             {
-                TxtFileName.Text = $"{SelectedDataBase.DbName}表结构信息";
+                TxtFileName.Text = $"{SelectedDataBase.DbName}数据库结构信息";
             }
             //文件扩展名
             var fileNameE = LblFileExtend.Content;
@@ -156,7 +157,7 @@ namespace SmartCode.Tool.Views
                         if (item.Type == type)
                         {
                             var objectId = Convert.ToInt32(item.ObejcetId);
-                            IExporter exporter = new SqlServer2008Exporter();
+                            var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                             var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
 
                             viewPro.Add(new ViewProDto
@@ -173,7 +174,8 @@ namespace SmartCode.Tool.Views
                     if (group.Type == type)
                     {
                         var objectId = Convert.ToInt32(group.ObejcetId);
-                        IExporter exporter = new SqlServer2008Exporter();
+                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                            selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
 
                         viewPro.Add(new ViewProDto
@@ -203,11 +205,12 @@ namespace SmartCode.Tool.Views
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.DisplayName;
                         tbDto.Comment = node.Comment;
-                        tbDto.DBType = "SqlServer";
+                        tbDto.DBType = nameof(DataBaseType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
                         var objectId = Convert.ToInt32(node.ObejcetId);
-                        IExporter exporter = new SqlServer2008Exporter();
+                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                            selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         foreach (var col in columns)
                         {
@@ -248,8 +251,9 @@ namespace SmartCode.Tool.Views
 
                     var lst_col_dto = new List<ColumnDto>();
                     var objectId = Convert.ToInt32(group.ObejcetId);
-                    IExporter exporter = new SqlServer2008Exporter();
-                    var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                    var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                        selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();

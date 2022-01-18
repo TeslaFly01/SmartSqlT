@@ -8,8 +8,17 @@ namespace SmartCode.Framework.Exporter
 {
     using PhysicalDataModel;
 
-    public abstract class BaseExporter : IExporter
+    public abstract class Exporter : IExporter
     {
+        public Exporter(string connectionString)
+        {
+            DBConnectString = connectionString;
+        }
+        /// <summary>
+        /// 数据库连接
+        /// </summary>
+        public string DBConnectString { get; private set; }
+
         public abstract Model Export(string connectionString);
         public abstract List<DataBase> GetDatabases(string connectionString);
 
@@ -19,6 +28,6 @@ namespace SmartCode.Framework.Exporter
 
         public abstract DataSet GetDataSet(string connectionString, string tbName, string strWhere);
 
-        public abstract bool UpdateComment(string connection,string  type, string tableName,string schema, string columnName, string comment);
+        public abstract bool UpdateComment(string connection, string type, string tableName, string schema, string columnName, string comment);
     }
 }

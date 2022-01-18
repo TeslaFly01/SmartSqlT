@@ -19,6 +19,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
+using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
@@ -133,7 +134,7 @@ namespace SmartCode.Tool.UserControl
                 TabData.Header = objName;
                 Clipboard.SetDataObject(selectedObjct.DisplayName);
                 var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                 Task.Run(() =>
                 {
                     var tableColumns = exporter.GetColumns(objectId, dbConnectionString);
@@ -174,7 +175,7 @@ namespace SmartCode.Tool.UserControl
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
                 var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                 Task.Run(() =>
                 {
                     var script = exporter.GetScripts(objectId, dbConnectionString);
@@ -217,7 +218,8 @@ namespace SmartCode.Tool.UserControl
             var selectedItem = (System.Windows.Controls.TabItem)((System.Windows.Controls.TabControl)sender).SelectedItem;
             if (selectedItem.Name.Equals("TabData"))
             {
-                IExporter exporter = new SqlServer2008Exporter();
+                var connectionString = SelectedConnection.DbMasterConnectString;
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, connectionString);
                 if (TabData.IsSelected)
                 {
                     SearchTableExt2.Text = "";
@@ -307,7 +309,7 @@ namespace SmartCode.Tool.UserControl
                         return;
                     }
                     var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
-                    IExporter exporter = new SqlServer2008Exporter();
+                    var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                     var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, SelectedObject.Schema, newValue, selectItem.Name);
                     if (!flag)
                     {

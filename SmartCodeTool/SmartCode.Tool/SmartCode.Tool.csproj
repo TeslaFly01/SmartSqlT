@@ -88,9 +88,6 @@
     <Compile Include="UserControl\MainW.xaml.cs">
       <DependentUpon>MainW.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\UDiagram.xaml.cs">
-      <DependentUpon>UDiagram.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
@@ -207,10 +204,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\MainW.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="UserControl\UDiagram.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

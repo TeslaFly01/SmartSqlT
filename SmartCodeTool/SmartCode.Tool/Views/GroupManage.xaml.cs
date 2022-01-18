@@ -92,7 +92,7 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                 var list = exporter.GetDatabases(dbConnectionString);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {

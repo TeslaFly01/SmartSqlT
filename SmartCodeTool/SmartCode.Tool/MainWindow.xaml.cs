@@ -148,7 +148,7 @@ namespace SmartCode.Tool
             SelectendConnection = connectConfig;
             try
             {
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, ConnectionString);
                 var list = exporter.GetDatabases(ConnectionString);
                 DBase = list;
                 SelectDatabase.ItemsSource = DBase;
@@ -301,7 +301,7 @@ namespace SmartCode.Tool
                 }
                 #endregion
 
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, ConnectionString);
                 Model model = exporter.Export(ConnectionString);
                 dataSource = model;
                 var textColor = "#333444";
@@ -1071,7 +1071,7 @@ namespace SmartCode.Tool
             }
             Task.Run(() =>
             {
-                IExporter exporter = new SqlServer2008Exporter();
+                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, ConnectionString);
                 var list = exporter.GetDatabases(dataBase.DbMasterConnectString);
 
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -1110,7 +1110,7 @@ namespace SmartCode.Tool
                 Growl.Warning(new GrowlInfo { Message = $"请选择目标数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            IExporter exporter = new SqlServer2008Exporter();
+            var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, ConnectionString);
             LoadingLine.Visibility = Visibility.Visible;
 
             Model model = exporter.Export(targetConnect.DbMasterConnectString.Replace("master", targetData.DbName));

@@ -74,7 +74,6 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                IExporter exporter = new SqlServer2008Exporter();
             });
         }
 
@@ -130,7 +129,7 @@ namespace SmartCode.Tool.Views
                 {
                     if (isConnect)
                     {
-                        IExporter exporter = new SqlServer2008Exporter();
+                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, connectionString);
                         exporter.GetDatabases(connectionString);
                     }
                     Dispatcher.Invoke(() =>
@@ -351,7 +350,7 @@ namespace SmartCode.Tool.Views
             {
                 try
                 {
-                    IExporter exporter = new SqlServer2008Exporter();
+                    var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, connectionString);
                     var list = exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {

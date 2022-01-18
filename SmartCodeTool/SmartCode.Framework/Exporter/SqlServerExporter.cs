@@ -11,8 +11,12 @@ namespace SmartCode.Framework.Exporter
     using PhysicalDataModel;
     using Util;
 
-    public class SqlServer2008Exporter : BaseExporter, IExporter
+    public class SqlServerExporter : Exporter, IExporter
     {
+        public SqlServerExporter(string connectionString) : base(connectionString)
+        {
+
+        }
         #region IExporter Members
 
         public override Model Export(string connectionString)
