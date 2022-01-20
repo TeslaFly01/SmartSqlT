@@ -780,7 +780,7 @@ namespace SmartCode.Tool
             {
                 foreach (var table in dataSource.Tables)
                 {
-                    if (!table.Key.StartsWith(searchText, true, null) && !table.Value.DisplayName.StartsWith(searchText, true, null))
+                    if (!table.Key.StartsWith(searchText, true, null) && !table.Value.Name.StartsWith(searchText, true, null))
                     {
                         continue;
                     }
@@ -838,7 +838,7 @@ namespace SmartCode.Tool
             {
                 foreach (var view in dataSource.Views)
                 {
-                    if (!view.Key.StartsWith(searchText, true, null) && !view.Value.DisplayName.StartsWith(searchText, true, null))
+                    if (!view.Key.StartsWith(searchText, true, null) && !view.Value.Name.StartsWith(searchText, true, null))
                     {
                         continue;
                     }
@@ -896,7 +896,7 @@ namespace SmartCode.Tool
             {
                 foreach (var proc in dataSource.Procedures)
                 {
-                    if (!proc.Key.StartsWith(searchText, true, null) && !proc.Value.DisplayName.StartsWith(searchText, true, null))
+                    if (!proc.Key.StartsWith(searchText, true, null) && !proc.Value.Name.StartsWith(searchText, true, null))
                     {
                         continue;
                     }

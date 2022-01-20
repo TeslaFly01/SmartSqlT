@@ -80,7 +80,7 @@ namespace SmartCode.Tool.Views
         private void ExportDoc_OnLoaded(object sender, RoutedEventArgs e)
         {
             Title = $"{SelectedDataBase.DbName} - {Title}";
-            TxtFileName.Text = SelectedDataBase.DbName + "表结构信息";
+            TxtFileName.Text = SelectedDataBase.DbName + "数据库结构信息";
             CheckAll.IsChecked = ExportType == ExportEnum.All;
             CheckPart.IsChecked = ExportType == ExportEnum.Partial;
         }
