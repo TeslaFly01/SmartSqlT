@@ -86,6 +86,17 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
+                        Name="ImportMark"
+                        FontWeight="Normal"
+                        Header="导入备注">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="{StaticResource ImportGeometry}"
+                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
                         Name="ExportDoc"
                         Click="ExportDoc_OnClick"
                         FontWeight="Normal"
