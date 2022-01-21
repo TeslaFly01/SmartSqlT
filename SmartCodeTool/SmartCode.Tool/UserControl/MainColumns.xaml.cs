@@ -132,7 +132,6 @@ namespace SmartCode.Tool.UserControl
                 var objName = isView ? "视图" : "数据表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
-                Clipboard.SetDataObject(selectedObjct.DisplayName);
                 var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
                 var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
                 Task.Run(() =>

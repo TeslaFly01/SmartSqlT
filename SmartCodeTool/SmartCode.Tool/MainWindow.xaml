@@ -21,6 +21,9 @@
     <Window.InputBindings>
         <KeyBinding Command="Copy" Gesture="Control + C" />
     </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Copy" Executed="MenuSelectedItem_OnClick" />
+    </Window.CommandBindings>
     <hc:GlowWindow.NonClientAreaContent>
         <StackPanel Height="29" Margin="25,0,0,0">
             <Menu HorizontalAlignment="Left">

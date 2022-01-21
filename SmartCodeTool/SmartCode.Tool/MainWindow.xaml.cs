@@ -1199,7 +1199,7 @@ namespace SmartCode.Tool
             {
                 return;
             }
-            Clipboard.SetDataObject(selectedObjects.DisplayName);
+            Clipboard.SetDataObject(selectedObjects.Name);
         }
 
         /// <summary>
