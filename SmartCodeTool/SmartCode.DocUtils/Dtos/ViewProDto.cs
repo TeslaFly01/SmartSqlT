@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace SmartCode.DocUtils.Dtos
 {
@@ -33,6 +34,7 @@ namespace SmartCode.DocUtils.Dtos
         /// <summary>
         /// 对象脚本
         /// </summary>
+        //[XmlIgnore]
         public string Script { get; set; }
 
         /// <summary>

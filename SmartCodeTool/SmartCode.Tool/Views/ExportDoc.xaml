@@ -109,6 +109,10 @@
                                 <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/CHM.png" />
                                 <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/CHM.png" />
                             </Trigger>
+                            <Trigger Property="Content" Value="XML">
+                                <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/XML.png" />
+                                <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/XML.png" />
+                            </Trigger>
                             <Trigger Property="Content" Value="MarkDown">
                                 <Setter TargetName="leftArrowImg" Property="Source" Value="../Resources/Img/doc/MARKDOWN.png" />
                                 <Setter TargetName="rightArrowImg" Property="Source" Value="../Resources/Img/doc/MARKDOWN.png" />
@@ -213,6 +217,15 @@
                         VerticalAlignment="Top"
                         Checked="Toggle_OnChecked"
                         Content="HTML"
+                        Style="{StaticResource ArrowToggleStyle1}" />
+                    <ToggleButton
+                        Name="Xml"
+                        Width="80"
+                        Margin="10,10,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Checked="Toggle_OnChecked"
+                        Content="XML"
                         Style="{StaticResource ArrowToggleStyle1}" />
                     <ToggleButton
                         Name="MarkDown"

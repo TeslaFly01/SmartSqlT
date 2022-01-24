@@ -300,6 +300,7 @@
     <Content Include="htmlhelp.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\doc\XML.png" />
     <Resource Include="Resources\Img\Refresh.png" />
     <Resource Include="Resources\Img\SetGroup.png" />
     <Resource Include="Resources\Img\NoData2.png" />

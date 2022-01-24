@@ -220,7 +220,8 @@ namespace SmartCode.DocUtils
             where T : new()
         {
             MemoryStream Stream = new MemoryStream();
-            XmlSerializer xml = new XmlSerializer(obj.GetType());
+            //XmlSerializer xml = new XmlSerializer(obj.GetType());
+            XmlSerializer xml = XmlSerializer.FromTypes(new[] { typeof(T) })[0];
             //序列化对象
             xml.Serialize(Stream, obj);
             Stream.Position = 0;

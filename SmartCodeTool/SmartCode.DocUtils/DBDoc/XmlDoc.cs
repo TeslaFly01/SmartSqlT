@@ -16,7 +16,7 @@ namespace SmartCode.DocUtils.DBDoc
 
         public override void Build(string filePath)
         {
-            string xmlContent = this.Dto.Tables.SerializeXml();
+            string xmlContent = this.Dto.SerializeXml();
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlContent);
 
