@@ -157,7 +157,7 @@ namespace SmartCode.Tool.Views
                         if (item.Type == type)
                         {
                             var objectId = Convert.ToInt32(item.ObejcetId);
-                            var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                            var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                             var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
 
                             viewPro.Add(new ViewProDto
@@ -174,7 +174,7 @@ namespace SmartCode.Tool.Views
                     if (group.Type == type)
                     {
                         var objectId = Convert.ToInt32(group.ObejcetId);
-                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
                             selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
 
@@ -205,11 +205,11 @@ namespace SmartCode.Tool.Views
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.DisplayName;
                         tbDto.Comment = node.Comment;
-                        tbDto.DBType = nameof(DataBaseType.SqlServer);
+                        tbDto.DBType = nameof(DBType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
                         var objectId = Convert.ToInt32(node.ObejcetId);
-                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
                             selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                         foreach (var col in columns)
@@ -251,7 +251,7 @@ namespace SmartCode.Tool.Views
 
                     var lst_col_dto = new List<ColumnDto>();
                     var objectId = Convert.ToInt32(group.ObejcetId);
-                    var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer,
+                    var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
                         selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                 var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
                     foreach (var col in columns)

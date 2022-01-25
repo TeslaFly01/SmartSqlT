@@ -129,7 +129,7 @@ namespace SmartCode.Tool.Views
                 {
                     if (isConnect)
                     {
-                        var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, connectionString);
+                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, connectionString);
                         exporter.GetDatabases(connectionString);
                     }
                     Dispatcher.Invoke(() =>
@@ -350,7 +350,7 @@ namespace SmartCode.Tool.Views
             {
                 try
                 {
-                    var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, connectionString);
+                    var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, connectionString);
                     var list = exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {

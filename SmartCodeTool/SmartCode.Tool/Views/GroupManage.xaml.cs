@@ -92,7 +92,7 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                var exporter = ExporterFactory.CreateInstance(DataBaseType.SqlServer, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, dbConnectionString);
                 var list = exporter.GetDatabases(dbConnectionString);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {

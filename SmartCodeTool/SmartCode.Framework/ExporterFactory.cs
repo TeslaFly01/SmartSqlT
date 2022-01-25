@@ -9,11 +9,11 @@ namespace SmartCode.Framework
 {
     public class ExporterFactory
     {
-        public static Exporter.Exporter CreateInstance(DataBaseType type, string ConnectionString)
+        public static Exporter.Exporter CreateInstance(DBType type, string ConnectionString)
         {
             switch (type)
             {
-                case DataBaseType.SqlServer: return new SqlServerExporter(ConnectionString);
+                case DBType.SqlServer: return new SqlServerExporter(ConnectionString);
                 default: return new SqlServerExporter(ConnectionString);
             }
         }

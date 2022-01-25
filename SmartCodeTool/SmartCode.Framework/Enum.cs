@@ -9,7 +9,7 @@ namespace SmartCode.Framework
     /// <summary>
     /// 数据库类型
     /// </summary>
-    public enum DataBaseType
+    public enum DBType
     {
         SqlServer,
         MySQL,
