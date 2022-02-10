@@ -492,8 +492,8 @@ namespace SmartCode.Tool.UserControl
                 Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要生成实体的数据表", ShowDateTime = false, WaitTime = 1 });
                 return;
             }
-            var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.DisplayName}.cs");
-            StrUtil.CreateClass(filePath, SelectedObject.DisplayName, SourceColunmData);
+            var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.Name}.cs");
+            StrUtil.CreateClass(filePath, SelectedObject.Name, SourceColunmData);
 
             Growl.SuccessGlobal(new GrowlInfo { Message = "实体生成成功", WaitTime = 1, ShowDateTime = false });
             Process.Start(baseDirectoryPath);
