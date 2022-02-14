@@ -87,6 +87,7 @@
                     </MenuItem>
                     <MenuItem
                         Name="ImportMark"
+                        Click="ImportMark_OnClick"
                         FontWeight="Normal"
                         Header="导入备注">
                         <MenuItem.Icon>

@@ -1265,13 +1265,28 @@ namespace SmartCode.Tool
                 return;
             }
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            ExportDoc exportDoc = new ExportDoc();
+            var exportDoc = new ExportDoc();
             exportDoc.Owner = this;
             exportDoc.ExportType = ExportEnum.All;
             exportDoc.SelectedConnection = SelectendConnection;
             exportDoc.SelectedDataBase = selectDatabase;
             exportDoc.ExportData = TreeViewData;
             exportDoc.ShowDialog();
+        }
+
+        /// <summary>
+        /// 导入备注
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ImportMark_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            var importMark = new ImportMark();
+            importMark.Owner = this;
+            importMark.SelectedConnection = SelectendConnection;
+            importMark.SelectedDataBase = selectDatabase;
+            importMark.ShowDialog();
         }
     }
 }
