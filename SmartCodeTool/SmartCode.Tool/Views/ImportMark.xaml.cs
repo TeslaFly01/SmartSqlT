@@ -104,6 +104,7 @@ namespace SmartCode.Tool.Views
                     var dbDTO = new DBDto().DeserializeXml(xmlContent);
                     foreach (var tabInfo in dbDTO.Tables)
                     {
+                        var tableName = tabInfo.TableName;
                         //更新表描述
                         if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
                         {
@@ -114,18 +115,48 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
                         }
                         //更新表列的描述
-                        foreach (var colInfo in tabInfo.Columns)
+                        tabInfo.Columns.ForEach(colInfo =>
                         {
-                            if (dbMaintenance.IsAnyColumn(tabInfo.TableName, colInfo.ColumnName) && !string.IsNullOrWhiteSpace(colInfo.Comment))
+                            var colName = colInfo.ColumnName;
+                            var comment = colInfo.Comment;
+                            if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
                             {
-                                if (dbMaintenance.IsAnyColumnRemark(colInfo.ColumnName, tabInfo.TableName))
+                                if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
                                 {
-                                    dbMaintenance.DeleteColumnRemark(colInfo.ColumnName, tabInfo.TableName);
+                                    dbMaintenance.DeleteColumnRemark(colName, tableName);
                                 }
-                                dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
+                                dbMaintenance.AddColumnRemark(colName, tableName, comment);
                             }
-                        }
+                        });
                     }
+                    //更新视图描述
+                    dbDTO.Views.ForEach(view =>
+                    {
+                        var viewName = view.ObjectName;
+                        var comment = view.Comment;
+                        if (!string.IsNullOrWhiteSpace(comment))
+                        {
+                            if (dbMaintenance.IsAnyViewRemark(viewName))
+                            {
+                                dbMaintenance.DeleteViewRemark(viewName);
+                            }
+                            dbMaintenance.AddViewRemark(viewName, comment);
+                        }
+                    });
+                    //更新存储过程描述
+                    dbDTO.Procs.ForEach(proc =>
+                    {
+                        var procName = proc.ObjectName;
+                        var comment = proc.Comment;
+                        if (!string.IsNullOrWhiteSpace(comment))
+                        {
+                            if (dbMaintenance.IsAnyProcRemark(procName))
+                            {
+                                dbMaintenance.DeleteProcRemark(procName);
+                            }
+                            dbMaintenance.AddProcRemark(procName, comment);
+                        }
+                    });
                     #endregion
                 }
                 else
@@ -148,7 +179,7 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddTableRemark(tableName, tableComment);
                         }
                         //更新表的列描述
-                        foreach (var colKV in item.Value)
+                        item.Value.ForEach(colKV =>
                         {
                             var colName = colKV.Key;
                             var colComment = colKV.Value;
@@ -160,7 +191,7 @@ namespace SmartCode.Tool.Views
                                 }
                                 dbMaintenance.AddColumnRemark(colName, tableName, colComment);
                             }
-                        }
+                        });
                     }
                     #endregion
                 }
