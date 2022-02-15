@@ -205,7 +205,7 @@ namespace SmartCode.Tool.Views
                     {
                         TableDto tbDto = new TableDto();
                         tbDto.TableOrder = orderNo.ToString();
-                        tbDto.TableName = node.DisplayName;
+                        tbDto.TableName = node.Name;
                         tbDto.Comment = node.Comment;
                         tbDto.DBType = nameof(DbType.SqlServer);
 
@@ -218,7 +218,7 @@ namespace SmartCode.Tool.Views
                         {
                             ColumnDto colDto = new ColumnDto();
                             colDto.ColumnOrder = col.Key.ToString();
-                            colDto.ColumnName = col.Value.DisplayName;
+                            colDto.ColumnName = col.Value.Name;
                             // 数据类型
                             colDto.ColumnTypeName = col.Value.DataType;
                             // 长度
@@ -247,7 +247,7 @@ namespace SmartCode.Tool.Views
                 {
                     TableDto tbDto = new TableDto();
                     tbDto.TableOrder = groupNo.ToString();
-                    tbDto.TableName = group.DisplayName;
+                    tbDto.TableName = group.Name;
                     tbDto.Comment = group.Comment;
                     tbDto.DBType = "SqlServer";
 
@@ -260,7 +260,7 @@ namespace SmartCode.Tool.Views
                     {
                         ColumnDto colDto = new ColumnDto();
                         colDto.ColumnOrder = col.Key.ToString();
-                        colDto.ColumnName = col.Value.DisplayName;
+                        colDto.ColumnName = col.Value.Name;
                         // 数据类型
                         colDto.ColumnTypeName = col.Value.DataType;
                         // 长度

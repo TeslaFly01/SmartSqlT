@@ -31,7 +31,7 @@
                     Margin="0,15,20,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    Click="BtnLookPath_OnClick"
+                    Click="BtnFindFile_OnClick"
                     Content="浏览..."
                     Cursor="Hand" />
                 <TextBlock

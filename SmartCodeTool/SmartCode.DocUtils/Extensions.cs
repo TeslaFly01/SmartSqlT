@@ -191,24 +191,11 @@ namespace SmartCode.DocUtils
         {
             using (StringReader sr = new StringReader(xml))
             {
-                XmlSerializer xmldes = new XmlSerializer(type);
+                //XmlSerializer xmldes = new XmlSerializer(type);
+                XmlSerializer xmldes = XmlSerializer.FromTypes(new[] { type })[0];
                 return xmldes.Deserialize(sr);
             }
         }
-
-        /// <summary>
-        /// 反序列化
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="xml"></param>
-        /// <returns></returns>
-        public static object DeserializeXml(this Type type, Stream stream)
-        {
-            XmlSerializer xmldes = new XmlSerializer(type);
-            return xmldes.Deserialize(stream);
-        }
-
-
 
         /// <summary>
         /// 序列化
@@ -234,6 +221,21 @@ namespace SmartCode.DocUtils
             return str;
         }
 
+        /// <summary>
+        /// 反序列化
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="type"></param>
+        /// <param name="xml"></param>
+        /// <returns></returns>
+        public static T DeserializeXml<T>(this T type, string xml) where T : new()
+        {
+            using (StringReader sr = new StringReader(xml))
+            {
+                XmlSerializer xmldes = XmlSerializer.FromTypes(new[] { typeof(T) })[0];
+                return (T)xmldes.Deserialize(sr);
+            }
+        }
         #endregion
     }
 }

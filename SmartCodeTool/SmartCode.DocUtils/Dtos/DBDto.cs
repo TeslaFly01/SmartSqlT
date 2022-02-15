@@ -30,33 +30,33 @@ namespace SmartCode.DocUtils.Dtos
         /// </summary>
         public string DBType { get; set; }
 
-
+        public List<TableDto> Tables { get; set; }
         private List<TableDto> _Tables = null;
-        /// <summary>
-        /// 表结构信息
-        /// </summary>
-        public List<TableDto> Tables
-        {
-            get
-            {
-                if (_Tables == null)
-                {
-                    return new List<TableDto>();
-                }
-                else
-                {
-                    _Tables.ForEach(t =>
-                    {
-                        t.Comment = FilterIllegalDir(t.Comment);
-                    });
-                    return _Tables;
-                }
-            }
-            set
-            {
-                _Tables = value;
-            }
-        }
+        ///// <summary>
+        ///// 表结构信息
+        ///// </summary>
+        //public List<TableDto> Tables
+        //{
+        //    get
+        //    {
+        //        if (_Tables == null)
+        //        {
+        //            return new List<TableDto>();
+        //        }
+        //        else
+        //        {
+        //            _Tables.ForEach(t =>
+        //            {
+        //                t.Comment = FilterIllegalDir(t.Comment);
+        //            });
+        //            return _Tables;
+        //        }
+        //    }
+        //    set
+        //    {
+        //        _Tables = value;
+        //    }
+        //}
 
         /// <summary>
         /// 数据库视图

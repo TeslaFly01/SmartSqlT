@@ -10,6 +10,7 @@ using SmartCode.DocUtils;
 using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace SmartCode.Tool.Views
 {
@@ -46,11 +47,13 @@ namespace SmartCode.Tool.Views
             InitializeComponent();
         }
 
-        private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)
+        private void BtnFindFile_OnClick(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "(*.xml)|*.xml";
-            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)//注意，此处一定要手动引入System.Window.Forms空间，否则你如果使用默认的DialogResult会发现没有OK属性
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                Filter = @"支持文件类型(*.pdm;*.xml)|*.pdm;*.xml|PowerDesigner文件(*.pdm)|*.pdm|XML文件|*.xml"
+            };
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 TxtPath.Text = openFileDialog.FileName;
             }
@@ -58,7 +61,7 @@ namespace SmartCode.Tool.Views
 
         private void BtnImport_OnClick(object sender, RoutedEventArgs e)
         {
-
+            UpdateCommentByXML(TxtPath.Text);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -75,7 +78,7 @@ namespace SmartCode.Tool.Views
             #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
-            if (xmlContent.Contains("ArrayOfTableDto"))
+            if (xmlContent.Contains("DBDto"))
             {
                 #region MyRegion
                 //通过 dbchm 导出的 XML文件 来更新 表列批注
@@ -93,9 +96,8 @@ namespace SmartCode.Tool.Views
                         //}
                     }
                 }
-
-                var listDTO = typeof(List<TableDto>).DeserializeXml(xmlContent) as List<TableDto>;
-                foreach (var tabInfo in listDTO)
+                var dbDTO = new DBDto().DeserializeXml(xmlContent);
+                foreach (var tabInfo in dbDTO.Tables)
                 {
                     //更新表描述
                     if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
@@ -118,7 +120,7 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
                         }
                     }
-                } 
+                }
                 #endregion
             }
             else
@@ -154,7 +156,7 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddColumnRemark(colName, tableName, colComment);
                         }
                     }
-                } 
+                }
                 #endregion
             }
             #endregion
