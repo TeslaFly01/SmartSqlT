@@ -123,7 +123,7 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="{StaticResource CloudDrawingBrush}">
         <Grid Margin="5,5,5,35" Background="White">
             <Grid Margin="20">
                 <TextBlock
@@ -259,28 +259,33 @@
                     Content=".chm" />
             </Grid>
         </Grid>
-        <hc:SimpleStackPanel
+        <Grid
             Margin="5"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom">
-            <hc:UniformSpacingPanel Spacing="10">
-                <Button
-                    x:Name="BtnExport"
-                    Height="25"
-                    Padding="20,0,20,0"
-                    Click="BtnExport_OnClick"
-                    Content="导出"
-                    Cursor="Hand"
-                    Style="{StaticResource ButtonPrimary}" />
-                <Button
-                    x:Name="BtnCancel"
-                    Height="25"
-                    Padding="20,0,20,0"
-                    Click="BtnCancel_OnClick"
-                    Content="取消"
-                    Cursor="Hand" />
-            </hc:UniformSpacingPanel>
-        </hc:SimpleStackPanel>
+            VerticalAlignment="Bottom"
+            Background="#f5f5f5">
+            <hc:SimpleStackPanel
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel Spacing="10">
+                    <Button
+                        x:Name="BtnExport"
+                        Height="25"
+                        Padding="20,0,20,0"
+                        Click="BtnExport_OnClick"
+                        Content="导出"
+                        Cursor="Hand"
+                        Style="{StaticResource ButtonPrimary}" />
+                    <Button
+                        x:Name="BtnCancel"
+                        Height="25"
+                        Padding="20,0,20,0"
+                        Click="BtnCancel_OnClick"
+                        Content="取消"
+                        Cursor="Hand" />
+                </hc:UniformSpacingPanel>
+            </hc:SimpleStackPanel>
+        </Grid>
         <localBase:Loading
             x:Name="LoadingG"
             Grid.Column="0"

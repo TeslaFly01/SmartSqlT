@@ -14,5 +14,71 @@
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid />
+    <Grid Background="{StaticResource CloudDrawingBrush}">
+        <Grid Margin="5,5,5,35" Background="White">
+            <Grid Margin="20">
+                <TextBlock
+                    Margin="10,22,0,0"
+                    VerticalAlignment="Top"
+                    Text="导出路径" />
+                <TextBox
+                    Name="TxtPath"
+                    Margin="75,15,77,0"
+                    VerticalAlignment="Top" />
+                <Button
+                    Name="BtnLookPath"
+                    Width="55"
+                    Margin="0,15,20,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Click="BtnLookPath_OnClick"
+                    Content="浏览..."
+                    Cursor="Hand" />
+                <TextBlock
+                    Margin="10,75,0,0"
+                    VerticalAlignment="Top"
+                    Text="当前导出支持pdm/xml文件来进行对象备注(注释)更新" />
+                <hc:TransitioningContentControl Margin="13,0,0,0" VerticalAlignment="Bottom">
+                    <StackPanel>
+                        <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
+                            <TextBlock Text="pdm 由powerdesigner设计数据库时产生；" />
+                        </Border>
+                        <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
+                            <TextBlock Text="xml 由visual studio设置实体类库的项目属性,勾选XML文档文件后生成项目时产生；" />
+                        </Border>
+                        <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
+                            <TextBlock Text="xml 由SmartSQL导出文档为XML类型而产生；" />
+                        </Border>
+                    </StackPanel>
+                </hc:TransitioningContentControl>
+            </Grid>
+        </Grid>
+        <Grid
+            Margin="5"
+            VerticalAlignment="Bottom"
+            Background="#f5f5f5">
+            <hc:SimpleStackPanel
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel Spacing="10">
+                    <Button
+                        x:Name="BtnImport"
+                        Height="25"
+                        Padding="20,0,20,0"
+                        Click="BtnImport_OnClick"
+                        Content="导入"
+                        Cursor="Hand"
+                        Style="{StaticResource ButtonPrimary}" />
+                    <Button
+                        x:Name="BtnCancel"
+                        Height="25"
+                        Padding="20,0,20,0"
+                        Click="BtnCancel_OnClick"
+                        Content="取消"
+                        Cursor="Hand" />
+                </hc:UniformSpacingPanel>
+            </hc:SimpleStackPanel>
+        </Grid>
+    </Grid>
 </hc:Window>

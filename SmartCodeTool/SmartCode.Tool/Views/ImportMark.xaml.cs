@@ -1,17 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using System.IO;
@@ -19,6 +9,7 @@ using System.Xml;
 using SmartCode.DocUtils;
 using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
+using System.Windows.Forms;
 
 namespace SmartCode.Tool.Views
 {
@@ -55,16 +46,38 @@ namespace SmartCode.Tool.Views
             InitializeComponent();
         }
 
+        private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "(*.xml)|*.xml";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)//注意，此处一定要手动引入System.Window.Forms空间，否则你如果使用默认的DialogResult会发现没有OK属性
+            {
+                TxtPath.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void BtnImport_OnClick(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         /// <summary>
         /// XML更新表批注
         /// </summary>
         /// <param name="path"></param>
         private void UpdateCommentByXML(string path)
         {
+            #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             if (xmlContent.Contains("ArrayOfTableDto"))
             {
+                #region MyRegion
                 //通过 dbchm 导出的 XML文件 来更新 表列批注
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlContent);
@@ -105,10 +118,12 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
                         }
                     }
-                }
+                } 
+                #endregion
             }
             else
             {
+                #region MyRegion
                 //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
                 XmlAnalyze analyze = new XmlAnalyze(path);
                 var data = analyze.Data;
@@ -139,8 +154,10 @@ namespace SmartCode.Tool.Views
                             dbMaintenance.AddColumnRemark(colName, tableName, colComment);
                         }
                     }
-                }
+                } 
+                #endregion
             }
+            #endregion
         }
     }
 }
