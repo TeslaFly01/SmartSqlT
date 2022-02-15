@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartCode.Framework.Util;
 using SQLite;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Framework.SqliteModel
 {
@@ -16,6 +18,10 @@ namespace SmartCode.Framework.SqliteModel
         /// 连接名称
         /// </summary>
         public string ConnectName { get; set; }
+        /// <summary>
+        /// 数据库类型
+        /// </summary>
+        public DbType DbType { get; set; }
         /// <summary>
         /// 服务器地址
         /// </summary>
@@ -55,5 +61,11 @@ namespace SmartCode.Framework.SqliteModel
         /// </summary>
         [Ignore]
         public string DbDefaultConnectString => $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+
+        public string SelectedDbConnectString(string selectedDatabase)
+        {
+            return
+                $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+        }
     }
 }

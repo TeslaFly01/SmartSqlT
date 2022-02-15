@@ -17,6 +17,7 @@ using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Tool.Models;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Tool.Views
 {
@@ -143,6 +144,7 @@ namespace SmartCode.Tool.Views
 
         private List<ViewProDto> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
         {
+            var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
             var viewPro = new List<ViewProDto>();
             foreach (var group in treeViewData)
             {
@@ -157,8 +159,8 @@ namespace SmartCode.Tool.Views
                         if (item.Type == type)
                         {
                             var objectId = Convert.ToInt32(item.ObejcetId);
-                            var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                            var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                            var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, selectedConnectionString);
+                            var script = exporter.GetScripts(objectId, selectedConnectionString);
 
                             viewPro.Add(new ViewProDto
                             {
@@ -174,9 +176,8 @@ namespace SmartCode.Tool.Views
                     if (group.Type == type)
                     {
                         var objectId = Convert.ToInt32(group.ObejcetId);
-                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
-                            selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                        var script = exporter.GetScripts(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                        var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, selectedConnectionString);
+                        var script = exporter.GetScripts(objectId, selectedConnectionString);
 
                         viewPro.Add(new ViewProDto
                         {
@@ -192,6 +193,7 @@ namespace SmartCode.Tool.Views
 
         private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
         {
+            var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
             List<TableDto> tables = new List<TableDto>();
             var groupNo = 1;
             foreach (var group in treeViewData)
@@ -205,13 +207,13 @@ namespace SmartCode.Tool.Views
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.DisplayName;
                         tbDto.Comment = node.Comment;
-                        tbDto.DBType = nameof(DBType.SqlServer);
+                        tbDto.DBType = nameof(DbType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
                         var objectId = Convert.ToInt32(node.ObejcetId);
-                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
-                            selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                        var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                        var exporter = ExporterFactory.CreateInstance(DbType.SqlServer,
+                            selectedConnectionString);
+                        var columns = exporter.GetColumns(objectId, selectedConnectionString);
                         foreach (var col in columns)
                         {
                             ColumnDto colDto = new ColumnDto();
@@ -251,9 +253,9 @@ namespace SmartCode.Tool.Views
 
                     var lst_col_dto = new List<ColumnDto>();
                     var objectId = Convert.ToInt32(group.ObejcetId);
-                    var exporter = ExporterFactory.CreateInstance(DBType.SqlServer,
-                        selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
-                var columns = exporter.GetColumns(objectId, selectedConnection.DbMasterConnectString.Replace("master", selectedDatabase.DbName));
+                    var exporter = ExporterFactory.CreateInstance(DbType.SqlServer,
+                        selectedConnectionString);
+                    var columns = exporter.GetColumns(objectId, selectedConnectionString);
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();

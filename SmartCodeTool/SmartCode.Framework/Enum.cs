@@ -6,16 +6,16 @@ using System.Threading.Tasks;
 
 namespace SmartCode.Framework
 {
-    /// <summary>
-    /// 数据库类型
-    /// </summary>
-    public enum DBType
-    {
-        SqlServer,
-        MySQL,
-        Oracle,
-        PostgreSQL,
-        DB2,
-        SQLite
-    }
+    ///// <summary>
+    ///// 数据库类型
+    ///// </summary>
+    //public enum DBType
+    //{
+    //    SqlServer,
+    //    MySQL,
+    //    Oracle,
+    //    PostgreSQL,
+    //    DB2,
+    //    SQLite
+    //}
 }

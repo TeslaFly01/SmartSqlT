@@ -59,47 +59,50 @@ namespace SmartCode.Tool.Views
         /// XML更新表批注
         /// </summary>
         /// <param name="path"></param>
-        void UpdateCommentByXML(string path)
+        private void UpdateCommentByXML(string path)
         {
-            var dbfact = SugarFactory.GetInstance();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             if (xmlContent.Contains("ArrayOfTableDto"))
             {
                 //通过 dbchm 导出的 XML文件 来更新 表列批注
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(xmlContent);
-                var dbName = doc.DocumentElement.GetAttribute("databaseName");
-
-                if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
+                if (doc.DocumentElement != null)
                 {
-                    //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-                    //{
-                    //    return;
-                    //}
+                    var dbName = doc.DocumentElement.GetAttribute("databaseName");
+
+                    if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
+                    {
+                        //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                        //{
+                        //    return;
+                        //}
+                    }
                 }
 
                 var listDTO = typeof(List<TableDto>).DeserializeXml(xmlContent) as List<TableDto>;
                 foreach (var tabInfo in listDTO)
                 {
                     //更新表描述
-                    if (dbfact.DbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
+                    if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
                     {
-                        if (dbfact.DbMaintenance.IsAnyTableRemark(tabInfo.TableName))
+                        if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
                         {
-                            dbfact.DbMaintenance.DeleteTableRemark(tabInfo.TableName);
+                            dbMaintenance.DeleteTableRemark(tabInfo.TableName);
                         }
-                        dbfact.DbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
+                        dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
                     }
                     //更新表列的描述
                     foreach (var colInfo in tabInfo.Columns)
                     {
-                        if (dbfact.DbMaintenance.IsAnyColumn(tabInfo.TableName, colInfo.ColumnName) && !string.IsNullOrWhiteSpace(colInfo.Comment))
+                        if (dbMaintenance.IsAnyColumn(tabInfo.TableName, colInfo.ColumnName) && !string.IsNullOrWhiteSpace(colInfo.Comment))
                         {
-                            if (dbfact.DbMaintenance.IsAnyColumnRemark(colInfo.ColumnName, tabInfo.TableName))
+                            if (dbMaintenance.IsAnyColumnRemark(colInfo.ColumnName, tabInfo.TableName))
                             {
-                                dbfact.DbMaintenance.DeleteColumnRemark(colInfo.ColumnName, tabInfo.TableName);
+                                dbMaintenance.DeleteColumnRemark(colInfo.ColumnName, tabInfo.TableName);
                             }
-                            dbfact.DbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
+                            dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
                         }
                     }
                 }
@@ -114,26 +117,26 @@ namespace SmartCode.Tool.Views
                     var tableName = item.Key.Key;
                     var tableComment = item.Key.Value;
                     //更新表描述
-                    if (dbfact.DbMaintenance.IsAnyTable(tableName) && !string.IsNullOrWhiteSpace(tableComment))
+                    if (dbMaintenance.IsAnyTable(tableName) && !string.IsNullOrWhiteSpace(tableComment))
                     {
-                        if (dbfact.DbMaintenance.IsAnyTableRemark(tableName))
+                        if (dbMaintenance.IsAnyTableRemark(tableName))
                         {
-                            dbfact.DbMaintenance.DeleteTableRemark(tableName);
+                            dbMaintenance.DeleteTableRemark(tableName);
                         }
-                        dbfact.DbMaintenance.AddTableRemark(tableName, tableComment);
+                        dbMaintenance.AddTableRemark(tableName, tableComment);
                     }
                     //更新表的列描述
                     foreach (var colKV in item.Value)
                     {
                         var colName = colKV.Key;
                         var colComment = colKV.Value;
-                        if (dbfact.DbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
+                        if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
                         {
-                            if (dbfact.DbMaintenance.IsAnyColumnRemark(colName, tableName))
+                            if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
                             {
-                                dbfact.DbMaintenance.DeleteColumnRemark(colName, tableName);
+                                dbMaintenance.DeleteColumnRemark(colName, tableName);
                             }
-                            dbfact.DbMaintenance.AddColumnRemark(colName, tableName, colComment);
+                            dbMaintenance.AddColumnRemark(colName, tableName, colComment);
                         }
                     }
                 }

@@ -32,6 +32,7 @@ using UserControlE = System.Windows.Controls.UserControl;
 using PathF = System.IO.Path;
 using TextBox = System.Windows.Controls.TextBox;
 using MessageBox = HandyControl.Controls.MessageBox;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Tool.UserControl
 {
@@ -118,7 +119,7 @@ namespace SmartCode.Tool.UserControl
             NoDataText.Visibility = Visibility.Collapsed;
             var selectedObjct = SelectedObject;
             var selectedConnection = SelectedConnection;
-            var dbConnectionString = selectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
+            var dbConnectionString = selectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
             if (selectedObjct.Type == ObjType.Table || selectedObjct.Type == ObjType.View)
             {
                 SearchColumns.Text = string.Empty;
@@ -133,7 +134,7 @@ namespace SmartCode.Tool.UserControl
                 TabStruct.Header = objName;
                 TabData.Header = objName;
                 var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
                 Task.Run(() =>
                 {
                     var tableColumns = exporter.GetColumns(objectId, dbConnectionString);
@@ -174,7 +175,7 @@ namespace SmartCode.Tool.UserControl
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
                 var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
                 Task.Run(() =>
                 {
                     var script = exporter.GetScripts(objectId, dbConnectionString);
@@ -218,7 +219,7 @@ namespace SmartCode.Tool.UserControl
             if (selectedItem.Name.Equals("TabData"))
             {
                 var connectionString = SelectedConnection.DbMasterConnectString;
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, connectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
                 if (TabData.IsSelected)
                 {
                     SearchTableExt2.Text = "";
@@ -307,8 +308,8 @@ namespace SmartCode.Tool.UserControl
                         ((TextBox)e.EditingElement).Text = _cellEditValue;
                         return;
                     }
-                    var dbConnectionString = SelectedConnection.DbMasterConnectString.Replace("master", SelectedDataBase.DbName);
-                    var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, dbConnectionString);
+                    var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
+                    var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
                     var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, SelectedObject.Schema, newValue, selectItem.Name);
                     if (!flag)
                     {

@@ -24,6 +24,8 @@ using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
 using SmartCode.Tool.Annotations;
 using SmartCode.Tool.Helper;
+using SqlSugar;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Tool.Views
 {
@@ -129,7 +131,7 @@ namespace SmartCode.Tool.Views
                 {
                     if (isConnect)
                     {
-                        var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, connectionString);
+                        var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
                         exporter.GetDatabases(connectionString);
                     }
                     Dispatcher.Invoke(() =>
@@ -154,6 +156,7 @@ namespace SmartCode.Tool.Views
                                 return;
                             }
                             connectConfig.ConnectName = connectName;
+                            connectConfig.DbType = DbType.SqlServer;
                             connectConfig.ServerAddress = serverAddress;
                             connectConfig.ServerPort = Convert.ToInt32(serverPort);
                             connectConfig.UserName = userName;
@@ -173,6 +176,7 @@ namespace SmartCode.Tool.Views
                             connectConfig = new ConnectConfigs()
                             {
                                 ConnectName = connectName,
+                                DbType = DbType.SqlServer,
                                 ServerAddress = serverAddress,
                                 ServerPort = Convert.ToInt32(serverPort),
                                 Authentication = authentication,
@@ -180,9 +184,11 @@ namespace SmartCode.Tool.Views
                                 Password = EncryptHelper.Encode(password),
                                 CreateDate = DateTime.Now,
                                 DefaultDatabase = defaultDataBase.DbName
+
                             };
                             sqLiteHelper.db.Insert(connectConfig);
                         }
+
                         Task.Run(() =>
                         {
                             var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
@@ -249,8 +255,8 @@ namespace SmartCode.Tool.Views
                     DataList = datalist;
                     if (ChangeRefreshEvent != null)
                     {
-                        //ChangeRefreshEvent();
-                    }
+                //ChangeRefreshEvent();
+            }
                 });
             });
         }
@@ -350,7 +356,7 @@ namespace SmartCode.Tool.Views
             {
                 try
                 {
-                    var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, connectionString);
+                    var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
                     var list = exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {

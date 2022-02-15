@@ -22,6 +22,7 @@ using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Tool.Annotations;
+using SqlSugar;
 
 namespace SmartCode.Tool.Views
 {
@@ -92,7 +93,7 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
                 var list = exporter.GetDatabases(dbConnectionString);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {

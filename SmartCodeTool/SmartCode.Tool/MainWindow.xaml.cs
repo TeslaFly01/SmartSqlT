@@ -42,6 +42,7 @@ using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using TextBox = System.Windows.Controls.TextBox;
 using PathF = System.IO.Path;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Tool
 {
@@ -148,7 +149,7 @@ namespace SmartCode.Tool
             SelectendConnection = connectConfig;
             try
             {
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, ConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
                 var list = exporter.GetDatabases(ConnectionString);
                 DBase = list;
                 SelectDatabase.ItemsSource = DBase;
@@ -301,7 +302,7 @@ namespace SmartCode.Tool
                 }
                 #endregion
 
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, ConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
                 Model model = exporter.Export(ConnectionString);
                 dataSource = model;
                 var textColor = "#333444";
@@ -1071,7 +1072,7 @@ namespace SmartCode.Tool
             }
             Task.Run(() =>
             {
-                var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, ConnectionString);
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
                 var list = exporter.GetDatabases(dataBase.DbMasterConnectString);
 
                 Dispatcher.BeginInvoke(new Action(() =>
@@ -1110,10 +1111,10 @@ namespace SmartCode.Tool
                 Growl.Warning(new GrowlInfo { Message = $"请选择目标数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var exporter = ExporterFactory.CreateInstance(DBType.SqlServer, ConnectionString);
+            var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
             LoadingLine.Visibility = Visibility.Visible;
 
-            Model model = exporter.Export(targetConnect.DbMasterConnectString.Replace("master", targetData.DbName));
+            Model model = exporter.Export(targetConnect.SelectedDbConnectString(targetData.DbName));
             MenuBind(true, model);
 
             #endregion
