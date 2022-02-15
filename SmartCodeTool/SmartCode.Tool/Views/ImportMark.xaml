@@ -5,6 +5,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartCode.Tool.Views"
+    xmlns:localBase="clr-namespace:SmartCode.Tool.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="导入备注"
     Width="540"
@@ -80,5 +81,10 @@
                 </hc:UniformSpacingPanel>
             </hc:SimpleStackPanel>
         </Grid>
+        <localBase:Loading
+            x:Name="LoadingG"
+            Grid.Column="0"
+            BackgroundOpacity="0.3"
+            Visibility="Collapsed" />
     </Grid>
 </hc:Window>

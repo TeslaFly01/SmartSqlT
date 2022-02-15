@@ -5,12 +5,15 @@ using System.Windows;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml;
 using SmartCode.DocUtils;
 using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
 using System.Windows.Forms;
 using System.Xml.Serialization;
+using HandyControl.Controls;
+using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
 namespace SmartCode.Tool.Views
 {
@@ -61,7 +64,7 @@ namespace SmartCode.Tool.Views
 
         private void BtnImport_OnClick(object sender, RoutedEventArgs e)
         {
-            UpdateCommentByXML(TxtPath.Text);
+            UpdateCommentXml(TxtPath.Text);
         }
 
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
@@ -73,92 +76,101 @@ namespace SmartCode.Tool.Views
         /// XML更新表批注
         /// </summary>
         /// <param name="path"></param>
-        private void UpdateCommentByXML(string path)
+        private void UpdateCommentXml(string path)
         {
             #region MyRegion
+            LoadingG.Visibility = Visibility.Visible;
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
-            if (xmlContent.Contains("DBDto"))
+            Task.Run(() =>
             {
-                #region MyRegion
-                //通过 dbchm 导出的 XML文件 来更新 表列批注
-                XmlDocument doc = new XmlDocument();
-                doc.LoadXml(xmlContent);
-                if (doc.DocumentElement != null)
+                if (xmlContent.Contains("DBDto"))
                 {
-                    var dbName = doc.DocumentElement.GetAttribute("databaseName");
-
-                    if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
+                    #region MyRegion
+                    //通过 dbchm 导出的 XML文件 来更新 表列批注
+                    XmlDocument doc = new XmlDocument();
+                    doc.LoadXml(xmlContent);
+                    if (doc.DocumentElement != null)
                     {
-                        //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                        var dbName = doc.DocumentElement.GetAttribute("databaseName");
+                        //if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
                         //{
-                        //    return;
+                        //    //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                        //    //{
+                        //    //    return;
+                        //    //}
                         //}
                     }
-                }
-                var dbDTO = new DBDto().DeserializeXml(xmlContent);
-                foreach (var tabInfo in dbDTO.Tables)
-                {
-                    //更新表描述
-                    if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
+                    var dbDTO = new DBDto().DeserializeXml(xmlContent);
+                    foreach (var tabInfo in dbDTO.Tables)
                     {
-                        if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
+                        //更新表描述
+                        if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
                         {
-                            dbMaintenance.DeleteTableRemark(tabInfo.TableName);
-                        }
-                        dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
-                    }
-                    //更新表列的描述
-                    foreach (var colInfo in tabInfo.Columns)
-                    {
-                        if (dbMaintenance.IsAnyColumn(tabInfo.TableName, colInfo.ColumnName) && !string.IsNullOrWhiteSpace(colInfo.Comment))
-                        {
-                            if (dbMaintenance.IsAnyColumnRemark(colInfo.ColumnName, tabInfo.TableName))
+                            if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
                             {
-                                dbMaintenance.DeleteColumnRemark(colInfo.ColumnName, tabInfo.TableName);
+                                dbMaintenance.DeleteTableRemark(tabInfo.TableName);
                             }
-                            dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
+                            dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
                         }
-                    }
-                }
-                #endregion
-            }
-            else
-            {
-                #region MyRegion
-                //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
-                XmlAnalyze analyze = new XmlAnalyze(path);
-                var data = analyze.Data;
-                foreach (var item in data)
-                {
-                    var tableName = item.Key.Key;
-                    var tableComment = item.Key.Value;
-                    //更新表描述
-                    if (dbMaintenance.IsAnyTable(tableName) && !string.IsNullOrWhiteSpace(tableComment))
-                    {
-                        if (dbMaintenance.IsAnyTableRemark(tableName))
+                        //更新表列的描述
+                        foreach (var colInfo in tabInfo.Columns)
                         {
-                            dbMaintenance.DeleteTableRemark(tableName);
-                        }
-                        dbMaintenance.AddTableRemark(tableName, tableComment);
-                    }
-                    //更新表的列描述
-                    foreach (var colKV in item.Value)
-                    {
-                        var colName = colKV.Key;
-                        var colComment = colKV.Value;
-                        if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
-                        {
-                            if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                            if (dbMaintenance.IsAnyColumn(tabInfo.TableName, colInfo.ColumnName) && !string.IsNullOrWhiteSpace(colInfo.Comment))
                             {
-                                dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                if (dbMaintenance.IsAnyColumnRemark(colInfo.ColumnName, tabInfo.TableName))
+                                {
+                                    dbMaintenance.DeleteColumnRemark(colInfo.ColumnName, tabInfo.TableName);
+                                }
+                                dbMaintenance.AddColumnRemark(colInfo.ColumnName, tabInfo.TableName, colInfo.Comment);
                             }
-                            dbMaintenance.AddColumnRemark(colName, tableName, colComment);
                         }
                     }
+                    #endregion
                 }
-                #endregion
-            }
+                else
+                {
+                    #region MyRegion
+                    //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
+                    XmlAnalyze analyze = new XmlAnalyze(path);
+                    var data = analyze.Data;
+                    foreach (var item in data)
+                    {
+                        var tableName = item.Key.Key;
+                        var tableComment = item.Key.Value;
+                        //更新表描述
+                        if (dbMaintenance.IsAnyTable(tableName) && !string.IsNullOrWhiteSpace(tableComment))
+                        {
+                            if (dbMaintenance.IsAnyTableRemark(tableName))
+                            {
+                                dbMaintenance.DeleteTableRemark(tableName);
+                            }
+                            dbMaintenance.AddTableRemark(tableName, tableComment);
+                        }
+                        //更新表的列描述
+                        foreach (var colKV in item.Value)
+                        {
+                            var colName = colKV.Key;
+                            var colComment = colKV.Value;
+                            if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
+                            {
+                                if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                {
+                                    dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                }
+                                dbMaintenance.AddColumnRemark(colName, tableName, colComment);
+                            }
+                        }
+                    }
+                    #endregion
+                }
+                Dispatcher.Invoke(() =>
+                {
+                    LoadingG.Visibility = Visibility.Collapsed;
+                    Growl.SuccessGlobal("导入成功.");
+                });
+            });
+
             #endregion
         }
     }
