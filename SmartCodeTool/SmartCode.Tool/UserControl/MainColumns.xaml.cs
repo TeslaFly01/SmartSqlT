@@ -309,12 +309,16 @@ namespace SmartCode.Tool.UserControl
                         return;
                     }
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                    var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
-                    var flag = exporter.UpdateComment(dbConnectionString, "table", SelectedObject.Name, SelectedObject.Schema, newValue, selectItem.Name);
-                    if (!flag)
+                    var db = SugarFactory.GetDbMaintenance(DbType.SqlServer, dbConnectionString);
+                    if (db.IsAnyColumnRemark(selectItem.Name, SelectedObject.Name))
                     {
-                        Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
+                        db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);
                     }
+                    var flag = db.AddColumnRemark(selectItem.Name, SelectedObject.Name, newValue);
+                    if (flag)
+                        Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
+                    else
+                        Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
                 }
             }
             #endregion

@@ -21,7 +21,7 @@
                 <TextBlock
                     Margin="10,22,0,0"
                     VerticalAlignment="Top"
-                    Text="导出路径" />
+                    Text="导入文件" />
                 <TextBox
                     Name="TxtPath"
                     Margin="75,15,77,0"

@@ -26,7 +26,7 @@ using SmartCode.Tool.Views;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControlE = System.Windows.Controls.UserControl;
 using MessageBox = HandyControl.Controls.MessageBox;
-using DbType=SqlSugar.DbType;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Tool.UserControl
 {
@@ -220,15 +220,37 @@ namespace SmartCode.Tool.UserControl
                     if (msgResult == MessageBoxResult.OK)
                     {
                         var type = "";
+                        var flag = false;
+                        var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
+                        var db = SugarFactory.GetDbMaintenance(DbType.SqlServer, dbConnectionString);
                         switch (selectItem.Type)
                         {
-                            case ObjType.Table: type = "table"; break;
-                            case ObjType.View: type = "view"; break;
-                            case ObjType.Proc: type = "procedure"; break;
+                            case ObjType.Table:
+                                if (db.IsAnyTableRemark(selectItem.Name))
+                                {
+                                    db.DeleteTableRemark(selectItem.Name);
+                                }
+                                flag = db.AddTableRemark(selectItem.Name, newValue);
+                                break;
+                            case ObjType.View:
+                                if (db.IsAnyViewRemark(selectItem.Name))
+                                {
+                                    db.DeleteViewRemark(selectItem.Name);
+                                }
+                                flag = db.AddViewRemark(selectItem.Name, newValue);
+                                break;
+                            case ObjType.Proc:
+                                if (db.IsAnyProcRemark(selectItem.Name))
+                                {
+                                    db.DeleteProcRemark(selectItem.Name);
+                                }
+                                flag = db.AddProcRemark(selectItem.Name, newValue);
+                                break;
                         }
-                        var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                        var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
-                        exporter.UpdateComment(dbConnectionString, type, selectItem.Name, selectItem.Schema, newValue, "");
+                        if (flag)
+                            Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
+                        else
+                            Growl.WarningGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
                     }
                     else
                     {
