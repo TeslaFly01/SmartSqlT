@@ -62,6 +62,12 @@
                                 CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                                 Header="主键"
                                 IsReadOnly="True" />
+                            <DataGridCheckBoxColumn
+                                Binding="{Binding IsIdentity}"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                Header="自增"
+                                IsReadOnly="True" />
                             <DataGridTextColumn
                                 Binding="{Binding DataType}"
                                 CanUserSort="False"

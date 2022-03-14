@@ -353,7 +353,7 @@ namespace SmartCode.Framework.Exporter
 
                 column.ObjectId = objectId.ToString();
                 column.ObjectName = objectName;
-                column.IsAutoIncremented = identity == 1;
+                column.IsIdentity = identity == 1;
                 column.IsNullable = isNullable == 1;
                 column.DefaultValue = defaultValue.Contains("((") ? defaultValue.Replace("((", "").Replace("))", "") : defaultValue;
                 column.DataType = dataType;

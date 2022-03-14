@@ -228,7 +228,7 @@ namespace SmartCode.Tool.Views
                             // 主键
                             colDto.IsPK = (col.Value.IsPrimaryKey ? "√" : "");
                             // 自增
-                            colDto.IsIdentity = (col.Value.IsAutoIncremented ? "√" : "");
+                            colDto.IsIdentity = (col.Value.IsIdentity ? "√" : "");
                             // 允许空
                             colDto.CanNull = (col.Value.IsNullable ? "√" : "");
                             // 默认值
@@ -270,7 +270,7 @@ namespace SmartCode.Tool.Views
                         // 主键
                         colDto.IsPK = (col.Value.IsPrimaryKey ? "√" : "");
                         // 自增
-                        colDto.IsIdentity = (col.Value.IsAutoIncremented ? "√" : "");
+                        colDto.IsIdentity = (col.Value.IsIdentity ? "√" : "");
                         // 允许空
                         colDto.CanNull = (col.Value.IsNullable ? "√" : "");
                         // 默认值

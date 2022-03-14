@@ -126,7 +126,7 @@ namespace SmartCode.Tool.UserControl
                 var isView = selectedObjct.Type == ObjType.View;
                 TabTable.SelectedItem = TabStruct;
                 LoadingG.Visibility = TabStruct.Visibility = Visibility.Visible;
-                TabData.Visibility = Visibility.Collapsed;// isView ? Visibility.Collapsed : Visibility.Visible;
+                TabData.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
                 BtnCopyColumnScript.IsEnabled = !isView;

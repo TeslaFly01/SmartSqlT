@@ -21,10 +21,10 @@ namespace SmartCode.Framework.PhysicalDataModel
         protected string _languageDefaultValue = string.Empty;
         protected string _length;
         protected int _ordinal = -1;
-        protected bool _isAutoIncremented;
         protected bool _isNullable;
         protected bool _hasDefault;
         protected bool _isPrimaryKey;
+        protected bool _isIdentity;
 
         public Column()
         {
@@ -101,10 +101,10 @@ namespace SmartCode.Framework.PhysicalDataModel
             set { this._length = value; }
         }
 
-        public bool IsAutoIncremented
+        public bool IsIdentity
         {
-            get { return this._isAutoIncremented; }
-            set { this._isAutoIncremented = value; }
+            get { return this._isIdentity; }
+            set { this._isIdentity = value; }
         }
 
         public bool IsNullable
