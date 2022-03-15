@@ -15,6 +15,7 @@ namespace SmartCode.Framework
             switch (type)
             {
                 case DbType.SqlServer: return new SqlServerExporter(ConnectionString);
+                case DbType.MySql: return new MySqlExporter(ConnectionString);
                 default: return new SqlServerExporter(ConnectionString);
             }
         }

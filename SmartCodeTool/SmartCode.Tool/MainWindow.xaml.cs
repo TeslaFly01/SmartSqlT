@@ -660,7 +660,7 @@ namespace SmartCode.Tool
             }
             var sqLiteHelper = new SQLiteHelper();
             var sysSet = sqLiteHelper.db.Table<SystemSet>().First(x => x.Name.Equals("LeftMenuType"));
-            var selectedItem = (System.Windows.Controls.TabItem)((System.Windows.Controls.TabControl)sender).SelectedItem;
+            var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
             if (selectedItem.Name == "TabAllData")
             {
                 sysSet.Value = "1";
