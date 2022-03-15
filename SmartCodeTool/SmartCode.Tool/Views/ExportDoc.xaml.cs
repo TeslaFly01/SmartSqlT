@@ -81,7 +81,7 @@ namespace SmartCode.Tool.Views
         private void ExportDoc_OnLoaded(object sender, RoutedEventArgs e)
         {
             Title = $"{SelectedDataBase.DbName} - {Title}";
-            TxtFileName.Text = SelectedDataBase.DbName + "数据库结构信息";
+            TxtFileName.Text = SelectedDataBase.DbName + "数据库设计文档";
             CheckAll.IsChecked = ExportType == ExportEnum.All;
             CheckPart.IsChecked = ExportType == ExportEnum.Partial;
         }
@@ -116,7 +116,7 @@ namespace SmartCode.Tool.Views
             }
             if (string.IsNullOrEmpty(TxtFileName.Text))
             {
-                TxtFileName.Text = $"{SelectedDataBase.DbName}数据库结构信息";
+                TxtFileName.Text = $"{SelectedDataBase.DbName}数据库设计文档";
             }
             //文件扩展名
             var fileNameE = LblFileExtend.Content;

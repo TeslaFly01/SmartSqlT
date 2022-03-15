@@ -93,6 +93,10 @@ namespace SmartCode.Tool.UserControl
             foreach (var column in list)
             {
                 sb.Append($"\t{column.DisplayName} {column.DataType}{column.Length} ");
+                if (column.IsIdentity)
+                {
+                    sb.Append("IDENTITY(1,1) ");
+                }
                 var isNull = column.IsNullable ? "NULL," : "NOT NULL,";
                 sb.Append(isNull);
                 sb.Append(Environment.NewLine);
