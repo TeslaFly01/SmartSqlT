@@ -23,4 +23,21 @@ namespace SmartCode.Tool.Models
         /// </summary>
         Img = 1,
     }
+
+    public enum LeftMenuType
+    {
+        /// <summary>
+        /// 全部
+        /// </summary>
+        All = 1,
+        /// <summary>
+        /// 分组
+        /// </summary>
+        Group = 2,
+        /// <summary>
+        /// 收藏
+        /// </summary>
+        Fav = 3
+    }
+
 }

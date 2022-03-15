@@ -115,9 +115,9 @@ namespace SmartCode.Tool
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
             CbTargetConnect.ItemsSource = connectConfigs;
-            var isGroup = sqLiteHelper.GetSys("IsGroup");
-            CheckIsGroup.IsChecked = isGroup;
-            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
+            TabLeftType.SelectedIndex = leftMenuType - 1;
+            var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");
             CornerRadius = isMultipleTab ? 0 : 10;
             //MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
             //MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
@@ -201,7 +201,7 @@ namespace SmartCode.Tool
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var isGroup = sqLiteHelper.GetSys("IsGroup");
+                var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
                 var currObjects = new List<SObjectDTO>();
                 var currGroups = new List<ObjectGroup>();
                 var itemParentList = new List<PropertyNodeItem>();
@@ -236,7 +236,7 @@ namespace SmartCode.Tool
 
                 #region 分组业务处理
                 //是否业务分组
-                if (isGroup)
+                if (leftMenuType == LeftMenuType.Group.GetHashCode())
                 {
                     currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
                         a.ConnectId == selectConnection.ID &&
@@ -333,7 +333,7 @@ namespace SmartCode.Tool
                     else
                     {
                         //是否业务分组
-                        if (isGroup)
+                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
                             var hasGroup = currObjects.Where(x => x.ObjectName == table.Key).
                                 GroupBy(x => x.GroupName).Select(x => x.Key)
@@ -410,7 +410,7 @@ namespace SmartCode.Tool
                     else
                     {
                         //是否业务分组
-                        if (isGroup)
+                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
                             var hasGroup = currObjects.Where(x => x.ObjectName == view.Key).
                                 GroupBy(x => x.GroupName).Select(x => x.Key)
@@ -487,7 +487,7 @@ namespace SmartCode.Tool
                     else
                     {
                         //是否业务分组
-                        if (isGroup)
+                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
                             var hasGroup = currObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
                                 .Select(x => x.Key)
@@ -599,7 +599,7 @@ namespace SmartCode.Tool
                     LoadingLine.Visibility = Visibility.Hidden;
                     //编写获取数据并显示在界面的代码
                     //是否业务分组
-                    if (isGroup && !isCompare)
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode() && !isCompare)
                     {
                         if (!itemParentList.Any())
                         {
@@ -645,6 +645,49 @@ namespace SmartCode.Tool
                 }));
             });
             #endregion
+        }
+
+        /// <summary>
+        /// 菜单类型变更事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var sqLiteHelper = new SQLiteHelper();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().First(x => x.Name.Equals("LeftMenuType"));
+            var selectedItem = (System.Windows.Controls.TabItem)((System.Windows.Controls.TabControl)sender).SelectedItem;
+            if (selectedItem.Name == "TabAllData")
+            {
+                sysSet.Value = "1";
+                sqLiteHelper.db.Update(sysSet);
+            }
+            else if (selectedItem.Name == "TabGroupData")
+            {
+                sysSet.Value = "2";
+                sqLiteHelper.db.Update(sysSet);
+            }
+            else
+            {
+                sysSet.Value = "3";
+                sqLiteHelper.db.Update(sysSet);
+            }
+            if (string.IsNullOrEmpty(ConnectionString))
+            {
+                return;
+            }
+            if (!string.IsNullOrEmpty(SearchMenu.Text))
+            {
+                SearchMenuBind();
+            }
+            else
+            {
+                MenuBind(false, null);
+            }
         }
 
         /// <summary>
@@ -697,14 +740,14 @@ namespace SmartCode.Tool
             };
             itemList.Add(nodeProc);
             var sqLiteHelper = new SQLiteHelper();
-            var isGroup = sqLiteHelper.GetSys("IsGroup");
+            var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectendConnection;
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
             var itemParentList = new List<PropertyNodeItem>();
             #region 分组业务处理
-            if (isGroup)
+            if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
                 currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
                     a.ConnectId == selectConnection.ID &&
@@ -786,7 +829,7 @@ namespace SmartCode.Tool
                         continue;
                     }
                     //是否业务分组
-                    if (isGroup)
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
                         var hasGroup = currObjects.Where(x => x.ObjectName == table.Key).
                             GroupBy(x => x.GroupName).Select(x => x.Key)
@@ -844,7 +887,7 @@ namespace SmartCode.Tool
                         continue;
                     }
                     //是否业务分组
-                    if (isGroup)
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
                         var hasGroup = currObjects.Where(x => x.ObjectName == view.Key).
                             GroupBy(x => x.GroupName).Select(x => x.Key)
@@ -902,7 +945,7 @@ namespace SmartCode.Tool
                         continue;
                     }
                     //是否业务分组
-                    if (isGroup)
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
                         var hasGroup = currObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
                             .Select(x => x.Key)
@@ -950,7 +993,7 @@ namespace SmartCode.Tool
             }
             #endregion
 
-            if (isGroup)
+            if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
                 itemParentList.ForEach(group =>
                 {
@@ -1008,7 +1051,7 @@ namespace SmartCode.Tool
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
-            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");
             if (!isMultipleTab)
             {
                 if (TabItemData.Any())
@@ -1158,37 +1201,7 @@ namespace SmartCode.Tool
         /// </summary>
         public void Group_ChangeRefreshEvent()
         {
-            if (CheckIsGroup.IsChecked.HasValue && CheckIsGroup.IsChecked.Value)
-            {
-                MenuBind(false, null);
-            }
-        }
-
-        /// <summary>
-        /// 是否分组显示
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CheckIsGroup_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (!IsLoaded)
-            {
-                return;
-            }
-            bool isChecked = CheckIsGroup.IsChecked == true;
-            var sqLiteHelper = new SQLiteHelper();
-            var sysSet = sqLiteHelper.db.Table<SystemSet>().First(x => x.Name.Equals("IsGroup"));
-            sysSet.Value = isChecked.ToString();
-            sqLiteHelper.db.Update(sysSet);
-            if (string.IsNullOrEmpty(ConnectionString))
-            {
-                return;
-            }
-            if (!string.IsNullOrEmpty(SearchMenu.Text))
-            {
-                SearchMenuBind();
-            }
-            else
+            if (TabGroupData.IsSelected)
             {
                 MenuBind(false, null);
             }

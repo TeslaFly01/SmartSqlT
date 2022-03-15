@@ -180,7 +180,6 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="2*" MinWidth="90" />
                                 <ColumnDefinition Width="1*" MinWidth="30" />
                             </Grid.ColumnDefinitions>
                             <ComboBox
@@ -211,18 +210,10 @@
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
-                            <CheckBox
-                                Name="CheckIsGroup"
-                                Grid.Column="1"
-                                Margin="10,7,0,0"
-                                VerticalAlignment="Top"
-                                Click="CheckIsGroup_OnClick"
-                                Content="业务分组"
-                                Cursor="Hand" />
                             <Button
                                 Name="BtnFresh"
                                 Grid.Column="2"
-                                Margin="0,0,5,0"
+                                Margin="0,0,0,0"
                                 Padding="4"
                                 VerticalAlignment="Top"
                                 Background="Transparent"
@@ -247,9 +238,30 @@
                             ShowClearButton="True"
                             Style="{StaticResource SearchBarPlus}"
                             TextChanged="SearchMenu_OnTextChanged" />
+                        <TabControl
+                            x:Name="TabLeftType"
+                            Margin="0,65,0,40"
+                            SelectionChanged="TabLeftType_OnSelectionChanged"
+                            Style="{StaticResource TabControlInLine}">
+                            <TabItem
+                                x:Name="TabAllData"
+                                Cursor="Hand"
+                                Header="全部"
+                                IsSelected="True" />
+                            <TabItem
+                                x:Name="TabGroupData"
+                                Cursor="Hand"
+                                Header="分组"
+                                IsSelected="False" />
+                            <!--<TabItem
+                                x:Name="TabFavData"
+                                Cursor="Hand"
+                                Header="收藏"
+                                IsSelected="False" />-->
+                        </TabControl>
                         <TreeView
                             x:Name="TreeViewTables"
-                            Margin="0,70,0,40"
+                            Margin="0,103,0,40"
                             VerticalAlignment="Top"
                             BorderThickness="0"
                             ItemsSource="{Binding TreeViewData}"

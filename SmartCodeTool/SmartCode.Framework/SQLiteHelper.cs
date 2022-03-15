@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.Serialization.Json;
 using SmartCode.Framework.SqliteModel;
 using SQLite;
 
@@ -11,7 +12,7 @@ namespace SmartCode.Framework
 {
     public class SQLiteHelper
     {
-        public static string BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData,Environment.SpecialFolderOption.Create),
+        public static string BasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData, Environment.SpecialFolderOption.Create),
             "SmartSQL");
         public string connstr = Path.Combine(BasePath, "SmartSQL.db");//没有数据库会创建数据库
         public SQLiteConnection db;
@@ -33,15 +34,18 @@ namespace SmartCode.Framework
         private void Init()
         {
             var sysList = db.Table<SystemSet>().ToList();
-            var initValue = new List<string> { "IsGroup", "IsMultipleTab" };
+            var initValue = new List<string> { "IsGroup", "IsMultipleTab", "LeftMenuType" };
             initValue.ForEach(x =>
             {
                 if (!sysList.Any(m => m.Name.Equals(x)))
                 {
+                    var defaultValue = x == "LeftMenuType" ? "1" : "false";
+                    var defaultType = x == "LeftMenuType" ? 2 : 1;
                     db.Insert(new SystemSet
                     {
                         Name = x,
-                        Value = "false"
+                        Type = defaultType,
+                        Value = defaultValue
                     });
                 }
             });
@@ -70,16 +74,62 @@ namespace SmartCode.Framework
             return db.Execute(sql);
         }
 
-        public bool GetSys(string name)
+        public bool GetSysBool(string name)
         {
-            var defaultV = false;
             var sqLiteHelper = new SQLiteHelper();
-            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name));
-            if (sysSet != null)
+            var type = SysDataType.BOOL.GetHashCode();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name) && x.Type == type);
+            if (sysSet == null)
             {
-                defaultV = Convert.ToBoolean(sysSet.Value);
+                return false;
             }
-            return defaultV;
+            return Convert.ToBoolean(sysSet.Value);
         }
+
+        public int GetSysInt(string name)
+        {
+            var sqLiteHelper = new SQLiteHelper();
+            var type = SysDataType.INT.GetHashCode();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name) && x.Type == type);
+            if (sysSet == null)
+            {
+                return 0;
+            }
+            return Convert.ToInt32(sysSet.Value);
+        }
+
+        public string GetSysString(string name)
+        {
+            var sqLiteHelper = new SQLiteHelper();
+            var type = SysDataType.STRING.GetHashCode();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name) && x.Type == type);
+            if (sysSet == null)
+            {
+                return "";
+            }
+            return sysSet.Value;
+        }
+
+        //public T GetSysJson<T>(string name)
+        //{
+        //    var sqLiteHelper = new SQLiteHelper();
+        //    var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name) && x.Type == SysDataType.JSON.GetHashCode());
+        //    if (sysSet == null)
+        //    {
+        //        return default(T);
+        //    }
+        //    return sysSet.Value;
+        //}
+    }
+
+    /// <summary>
+    /// 系统设置数据类型
+    /// </summary>
+    public enum SysDataType
+    {
+        BOOL = 1,
+        INT = 2,
+        STRING = 3,
+        JSON = 4
     }
 }

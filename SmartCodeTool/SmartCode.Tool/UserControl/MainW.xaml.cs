@@ -88,7 +88,7 @@ namespace SmartCode.Tool.UserControl
         public void LoadPage(List<PropertyNodeItem> objectsViewData)
         {
             var sqLiteHelper = new SQLiteHelper();
-            var isMultipleTab = sqLiteHelper.GetSys("IsMultipleTab");
+            var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");
             if (isMultipleTab)
             {
                 GridMultiple.Visibility = Visibility.Visible;
