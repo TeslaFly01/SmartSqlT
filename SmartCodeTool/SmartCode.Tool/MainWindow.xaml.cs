@@ -149,8 +149,8 @@ namespace SmartCode.Tool
             SelectendConnection = connectConfig;
             try
             {
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
-                var list = exporter.GetDatabases(ConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, ConnectionString);
+                var list = dbInstance.GetDatabases(ConnectionString);
                 DBase = list;
                 SelectDatabase.ItemsSource = DBase;
                 ConnectionString = connectConfig.DbDefaultConnectString;
@@ -302,8 +302,8 @@ namespace SmartCode.Tool
                 }
                 #endregion
 
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
-                Model model = exporter.Export(ConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, ConnectionString);
+                Model model = dbInstance.Export(ConnectionString);
                 dataSource = model;
                 var textColor = "#333444";
                 #region 数据表
@@ -1115,9 +1115,8 @@ namespace SmartCode.Tool
             }
             Task.Run(() =>
             {
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
-                var list = exporter.GetDatabases(dataBase.DbMasterConnectString);
-
+                var dbInstance = ExporterFactory.CreateInstance(dataBase.DbType, ConnectionString);
+                var list = dbInstance.GetDatabases(dataBase.DbMasterConnectString);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     CbTargetDatabase.ItemsSource = list;
@@ -1154,10 +1153,10 @@ namespace SmartCode.Tool
                 Growl.Warning(new GrowlInfo { Message = $"请选择目标数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, ConnectionString);
+            var dbInstance = ExporterFactory.CreateInstance(targetConnect.DbType, ConnectionString);
             LoadingLine.Visibility = Visibility.Visible;
 
-            Model model = exporter.Export(targetConnect.SelectedDbConnectString(targetData.DbName));
+            Model model = dbInstance.Export(targetConnect.SelectedDbConnectString(targetData.DbName));
             MenuBind(true, model);
 
             #endregion
