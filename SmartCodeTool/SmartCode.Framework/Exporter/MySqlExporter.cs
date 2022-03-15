@@ -26,8 +26,8 @@ namespace SmartCode.Framework.Exporter
             try
             {
                 model.Tables = this.GetTables(connectionString);
-                //model.Views = this.GetViews(connectionString);
-                //model.Procedures = this.GetProcedures(connectionString);
+                model.Views = new Views();// this.GetViews(connectionString);
+                model.Procedures = new Procedures(); //this.GetProcedures(connectionString);
                 return model;
             }
             catch (Exception ex)
@@ -56,113 +56,57 @@ namespace SmartCode.Framework.Exporter
 
         private Tables GetTables(string connectionString)
         {
-            Tables tables = new Tables(10);
-
+            var tables = new Tables();
             var dbMaintenancet = SugarFactory.GetDbMaintenance(DbType.MySql, connectionString);
-            var dbClient = SugarFactory.GetInstance(DbType.MySql, connectionString);
             var tableList = dbMaintenancet.GetTableInfoList();
             tableList.ForEach(tb =>
             {
+                if (tables.ContainsKey(tb.Name))
+                {
+                    return;
+                }
                 var table = new Table
                 {
+                    Id = tb.Name,
                     Name = tb.Name,
                     DisplayName = tb.Name,
                     Comment = tb.Description,
                     CreateDate = tb.CreateDate,
                     ModifyDate = tb.ModifyDate
                 };
-                if (!tables.ContainsKey(tb.Name))
-                {
-                    tables.Add(tb.Name, table);
-                }
+                tables.Add(tb.Name, table);
             });
             return tables;
         }
 
         private Views GetViews(string connectionString)
         {
-            Views views = new Views(10);
-
-            string sqlCmd = @"SELECT   a.name,
-                                       a.object_id,
-                                       b.descript,
-                                       a.create_date,
-                                       a.modify_date,
-                                       s.name AS schemaName
-                                FROM sys.views a
-                                LEFT JOIN
-                                (
-                                    SELECT sy.name,
-                                           sy.object_id,
-                                           CASE
-                                               WHEN st.name = 'MS_Description' THEN
-                                                   ISNULL(st.value, '')
-                                               ELSE
-                                                   ''
-                                           END AS descript,
-                                           sy.create_date,
-                                           sy.modify_date
-                                    FROM sys.views sy
-                                    LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                                                                            AND minor_id = 0
-                                    WHERE sy.type = 'V'
-                                          AND
-                                          (
-                                              st.name IS NULL
-                                              OR st.name IN ( 'MS_Description' )
-                                          )
-                                    GROUP BY sy.name,
-                                             sy.object_id,
-                                             sy.create_date,
-                                             sy.modify_date,
-                                             CASE
-                                                 WHEN st.name = 'MS_Description' THEN
-                                                     ISNULL(st.value, '')
-                                                 ELSE
-                                                     ''
-                                             END
-                                ) b ON a.object_id = b.object_id
-                                LEFT JOIN sys.schemas s ON s.schema_id = a.schema_id
-                                ORDER BY a.name;";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
+            Views views = new Views();
+            var dbMaintenancet = SugarFactory.GetDbMaintenance(DbType.MySql, connectionString);
+            var viewList = dbMaintenancet.GetViewInfoList();
+            viewList.ForEach(v =>
             {
-                try
+                if (views.ContainsKey(v.Name))
                 {
-                    var name = dr.GetString(0);
-                    var objectId = dr.GetInt32(1);
-                    var comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                    var createDate = dr.GetDateTime(3);
-                    var modifyDate = dr.GetDateTime(4);
-                    var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
-                    var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
-                    var view = new View
-                    {
-                        Id = objectId.ToString(),
-                        Name = name,
-                        DisplayName = schemaName + "." + name,
-                        SchemaName = schemaName,
-                        Comment = comment,
-                        CreateDate = createDate,
-                        ModifyDate = modifyDate
-                    };
-                    if (!views.ContainsKey(key))
-                    {
-                        views.Add(key, view);
-                    }
+                    return;
                 }
-                catch (Exception ex)
+                var view = new View()
                 {
-
-                    throw;
-                }
-            }
-            dr.Close();
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Description,
+                    CreateDate = v.CreateDate,
+                    ModifyDate = v.ModifyDate
+                };
+                views.Add(v.Name, view);
+            });
             return views;
         }
 
         private Procedures GetProcedures(string connectionString)
         {
+            #region MyRegion
             Procedures procDic = new Procedures();
 
             string sqlCmd = @"SELECT   a.name,
@@ -238,64 +182,23 @@ namespace SmartCode.Framework.Exporter
             }
             dr.Close();
             return procDic;
+            #endregion
         }
 
-        public override Columns GetColumns(int objectId, string connectionString)
+        public override Columns GetColumns(string objectId, string connectionString)
         {
-            var sql = $@"SELECT  
-                                --表名=case when a.colorder=1 then d.name else '' end, 
-                                --表说明=case when a.colorder=1 then isnull(f.value,'') else '' end,
-                                d.id as object_id,
-                                d.name as object_name,
-                                a.colorder AS column_id, 
-                                a.name AS column_name, 
-                                b.name AS type_name, 
-                                COLUMNPROPERTY(a.id,a.name,'IsIdentity') AS is_identity , 
-                                a.length AS byte_length, 
-                                CASE WHEN b.name IN ('char','nchar','varchar','nvarchar','text','binary','varbinary','datetime2','datetimeoffset','time','numeric','decimal') THEN COLUMNPROPERTY(a.id,a.name,'PRECISION') ELSE 0 END AS length, 
-                                isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS dot_length, 
-                                a.isnullable AS is_nullable, 
-                                isnull(e.text,'') AS default_value, 
-                                isnull(g.[value],'') AS description,
-                                case when exists(SELECT 1 FROM sysobjects where xtype='PK' and name in (
-                                  SELECT name FROM sysindexes WHERE indid in(
-                                  SELECT indid FROM sysindexkeys WHERE id = a.id AND colid=a.colid 
-                                   ))) then 1 else 0 END AS is_primarykey 
-                                FROM syscolumns a 
-                                left join systypes b on a.xtype=b.xusertype 
-                                inner join sysobjects d on a.id=d.id and d.name<>'dtproperties' 
-                                left join syscomments e on a.cdefault=e.id 
-                                left join sys.extended_properties g on a.id=g.major_id and a.colid=g.minor_id 
-                                left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
-                                where d.id={objectId}
-                                order by a.id,a.colorder";
-
-            return this.GetColumnsExt(connectionString, sql);
-        }
-
-        private Columns GetColumnsExt(string connectionString, string sqlCmd)
-        {
-            Columns columns = new Columns(500);
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
+            var columns = new Columns(500);
+            var dbMaintenancet = SugarFactory.GetDbMaintenance(DbType.MySql, connectionString);
+            var viewList = dbMaintenancet.GetColumnInfosByTableName(objectId);
+            viewList.ForEach(v =>
             {
-                int objectId = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
-                string objectName = dr.IsDBNull(1) ? "" : dr.GetString(1);
-                int id = dr.IsDBNull(2) ? 0 : dr.GetInt16(2);
-                string displayName = dr.IsDBNull(3) ? string.Empty : dr.GetString(3);
-                string name = dr.IsDBNull(3) ? string.Empty : dr.GetString(3);
-                string dataType = dr.IsDBNull(4) ? string.Empty : dr.GetString(4);
-                int identity = dr.IsDBNull(5) ? 0 : dr.GetInt32(5);
-                int length = dr.IsDBNull(7) ? 0 : dr.GetInt32(7);
-                int length_dot = dr.IsDBNull(8) ? 0 : dr.GetInt32(8);
-                int isNullable = dr.IsDBNull(9) ? 0 : dr.GetInt32(9);
-                string defaultValue = dr.IsDBNull(10) ? string.Empty : dr.GetString(10);
-                string comment = dr.IsDBNull(11) ? string.Empty : dr.GetString(11);
-                int isPrimaryKey = dr.IsDBNull(12) ? 0 : dr.GetInt32(12);
-
-                Column column = new Column(id.ToString(), displayName, name, dataType, comment);
+                if (columns.ContainsKey(v.DbColumnName))
+                {
+                    return;
+                }
+                var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
                 column.Length = "";
-                switch (dataType)
+                switch (v.DataType)
                 {
                     case "char":
                     case "nchar":
@@ -307,62 +210,38 @@ namespace SmartCode.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({length})"; break;
+                        column.Length = $"({v.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({length},{length_dot})"; break;
+                        column.Length = $"({v.Length},{v.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
-                column.ObjectName = objectName;
-                column.IsIdentity = identity == 1;
-                column.IsNullable = isNullable == 1;
-                column.DefaultValue = defaultValue.Contains("((") ? defaultValue.Replace("((", "").Replace("))", "") : defaultValue;
-                column.DataType = dataType;
-                column.OriginalName = name;
-                column.Comment = comment;
-                column.IsPrimaryKey = isPrimaryKey == 1;
-                if (!columns.ContainsKey(id.ToString()))
-                {
-                    columns.Add(id.ToString(), column);
-                }
-            }
-            dr.Close();
+                column.ObjectName = v.DbColumnName;
+                column.IsIdentity = v.IsIdentity;
+                column.IsNullable = v.IsNullable;
+                column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
+                column.DataType = v.DataType;
+                column.OriginalName = v.DbColumnName;
+                column.Comment = v.ColumnDescription;
+                column.IsPrimaryKey = v.IsPrimarykey;
+                columns.Add(v.DbColumnName, column);
+            });
             return columns;
         }
 
-        public override string GetScripts(int objectId, string connectionString)
+        public override string GetScripts(string objectId, string connectionString)
         {
+            return "";
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT a.name,a.[type],b.[definition] ");
             sqlBuilder.Append("FROM sys.all_objects a, sys.sql_modules b ");
             sqlBuilder.AppendFormat("WHERE a.is_ms_shipped = 0 AND a.object_id = b.object_id AND a.object_id={0} ORDER BY a.[name] ASC ", objectId);
 
-            return this.GetScripts(connectionString, sqlBuilder.ToString());
+            return this.GetScripts1(connectionString, sqlBuilder.ToString());
         }
 
-        public Columns GetPrimaryKeys(int objectId, string connectionString, Columns columns)
-        {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append("select syscolumns.name from syscolumns,sysobjects,sysindexes,sysindexkeys ");
-            sqlBuilder.AppendFormat("where syscolumns.id ={0} ", objectId);
-            sqlBuilder.Append("and sysobjects.xtype = 'PK' and sysobjects.parent_obj = syscolumns.id ");
-            sqlBuilder.Append("and sysindexes.id = syscolumns.id and sysobjects.name = sysindexes.name and ");
-            sqlBuilder.Append("sysindexkeys.id = syscolumns.id and sysindexkeys.indid = sysindexes.indid and syscolumns.colid = sysindexkeys.colid");
-
-            Columns primaryKeys = new Columns(4);
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlBuilder.ToString());
-            while (dr.Read())
-            {
-                string name = dr.IsDBNull(0) ? string.Empty : dr.GetString(0);
-                if (columns.ContainsKey(name)) primaryKeys.Add(name, columns[name]);
-            }
-            dr.Close();
-
-            return primaryKeys;
-        }
-
-        private string GetScripts(string connectionString, string sqlCmd)
+        private string GetScripts1(string connectionString, string sqlCmd)
         {
             string script = string.Empty;
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);

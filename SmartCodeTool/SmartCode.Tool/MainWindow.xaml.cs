@@ -202,8 +202,8 @@ namespace SmartCode.Tool
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
-                var currObjects = new List<SObjectDTO>();
-                var currGroups = new List<ObjectGroup>();
+                var curObjects = new List<SObjectDTO>();
+                var curGroups = new List<ObjectGroup>();
                 var itemParentList = new List<PropertyNodeItem>();
                 itemList = new List<PropertyNodeItem>();
                 var nodeTable = new PropertyNodeItem
@@ -238,12 +238,12 @@ namespace SmartCode.Tool
                 //是否业务分组
                 if (leftMenuType == LeftMenuType.Group.GetHashCode())
                 {
-                    currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
+                    curGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
                         a.ConnectId == selectConnection.ID &&
                         a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
-                    if (currGroups.Any())
+                    if (curGroups.Any())
                     {
-                        foreach (var group in currGroups)
+                        foreach (var group in curGroups)
                         {
                             var itemChildList = new List<PropertyNodeItem>();
                             var nodeGroup = new PropertyNodeItem
@@ -290,15 +290,15 @@ namespace SmartCode.Tool
                             itemParentList.Add(nodeGroup);
                         }
                     }
-                    currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
-                                   join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
-                                   where a.ConnectId == selectConnection.ID &&
-                                         a.DataBaseName == selectDataBase
-                                   select new SObjectDTO
-                                   {
-                                       GroupName = a.GroupName,
-                                       ObjectName = b.ObjectName
-                                   }).ToList();
+                    curObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
+                                  join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
+                                  where a.ConnectId == selectConnection.ID &&
+                                        a.DataBaseName == selectDataBase
+                                  select new SObjectDTO
+                                  {
+                                      GroupName = a.GroupName,
+                                      ObjectName = b.ObjectName
+                                  }).ToList();
                 }
                 #endregion
 
@@ -335,7 +335,7 @@ namespace SmartCode.Tool
                         //是否业务分组
                         if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
-                            var hasGroup = currObjects.Where(x => x.ObjectName == table.Key).
+                            var hasGroup = curObjects.Where(x => x.ObjectName == table.Key).
                                 GroupBy(x => x.GroupName).Select(x => x.Key)
                                 .ToList();
                             foreach (var group in hasGroup)
@@ -412,7 +412,7 @@ namespace SmartCode.Tool
                         //是否业务分组
                         if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
-                            var hasGroup = currObjects.Where(x => x.ObjectName == view.Key).
+                            var hasGroup = curObjects.Where(x => x.ObjectName == view.Key).
                                 GroupBy(x => x.GroupName).Select(x => x.Key)
                                 .ToList();
                             foreach (var group in hasGroup)
@@ -489,7 +489,7 @@ namespace SmartCode.Tool
                         //是否业务分组
                         if (leftMenuType == LeftMenuType.Group.GetHashCode())
                         {
-                            var hasGroup = currObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
+                            var hasGroup = curObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
                                 .Select(x => x.Key)
                                 .ToList();
                             foreach (var group in hasGroup)

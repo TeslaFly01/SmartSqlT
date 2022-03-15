@@ -278,7 +278,7 @@ namespace SmartCode.Framework.Exporter
             return procDic;
         }
 
-        public override Columns GetColumns(int objectId, string connectionString)
+        public override Columns GetColumns(string objectId, string connectionString)
         {
             var sql = $@"SELECT  
                                 --表名=case when a.colorder=1 then d.name else '' end, 
@@ -305,7 +305,7 @@ namespace SmartCode.Framework.Exporter
                                 left join syscomments e on a.cdefault=e.id 
                                 left join sys.extended_properties g on a.id=g.major_id and a.colid=g.minor_id 
                                 left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
-                                where d.id={objectId}
+                                where d.id={ Convert.ToInt32(objectId)}
                                 order by a.id,a.colorder";
 
             return this.GetColumnsExt(connectionString, sql);
@@ -369,14 +369,14 @@ namespace SmartCode.Framework.Exporter
             return columns;
         }
 
-        public override string GetScripts(int objectId, string connectionString)
+        public override string GetScripts(string objectId, string connectionString)
         {
             StringBuilder sqlBuilder = new StringBuilder();
             sqlBuilder.Append("SELECT a.name,a.[type],b.[definition] ");
             sqlBuilder.Append("FROM sys.all_objects a, sys.sql_modules b ");
-            sqlBuilder.AppendFormat("WHERE a.is_ms_shipped = 0 AND a.object_id = b.object_id AND a.object_id={0} ORDER BY a.[name] ASC ", objectId);
+            sqlBuilder.AppendFormat("WHERE a.is_ms_shipped = 0 AND a.object_id = b.object_id AND a.object_id={0} ORDER BY a.[name] ASC ", Convert.ToInt32(objectId));
 
-            return this.GetScripts(connectionString, sqlBuilder.ToString());
+            return this.GetScriptsExt(connectionString, sqlBuilder.ToString());
         }
 
         public Columns GetPrimaryKeys(int objectId, string connectionString, Columns columns)
@@ -400,7 +400,7 @@ namespace SmartCode.Framework.Exporter
             return primaryKeys;
         }
 
-        private string GetScripts(string connectionString, string sqlCmd)
+        private string GetScriptsExt(string connectionString, string sqlCmd)
         {
             string script = string.Empty;
             SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);

@@ -13,9 +13,9 @@ namespace SmartCode.Framework.Exporter
         Model Export(string connectionString);
         List<DataBase> GetDatabases(string connectionString);
 
-        Columns GetColumns(int objectId, string connectionString);
+        Columns GetColumns(string objectId, string connectionString);
 
-        string GetScripts(int objectId, string connectionString);
+        string GetScripts(string objectId, string connectionString);
 
         DataSet GetDataSet(string connectionString, string tbName, string strWhere);
 

@@ -22,9 +22,9 @@ namespace SmartCode.Framework.Exporter
         public abstract Model Export(string connectionString);
         public abstract List<DataBase> GetDatabases(string connectionString);
 
-        public abstract Columns GetColumns(int objectId, string connectionString);
+        public abstract Columns GetColumns(string objectId, string connectionString);
 
-        public abstract string GetScripts(int objectId, string connectionString);
+        public abstract string GetScripts(string objectId, string connectionString);
 
         public abstract DataSet GetDataSet(string connectionString, string tbName, string strWhere);
 

@@ -133,11 +133,10 @@ namespace SmartCode.Tool.UserControl
                 var objName = isView ? "视图" : "数据表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
-                var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var tableColumns = exporter.GetColumns(objectId, dbConnectionString);
+                    var tableColumns = dbInstance.GetColumns(selectedObjct.ObejcetId, dbConnectionString);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -152,7 +151,7 @@ namespace SmartCode.Tool.UserControl
                     }));
                     if (selectedObjct.Type == ObjType.View)
                     {
-                        var script = exporter.GetScripts(objectId, dbConnectionString);
+                        var script = dbInstance.GetScripts(selectedObjct.ObejcetId, dbConnectionString);
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             TextSqlEditor.SelectedText = string.Empty;
@@ -174,11 +173,10 @@ namespace SmartCode.Tool.UserControl
                 TabCode.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
-                var objectId = Convert.ToInt32(selectedObjct.ObejcetId);
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var script = exporter.GetScripts(objectId, dbConnectionString);
+                    var script = dbInstance.GetScripts(selectedObjct.ObejcetId, dbConnectionString);
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TextSqlEditor.SelectedText = string.Empty;
@@ -219,7 +217,7 @@ namespace SmartCode.Tool.UserControl
             if (selectedItem.Name.Equals("TabData"))
             {
                 var connectionString = SelectedConnection.DbMasterConnectString;
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
+                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString);
                 if (TabData.IsSelected)
                 {
                     SearchTableExt2.Text = "";
@@ -309,7 +307,7 @@ namespace SmartCode.Tool.UserControl
                         return;
                     }
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                    var db = SugarFactory.GetDbMaintenance(DbType.SqlServer, dbConnectionString);
+                    var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
                     if (db.IsAnyColumnRemark(selectItem.Name, SelectedObject.Name))
                     {
                         db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);

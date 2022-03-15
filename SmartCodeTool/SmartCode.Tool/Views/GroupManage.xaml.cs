@@ -93,7 +93,7 @@ namespace SmartCode.Tool.Views
                 {
                     DataList = datalist;
                 });
-                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
                 var list = exporter.GetDatabases(dbConnectionString);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
@@ -350,7 +350,7 @@ namespace SmartCode.Tool.Views
         {
             if (e.Key == Key.Enter)
             {
-                BtnSave_OnClick(sender,e);
+                BtnSave_OnClick(sender, e);
             }
         }
     }

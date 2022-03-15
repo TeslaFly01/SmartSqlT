@@ -55,17 +55,23 @@ namespace SmartCode.Framework.SqliteModel
         /// Master数据库连接，查询系统库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbMasterConnectString => $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+        public string DbMasterConnectString =>
+            DbType == DbType.SqlServer ?
+                $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};"
+                : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
         /// <summary>
         /// 默认数据库连接，查询默认数据库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbDefaultConnectString => $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+        public string DbDefaultConnectString => DbType == DbType.SqlServer
+            ? $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};"
+            : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
 
         public string SelectedDbConnectString(string selectedDatabase)
         {
-            return
-                $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+            return DbType == DbType.SqlServer
+                ? $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};"
+                : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
         }
     }
 }

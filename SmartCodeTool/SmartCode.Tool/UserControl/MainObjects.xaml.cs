@@ -222,7 +222,7 @@ namespace SmartCode.Tool.UserControl
                         var type = "";
                         var flag = false;
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                        var db = SugarFactory.GetDbMaintenance(DbType.SqlServer, dbConnectionString);
+                        var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
                         switch (selectItem.Type)
                         {
                             case ObjType.Table:
