@@ -79,6 +79,11 @@ namespace SmartCode.Tool.Views
         private void UpdateCommentXml(string path)
         {
             #region MyRegion
+            if (string.IsNullOrWhiteSpace(path))
+            {
+                Growl.Warning("导入文件为空.");
+                return;
+            }
             LoadingG.Visibility = Visibility.Visible;
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
