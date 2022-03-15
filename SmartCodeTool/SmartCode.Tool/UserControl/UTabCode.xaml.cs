@@ -135,7 +135,10 @@ namespace SmartCode.Tool.UserControl
                 #region 字段注释
                 if (!string.IsNullOrEmpty(column.Comment))
                 {
-                    sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'{column.ObjectName}', @level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
+                    sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}',");
+                    sb.Append("@level0type=N'SCHEMA',@level0name=N'dbo',");
+                    sb.Append("@level1type=N'TABLE',@level1name=N'{column.ObjectName}',");
+                    sb.Append("@level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
                     sb.Append(Environment.NewLine);
                     sb.Append("GO");
                     sb.Append(Environment.NewLine);
