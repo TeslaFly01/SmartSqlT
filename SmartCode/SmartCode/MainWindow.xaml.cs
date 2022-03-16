@@ -1,5 +1,4 @@
-﻿using SmartCode.Framework.Exporter;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -10,38 +9,17 @@ using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Models;
-using System.Data;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Configuration;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Shapes;
-using System.Xml;
-using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.CodeCompletion;
-using Microsoft.Win32;
-using SmartCode.DocUtils;
-using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Framework.Util;
 using SmartCode.Annotations;
-using SmartCode.Helper;
 using SmartCode.UserControl;
 using SmartCode.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
-using MessageBox = HandyControl.Controls.MessageBox;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
-using TextBox = System.Windows.Controls.TextBox;
-using PathF = System.IO.Path;
-using DbType = SqlSugar.DbType;
 
 namespace SmartCode
 {
