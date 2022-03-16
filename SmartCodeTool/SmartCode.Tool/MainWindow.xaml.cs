@@ -9,7 +9,7 @@ using System.Windows.Controls;
 using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Tool.Models;
+using SmartCode.Models;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -23,7 +23,6 @@ using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Shapes;
 using System.Xml;
-using HandyControlDemo.Window;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.CodeCompletion;
 using Microsoft.Win32;
@@ -32,10 +31,10 @@ using SmartCode.DocUtils.Dtos;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
-using SmartCode.Tool.Annotations;
-using SmartCode.Tool.Helper;
-using SmartCode.Tool.UserControl;
-using SmartCode.Tool.Views;
+using SmartCode.Annotations;
+using SmartCode.Helper;
+using SmartCode.UserControl;
+using SmartCode.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
 using MessageBox = HandyControl.Controls.MessageBox;
 using TabControl = System.Windows.Controls.TabControl;
@@ -44,7 +43,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using PathF = System.IO.Path;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Tool
+namespace SmartCode
 {
     public partial class MainWindow : INotifyPropertyChanged
     {

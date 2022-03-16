@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SmartCodeTool", "SmartCodeT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Framework", "SmartCodeTool\SmartCode.Framework\SmartCode.Framework.csproj", "{8F686DD2-388C-4D61-A077-3A769059D547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Tool", "SmartCodeTool\SmartCode.Tool\SmartCode.Tool.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode", "SmartCodeTool\SmartCode.Tool\SmartCode.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.DocUtils", "SmartCodeTool\SmartCode.DocUtils\SmartCode.DocUtils.csproj", "{84E6E445-CFE0-4F01-B815-14F69F682EB9}"
 EndProject

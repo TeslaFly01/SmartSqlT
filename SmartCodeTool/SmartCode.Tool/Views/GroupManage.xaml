@@ -1,5 +1,5 @@
 ﻿<hc:Window
-    x:Class="SmartCode.Tool.Views.GroupManage"
+    x:Class="SmartCode.Views.GroupManage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -42,7 +42,7 @@
                             <Image
                                 Width="11"
                                 Height="15"
-                                Source="/SmartCode.Tool;component/Resources/Img/dataBase.ico" />
+                                Source="/SmartCode;component/Resources/Img/dataBase.ico" />
                             <TextBlock
                                 Margin="5,0,0,0"
                                 HorizontalAlignment="Center"
@@ -127,10 +127,10 @@
                 Height="30"
                 Margin="20"
                 VerticalAlignment="Top"
-                PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                 hc:InfoElement.Title="分组名"
                 hc:InfoElement.TitlePlacement="Left"
                 hc:InfoElement.TitleWidth="80"
+                PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                 Style="{StaticResource TextBoxExtend}"
                 TextChanged="TextGourpName_OnTextChanged" />
             <hc:SimpleStackPanel

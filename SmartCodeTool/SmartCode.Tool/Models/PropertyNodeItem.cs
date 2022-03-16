@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Tool.Annotations;
+using SmartCode.Annotations;
 
-namespace SmartCode.Tool.Models
+namespace SmartCode.Models
 {
     public class PropertyNodeItem : NotifyPropertyBase
     {

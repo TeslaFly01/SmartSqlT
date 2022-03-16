@@ -1,4 +1,4 @@
-﻿namespace SmartCode.Tool
+﻿namespace SmartCode
 {
     public partial class App
     {

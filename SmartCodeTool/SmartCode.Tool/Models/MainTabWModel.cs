@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Tool.UserControl;
+using SmartCode.UserControl;
 
-namespace SmartCode.Tool.Models
+namespace SmartCode.Models
 {
     public class MainTabWModel
     {

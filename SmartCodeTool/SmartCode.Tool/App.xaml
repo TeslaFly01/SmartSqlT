@@ -1,5 +1,5 @@
 ﻿<Application
-    x:Class="SmartCode.Tool.App"
+    x:Class="SmartCode.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
@@ -27,13 +27,13 @@
                 <DrawingBrush.Drawing>
                     <ImageDrawing
                         o:Freeze="True"
-                        ImageSource="/SmartCode.Tool;component/Resources/cloud.png"
+                        ImageSource="/SmartCode;component/Resources/cloud.png"
                         Rect="0,0,157,157" />
                 </DrawingBrush.Drawing>
             </DrawingBrush>
 
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="pack://application:,,,/SmartCode.Tool;component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/SmartCode;component/Themes/Generic.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="Resources/Themes/Theme.xaml" />

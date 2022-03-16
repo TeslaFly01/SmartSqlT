@@ -19,10 +19,10 @@ using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Tool.Annotations;
-using SmartCode.Tool.Models;
+using SmartCode.Annotations;
+using SmartCode.Models;
 
-namespace SmartCode.Tool.Views
+namespace SmartCode.Views
 {
     //定义一个委托去刷新主窗体
     public delegate void ObjChangeRefreshHandler();

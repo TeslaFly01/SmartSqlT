@@ -16,10 +16,10 @@ using HandyControl.Data;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.Util;
-using SmartCode.Tool.Models;
+using SmartCode.Models;
 using UserControlE = System.Windows.Controls.UserControl;
 
-namespace SmartCode.Tool.UserControl
+namespace SmartCode.UserControl
 {
     /// <summary>
     /// UTabCode.xaml 的交互逻辑

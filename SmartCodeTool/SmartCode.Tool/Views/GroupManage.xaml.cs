@@ -21,10 +21,10 @@ using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Tool.Annotations;
+using SmartCode.Annotations;
 using SqlSugar;
 
-namespace SmartCode.Tool.Views
+namespace SmartCode.Views
 {
     //定义委托
     public delegate void ChangeRefreshHandler();

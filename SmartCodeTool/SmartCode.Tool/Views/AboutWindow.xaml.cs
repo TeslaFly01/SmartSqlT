@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace HandyControlDemo.Window
+namespace SmartCode.Views
 {
     public partial class AboutWindow
     {

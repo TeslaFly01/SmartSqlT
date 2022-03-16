@@ -6,7 +6,7 @@ using HandyControl.Data;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 
-namespace SmartCode.Tool
+namespace SmartCode
 {
     internal class HighlightingProvider
     {

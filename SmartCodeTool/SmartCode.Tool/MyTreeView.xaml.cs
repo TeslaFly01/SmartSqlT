@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SmartCode.Tool.Models;
+using SmartCode.Models;
 
-namespace SmartCode.Tool
+namespace SmartCode
 {
     /// <summary>
     /// MyTreeView.xaml 的交互逻辑

@@ -15,7 +15,7 @@ using System.Xml.Serialization;
 using HandyControl.Controls;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 
-namespace SmartCode.Tool.Views
+namespace SmartCode.Views
 {
     /// <summary>
     /// ImportNote.xaml 的交互逻辑

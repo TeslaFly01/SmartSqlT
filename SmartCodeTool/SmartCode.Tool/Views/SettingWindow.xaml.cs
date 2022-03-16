@@ -15,7 +15,7 @@ using System.Windows.Shapes;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
 
-namespace SmartCode.Tool.Views
+namespace SmartCode.Views
 {
     /// <summary>
     /// SettingWindow.xaml 的交互逻辑

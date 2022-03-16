@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SmartCode.Framework.SqliteModel;
 
-namespace SmartCode.Tool.Models
+namespace SmartCode.Models
 {
     public class SObjectDTO : SObjects
     {
