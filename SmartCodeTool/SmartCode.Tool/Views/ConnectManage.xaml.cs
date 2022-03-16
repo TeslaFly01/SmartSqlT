@@ -385,32 +385,22 @@ namespace SmartCode.Tool.Views
             if (string.IsNullOrEmpty(connectName))
             {
                 tipMsg.Append("- 请填写连接名称" + Environment.NewLine);
-                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
-                //return false;
             }
             if (string.IsNullOrEmpty(serverAddress))
             {
                 tipMsg.Append("- 请填写服务器地址" + Environment.NewLine);
-                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
-                //return false;
             }
             if (serverPort < 1)
             {
                 tipMsg.Append("- 请填写端口号" + Environment.NewLine);
-                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
-                //return false;
             }
             if (string.IsNullOrEmpty(userName))
             {
-                tipMsg.Append("- 请填写用户名" + Environment.NewLine);
-                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
-                //return false;
+                tipMsg.Append("- 请填写登录名" + Environment.NewLine);
             }
             if (string.IsNullOrEmpty(password))
             {
-                tipMsg.Append("- 请填写密码" + Environment.NewLine);
-                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
-                //return false;
+                tipMsg.Append("- 请填写密码");
             }
             if (tipMsg.ToString().Length > 0)
             {
