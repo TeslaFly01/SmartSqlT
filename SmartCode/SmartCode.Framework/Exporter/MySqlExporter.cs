@@ -26,8 +26,8 @@ namespace SmartCode.Framework.Exporter
             try
             {
                 model.Tables = this.GetTables(connectionString);
-                model.Views = new Views();// this.GetViews(connectionString);
-                model.Procedures = new Procedures(); //this.GetProcedures(connectionString);
+                model.Views = this.GetViews(connectionString);
+                model.Procedures = this.GetProcedures(connectionString);
                 return model;
             }
             catch (Exception ex)
@@ -109,78 +109,27 @@ namespace SmartCode.Framework.Exporter
             #region MyRegion
             Procedures procDic = new Procedures();
 
-            string sqlCmd = @"SELECT   a.name,
-                                       a.object_id,
-                                       b.descript,
-                                       a.create_date,
-                                       a.modify_date,
-                                       s.name AS schemaName
-                                FROM sys.procedures a
-                                LEFT JOIN sys.sql_modules m ON m.object_id = a.object_id
-                                LEFT JOIN
-                                (
-                                    SELECT sy.name,
-                                           sy.object_id,
-                                           CASE
-                                               WHEN st.name = 'MS_Description' THEN
-                                                   ISNULL(st.value, '')
-                                               ELSE
-                                                   ''
-                                           END AS descript,
-                                           sy.create_date,
-                                           sy.modify_date
-                                    FROM sys.procedures sy
-                                    LEFT JOIN sys.extended_properties st ON st.major_id = sy.object_id
-                                                                            AND minor_id = 0
-                                    WHERE sy.type = 'P'
-                                          AND
-                                          (
-                                              st.name IS NULL
-                                              OR st.name IN ( 'MS_Description' )
-                                          )
-                                    GROUP BY sy.name,
-                                             sy.object_id,
-                                             sy.create_date,
-                                             sy.modify_date,
-                                             CASE
-                                                 WHEN st.name = 'MS_Description' THEN
-                                                     ISNULL(st.value, '')
-                                                 ELSE
-                                                     ''
-                                             END
-                                ) b ON a.object_id = b.object_id
-                                LEFT JOIN sys.schemas s ON s.schema_id = a.schema_id
-                                WHERE a.is_ms_shipped = 0
-                                      AND m.execute_as_principal_id IS NULL
-                                      AND a.name <> 'sp_upgraddiagrams'
-                                ORDER BY a.name;";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
+            var dbMaintenancet = SugarFactory.GetDbMaintenance(DbType.MySql, connectionString);
+            var procInfoList = dbMaintenancet.GetProcInfoList();
+            var dbName = dbMaintenancet.Context.Ado.Connection.Database;
+            var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
+            procList.ForEach(p =>
             {
-                string name = dr.GetString(0);
-                int objectId = dr.GetInt32(1);
-                string comment = dr.IsDBNull(2) ? "" : dr.GetString(2);
-                DateTime createDate = dr.GetDateTime(3);
-                DateTime modifyDate = dr.GetDateTime(4);
-                var schemaName = dr.IsDBNull(5) ? "" : dr.GetString(5);
-                var key = string.IsNullOrEmpty(schemaName) ? name : $"{schemaName}.{name}";
-
-                var proc = new Procedure
+                if (procDic.ContainsKey(p.Name))
                 {
-                    Id = objectId.ToString(),
-                    Name = name,
-                    DisplayName = schemaName + "." + name,
-                    SchemaName = schemaName,
-                    Comment = comment,
-                    CreateDate = createDate,
-                    ModifyDate = modifyDate
-                };
-                if (!procDic.ContainsKey(key))
-                {
-                    procDic.Add(key, proc);
+                    return;
                 }
-            }
-            dr.Close();
+                var proc = new Procedure()
+                {
+                    Id = p.Name,
+                    Name = p.Name,
+                    DisplayName = p.Name,
+                    Comment = p.Description,
+                    CreateDate = p.CreateDate,
+                    ModifyDate = p.ModifyDate
+                };
+                procDic.Add(p.Name, proc);
+            });
             return procDic;
             #endregion
         }
