@@ -10,3 +10,7 @@
 /SmartCode/SmartCode.Tool/bin/*
 /SmartCode/SmartCode.DocUtils/obj/*
 /SmartCode/SmartCode.DocUtils/bin/*
+bin/*
+obj/*
+/bin/*
+/obj/*
