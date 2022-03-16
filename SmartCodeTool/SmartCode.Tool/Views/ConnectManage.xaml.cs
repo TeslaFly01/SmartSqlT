@@ -86,17 +86,35 @@ namespace SmartCode.Tool.Views
             {
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 var pwd = EncryptHelper.Decode(connect.Password);
-                HidId.Text = connect.ID.ToString();
-                TextConnectName.Text = connect.ConnectName;
-                TextServerAddress.Text = connect.ServerAddress;
-                TextServerPort.Value = connect.ServerPort;
-                TextServerName.Text = connect.UserName;
-                ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
-                TextServerPassword.Password = pwd;
-                BtnConnect.IsEnabled = true;
-                var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-                ComboDefaultDatabase.ItemsSource = defaultBase;
-                ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                if (connect.DbType == DbType.SqlServer)
+                {
+                    TabSqlServer.IsSelected = true;
+                    MsSql_HidId.Text = connect.ID.ToString();
+                    MsSql_TextConnectName.Text = connect.ConnectName;
+                    MsSql_TextServerAddress.Text = connect.ServerAddress;
+                    MsSql_TextServerPort.Value = connect.ServerPort;
+                    MsSql_TextServerName.Text = connect.UserName;
+                    MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
+                    MsSql_TextServerPassword.Password = pwd;
+                    BtnConnect.IsEnabled = true;
+                    var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
+                    MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
+                    MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                }
+                if (connect.DbType == DbType.MySql)
+                {
+                    TabMySql.IsSelected = true;
+                    MySql_HidId.Text = connect.ID.ToString();
+                    MySql_TextConnectName.Text = connect.ConnectName;
+                    MySql_TextServerAddress.Text = connect.ServerAddress;
+                    MySql_TextServerPort.Value = connect.ServerPort;
+                    MySql_TextServerName.Text = connect.UserName;
+                    MySql_TextServerPassword.Password = pwd;
+                    BtnConnect.IsEnabled = true;
+                    var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
+                    MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
+                    MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                }
             }
         }
 
@@ -113,17 +131,50 @@ namespace SmartCode.Tool.Views
             }
             var tag = ((Button)sender).Tag;
             var isConnect = tag != null && (string)tag == $"Connect";
-            var connectId = Convert.ToInt32(HidId.Text);
-            var connectName = TextConnectName.Text.Trim();
-            var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = TextServerPort.Value;
-            var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-            var userName = TextServerName.Text.Trim();
-            var password = TextServerPassword.Password.Trim();
-            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
+            var connectId = 0;
+            var connectName = "";
+            var serverAddress = "";
+            var serverPort = 1433d;
+            var authentication = 1;
+            var userName = "";
+            var password = "";
+            var defaultDataBase = new DataBase();
+            var connectionString = "";
+            var dbType = DbType.SqlServer;
+            if (TabSqlServer.IsSelected)
+            {
+                dbType = DbType.SqlServer;
+                connectId = Convert.ToInt32(MsSql_HidId.Text);
+                connectName = MsSql_TextConnectName.Text.Trim();
+                serverAddress = MsSql_TextServerAddress.Text.Trim();
+                serverPort = MsSql_TextServerPort.Value;
+                authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+                userName = MsSql_TextServerName.Text.Trim();
+                password = MsSql_TextServerPassword.Password.Trim();
+                defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
+                connectionString = $"server={serverAddress},{serverPort};" +
+                                   $"database=master;uid={userName};" +
+                                   $"pwd={password};";
+            }
+            if (TabMySql.IsSelected)
+            {
+                dbType = DbType.MySql;
+                connectId = Convert.ToInt32(MySql_HidId.Text);
+                connectName = MySql_TextConnectName.Text.Trim();
+                serverAddress = MySql_TextServerAddress.Text.Trim();
+                serverPort = MySql_TextServerPort.Value;
+                userName = MySql_TextServerName.Text.Trim();
+                password = MySql_TextServerPassword.Password.Trim();
+                defaultDataBase = (DataBase)MySql_ComboDefaultDatabase.SelectedItem;
+                connectionString = $"server={serverAddress};" +
+                                   $"port={serverPort};" +
+                                   $"uid={userName};" +
+                                   $"pwd={password};" +
+                                   $"Allow User Variables=True;";
+            }
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
-            var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
+
             LoadingG.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
@@ -131,7 +182,7 @@ namespace SmartCode.Tool.Views
                 {
                     if (isConnect)
                     {
-                        var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
+                        var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
                         exporter.GetDatabases(connectionString);
                     }
                     Dispatcher.Invoke(() =>
@@ -156,7 +207,7 @@ namespace SmartCode.Tool.Views
                                 return;
                             }
                             connectConfig.ConnectName = connectName;
-                            connectConfig.DbType = DbType.SqlServer;
+                            connectConfig.DbType = dbType;
                             connectConfig.ServerAddress = serverAddress;
                             connectConfig.ServerPort = Convert.ToInt32(serverPort);
                             connectConfig.UserName = userName;
@@ -238,7 +289,7 @@ namespace SmartCode.Tool.Views
         private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = new SQLiteHelper();
-            var connectId = Convert.ToInt32(HidId.Text);
+            var connectId = Convert.ToInt32(MsSql_HidId.Text);
             if (connectId < 1)
             {
                 Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要删除的连接", WaitTime = 1, ShowDateTime = false });
@@ -255,8 +306,8 @@ namespace SmartCode.Tool.Views
                     DataList = datalist;
                     if (ChangeRefreshEvent != null)
                     {
-                //ChangeRefreshEvent();
-            }
+                        //ChangeRefreshEvent();
+                    }
                 });
             });
         }
@@ -268,7 +319,7 @@ namespace SmartCode.Tool.Views
         /// <param name="e"></param>
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
-            if (HidId.Text == "0")
+            if (MsSql_HidId.Text == "0")
             {
 
             }
@@ -277,13 +328,25 @@ namespace SmartCode.Tool.Views
 
         private void ResetData()
         {
-            HidId.Text = "0";
-            TextConnectName.Text = "";
-            TextServerAddress.Text = "";
-            TextServerPort.Value = 1433;
-            TextServerName.Text = "";
-            TextServerPassword.Password = "";
-            ComboAuthentication.SelectedItem = SQLServer;
+            if (TabSqlServer.IsSelected)
+            {
+                MsSql_HidId.Text = "0";
+                MsSql_TextConnectName.Text = "";
+                MsSql_TextServerAddress.Text = "";
+                MsSql_TextServerPort.Value = 1433;
+                MsSql_TextServerName.Text = "";
+                MsSql_TextServerPassword.Password = "";
+                MsSql_ComboAuthentication.SelectedItem = SQLServer;
+            }
+            if (TabMySql.IsSelected)
+            {
+                MySql_HidId.Text = "0";
+                MySql_TextConnectName.Text = "";
+                MySql_TextServerAddress.Text = "";
+                MySql_TextServerPort.Value = 3306;
+                MySql_TextServerName.Text = "";
+                MySql_TextServerPassword.Password = "";
+            }
             ListConnects.SelectedItem = null;
             BtnConnect.IsEnabled = false;
             BtnTestConnect.IsEnabled = false;
@@ -295,35 +358,63 @@ namespace SmartCode.Tool.Views
         private bool CheckConnectForm()
         {
             #region MyRegion
-            var connectName = TextConnectName.Text.Trim();
-            var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = TextServerPort.Value;
-            var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-            var userName = TextServerName.Text.Trim();
-            var password = TextServerPassword.Password.Trim();
+            var connectName = "";
+            var serverAddress = "";
+            var serverPort = 1433d;
+            var authentication = 1;
+            var userName = "";
+            var password = "";
+            if (TabSqlServer.IsSelected)
+            {
+                connectName = MsSql_TextConnectName.Text.Trim();
+                serverAddress = MsSql_TextServerAddress.Text.Trim();
+                serverPort = MsSql_TextServerPort.Value;
+                authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+                userName = MsSql_TextServerName.Text.Trim();
+                password = MsSql_TextServerPassword.Password.Trim();
+            }
+            if (TabMySql.IsSelected)
+            {
+                connectName = MySql_TextConnectName.Text.Trim();
+                serverAddress = MySql_TextServerAddress.Text.Trim();
+                serverPort = MySql_TextServerPort.Value;
+                userName = MySql_TextServerName.Text.Trim();
+                password = MySql_TextServerPassword.Password.Trim();
+            }
+            var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
-                return false;
+                tipMsg.Append("- 请填写连接名称" + Environment.NewLine);
+                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写连接名称", WaitTime = 1, ShowDateTime = false });
+                //return false;
             }
             if (string.IsNullOrEmpty(serverAddress))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
-                return false;
+                tipMsg.Append("- 请填写服务器地址" + Environment.NewLine);
+                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写服务器地址", WaitTime = 1, ShowDateTime = false });
+                //return false;
             }
             if (serverPort < 1)
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
-                return false;
+                tipMsg.Append("- 请填写端口号" + Environment.NewLine);
+                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写端口号", WaitTime = 1, ShowDateTime = false });
+                //return false;
             }
             if (string.IsNullOrEmpty(userName))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
-                return false;
+                tipMsg.Append("- 请填写用户名" + Environment.NewLine);
+                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写用户名", WaitTime = 1, ShowDateTime = false });
+                //return false;
             }
             if (string.IsNullOrEmpty(password))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
+                tipMsg.Append("- 请填写密码" + Environment.NewLine);
+                //Growl.WarningGlobal(new GrowlInfo { Message = $"请填写密码", WaitTime = 1, ShowDateTime = false });
+                //return false;
+            }
+            if (tipMsg.ToString().Length > 0)
+            {
+                Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             return true;
@@ -350,21 +441,53 @@ namespace SmartCode.Tool.Views
             {
                 return;
             }
-            var connectionString = $"server={TextServerAddress.Text.Trim()},{TextServerPort.Value};database=master;uid={TextServerName.Text.Trim()};pwd={TextServerPassword.Password.Trim()};";
+            var dbType = TabSqlServer.IsSelected ? DbType.SqlServer : DbType.MySql;
+            var connectId = 0;
+            var connectionString = @"";
+            if (TabSqlServer.IsSelected)
+            {
+                connectId = Convert.ToInt32(MsSql_HidId.Text);
+                connectionString = $"server={MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value};" +
+                                   $"database=master;" +
+                                   $"uid={MsSql_TextServerName.Text.Trim()};" +
+                                   $"pwd={MsSql_TextServerPassword.Password.Trim()};";
+            }
+            if (TabMySql.IsSelected)
+            {
+                connectId = Convert.ToInt32(MySql_HidId.Text);
+                connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
+                                   $"port={MySql_TextServerPort.Value};" +
+                                   $"uid={MySql_TextServerName.Text.Trim()};" +
+                                   $"pwd={MySql_TextServerPassword.Password.Trim()};" +
+                                   $"Allow User Variables=True;";
+            }
             LoadingG.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
                 try
                 {
-                    var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
+                    var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
                     var list = exporter.GetDatabases(connectionString);
                     Dispatcher.Invoke(() =>
                     {
-                        var connectId = Convert.ToInt32(HidId.Text);
-                        ComboDefaultDatabase.ItemsSource = list;
+                        if (TabSqlServer.IsSelected)
+                        {
+                            MsSql_ComboDefaultDatabase.ItemsSource = list;
+                        }
+                        if (TabMySql.IsSelected)
+                        {
+                            MySql_ComboDefaultDatabase.ItemsSource = list;
+                        }
                         if (connectId < 1)
                         {
-                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+                            if (TabSqlServer.IsSelected)
+                            {
+                                MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+                            }
+                            if (TabMySql.IsSelected)
+                            {
+                                MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
+                            }
                         }
                         else
                         {
@@ -372,7 +495,14 @@ namespace SmartCode.Tool.Views
                             var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                             if (connect != null)
                             {
-                                ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                                if (TabSqlServer.IsSelected)
+                                {
+                                    MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                                }
+                                if (TabMySql.IsSelected)
+                                {
+                                    MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                                }
                             }
                         }
                         LoadingG.Visibility = Visibility.Collapsed;

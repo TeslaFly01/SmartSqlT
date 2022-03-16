@@ -71,7 +71,7 @@ namespace SmartCode.Framework.SqliteModel
         {
             return DbType == DbType.SqlServer
                 ? $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};"
-                : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
+                : $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
         }
     }
 }
