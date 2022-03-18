@@ -90,7 +90,7 @@ namespace SmartCode.UserControl
             var sb = new StringBuilder();
 
             #region 1、生成新建表脚本
-            
+
             var instance = ExporterFactory.CreateInstance(DbType.SqlServer);
             var createTableSql = instance.CreateTableSql(objE.DisplayName, list);
             TextTableEditor.Text = createTableSql;
@@ -127,40 +127,9 @@ namespace SmartCode.UserControl
             #endregion
 
             sb.Clear();
-            sb.Append("using System;");
-            sb.Append(Environment.NewLine);
-            sb.Append("using System.Collections.Generic;");
-            sb.Append(Environment.NewLine);
-            sb.Append("namespace Test");
-            sb.Append(Environment.NewLine);
-            sb.Append("{");
-            sb.Append(Environment.NewLine);
-            sb.Append($"\tpublic class {objE.Name}");
-            sb.Append(Environment.NewLine);
-            sb.Append("\t{");
-            sb.Append(Environment.NewLine);
-            sb.Append($"\t\tpublic {objE.Name}()");
-            sb.Append(Environment.NewLine);
-            sb.Append("\t\t{");
-            sb.Append(Environment.NewLine);
-            sb.Append("\t\t}");
-            sb.Append(Environment.NewLine);
-            foreach (var column in list)
-            {
-                sb.Append("\t\t///<summary>");
-                sb.Append(Environment.NewLine);
-                sb.Append($"\t\t///{column.Comment}");
-                sb.Append(Environment.NewLine);
-                sb.Append("\t\t///</summary>");
-                sb.Append(Environment.NewLine);
-                sb.Append($"\t\tpublic {column.CSharpType} {column.DisplayName} {{ get; set; }}");
-                sb.Append("\t\t");
-                sb.Append(Environment.NewLine);
-            }
-            sb.Append("\t}");
-            sb.Append(Environment.NewLine);
-            sb.Append("}");
-            TextCsharpEditor.Text = sb.ToString();
+            var langInstance = LangFactory.CreateInstance(LangType.Csharp);
+            var csharpEntityCode = langInstance.BuildEntity(objE.Name, list);
+            TextCsharpEditor.Text = csharpEntityCode;
         }
     }
 }

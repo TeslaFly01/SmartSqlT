@@ -37,4 +37,11 @@ namespace SmartCode.Framework
         /// </summary>
         Proc = 3
     }
+
+    public enum LangType
+    {
+        Csharp = 1,
+
+        Java = 2
+    }
 }
