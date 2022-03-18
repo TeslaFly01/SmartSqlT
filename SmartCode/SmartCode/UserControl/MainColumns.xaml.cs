@@ -125,7 +125,7 @@ namespace SmartCode.UserControl
             {
                 SearchColumns.Text = string.Empty;
                 var isView = selectedObject.Type == ObjType.View;
-                TabTable.SelectedItem = TabStruct;
+                TabTable.SelectedItem = isView ? TabSql : TabStruct;
                 LoadingG.Visibility = TabStruct.Visibility = Visibility.Visible;
                 TabData.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
