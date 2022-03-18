@@ -517,5 +517,28 @@ namespace SmartCode.Views
         {
             TestConnect(false);
         }
+
+        /// <summary>
+        /// 数据库类型变更
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabDbType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            if (TabDbType.SelectedItem == TabSqlServer)
+            {
+                var connectId = Convert.ToInt32(MsSql_HidId.Text);
+                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
+            }
+            if (TabDbType.SelectedItem == TabMySql)
+            {
+                var connectId = Convert.ToInt32(MySql_HidId.Text);
+                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
+            }
+        }
     }
 }
