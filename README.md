@@ -54,10 +54,10 @@ SmartSQL 是一款数据库文档工具！
 ## 🎉效果展示
 
 ### 1 数据库连接配置示例
-![数据库连接配置](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
+![新建数据库连接](SmartCode/SmartCode/Resources/Img/Readme/%E6%96%B0%E5%BB%BA%E8%BF%9E%E6%8E%A5.jpg)
 
-### 2 数据库连接管理
-![数据库连接管理](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
+### 2 数据库对象分组管理
+![数据库对象分组管理](SmartCode/SmartCode/Resources/Img/Readme/%E5%88%86%E7%BB%84%E7%AE%A1%E7%90%86.jpg)
 
 ### 3 表名模糊匹配
 ![表名模糊搜索](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
