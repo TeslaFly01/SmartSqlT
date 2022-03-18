@@ -20,30 +20,30 @@ SmartSQL 是一款数据库文档工具！
 ### 🎯 本项目力求做最简单、最实用的数据库文档(字典)生成工具！
 
 ## 🍀支持的数据库
-- [x] SqlServer
-- [x] MySQL
-- [x] Oracle
-- [x] PostgreSQL
-- [x] DB2
-- [x] SQLite
+- ✅ SqlServer
+- ✅ MySQL
+- - [x] Oracle
+- - [x] PostgreSQL
+- - [x] DB2
+- - [x] SQLite
 
 ## 🥝主要功能 
 
 ### 文档的内容都包含什么？
 - 序号 | 列名 | 数据类型 | 长度 | 小数位数 | 主键 | 自增 | 允许空 | 默认值 | 列说明
-- 视图 视图具体内容
-- 存储过程 存储过程具体内容
+- 视图 视图内容SQL脚本
+- 存储过程 存储过程内容SQL脚本
 
 🔹注：Oracle在v1.8.0.3-beta版本及以后暂不会查询显示自增数据。
 
 ### 支持哪些文档格式的导出？
-- [x] chm
-- [x] word
-- [x] excel
-- [x] pdf
-- [x] html
-- [x] xml
-- [x] markdown
+- ✅ chm
+- ✅ word
+- ✅ excel
+- ✅ pdf
+- ✅ html
+- ✅ xml
+- ✅ markdown
 ### 更新表列的注释，有哪些方式？
 - 通过 工具-批注上载，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`powerdesigner`设计数据库时产生。
