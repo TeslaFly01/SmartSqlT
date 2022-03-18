@@ -59,14 +59,11 @@ SmartSQL 是一款数据库文档工具！
 ### 2 数据库对象分组管理
 ![数据库对象分组管理](SmartCode/SmartCode/Resources/Img/Readme/%E5%88%86%E7%BB%84%E7%AE%A1%E7%90%86.jpg)
 
-### 3 表名模糊匹配
-![表名模糊搜索](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
+### 3 快捷查询表、视图、存储过程
+![快捷查询](SmartCode/SmartCode/Resources/Img/Readme/%E5%BF%AB%E6%8D%B7%E6%9F%A5%E8%AF%A2.jpg)
 
 ### 4 执行批注更新
 ![表批注更新](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
-
-### 5 导出CHM文件
-![导出CHM文件](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM004.png)
 
 ### 6 表结构信息
 ![表结构信息](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
