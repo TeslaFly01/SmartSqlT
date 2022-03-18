@@ -18,4 +18,23 @@ namespace SmartCode.Framework
     //    DB2,
     //    SQLite
     //}
+
+    /// <summary>
+    /// 脚本类型
+    /// </summary>
+    public enum ScriptType
+    {
+        /// <summary>
+        /// 表
+        /// </summary>
+        Table = 1,
+        /// <summary>
+        /// 视图
+        /// </summary>
+        View = 2,
+        /// <summary>
+        /// 存储过程
+        /// </summary>
+        Proc = 3
+    }
 }

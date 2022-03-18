@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartCode.Framework.PhysicalDataModel;
+using SqlSugar;
 using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Framework.Exporter
@@ -17,6 +18,10 @@ namespace SmartCode.Framework.Exporter
 
         }
 
+        /// <summary>
+        /// 初始化数据库
+        /// </summary>
+        /// <returns></returns>
         public override Model Init()
         {
             var model = new Model { Database = "MySql" };
@@ -33,8 +38,13 @@ namespace SmartCode.Framework.Exporter
             }
         }
 
+        /// <summary>
+        /// 获取数据库列表
+        /// </summary>
+        /// <returns></returns>
         public override List<DataBase> GetDatabases()
         {
+            #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var dbClient = SugarFactory.GetInstance(DbType.MySql, DbConnectString);
             var dataBaseList = dbMaintenance.GetDataBaseList(dbClient);
@@ -49,10 +59,13 @@ namespace SmartCode.Framework.Exporter
                 list.Add(dBase);
             });
             return list;
+            #endregion
         }
 
+        #region private
         private Tables GetTables()
         {
+            #region MyRegion
             var tables = new Tables();
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var tableList = dbMaintenance.GetTableInfoList(false);
@@ -74,11 +87,13 @@ namespace SmartCode.Framework.Exporter
                 tables.Add(tb.Name, table);
             });
             return tables;
+            #endregion
         }
 
         private Views GetViews()
         {
-            Views views = new Views();
+            #region MyRegion
+            var views = new Views();
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var viewList = dbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
@@ -99,13 +114,13 @@ namespace SmartCode.Framework.Exporter
                 views.Add(v.Name, view);
             });
             return views;
+            #endregion
         }
 
         private Procedures GetProcedures()
         {
             #region MyRegion
-            Procedures procDic = new Procedures();
-
+            var procDic = new Procedures();
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var procInfoList = dbMaintenance.GetProcInfoList(false);
             var dbName = dbMaintenance.Context.Ado.Connection.Database;
@@ -130,7 +145,13 @@ namespace SmartCode.Framework.Exporter
             return procDic;
             #endregion
         }
+        #endregion
 
+        /// <summary>
+        /// 根据对象ID获取列信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
         public override Columns GetColumnInfoById(string objectId)
         {
             var columns = new Columns(500);
@@ -176,10 +197,16 @@ namespace SmartCode.Framework.Exporter
             return columns;
         }
 
-        public override string GetScriptInfoById(string objectId)
+        /// <summary>
+        /// 根据对象ID获取脚本信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
+        public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var scriptInfo = dbMaintenance.GetScriptInfo(objectId);
+            var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
     }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using SqlSugar;
 
 namespace SmartCode.Framework.Exporter
 {
@@ -38,7 +39,8 @@ namespace SmartCode.Framework.Exporter
         /// 获取脚本信息
         /// </summary>
         /// <param name="objectId"></param>
+        /// <param name="objectType"></param>
         /// <returns></returns>
-        public abstract string GetScriptInfoById(string objectId);
+        public abstract string GetScriptInfoById(string objectId, DbObjectType objectType);
     }
 }

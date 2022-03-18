@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using SqlSugar;
 using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Framework.Exporter
@@ -118,7 +119,7 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return tables; 
+            return tables;
             #endregion
         }
 
@@ -200,7 +201,7 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return views; 
+            return views;
             #endregion
         }
 
@@ -280,7 +281,7 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return procDic; 
+            return procDic;
             #endregion
         }
 
@@ -311,7 +312,7 @@ namespace SmartCode.Framework.Exporter
                                 left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
                                 where d.id={ Convert.ToInt32(objectId)}
                                 order by a.id,a.colorder";
-            return this.GetColumnsExt(DbConnectString, sql); 
+            return this.GetColumnsExt(DbConnectString, sql);
             #endregion
         }
 
@@ -371,14 +372,14 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return columns; 
+            return columns;
             #endregion
         }
 
-        public override string GetScriptInfoById(string objectId)
+        public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
-            var scriptInfo = dbMaintenance.GetScriptInfo(objectId);
+            var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
         #endregion

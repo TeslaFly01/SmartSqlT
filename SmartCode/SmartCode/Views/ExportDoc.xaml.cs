@@ -17,6 +17,7 @@ using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Models;
+using SqlSugar;
 using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Views
@@ -146,6 +147,7 @@ namespace SmartCode.Views
         {
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
             var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString);
+            var objectType = type == "View" ? DbObjectType.View : DbObjectType.Proc;
             var viewPro = new List<ViewProDto>();
             foreach (var group in treeViewData)
             {
@@ -159,7 +161,7 @@ namespace SmartCode.Views
                     {
                         if (item.Type == type)
                         {
-                            var script = exporter.GetScriptInfoById(item.ObejcetId);
+                            var script = exporter.GetScriptInfoById(item.ObejcetId, objectType);
                             viewPro.Add(new ViewProDto
                             {
                                 ObjectName = item.DisplayName,
@@ -173,7 +175,7 @@ namespace SmartCode.Views
                 {
                     if (group.Type == type)
                     {
-                        var script = exporter.GetScriptInfoById(group.ObejcetId);
+                        var script = exporter.GetScriptInfoById(group.ObejcetId, objectType);
                         viewPro.Add(new ViewProDto
                         {
                             ObjectName = group.DisplayName,

@@ -28,6 +28,7 @@ using SmartCode.Annotations;
 using SmartCode.Helper;
 using SmartCode.Models;
 using SmartCode.Views;
+using SqlSugar;
 using UserControlE = System.Windows.Controls.UserControl;
 using PathF = System.IO.Path;
 using TextBox = System.Windows.Controls.TextBox;
@@ -151,7 +152,7 @@ namespace SmartCode.UserControl
                     }));
                     if (selectedObjct.Type == ObjType.View)
                     {
-                        var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId);
+                        var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId, DbObjectType.View);
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             TextSqlEditor.SelectedText = string.Empty;
@@ -176,7 +177,7 @@ namespace SmartCode.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId);
+                    var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId, DbObjectType.Proc);
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TextSqlEditor.SelectedText = string.Empty;
