@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="DBCHM" src="https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/dbchm.png">
+   <img alt="DBCHM" src="https://gitee.com/izhaofu/SmartSQL/raw/master/SmartCode/SmartCode/Resources/Img/icon.png">
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
