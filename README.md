@@ -12,14 +12,14 @@
 <img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
 </p>
 
-## 🚩 项目介绍
+## 🚩 一、项目介绍
 
 SmartSQL 是一款数据库文档工具！
 该工具从最初支持chm文档格式开始，通过开源，集思广益，不断改进，又陆续支持word、excel、pdf、html、xml、markdown等文档格式的导出。
 
 ### 🎯 本项目力求做最简单、最实用的数据库文档(字典)生成工具！
 
-## 🍀支持的数据库
+## 🍀 二、数据库支持
 - ✅ SqlServer
 - ✅ MySQL
 - - [x] Oracle
@@ -27,7 +27,7 @@ SmartSQL 是一款数据库文档工具！
 - - [x] DB2
 - - [x] SQLite
 
-## 🥝主要功能 
+## 🥝 三、主要功能 
 
 ### 文档的内容都包含什么？
 - 序号 | 列名 | 数据类型 | 长度 | 小数位数 | 主键 | 自增 | 允许空 | 默认值 | 列说明
@@ -51,7 +51,7 @@ SmartSQL 是一款数据库文档工具！
     - 	[x] xml 由`dbchm`的 XML导出 而产生。
 - 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
 
-## 🎉效果展示
+## 🎉 四、截图展示
 
 ### 1 数据库连接配置示例
 ![新建数据库连接](SmartCode/SmartCode/Resources/Img/Readme/%E6%96%B0%E5%BB%BA%E8%BF%9E%E6%8E%A5.jpg)
@@ -72,25 +72,25 @@ SmartSQL 是一款数据库文档工具！
 
 查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
-## 📘发行历史
+## 📘 五、更新日志
 
 ​	<a target='_blank' href ='./ReleaseNote.md'>ReleaseNote</a>
 
-## 💪贡献者
+## 💪 六、贡献者
 
 - @[trycache](https://gitee.com/trycache) 主要开发者
 - @[空无一物](https://gitee.com/dotnetchina/) 先驱者
 
-##  ⬇️下载使用
+## ⬇️ 七、下载地址
 - **[下载发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
 
 - **[下载最新功能的内测版本](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)**，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
 
-## 🍄 其他工具
+## 🍄 附一、其他工具
 - [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
 - [PDMToCHM](https://gitee.com/dotnetchina/DBCHM/attach_files)，将PDM表结构文件导出到CHM文件。
 
-##  🌱开发计划
+## 🌱 附二、开发计划
 
 - [x] 收集问题，修复完善基础功能
 - [x] MJTop.Data 类库完善
@@ -98,7 +98,7 @@ SmartSQL 是一款数据库文档工具！
 - [ ]  C#实体代码生成器
 - [ ]  ...
 
-## 📖常见问题
+## 📖 附三、常见问题
 - **连接不上，怎么办？**
 	
 	1. `连接数据库`界面填写的`连接信息`真的正确无误?
@@ -168,5 +168,5 @@ PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越
 	
 	如果你有更好的解决方法，欢迎提供改善建议或直接提pr，我们一起完善该工具！
 
-## 🔗交流
+## 🔗 最后、交流
 - QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
