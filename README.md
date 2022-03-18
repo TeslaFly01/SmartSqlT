@@ -3,7 +3,7 @@
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
-<h3 align="center">最简单、最实用的数据库文档生成工具</h3>
+<h3 align="center">最方便、快捷的数据库文档生成工具</h3>
 </div>
 
 <p align="center">
@@ -14,7 +14,7 @@
 
 ## 🚩 项目介绍
 
-DBCHM 是一款数据库文档生成工具！
+SmartSQL 是一款数据库文档工具！
 该工具从最初支持chm文档格式开始，通过开源，集思广益，不断改进，又陆续支持word、excel、pdf、html、xml、markdown等文档格式的导出。
 
 ### 🎯 本项目力求做最简单、最实用的数据库文档(字典)生成工具！
