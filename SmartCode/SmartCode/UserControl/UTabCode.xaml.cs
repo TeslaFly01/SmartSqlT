@@ -13,10 +13,12 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
+using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.Util;
 using SmartCode.Models;
+using SqlSugar;
 using UserControlE = System.Windows.Controls.UserControl;
 
 namespace SmartCode.UserControl
@@ -83,39 +85,15 @@ namespace SmartCode.UserControl
             TabParentSql.IsSelected = true;
             TabTableSql.IsSelected = true;
             var objE = SelectedObject;
-            
+
             var list = SelectedTableColunms;
             var sb = new StringBuilder();
 
             #region 1、生成新建表脚本
-            sb.Append($"CREATE TABLE {objE.DisplayName}(");
-            sb.Append(Environment.NewLine);
-            foreach (var column in list)
-            {
-                sb.Append($"\t{column.DisplayName} {column.DataType}{column.Length} ");
-                if (column.IsIdentity)
-                {
-                    sb.Append("IDENTITY(1,1) ");
-                }
-                var isNull = column.IsNullable ? "NULL," : "NOT NULL,";
-                sb.Append(isNull);
-                sb.Append(Environment.NewLine);
-            }
-            var primaryKeyList = list.FindAll(x => x.IsPrimaryKey);
-            if (primaryKeyList.Any())
-            {
-                sb.Append($"\tPRIMARY KEY (");
-                var sbPriKey = new StringBuilder();
-                foreach (var column in primaryKeyList)
-                {
-                    sbPriKey.Append($"{column.DisplayName},");
-                }
-                sb.Append(sbPriKey.ToString().TrimEnd(','));
-                sb.Append(")");
-                sb.Append(Environment.NewLine);
-            }
-            sb.Append(")");
-            TextTableEditor.Text = sb.ToString();
+            
+            var instance = ExporterFactory.CreateInstance(DbType.SqlServer);
+            var createTableSql = instance.CreateTableSql(objE.DisplayName, list);
+            TextTableEditor.Text = createTableSql;
             #endregion
 
             sb.Clear();

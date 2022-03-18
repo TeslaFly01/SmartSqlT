@@ -118,13 +118,13 @@ namespace SmartCode.UserControl
         public void LoadPageData()
         {
             NoDataText.Visibility = Visibility.Collapsed;
-            var selectedObjct = SelectedObject;
+            var selectedObject = SelectedObject;
             var selectedConnection = SelectedConnection;
             var dbConnectionString = selectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-            if (selectedObjct.Type == ObjType.Table || selectedObjct.Type == ObjType.View)
+            if (selectedObject.Type == ObjType.Table || selectedObject.Type == ObjType.View)
             {
                 SearchColumns.Text = string.Empty;
-                var isView = selectedObjct.Type == ObjType.View;
+                var isView = selectedObject.Type == ObjType.View;
                 TabTable.SelectedItem = TabStruct;
                 LoadingG.Visibility = TabStruct.Visibility = Visibility.Visible;
                 TabData.Visibility = Visibility.Collapsed;
@@ -137,7 +137,7 @@ namespace SmartCode.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var tableColumns = dbInstance.GetColumnInfoById(selectedObjct.ObejcetId);
+                    var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -150,9 +150,9 @@ namespace SmartCode.UserControl
                             NoDataText.Visibility = Visibility.Visible;
                         }
                     }));
-                    if (selectedObjct.Type == ObjType.View)
+                    if (selectedObject.Type == ObjType.View)
                     {
-                        var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId, DbObjectType.View);
+                        var script = dbInstance.GetScriptInfoById(selectedObject.ObejcetId, DbObjectType.View);
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             TextSqlEditor.SelectedText = string.Empty;
@@ -177,7 +177,7 @@ namespace SmartCode.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId, DbObjectType.Proc);
+                    var script = dbInstance.GetScriptInfoById(selectedObject.ObejcetId, DbObjectType.Proc);
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TextSqlEditor.SelectedText = string.Empty;

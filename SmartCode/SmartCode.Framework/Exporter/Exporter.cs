@@ -42,5 +42,12 @@ namespace SmartCode.Framework.Exporter
         /// <param name="objectType"></param>
         /// <returns></returns>
         public abstract string GetScriptInfoById(string objectId, DbObjectType objectType);
+        /// <summary>
+        /// 创建表SQL
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string CreateTableSql(string tableName, List<Column> columns);
     }
 }

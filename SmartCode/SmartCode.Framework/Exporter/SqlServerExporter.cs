@@ -382,6 +382,44 @@ namespace SmartCode.Framework.Exporter
             var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
+
+        public override string CreateTableSql(string tableName, List<Column> columns)
+        {
+            if (string.IsNullOrEmpty(tableName) || !columns.Any())
+            {
+                return "";
+            }
+            var sb = new StringBuilder();
+            sb.Append($"CREATE TABLE {tableName}(");
+            sb.Append(Environment.NewLine);
+            columns.ForEach(col =>
+            {
+                sb.Append($"\t{col.DisplayName} {col.DataType}{col.Length} ");
+                if (col.IsIdentity)
+                {
+                    sb.Append("IDENTITY(1,1) ");
+                }
+                var isNull = col.IsNullable ? "NULL," : "NOT NULL,";
+                sb.Append(isNull);
+                sb.Append(Environment.NewLine);
+            });
+            var primaryKeyList = columns.FindAll(x => x.IsPrimaryKey);
+            if (primaryKeyList.Any())
+            {
+                sb.Append($"\tPRIMARY KEY (");
+                var sbPriKey = new StringBuilder();
+                foreach (var column in primaryKeyList)
+                {
+                    sbPriKey.Append($"{column.DisplayName},");
+                }
+                sb.Append(sbPriKey.ToString().TrimEnd(','));
+                sb.Append(")");
+                sb.Append(Environment.NewLine);
+            }
+            sb.Append(")");
+            return sb.ToString();
+        }
+
         #endregion
     }
 }

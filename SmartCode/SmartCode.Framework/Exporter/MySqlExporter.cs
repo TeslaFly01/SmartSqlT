@@ -209,5 +209,10 @@ namespace SmartCode.Framework.Exporter
             var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
+
+        public override string CreateTableSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
     }
 }
