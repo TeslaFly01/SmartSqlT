@@ -10,15 +10,27 @@ namespace SmartCode.Framework.Exporter
 
     public interface IExporter
     {
-        Model Export(string connectionString);
-        List<DataBase> GetDatabases(string connectionString);
-
-        Columns GetColumns(string objectId, string connectionString);
-
-        string GetScripts(string objectId, string connectionString);
-
-        DataSet GetDataSet(string connectionString, string tbName, string strWhere);
-
-        bool UpdateComment(string connection,string type, string tableName,string schema, string comment, string columnName="");
+        /// <summary>
+        /// 连接初始化获取对象列表
+        /// </summary>
+        /// <returns></returns>
+        Model Init();
+        /// <summary>
+        /// 获取数据库列表
+        /// </summary>
+        /// <returns></returns>
+        List<DataBase> GetDatabases();
+        /// <summary>
+        /// 获取对象列信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        Columns GetColumnInfoById(string objectId);
+        /// <summary>
+        /// 获取脚本信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        string GetScriptInfoById(string objectId);
     }
 }

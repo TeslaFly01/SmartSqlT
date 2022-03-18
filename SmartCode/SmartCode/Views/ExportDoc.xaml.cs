@@ -145,6 +145,7 @@ namespace SmartCode.Views
         private List<ViewProDto> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
         {
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
+            var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString);
             var viewPro = new List<ViewProDto>();
             foreach (var group in treeViewData)
             {
@@ -158,9 +159,7 @@ namespace SmartCode.Views
                     {
                         if (item.Type == type)
                         {
-                            var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString);
-                            var script = exporter.GetScripts(item.ObejcetId, selectedConnectionString);
-
+                            var script = exporter.GetScriptInfoById(item.ObejcetId);
                             viewPro.Add(new ViewProDto
                             {
                                 ObjectName = item.DisplayName,
@@ -174,9 +173,7 @@ namespace SmartCode.Views
                 {
                     if (group.Type == type)
                     {
-                        var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString);
-                        var script = exporter.GetScripts(group.ObejcetId, selectedConnectionString);
-
+                        var script = exporter.GetScriptInfoById(group.ObejcetId);
                         viewPro.Add(new ViewProDto
                         {
                             ObjectName = group.DisplayName,
@@ -210,7 +207,7 @@ namespace SmartCode.Views
                         var lst_col_dto = new List<ColumnDto>();
                         var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
                             selectedConnectionString);
-                        var columns = dbInstance.GetColumns(node.ObejcetId, selectedConnectionString);
+                        var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
                         foreach (var col in columns)
                         {
                             ColumnDto colDto = new ColumnDto();
@@ -251,7 +248,7 @@ namespace SmartCode.Views
                     var lst_col_dto = new List<ColumnDto>();
                     var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
                         selectedConnectionString);
-                    var columns = dbInstance.GetColumns(group.ObejcetId, selectedConnectionString);
+                    var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();

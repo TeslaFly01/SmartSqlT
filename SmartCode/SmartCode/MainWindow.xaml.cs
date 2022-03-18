@@ -127,7 +127,7 @@ namespace SmartCode
             try
             {
                 var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, ConnectionString);
-                var list = dbInstance.GetDatabases(ConnectionString);
+                var list = dbInstance.GetDatabases();
                 DBase = list;
                 SelectDatabase.ItemsSource = DBase;
                 ConnectionString = connectConfig.DbDefaultConnectString;
@@ -280,7 +280,7 @@ namespace SmartCode
                 #endregion
 
                 var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, ConnectionString);
-                Model model = dbInstance.Export(ConnectionString);
+                var model = dbInstance.Init();
                 dataSource = model;
                 var textColor = "#333444";
                 #region 数据表
@@ -1092,8 +1092,8 @@ namespace SmartCode
             }
             Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(dataBase.DbType, ConnectionString);
-                var list = dbInstance.GetDatabases(dataBase.DbMasterConnectString);
+                var dbInstance = ExporterFactory.CreateInstance(dataBase.DbType, dataBase.DbMasterConnectString);
+                var list = dbInstance.GetDatabases();
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     CbTargetDatabase.ItemsSource = list;
@@ -1130,10 +1130,10 @@ namespace SmartCode
                 Growl.Warning(new GrowlInfo { Message = $"请选择目标数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var dbInstance = ExporterFactory.CreateInstance(targetConnect.DbType, ConnectionString);
+            var dbInstance = ExporterFactory.CreateInstance(targetConnect.DbType, targetConnect.SelectedDbConnectString(targetData.DbName));
             LoadingLine.Visibility = Visibility.Visible;
 
-            Model model = dbInstance.Export(targetConnect.SelectedDbConnectString(targetData.DbName));
+            var model = dbInstance.Init();
             MenuBind(true, model);
 
             #endregion

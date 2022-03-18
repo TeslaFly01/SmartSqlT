@@ -5,6 +5,7 @@ using System.Text;
 using System.Data;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
+using DbType = SqlSugar.DbType;
 
 namespace SmartCode.Framework.Exporter
 {
@@ -18,18 +19,19 @@ namespace SmartCode.Framework.Exporter
 
         }
         #region IExporter Members
-
-        public override Model Export(string connectionString)
+        /// <summary>
+        /// 初始化获取对象列表
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
+        public override Model Init()
         {
-            if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
-
             var model = new Model { Database = "SqlServer2008" };
             try
             {
-                model.Tables = this.GetTables(connectionString);
-                model.Views = this.GetViews(connectionString);
-                model.Procedures = this.GetProcedures(connectionString);
+                model.Tables = this.GetTables();
+                model.Views = this.GetViews();
+                model.Procedures = this.GetProcedures();
                 return model;
             }
             catch (Exception ex)
@@ -41,11 +43,14 @@ namespace SmartCode.Framework.Exporter
         #endregion
 
         #region Private Members
-
-        public override List<DataBase> GetDatabases(string connectionString)
+        /// <summary>
+        /// 获取数据库列表
+        /// </summary>
+        /// <returns></returns>
+        public override List<DataBase> GetDatabases()
         {
             var sqlCmd = "SELECT name FROM sysdatabases ORDER BY name ASC";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
             var list = new List<DataBase>();
             while (dr.Read())
             {
@@ -60,10 +65,10 @@ namespace SmartCode.Framework.Exporter
             return list;
         }
 
-        private Tables GetTables(string connectionString)
+        private Tables GetTables()
         {
+            #region MyRegion
             Tables tables = new Tables(10);
-
             string sqlCmd = @"SELECT sy.[name],
                                      [object_id],
                                      CASE
@@ -80,7 +85,7 @@ namespace SmartCode.Framework.Exporter
                               WHERE sy.type = 'U'
 							  AND sy.name <> 'sysdiagrams'
                               ORDER BY sy.name ASC";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 try
@@ -113,15 +118,15 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-
-            return tables;
+            return tables; 
+            #endregion
         }
 
-        private Views GetViews(string connectionString)
+        private Views GetViews()
         {
-            Views views = new Views(10);
-
-            string sqlCmd = @"SELECT   a.name,
+            #region MyRegion
+            var views = new Views(10);
+            var sqlCmd = @"SELECT   a.name,
                                        a.object_id,
                                        b.descript,
                                        a.create_date,
@@ -162,7 +167,7 @@ namespace SmartCode.Framework.Exporter
                                 ) b ON a.object_id = b.object_id
                                 LEFT JOIN sys.schemas s ON s.schema_id = a.schema_id
                                 ORDER BY a.name;";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 try
@@ -191,19 +196,19 @@ namespace SmartCode.Framework.Exporter
                 }
                 catch (Exception ex)
                 {
-
                     throw;
                 }
             }
             dr.Close();
-            return views;
+            return views; 
+            #endregion
         }
 
-        private Procedures GetProcedures(string connectionString)
+        private Procedures GetProcedures()
         {
-            Procedures procDic = new Procedures();
-
-            string sqlCmd = @"SELECT   a.name,
+            #region MyRegion
+            var procDic = new Procedures();
+            var sqlCmd = @"SELECT   a.name,
                                        a.object_id,
                                        b.descript,
                                        a.create_date,
@@ -248,7 +253,7 @@ namespace SmartCode.Framework.Exporter
                                       AND m.execute_as_principal_id IS NULL
                                       AND a.name <> 'sp_upgraddiagrams'
                                 ORDER BY a.name;";
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 string name = dr.GetString(0);
@@ -275,15 +280,14 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return procDic;
+            return procDic; 
+            #endregion
         }
 
-        public override Columns GetColumns(string objectId, string connectionString)
+        public override Columns GetColumnInfoById(string objectId)
         {
-            var sql = $@"SELECT  
-                                --表名=case when a.colorder=1 then d.name else '' end, 
-                                --表说明=case when a.colorder=1 then isnull(f.value,'') else '' end,
-                                d.id as object_id,
+            #region MyRegion
+            var sql = $@"SELECT d.id as object_id,
                                 d.name as object_name,
                                 a.colorder AS column_id, 
                                 a.name AS column_name, 
@@ -307,14 +311,15 @@ namespace SmartCode.Framework.Exporter
                                 left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
                                 where d.id={ Convert.ToInt32(objectId)}
                                 order by a.id,a.colorder";
-
-            return this.GetColumnsExt(connectionString, sql);
+            return this.GetColumnsExt(DbConnectString, sql); 
+            #endregion
         }
 
         private Columns GetColumnsExt(string connectionString, string sqlCmd)
         {
-            Columns columns = new Columns(500);
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
+            #region MyRegion
+            var columns = new Columns(500);
+            var dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
             while (dr.Read())
             {
                 int objectId = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
@@ -366,106 +371,15 @@ namespace SmartCode.Framework.Exporter
                 }
             }
             dr.Close();
-            return columns;
+            return columns; 
+            #endregion
         }
 
-        public override string GetScripts(string objectId, string connectionString)
+        public override string GetScriptInfoById(string objectId)
         {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append("SELECT a.name,a.[type],b.[definition] ");
-            sqlBuilder.Append("FROM sys.all_objects a, sys.sql_modules b ");
-            sqlBuilder.AppendFormat("WHERE a.is_ms_shipped = 0 AND a.object_id = b.object_id AND a.object_id={0} ORDER BY a.[name] ASC ", Convert.ToInt32(objectId));
-
-            return this.GetScriptsExt(connectionString, sqlBuilder.ToString());
-        }
-
-        public Columns GetPrimaryKeys(int objectId, string connectionString, Columns columns)
-        {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append("select syscolumns.name from syscolumns,sysobjects,sysindexes,sysindexkeys ");
-            sqlBuilder.AppendFormat("where syscolumns.id ={0} ", objectId);
-            sqlBuilder.Append("and sysobjects.xtype = 'PK' and sysobjects.parent_obj = syscolumns.id ");
-            sqlBuilder.Append("and sysindexes.id = syscolumns.id and sysobjects.name = sysindexes.name and ");
-            sqlBuilder.Append("sysindexkeys.id = syscolumns.id and sysindexkeys.indid = sysindexes.indid and syscolumns.colid = sysindexkeys.colid");
-
-            Columns primaryKeys = new Columns(4);
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlBuilder.ToString());
-            while (dr.Read())
-            {
-                string name = dr.IsDBNull(0) ? string.Empty : dr.GetString(0);
-                if (columns.ContainsKey(name)) primaryKeys.Add(name, columns[name]);
-            }
-            dr.Close();
-
-            return primaryKeys;
-        }
-
-        private string GetScriptsExt(string connectionString, string sqlCmd)
-        {
-            string script = string.Empty;
-            SqlDataReader dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
-            {
-                string displayName = dr.IsDBNull(2) ? string.Empty : dr.GetString(2);
-                script = displayName;
-            }
-            dr.Close();
-
-            return script;
-        }
-
-        public override DataSet GetDataSet(string connectionString, string tbName, string strWhere)
-        {
-            StringBuilder sqlBuilder = new StringBuilder();
-            sqlBuilder.Append($"select top 200 * from {tbName} where 1=1 ");
-            if (!string.IsNullOrEmpty(strWhere))
-            {
-                sqlBuilder.Append($" and {strWhere}");
-            }
-            var dataSet = SqlHelper.ExecuteDataset(connectionString, CommandType.Text, sqlBuilder.ToString());
-            return dataSet;
-        }
-
-        /// <summary>
-        /// 修改字段备注说明
-        /// </summary>
-        /// <param name="connection">连接</param>
-        /// <param name="objectName">对象名</param>
-        /// <param name="schema">架构名</param>
-        /// <param name="comment">描述</param>
-        /// <param name="columnName">列名</param>
-        /// <returns></returns>
-        public override bool UpdateComment(string connection, string type, string objectName, string schema, string comment, string columnName)
-        {
-            var sb = new StringBuilder();
-            sb.Append(
-                $"EXEC sp_updateextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'{schema}',@level1type=N'{type}', @level1name=N'{objectName}'");
-            if (!string.IsNullOrEmpty(columnName))
-            {
-                sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
-            }
-            try
-            {
-                SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
-            }
-            catch (Exception ex)
-            {
-                try
-                {
-                    sb.Clear();
-                    sb.Append($"EXEC sp_addextendedproperty @name= N'MS_Description',@value= N'{comment}',@level0type= N'SCHEMA', @level0name=N'{schema}',@level1type=N'{type}', @level1name=N'{objectName}'");
-                    if (!string.IsNullOrEmpty(columnName))
-                    {
-                        sb.Append($",@level2type=N'column',@level2name= N'{columnName}'");
-                    }
-                    SqlHelper.ExecuteNonQuery(connection, CommandType.Text, sb.ToString());
-                }
-                catch (Exception ex1)
-                {
-                    return false;
-                }
-            }
-            return true;
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            var scriptInfo = dbMaintenance.GetScriptInfo(objectId);
+            return scriptInfo.Definition;
         }
         #endregion
     }

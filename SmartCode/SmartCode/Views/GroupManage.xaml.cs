@@ -94,7 +94,7 @@ namespace SmartCode.Views
                     DataList = datalist;
                 });
                 var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
-                var list = exporter.GetDatabases(dbConnectionString);
+                var list = exporter.GetDatabases();
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     var DBase = list;

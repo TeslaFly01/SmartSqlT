@@ -6,12 +6,24 @@ using System.Threading.Tasks;
 
 namespace SmartCode.Models
 {
+    /// <summary>
+    /// 导出文档类型
+    /// </summary>
     public enum ExportEnum
     {
+        /// <summary>
+        /// 全部导出
+        /// </summary>
         All = 0,
+        /// <summary>
+        /// 部分导出
+        /// </summary>
         Partial = 1
     }
 
+    /// <summary>
+    /// 显示类型
+    /// </summary>
     public enum ShowType
     {
         /// <summary>
@@ -24,6 +36,9 @@ namespace SmartCode.Models
         Img = 1,
     }
 
+    /// <summary>
+    /// 左侧菜单类型
+    /// </summary>
     public enum LeftMenuType
     {
         /// <summary>
@@ -40,4 +55,22 @@ namespace SmartCode.Models
         Fav = 3
     }
 
+    /// <summary>
+    /// 脚本类型
+    /// </summary>
+    public enum ScriptType1
+    {
+        /// <summary>
+        /// 表
+        /// </summary>
+        Table = 1,
+        /// <summary>
+        /// 视图
+        /// </summary>
+        View = 2,
+        /// <summary>
+        /// 存储过程
+        /// </summary>
+        Proc = 3
+    }
 }

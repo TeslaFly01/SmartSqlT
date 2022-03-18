@@ -136,7 +136,7 @@ namespace SmartCode.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var tableColumns = dbInstance.GetColumns(selectedObjct.ObejcetId, dbConnectionString);
+                    var tableColumns = dbInstance.GetColumnInfoById(selectedObjct.ObejcetId);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -151,7 +151,7 @@ namespace SmartCode.UserControl
                     }));
                     if (selectedObjct.Type == ObjType.View)
                     {
-                        var script = dbInstance.GetScripts(selectedObjct.ObejcetId, dbConnectionString);
+                        var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId);
                         this.Dispatcher.BeginInvoke(new Action(() =>
                         {
                             TextSqlEditor.SelectedText = string.Empty;
@@ -176,7 +176,7 @@ namespace SmartCode.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
                 Task.Run(() =>
                 {
-                    var script = dbInstance.GetScripts(selectedObjct.ObejcetId, dbConnectionString);
+                    var script = dbInstance.GetScriptInfoById(selectedObjct.ObejcetId);
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
                         TextSqlEditor.SelectedText = string.Empty;
@@ -511,25 +511,25 @@ namespace SmartCode.UserControl
         /// <param name="strWhere"></param>
         private void BindDataSet(IExporter exporter, PropertyNodeItem objects, string strWhere)
         {
-            LoadingLineTableData.Visibility = Visibility.Visible;
-            NoDataTextExt.Visibility = Visibility.Collapsed;
-            var connectionString = SelectedConnection.DbMasterConnectString;
-            Task.Run(() =>
-            {
-                DataSet dataSet = exporter.GetDataSet(connectionString, objects.DisplayName, strWhere);
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    TableDataGrid.ItemsSource = null;
-                    //编写获取数据并显示在界面的代码
-                    var dataView = dataSet.Tables[0].DefaultView;
-                    TableDataGrid.ItemsSource = dataView;
-                    LoadingLineTableData.Visibility = Visibility.Hidden;
-                    if (dataView.Count < 1)
-                    {
-                        NoDataTextExt.Visibility = Visibility.Visible;
-                    }
-                }));
-            });
+            //LoadingLineTableData.Visibility = Visibility.Visible;
+            //NoDataTextExt.Visibility = Visibility.Collapsed;
+            //var connectionString = SelectedConnection.DbMasterConnectString;
+            //Task.Run(() =>
+            //{
+            //    DataSet dataSet = exporter.GetDataSet(connectionString, objects.DisplayName, strWhere);
+            //    this.Dispatcher.BeginInvoke(new Action(() =>
+            //    {
+            //        TableDataGrid.ItemsSource = null;
+            //        //编写获取数据并显示在界面的代码
+            //        var dataView = dataSet.Tables[0].DefaultView;
+            //        TableDataGrid.ItemsSource = dataView;
+            //        LoadingLineTableData.Visibility = Visibility.Hidden;
+            //        if (dataView.Count < 1)
+            //        {
+            //            NoDataTextExt.Visibility = Visibility.Visible;
+            //        }
+            //    }));
+            //});
         }
 
         /// <summary>

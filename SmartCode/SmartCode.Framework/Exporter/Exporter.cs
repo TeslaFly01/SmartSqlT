@@ -12,22 +12,33 @@ namespace SmartCode.Framework.Exporter
     {
         public Exporter(string connectionString)
         {
-            DBConnectString = connectionString;
+            DbConnectString = connectionString;
         }
         /// <summary>
         /// 数据库连接
         /// </summary>
-        public string DBConnectString { get; private set; }
-
-        public abstract Model Export(string connectionString);
-        public abstract List<DataBase> GetDatabases(string connectionString);
-
-        public abstract Columns GetColumns(string objectId, string connectionString);
-
-        public abstract string GetScripts(string objectId, string connectionString);
-
-        public abstract DataSet GetDataSet(string connectionString, string tbName, string strWhere);
-
-        public abstract bool UpdateComment(string connection, string type, string tableName, string schema, string columnName, string comment);
+        public string DbConnectString { get; private set; }
+        /// <summary>
+        /// 连接初始化获取对象列表
+        /// </summary>
+        /// <returns></returns>
+        public abstract Model Init();
+        /// <summary>
+        /// 获取数据库列表
+        /// </summary>
+        /// <returns></returns>
+        public abstract List<DataBase> GetDatabases();
+        /// <summary>
+        /// 获取对象列信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        public abstract Columns GetColumnInfoById(string objectId);
+        /// <summary>
+        /// 获取脚本信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
+        public abstract string GetScriptInfoById(string objectId);
     }
 }

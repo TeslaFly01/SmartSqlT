@@ -183,7 +183,7 @@ namespace SmartCode.Views
                     if (isConnect)
                     {
                         var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-                        exporter.GetDatabases(connectionString);
+                        exporter.GetDatabases();
                     }
                     Dispatcher.Invoke(() =>
                     {
@@ -457,7 +457,7 @@ namespace SmartCode.Views
                 try
                 {
                     var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-                    var list = exporter.GetDatabases(connectionString);
+                    var list = exporter.GetDatabases();
                     Dispatcher.Invoke(() =>
                     {
                         if (TabSqlServer.IsSelected)
