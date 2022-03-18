@@ -3,7 +3,7 @@
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
-<h3 align="center">最方便、快捷的数据库文档工具</h3>
+<h3 align="center">最简单、最实用的数据库文档生成工具</h3>
 </div>
 
 <p align="center">
@@ -14,18 +14,18 @@
 
 ## 🚩 项目介绍
 
-SmartSQL 是一款数据库文档生成工具！
+DBCHM 是一款数据库文档生成工具！
 该工具从最初支持chm文档格式开始，通过开源，集思广益，不断改进，又陆续支持word、excel、pdf、html、xml、markdown等文档格式的导出。
 
 ### 🎯 本项目力求做最简单、最实用的数据库文档(字典)生成工具！
 
 ## 🍀支持的数据库
-- ✅ SqlServer
-- ✅ MySQL
-- - [x] Oracle
-- - [x] PostgreSQL
-- - [x] DB2
-- - [x] SQLite
+- [x] SqlServer
+- [x] MySQL
+- [x] Oracle
+- [x] PostgreSQL
+- [x] DB2
+- [x] SQLite
 
 ## 🥝主要功能 
 
@@ -37,13 +37,13 @@ SmartSQL 是一款数据库文档生成工具！
 🔹注：Oracle在v1.8.0.3-beta版本及以后暂不会查询显示自增数据。
 
 ### 支持哪些文档格式的导出？
-- ✅ chm
-- ✅ word
-- ✅ excel
-- ✅ pdf
-- ✅ html
-- ✅ xml
-- ✅ markdown
+- [x] chm
+- [x] word
+- [x] excel
+- [x] pdf
+- [x] html
+- [x] xml
+- [x] markdown
 ### 更新表列的注释，有哪些方式？
 - 通过 工具-批注上载，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`powerdesigner`设计数据库时产生。
@@ -54,10 +54,10 @@ SmartSQL 是一款数据库文档生成工具！
 ## 🎉效果展示
 
 ### 1 数据库连接配置示例
-![新建数据库连接](SmartCodeTool/Dingtalk_20220318161509.jpg)
+![数据库连接配置](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM000.png)
 
 ### 2 数据库连接管理
-![数据库对象分组管理](SmartCodeTool/Dingtalk_20220318162021.jpg)
+![数据库连接管理](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM001.png)
 
 ### 3 表名模糊匹配
 ![表名模糊搜索](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM002.png)
