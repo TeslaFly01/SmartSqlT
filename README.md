@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="DBCHM" src="https://gitee.com/izhaofu/SmartSQL/raw/master/SmartCode/SmartCode/Resources/Img/icon.png">
+   <img alt="DBCHM" src="SmartCode/SmartCode/Resources/Img/icon.png">
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
@@ -46,9 +46,9 @@ SmartSQL 是一款数据库文档工具！
 - ✅ markdown
 ### 更新表列的注释，有哪些方式？
 - 通过 工具-批注上载，选择文件导入进行更新批注(注释)：
-    - 	[x] pdm 由`powerdesigner`设计数据库时产生。
-    - 	[x] xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
-    - 	[x] xml 由`dbchm`的 XML导出 而产生。
+    - 	✅ pdm 由`powerdesigner`设计数据库时产生。
+    - 	✅ xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
+    - 	✅ xml 由`dbchm`的 XML导出 而产生。
 - 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
 
 ## 🎉 四、截图展示
@@ -69,8 +69,6 @@ SmartSQL 是一款数据库文档工具！
 ![表结构信息](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
 
 ### 7 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
-
-查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
 ## 📘 五、更新日志
 
@@ -167,6 +165,3 @@ PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越
 	如遇其他问题，可以通过Issues或群里反馈，记录问题，请写清楚遇到问题的原因、软件版本、系统环境、数据库版本、甚至数据库结构、复显步骤以及期望达到的效果；建议配上多张全屏大图，请勿使用局部截屏小图！方便我们这边可以迅速定位，就事论事，解决问题。
 	
 	如果你有更好的解决方法，欢迎提供改善建议或直接提pr，我们一起完善该工具！
-
-## 🔗 最后、交流
-- QQ交流群：[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) ，推荐点击按钮入群，当然如果无法成功操作，请自行搜索群号132941648进行添加 ），其它疑问或idea欢迎入群交流！
