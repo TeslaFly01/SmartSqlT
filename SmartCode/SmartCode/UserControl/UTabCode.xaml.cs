@@ -16,6 +16,7 @@ using HandyControl.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
+using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
 using SmartCode.Helper;
 using SmartCode.Models;
@@ -32,8 +33,8 @@ namespace SmartCode.UserControl
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(PropertyNodeItem), typeof(UTabCode), new PropertyMetadata(default(PropertyNodeItem)));
 
-        public static readonly DependencyProperty ConnStringProperty = DependencyProperty.Register(
-            "ConnString", typeof(string), typeof(UTabCode), new PropertyMetadata(default(string)));
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UTabCode), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
             "SelectedDataBase", typeof(string), typeof(UTabCode), new PropertyMetadata(default(string)));
@@ -46,10 +47,13 @@ namespace SmartCode.UserControl
             get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
-        public string ConnString
+        /// <summary>
+        /// 当前数据连接
+        /// </summary>
+        public ConnectConfigs SelectedConnection
         {
-            get => (string)GetValue(ConnStringProperty);
-            set => SetValue(ConnStringProperty, value);
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
         }
         public string SelectedDataBase
         {
@@ -91,7 +95,7 @@ namespace SmartCode.UserControl
 
             #region 1、生成新建表脚本
 
-            var instance = ExporterFactory.CreateInstance(DbType.SqlServer);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
             var createTableSql = instance.CreateTableSql(objE.DisplayName, list);
             TxtCreateSql.SqlText = createTableSql;
             #endregion

@@ -45,9 +45,6 @@ namespace SmartCode.UserControl
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(MainObjects), new PropertyMetadata(default(ConnectConfigs)));
 
-        public static readonly DependencyProperty ColunmDataProperty = DependencyProperty.Register(
-            "ColunmData", typeof(List<Column>), typeof(MainObjects), new PropertyMetadata(default(List<Column>)));
-
         public static readonly DependencyProperty ObjectsViewDataProperty = DependencyProperty.Register(
             "ObjectsViewData", typeof(List<PropertyNodeItem>), typeof(MainObjects), new PropertyMetadata(default(List<PropertyNodeItem>)));
 

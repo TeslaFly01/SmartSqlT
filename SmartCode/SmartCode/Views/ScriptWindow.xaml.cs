@@ -65,18 +65,18 @@ namespace SmartCode.Views
 
         private void ScriptWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
-            if (TabCreateSql.IsSelected)
-            {
-                var createTableSql = instance.CreateTableSql(SelectedObject.DisplayName, SelectedColumns);
-                TxtCreateSql.SqlText = createTableSql;
-            }
             var objectName = SelectedObject.DisplayName;
             var colList = SelectedColumns;
-            Task.Run(() =>
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
+            if (TabSelectSql.IsSelected)
             {
                 //查询sql
                 var selSql = instance.SelectSql(objectName, colList);
+                TxtSelectSql.SqlText = selSql;
+            }
+            Task.Run(() =>
+            {
+                var ddlSql = instance.CreateTableSql(objectName, colList);
                 //插入sql
                 var insSql = instance.InsertSql(objectName, colList);
                 //更新sql
@@ -85,7 +85,7 @@ namespace SmartCode.Views
                 var delSql = instance.DeleteSql(objectName, colList);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    TxtSelectSql.SqlText = selSql;
+                    TxtCreateSql.SqlText = ddlSql;
                     TxtInsertSql.SqlText = insSql;
                     TxtUpdateSql.SqlText = updSql;
                     TxtDeleteSql.SqlText = delSql;

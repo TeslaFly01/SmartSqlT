@@ -229,7 +229,7 @@ namespace SmartCode.UserControl
             if (selectedItem == TabCode)
             {
                 UTabCode.SelectedDataBase = SelectedDataBase.DbName;
-                UTabCode.ConnString = SelectedConnection.DbMasterConnectString;
+                UTabCode.SelectedConnection = SelectedConnection;
                 UTabCode.SelectedObject = SelectedObject;
                 UTabCode.SelectedTableColunms = SourceColunmData;
             }
