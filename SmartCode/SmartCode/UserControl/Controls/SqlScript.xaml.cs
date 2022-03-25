@@ -38,7 +38,7 @@ namespace SmartCode.UserControl.Controls
         public static readonly DependencyProperty SqlTextProperty = DependencyProperty.Register(
             "SqlText", typeof(string), typeof(SqlScript), new PropertyMetadata(default(string)));
         /// <summary>
-        /// 提示文字
+        /// Sql文本
         /// </summary>
         public string SqlText
         {
@@ -47,6 +47,21 @@ namespace SmartCode.UserControl.Controls
             {
                 SetValue(SqlTextProperty, value);
                 OnPropertyChanged(nameof(SqlText));
+            }
+        }
+
+        public static readonly DependencyProperty HasCloseProperty = DependencyProperty.Register(
+            "HasClose", typeof(bool), typeof(SqlScript), new PropertyMetadata(default(bool)));
+        /// <summary>
+        /// 是否有关闭按钮
+        /// </summary>
+        public bool HasClose
+        {
+            get => (bool)GetValue(HasCloseProperty);
+            set
+            {
+                SetValue(HasCloseProperty, value);
+                OnPropertyChanged(nameof(HasClose));
             }
         }
         public SqlScript()
@@ -59,6 +74,10 @@ namespace SmartCode.UserControl.Controls
 
         private void SqlScript_OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (HasClose)
+            {
+                BtnCopyScript.Margin = new Thickness(0, 0, 95, 5);
+            }
             TextEditor.Text = SqlText.SqlFormat();
         }
 

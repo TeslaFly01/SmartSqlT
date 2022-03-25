@@ -33,7 +33,7 @@
             x:Name="BtnCopyScript"
             Width="80"
             Height="28"
-            Margin="0,0,95,5"
+            Margin="0,0,5,5"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:controls="clr-namespace:SmartCode.UserControl.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
@@ -23,36 +24,14 @@
                 <Grid>
                     <TabControl
                         Name="TabSql"
-                        Margin="5"
+                        Margin="5,5,0,0"
                         Style="{StaticResource TabControlBaseStyle}"
                         TabStripPlacement="Left">
                         <TabItem
-                            Name="TabTableSql"
+                            Name="TabCreateSql"
                             Header="CREATE"
                             IsSelected="True">
-                            <Grid>
-                                <!--
-                                    Background="#272822"
-                                    FontSize="12"
-                                    Foreground="White"
-                                -->
-                                <avalonedit:TextEditor
-                                    x:Name="TextTableEditor"
-                                    Margin="0,0,0,0"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtCreateSql" />
                         </TabItem>
                         <TabItem
                             Name="TabColumnSql"
@@ -78,84 +57,16 @@
                             </Grid>
                         </TabItem>
                         <TabItem Name="TabSelectSql" Header="SELECT">
-                            <Grid>
-                                <avalonedit:TextEditor
-                                    x:Name="TextSelectEditor"
-                                    Margin="0,0,0,45"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtSelectSql" />
                         </TabItem>
                         <TabItem Name="TabInsertSql" Header="INSERT">
-                            <Grid>
-                                <avalonedit:TextEditor
-                                    x:Name="TextInsertEditor"
-                                    Margin="0,0,0,45"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtInsertSql" />
                         </TabItem>
                         <TabItem Name="TabUpdateSql" Header="UPDATE">
-                            <Grid>
-                                <avalonedit:TextEditor
-                                    x:Name="TextUpdateEditor"
-                                    Margin="0,0,0,45"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtUpdateSql" />
                         </TabItem>
                         <TabItem Name="TabDeleteSql" Header="DELETE">
-                            <Grid>
-                                <avalonedit:TextEditor
-                                    x:Name="TextDeleteEditor"
-                                    Margin="0,0,0,45"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtDeleteSql" />
                         </TabItem>
                     </TabControl>
                 </Grid>

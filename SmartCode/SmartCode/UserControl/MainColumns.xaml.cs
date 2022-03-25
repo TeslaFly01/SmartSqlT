@@ -425,8 +425,6 @@ namespace SmartCode.UserControl
                     return;
                 }
                 selectRows = SourceColunmData;
-                //Growl.Warning(new GrowlInfo() { Message = "请选中需要生成脚本的字段.", ShowDateTime = false, WaitTime = 1 });
-                //return;
             }
             var mainWindow = System.Windows.Window.GetWindow(this);
             var scriptW = new ScriptWindow();
