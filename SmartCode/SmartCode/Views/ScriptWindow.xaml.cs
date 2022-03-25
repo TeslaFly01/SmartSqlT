@@ -81,5 +81,10 @@ namespace SmartCode.Views
                 }));
             });
         }
+
+        private void BtnClose_OnClick(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

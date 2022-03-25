@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Annotations;
+using SmartCode.Framework;
 using SmartCode.Framework.Util;
 
 namespace SmartCode.UserControl.Controls

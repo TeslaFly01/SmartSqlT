@@ -15,7 +15,7 @@
     BorderThickness="0"
     Icon="../Resources/Img/doc.ico"
     Loaded="ScriptWindow_OnLoaded"
-    ResizeMode="NoResize"
+    ResizeMode="CanResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -45,13 +45,14 @@
             </TabItem>
         </TabControl>
         <Button
-            x:Name="BtnCopyScript"
+            x:Name="BtnClose"
             Width="80"
             Height="28"
             Margin="0,0,10,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+            Click="BtnClose_OnClick"
             Content="关闭"
             Cursor="Hand" />
     </Grid>

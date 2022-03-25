@@ -36,8 +36,8 @@
             Margin="0,0,95,5"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            Click="BtnCopyScript_OnClick"
             hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+            Click="BtnCopyScript_OnClick"
             Content="复制"
             Cursor="Hand"
             Style="{StaticResource ButtonPrimary}" />

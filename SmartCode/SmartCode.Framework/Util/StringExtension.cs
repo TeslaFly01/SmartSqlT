@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using SmartCode.Helper;
 
 namespace SmartCode.Framework.Util
 {
@@ -50,15 +49,6 @@ namespace SmartCode.Framework.Util
             if (String.IsNullOrEmpty(str) || str.Length == 0)
                 return str;
             return Regex.Replace(str, "[']", "\"");
-        }
-
-        public static string SqlFormat(this string sql)
-        {
-            if (string.IsNullOrWhiteSpace(sql))
-            {
-                return sql;
-            }
-            return new SQLFormatter(sql).Format();
         }
     }
 }
