@@ -430,6 +430,7 @@ namespace SmartCode.UserControl
             }
             var mainWindow = System.Windows.Window.GetWindow(this);
             var scriptW = new ScriptWindow();
+            scriptW.SelectedConnection = SelectedConnection;
             scriptW.SelectedObject = SelectedObject;
             scriptW.SelectedColumns = selectRows;
             scriptW.Owner = mainWindow;

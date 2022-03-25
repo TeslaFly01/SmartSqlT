@@ -27,7 +27,7 @@
             TabStripPlacement="Left">
             <TabItem
                 Name="TabCreateSql"
-                Header="CREATE"
+                Header="DDL"
                 IsSelected="True">
                 <controls:SqlScript x:Name="TxtCreateSql" />
             </TabItem>

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartCode.Framework;
 using SmartCode.Framework.PhysicalDataModel;
+using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
 using SmartCode.Models;
 using SqlSugar;
@@ -25,6 +26,16 @@ namespace SmartCode.Views
     /// </summary>
     public partial class ScriptWindow
     {
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(ScriptWindow), new PropertyMetadata(default(ConnectConfigs)));
+        /// <summary>
+        /// 当前连接
+        /// </summary>
+        public ConnectConfigs SelectedConnection
+        {
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
+        }
 
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(PropertyNodeItem), typeof(ScriptWindow), new PropertyMetadata(default(PropertyNodeItem)));
@@ -54,7 +65,7 @@ namespace SmartCode.Views
 
         private void ScriptWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var instance = ExporterFactory.CreateInstance(DbType.SqlServer);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
             if (TabCreateSql.IsSelected)
             {
                 var createTableSql = instance.CreateTableSql(SelectedObject.DisplayName, SelectedColumns);
