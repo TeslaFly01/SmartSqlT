@@ -14,8 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Annotations;
+using SmartCode.Framework.Util;
 
 namespace SmartCode.UserControl.Controls
 {
@@ -56,7 +58,18 @@ namespace SmartCode.UserControl.Controls
 
         private void SqlScript_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TextEditor.Text = SqlText;
+            TextEditor.Text = SqlText.SqlFormat();
+        }
+
+        /// <summary>
+        /// 复制脚本
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCopyScript_OnClick(object sender, RoutedEventArgs e)
+        {
+            Clipboard.SetDataObject(SqlText.SqlFormat());
+            Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
         }
     }
 }

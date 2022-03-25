@@ -60,7 +60,7 @@ namespace SmartCode.Views
                 var createTableSql = instance.CreateTableSql(SelectedObject.DisplayName, SelectedColumns);
                 TxtCreateSql.SqlText = createTableSql;
             }
-            var objectName = SelectedObject.Name;
+            var objectName = SelectedObject.DisplayName;
             var colList = SelectedColumns;
             Task.Run(() =>
             {
@@ -74,10 +74,10 @@ namespace SmartCode.Views
                 var delSql = instance.DeleteSql(objectName, colList);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    TxtSelectSql.SqlText = selSql.SqlFormat();
-                    TxtInsertSql.SqlText = insSql.SqlFormat();
-                    TxtUpdateSql.SqlText = updSql.SqlFormat();
-                    TxtDeleteSql.SqlText = delSql.SqlFormat();
+                    TxtSelectSql.SqlText = selSql;
+                    TxtInsertSql.SqlText = insSql;
+                    TxtUpdateSql.SqlText = updSql;
+                    TxtDeleteSql.SqlText = delSql;
                 }));
             });
         }

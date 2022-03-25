@@ -14,9 +14,9 @@
     Height="410"
     BorderThickness="0"
     Icon="../Resources/Img/doc.ico"
+    Loaded="ScriptWindow_OnLoaded"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
-    Loaded="ScriptWindow_OnLoaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <Grid>
@@ -44,5 +44,15 @@
                 <controls:SqlScript x:Name="TxtDeleteSql" />
             </TabItem>
         </TabControl>
+        <Button
+            x:Name="BtnCopyScript"
+            Width="80"
+            Height="28"
+            Margin="0,0,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+            Content="关闭"
+            Cursor="Hand" />
     </Grid>
 </hc:Window>

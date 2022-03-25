@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartCode.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
@@ -28,5 +29,17 @@
                 </avalonedit:TextEditorOptions>
             </avalonedit:TextEditor.Options>
         </avalonedit:TextEditor>
+        <Button
+            x:Name="BtnCopyScript"
+            Width="80"
+            Height="28"
+            Margin="0,0,95,5"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            Click="BtnCopyScript_OnClick"
+            hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+            Content="复制"
+            Cursor="Hand"
+            Style="{StaticResource ButtonPrimary}" />
     </Grid>
 </UserControl>
