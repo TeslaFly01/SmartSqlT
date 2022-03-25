@@ -424,41 +424,48 @@ namespace SmartCode.UserControl
                     Growl.WarningGlobal(new GrowlInfo { Message = $"请选择对应的数据表", ShowDateTime = false, WaitTime = 1 });
                     return;
                 }
-                Growl.Warning(new GrowlInfo() { Message = "请选中需要生成脚本的字段.", ShowDateTime = false, WaitTime = 1 });
-                return;
+                selectRows = SourceColunmData;
+                //Growl.Warning(new GrowlInfo() { Message = "请选中需要生成脚本的字段.", ShowDateTime = false, WaitTime = 1 });
+                //return;
             }
-            var sb = new StringBuilder();
-            foreach (var column in selectRows)
-            {
-                sb.Append($"ALTER TABLE dbo.{column.ObjectName} ADD {column.DisplayName} {column.DataType.ToLower()} ");
-                if (SqlServerDbTypeMapHelper.IsMulObj(column.DataType))
-                {
-                    if (column.DataType.Equals("decimal") || column.DataType.Equals("numeric"))
-                    {
-                        sb.Append($"{column.Length} ");
-                    }
-                    else
-                    {
-                        sb.Append($"{column.Length} ");
-                    }
-                }
-                var isNull = column.IsNullable ? "NULL " : "NOT NULL ";
-                sb.Append(isNull);
-                sb.Append(Environment.NewLine);
-                sb.Append("GO");
-                sb.Append(Environment.NewLine);
-                #region 字段注释
-                if (!string.IsNullOrEmpty(column.Comment))
-                {
-                    sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'{column.ObjectName}', @level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
-                    sb.Append(Environment.NewLine);
-                    sb.Append("GO");
-                    sb.Append(Environment.NewLine);
-                }
-                #endregion
-            }
-            Clipboard.SetDataObject(sb.ToString());
-            Growl.Success(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            var scriptW = new ScriptWindow();
+            scriptW.SelectedObject = SelectedObject;
+            scriptW.SelectedColumns = selectRows;
+            scriptW.Owner = mainWindow;
+            scriptW.ShowDialog();
+            //var sb = new StringBuilder();
+            //foreach (var column in selectRows)
+            //{
+            //    sb.Append($"ALTER TABLE dbo.{column.ObjectName} ADD {column.DisplayName} {column.DataType.ToLower()} ");
+            //    if (SqlServerDbTypeMapHelper.IsMulObj(column.DataType))
+            //    {
+            //        if (column.DataType.Equals("decimal") || column.DataType.Equals("numeric"))
+            //        {
+            //            sb.Append($"{column.Length} ");
+            //        }
+            //        else
+            //        {
+            //            sb.Append($"{column.Length} ");
+            //        }
+            //    }
+            //    var isNull = column.IsNullable ? "NULL " : "NOT NULL ";
+            //    sb.Append(isNull);
+            //    sb.Append(Environment.NewLine);
+            //    sb.Append("GO");
+            //    sb.Append(Environment.NewLine);
+            //    #region 字段注释
+            //    if (!string.IsNullOrEmpty(column.Comment))
+            //    {
+            //        sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'{column.ObjectName}', @level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
+            //        sb.Append(Environment.NewLine);
+            //        sb.Append("GO");
+            //        sb.Append(Environment.NewLine);
+            //    }
+            //    #endregion
+            //}
+            //Clipboard.SetDataObject(sb.ToString());
+            //Growl.Success(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
             #endregion
         }
 

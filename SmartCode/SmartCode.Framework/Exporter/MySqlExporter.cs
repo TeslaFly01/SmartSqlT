@@ -214,5 +214,101 @@ namespace SmartCode.Framework.Exporter
         {
             return "";
         }
+
+        /// <summary>
+        /// 查询数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string SelectSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder("SELECT ");
+            columns.ForEach(col =>
+            {
+                strSql.Append($"{col.Name},");
+            });
+            strSql.ToString().TrimEnd(',');
+            strSql.Append($" FROM {tableName}");
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 插入数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string InsertSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder($"INSERT INTO {tableName} (");
+            columns.ForEach(col =>
+            {
+                strSql.Append($"{col.Name},");
+            });
+            strSql.ToString().TrimEnd(',');
+            strSql.Append(") VALUES (");
+            columns.ForEach(col =>
+            {
+                strSql.Append($",");
+            });
+            strSql.Append(")");
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 更新数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string UpdateSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// 删除数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string DeleteSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// 添加列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string AddColumnSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// 修改列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string AlterColumnSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
+
+        /// <summary>
+        /// 删除列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string DropColumnSql(string tableName, List<Column> columns)
+        {
+            return "";
+        }
     }
 }

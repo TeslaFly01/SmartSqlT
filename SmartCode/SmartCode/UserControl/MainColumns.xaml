@@ -125,7 +125,7 @@
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
                                     Click="BtnCopyColumnScript_OnClick"
-                                    Content="字段脚本"
+                                    Content="生成SQL"
                                     Style="{StaticResource ButtonPrimary}" />
                                 <Button
                                     x:Name="BtnCreateEntity"

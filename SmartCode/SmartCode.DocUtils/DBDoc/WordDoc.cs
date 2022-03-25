@@ -57,7 +57,7 @@ namespace SmartCode.DocUtils.DBDoc
                 Aspose.Words.ParagraphAlignment.Right;
 
             Aspose.Words.DocumentBuilder builder = new Aspose.Words.DocumentBuilder(doc);
-
+            
             // TODO 创建文档标题书签
             CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level1, 25,
                 asposeBookmark_prefix + "0", "数据库字典文档");
@@ -70,19 +70,19 @@ namespace SmartCode.DocUtils.DBDoc
             builder.InsertBreak(Aspose.Words.BreakType.ParagraphBreak);
 
             // TODO 数据库字典文档修订日志表
-            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 16,
+            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 15,
                 asposeBookmarkLog, AppConst.LOG_CHAPTER_NAME);
             CreateLogTable(builder);
             builder.InsertBreak(Aspose.Words.BreakType.PageBreak);
 
             // TODO 创建数据库字典文档数据库概况一览表
-            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 16,
+            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Center, Aspose.Words.OutlineLevel.Level2, 15,
                 asposeBookmarkOverview, AppConst.TABLE_CHAPTER_NAME);
             CreateOverviewTable(builder, tables);
             builder.InsertBreak(Aspose.Words.BreakType.PageBreak);
 
             // TODO 创建书签
-            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level2, 16,
+            CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level2, 15,
                 asposeBookmark_prefix + 0, AppConst.TABLE_STRUCTURE_CHAPTER_NAME);
 
             int i = 0; // 计数器
@@ -92,7 +92,7 @@ namespace SmartCode.DocUtils.DBDoc
                 string bookmarkName = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
 
                 // TODO 创建书签
-                CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level3, 16,
+                CreateBookmark(builder, Aspose.Words.ParagraphAlignment.Left, Aspose.Words.OutlineLevel.Level3, 13,
                     asposeBookmark_prefix + i, table.TableOrder + "、" + bookmarkName);
 
                 // TODO 遍历数据库表字段集合
@@ -111,12 +111,12 @@ namespace SmartCode.DocUtils.DBDoc
                 asposeTable.PreferredWidth = PreferredWidth.FromPercent(120);
                 asposeTable.AllowAutoFit = false;
                 // Set height and define the height rule for the header row.
-                builder.RowFormat.Height = 40.0;
+                builder.RowFormat.Height = 30.0;
                 builder.RowFormat.HeightRule = Aspose.Words.HeightRule.AtLeast;
                 // Some special features for the header row.
                 builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.FromArgb(198, 217, 241);
                 builder.ParagraphFormat.Alignment = Aspose.Words.ParagraphAlignment.Center;
-                builder.Font.Size = 14;
+                builder.Font.Size = 12;
                 builder.Font.Name = "Arial";
                 builder.Font.Bold = true;
                 builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(8);
@@ -290,7 +290,7 @@ namespace SmartCode.DocUtils.DBDoc
             builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.FromArgb(198, 217, 241);
             builder.CellFormat.VerticalAlignment = Aspose.Words.Tables.CellVerticalAlignment.Center;
             builder.ParagraphFormat.Alignment = Aspose.Words.ParagraphAlignment.Center;
-            builder.Font.Size = 14;
+            builder.Font.Size = 12;
             builder.Font.Name = "Arial";
             builder.Font.Bold = true;
             builder.CellFormat.Width = 100.0;
@@ -373,10 +373,10 @@ namespace SmartCode.DocUtils.DBDoc
             builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.FromArgb(198, 217, 241);
             builder.CellFormat.VerticalAlignment = Aspose.Words.Tables.CellVerticalAlignment.Center;
             builder.ParagraphFormat.Alignment = Aspose.Words.ParagraphAlignment.Center;
-            builder.Font.Size = 14;
+            builder.Font.Size = 12;
             builder.Font.Name = "Arial";
             builder.Font.Bold = true;
-            builder.CellFormat.Width = 100.0;
+            builder.CellFormat.Width = 20.0;
             builder.Write("序号");
 
             builder.InsertCell();
@@ -394,7 +394,7 @@ namespace SmartCode.DocUtils.DBDoc
                 #region 遍历表格数据行写入
                 // Set features for the other rows and cells.
                 builder.CellFormat.Shading.BackgroundPatternColor = System.Drawing.Color.White;
-                builder.CellFormat.Width = 100.0;
+                builder.CellFormat.Width = 20.0;
                 builder.CellFormat.VerticalAlignment = Aspose.Words.Tables.CellVerticalAlignment.Center;
                 // Reset height and define a different height rule for table body
                 builder.RowFormat.Height = 40.0;
@@ -405,9 +405,11 @@ namespace SmartCode.DocUtils.DBDoc
                 builder.Write(table.TableOrder); // 序号
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(50);
                 builder.Write(table.TableName); // 表名
 
                 builder.InsertCell();
+                builder.CellFormat.PreferredWidth = PreferredWidth.FromPercent(40);
                 builder.Write((!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "")); // 说明
                 #endregion
 

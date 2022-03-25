@@ -29,7 +29,7 @@ namespace SmartCode.Views
     {
         #region DependencyProperty
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(ExportDoc), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(ExportDoc), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前连接
         /// </summary>

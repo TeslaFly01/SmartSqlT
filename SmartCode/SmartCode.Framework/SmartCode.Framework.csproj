@@ -142,6 +142,7 @@
     <Compile Include="Util\Logging\Logger.cs" />
     <Compile Include="Util\PathHelper.cs" />
     <Compile Include="Util\SerializeHelper.cs" />
+    <Compile Include="Util\SQLFormatter.cs" />
     <Compile Include="Util\SqlServerDbTypeMapHelper.cs" />
     <Compile Include="Util\StringExtension.cs" />
   </ItemGroup>

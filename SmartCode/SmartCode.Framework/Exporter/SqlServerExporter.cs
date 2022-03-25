@@ -66,6 +66,10 @@ namespace SmartCode.Framework.Exporter
             return list;
         }
 
+        /// <summary>
+        /// 获取所有表
+        /// </summary>
+        /// <returns></returns>
         private Tables GetTables()
         {
             #region MyRegion
@@ -123,6 +127,10 @@ namespace SmartCode.Framework.Exporter
             #endregion
         }
 
+        /// <summary>
+        /// 获取所有视图
+        /// </summary>
+        /// <returns></returns>
         private Views GetViews()
         {
             #region MyRegion
@@ -205,6 +213,10 @@ namespace SmartCode.Framework.Exporter
             #endregion
         }
 
+        /// <summary>
+        /// 获取所有存储过程
+        /// </summary>
+        /// <returns></returns>
         private Procedures GetProcedures()
         {
             #region MyRegion
@@ -376,6 +388,12 @@ namespace SmartCode.Framework.Exporter
             #endregion
         }
 
+        /// <summary>
+        /// 获取对象定义脚本（视图、存储过程）
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
@@ -420,6 +438,243 @@ namespace SmartCode.Framework.Exporter
             return sb.ToString();
         }
 
+        /// <summary>
+        /// 查询数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string SelectSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder("SELECT ");
+            var tempCol = new StringBuilder();
+            columns.ForEach(col =>
+            {
+                tempCol.Append($"{col.Name},");
+            });
+            var tempSql = tempCol.ToString().TrimEnd(',');
+            strSql.Append($"{tempSql} FROM {tableName}");
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 插入数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string InsertSql(string tableName, List<Column> columns)
+        {
+            var tempCols = columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"INSERT INTO {tableName} (");
+            var tempCol = new StringBuilder();
+            tempCols.ForEach(col =>
+                {
+                    tempCol.Append($"{col.Name},");
+                });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')}) VALUES (");
+            tempCol.Clear();
+            tempCols.ForEach(col =>
+            {
+                if (col.DataType != "int" || col.DataType != "bigint")
+                {
+                    tempCol.Append("''");
+                }
+                tempCol.Append($",");
+            });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')})");
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 更新数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string UpdateSql(string tableName, List<Column> columns)
+        {
+            var tempCols = columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"UPDATE {tableName} SET ");
+            var tempCol = new StringBuilder();
+            tempCols.ForEach(col =>
+            {
+                tempCol.Append($"{col.Name}=");
+                if (col.DataType == "int" || col.DataType == "bigint")
+                {
+                    tempCol.Append("0");
+                }
+                else
+                {
+                    tempCol.Append("''");
+                }
+                tempCol.Append($",");
+            });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')} WHERE ");
+            tempCol.Clear();
+            var j = 0;
+            columns.ForEach(col =>
+            {
+                if (j == 0)
+                {
+                    tempCol.Append($"{col.Name}=");
+                    if (col.DataType == "int" || col.DataType == "bigint")
+                    {
+                        tempCol.Append("0");
+                    }
+                    else
+                    {
+                        tempCol.Append("''");
+                    }
+                }
+                j++;
+            });
+            strSql.Append(tempCol);
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 删除数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string DeleteSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder($"DELETE FROM {tableName} WHERE ");
+            var tempCol = new StringBuilder();
+            var j = 0;
+            columns.ForEach(col =>
+            {
+                if (j == 0)
+                {
+                    tempCol.Append($"{col.Name}=");
+                    if (col.DataType == "int" || col.DataType == "bigint")
+                    {
+                        tempCol.Append("0");
+                    }
+                    else
+                    {
+                        tempCol.Append("''");
+                    }
+                }
+                j++;
+            });
+            strSql.Append(tempCol);
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 添加列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string AddColumnSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder();
+            columns.ForEach(col =>
+            {
+                strSql.Append($"ALTER FROM {tableName} ADD {col.Name} {col.DataType.ToLower()} ");
+                if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
+                {
+                    strSql.Append($"{col.Length} ");
+                }
+                var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
+                strSql.Append(isNull);
+                strSql.Append(Environment.NewLine);
+                strSql.Append("GO");
+                strSql.Append(Environment.NewLine);
+                #region 字段注释
+                if (!string.IsNullOrEmpty(col.Comment))
+                {
+                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
+                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
+                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
+                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
+                    strSql.Append(Environment.NewLine);
+                    strSql.Append("GO");
+                    strSql.Append(Environment.NewLine);
+                }
+                #endregion
+            });
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 修改列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string AlterColumnSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder();
+            columns.ForEach(col =>
+            {
+                strSql.Append($"ALTER FROM {tableName} ADD {col.Name} {col.DataType.ToLower()} ");
+                if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
+                {
+                    strSql.Append($"{col.Length} ");
+                }
+                var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
+                strSql.Append(isNull);
+                strSql.Append(Environment.NewLine);
+                strSql.Append("GO");
+                strSql.Append(Environment.NewLine);
+                #region 字段注释
+                if (!string.IsNullOrEmpty(col.Comment))
+                {
+                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
+                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
+                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
+                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
+                    strSql.Append(Environment.NewLine);
+                    strSql.Append("GO");
+                    strSql.Append(Environment.NewLine);
+                }
+                #endregion
+            });
+            return strSql.ToString();
+        }
+
+        /// <summary>
+        /// 删除列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public override string DropColumnSql(string tableName, List<Column> columns)
+        {
+            var strSql = new StringBuilder();
+            columns.ForEach(col =>
+            {
+                strSql.Append($"ALTER TABLE [表名] DROP COLUMN  ");
+                if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
+                {
+                    strSql.Append($"{col.Length} ");
+                }
+                var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
+                strSql.Append(isNull);
+                strSql.Append(Environment.NewLine);
+                strSql.Append("GO");
+                strSql.Append(Environment.NewLine);
+                #region 字段注释
+                if (!string.IsNullOrEmpty(col.Comment))
+                {
+                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
+                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
+                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
+                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
+                    strSql.Append(Environment.NewLine);
+                    strSql.Append("GO");
+                    strSql.Append(Environment.NewLine);
+                }
+                #endregion
+            });
+            return strSql.ToString();
+            return "ALTER TABLE [表名] DROP COLUMN [字段名]";
+        }
         #endregion
     }
 }

@@ -17,6 +17,7 @@ using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.Util;
+using SmartCode.Helper;
 using SmartCode.Models;
 using SqlSugar;
 using UserControlE = System.Windows.Controls.UserControl;
@@ -74,6 +75,10 @@ namespace SmartCode.UserControl
             TextTableEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             TextColumnsEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+            TextSelectEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+            TextInsertEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+            TextUpdateEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+            TextDeleteEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
         }
 
         private void TabCode_OnLoaded(object sender, RoutedEventArgs e)
@@ -127,6 +132,18 @@ namespace SmartCode.UserControl
             #endregion
 
             sb.Clear();
+            //查询sql
+            var selSql = instance.SelectSql(objE.Name, list);
+            TextSelectEditor.Text = selSql.SqlFormat();
+            //插入sql
+            var insSql = instance.InsertSql(objE.Name, list);
+            TextInsertEditor.Text = insSql.SqlFormat();
+            //更新sql
+            var updSql = instance.UpdateSql(objE.Name, list);
+            TextUpdateEditor.Text = updSql.SqlFormat();
+            //删除sql
+            var delSql = instance.DeleteSql(objE.Name, list);
+            TextDeleteEditor.Text = delSql.SqlFormat();
             var langInstance = LangFactory.CreateInstance(LangType.Csharp);
             var csharpEntityCode = langInstance.BuildEntity(objE.Name, list);
             TextCsharpEditor.Text = csharpEntityCode;

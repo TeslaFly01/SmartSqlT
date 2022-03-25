@@ -49,5 +49,61 @@ namespace SmartCode.Framework.Exporter
         /// <param name="columns"></param>
         /// <returns></returns>
         public abstract string CreateTableSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 查询数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string SelectSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 插入数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string InsertSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 更新数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string UpdateSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 删除数据sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string DeleteSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 添加列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string AddColumnSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 修改列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string AlterColumnSql(string tableName, List<Column> columns);
+
+        /// <summary>
+        /// 删除列sql脚本
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columns"></param>
+        /// <returns></returns>
+        public abstract string DropColumnSql(string tableName, List<Column> columns);
     }
 }
