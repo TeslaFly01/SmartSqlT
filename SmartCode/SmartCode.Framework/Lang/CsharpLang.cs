@@ -9,7 +9,12 @@ namespace SmartCode.Framework.Lang
 {
     public class CsharpLang : Lang
     {
-        public override string BuildEntity(string tableName, List<Column> columns)
+        public CsharpLang(string tableName, List<Column> columns) : base(tableName, columns)
+        {
+
+        }
+
+        public override string BuildEntity()
         {
             var sb = new StringBuilder();
             sb.Append("using System;");
@@ -20,17 +25,17 @@ namespace SmartCode.Framework.Lang
             sb.Append(Environment.NewLine);
             sb.Append("{");
             sb.Append(Environment.NewLine);
-            sb.Append($"\tpublic class {tableName}");
+            sb.Append($"\tpublic class {TableName}");
             sb.Append(Environment.NewLine);
             sb.Append("\t{");
             sb.Append(Environment.NewLine);
-            sb.Append($"\t\tpublic {tableName}()");
+            sb.Append($"\t\tpublic {TableName}()");
             sb.Append(Environment.NewLine);
             sb.Append("\t\t{");
             sb.Append(Environment.NewLine);
             sb.Append("\t\t}");
             sb.Append(Environment.NewLine);
-            foreach (var column in columns)
+            foreach (var column in Columns)
             {
                 sb.Append("\t\t///<summary>");
                 sb.Append(Environment.NewLine);

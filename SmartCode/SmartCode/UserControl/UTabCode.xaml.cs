@@ -90,46 +90,14 @@ namespace SmartCode.UserControl
             var objE = SelectedObject;
 
             var list = SelectedTableColunms;
-            var sb = new StringBuilder();
-
-            #region 1、生成新建表脚本
-
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType,objE.DisplayName,list);
+            
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, objE.DisplayName, list);
+            //建表sql
             var createTableSql = instance.CreateTableSql();
             TxtCreateSql.SqlText = createTableSql;
-            #endregion
-
-            sb.Clear();
-            #region 2、生成新建字段脚本
-            foreach (var column in list)
-            {
-                sb.Append($"ALTER TABLE dbo.{column.ObjectName} ADD {column.DisplayName} {column.DataType.ToLower()} ");
-                if (SqlServerDbTypeMapHelper.IsMulObj(column.DataType))
-                {
-                    sb.Append($"{column.Length} ");
-                }
-                var isNull = column.IsNullable ? "NULL " : "NOT NULL ";
-                sb.Append(isNull);
-                sb.Append(Environment.NewLine);
-                sb.Append("GO");
-                sb.Append(Environment.NewLine);
-                #region 字段注释
-                if (!string.IsNullOrEmpty(column.Comment))
-                {
-                    sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}',");
-                    sb.Append("@level0type=N'SCHEMA',@level0name=N'dbo',");
-                    sb.Append("@level1type=N'TABLE',@level1name=N'{column.ObjectName}',");
-                    sb.Append("@level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
-                    sb.Append(Environment.NewLine);
-                    sb.Append("GO");
-                    sb.Append(Environment.NewLine);
-                }
-                #endregion
-            }
-            TxtAddColumnSql.SqlText = sb.ToString();
-            #endregion
-
-            sb.Clear();
+            //建字段sql
+            var alterAdd = instance.AddColumnSql();
+            TxtAddColumnSql.SqlText = alterAdd;
             //查询sql
             var selSql = instance.SelectSql();
             TxtSelectSql.SqlText = selSql;
@@ -142,8 +110,8 @@ namespace SmartCode.UserControl
             //删除sql
             var delSql = instance.DeleteSql();
             TxtDeleteSql.SqlText = delSql;
-            var langInstance = LangFactory.CreateInstance(LangType.Csharp);
-            var csharpEntityCode = langInstance.BuildEntity(objE.Name, list);
+            var langInstance = LangFactory.CreateInstance(LangType.Csharp, objE.Name, list);
+            var csharpEntityCode = langInstance.BuildEntity();
             TextCsharpEditor.Text = csharpEntityCode;
         }
     }

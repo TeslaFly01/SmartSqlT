@@ -9,7 +9,15 @@ namespace SmartCode.Framework.Lang
 {
     public abstract class Lang
     {
+        public string TableName { get; set; }
+        public List<Column> Columns { get; set; }
 
-        public abstract string BuildEntity(string tableName, List<Column> columns);
+        public Lang(string tableName, List<Column> columns)
+        {
+            TableName = tableName;
+            Columns = columns;
+        }
+
+        public abstract string BuildEntity();
     }
 }

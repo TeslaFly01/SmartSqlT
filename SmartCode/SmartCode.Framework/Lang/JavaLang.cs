@@ -9,7 +9,12 @@ namespace SmartCode.Framework.Lang
 {
     public class JavaLang : Lang
     {
-        public override string BuildEntity(string tableName, List<Column> columns)
+        public JavaLang(string tableName, List<Column> columns) : base(tableName, columns)
+        {
+
+        }
+
+        public override string BuildEntity()
         {
             return "";
         }
