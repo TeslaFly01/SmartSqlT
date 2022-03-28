@@ -580,7 +580,7 @@ namespace SmartCode.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER FROM {TableName} ADD {col.Name} {col.DataType.ToLower()} ");
+                strSql.Append($"ALTER TABLE {TableName} ADD {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
                     strSql.Append($"{col.Length} ");
@@ -593,13 +593,14 @@ namespace SmartCode.Framework.Exporter
                 #region 字段注释
                 if (!string.IsNullOrEmpty(col.Comment))
                 {
-                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
-                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
-                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
-                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
-                    strSql.Append(Environment.NewLine);
-                    strSql.Append("GO");
-                    strSql.Append(Environment.NewLine);
+                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name = N'MS_Description',
+                                @value = '{col.Comment}',     
+                                @level0type = 'SCHEMA',  
+                                @level0name = 'dbo',
+                                @level1type = 'TABLE',  
+                                @level1name = '{col.ObjectName}',
+                                @level2type = 'COLUMN',  
+                                @level2name = '{col.DisplayName}' ");
                 }
                 #endregion
             });
@@ -617,7 +618,7 @@ namespace SmartCode.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER FROM {TableName} ADD {col.Name} {col.DataType.ToLower()} ");
+                strSql.Append($"ALTER TABLE {TableName} ALTER {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
                     strSql.Append($"{col.Length} ");
@@ -630,13 +631,14 @@ namespace SmartCode.Framework.Exporter
                 #region 字段注释
                 if (!string.IsNullOrEmpty(col.Comment))
                 {
-                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
-                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
-                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
-                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
-                    strSql.Append(Environment.NewLine);
-                    strSql.Append("GO");
-                    strSql.Append(Environment.NewLine);
+                    strSql.Append($@"EXEC sys.sp_updateextendedproperty @name = N'MS_Description',
+                    @value = '{col.Comment}',
+                    @level0type = 'SCHEMA',
+                    @level0name = 'dbo',
+                    @level1type = 'TABLE',
+                    @level1name = '{col.ObjectName}',
+                    @level2type = 'COLUMN',
+                    @level2name = {col.DisplayName}");
                 }
                 #endregion
             });
@@ -654,31 +656,21 @@ namespace SmartCode.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER TABLE [表名] DROP COLUMN  ");
-                if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
-                {
-                    strSql.Append($"{col.Length} ");
-                }
-                var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
-                strSql.Append(isNull);
-                strSql.Append(Environment.NewLine);
-                strSql.Append("GO");
-                strSql.Append(Environment.NewLine);
+                strSql.Append($"ALTER TABLE {TableName} DROP COLUMN {col.DisplayName}");
                 #region 字段注释
                 if (!string.IsNullOrEmpty(col.Comment))
                 {
-                    strSql.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}',");
-                    strSql.Append($"@level0type=N'SCHEMA',@level0name=N'dbo',");
-                    strSql.Append($"@level1type=N'TABLE',@level1name=N'{col.ObjectName}',");
-                    strSql.Append($"@level2type=N'COLUMN',@level2name=N'{col.DisplayName}'");
-                    strSql.Append(Environment.NewLine);
-                    strSql.Append("GO");
-                    strSql.Append(Environment.NewLine);
+                    strSql.Append($@"EXEC sys.sp_dropextendedproperty @name = N'MS_Description',      
+                                 @level0type = 'SCHEMA',  
+                                 @level0name = 'dbo',
+                                 @level1type = 'TABLE',  
+                                 @level1name = '{col.ObjectName}',
+                                 @level2type = 'COLUMN',  
+                                 @level2name = '{col.DisplayName}' ");
                 }
                 #endregion
             });
             return strSql.ToString();
-            return "ALTER TABLE [表名] DROP COLUMN [字段名]";
         }
         #endregion
     }

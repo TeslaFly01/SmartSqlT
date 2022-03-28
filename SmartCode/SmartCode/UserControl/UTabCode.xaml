@@ -31,24 +31,7 @@
                             Name="TabColumnSql"
                             Header="ADDCOLUMN"
                             Visibility="Collapsed">
-                            <Grid>
-                                <avalonedit:TextEditor
-                                    x:Name="TextColumnsEditor"
-                                    Margin="0,0,0,45"
-                                    Padding="5,0,0,0"
-                                    FontFamily="新宋体"
-                                    FontSize="12"
-                                    ShowLineNumbers="True"
-                                    WordWrap="True">
-                                    <avalonedit:TextEditor.Options>
-                                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                                <system:Int32>10</system:Int32>
-                                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                        </avalonedit:TextEditorOptions>
-                                    </avalonedit:TextEditor.Options>
-                                </avalonedit:TextEditor>
-                            </Grid>
+                            <controls:SqlScript x:Name="TxtAddColumnSql" />
                         </TabItem>
                         <TabItem Name="TabSelectSql" Header="SELECT">
                             <controls:SqlScript x:Name="TxtSelectSql" />

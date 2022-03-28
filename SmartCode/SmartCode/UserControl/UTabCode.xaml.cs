@@ -76,7 +76,6 @@ namespace SmartCode.UserControl
             InitializeComponent();
             DataContext = this;
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
-            TextColumnsEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
         }
 
@@ -127,7 +126,7 @@ namespace SmartCode.UserControl
                 }
                 #endregion
             }
-            TextColumnsEditor.Text = sb.ToString();
+            TxtAddColumnSql.SqlText = sb.ToString();
             #endregion
 
             sb.Clear();
