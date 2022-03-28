@@ -24,15 +24,9 @@
                 <Grid>
                     <TabControl
                         Name="TabSql"
-                        Margin="5,5,0,0"
+                        Margin="5,0,0,0"
                         Style="{StaticResource TabControlBaseStyle}"
                         TabStripPlacement="Left">
-                        <TabItem
-                            Name="TabCreateSql"
-                            Header="CREATE"
-                            IsSelected="True">
-                            <controls:SqlScript x:Name="TxtCreateSql" />
-                        </TabItem>
                         <TabItem
                             Name="TabColumnSql"
                             Header="ADDCOLUMN"
@@ -68,12 +62,18 @@
                         <TabItem Name="TabDeleteSql" Header="DELETE">
                             <controls:SqlScript x:Name="TxtDeleteSql" />
                         </TabItem>
+                        <TabItem
+                            Name="TabCreateSql"
+                            Header="DDL"
+                            IsSelected="True">
+                            <controls:SqlScript x:Name="TxtCreateSql" />
+                        </TabItem>
                     </TabControl>
                 </Grid>
             </TabItem>
             <TabItem Name="TabParentCsharp" Header="C#实体类">
                 <TabControl
-                    Margin="5,5,0,5"
+                    Margin="5,0,0,5"
                     Style="{StaticResource TabControlBaseStyle}"
                     TabStripPlacement="Left">
                     <TabItem Header="基础代码" IsSelected="True">

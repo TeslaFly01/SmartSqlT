@@ -16,7 +16,7 @@
         <avalonedit:TextEditor
             x:Name="TextEditor"
             Margin="0,0,0,45"
-            Padding="5,0,0,0"
+            Padding="5,5,0,0"
             FontFamily="新宋体"
             FontSize="12"
             ShowLineNumbers="True"
