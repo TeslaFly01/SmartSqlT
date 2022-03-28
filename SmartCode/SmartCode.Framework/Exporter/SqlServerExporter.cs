@@ -446,8 +446,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 查询数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string SelectSql()
         {
@@ -465,8 +463,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 插入数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string InsertSql()
         {
@@ -494,8 +490,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 更新数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string UpdateSql()
         {
@@ -541,8 +535,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 删除数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string DeleteSql()
         {
@@ -572,8 +564,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 添加列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string AddColumnSql()
         {
@@ -610,8 +600,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 修改列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string AlterColumnSql()
         {
@@ -648,8 +636,6 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 删除列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
         public override string DropColumnSql()
         {
