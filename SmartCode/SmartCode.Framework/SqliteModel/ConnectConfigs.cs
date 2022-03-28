@@ -51,6 +51,20 @@ namespace SmartCode.Framework.SqliteModel
         /// 默认数据库
         /// </summary>
         public string DefaultDatabase { get; set; }
+
+        [Ignore]
+        public string Icon
+        {
+            get
+            {
+                switch (DbType)
+                {
+                    case DbType.MySql: return "/SmartCode;component/Resources/Img/mysql.png";
+                    default: return "/SmartCode;component/Resources/Img/mssql.png";
+                }
+            }
+        }
+
         /// <summary>
         /// Master数据库连接，查询系统库相关信息（不映射数据库)
         /// </summary>
