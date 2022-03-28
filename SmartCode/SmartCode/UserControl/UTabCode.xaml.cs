@@ -95,8 +95,8 @@ namespace SmartCode.UserControl
 
             #region 1、生成新建表脚本
 
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
-            var createTableSql = instance.CreateTableSql(objE.DisplayName, list);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType,objE.DisplayName,list);
+            var createTableSql = instance.CreateTableSql();
             TxtCreateSql.SqlText = createTableSql;
             #endregion
 
@@ -132,16 +132,16 @@ namespace SmartCode.UserControl
 
             sb.Clear();
             //查询sql
-            var selSql = instance.SelectSql(objE.Name, list);
+            var selSql = instance.SelectSql();
             TxtSelectSql.SqlText = selSql;
             //插入sql
-            var insSql = instance.InsertSql(objE.Name, list);
+            var insSql = instance.InsertSql();
             TxtInsertSql.SqlText = insSql;
             //更新sql
-            var updSql = instance.UpdateSql(objE.Name, list);
+            var updSql = instance.UpdateSql();
             TxtUpdateSql.SqlText = updSql;
             //删除sql
-            var delSql = instance.DeleteSql(objE.Name, list);
+            var delSql = instance.DeleteSql();
             TxtDeleteSql.SqlText = delSql;
             var langInstance = LangFactory.CreateInstance(LangType.Csharp);
             var csharpEntityCode = langInstance.BuildEntity(objE.Name, list);

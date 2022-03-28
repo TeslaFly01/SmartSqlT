@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using SmartCode.Framework.Exporter;
+using SmartCode.Framework.PhysicalDataModel;
 using SqlSugar;
 
 namespace SmartCode.Framework
@@ -16,13 +14,22 @@ namespace SmartCode.Framework
         /// <param name="type">数据库类型</param>
         /// <param name="dbConnectionString">数据库连接字符串，访问数据库时必填</param>
         /// <returns></returns>
-        public static Exporter.Exporter CreateInstance(DbType type, string dbConnectionString = "")
+        public static Exporter.Exporter CreateInstance(DbType type, string dbConnectionString)
         {
             switch (type)
             {
                 case DbType.SqlServer: return new SqlServerExporter(dbConnectionString);
                 case DbType.MySql: return new MySqlExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
+            }
+        }
+        public static Exporter.Exporter CreateInstance(DbType type, string tableName, List<Column> columns)
+        {
+            switch (type)
+            {
+                case DbType.SqlServer: return new SqlServerExporter(tableName,columns);
+                case DbType.MySql: return new MySqlExporter(tableName, columns);
+                default: return new SqlServerExporter(tableName, columns);
             }
         }
     }

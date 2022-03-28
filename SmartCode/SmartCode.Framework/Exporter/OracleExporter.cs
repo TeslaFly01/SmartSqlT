@@ -14,6 +14,10 @@ namespace SmartCode.Framework.Exporter
         {
 
         }
+        public OracleExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        {
+
+        }
 
         /// <summary>
         /// 初始化
@@ -112,42 +116,42 @@ namespace SmartCode.Framework.Exporter
             return scriptInfo.Definition;
         }
 
-        public override string CreateTableSql(string tableName, List<Column> columns)
+        public override string CreateTableSql()
         {
             return "";
         }
 
-        public override string SelectSql(string tableName, List<Column> columns)
+        public override string SelectSql()
         {
             return "";
         }
 
-        public override string InsertSql(string tableName, List<Column> columns)
+        public override string InsertSql()
         {
             return "";
         }
 
-        public override string UpdateSql(string tableName, List<Column> columns)
+        public override string UpdateSql()
         {
             return "";
         }
 
-        public override string DeleteSql(string tableName, List<Column> columns)
+        public override string DeleteSql()
         {
             return "";
         }
 
-        public override string AddColumnSql(string tableName, List<Column> columns)
+        public override string AddColumnSql()
         {
             return "";
         }
 
-        public override string AlterColumnSql(string tableName, List<Column> columns)
+        public override string AlterColumnSql()
         {
             return "";
         }
 
-        public override string DropColumnSql(string tableName, List<Column> columns)
+        public override string DropColumnSql()
         {
             return "";
         }

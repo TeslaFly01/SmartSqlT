@@ -67,22 +67,22 @@ namespace SmartCode.Views
         {
             var objectName = SelectedObject.DisplayName;
             var colList = SelectedColumns;
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, objectName, colList);
             if (TabSelectSql.IsSelected)
             {
                 //查询sql
-                var selSql = instance.SelectSql(objectName, colList);
+                var selSql = instance.SelectSql();
                 TxtSelectSql.SqlText = selSql;
             }
             Task.Run(() =>
             {
-                var ddlSql = instance.CreateTableSql(objectName, colList);
+                var ddlSql = instance.CreateTableSql();
                 //插入sql
-                var insSql = instance.InsertSql(objectName, colList);
+                var insSql = instance.InsertSql();
                 //更新sql
-                var updSql = instance.UpdateSql(objectName, colList);
+                var updSql = instance.UpdateSql();
                 //删除sql
-                var delSql = instance.DeleteSql(objectName, colList);
+                var delSql = instance.DeleteSql();
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     TxtCreateSql.SqlText = ddlSql;

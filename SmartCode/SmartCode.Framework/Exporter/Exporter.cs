@@ -15,10 +15,24 @@ namespace SmartCode.Framework.Exporter
         {
             DbConnectString = connectionString;
         }
+
+        public Exporter(string tableName, List<Column> columns)
+        {
+            TableName = tableName;
+            Columns = columns;
+        }
         /// <summary>
         /// 数据库连接
         /// </summary>
         public string DbConnectString { get; private set; }
+        /// <summary>
+        /// 表名
+        /// </summary>
+        public string TableName { get; set; }
+        /// <summary>
+        /// 表字段
+        /// </summary>
+        public List<Column> Columns { get; set; }
         /// <summary>
         /// 连接初始化获取对象列表
         /// </summary>
@@ -45,65 +59,49 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 创建表SQL
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string CreateTableSql(string tableName, List<Column> columns);
+        public abstract string CreateTableSql();
 
         /// <summary>
         /// 查询数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string SelectSql(string tableName, List<Column> columns);
+        public abstract string SelectSql();
 
         /// <summary>
         /// 插入数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string InsertSql(string tableName, List<Column> columns);
+        public abstract string InsertSql();
 
         /// <summary>
         /// 更新数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string UpdateSql(string tableName, List<Column> columns);
+        public abstract string UpdateSql();
 
         /// <summary>
         /// 删除数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string DeleteSql(string tableName, List<Column> columns);
+        public abstract string DeleteSql();
 
         /// <summary>
         /// 添加列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string AddColumnSql(string tableName, List<Column> columns);
+        public abstract string AddColumnSql();
 
         /// <summary>
         /// 修改列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string AlterColumnSql(string tableName, List<Column> columns);
+        public abstract string AlterColumnSql();
 
         /// <summary>
         /// 删除列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        public abstract string DropColumnSql(string tableName, List<Column> columns);
+        public abstract string DropColumnSql();
     }
 }

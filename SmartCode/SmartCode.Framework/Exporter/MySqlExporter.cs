@@ -17,6 +17,10 @@ namespace SmartCode.Framework.Exporter
         {
 
         }
+        public MySqlExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        {
+
+        }
 
         /// <summary>
         /// 初始化数据库
@@ -210,16 +214,16 @@ namespace SmartCode.Framework.Exporter
             return scriptInfo.Definition;
         }
 
-        public override string CreateTableSql(string tableName, List<Column> columns)
+        public override string CreateTableSql()
         {
-            if (string.IsNullOrEmpty(tableName) || !columns.Any())
+            if (string.IsNullOrEmpty(TableName) || !Columns.Any())
             {
                 return "";
             }
             var sb = new StringBuilder();
-            sb.Append($"CREATE TABLE `{tableName}` (");
+            sb.Append($"CREATE TABLE `{TableName}` (");
             sb.Append(Environment.NewLine);
-            columns.ForEach(col =>
+            Columns.ForEach(col =>
             {
                 sb.Append($" `{col.DisplayName}` {col.DataType}{col.Length} ");
                 if (col.IsIdentity)
@@ -230,7 +234,7 @@ namespace SmartCode.Framework.Exporter
                 sb.Append(isNull);
                 sb.Append(Environment.NewLine);
             });
-            var primaryKeyList = columns.FindAll(x => x.IsPrimaryKey);
+            var primaryKeyList = Columns.FindAll(x => x.IsPrimaryKey);
             if (primaryKeyList.Any())
             {
                 sb.Append($"\tPRIMARY KEY (");
@@ -253,16 +257,16 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string SelectSql(string tableName, List<Column> columns)
+        public override string SelectSql()
         {
             var strSql = new StringBuilder("SELECT ");
             var tempCol = new StringBuilder();
-            columns.ForEach(col =>
+            Columns.ForEach(col =>
             {
                 tempCol.Append($"{col.Name},");
             });
             var tempSql = tempCol.ToString().TrimEnd(',');
-            strSql.Append($"{tempSql} FROM {tableName}");
+            strSql.Append($"{tempSql} FROM {TableName}");
             return strSql.ToString();
         }
 
@@ -272,10 +276,10 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string InsertSql(string tableName, List<Column> columns)
+        public override string InsertSql()
         {
-            var tempCols = columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"INSERT INTO {tableName} (");
+            var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"INSERT INTO {TableName} (");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -301,10 +305,10 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string UpdateSql(string tableName, List<Column> columns)
+        public override string UpdateSql()
         {
-            var tempCols = columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"UPDATE {tableName} SET ");
+            var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"UPDATE {TableName} SET ");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -322,7 +326,7 @@ namespace SmartCode.Framework.Exporter
             strSql.Append($"{tempCol.ToString().TrimEnd(',')} WHERE ");
             tempCol.Clear();
             var j = 0;
-            columns.ForEach(col =>
+            Columns.ForEach(col =>
             {
                 if (j == 0)
                 {
@@ -348,12 +352,12 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string DeleteSql(string tableName, List<Column> columns)
+        public override string DeleteSql()
         {
-            var strSql = new StringBuilder($"DELETE FROM {tableName} WHERE ");
+            var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
             var tempCol = new StringBuilder();
             var j = 0;
-            columns.ForEach(col =>
+            Columns.ForEach(col =>
             {
                 if (j == 0)
                 {
@@ -379,7 +383,7 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string AddColumnSql(string tableName, List<Column> columns)
+        public override string AddColumnSql()
         {
             return "";
         }
@@ -390,7 +394,7 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string AlterColumnSql(string tableName, List<Column> columns)
+        public override string AlterColumnSql()
         {
             return "";
         }
@@ -401,7 +405,7 @@ namespace SmartCode.Framework.Exporter
         /// <param name="tableName"></param>
         /// <param name="columns"></param>
         /// <returns></returns>
-        public override string DropColumnSql(string tableName, List<Column> columns)
+        public override string DropColumnSql()
         {
             return "";
         }

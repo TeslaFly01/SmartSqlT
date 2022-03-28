@@ -37,65 +37,49 @@ namespace SmartCode.Framework.Exporter
         /// <summary>
         /// 创建表SQL
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string CreateTableSql(string tableName, List<Column> columns);
+        string CreateTableSql();
 
         /// <summary>
         /// 查询数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string SelectSql(string tableName, List<Column> columns);
+        string SelectSql();
 
         /// <summary>
         /// 插入数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string InsertSql(string tableName, List<Column> columns);
+        string InsertSql();
 
         /// <summary>
         /// 更新数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string UpdateSql(string tableName, List<Column> columns);
+        string UpdateSql();
 
         /// <summary>
         /// 删除数据sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string DeleteSql(string tableName, List<Column> columns);
+        string DeleteSql();
 
         /// <summary>
         /// 添加列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string AddColumnSql(string tableName, List<Column> columns);
+        string AddColumnSql();
 
         /// <summary>
         /// 修改列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string AlterColumnSql(string tableName, List<Column> columns);
+        string AlterColumnSql();
 
         /// <summary>
         /// 删除列sql脚本
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columns"></param>
         /// <returns></returns>
-        string DropColumnSql(string tableName, List<Column> columns);
+        string DropColumnSql();
     }
 }
