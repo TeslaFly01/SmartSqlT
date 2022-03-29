@@ -15,6 +15,7 @@ using System.Windows.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Annotations;
+using SmartCode.Framework.Const;
 using SmartCode.UserControl;
 using SmartCode.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
@@ -88,14 +89,20 @@ namespace SmartCode
         public void LoadConnects()
         {
             var sqLiteHelper = new SQLiteHelper();
-            var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
             CbTargetConnect.ItemsSource = connectConfigs;
-            var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
+            var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             TabLeftType.SelectedIndex = leftMenuType - 1;
-            var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");
+            var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
+            var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
+            if (!string.IsNullOrWhiteSpace(selectedConn))
+            {
+                var connectConfig = sqLiteHelper.FirstOrDefault<ConnectConfigs>(x => x.ConnectName.Equals(selectedConn));
+                SwitchConnect(connectConfig);
+            }
             //MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
             //MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
             MainTabW.DataContext = TabItemData;
@@ -133,9 +140,10 @@ namespace SmartCode
                 ConnectionString = connectConfig.DbDefaultConnectString;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
                 SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
-                //SearchMenu.Text = string.Empty;
+
                 var sqLiteHelper = new SQLiteHelper();
-                var connectConfigs = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+                sqLiteHelper.SetSysValue(SysConst.Sys_SelectedConnection, connectConfig.ConnectName);
+                var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
                 SwitchMenu.ItemsSource = null;
                 SwitchMenu.ItemsSource = connectConfigs;
                 CbTargetConnect.ItemsSource = connectConfigs;
@@ -160,9 +168,14 @@ namespace SmartCode
             var selectDatabase = SelectDatabase.SelectedItem;
             if (selectDatabase != null)
             {
-                ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, ((DataBase)selectDatabase).DbName);
-                SelectDatabase.SelectedItem = DBase.FirstOrDefault(x => x.DbName == ((DataBase)selectDatabase).DbName);
+                var selectedDbBase = (DataBase)selectDatabase;
+                ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, selectedDbBase.DbName);
+                //SelectDatabase.SelectedItem = DBase.FirstOrDefault(x => x.DbName == selectedDbBase.DbName);
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
+
+                var sqLiteHelper = new SQLiteHelper();
+                sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
+
                 MenuBind(false, null);
             }
         }
@@ -178,7 +191,7 @@ namespace SmartCode
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
+                var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
                 var curObjects = new List<SObjectDTO>();
                 var curGroups = new List<ObjectGroup>();
                 var itemParentList = new List<PropertyNodeItem>();
@@ -636,22 +649,18 @@ namespace SmartCode
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
-            var sysSet = sqLiteHelper.db.Table<SystemSet>().First(x => x.Name.Equals("LeftMenuType"));
             var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
             if (selectedItem.Name == "TabAllData")
             {
-                sysSet.Value = "1";
-                sqLiteHelper.db.Update(sysSet);
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "1");
             }
             else if (selectedItem.Name == "TabGroupData")
             {
-                sysSet.Value = "2";
-                sqLiteHelper.db.Update(sysSet);
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "2");
             }
             else
             {
-                sysSet.Value = "3";
-                sqLiteHelper.db.Update(sysSet);
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "3");
             }
             if (string.IsNullOrEmpty(ConnectionString))
             {
@@ -717,7 +726,7 @@ namespace SmartCode
             };
             itemList.Add(nodeProc);
             var sqLiteHelper = new SQLiteHelper();
-            var leftMenuType = sqLiteHelper.GetSysInt("LeftMenuType");
+            var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectendConnection;
             var currObjects = new List<SObjectDTO>();
@@ -1028,7 +1037,7 @@ namespace SmartCode
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
-            var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");
+            var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             if (!isMultipleTab)
             {
                 if (TabItemData.Any())

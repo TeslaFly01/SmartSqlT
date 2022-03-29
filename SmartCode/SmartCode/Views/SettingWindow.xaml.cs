@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartCode.Framework;
+using SmartCode.Framework.Const;
 using SmartCode.Framework.SqliteModel;
 
 namespace SmartCode.Views
@@ -41,7 +42,7 @@ namespace SmartCode.Views
             });
         }
 
-        private readonly List<string> KeyList = new List<string> { "IsMultipleTab" };
+        private readonly List<string> KeyList = new List<string> { SysConst.Sys_IsMultipleTab };
         /// <summary>
         /// 保存
         /// </summary>
@@ -54,7 +55,7 @@ namespace SmartCode.Views
             var sysSets = sqLiteHelper.db.Table<SystemSet>().Where(x => KeyList.Contains(x.Name)).ToList();
             sysSets.ForEach(x =>
             {
-                if (x.Name == "IsMultipleTab")
+                if (x.Name == SysConst.Sys_IsMultipleTab)
                 {
                     x.Value = isMultipleTab.ToString();
                 }

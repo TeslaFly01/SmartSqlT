@@ -101,6 +101,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Const\SysConst.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="ExporterFactory.cs" />
     <Compile Include="Exporter\Exporter.cs" />

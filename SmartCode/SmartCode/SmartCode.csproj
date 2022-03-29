@@ -342,12 +342,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
-    <Content Include="Resources\Img\mysql.png">
+    <Resource Include="Resources\Img\mysql.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\Img\sqlScript.ico">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </Resource>
+    <Resource Include="Resources\Img\sqlScript.ico" />
     <Resource Include="Resources\Img\doc\XML.png" />
     <Resource Include="Resources\Img\Refresh.png" />
     <Resource Include="Resources\Img\SetGroup.png" />

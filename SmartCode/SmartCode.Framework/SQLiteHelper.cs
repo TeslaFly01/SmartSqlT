@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.Serialization.Json;
+using SmartCode.Framework.Const;
 using SmartCode.Framework.SqliteModel;
 using SQLite;
 
@@ -31,22 +33,22 @@ namespace SmartCode.Framework
             Init();
         }
 
+        public List<SystemSet> InitValue = new List<SystemSet>
+        {
+            new SystemSet{Name = SysConst.Sys_IsGroup,Type = 1,Value = "false"},
+            new SystemSet{Name = SysConst.Sys_IsMultipleTab,Type = 1,Value = "false"},
+            new SystemSet{Name = SysConst.Sys_LeftMenuType,Type = 2,Value = "1"},
+            new SystemSet{Name = SysConst.Sys_SelectedConnection,Type = 3,Value = ""},
+            new SystemSet{Name = SysConst.Sys_SelectedDataBase,Type = 3,Value = ""},
+        };
         private void Init()
         {
             var sysList = db.Table<SystemSet>().ToList();
-            var initValue = new List<string> { "IsGroup", "IsMultipleTab", "LeftMenuType" };
-            initValue.ForEach(x =>
+            InitValue.ForEach(x =>
             {
-                if (!sysList.Any(m => m.Name.Equals(x)))
+                if (!sysList.Any(m => m.Name.Equals(x.Name)))
                 {
-                    var defaultValue = x == "LeftMenuType" ? "1" : "false";
-                    var defaultType = x == "LeftMenuType" ? 2 : 1;
-                    db.Insert(new SystemSet
-                    {
-                        Name = x,
-                        Type = defaultType,
-                        Value = defaultValue
-                    });
+                    db.Insert(x);
                 }
             });
         }
@@ -65,6 +67,22 @@ namespace SmartCode.Framework
         {
             return db.Update(model);
         }
+
+        public T FirstOrDefault<T>(Expression<Func<T, bool>> predExpr) where T : new()
+        {
+            return db.Table<T>().FirstOrDefault(predExpr);
+        }
+
+        public List<T> ToList<T>() where T : new()
+        {
+            return db.Table<T>().ToList();
+        }
+
+        public List<T> ToList<T>(Expression<Func<T, bool>> predExpr) where T : new()
+        {
+            return db.Table<T>().Where(predExpr).ToList();
+        }
+
         public List<T> Query<T>(string sql) where T : new()
         {
             return db.Query<T>(sql);
@@ -72,6 +90,18 @@ namespace SmartCode.Framework
         public int Execute(string sql)
         {
             return db.Execute(sql);
+        }
+
+        public void SetSysValue(string name, object value)
+        {
+            var sqLiteHelper = new SQLiteHelper();
+            var sysSet = sqLiteHelper.db.Table<SystemSet>().First(x => x.Name == name);
+            if (sysSet == null)
+            {
+                return;
+            }
+            sysSet.Value = value.ToString();
+            sqLiteHelper.Update(sysSet);
         }
 
         public bool GetSysBool(string name)

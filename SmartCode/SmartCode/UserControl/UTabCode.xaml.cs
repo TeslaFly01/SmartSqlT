@@ -90,7 +90,7 @@ namespace SmartCode.UserControl
                 return;
             }
             TabParentSql.IsSelected = true;
-            TabCreateSql.IsSelected = true;
+            TabSelectSql.IsSelected = true;
             var objE = SelectedObject;
 
             var list = SelectedTableColunms;
