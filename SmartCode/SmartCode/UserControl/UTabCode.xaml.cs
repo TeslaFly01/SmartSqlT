@@ -77,6 +77,10 @@ namespace SmartCode.UserControl
             DataContext = this;
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
             TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+            TextCsharpEditor.TextArea.SelectionCornerRadius = 0;
+            TextCsharpEditor.TextArea.SelectionBorder = null;
+            TextCsharpEditor.TextArea.SelectionForeground = null;
+            TextCsharpEditor.TextArea.SelectionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFADD6FF"));
         }
 
         private void TabCode_OnLoaded(object sender, RoutedEventArgs e)

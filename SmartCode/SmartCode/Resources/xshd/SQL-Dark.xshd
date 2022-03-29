@@ -225,6 +225,8 @@
           <Word>top</Word>
           <Word>partition</Word>
           <Word>add</Word>
+          <Word>key</Word>
+          <Word>primary</Word>
           
           <Word>IF</Word>
           <Word>ELSE</Word>
@@ -284,6 +286,8 @@
           <Word>TOP</Word>
           <Word>PARTITION</Word>
           <Word>ADD</Word>
+          <Word>KEY</Word>
+          <Word>PRIMARY</Word>
         </Keywords>
 
         <Keywords color="GotoKeywords">

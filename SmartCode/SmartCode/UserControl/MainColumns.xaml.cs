@@ -113,6 +113,10 @@ namespace SmartCode.UserControl
             DataContext = this;
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
             TextSqlEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+            TextSqlEditor.TextArea.SelectionCornerRadius = 0;
+            TextSqlEditor.TextArea.SelectionBorder = null;
+            TextSqlEditor.TextArea.SelectionForeground = null;
+            TextSqlEditor.TextArea.SelectionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFADD6FF"));
         }
 
         public void LoadPageData()

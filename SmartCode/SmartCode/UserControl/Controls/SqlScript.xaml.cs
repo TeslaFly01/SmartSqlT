@@ -70,6 +70,10 @@ namespace SmartCode.UserControl.Controls
             DataContext = this;
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
             TextEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+            TextEditor.TextArea.SelectionCornerRadius = 0;
+            TextEditor.TextArea.SelectionBorder = null;
+            TextEditor.TextArea.SelectionForeground = null;
+            TextEditor.TextArea.SelectionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFADD6FF"));
         }
 
         private void SqlScript_OnLoaded(object sender, RoutedEventArgs e)

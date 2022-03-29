@@ -94,28 +94,24 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Helper\CompletionData.cs" />
-    <Compile Include="Helper\FileHelper.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
     <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
     <Compile Include="UserControl\BaseUserControl.cs" />
-    <Compile Include="UserControl\CompletionWindowEx.cs" />
     <Compile Include="UserControl\Controls\NoDataArea.xaml.cs">
       <DependentUpon>NoDataArea.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Controls\SqlScript.xaml.cs">
       <DependentUpon>SqlScript.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\EditorCompletionData.cs" />
     <Compile Include="UserControl\MainObjects.xaml.cs">
       <DependentUpon>MainObjects.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\MainW.xaml.cs">
       <DependentUpon>MainW.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\TextEditorEx.cs" />
     <Compile Include="UserControl\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
@@ -159,7 +155,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Helper\ExportModelHelper.cs" />
     <Compile Include="Helper\HighlightingProvider.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
