@@ -27,7 +27,10 @@
                         Margin="5,0,0,0"
                         Style="{StaticResource TabControlBaseStyle}"
                         TabStripPlacement="Left">
-                        <TabItem Name="TabColumnSql" Header="ADDCOLUMN">
+                        <TabItem
+                            Name="TabColumnSql"
+                            Header="ADDCOLUMN"
+                            Visibility="Collapsed">
                             <controls:SqlScript x:Name="TxtAddColumnSql" />
                         </TabItem>
                         <TabItem Name="TabSelectSql" Header="SELECT">

@@ -19,6 +19,7 @@
             Padding="5,5,0,0"
             FontFamily="新宋体"
             FontSize="12"
+            IsReadOnly="True"
             ShowLineNumbers="True"
             WordWrap="True">
             <avalonedit:TextEditor.Options>

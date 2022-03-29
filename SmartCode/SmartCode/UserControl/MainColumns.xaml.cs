@@ -134,7 +134,7 @@ namespace SmartCode.UserControl
                 TabData.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
-                BtnCopyColumnScript.IsEnabled = !isView;
+                BtnCreateSqlScript.IsEnabled = !isView;
                 var objName = isView ? "视图" : "数据表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
@@ -417,7 +417,7 @@ namespace SmartCode.UserControl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnCopyColumnScript_OnClick(object sender, RoutedEventArgs e)
+        private void BtnCreateSqlScript_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
             var selectRows = GetTableGridSelectRows();
@@ -437,38 +437,6 @@ namespace SmartCode.UserControl
             scriptW.SelectedColumns = selectRows;
             scriptW.Owner = mainWindow;
             scriptW.ShowDialog();
-            //var sb = new StringBuilder();
-            //foreach (var column in selectRows)
-            //{
-            //    sb.Append($"ALTER TABLE dbo.{column.ObjectName} ADD {column.DisplayName} {column.DataType.ToLower()} ");
-            //    if (SqlServerDbTypeMapHelper.IsMulObj(column.DataType))
-            //    {
-            //        if (column.DataType.Equals("decimal") || column.DataType.Equals("numeric"))
-            //        {
-            //            sb.Append($"{column.Length} ");
-            //        }
-            //        else
-            //        {
-            //            sb.Append($"{column.Length} ");
-            //        }
-            //    }
-            //    var isNull = column.IsNullable ? "NULL " : "NOT NULL ";
-            //    sb.Append(isNull);
-            //    sb.Append(Environment.NewLine);
-            //    sb.Append("GO");
-            //    sb.Append(Environment.NewLine);
-            //    #region 字段注释
-            //    if (!string.IsNullOrEmpty(column.Comment))
-            //    {
-            //        sb.Append($@"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{column.Comment}' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'{column.ObjectName}', @level2type=N'COLUMN',@level2name=N'{column.DisplayName}'");
-            //        sb.Append(Environment.NewLine);
-            //        sb.Append("GO");
-            //        sb.Append(Environment.NewLine);
-            //    }
-            //    #endregion
-            //}
-            //Clipboard.SetDataObject(sb.ToString());
-            //Growl.Success(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
             #endregion
         }
 
@@ -554,7 +522,7 @@ namespace SmartCode.UserControl
             {
                 TextSqlEditor.SelectAll();
                 Clipboard.SetDataObject(TextSqlEditor.Text);
-                Growl.Success(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
+                Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
             }
         }
     }

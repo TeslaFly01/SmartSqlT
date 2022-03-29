@@ -13,7 +13,7 @@
     Width="600"
     Height="410"
     BorderThickness="0"
-    Icon="../Resources/Img/doc.ico"
+    Icon="../Resources/Img/sqlScript.ico"
     Loaded="ScriptWindow_OnLoaded"
     ResizeMode="CanResize"
     ShowInTaskbar="False"

@@ -414,22 +414,24 @@ namespace SmartCode.Framework.Exporter
             }
             var sb = new StringBuilder();
             sb.Append($"CREATE TABLE {TableName}(");
-            sb.Append(Environment.NewLine);
+            var tempStr = new StringBuilder();
             Columns.ForEach(col =>
             {
-                sb.Append($"\t{col.DisplayName} {col.DataType}{col.Length} ");
+                tempStr.Append(Environment.NewLine);
+                tempStr.Append($"\t{col.DisplayName} {col.DataType}{col.Length} ");
                 if (col.IsIdentity)
                 {
-                    sb.Append("IDENTITY(1,1) ");
+                    tempStr.Append("IDENTITY(1,1) ");
                 }
                 var isNull = col.IsNullable ? "NULL," : "NOT NULL,";
-                sb.Append(isNull);
-                sb.Append(Environment.NewLine);
+                tempStr.Append(isNull);
             });
+            sb.Append(tempStr.ToString().TrimEnd(','));
             var primaryKeyList = Columns.FindAll(x => x.IsPrimaryKey);
             if (primaryKeyList.Any())
             {
-                sb.Append($"\tPRIMARY KEY (");
+                sb.Append(Environment.NewLine);
+                sb.Append($",\tPRIMARY KEY (");
                 var sbPriKey = new StringBuilder();
                 foreach (var column in primaryKeyList)
                 {
@@ -437,8 +439,8 @@ namespace SmartCode.Framework.Exporter
                 }
                 sb.Append(sbPriKey.ToString().TrimEnd(','));
                 sb.Append(")");
-                sb.Append(Environment.NewLine);
             }
+            sb.Append(Environment.NewLine);
             sb.Append(")");
             return sb.ToString();
         }

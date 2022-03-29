@@ -345,6 +345,9 @@
     <Content Include="Resources\Img\mysql.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Img\sqlScript.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="Resources\Img\doc\XML.png" />
     <Resource Include="Resources\Img\Refresh.png" />
     <Resource Include="Resources\Img\SetGroup.png" />

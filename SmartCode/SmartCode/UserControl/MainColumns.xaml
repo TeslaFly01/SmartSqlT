@@ -121,10 +121,10 @@
                                     Content="设置分组"
                                     Style="{StaticResource ButtonWarning}" />
                                 <Button
-                                    x:Name="BtnCopyColumnScript"
+                                    x:Name="BtnCreateSqlScript"
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
-                                    Click="BtnCopyColumnScript_OnClick"
+                                    Click="BtnCreateSqlScript_OnClick"
                                     Content="生成SQL"
                                     Style="{StaticResource ButtonPrimary}" />
                                 <Button

@@ -92,6 +92,7 @@ namespace SmartCode.UserControl.Controls
         /// <param name="e"></param>
         private void BtnCopyScript_OnClick(object sender, RoutedEventArgs e)
         {
+            TextEditor.SelectAll();
             Clipboard.SetDataObject(SqlText.SqlFormat());
             Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
         }
