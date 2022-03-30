@@ -63,6 +63,16 @@ namespace SmartCode.DocUtils.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] doc {
+            get {
+                object obj = ResourceManager.GetObject("doc", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] hhc {
             get {
                 object obj = ResourceManager.GetObject("hhc", resourceCulture);

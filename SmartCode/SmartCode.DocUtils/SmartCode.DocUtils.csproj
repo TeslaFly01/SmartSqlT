@@ -140,6 +140,7 @@
     <Compile Include="DBDoc\MarkDownDoc.cs" />
     <Compile Include="DBDoc\PdfDoc.cs" />
     <Compile Include="DBDoc\WordDoc.cs" />
+    <Compile Include="DBDoc\WordExtDoc.cs" />
     <Compile Include="DBDoc\XmlDoc.cs" />
     <Compile Include="DocFactory.cs" />
     <Compile Include="Dtos\ChmHHP.cs" />
@@ -181,9 +182,6 @@
     <Resource Include="TplFile\chm\table.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="TplFile\html\html1.cshtml">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Resource>
     <Resource Include="TplFile\pdf\msyh.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
@@ -203,10 +201,13 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="TplFile\doc\doc.xml" />
     <None Include="TplFile\html\html.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
