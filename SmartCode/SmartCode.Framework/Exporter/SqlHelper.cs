@@ -28,7 +28,7 @@ using System.Xml;
 using System.Data.SqlClient;
 using System.Collections;
 
-namespace SmartCode.Framework.Exporter
+namespace SmartSQL.Framework.Exporter
 {
     /// <summary>
     /// The SqlHelper class is intended to encapsulate high performance, scalable best practices for 

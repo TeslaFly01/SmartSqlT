@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public class PathHelper
     {

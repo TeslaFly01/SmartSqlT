@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
-using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Framework.SqliteModel;
+using SmartSQL.Framework.PhysicalDataModel;
+using SmartSQL.Framework.SqliteModel;
+using SmartSQL.Framework;
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using SmartSQL.DocUtils;
 using SmartSQL.DocUtils.Dtos;
-using SmartCode.Framework;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 using HandyControl.Controls;

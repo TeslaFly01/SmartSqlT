@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public class AssemblyHelper
     {

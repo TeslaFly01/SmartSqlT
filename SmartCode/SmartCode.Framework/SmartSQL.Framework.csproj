@@ -7,8 +7,8 @@
     <ProjectGuid>{8F686DD2-388C-4D61-A077-3A769059D547}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartCode.Framework</RootNamespace>
-    <AssemblyName>SmartCode.Framework</AssemblyName>
+    <RootNamespace>SmartSQL.Framework</RootNamespace>
+    <AssemblyName>SmartSQL.Framework</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

@@ -5,11 +5,11 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.PhysicalDataModel;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Framework.Exporter
+namespace SmartSQL.Framework.Exporter
 {
     public class MySqlExporter : Exporter, IExporter
     {

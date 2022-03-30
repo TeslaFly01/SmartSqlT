@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using TSqlFormatter;
 using TSqlFormatter.Formatters;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     public static class TsqlFormatHelper
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public class SqlServerDbTypeMapHelper
     {

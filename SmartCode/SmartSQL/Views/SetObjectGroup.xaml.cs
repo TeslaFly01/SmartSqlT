@@ -17,8 +17,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
-using SmartCode.Framework;
-using SmartCode.Framework.SqliteModel;
+using SmartSQL.Framework;
+using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Annotations;
 using SmartSQL.Models;
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.UserControl;
 
 namespace SmartSQL.Models

@@ -12,9 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SmartCode.Framework;
-using SmartCode.Framework.Const;
-using SmartCode.Framework.SqliteModel;
+using SmartSQL.Framework;
+using SmartSQL.Framework.Const;
+using SmartSQL.Framework.SqliteModel;
 
 namespace SmartSQL.Views
 {

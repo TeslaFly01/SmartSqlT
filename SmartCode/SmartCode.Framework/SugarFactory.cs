@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SqlSugar;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     public class SugarFactory
     {

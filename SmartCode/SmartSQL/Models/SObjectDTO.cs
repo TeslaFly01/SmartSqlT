@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.SqliteModel;
+using SmartSQL.Framework.SqliteModel;
 
 namespace SmartSQL.Models
 {

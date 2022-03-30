@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using SmartCode.Framework.Exporter;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.Exporter;
+using SmartSQL.Framework.PhysicalDataModel;
 using SqlSugar;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     public class ExporterFactory
     {

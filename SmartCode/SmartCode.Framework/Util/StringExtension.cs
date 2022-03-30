@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public static class StringExtension
     {

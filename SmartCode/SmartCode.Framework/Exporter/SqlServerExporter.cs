@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Framework.Exporter
+namespace SmartSQL.Framework.Exporter
 {
     using PhysicalDataModel;
     using Util;

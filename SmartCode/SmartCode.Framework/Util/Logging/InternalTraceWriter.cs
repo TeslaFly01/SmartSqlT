@@ -2,7 +2,7 @@ using System;
 using System.Diagnostics;
 using System.IO;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
 	public class InternalTraceWriter : TextWriter
 	{

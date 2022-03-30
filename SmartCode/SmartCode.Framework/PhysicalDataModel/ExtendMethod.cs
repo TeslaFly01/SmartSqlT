@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework.PhysicalDataModel
+namespace SmartSQL.Framework.PhysicalDataModel
 {
     public static class ExtendMethod
     {

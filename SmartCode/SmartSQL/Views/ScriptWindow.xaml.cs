@@ -12,10 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SmartCode.Framework;
-using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Framework.SqliteModel;
-using SmartCode.Framework.Util;
+using SmartSQL.Framework;
+using SmartSQL.Framework.PhysicalDataModel;
+using SmartSQL.Framework.SqliteModel;
+using SmartSQL.Framework.Util;
 using SmartSQL.Models;
 using SqlSugar;
 

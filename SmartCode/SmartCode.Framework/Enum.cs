@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     ///// <summary>
     ///// 数据库类型

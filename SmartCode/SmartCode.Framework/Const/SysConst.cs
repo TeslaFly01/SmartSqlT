@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework.Const
+namespace SmartSQL.Framework.Const
 {
     public static class SysConst
     {

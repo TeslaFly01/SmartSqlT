@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.PhysicalDataModel;
 using SqlSugar;
 
-namespace SmartCode.Framework.Exporter
+namespace SmartSQL.Framework.Exporter
 {
     public class OracleExporter : Exporter, IExporter
     {

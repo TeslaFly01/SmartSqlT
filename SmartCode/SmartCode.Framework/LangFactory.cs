@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.Lang;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.Lang;
+using SmartSQL.Framework.PhysicalDataModel;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     public class LangFactory
     {

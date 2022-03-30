@@ -16,3 +16,5 @@ obj/*
 /obj/*
 /SmartCode/SmartSQL/obj
 /SmartCode/SmartSQL/bin
+/SmartCode/SmartSQL.DocUtils/bin/Debug
+/SmartCode/SmartSQL.DocUtils/obj/Debug

@@ -4,11 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.Util;
+using SmartSQL.Framework.Util;
 using SQLite;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Framework.SqliteModel
+namespace SmartSQL.Framework.SqliteModel
 {
     public class ConnectConfigs
     {

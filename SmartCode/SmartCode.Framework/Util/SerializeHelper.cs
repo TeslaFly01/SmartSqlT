@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public class SerializeHelper
     {

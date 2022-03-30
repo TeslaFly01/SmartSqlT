@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Json;
-using SmartCode.Framework.Const;
-using SmartCode.Framework.SqliteModel;
+using SmartSQL.Framework.Const;
+using SmartSQL.Framework.SqliteModel;
 using SQLite;
 
-namespace SmartCode.Framework
+namespace SmartSQL.Framework
 {
     public class SQLiteHelper
     {

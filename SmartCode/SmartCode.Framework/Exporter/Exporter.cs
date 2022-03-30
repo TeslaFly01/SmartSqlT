@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using SqlSugar;
 
-namespace SmartCode.Framework.Exporter
+namespace SmartSQL.Framework.Exporter
 {
     using PhysicalDataModel;
 

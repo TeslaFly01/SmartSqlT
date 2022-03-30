@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SQLite;
 
-namespace SmartCode.Framework.SqliteModel
+namespace SmartSQL.Framework.SqliteModel
 {
     public class ObjectGroup
     {

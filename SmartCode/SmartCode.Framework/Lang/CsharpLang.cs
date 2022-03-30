@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Framework.PhysicalDataModel;
+using SmartSQL.Framework.PhysicalDataModel;
 
-namespace SmartCode.Framework.Lang
+namespace SmartSQL.Framework.Lang
 {
     public class CsharpLang : Lang
     {

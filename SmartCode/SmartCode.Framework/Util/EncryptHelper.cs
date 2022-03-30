@@ -6,7 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework.Util
+namespace SmartSQL.Framework.Util
 {
     public static class EncryptHelper
     {

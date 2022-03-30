@@ -17,8 +17,8 @@ using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
 using SmartSQL.Annotations;
-using SmartCode.Framework;
-using SmartCode.Framework.Util;
+using SmartSQL.Framework;
+using SmartSQL.Framework.Util;
 
 namespace SmartSQL.UserControl.Controls
 {

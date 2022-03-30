@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Framework.PhysicalDataModel
+namespace SmartSQL.Framework.PhysicalDataModel
 {
     public partial class DataBase
     {

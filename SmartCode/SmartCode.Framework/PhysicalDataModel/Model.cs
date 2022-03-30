@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace SmartCode.Framework.PhysicalDataModel
+namespace SmartSQL.Framework.PhysicalDataModel
 {
     /// <summary>
     /// Represent the Physical Data Model of Database.
