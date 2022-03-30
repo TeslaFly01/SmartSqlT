@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using SmartSQL.Models;
 
-namespace SmartCode
+namespace SmartSQL
 {
     /// <summary>
     /// MyTreeView.xaml 的交互逻辑
