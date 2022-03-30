@@ -14,12 +14,12 @@ using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
-using SmartCode.Annotations;
-using SmartCode.Helper;
+using SmartSQL.Annotations;
+using SmartSQL.Helper;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Views
+namespace SmartSQL.Views
 {
     //定义委托
     public delegate void ConnectChangeRefreshHandler(ConnectConfigs connectConfig);

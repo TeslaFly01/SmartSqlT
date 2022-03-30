@@ -1,33 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Framework.Util;
-using SmartCode.Annotations;
-using SmartCode.Helper;
-using SmartCode.Models;
-using SmartCode.Views;
+using SmartSQL.Helper;
+using SmartSQL.Models;
+using SmartSQL.Views;
 using SqlSugar;
 using UserControlE = System.Windows.Controls.UserControl;
 using PathF = System.IO.Path;
@@ -35,7 +24,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.UserControl
+namespace SmartSQL.UserControl
 {
     /// <summary>
     /// Main.xaml 的交互逻辑

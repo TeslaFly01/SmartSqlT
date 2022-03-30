@@ -14,10 +14,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SmartCode.Annotations;
-using SmartCode.Models;
+using SmartSQL.Annotations;
+using SmartSQL.Models;
 
-namespace SmartCode.UserControl.Controls
+namespace SmartSQL.UserControl.Controls
 {
     /// <summary>
     /// NoDataArea.xaml 的交互逻辑

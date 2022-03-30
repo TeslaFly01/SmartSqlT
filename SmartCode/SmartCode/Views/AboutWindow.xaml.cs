@@ -1,19 +1,20 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
 
-namespace SmartCode.Views
+namespace SmartSQL.Views
 {
     public partial class AboutWindow
     {
         public AboutWindow()
         {
             InitializeComponent();
-
+            var version = Assembly.GetExecutingAssembly().GetName().Version;
             DataContext = this;
             CopyRight = DateTime.Now.Year == 2021 ? $"Copyright ©{DateTime.Now.Year} zfluok" : $"Copyright ©2021-{DateTime.Now.Year} zfluok";
-            Version = "Version 1.0.1";
+            Version = $"Version {version.ToString()}";
         }
 
         public static readonly DependencyProperty CopyRightProperty = DependencyProperty.Register(

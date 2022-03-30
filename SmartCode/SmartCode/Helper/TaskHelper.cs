@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
-namespace SmartCode.Helper
+namespace SmartSQL.Helper
 {
 	/// <summary>
 	/// Provides static helper methods for easier execution of asynchronous and synchronised

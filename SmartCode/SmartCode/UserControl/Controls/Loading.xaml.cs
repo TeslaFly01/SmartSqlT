@@ -14,7 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 
-namespace SmartCode.UserControl.Controls
+namespace SmartSQL.UserControl.Controls
 {
     /// <summary>
     /// Loading.xaml 的交互逻辑

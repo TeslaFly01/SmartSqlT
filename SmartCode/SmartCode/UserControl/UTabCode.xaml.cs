@@ -18,12 +18,12 @@ using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
-using SmartCode.Helper;
-using SmartCode.Models;
+using SmartSQL.Helper;
+using SmartSQL.Models;
 using SqlSugar;
 using UserControlE = System.Windows.Controls.UserControl;
 
-namespace SmartCode.UserControl
+namespace SmartSQL.UserControl
 {
     /// <summary>
     /// UTabCode.xaml 的交互逻辑

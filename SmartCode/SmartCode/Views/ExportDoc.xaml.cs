@@ -16,11 +16,11 @@ using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Models;
+using SmartSQL.Models;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.Views
+namespace SmartSQL.Views
 {
     /// <summary>
     /// ExportDoc.xaml 的交互逻辑

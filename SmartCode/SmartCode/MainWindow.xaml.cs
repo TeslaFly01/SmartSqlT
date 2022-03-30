@@ -8,21 +8,21 @@ using System.Windows.Controls;
 using HandyControl.Controls;
 using HandyControl.Data;
 using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Models;
+using SmartSQL.Models;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Annotations;
+using SmartSQL.Annotations;
 using SmartCode.Framework.Const;
-using SmartCode.UserControl;
-using SmartCode.Views;
+using SmartSQL.UserControl;
+using SmartSQL.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 
-namespace SmartCode
+namespace SmartSQL
 {
     public partial class MainWindow : INotifyPropertyChanged
     {
@@ -97,12 +97,12 @@ namespace SmartCode
             TabLeftType.SelectedIndex = leftMenuType - 1;
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
-            var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
-            if (!string.IsNullOrWhiteSpace(selectedConn))
-            {
-                var connectConfig = sqLiteHelper.FirstOrDefault<ConnectConfigs>(x => x.ConnectName.Equals(selectedConn));
-                SwitchConnect(connectConfig);
-            }
+            //var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
+            //if (!string.IsNullOrWhiteSpace(selectedConn))
+            //{
+            //    var connectConfig = sqLiteHelper.FirstOrDefault<ConnectConfigs>(x => x.ConnectName.Equals(selectedConn));
+            //    SwitchConnect(connectConfig);
+            //}
             //MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
             //MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
             MainTabW.DataContext = TabItemData;
@@ -165,17 +165,18 @@ namespace SmartCode
         /// <param name="e"></param>
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
             var selectDatabase = SelectDatabase.SelectedItem;
             if (selectDatabase != null)
             {
                 var selectedDbBase = (DataBase)selectDatabase;
                 ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, selectedDbBase.DbName);
-                //SelectDatabase.SelectedItem = DBase.FirstOrDefault(x => x.DbName == selectedDbBase.DbName);
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
-
                 var sqLiteHelper = new SQLiteHelper();
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
-
                 MenuBind(false, null);
             }
         }
@@ -644,10 +645,6 @@ namespace SmartCode
         /// <param name="e"></param>
         private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (!IsLoaded)
-            {
-                return;
-            }
             var sqLiteHelper = new SQLiteHelper();
             var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
             if (selectedItem.Name == "TabAllData")

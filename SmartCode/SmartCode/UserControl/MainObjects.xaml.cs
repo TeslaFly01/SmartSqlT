@@ -20,15 +20,15 @@ using SmartCode.Framework;
 using SmartCode.Framework.Exporter;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Annotations;
-using SmartCode.Models;
-using SmartCode.Views;
+using SmartSQL.Annotations;
+using SmartSQL.Models;
+using SmartSQL.Views;
 using TextBox = System.Windows.Controls.TextBox;
 using UserControlE = System.Windows.Controls.UserControl;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
 
-namespace SmartCode.UserControl
+namespace SmartSQL.UserControl
 {
     /// <summary>
     /// MainObjects.xaml 的交互逻辑

@@ -6,9 +6,9 @@ using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Annotations;
+using SmartSQL.Annotations;
 
-namespace SmartCode.Models
+namespace SmartSQL.Models
 {
     public class NotifyPropertyBase : INotifyPropertyChanged
     {

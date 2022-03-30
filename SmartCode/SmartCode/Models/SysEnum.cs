@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.Models
+namespace SmartSQL.Models
 {
     /// <summary>
     /// 导出文档类型

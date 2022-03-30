@@ -1,5 +1,5 @@
 ﻿<Application
-    x:Class="SmartCode.App"
+    x:Class="SmartSQL.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:o="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
@@ -27,7 +27,7 @@
                 <DrawingBrush.Drawing>
                     <ImageDrawing
                         o:Freeze="True"
-                        ImageSource="/SmartCode;component/Resources/cloud.png"
+                        ImageSource="/SmartSQL;component/Resources/cloud.png"
                         Rect="0,0,157,157" />
                 </DrawingBrush.Drawing>
             </DrawingBrush>

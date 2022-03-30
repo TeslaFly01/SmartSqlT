@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Framework", "SmartCode\SmartCode.Framework\SmartCode.Framework.csproj", "{8F686DD2-388C-4D61-A077-3A769059D547}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode", "SmartCode\SmartCode\SmartCode.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSQL", "SmartCode\SmartCode\SmartSQL.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.DocUtils", "SmartCode\SmartCode.DocUtils\SmartCode.DocUtils.csproj", "{84E6E445-CFE0-4F01-B815-14F69F682EB9}"
 EndProject

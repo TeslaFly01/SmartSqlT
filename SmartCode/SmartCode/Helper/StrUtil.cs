@@ -5,9 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartCode.Framework.PhysicalDataModel;
-using SmartCode.Models;
 
-namespace SmartCode.Helper
+namespace SmartSQL.Helper
 {
     public static class StrUtil
     {

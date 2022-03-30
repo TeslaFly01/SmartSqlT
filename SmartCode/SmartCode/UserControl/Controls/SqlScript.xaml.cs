@@ -16,11 +16,11 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
-using SmartCode.Annotations;
+using SmartSQL.Annotations;
 using SmartCode.Framework;
 using SmartCode.Framework.Util;
 
-namespace SmartCode.UserControl.Controls
+namespace SmartSQL.UserControl.Controls
 {
     /// <summary>
     /// SqlScript.xaml 的交互逻辑

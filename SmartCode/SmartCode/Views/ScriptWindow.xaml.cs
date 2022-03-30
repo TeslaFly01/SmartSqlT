@@ -16,10 +16,10 @@ using SmartCode.Framework;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
 using SmartCode.Framework.Util;
-using SmartCode.Models;
+using SmartSQL.Models;
 using SqlSugar;
 
-namespace SmartCode.Views
+namespace SmartSQL.Views
 {
     /// <summary>
     /// ScriptWindow.xaml 的交互逻辑

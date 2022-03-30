@@ -16,7 +16,7 @@ using SmartCode.Framework;
 using SmartCode.Framework.Const;
 using SmartCode.Framework.SqliteModel;
 
-namespace SmartCode.Views
+namespace SmartSQL.Views
 {
     /// <summary>
     /// SettingWindow.xaml 的交互逻辑

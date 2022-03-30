@@ -5,9 +5,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.Annotations;
+using SmartSQL.Annotations;
 
-namespace SmartCode.UserControl
+namespace SmartSQL.UserControl
 {
     public abstract class BaseUserControl : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {

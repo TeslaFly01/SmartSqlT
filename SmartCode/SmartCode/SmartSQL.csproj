@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{12909642-6A41-43B5-B2F8-1ED0E6FF132B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>SmartCode</RootNamespace>
-    <AssemblyName>SmartCode</AssemblyName>
+    <RootNamespace>SmartSQL</RootNamespace>
+    <AssemblyName>SmartSQL</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <WarningLevel>4</WarningLevel>
@@ -93,7 +93,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Helper\CompletionData.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
     <Compile Include="Models\SysEnum.cs" />

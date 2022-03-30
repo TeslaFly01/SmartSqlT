@@ -6,7 +6,7 @@ using System.Windows.Threading;
 using HandyControl.Controls;
 using MessageBox = System.Windows.MessageBox;
 
-namespace SmartCode
+namespace SmartSQL
 {
     public partial class App
     {

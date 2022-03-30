@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SmartCode.Models;
+using SmartSQL.Models;
 
 namespace SmartCode
 {

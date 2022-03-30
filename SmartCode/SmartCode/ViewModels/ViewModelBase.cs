@@ -1,8 +1,8 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using SmartCode.Annotations;
+using SmartSQL.Annotations;
 
-namespace SmartCode.ViewModels
+namespace SmartSQL.ViewModels
 {
 	class ViewModelBase : INotifyPropertyChanged
 	{

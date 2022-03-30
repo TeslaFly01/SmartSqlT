@@ -17,11 +17,11 @@ using HandyControl.Data;
 using SmartCode.Framework;
 using SmartCode.Framework.PhysicalDataModel;
 using SmartCode.Framework.SqliteModel;
-using SmartCode.Models;
-using SmartCode.Views;
+using SmartSQL.Models;
+using SmartSQL.Views;
 using UserControlE = System.Windows.Controls.UserControl;
 
-namespace SmartCode.UserControl
+namespace SmartSQL.UserControl
 {
     /// <summary>
     /// MainW.xaml 的交互逻辑
