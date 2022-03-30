@@ -131,7 +131,7 @@ namespace SmartCode.Views
                 dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
                 dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
                 dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
-                //xml生成目前有问题
+
                 var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 var filePath = Path.Combine(floderPath, fileName);
                 doc.Build(filePath);
