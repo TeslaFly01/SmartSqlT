@@ -19,7 +19,7 @@ namespace SmartCode.DocUtils
                 case DocType.html:
                     return new HtmlDoc(dto);
                 case DocType.word:
-                    return new WordExtDoc(dto);
+                    return new WordDoc(dto);
                 case DocType.excel:
                     return new ExcelDoc(dto);
                 case DocType.pdf:

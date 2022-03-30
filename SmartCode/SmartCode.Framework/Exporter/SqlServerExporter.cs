@@ -305,58 +305,46 @@ namespace SmartCode.Framework.Exporter
         public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
-            var sql = $@"SELECT d.id as object_id,
-                                d.name as object_name,
-                                a.colorder AS column_id, 
-                                a.name AS column_name, 
-                                b.name AS type_name, 
-                                COLUMNPROPERTY(a.id,a.name,'IsIdentity') AS is_identity , 
-                                a.length AS byte_length, 
-                                CASE WHEN b.name IN ('char','nchar','varchar','nvarchar','text','binary','varbinary','datetime2','datetimeoffset','time','numeric','decimal') THEN COLUMNPROPERTY(a.id,a.name,'PRECISION') ELSE 0 END AS length, 
-                                isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS dot_length, 
-                                a.isnullable AS is_nullable, 
-                                isnull(e.text,'') AS default_value, 
-                                isnull(g.[value],'') AS description,
-                                case when exists(SELECT 1 FROM sysobjects where xtype='PK' and name in (
-                                  SELECT name FROM sysindexes WHERE indid in(
-                                  SELECT indid FROM sysindexkeys WHERE id = a.id AND colid=a.colid 
-                                   ))) then 1 else 0 END AS is_primarykey 
-                                FROM syscolumns a 
-                                left join systypes b on a.xtype=b.xusertype 
-                                inner join sysobjects d on a.id=d.id and d.name<>'dtproperties' 
-                                left join syscomments e on a.cdefault=e.id 
-                                left join sys.extended_properties g on a.id=g.major_id and a.colid=g.minor_id 
-                                left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
-                                where d.id={ Convert.ToInt32(objectId)}
-                                order by a.id,a.colorder";
-            return this.GetColumnsExt(DbConnectString, sql);
+            //var sql = $@"SELECT d.id as object_id,
+            //                    d.name as object_name,
+            //                    a.colorder AS column_id, 
+            //                    a.name AS column_name, 
+            //                    b.name AS type_name, 
+            //                    COLUMNPROPERTY(a.id,a.name,'IsIdentity') AS is_identity , 
+            //                    a.length AS byte_length, 
+            //                    CASE WHEN b.name IN ('char','nchar','varchar','nvarchar','text','binary','varbinary','datetime2','datetimeoffset','time','numeric','decimal') THEN COLUMNPROPERTY(a.id,a.name,'PRECISION') ELSE 0 END AS length, 
+            //                    isnull(COLUMNPROPERTY(a.id,a.name,'Scale'),0) AS dot_length, 
+            //                    a.isnullable AS is_nullable, 
+            //                    isnull(e.text,'') AS default_value, 
+            //                    isnull(g.[value],'') AS description,
+            //                    case when exists(SELECT 1 FROM sysobjects where xtype='PK' and name in (
+            //                      SELECT name FROM sysindexes WHERE indid in(
+            //                      SELECT indid FROM sysindexkeys WHERE id = a.id AND colid=a.colid 
+            //                       ))) then 1 else 0 END AS is_primarykey 
+            //                    FROM syscolumns a 
+            //                    left join systypes b on a.xtype=b.xusertype 
+            //                    inner join sysobjects d on a.id=d.id and d.name<>'dtproperties' 
+            //                    left join syscomments e on a.cdefault=e.id 
+            //                    left join sys.extended_properties g on a.id=g.major_id and a.colid=g.minor_id 
+            //                    left join sys.extended_properties f on d.id=f.major_id and f.minor_id =0 
+            //                    where d.id={ Convert.ToInt32(objectId)}
+            //                    order by a.id,a.colorder";
+            //return this.GetColumnsExt(DbConnectString, sql);
             #endregion
-        }
 
-        private Columns GetColumnsExt(string connectionString, string sqlCmd)
-        {
             #region MyRegion
-            var columns = new Columns(500);
-            var dr = SqlHelper.ExecuteReader(connectionString, CommandType.Text, sqlCmd);
-            while (dr.Read())
+            var columns = new Columns();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            var colList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            colList.ForEach(col =>
             {
-                int objectId = dr.IsDBNull(0) ? 0 : dr.GetInt32(0);
-                string objectName = dr.IsDBNull(1) ? "" : dr.GetString(1);
-                int id = dr.IsDBNull(2) ? 0 : dr.GetInt16(2);
-                string displayName = dr.IsDBNull(3) ? string.Empty : dr.GetString(3);
-                string name = dr.IsDBNull(3) ? string.Empty : dr.GetString(3);
-                string dataType = dr.IsDBNull(4) ? string.Empty : dr.GetString(4);
-                int identity = dr.IsDBNull(5) ? 0 : dr.GetInt32(5);
-                int length = dr.IsDBNull(7) ? 0 : dr.GetInt32(7);
-                int length_dot = dr.IsDBNull(8) ? 0 : dr.GetInt32(8);
-                int isNullable = dr.IsDBNull(9) ? 0 : dr.GetInt32(9);
-                string defaultValue = dr.IsDBNull(10) ? string.Empty : dr.GetString(10);
-                string comment = dr.IsDBNull(11) ? string.Empty : dr.GetString(11);
-                int isPrimaryKey = dr.IsDBNull(12) ? 0 : dr.GetInt32(12);
-
-                Column column = new Column(id.ToString(), displayName, name, dataType, comment);
+                if (columns.ContainsKey(col.DbColumnName))
+                {
+                    return;
+                }
+                var column = new Column(col.DbColumnId.ToString(), col.DbColumnName, col.DbColumnName, col.DataType, col.ColumnDescription);
                 column.Length = "";
-                switch (dataType)
+                switch (col.DataType)
                 {
                     case "char":
                     case "nchar":
@@ -368,28 +356,24 @@ namespace SmartCode.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({length})"; break;
+                        column.Length = $"({col.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({length},{length_dot})"; break;
+                        column.Length = $"({col.Length},{col.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
-                column.ObjectName = objectName;
-                column.IsIdentity = identity == 1;
-                column.IsNullable = isNullable == 1;
-                column.DefaultValue = defaultValue.Contains("((") ? defaultValue.Replace("((", "").Replace("))", "") : defaultValue;
-                column.DataType = dataType;
-                column.OriginalName = name;
-                column.Comment = comment;
-                column.IsPrimaryKey = isPrimaryKey == 1;
-                if (!columns.ContainsKey(id.ToString()))
-                {
-                    columns.Add(id.ToString(), column);
-                }
-            }
-            dr.Close();
-            return columns;
+                column.ObjectName = col.TableName;
+                column.IsIdentity = col.IsIdentity;
+                column.IsNullable = col.IsNullable;
+                column.DefaultValue = !string.IsNullOrEmpty(col.DefaultValue) && col.DefaultValue.Contains("((") ? col.DefaultValue.Replace("((", "").Replace("))", "") : col.DefaultValue;
+                column.DataType = col.DataType;
+                column.OriginalName = col.DbColumnName;
+                column.Comment = col.ColumnDescription;
+                column.IsPrimaryKey = col.IsPrimarykey;
+                columns.Add(col.DbColumnName, column);
+            });
+            return columns; 
             #endregion
         }
 
@@ -408,6 +392,7 @@ namespace SmartCode.Framework.Exporter
 
         public override string CreateTableSql()
         {
+            #region MyRegion
             if (string.IsNullOrEmpty(TableName) || !Columns.Any())
             {
                 return "";
@@ -442,7 +427,8 @@ namespace SmartCode.Framework.Exporter
             }
             sb.Append(Environment.NewLine);
             sb.Append(")");
-            return sb.ToString();
+            return sb.ToString(); 
+            #endregion
         }
 
         /// <summary>
@@ -468,6 +454,7 @@ namespace SmartCode.Framework.Exporter
         /// <returns></returns>
         public override string InsertSql()
         {
+            #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
             var strSql = new StringBuilder($"INSERT INTO {TableName} (");
             var tempCol = new StringBuilder();
@@ -486,7 +473,8 @@ namespace SmartCode.Framework.Exporter
                 tempCol.Append($",");
             });
             strSql.Append($"{tempCol.ToString().TrimEnd(',')})");
-            return strSql.ToString();
+            return strSql.ToString(); 
+            #endregion
         }
 
         /// <summary>
@@ -495,6 +483,7 @@ namespace SmartCode.Framework.Exporter
         /// <returns></returns>
         public override string UpdateSql()
         {
+            #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
             var strSql = new StringBuilder($"UPDATE {TableName} SET ");
             var tempCol = new StringBuilder();
@@ -531,7 +520,8 @@ namespace SmartCode.Framework.Exporter
                 j++;
             });
             strSql.Append(tempCol);
-            return strSql.ToString();
+            return strSql.ToString(); 
+            #endregion
         }
 
         /// <summary>
@@ -540,6 +530,7 @@ namespace SmartCode.Framework.Exporter
         /// <returns></returns>
         public override string DeleteSql()
         {
+            #region MyRegion
             var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
             var tempCol = new StringBuilder();
             var j = 0;
@@ -560,7 +551,8 @@ namespace SmartCode.Framework.Exporter
                 j++;
             });
             strSql.Append(tempCol);
-            return strSql.ToString();
+            return strSql.ToString(); 
+            #endregion
         }
 
         /// <summary>

@@ -140,7 +140,6 @@
     <Compile Include="DBDoc\MarkDownDoc.cs" />
     <Compile Include="DBDoc\PdfDoc.cs" />
     <Compile Include="DBDoc\WordDoc.cs" />
-    <Compile Include="DBDoc\WordExtDoc.cs" />
     <Compile Include="DBDoc\XmlDoc.cs" />
     <Compile Include="DocFactory.cs" />
     <Compile Include="Dtos\ChmHHP.cs" />
