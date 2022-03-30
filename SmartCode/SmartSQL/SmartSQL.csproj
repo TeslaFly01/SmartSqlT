@@ -33,7 +33,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug2\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -346,7 +346,9 @@
     </Resource>
     <Resource Include="Resources\Img\sqlScript.ico" />
     <Resource Include="Resources\Img\doc\XML.png" />
-    <Resource Include="Resources\Img\Refresh.png" />
+    <Resource Include="Resources\Img\Refresh.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Resources\Img\SetGroup.png" />
     <Resource Include="Resources\Img\NoData2.png" />
     <Resource Include="Resources\Img\NoData1.png" />

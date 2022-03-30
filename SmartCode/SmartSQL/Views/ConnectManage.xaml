@@ -203,7 +203,7 @@
                                                 <Image
                                                     Width="11"
                                                     Height="15"
-                                                    Source="/SmartCode;component/Resources/Img/dataBase.ico" />
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
                                                 <TextBlock
                                                     Margin="5,0,0,0"
                                                     HorizontalAlignment="Center"
@@ -328,7 +328,7 @@
                                                 <Image
                                                     Width="11"
                                                     Height="15"
-                                                    Source="/SmartCode;component/Resources/Img/dataBase.ico" />
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
                                                 <TextBlock
                                                     Margin="5,0,0,0"
                                                     HorizontalAlignment="Center"

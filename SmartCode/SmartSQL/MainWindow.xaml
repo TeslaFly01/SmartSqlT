@@ -6,7 +6,7 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modelHelper="clr-namespace:SmartCode"
+    xmlns:modelHelper="clr-namespace:SmartSQL"
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
     Title="SmartSQL"
@@ -200,7 +200,7 @@
                                             <Image
                                                 Width="11"
                                                 Height="15"
-                                                Source="/SmartCode;component/Resources/Img/dataBase.ico" />
+                                                Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
                                             <TextBlock
                                                 Margin="5,0,0,0"
                                                 HorizontalAlignment="Center"
@@ -221,7 +221,7 @@
                                 Click="BtnFresh_OnClick"
                                 Cursor="Hand">
                                 <Button.Content>
-                                    <Image Source="/SmartCode;component/Resources/Img/Refresh.png" Stretch="Fill" />
+                                    <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
                                 </Button.Content>
                             </Button>
                         </Grid>
