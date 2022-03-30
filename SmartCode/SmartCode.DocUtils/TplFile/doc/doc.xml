@@ -292,6 +292,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:eastAsia="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -300,6 +302,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -318,6 +322,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:eastAsia="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -326,6 +332,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -344,6 +352,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -351,6 +361,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -368,6 +380,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:eastAsia="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:eastAsia="zh-CN"/>
@@ -376,6 +390,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -394,6 +410,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -401,6 +419,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -418,6 +438,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:eastAsia="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -426,6 +448,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -444,6 +468,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -451,6 +477,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -468,6 +496,8 @@
                     <w:jc w:val="center"/>
                     <w:rPr>
                       <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -475,6 +505,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN"/>
@@ -484,6 +516,8 @@
                   <w:r>
                     <w:rPr>
                       <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                      <w:b/>
+                      <w:bCs/>
                       <w:sz w:val="18"/>
                       <w:szCs w:val="18"/>
                     </w:rPr>
@@ -706,8 +740,6 @@
                     </w:rPr>
                     <w:t>@col.Comment</w:t>
                   </w:r>
-                  <w:bookmarkStart w:id="1" w:name="_GoBack"/>
-                  <w:bookmarkEnd w:id="1"/>
                 </w:p>
               </w:tc>
             </w:tr>
@@ -767,7 +799,7 @@
         <Characters>222</Characters>
         <Lines>1</Lines>
         <Paragraphs>1</Paragraphs>
-        <TotalTime>23</TotalTime>
+        <TotalTime>35</TotalTime>
         <ScaleCrop>false</ScaleCrop>
         <LinksUpToDate>false</LinksUpToDate>
         <CharactersWithSpaces>223</CharactersWithSpaces>
@@ -785,9 +817,9 @@
           xmlns:dcmitype="http://purl.org/dc/dcmitype/"
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <dcterms:created xsi:type="dcterms:W3CDTF">2022-03-30T04:46:13Z</dcterms:created>
-        <dc:creator>screw</dc:creator>
+        <dc:creator>smartSql</dc:creator>
         <cp:lastModifiedBy>Colin</cp:lastModifiedBy>
-        <dcterms:modified xsi:type="dcterms:W3CDTF">2022-03-30T05:17:13Z</dcterms:modified>
+        <dcterms:modified xsi:type="dcterms:W3CDTF">2022-03-30T05:36:44Z</dcterms:modified>
         <dc:title>数据库表结构文档</dc:title>
         <cp:revision>2</cp:revision>
       </cp:coreProperties>
@@ -802,7 +834,7 @@
           <vt:lpwstr>2052-11.1.0.11365</vt:lpwstr>
         </property>
         <property fmtid="{D5CDD505-2E9C-101B-9397-08002B2CF9AE}" pid="3" name="ICV">
-          <vt:lpwstr>A95692633D93459181DB5218A597BA2F</vt:lpwstr>
+          <vt:lpwstr>C6D385C2410B4B5D8D104BD3585947E5</vt:lpwstr>
         </property>
       </Properties>
     </pkg:xmlData>
@@ -1048,6 +1080,7 @@
           <w:rsid w:val="020F6014"/>
           <w:rsid w:val="05FE0636"/>
           <w:rsid w:val="06110369"/>
+          <w:rsid w:val="09CD18FD"/>
           <w:rsid w:val="0B795A0E"/>
           <w:rsid w:val="0CF9065E"/>
           <w:rsid w:val="11DF756D"/>
@@ -1056,6 +1089,7 @@
           <w:rsid w:val="16102588"/>
           <w:rsid w:val="186B5653"/>
           <w:rsid w:val="190F7065"/>
+          <w:rsid w:val="1C1918CE"/>
           <w:rsid w:val="1F0935E8"/>
           <w:rsid w:val="1FDD5F9C"/>
           <w:rsid w:val="244A6AC8"/>
@@ -1067,21 +1101,28 @@
           <w:rsid w:val="2F6E64F7"/>
           <w:rsid w:val="307849BD"/>
           <w:rsid w:val="30B73737"/>
+          <w:rsid w:val="318231C5"/>
+          <w:rsid w:val="33F407FF"/>
           <w:rsid w:val="35B04BF9"/>
           <w:rsid w:val="35F02A4C"/>
           <w:rsid w:val="36DF4541"/>
           <w:rsid w:val="378D51F2"/>
           <w:rsid w:val="39292CF8"/>
+          <w:rsid w:val="3C3E4D0D"/>
+          <w:rsid w:val="3CE21B3C"/>
           <w:rsid w:val="40E00744"/>
           <w:rsid w:val="42B74BAD"/>
           <w:rsid w:val="434F6875"/>
           <w:rsid w:val="446F64D3"/>
+          <w:rsid w:val="46A30795"/>
           <w:rsid w:val="482E7D1D"/>
           <w:rsid w:val="49AB775A"/>
+          <w:rsid w:val="4ABF76E9"/>
           <w:rsid w:val="4AC72371"/>
           <w:rsid w:val="4C3E6663"/>
           <w:rsid w:val="4CCA439B"/>
           <w:rsid w:val="4D0258E3"/>
+          <w:rsid w:val="4D5048A0"/>
           <w:rsid w:val="51257DF2"/>
           <w:rsid w:val="522C2596"/>
           <w:rsid w:val="532E03DD"/>
@@ -1089,10 +1130,12 @@
           <w:rsid w:val="56226FF5"/>
           <w:rsid w:val="567F0764"/>
           <w:rsid w:val="58E02D25"/>
+          <w:rsid w:val="5AA4622B"/>
           <w:rsid w:val="5B687259"/>
           <w:rsid w:val="5EB31DB5"/>
           <w:rsid w:val="5EB804F7"/>
           <w:rsid w:val="5F3005FC"/>
+          <w:rsid w:val="5F4973A1"/>
           <w:rsid w:val="60B27DD0"/>
           <w:rsid w:val="60B42F40"/>
           <w:rsid w:val="60CE4002"/>
@@ -1107,14 +1150,21 @@
           <w:rsid w:val="679346C8"/>
           <w:rsid w:val="68444C3D"/>
           <w:rsid w:val="68794446"/>
+          <w:rsid w:val="6B144D07"/>
           <w:rsid w:val="6C1D3C2D"/>
           <w:rsid w:val="6ED956C3"/>
           <w:rsid w:val="6F8754C1"/>
           <w:rsid w:val="6FB02165"/>
           <w:rsid w:val="71C10F79"/>
           <w:rsid w:val="73133AF6"/>
+          <w:rsid w:val="73814F04"/>
+          <w:rsid w:val="7399224D"/>
+          <w:rsid w:val="73F416D3"/>
+          <w:rsid w:val="75CD2682"/>
           <w:rsid w:val="76BC2F74"/>
           <w:rsid w:val="780775B7"/>
+          <w:rsid w:val="785B3F75"/>
+          <w:rsid w:val="78FD502C"/>
           <w:rsid w:val="7C642244"/>
           <w:rsid w:val="7CE343A8"/>
           <w:rsid w:val="7E837D82"/>

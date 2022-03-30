@@ -229,8 +229,9 @@ namespace SmartCode.Views
                             colDto.CanNull = (col.Value.IsNullable ? "√" : "");
                             // 默认值
                             colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
+                            var comment = col.Value.Comment.Replace("<", "").Replace(">", "");
                             // 列注释（说明）
-                            colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment : "");
+                            colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? comment : "");
 
                             lst_col_dto.Add(colDto);
                         }
@@ -270,8 +271,9 @@ namespace SmartCode.Views
                         colDto.CanNull = (col.Value.IsNullable ? "√" : "");
                         // 默认值
                         colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
+                        var comment = col.Value.Comment.Replace("<", "").Replace(">", "");
                         // 列注释（说明）
-                        colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment : "");
+                        colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? comment : "");
 
                         lst_col_dto.Add(colDto);
                     }
