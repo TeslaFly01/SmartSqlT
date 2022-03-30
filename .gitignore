@@ -14,3 +14,5 @@ bin/*
 obj/*
 /bin/*
 /obj/*
+/SmartCode/SmartSQL/obj
+/SmartCode/SmartSQL/bin
