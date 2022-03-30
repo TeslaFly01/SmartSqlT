@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.Framework", "Smar
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSQL", "SmartCode\SmartSQL\SmartSQL.csproj", "{12909642-6A41-43B5-B2F8-1ED0E6FF132B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartCode.DocUtils", "SmartCode\SmartCode.DocUtils\SmartCode.DocUtils.csproj", "{84E6E445-CFE0-4F01-B815-14F69F682EB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartSQL.DocUtils", "SmartCode\SmartCode.DocUtils\SmartSQL.DocUtils.csproj", "{84E6E445-CFE0-4F01-B815-14F69F682EB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

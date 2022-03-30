@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SmartCode.DocUtils.Dtos
+namespace SmartSQL.DocUtils.Dtos
 {
     /// <summary>
     /// 数据库表dto

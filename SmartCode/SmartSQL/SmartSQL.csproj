@@ -296,9 +296,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SmartCode.DocUtils\SmartCode.DocUtils.csproj">
+    <ProjectReference Include="..\SmartCode.DocUtils\SmartSQL.DocUtils.csproj">
       <Project>{84e6e445-cfe0-4f01-b815-14f69f682eb9}</Project>
-      <Name>SmartCode.DocUtils</Name>
+      <Name>SmartSQL.DocUtils</Name>
     </ProjectReference>
     <ProjectReference Include="..\SmartCode.Framework\SmartCode.Framework.csproj">
       <Project>{8F686DD2-388C-4D61-A077-3A769059D547}</Project>

@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using SmartCode.DocUtils;
+using SmartSQL.DocUtils;
 using ZetaLongPaths;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils.Dtos;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class MarkDownDoc : Doc
     {

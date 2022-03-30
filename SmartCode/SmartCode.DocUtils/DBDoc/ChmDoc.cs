@@ -8,11 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
-using SmartCode.DocUtils.Dtos;
-using SmartCode.DocUtils.Properties;
+using SmartSQL.DocUtils.Dtos;
+using SmartSQL.DocUtils.Properties;
 using ZetaLongPaths;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class ChmDoc : Doc
     {

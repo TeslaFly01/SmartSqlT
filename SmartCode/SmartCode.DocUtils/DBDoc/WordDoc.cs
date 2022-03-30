@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ZetaLongPaths;
-using SmartCode.DocUtils.Dtos;
-using SmartCode.DocUtils.Properties;
+using SmartSQL.DocUtils.Dtos;
+using SmartSQL.DocUtils.Properties;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class WordDoc : Doc
     {

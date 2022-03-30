@@ -4,9 +4,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.DocUtils;
+using SmartSQL.DocUtils;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     public class JS
     {

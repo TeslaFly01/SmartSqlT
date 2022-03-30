@@ -11,7 +11,7 @@ using ZetaLongPaths;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Specialized;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     public static class Extensions
     {

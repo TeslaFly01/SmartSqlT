@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.DocUtils;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils;
+using SmartSQL.DocUtils.Dtos;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class ExcelDoc : Doc
     {

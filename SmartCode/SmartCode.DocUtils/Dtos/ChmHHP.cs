@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.DocUtils.Dtos
+namespace SmartSQL.DocUtils.Dtos
 {
     public class ChmHHP
     {

@@ -4,13 +4,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils.Dtos;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-using SmartCode.DocUtils.Properties;
+using SmartSQL.DocUtils.Properties;
 using ZetaLongPaths;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class PdfDoc : Doc
     {

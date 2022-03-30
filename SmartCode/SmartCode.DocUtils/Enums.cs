@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     public enum DocType
     {

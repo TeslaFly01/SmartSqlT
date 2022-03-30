@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace SmartCode.DocUtils.Dtos
+namespace SmartSQL.DocUtils.Dtos
 {
     /// <summary>
     /// 数据库视图存储过程Dto

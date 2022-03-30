@@ -4,10 +4,10 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils.Dtos;
 using ZetaLongPaths;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public abstract class Doc
     {

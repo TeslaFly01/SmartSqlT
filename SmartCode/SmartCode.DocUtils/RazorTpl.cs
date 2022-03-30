@@ -10,7 +10,7 @@ using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using RazorEngine.Text;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     public static class RazorTpl
     {

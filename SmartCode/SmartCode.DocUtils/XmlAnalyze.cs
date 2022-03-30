@@ -7,7 +7,7 @@ using System.IO;
 using System.Xml;
 using System.Text.RegularExpressions;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     /// <summary>
     /// 解析VS生成的 XML文档文件

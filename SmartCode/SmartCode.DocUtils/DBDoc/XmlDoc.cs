@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils.Dtos;
 
-namespace SmartCode.DocUtils.DBDoc
+namespace SmartSQL.DocUtils.DBDoc
 {
     public class XmlDoc : Doc
     {

@@ -6,7 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     /// <summary>
     /// 管理 配置的连接字符串

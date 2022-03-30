@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SmartCode.DocUtils.DBDoc;
-using SmartCode.DocUtils.Dtos;
+using SmartSQL.DocUtils.DBDoc;
+using SmartSQL.DocUtils.Dtos;
 
-namespace SmartCode.DocUtils
+namespace SmartSQL.DocUtils
 {
     public class DocFactory
     {

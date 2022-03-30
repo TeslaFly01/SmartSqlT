@@ -7,8 +7,8 @@
     <ProjectGuid>{84E6E445-CFE0-4F01-B815-14F69F682EB9}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SmartCode.DocUtils</RootNamespace>
-    <AssemblyName>SmartCode.DocUtils</AssemblyName>
+    <RootNamespace>SmartSQL.DocUtils</RootNamespace>
+    <AssemblyName>SmartSQL.DocUtils</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>

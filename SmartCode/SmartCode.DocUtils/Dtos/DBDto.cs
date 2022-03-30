@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace SmartCode.DocUtils.Dtos
+namespace SmartSQL.DocUtils.Dtos
 {
     /// <summary>
     /// 数据库Dto
