@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 
 [assembly: AssemblyTitle("SmartSQL")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("一款方便、快捷的数据库文档生成工具")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("SmartSQL")]
