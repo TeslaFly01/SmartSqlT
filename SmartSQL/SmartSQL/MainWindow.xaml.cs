@@ -38,8 +38,9 @@ namespace SmartSQL
         private static readonly string TABLEICON = "\ue6ac";
         private static readonly string VIEWICON = "\ue601";
         private static readonly string PROCICON = "\ue6d2";
-        private string ConnectionString = "";
+        //private string ConnectionString = "";
         private ConnectConfigs SelectendConnection = null;
+        private DataBase SelectedDataBase = null;
 
         public Model dataSource = new Model();
         public List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
@@ -53,15 +54,7 @@ namespace SmartSQL
             set => SetValue(CornerRadiusProperty, value);
         }
 
-        public static readonly DependencyProperty DBaseProperty = DependencyProperty.Register(
-            "DBase", typeof(List<DataBase>), typeof(MainWindow), new PropertyMetadata(default(List<DataBase>)));
-
-        public List<DataBase> DBase
-        {
-            get => (List<DataBase>)GetValue(DBaseProperty);
-            set => SetValue(DBaseProperty, value);
-        }
-
+        #region TreeViewData
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
             "TreeViewData", typeof(List<PropertyNodeItem>), typeof(MainWindow), new PropertyMetadata(default(List<PropertyNodeItem>)));
         /// <summary>
@@ -75,7 +68,8 @@ namespace SmartSQL
                 SetValue(TreeViewDataProperty, value);
                 OnPropertyChanged(nameof(TreeViewData));
             }
-        }
+        } 
+        #endregion
 
         public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
 
@@ -103,8 +97,6 @@ namespace SmartSQL
             //    var connectConfig = sqLiteHelper.FirstOrDefault<ConnectConfigs>(x => x.ConnectName.Equals(selectedConn));
             //    SwitchConnect(connectConfig);
             //}
-            //MainW.Visibility = isMultipleTab ? Visibility.Collapsed : Visibility.Visible;
-            //MainTabW.Visibility = isMultipleTab ? Visibility.Visible : Visibility.Collapsed;
             MainTabW.DataContext = TabItemData;
             MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
         }
@@ -128,16 +120,13 @@ namespace SmartSQL
         public void SwitchConnect(ConnectConfigs connectConfig)
         {
             LoadingLine.Visibility = Visibility.Visible;
-            ConnectionString = connectConfig.DbMasterConnectString;
             SwitchMenu.Header = connectConfig.ConnectName;
             SelectendConnection = connectConfig;
             try
             {
-                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, ConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
                 var list = dbInstance.GetDatabases();
-                DBase = list;
-                SelectDatabase.ItemsSource = DBase;
-                ConnectionString = connectConfig.DbDefaultConnectString;
+                SelectDatabase.ItemsSource = list;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
                 SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
 
@@ -173,7 +162,7 @@ namespace SmartSQL
             if (selectDatabase != null)
             {
                 var selectedDbBase = (DataBase)selectDatabase;
-                ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, selectedDbBase.DbName);
+                //////ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, selectedDbBase.DbName);
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
                 var sqLiteHelper = new SQLiteHelper();
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
@@ -293,7 +282,7 @@ namespace SmartSQL
                 }
                 #endregion
 
-                var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, ConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
                 var model = dbInstance.Init();
                 dataSource = model;
                 var textColor = "#333444";
@@ -659,7 +648,7 @@ namespace SmartSQL
             {
                 sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "3");
             }
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (SelectendConnection == null)
             {
                 return;
             }
@@ -1124,7 +1113,7 @@ namespace SmartSQL
         private void BtnCompare_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (SelectendConnection == null)
             {
                 Growl.Warning(new GrowlInfo { Message = $"请选择源数据库", WaitTime = 1, ShowDateTime = false });
                 return;
@@ -1164,7 +1153,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void MenuGroup_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (SelectendConnection == null)
             {
                 Growl.Warning(new GrowlInfo { Message = $"请选择连接", WaitTime = 1, ShowDateTime = false });
                 return;
@@ -1205,7 +1194,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (SelectendConnection == null)
             {
                 return;
             }
@@ -1255,7 +1244,7 @@ namespace SmartSQL
 
         private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(ConnectionString))
+            if (SelectendConnection == null)
             {
                 Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
                 return;
