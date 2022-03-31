@@ -37,7 +37,7 @@ namespace SmartSQL
             try
             {
                 e.Handled = true; //把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出
-                Growl.WarningGlobal("UI线程异常:" + e.Exception.Message);
+                Growl.WarningGlobal("UI线程异常:" + e.Exception);
             }
             catch (Exception ex)
             {

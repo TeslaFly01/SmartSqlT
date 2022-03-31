@@ -16,6 +16,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Annotations;
 using SmartSQL.Framework.Const;
+using SmartSQL.Helper;
 using SmartSQL.UserControl;
 using SmartSQL.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
@@ -42,8 +43,8 @@ namespace SmartSQL
         private ConnectConfigs SelectendConnection = null;
         private DataBase SelectedDataBase = null;
 
-        public Model dataSource = new Model();
-        public List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
+        private Model dataSource = new Model();
+        private List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
             "CornerRadius", typeof(int), typeof(MainWindow), new PropertyMetadata(default(int)));
@@ -68,7 +69,7 @@ namespace SmartSQL
                 SetValue(TreeViewDataProperty, value);
                 OnPropertyChanged(nameof(TreeViewData));
             }
-        } 
+        }
         #endregion
 
         public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
@@ -162,7 +163,6 @@ namespace SmartSQL
             if (selectDatabase != null)
             {
                 var selectedDbBase = (DataBase)selectDatabase;
-                //////ConnectionString = ConnectionString.Replace(HidSelectDatabase.Text, selectedDbBase.DbName);
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
                 var sqLiteHelper = new SQLiteHelper();
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
@@ -1244,12 +1244,12 @@ namespace SmartSQL
 
         private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
-            if (SelectendConnection == null)
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            if (SelectendConnection == null || selectDatabase == null)
             {
                 Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             var exportDoc = new ExportDoc();
             exportDoc.Owner = this;
             exportDoc.ExportType = ExportEnum.All;
@@ -1267,6 +1267,11 @@ namespace SmartSQL
         private void ImportMark_OnClick(object sender, RoutedEventArgs e)
         {
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            if (SelectendConnection == null || selectDatabase == null)
+            {
+                Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
+                return;
+            }
             var importMark = new ImportMark();
             importMark.Owner = this;
             importMark.SelectedConnection = SelectendConnection;
