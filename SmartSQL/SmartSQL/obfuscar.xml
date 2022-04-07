@@ -2,7 +2,8 @@
 <Obfuscator>
   <Var name="InPath" value="." />
   <Var name="OutPath" value=".\obfuscar_Output" />
-  <Var name="UseUnicodeNames" value="true" />
+  <Var name="UseUnicodeNames" value="false" />
+  <Var name="UseKoreanNames" value="true" />
   <Var name="RenameProperties" value="true" />
   <Var name="RenameEvents" value="true" />
   <Var name="RenameFields" value="true" />
@@ -13,9 +14,11 @@
   <Module file="$(InPath)\SmartSQL.DocUtils.dll"/>
   <Module file="$(InPath)\SmartSQL.Framework.dll"/>
   <Module file="$(InPath)\SmartSQL.exe">
-    <SkipNamespace name="PresentationFramework" />
     <SkipNamespace name="System" />
+    <SkipNamespace name="System.*" />
     <SkipNamespace name="System.Windows" />
     <SkipNamespace name="System.Windows*" />
+    <SkipNamespace name="MS.Internal" />
+    <SkipNamespace name="MS.Internal.*" />
   </Module>
 </Obfuscator>

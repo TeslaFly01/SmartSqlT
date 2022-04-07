@@ -59,8 +59,8 @@ namespace SmartSQL.Framework.SqliteModel
             {
                 switch (DbType)
                 {
-                    case DbType.MySql: return "/SmartSQL;component/Resources/Img/mysql.png";
-                    default: return "/SmartSQL;component/Resources/Img/mssql.png";
+                    case DbType.MySql: return "/SmartSQL;component/Resources/Img/mysql_icon_big.png";
+                    default: return "/SmartSQL;component/Resources/Img/mssql_icon_big.png";
                 }
             }
         }

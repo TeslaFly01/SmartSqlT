@@ -107,6 +107,7 @@
     <Compile Include="Exporter\Exporter.cs" />
     <Compile Include="Exporter\MySqlExporter.cs" />
     <Compile Include="Exporter\OracleExporter.cs" />
+    <Compile Include="Exporter\PostgreSqlExporter.cs" />
     <Compile Include="Exporter\SqlHelper.cs" />
     <Compile Include="Exporter\SqlServerExporter.cs" />
     <Compile Include="Exporter\IExporter.cs" />
