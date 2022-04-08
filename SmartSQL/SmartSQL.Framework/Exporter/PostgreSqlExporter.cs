@@ -45,6 +45,10 @@ namespace SmartSQL.Framework.Exporter
             var list = new List<DataBase>();
             dataBaseList.ForEach(dbName =>
             {
+                if (dbName.Equals("template0") || dbName.Equals("template1"))
+                {
+                    return;
+                }
                 var dBase = new DataBase
                 {
                     DbName = dbName,
@@ -56,6 +60,7 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
+        #region Private
         private Tables GetTables()
         {
             #region MyRegion
@@ -138,9 +143,11 @@ namespace SmartSQL.Framework.Exporter
             return procDic;
             #endregion
         }
+        #endregion
 
         public override Columns GetColumnInfoById(string objectId)
         {
+            #region MyRegion
             var columns = new Columns(500);
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
             var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
@@ -185,11 +192,12 @@ namespace SmartSQL.Framework.Exporter
                 columns.Add(v.DbColumnName, column);
             });
             return columns;
+            #endregion
         }
 
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string CreateTableSql()

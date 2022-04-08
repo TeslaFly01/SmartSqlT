@@ -76,6 +76,7 @@ namespace SmartSQL.Views
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
+                BtnConnect.IsEnabled = true;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 var pwd = EncryptHelper.Decode(connect.Password);
                 var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
@@ -90,7 +91,6 @@ namespace SmartSQL.Views
                         MsSql_TextServerName.Text = connect.UserName;
                         MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
                         MsSql_TextServerPassword.Password = pwd;
-                        BtnConnect.IsEnabled = true;
                         MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
                         MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
@@ -102,7 +102,6 @@ namespace SmartSQL.Views
                         MySql_TextServerPort.Value = connect.ServerPort;
                         MySql_TextServerName.Text = connect.UserName;
                         MySql_TextServerPassword.Password = pwd;
-                        BtnConnect.IsEnabled = true;
                         MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
                         MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
@@ -114,7 +113,6 @@ namespace SmartSQL.Views
                         PostgreSql_TextServerPort.Value = connect.ServerPort;
                         PostgreSql_TextServerName.Text = connect.UserName;
                         PostgreSql_TextServerPassword.Password = pwd;
-                        BtnConnect.IsEnabled = true;
                         PostgreSql_ComboDefaultDatabase.ItemsSource = defaultBase;
                         PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
@@ -129,6 +127,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             if (!CheckConnectForm())
             {
                 return;
@@ -288,7 +287,8 @@ namespace SmartSQL.Views
                         Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }
-            });
+            }); 
+            #endregion
         }
 
         /// <summary>
@@ -308,6 +308,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             var sqLiteHelper = new SQLiteHelper();
             var connectId = Convert.ToInt32(MsSql_HidId.Text);
             if (connectId < 1)
@@ -329,7 +330,8 @@ namespace SmartSQL.Views
                         //ChangeRefreshEvent();
                     }
                 });
-            });
+            }); 
+            #endregion
         }
 
         /// <summary>
@@ -379,7 +381,6 @@ namespace SmartSQL.Views
             }
             ListConnects.SelectedItem = null;
             BtnConnect.IsEnabled = false;
-            BtnTestConnect.IsEnabled = false;
         }
 
         /// <summary>

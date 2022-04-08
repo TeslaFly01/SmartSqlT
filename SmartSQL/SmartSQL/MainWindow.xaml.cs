@@ -92,6 +92,8 @@ namespace SmartSQL
             TabLeftType.SelectedIndex = leftMenuType - 1;
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
+
+            MainConnect.ConnectConfigs = connectConfigs;
             //var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
             //if (!string.IsNullOrWhiteSpace(selectedConn))
             //{
