@@ -42,20 +42,17 @@
                     <MenuItem.ItemTemplate>
                         <HierarchicalDataTemplate>
                             <MenuItem
-                                Width="150"
+                                Width="160"
                                 Margin="0"
                                 Padding="0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Stretch"
                                 Click="SwitchMenu_Click"
                                 Cursor="Hand"
                                 FontWeight="Normal"
                                 Header="{Binding ConnectName}">
                                 <MenuItem.Icon>
-                                    <Path
-                                        x:Name="MeIcon"
-                                        Data="{StaticResource ConnectGeometry}"
-                                        Fill="{DynamicResource DarkPrimaryBrush}"
-                                        Stretch="Uniform" />
+                                    <Image Source="{Binding Icon}" />
                                 </MenuItem.Icon>
                             </MenuItem>
                         </HierarchicalDataTemplate>

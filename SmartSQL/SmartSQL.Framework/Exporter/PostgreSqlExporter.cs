@@ -83,6 +83,62 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
+        private Views GetViews()
+        {
+            #region MyRegion
+            var views = new Views();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            var viewList = dbMaintenance.GetViewInfoList(false);
+            viewList.ForEach(v =>
+            {
+                if (views.ContainsKey(v.Name))
+                {
+                    return;
+                }
+                var view = new View()
+                {
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Description,
+                    CreateDate = v.CreateDate,
+                    ModifyDate = v.ModifyDate
+                };
+                views.Add(v.Name, view);
+            });
+            return views;
+            #endregion
+        }
+
+        private Procedures GetProcedures()
+        {
+            #region MyRegion
+            var procDic = new Procedures();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            var procInfoList = dbMaintenance.GetProcInfoList(false);
+            var dbName = dbMaintenance.Context.Ado.Connection.Database;
+            var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
+            procList.ForEach(p =>
+            {
+                if (procDic.ContainsKey(p.Name))
+                {
+                    return;
+                }
+                var proc = new Procedure()
+                {
+                    Id = p.Name,
+                    Name = p.Name,
+                    DisplayName = p.Name,
+                    Comment = p.Description,
+                    CreateDate = p.CreateDate,
+                    ModifyDate = p.ModifyDate
+                };
+                procDic.Add(p.Name, proc);
+            });
+            return procDic;
+            #endregion
+        }
+
         public override Columns GetColumnInfoById(string objectId)
         {
             var columns = new Columns(500);

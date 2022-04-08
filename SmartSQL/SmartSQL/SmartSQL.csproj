@@ -356,11 +356,11 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
-    <Content Include="Resources\Img\mssql_icon.png" />
-    <Content Include="Resources\Img\mysql_icon.png" />
+    <Resource Include="Resources\Img\mssql_icon.png" />
+    <Resource Include="Resources\Img\mysql_icon.png" />
     <Content Include="Resources\Img\oracle_icon.png" />
     <Content Include="Resources\Img\oracle_icon_big.png" />
-    <Content Include="Resources\Img\postgresql_icon.png" />
+    <Resource Include="Resources\Img\postgresql_icon.png" />
     <Content Include="Resources\Img\postgresql_icon_big.png" />
     <Resource Include="Resources\Img\mssql_icon_big.png" />
     <Resource Include="Resources\Img\mysql_icon_big.png" />
