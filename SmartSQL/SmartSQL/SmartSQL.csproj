@@ -67,6 +67,9 @@
     <PackageReference Include="MySql.Data">
       <Version>6.9.12</Version>
     </PackageReference>
+    <PackageReference Include="Npgsql">
+      <Version>6.0.3</Version>
+    </PackageReference>
     <PackageReference Include="Obfuscar">
       <Version>2.2.33</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

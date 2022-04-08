@@ -25,7 +25,7 @@ namespace SmartSQL.Framework.Exporter
             var model = new Model { Database = "PostgreSql" };
             try
             {
-                model.Tables = new Tables();// this.GetTables();
+                model.Tables = this.GetTables();
                 model.Views = new Views();// this.GetViews();
                 model.Procedures = new Procedures();// this.GetProcedures();
                 return model;
@@ -56,9 +56,79 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
+        private Tables GetTables()
+        {
+            #region MyRegion
+            var tables = new Tables();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            var tableList = dbMaintenance.GetTableInfoList(false);
+            tableList.ForEach(tb =>
+            {
+                if (tables.ContainsKey(tb.Name))
+                {
+                    return;
+                }
+                var table = new Table
+                {
+                    Id = tb.Name,
+                    Name = tb.Name,
+                    DisplayName = tb.Name,
+                    Comment = tb.Description,
+                    CreateDate = tb.CreateDate,
+                    ModifyDate = tb.ModifyDate
+                };
+                tables.Add(tb.Name, table);
+            });
+            return tables;
+            #endregion
+        }
+
         public override Columns GetColumnInfoById(string objectId)
         {
-            throw new NotImplementedException();
+            var columns = new Columns(500);
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            viewList.ForEach(v =>
+            {
+                if (columns.ContainsKey(v.DbColumnName))
+                {
+                    return;
+                }
+                var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
+                column.Length = "";
+                switch (v.DataType)
+                {
+                    case "char":
+                    case "nchar":
+                    case "time":
+                    case "text":
+                    case "binary":
+                    case "varchar":
+                    case "nvarchar":
+                    case "varbinary":
+                    case "datetime2":
+                    case "datetimeoffset":
+                        if (v.Length > 0)
+                        {
+                            column.Length = $"({v.Length})";
+                        }
+                        break;
+                    case "numeric":
+                    case "decimal":
+                        column.Length = $"({v.Length},{v.Scale})"; break;
+                }
+                column.ObjectId = objectId.ToString();
+                column.ObjectName = v.DbColumnName;
+                column.IsIdentity = v.IsIdentity;
+                column.IsNullable = v.IsNullable;
+                column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
+                column.DataType = v.DataType;
+                column.OriginalName = v.DbColumnName;
+                column.Comment = v.ColumnDescription;
+                column.IsPrimaryKey = v.IsPrimarykey;
+                columns.Add(v.DbColumnName, column);
+            });
+            return columns;
         }
 
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)

@@ -78,34 +78,46 @@ namespace SmartSQL.Views
             {
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 var pwd = EncryptHelper.Decode(connect.Password);
-                if (connect.DbType == DbType.SqlServer)
+                var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
+                switch (connect.DbType)
                 {
-                    TabSqlServer.IsSelected = true;
-                    MsSql_HidId.Text = connect.ID.ToString();
-                    MsSql_TextConnectName.Text = connect.ConnectName;
-                    MsSql_TextServerAddress.Text = connect.ServerAddress;
-                    MsSql_TextServerPort.Value = connect.ServerPort;
-                    MsSql_TextServerName.Text = connect.UserName;
-                    MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
-                    MsSql_TextServerPassword.Password = pwd;
-                    BtnConnect.IsEnabled = true;
-                    var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-                    MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-                    MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
-                }
-                if (connect.DbType == DbType.MySql)
-                {
-                    TabMySql.IsSelected = true;
-                    MySql_HidId.Text = connect.ID.ToString();
-                    MySql_TextConnectName.Text = connect.ConnectName;
-                    MySql_TextServerAddress.Text = connect.ServerAddress;
-                    MySql_TextServerPort.Value = connect.ServerPort;
-                    MySql_TextServerName.Text = connect.UserName;
-                    MySql_TextServerPassword.Password = pwd;
-                    BtnConnect.IsEnabled = true;
-                    var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-                    MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
-                    MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                    case DbType.SqlServer:
+                        TabSqlServer.IsSelected = true;
+                        MsSql_HidId.Text = connect.ID.ToString();
+                        MsSql_TextConnectName.Text = connect.ConnectName;
+                        MsSql_TextServerAddress.Text = connect.ServerAddress;
+                        MsSql_TextServerPort.Value = connect.ServerPort;
+                        MsSql_TextServerName.Text = connect.UserName;
+                        MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
+                        MsSql_TextServerPassword.Password = pwd;
+                        BtnConnect.IsEnabled = true;
+                        MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
+                        MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        break;
+                    case DbType.MySql:
+                        TabMySql.IsSelected = true;
+                        MySql_HidId.Text = connect.ID.ToString();
+                        MySql_TextConnectName.Text = connect.ConnectName;
+                        MySql_TextServerAddress.Text = connect.ServerAddress;
+                        MySql_TextServerPort.Value = connect.ServerPort;
+                        MySql_TextServerName.Text = connect.UserName;
+                        MySql_TextServerPassword.Password = pwd;
+                        BtnConnect.IsEnabled = true;
+                        MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
+                        MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        break;
+                    case DbType.PostgreSQL:
+                        TabPostgreSql.IsSelected = true;
+                        PostgreSql_HidId.Text = connect.ID.ToString();
+                        PostgreSql_TextConnectName.Text = connect.ConnectName;
+                        PostgreSql_TextServerAddress.Text = connect.ServerAddress;
+                        PostgreSql_TextServerPort.Value = connect.ServerPort;
+                        PostgreSql_TextServerName.Text = connect.UserName;
+                        PostgreSql_TextServerPassword.Password = pwd;
+                        BtnConnect.IsEnabled = true;
+                        PostgreSql_ComboDefaultDatabase.ItemsSource = defaultBase;
+                        PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        break;
                 }
             }
         }
@@ -164,6 +176,22 @@ namespace SmartSQL.Views
                                    $"pwd={password};" +
                                    $"Allow User Variables=True;";
             }
+            if (TabPostgreSql.IsSelected)
+            {
+                dbType = DbType.PostgreSQL;
+                connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+                connectName = PostgreSql_TextConnectName.Text.Trim();
+                serverAddress = PostgreSql_TextServerAddress.Text.Trim();
+                serverPort = PostgreSql_TextServerPort.Value;
+                userName = PostgreSql_TextServerName.Text.Trim();
+                password = PostgreSql_TextServerPassword.Password.Trim();
+                defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
+                connectionString = $"HOST={serverAddress};" +
+                                   $"PORT={serverPort};" +
+                                   $"DATABASE=postgres;" +
+                                   $"USER ID={userName};" +
+                                   $"PASSWORD={password}";
+            }
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
 
@@ -219,7 +247,7 @@ namespace SmartSQL.Views
                             connectConfig = new ConnectConfigs()
                             {
                                 ConnectName = connectName,
-                                DbType = DbType.SqlServer,
+                                DbType = dbType,
                                 ServerAddress = serverAddress,
                                 ServerPort = Convert.ToInt32(serverPort),
                                 Authentication = authentication,
@@ -320,6 +348,7 @@ namespace SmartSQL.Views
 
         private void ResetData()
         {
+            var sdfs = TabDbType;
             if (TabSqlServer.IsSelected)
             {
                 MsSql_HidId.Text = "0";
@@ -338,6 +367,15 @@ namespace SmartSQL.Views
                 MySql_TextServerPort.Value = 3306;
                 MySql_TextServerName.Text = "";
                 MySql_TextServerPassword.Password = "";
+            }
+            if (TabPostgreSql.IsSelected)
+            {
+                PostgreSql_HidId.Text = "0";
+                PostgreSql_TextConnectName.Text = "";
+                PostgreSql_TextServerAddress.Text = "";
+                PostgreSql_TextServerPort.Value = 5432;
+                PostgreSql_TextServerName.Text = "";
+                PostgreSql_TextServerPassword.Password = "";
             }
             ListConnects.SelectedItem = null;
             BtnConnect.IsEnabled = false;
@@ -372,6 +410,14 @@ namespace SmartSQL.Views
                 serverPort = MySql_TextServerPort.Value;
                 userName = MySql_TextServerName.Text.Trim();
                 password = MySql_TextServerPassword.Password.Trim();
+            }
+            if (TabPostgreSql.IsSelected)
+            {
+                connectName = PostgreSql_TextConnectName.Text.Trim();
+                serverAddress = PostgreSql_TextServerAddress.Text.Trim();
+                serverPort = PostgreSql_TextServerPort.Value;
+                userName = PostgreSql_TextServerName.Text.Trim();
+                password = PostgreSql_TextServerPassword.Password.Trim();
             }
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
@@ -423,11 +469,13 @@ namespace SmartSQL.Views
             {
                 return;
             }
-            var dbType = TabSqlServer.IsSelected ? DbType.SqlServer : DbType.MySql;
+            var dbType = DbType.SqlServer;
+
             var connectId = 0;
             var connectionString = @"";
             if (TabSqlServer.IsSelected)
             {
+                dbType = DbType.SqlServer;
                 connectId = Convert.ToInt32(MsSql_HidId.Text);
                 connectionString = $"server={MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value};" +
                                    $"database=master;" +
@@ -436,12 +484,23 @@ namespace SmartSQL.Views
             }
             if (TabMySql.IsSelected)
             {
+                dbType = DbType.MySql;
                 connectId = Convert.ToInt32(MySql_HidId.Text);
                 connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
                                    $"port={MySql_TextServerPort.Value};" +
                                    $"uid={MySql_TextServerName.Text.Trim()};" +
                                    $"pwd={MySql_TextServerPassword.Password.Trim()};" +
                                    $"Allow User Variables=True;";
+            }
+            if (TabPostgreSql.IsSelected)
+            {
+                dbType = DbType.PostgreSQL;
+                connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+                connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
+                                   $"PORT={PostgreSql_TextServerPort.Value};" +
+                                   $"DATABASE=postgres;" +
+                                   $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
+                                   $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
             }
             LoadingG.Visibility = Visibility.Visible;
             Task.Run(() =>
@@ -460,6 +519,10 @@ namespace SmartSQL.Views
                         {
                             MySql_ComboDefaultDatabase.ItemsSource = list;
                         }
+                        if (TabPostgreSql.IsSelected)
+                        {
+                            PostgreSql_ComboDefaultDatabase.ItemsSource = list;
+                        }
                         if (connectId < 1)
                         {
                             if (TabSqlServer.IsSelected)
@@ -469,6 +532,10 @@ namespace SmartSQL.Views
                             if (TabMySql.IsSelected)
                             {
                                 MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
+                            }
+                            if (TabPostgreSql.IsSelected)
+                            {
+                                PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
                             }
                         }
                         else
@@ -484,6 +551,10 @@ namespace SmartSQL.Views
                                 if (TabMySql.IsSelected)
                                 {
                                     MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                                }
+                                if (TabPostgreSql.IsSelected)
+                                {
+                                    PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
                                 }
                             }
                         }
@@ -529,6 +600,11 @@ namespace SmartSQL.Views
             if (TabDbType.SelectedItem == TabMySql)
             {
                 var connectId = Convert.ToInt32(MySql_HidId.Text);
+                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
+            }
+            if (TabDbType.SelectedItem == TabPostgreSql)
+            {
+                var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
                 ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
             }
         }

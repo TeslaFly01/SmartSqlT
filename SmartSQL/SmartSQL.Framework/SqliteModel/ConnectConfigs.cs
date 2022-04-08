@@ -69,23 +69,83 @@ namespace SmartSQL.Framework.SqliteModel
         /// Master数据库连接，查询系统库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbMasterConnectString =>
-            DbType == DbType.SqlServer ?
-                $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};"
-                : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+        public string DbMasterConnectString
+        {
+            get
+            {
+                var connectString = string.Empty;
+                switch (DbType)
+                {
+                    case DbType.SqlServer:
+                        connectString =
+                            $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        break;
+                    case DbType.MySql:
+                        connectString =
+                            $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+                        break;
+                    case DbType.PostgreSQL:
+                        connectString = $"HOST={ServerAddress};" +
+                                        $"PORT={ServerPort};" +
+                                        $"DATABASE={DefaultDatabase};" +
+                                        $"USER ID={UserName};" +
+                                        $"PASSWORD={EncryptHelper.Decode(Password)}";
+                        break;
+                }
+                return connectString;
+            }
+        }
         /// <summary>
         /// 默认数据库连接，查询默认数据库相关信息（不映射数据库)
         /// </summary>
         [Ignore]
-        public string DbDefaultConnectString => DbType == DbType.SqlServer
-            ? $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};"
-            : $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+        public string DbDefaultConnectString
+        {
+            get
+            {
+                var connectString = string.Empty;
+                switch (DbType)
+                {
+                    case DbType.SqlServer:
+                        connectString =
+                            $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        break;
+                    case DbType.MySql:
+                        connectString = $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+                        break;
+                    case DbType.PostgreSQL:
+                        connectString = $"HOST={ServerAddress};" +
+                                        $"PORT={ServerPort};" +
+                                        $"DATABASE={DefaultDatabase};" +
+                                        $"USER ID={UserName};" +
+                                        $"PASSWORD={EncryptHelper.Decode(Password)}";
+                        break;
+                }
+                return connectString;
+            }
+        }
 
         public string SelectedDbConnectString(string selectedDatabase)
         {
-            return DbType == DbType.SqlServer
-                ? $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};"
-                : $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
+            var connectString = string.Empty;
+            switch (DbType)
+            {
+                case DbType.SqlServer:
+                    connectString =
+                        $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                    break;
+                case DbType.MySql:
+                    connectString = $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
+                    break;
+                case DbType.PostgreSQL:
+                    connectString = $"HOST={ServerAddress};" +
+                                    $"PORT={ServerPort};" +
+                                    $"DATABASE={selectedDatabase};" +
+                                    $"USER ID={UserName};" +
+                                    $"PASSWORD={EncryptHelper.Decode(Password)}";
+                    break;
+            }
+            return connectString;
         }
     }
 }

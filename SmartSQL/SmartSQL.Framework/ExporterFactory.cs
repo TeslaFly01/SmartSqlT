@@ -20,6 +20,7 @@ namespace SmartSQL.Framework
             {
                 case DbType.SqlServer: return new SqlServerExporter(dbConnectionString);
                 case DbType.MySql: return new MySqlExporter(dbConnectionString);
+                case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
@@ -27,8 +28,9 @@ namespace SmartSQL.Framework
         {
             switch (type)
             {
-                case DbType.SqlServer: return new SqlServerExporter(tableName,columns);
+                case DbType.SqlServer: return new SqlServerExporter(tableName, columns);
                 case DbType.MySql: return new MySqlExporter(tableName, columns);
+                case DbType.PostgreSQL: return new PostgreSqlExporter(tableName, columns);
                 default: return new SqlServerExporter(tableName, columns);
             }
         }
