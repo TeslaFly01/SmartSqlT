@@ -45,6 +45,7 @@
                         Background="Transparent"
                         BeginningEdit="TableGrid_OnBeginningEdit"
                         CellEditEnding="TableGrid_OnCellEditEnding"
+                        Cursor="Arrow"
                         HeadersVisibility="All"
                         ItemsSource="{Binding ObjectColumns}"
                         RowHeaderWidth="60"
@@ -107,7 +108,8 @@
                     <Grid
                         Height="36"
                         VerticalAlignment="Bottom"
-                        Background="White">
+                        Background="White"
+                        Cursor="Arrow">
                         <hc:SimpleStackPanel
                             Margin="5,0,5,5"
                             HorizontalAlignment="Right"
@@ -119,6 +121,7 @@
                                     hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
                                     Click="BtnSetGroup_OnClick"
                                     Content="设置分组"
+                                    Cursor="Hand"
                                     Style="{StaticResource ButtonWarning}" />
                                 <Button
                                     x:Name="BtnCreateSqlScript"
@@ -126,13 +129,15 @@
                                     hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
                                     Click="BtnCreateSqlScript_OnClick"
                                     Content="生成SQL"
-                                    Style="{StaticResource ButtonPrimary}" />
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonInfo}" />
                                 <Button
                                     x:Name="BtnCreateEntity"
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource EntityGeometry}"
                                     Click="BtnCreateEntity_OnClick"
                                     Content="生成实体"
+                                    Cursor="Hand"
                                     Style="{StaticResource ButtonPrimary}" />
                             </hc:UniformSpacingPanel>
                         </hc:SimpleStackPanel>
@@ -243,7 +248,8 @@
                     <Grid
                         Height="36"
                         VerticalAlignment="Bottom"
-                        Background="White">
+                        Background="White"
+                        Cursor="Arrow">
                         <hc:SimpleStackPanel
                             Margin="5,0,5,5"
                             HorizontalAlignment="Right"
@@ -255,6 +261,7 @@
                                     hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
                                     Click="BtnSetGroup_OnClick"
                                     Content="设置分组"
+                                    Cursor="Hand"
                                     Style="{StaticResource ButtonWarning}" />
                                 <Button
                                     x:Name="BtnFormat"
@@ -262,10 +269,10 @@
                                     hc:IconElement.Geometry="{StaticResource PageModeGeometry}"
                                     Click="BtnFormat_OnClick"
                                     Content="格式化"
+                                    Cursor="Hand"
                                     Style="{StaticResource ButtonInfo}" />
                                 <Button
                                     x:Name="BtnCopyScript"
-                                    Grid.Column="0"
                                     Height="26"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"

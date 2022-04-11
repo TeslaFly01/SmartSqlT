@@ -94,7 +94,8 @@
         <Grid
             Height="36"
             VerticalAlignment="Bottom"
-            Background="White">
+            Background="White"
+            Cursor="Arrow">
             <hc:SimpleStackPanel
                 Margin="47,0,5,10"
                 HorizontalAlignment="Left"
@@ -118,6 +119,7 @@
                         hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
                         Click="BtnSetGroup_OnClick"
                         Content="设置分组"
+                        Cursor="Hand"
                         Style="{StaticResource ButtonWarning}" />
                     <Button
                         x:Name="BtnExport"
@@ -125,7 +127,8 @@
                         hc:IconElement.Geometry="{StaticResource ExportGeometry}"
                         Click="BtnExport_OnClick"
                         Content="导出文档"
-                        Style="{StaticResource ButtonWarning}" />
+                        Cursor="Hand"
+                        Style="{StaticResource ButtonSuccess}" />
                     <!--<Button
                         x:Name="BtnCreateEntity"
                         Height="26"

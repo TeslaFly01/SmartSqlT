@@ -202,42 +202,42 @@ namespace SmartSQL.Framework.Exporter
 
         public override string CreateTableSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string SelectSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string InsertSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string UpdateSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string DeleteSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string AddColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string AlterColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string DropColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
     }
 }
