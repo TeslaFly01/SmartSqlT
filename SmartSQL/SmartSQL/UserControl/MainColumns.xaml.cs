@@ -514,5 +514,15 @@ namespace SmartSQL.UserControl
                 Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
             }
         }
+
+        /// <summary>
+        /// 格式化SQL代码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnFormat_OnClick(object sender, RoutedEventArgs e)
+        {
+            TextSqlEditor.Text = TextSqlEditor.Text.SqlFormat();
+        }
     }
 }
