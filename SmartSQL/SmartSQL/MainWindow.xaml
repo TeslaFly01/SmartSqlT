@@ -301,7 +301,7 @@
                                             Margin="5,0,5,0"
                                             FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
                                             FontSize="12"
-                                            Foreground="#e9af20"
+                                            Foreground="{StaticResource DarkWarningBrush}"
                                             Text="{Binding Icon}" />
                                         <TextBlock
                                             VerticalAlignment="Center"
