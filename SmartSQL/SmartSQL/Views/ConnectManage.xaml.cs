@@ -76,7 +76,6 @@ namespace SmartSQL.Views
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
-                BtnConnect.IsEnabled = true;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 var pwd = EncryptHelper.Decode(connect.Password);
                 var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
@@ -380,7 +379,6 @@ namespace SmartSQL.Views
                 PostgreSql_TextServerPassword.Password = "";
             }
             ListConnects.SelectedItem = null;
-            BtnConnect.IsEnabled = false;
         }
 
         /// <summary>
