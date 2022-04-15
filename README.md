@@ -48,7 +48,7 @@ SmartSQL 是一款数据库文档工具！
 - 通过 工具-批注上载，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`powerdesigner`设计数据库时产生。
     - 	[x] xml 由`visual studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
-    - 	[x] xml 由`dbchm`的 XML导出 而产生。
+    - 	[x] xml 由`SmartSQL`的 XML导出 而产生。
 - 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
 
 ## 🎉 四、截图展示
@@ -95,15 +95,12 @@ SmartSQL 是一款数据库文档工具！
 
 ​	<a target='_blank' href ='./ReleaseNote.md'>ReleaseNote</a>
 
-## 💪 六、贡献者
+## 💪 六、作者
 
-- @[trycache](https://gitee.com/trycache) 主要开发者
-- @[空无一物](https://gitee.com/dotnetchina/) 先驱者
+- @[MicLuo](https://gitee.com/izhaofu) MicLuo
 
 ## ⬇️ 七、下载地址
-- **[下载发行版本](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `DBCHM.exe`。
-
-- **[下载最新功能的内测版本](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)**，Bug修复早知道，最新功能尝鲜，请在[![加入QQ群](https://img.shields.io/badge/QQ群-132941648-blue.svg)](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26)共享中获取:yum:！
+- **[立即下载](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
 
 ## 🍄 附一、其他工具
 - [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
@@ -113,8 +110,9 @@ SmartSQL 是一款数据库文档工具！
 
 - [x] 收集问题，修复完善基础功能
 - [x] MJTop.Data 类库完善
-- [ ]  测试数据生成器
-- [ ]  C#实体代码生成器
+- [ ]  表、视图、存储过程同步功能
+- [ ]  对象结构对比功能
+- [ ]  C#实体代码生成
 - [ ]  ...
 
 ## 📖 附三、常见问题
@@ -128,20 +126,20 @@ SmartSQL 是一款数据库文档工具！
 	
 	可能是连接远程数据库网络不好的原因，可以把`连接超时`设置的小一些。
 	
-- **dbchm可以连接上，但显示不了数据怎么办？**
+- **SmartSQL可以连接上，但显示不了数据怎么办？**
 	- 导出文档前，数据库使用账号要给予`root级别`的权限，非root级别账号连接，可能会出现`表数据显示不全`或数据查询因权限不足，会`查不出来数据`！
-	- dbchm有Bug， [提Issue](https://gitee.com/dotnetchina/DBCHM/issues/new) 或 [进群里](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) 反馈。
+	- SmartSQL有Bug， [提Issue](https://gitee.com/dotnetchina/DBCHM/issues/new) 或 [进群里](http://shang.qq.com/wpa/qunwpa?idkey=43619cbe3b2a10ded01b5354ac6928b30cc91bda45176f89a191796b7a7c0e26) 反馈。
 	
 - **表列的批注数据我想迁移，怎么办？**
-	1. 使用 dbchm 的 `XML导出`，对当前数据库的批注数据 就会导出一个xml文件。
+	1. 使用 SmartSQL 的 `XML导出`，对当前数据库的批注数据 就会导出一个xml文件。
 	2. 点`数据连接`， 切换至 目标数据库连
 	3. 再用`批注上载` 就可以选择刚刚的xml文件，如果数据库表结构相同，批注就会更新到目标数据库服上。
 	
-- **数据库比较老，如  `Sql Server 2000 `，怎么使用dbchm？**
+- **数据库比较老，如  `Sql Server 2000 `，怎么使用SmartSQL？**
 	1. 下载安装 [Navicat Premium](https://gitee.com/dotnetchina/DBCHM/attach_files)
 	2. 连接上老旧的数据库服务器，将数据库表结构脚本导出。
 	3. 找一台高版本的数据库服务器，新建一个临时数据库，将导出的脚本导入。
-	4. 然后用dbchm连接高版本的数据库服务器。
+	4. 然后用SmartSQL连接高版本的数据库服务器。
 	
 - **chm文件可以正常导出，但是文件名中文乱码，打开显示 无法访问此页**
 	
