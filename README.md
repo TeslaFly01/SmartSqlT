@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="DBCHM" src="https://gitee.com/izhaofu/SmartSQL/raw/master/SmartCode/SmartCode/Resources/Img/icon.png">
+   <img alt="SmartSQL" src="https://gitee.com/izhaofu/pic/raw/master/icon.png">
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
@@ -53,22 +53,41 @@ SmartSQL 是一款数据库文档工具！
 
 ## 🎉 四、截图展示
 
-### 1 数据库连接配置示例
-![新建数据库连接](SmartCode/SmartCode/Resources/Img/Readme/%E6%96%B0%E5%BB%BA%E8%BF%9E%E6%8E%A5.jpg)
+![首页](https://gitee.com/izhaofu/pic/raw/master/Top.png)
 
-### 2 数据库对象分组管理
-![数据库对象分组管理](SmartCode/SmartCode/Resources/Img/Readme/%E5%88%86%E7%BB%84%E7%AE%A1%E7%90%86.jpg)
+### 1 数据库连接
 
-### 3 快捷查询表、视图、存储过程
-![快捷查询](SmartCode/SmartCode/Resources/Img/Readme/%E5%BF%AB%E6%8D%B7%E6%9F%A5%E8%AF%A2.jpg)
+![新建数据库连接](https://gitee.com/izhaofu/pic/raw/master/Connect.png)
 
-### 4 执行批注更新
-![表批注更新](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM003.png)
+### 2 分组管理
+![数据库对象分组管理](https://gitee.com/izhaofu/pic/raw/master/Group.png)
 
-### 6 表结构信息
-![表结构信息](https://gitee.com/dotnetchina/DBCHM/raw/master/DBChm/Images/DBCHM005.png)
+![数据库对象分组管理](https://gitee.com/izhaofu/pic/raw/master/GroupObject.png)
 
-### 7 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
+### 3 快捷查询
+![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Objects.png)
+
+![快捷查询](https://gitee.com/izhaofu/pic/raw/master/View.png)
+
+![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Pro.png)
+
+![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Column.png)
+
+![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Objects.png)
+
+### 4 导入备注
+![导入备注](https://gitee.com/izhaofu/pic/raw/master/Import.png)
+
+### 5 导出文档
+![导出文档](https://gitee.com/izhaofu/pic/raw/master/Export.png)
+
+### 6 设置
+![导出文档](https://gitee.com/izhaofu/pic/raw/master/Setting.png)
+
+### 7 关于
+![导出文档](https://gitee.com/izhaofu/pic/raw/master/Export.png)
+
+### 8 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
 
 查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
