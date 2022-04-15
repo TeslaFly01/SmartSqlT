@@ -57,12 +57,12 @@ SmartSQL 是一款数据库文档工具！
 
 ### 1 数据库连接
 
-![新建数据库连接](https://gitee.com/izhaofu/pic/raw/master/Connect.png)
+![数据库连接](https://gitee.com/izhaofu/pic/raw/master/Connect.png)
 
 ### 2 分组管理
-![数据库对象分组管理](https://gitee.com/izhaofu/pic/raw/master/Group.png)
+![分组管理](https://gitee.com/izhaofu/pic/raw/master/Group.png)
 
-![数据库对象分组管理](https://gitee.com/izhaofu/pic/raw/master/GroupObject.png)
+![分组管理](https://gitee.com/izhaofu/pic/raw/master/GroupObject.png)
 
 ### 3 快捷查询
 ![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Objects.png)
@@ -82,10 +82,10 @@ SmartSQL 是一款数据库文档工具！
 ![导出文档](https://gitee.com/izhaofu/pic/raw/master/Export.png)
 
 ### 6 设置
-![导出文档](https://gitee.com/izhaofu/pic/raw/master/Setting.png)
+![设置](https://gitee.com/izhaofu/pic/raw/master/Setting.png)
 
 ### 7 关于
-![导出文档](https://gitee.com/izhaofu/pic/raw/master/Export.png)
+![关于](https://gitee.com/izhaofu/pic/raw/master/About.png)
 
 ### 8 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
 
