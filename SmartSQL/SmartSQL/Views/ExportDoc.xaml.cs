@@ -210,10 +210,11 @@ namespace SmartSQL.Views
                         var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
                             selectedConnectionString);
                         var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
+                        var columnIndex = 1;
                         foreach (var col in columns)
                         {
-                            ColumnDto colDto = new ColumnDto();
-                            colDto.ColumnOrder = col.Key.ToString();
+                            var colDto = new ColumnDto();
+                            colDto.ColumnOrder = columnIndex.ToString();
                             colDto.ColumnName = col.Value.Name;
                             // 数据类型
                             colDto.ColumnTypeName = col.Value.DataType;
@@ -233,6 +234,7 @@ namespace SmartSQL.Views
                             colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment.Replace("<", "").Replace(">", "") : "");
 
                             lst_col_dto.Add(colDto);
+                            columnIndex++;
                         }
                         tbDto.Columns = lst_col_dto;
                         tables.Add(tbDto);
@@ -251,10 +253,11 @@ namespace SmartSQL.Views
                     var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
                         selectedConnectionString);
                     var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
+                    var columnIndex = 1;
                     foreach (var col in columns)
                     {
                         ColumnDto colDto = new ColumnDto();
-                        colDto.ColumnOrder = col.Key.ToString();
+                        colDto.ColumnOrder = columnIndex.ToString();
                         colDto.ColumnName = col.Value.Name;
                         // 数据类型
                         colDto.ColumnTypeName = col.Value.DataType;
@@ -272,8 +275,8 @@ namespace SmartSQL.Views
                         colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
                         // 列注释（说明）
                         colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment.Replace("<", "").Replace(">", "") : "");
-
                         lst_col_dto.Add(colDto);
+                        columnIndex++;
                     }
                     tbDto.Columns = lst_col_dto;
                     tables.Add(tbDto);

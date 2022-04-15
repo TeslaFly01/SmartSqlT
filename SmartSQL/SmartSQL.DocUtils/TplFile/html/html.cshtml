@@ -98,22 +98,28 @@
                     <td>说明</td>
                 </tr>
             </thead>
-            @foreach (var col in item.Columns)
-            {
-                <tr>
-                    <td style="text-align: center">@col.ColumnOrder</td>
-                    <td>@col.ColumnName</td>
-                    <td align="center">@col.ColumnTypeName</td>
-                    <td align="center">@col.Length</td>
-                    <td align="center">@col.IsPK</td>
-                    @if (!item.DBType.StartsWith("Oracle"))
+            @{
+                var index = 1;
+                foreach (var col in item.Columns)
+                {
+                    <tr>
+                        <td style="text-align: center">@index</td>
+                        <td>@col.ColumnName</td>
+                        <td align="center">@col.ColumnTypeName</td>
+                        <td align="center">@col.Length</td>
+                        <td align="center">@col.IsPK</td>
+                        @if (!item.DBType.StartsWith("Oracle"))
+                        {
+                            <td align="center">@col.IsIdentity</td>
+                        }
+                        <td align="center">@col.CanNull</td>
+                        <td align="center">@col.DefaultVal</td>
+                        <td align="center">@col.Comment</td>
+                    </tr>
                     {
-                        <td align="center">@col.IsIdentity</td>
+                        index++;
                     }
-                    <td align="center">@col.CanNull</td>
-                    <td align="center">@col.DefaultVal</td>
-                    <td align="center">@col.Comment</td>
-                </tr>
+                }
             }
         </table>
     }

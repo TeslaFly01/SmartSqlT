@@ -205,7 +205,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="TplFile\doc\doc.xml" />
-    <None Include="TplFile\html\html.cshtml" />
+    <Resource Include="TplFile\html\html.cshtml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
