@@ -30,63 +30,24 @@ namespace SmartSQL.DocUtils.Dtos
         /// </summary>
         public string DBType { get; set; }
 
+        /// <summary>
+        /// 表
+        /// </summary>
         public List<TableDto> Tables { get; set; }
-        private List<TableDto> _Tables = null;
-        ///// <summary>
-        ///// 表结构信息
-        ///// </summary>
-        //public List<TableDto> Tables
-        //{
-        //    get
-        //    {
-        //        if (_Tables == null)
-        //        {
-        //            return new List<TableDto>();
-        //        }
-        //        else
-        //        {
-        //            _Tables.ForEach(t =>
-        //            {
-        //                t.Comment = FilterIllegalDir(t.Comment);
-        //            });
-        //            return _Tables;
-        //        }
-        //    }
-        //    set
-        //    {
-        //        _Tables = value;
-        //    }
-        //}
 
         /// <summary>
-        /// 数据库视图
+        /// 视图
         /// </summary>
         public List<ViewProDto> Views { get; set; }
 
         /// <summary>
-        /// 数据库存储过程
+        /// 存储过程
         /// </summary>
         public List<ViewProDto> Procs { get; set; }
 
         /// <summary>
-        /// 其他一些参数数据，用法如 winform 控件的 Tag属性
+        /// 其他一些参数数据，用法如 WinForm 控件的 Tag属性
         /// </summary>
         public object Tag { get; set; }
-
-
-        /// <summary>
-        /// 处理非法字符路径
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private string FilterIllegalDir(string str)
-        {
-            if (str.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
-            {
-                str = string.Join(" ", str.Split(Path.GetInvalidFileNameChars()));
-            }
-            return str;
-        }
-
     }
 }

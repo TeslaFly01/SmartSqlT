@@ -287,7 +287,7 @@ namespace SmartSQL.Views
                         Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
                     });
                 }
-            }); 
+            });
             #endregion
         }
 
@@ -330,7 +330,7 @@ namespace SmartSQL.Views
                         //ChangeRefreshEvent();
                     }
                 });
-            }); 
+            });
             #endregion
         }
 
@@ -478,8 +478,11 @@ namespace SmartSQL.Views
             {
                 dbType = DbType.SqlServer;
                 connectId = Convert.ToInt32(MsSql_HidId.Text);
-                connectionString = $"server={MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value};" +
-                                   $"database=master;" +
+                var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
+                    ? $"{MsSql_TextServerAddress.Text.Trim()}"
+                    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
+                connectionString = $"server={serAddr};" +
+                                   "database=master;" +
                                    $"uid={MsSql_TextServerName.Text.Trim()};" +
                                    $"pwd={MsSql_TextServerPassword.Password.Trim()};";
             }

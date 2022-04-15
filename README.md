@@ -22,8 +22,8 @@ SmartSQL 是一款数据库文档工具！
 ## 🍀 二、数据库支持
 - ✅ SqlServer
 - ✅ MySQL
+- ✅ PostgreSQL
 - - [x] Oracle
-- - [x] PostgreSQL
 - - [x] DB2
 - - [x] SQLite
 

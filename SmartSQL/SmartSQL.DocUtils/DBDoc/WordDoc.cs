@@ -30,9 +30,9 @@ namespace SmartSQL.DocUtils.DBDoc
             }
             var docTpl = File.ReadAllText(doc, Encoding.UTF8);
             var docResult = docTpl.RazorRender(this.Dto);
-            using (FileStream sfs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
+            using (var sfs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
-                using (StreamWriter sw = new StreamWriter(sfs))
+                using (var sw = new StreamWriter(sfs))
                 {
                     sw.Write(docResult);
                 }

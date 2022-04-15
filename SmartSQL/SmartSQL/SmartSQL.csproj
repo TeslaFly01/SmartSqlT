@@ -363,6 +363,22 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
+    <Content Include="Resources\Img\Readme\About.png" />
+    <Content Include="Resources\Img\Readme\Column.png" />
+    <Content Include="Resources\Img\Readme\Connect.png" />
+    <Content Include="Resources\Img\Readme\Export.png" />
+    <Content Include="Resources\Img\Readme\Group.png" />
+    <Content Include="Resources\Img\Readme\GroupObject.png" />
+    <Content Include="Resources\Img\Readme\Import.png" />
+    <Content Include="Resources\Img\Readme\Objects.png" />
+    <Content Include="Resources\Img\Readme\Pro.png" />
+    <Content Include="Resources\Img\Readme\Setting.png" />
+    <Content Include="Resources\Img\Readme\Top.png" />
+    <Content Include="Resources\Img\Readme\View.png" />
+    <Content Include="Resources\Img\Readme\分组查询.png" />
+    <Content Include="Resources\Img\Readme\分组管理.jpg" />
+    <Content Include="Resources\Img\Readme\快捷查询.jpg" />
+    <Content Include="Resources\Img\Readme\新建连接.jpg" />
     <Resource Include="Resources\Img\mssql_icon.png" />
     <Resource Include="Resources\Img\mysql_icon.png" />
     <Content Include="Resources\Img\oracle_icon.png" />

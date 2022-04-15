@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -34,6 +35,20 @@ namespace SmartSQL.Framework.Util
                 return str;
             if (str.Length == 1) return str.ToUpper();
             return str.Substring(0, 1).ToUpper() + str.Substring(1);
+        }
+
+        /// <summary>
+        /// 处理非法字符路径
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string FilterIllegalDir(this string str)
+        {
+            if (str.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
+            {
+                str = string.Join(" ", str.Split(Path.GetInvalidFileNameChars()));
+            }
+            return str;
         }
 
         public static string ToEmpty(this string str)

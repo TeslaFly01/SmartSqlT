@@ -16,6 +16,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.Exporter;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
+using SmartSQL.Framework.Util;
 using SmartSQL.Models;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
@@ -127,7 +128,7 @@ namespace SmartSQL.Views
             var dbDto = new DBDto(selectedDatabase.DbName);
             Task.Run(() =>
             {
-                dbDto.DBType = "SqlServer";
+                dbDto.DBType = selectedConnection.DbType.ToString();
                 dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
                 dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
                 dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
@@ -203,7 +204,7 @@ namespace SmartSQL.Views
                         TableDto tbDto = new TableDto();
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.Name;
-                        tbDto.Comment = node.Comment;
+                        tbDto.Comment = node.Comment.FilterIllegalDir();
                         tbDto.DBType = nameof(DbType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
@@ -231,7 +232,7 @@ namespace SmartSQL.Views
                             // 默认值
                             colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
                             // 列注释（说明）
-                            colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment.Replace("<", "").Replace(">", "") : "");
+                            colDto.Comment = col.Value.Comment.FilterIllegalDir();
 
                             lst_col_dto.Add(colDto);
                             columnIndex++;
@@ -246,7 +247,7 @@ namespace SmartSQL.Views
                     TableDto tbDto = new TableDto();
                     tbDto.TableOrder = groupNo.ToString();
                     tbDto.TableName = group.Name;
-                    tbDto.Comment = group.Comment;
+                    tbDto.Comment = group.Comment.FilterIllegalDir();
                     tbDto.DBType = "SqlServer";
 
                     var lst_col_dto = new List<ColumnDto>();
@@ -274,7 +275,7 @@ namespace SmartSQL.Views
                         // 默认值
                         colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
                         // 列注释（说明）
-                        colDto.Comment = (!string.IsNullOrWhiteSpace(col.Value.Comment) ? col.Value.Comment.Replace("<", "").Replace(">", "") : "");
+                        colDto.Comment = col.Value.Comment.FilterIllegalDir();
                         lst_col_dto.Add(colDto);
                         columnIndex++;
                     }

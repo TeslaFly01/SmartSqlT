@@ -79,8 +79,9 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
+                        var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                         connectString =
-                            $"server={ServerAddress},{ServerPort};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                            $"server={serAddress};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                         break;
                     case DbType.MySql:
                         connectString =
@@ -109,8 +110,9 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
+                        var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                         connectString =
-                            $"server={ServerAddress},{ServerPort};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                            $"server={serAddress};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                         break;
                     case DbType.MySql:
                         connectString = $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
@@ -133,8 +135,9 @@ namespace SmartSQL.Framework.SqliteModel
             switch (DbType)
             {
                 case DbType.SqlServer:
+                    var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                     connectString =
-                        $"server={ServerAddress},{ServerPort};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        $"server={serAddress};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                     break;
                 case DbType.MySql:
                     connectString = $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
