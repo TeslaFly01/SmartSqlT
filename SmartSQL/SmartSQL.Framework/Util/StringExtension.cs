@@ -44,6 +44,10 @@ namespace SmartSQL.Framework.Util
         /// <returns></returns>
         public static string FilterIllegalDir(this string str)
         {
+            if (string.IsNullOrEmpty(str))
+            {
+                return "";
+            }
             if (str.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0)
             {
                 str = string.Join(" ", str.Split(Path.GetInvalidFileNameChars()));
