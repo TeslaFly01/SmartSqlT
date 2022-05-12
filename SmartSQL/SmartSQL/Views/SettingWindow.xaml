@@ -54,6 +54,13 @@
                 VerticalAlignment="Top"
                 Content="主窗口多标签展示"
                 IsChecked="True" />
+            <CheckBox
+                Name="ChkIsLikeSearch"
+                Margin="36,60,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                Content="对象名模糊搜索"
+                IsChecked="True" />
             <hc:SimpleStackPanel
                 Margin="5"
                 HorizontalAlignment="Right"

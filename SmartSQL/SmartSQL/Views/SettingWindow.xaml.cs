@@ -32,17 +32,18 @@ namespace SmartSQL.Views
             var sysSets = sqLiteHelper.db.Table<SystemSet>().Where(x => KeyList.Contains(x.Name)).ToList();
             sysSets.ForEach(x =>
             {
-                var name = x.Name;
                 var value = Convert.ToBoolean(x.Value);
                 switch (x.Name)
                 {
                     case "IsMultipleTab":
                         ChkIsMultipleTab.IsChecked = value; break;
+                    case "IsLikeSearch":
+                        ChkIsLikeSearch.IsChecked = value; break;
                 }
             });
         }
 
-        private readonly List<string> KeyList = new List<string> { SysConst.Sys_IsMultipleTab };
+        private readonly List<string> KeyList = new List<string> { SysConst.Sys_IsMultipleTab, SysConst.Sys_IsLikeSearch };
         /// <summary>
         /// 保存
         /// </summary>
@@ -51,6 +52,7 @@ namespace SmartSQL.Views
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
             var isMultipleTab = ChkIsMultipleTab.IsChecked == true;
+            var isLikeSearch = ChkIsLikeSearch.IsChecked == true;
             var sqLiteHelper = new SQLiteHelper();
             var sysSets = sqLiteHelper.db.Table<SystemSet>().Where(x => KeyList.Contains(x.Name)).ToList();
             sysSets.ForEach(x =>
@@ -58,6 +60,10 @@ namespace SmartSQL.Views
                 if (x.Name == SysConst.Sys_IsMultipleTab)
                 {
                     x.Value = isMultipleTab.ToString();
+                }
+                if (x.Name == SysConst.Sys_IsLikeSearch)
+                {
+                    x.Value = isLikeSearch.ToString();
                 }
             });
             sqLiteHelper.db.UpdateAll(sysSets);

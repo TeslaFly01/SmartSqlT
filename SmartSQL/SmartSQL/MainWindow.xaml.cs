@@ -682,7 +682,7 @@ namespace SmartSQL
             #region MyRegion
             NoDataText.Visibility = Visibility.Collapsed;
             itemList = new List<PropertyNodeItem>();
-            var searchText = SearchMenu.Text.Trim();
+            var searchText = SearchMenu.Text.ToLower().Trim();
             var nodeTable = new PropertyNodeItem()
             {
                 ObejcetId = "0",
@@ -715,6 +715,7 @@ namespace SmartSQL
             itemList.Add(nodeProc);
             var sqLiteHelper = new SQLiteHelper();
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
+            var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectendConnection;
             var currObjects = new List<SObjectDTO>();
@@ -798,7 +799,11 @@ namespace SmartSQL
             {
                 foreach (var table in dataSource.Tables)
                 {
-                    if (!table.Key.StartsWith(searchText, true, null) && !table.Value.Name.StartsWith(searchText, true, null))
+                    var isStartWith = !table.Key.ToLower().StartsWith(searchText, true, null) &&
+                                     !table.Value.Name.ToLower().StartsWith(searchText, true, null);
+                    var isContains = !table.Key.ToLower().Contains(searchText) && !table.Key.ToLower().Contains(searchText);
+                    var isSearchMode = isLikeSearch ? isContains : isStartWith;
+                    if (isSearchMode)
                     {
                         continue;
                     }
@@ -856,7 +861,10 @@ namespace SmartSQL
             {
                 foreach (var view in dataSource.Views)
                 {
-                    if (!view.Key.StartsWith(searchText, true, null) && !view.Value.Name.StartsWith(searchText, true, null))
+                    var isStartWith = !view.Key.ToLower().StartsWith(searchText, true, null) && !view.Value.Name.ToLower().StartsWith(searchText, true, null);
+                    var isContains = !view.Key.ToLower().Contains(searchText) && !view.Key.ToLower().Contains(searchText);
+                    var isSearchMode = isLikeSearch ? isContains : isStartWith;
+                    if (isSearchMode)
                     {
                         continue;
                     }
@@ -914,7 +922,10 @@ namespace SmartSQL
             {
                 foreach (var proc in dataSource.Procedures)
                 {
-                    if (!proc.Key.StartsWith(searchText, true, null) && !proc.Value.Name.StartsWith(searchText, true, null))
+                    var isStartWith = !proc.Key.ToLower().StartsWith(searchText, true, null) && !proc.Value.Name.ToLower().StartsWith(searchText, true, null);
+                    var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Key.ToLower().Contains(searchText);
+                    var isSearchMode = isLikeSearch ? isContains : isStartWith;
+                    if (isSearchMode)
                     {
                         continue;
                     }

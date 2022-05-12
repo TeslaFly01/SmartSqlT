@@ -98,7 +98,7 @@ SmartSQL 是一款数据库文档工具！
 - @[MicLuo](https://gitee.com/izhaofu) MicLuo
 
 ## ⬇️ 七、下载地址
-- **[立即下载](https://gitee.com/dotnetchina/DBCHM/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
+- **[立即下载](https://gitee.com/izhaofu/SmartSQL/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
 
 ## 🍄 附一、其他工具
 - [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files)，生成chm文件时，需提前安装。
