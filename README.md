@@ -73,8 +73,6 @@ SmartSQL 是一款数据库文档工具！
 
 ![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Column.png)
 
-![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Objects.png)
-
 ### 4 导入备注
 ![导入备注](https://gitee.com/izhaofu/pic/raw/master/Import.png)
 
