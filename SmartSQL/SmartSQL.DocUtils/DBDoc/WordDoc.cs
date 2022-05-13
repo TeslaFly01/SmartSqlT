@@ -18,6 +18,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
+            return BuildDoc(filePath);
+        }
+
+        private bool BuildDoc(string filePath)
+        {
             var docPath = Path.Combine(TplPath, "doc");
             if (!Directory.Exists(docPath))
             {

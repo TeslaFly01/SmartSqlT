@@ -19,6 +19,12 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
+            return BuildDoc(filePath);
+        }
+
+        private bool BuildDoc(string filePath)
+        {
+            #region MyRegion
             var sb = new StringBuilder();
             sb.AppendLine("# 数据库表目录");
             var dirMD = this.Dto.Tables.MarkDown("Columns", "DBType");
@@ -81,6 +87,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
             ZlpIOHelper.WriteAllText(filePath, md, Encoding.UTF8);
             return true;
+            #endregion
         }
     }
 }

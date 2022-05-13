@@ -16,6 +16,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
+            return BuildDoc(filePath);
+        }
+
+        private bool BuildDoc(string filePath)
+        {
             string xmlContent = this.Dto.SerializeXml();
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlContent);

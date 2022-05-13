@@ -16,11 +16,17 @@ namespace SmartSQL.DocUtils.DBDoc
     {
         public PdfDoc(DBDto dto, string filter = "html files (.pdf)|*.pdf") : base(dto, filter)
         {
+
         }
 
         private static string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\pdf\\msyh.ttf");
 
         public override bool Build(string filePath)
+        {
+            return BuildDoc(filePath);
+        }
+
+        private bool BuildDoc(string filePath)
         {
             var pdfPath = Path.Combine(TplPath, "pdf");
             if (!Directory.Exists(pdfPath))
