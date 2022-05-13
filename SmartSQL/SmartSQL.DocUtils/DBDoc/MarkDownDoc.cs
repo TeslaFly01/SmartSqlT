@@ -17,7 +17,7 @@ namespace SmartSQL.DocUtils.DBDoc
         {
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             var sb = new StringBuilder();
             sb.AppendLine("# 数据库表目录");
@@ -80,6 +80,7 @@ namespace SmartSQL.DocUtils.DBDoc
             var md = sb.ToString();
 
             ZlpIOHelper.WriteAllText(filePath, md, Encoding.UTF8);
+            return true;
         }
     }
 }

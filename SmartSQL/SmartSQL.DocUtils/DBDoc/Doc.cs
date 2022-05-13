@@ -62,6 +62,6 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <summary>
         /// 构建生成文档
         /// </summary>
-        public abstract void Build(string filePath);
+        public abstract bool Build(string filePath);
     }
 }

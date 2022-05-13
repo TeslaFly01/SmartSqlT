@@ -16,7 +16,7 @@ namespace SmartSQL.DocUtils.DBDoc
         {
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             var docPath = Path.Combine(TplPath, "doc");
             if (!Directory.Exists(docPath))
@@ -38,6 +38,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
             }
             ZlpIOHelper.WriteAllText(filePath, docResult, Encoding.UTF8);
+            return true;
         }
     }
 }

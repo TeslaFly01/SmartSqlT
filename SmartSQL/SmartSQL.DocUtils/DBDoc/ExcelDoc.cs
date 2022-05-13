@@ -14,9 +14,10 @@ namespace SmartSQL.DocUtils.DBDoc
         {
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             ExcelUtils.ExportExcelByEpplus(filePath, this.Dto);
+            return true;
         }
     }
 

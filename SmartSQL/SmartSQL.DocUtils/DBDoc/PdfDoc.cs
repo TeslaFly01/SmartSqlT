@@ -20,7 +20,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
         private static string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\pdf\\msyh.ttf");
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             var pdfPath = Path.Combine(TplPath, "pdf");
             if (!Directory.Exists(pdfPath))
@@ -33,6 +33,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 File.WriteAllBytes(pdf, Resources.msyh);
             }
             PdfUtils.ExportPdfByITextSharp(filePath, pdf, this.Dto);
+            return true;
         }
     }
 

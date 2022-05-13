@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Media;
 using HandyControl.Controls;
 using HandyControl.Data;
 using Microsoft.Win32;
@@ -135,11 +137,14 @@ namespace SmartSQL.Views
 
                 var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 var filePath = Path.Combine(floderPath, fileName);
-                doc.Build(filePath);
+                var bulResult = doc.Build(filePath);
                 Dispatcher.Invoke(() =>
                 {
                     LoadingG.Visibility = Visibility.Collapsed;
-                    Growl.SuccessGlobal("导出成功.");
+                    if (bulResult)
+                    {
+                        Growl.SuccessGlobal("导出成功.");
+                    }
                 });
             });
         }

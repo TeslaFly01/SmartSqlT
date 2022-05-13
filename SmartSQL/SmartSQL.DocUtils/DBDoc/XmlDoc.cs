@@ -14,7 +14,7 @@ namespace SmartSQL.DocUtils.DBDoc
         {
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             string xmlContent = this.Dto.SerializeXml();
             XmlDocument xmlDoc = new XmlDocument();
@@ -24,6 +24,7 @@ namespace SmartSQL.DocUtils.DBDoc
             root.SetAttribute("databaseName", this.Dto.DBName);
             root.SetAttribute("tableNum", this.Dto.Tables.Count + "");
             xmlDoc.Save(filePath);
+            return true;
         }
     }
 }

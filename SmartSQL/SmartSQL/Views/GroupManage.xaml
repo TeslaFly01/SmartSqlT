@@ -54,7 +54,7 @@
             </ComboBox>
             <ListBox
                 Name="ListGroup"
-                Margin="5,40,5,5"
+                Margin="5,40,5,26"
                 AllowDrop="True"
                 BorderThickness="0"
                 Drop="ListGroup_OnDrop"
@@ -83,7 +83,7 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <hc:SimpleStackPanel
-                Margin="5"
+                Margin="5,5,5,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom">
                 <hc:UniformSpacingPanel Spacing="2">

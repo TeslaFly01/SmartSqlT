@@ -17,7 +17,7 @@ namespace SmartSQL.DocUtils.DBDoc
         {
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             var htmlPath = Path.Combine(TplPath, "html");
             if (!Directory.Exists(htmlPath))
@@ -32,6 +32,7 @@ namespace SmartSQL.DocUtils.DBDoc
             var html_tpl = File.ReadAllText(html, Encoding.UTF8);
             var html_doc = html_tpl.RazorRender(this.Dto);
             ZlpIOHelper.WriteAllText(filePath, html_doc, Encoding.UTF8);
+            return true;
         }
     }
 }

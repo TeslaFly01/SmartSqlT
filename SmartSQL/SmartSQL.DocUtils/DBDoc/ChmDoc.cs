@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using HandyControl.Controls;
 using SmartSQL.DocUtils.Dtos;
 using SmartSQL.DocUtils.Properties;
 using ZetaLongPaths;
@@ -46,6 +47,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
         void InitDirFiles()
         {
+            #region MyRegion
             var dirNames = new string[] {
                 "表结构",
                 "视图",
@@ -80,19 +82,19 @@ namespace SmartSQL.DocUtils.DBDoc
             var highlight = Path.Combine(ChmPath, "embed", "highlight.js");
             if (!File.Exists(highlight))
             {
-                File.AppendAllText(highlight,Resources.highlight);
+                File.AppendAllText(highlight, Resources.highlight);
             }
             var sql_formatter = Path.Combine(ChmPath, "embed", "sql-formatter.js");
             if (!File.Exists(sql_formatter))
             {
-                File.AppendAllText(sql_formatter,Resources.sql_formatter);
+                File.AppendAllText(sql_formatter, Resources.sql_formatter);
             }
             var jQuery = Path.Combine(ChmPath, "js", "jQuery.js");
             if (!File.Exists(jQuery))
             {
                 File.AppendAllText(jQuery, Resources.jQuery);
             }
-            var hhc= Path.Combine(ChmPath, "hhc.cshtml");
+            var hhc = Path.Combine(ChmPath, "hhc.cshtml");
             var hhk = Path.Combine(ChmPath, "hhk.cshtml");
             var hhp = Path.Combine(ChmPath, "hhp.cshtml");
             var list = Path.Combine(ChmPath, "list.cshtml");
@@ -100,7 +102,7 @@ namespace SmartSQL.DocUtils.DBDoc
             var table = Path.Combine(ChmPath, "table.cshtml");
             if (!File.Exists(hhc))
             {
-                File.WriteAllBytes(hhc,Resources.hhc);
+                File.WriteAllBytes(hhc, Resources.hhc);
             }
             if (!File.Exists(hhk))
             {
@@ -131,33 +133,57 @@ namespace SmartSQL.DocUtils.DBDoc
                 var fileName = Path.GetFileName(filePath);
                 ZlpIOHelper.CopyFile(filePath, Path.Combine(this.WorkTmpDir, "resources\\js\\", fileName), true);
             }
+            #endregion
         }
 
-        public override void Build(string filePath)
+        public override bool Build(string filePath)
         {
             #region 使用 HTML Help Workshop 的 hhc.exe 编译 ,先判断系统中是否已经安装有  HTML Help Workshop 
 
-            if (this.HHCPath.IsNullOrWhiteSpace())
+            if (this.HHCPath.IsNullOrWhiteSpace() || !File.Exists(HHCPath))
             {
                 string htmlhelpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "htmlhelp.exe");
 
                 if (File.Exists(htmlhelpPath))
                 {
-                    var result = new HandyControl.Data.MessageBoxInfo
+                    string htmlHelpPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "htmlhelp.exe");
+                    if (File.Exists(htmlHelpPath))
                     {
-                        Message = "导出CHM文档需安装 HTML Help Workshop ，是否现在安装？",
-                        Caption = "提示",
-                        Button = MessageBoxButton.OKCancel,
-                        Icon = Geometry.Empty,
-                    };
-                    if (result.DefaultResult == MessageBoxResult.OK)
-                    {
-                        var proc = Process.Start(htmlhelpPath);
+                        Growl.AskGlobal("导出CHM文档需安装 HTML Help Workshop ，是否立即安装？", isConfirm =>
+                        {
+                            if (isConfirm)
+                            {
+                                try
+                                {
+                                    var proc = Process.Start(htmlHelpPath);
+                                }
+                                catch { }
+                            }
+                            return true;
+                        });
                     }
                 }
-                return;
+                else
+                {
+                    Growl.AskGlobal("导出CHM文档需安装 HTML Help Workshop ，是否立即下载安装？", isConfirm =>
+                    {
+                        if (isConfirm)
+                        {
+                            try
+                            {
+                                var myProcess = new Process();
+                                //"firefox.exe";// "iexplore.exe";  //chrome  //iexplore.exe //哪个浏览器打开
+                                myProcess.StartInfo.FileName = "chrome.exe";
+                                myProcess.StartInfo.Arguments = "https://gitee.com/dotnetchina/DBCHM/attach_files/443656/download";
+                                myProcess.Start();
+                            }
+                            catch { }
+                        }
+                        return true;
+                    });
+                }
+                return false;
             }
-
             #endregion
 
             this.InitDirFiles();
@@ -218,6 +244,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 Directory.CreateDirectory(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log"));
             }
             ZlpIOHelper.WriteAllText(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log", "chm.log"), res);
+            return true;
         }
 
         private string StartRun(string hhcPath, string arguments, Encoding encoding)

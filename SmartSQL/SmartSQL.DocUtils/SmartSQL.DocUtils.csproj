@@ -126,6 +126,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
     <Reference Include="ZetaLongPaths, Version=1.0.0.41, Culture=neutral, PublicKeyToken=b764f59068f31f38, processorArchitecture=MSIL">
       <HintPath>..\..\packages\ZetaLongPaths.1.0.0.41\lib\net452-full\ZetaLongPaths.dll</HintPath>
     </Reference>
