@@ -94,8 +94,8 @@ SmartSQL 是一款数据库文档工具！
 ### 1 CHM文档
 ![CHM文档](https://gitee.com/izhaofu/pic/raw/master/docImg/chm.png)
 
-### 2 Html文档
-![Html文档](https://gitee.com/izhaofu/pic/raw/master/docImg/html.png)
+### 2 HTML文档
+![HTML文档](https://gitee.com/izhaofu/pic/raw/master/docImg/html.png)
 
 
 ## 📘 五、更新日志
