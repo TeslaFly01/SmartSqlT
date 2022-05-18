@@ -51,7 +51,7 @@ SmartSQL 是一款数据库文档工具！
     - 	[x] xml 由`SmartSQL`的 XML导出 而产生。
 - 列批注 在编辑前的选中状态下，可以从 选定行开始 粘贴多行文本内容 对多个列注释批量赋值。
 
-## 🎉 四、截图展示
+## 🎉 四、工具截图
 
 ![首页](https://gitee.com/izhaofu/pic/raw/master/Top.png)
 
@@ -88,6 +88,15 @@ SmartSQL 是一款数据库文档工具！
 ### 8 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
 
 查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
+
+## 🎉 五、文档截图
+
+### 1 CHM文档
+![CHM文档](https://gitee.com/izhaofu/pic/raw/master/docImg/chm.png)
+
+### 2 Html文档
+![Html文档](https://gitee.com/izhaofu/pic/raw/master/docImg/html.png)
+
 
 ## 📘 五、更新日志
 

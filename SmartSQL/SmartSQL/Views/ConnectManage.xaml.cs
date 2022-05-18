@@ -340,10 +340,6 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
-            if (MsSql_HidId.Text == "0")
-            {
-
-            }
             ResetData();
         }
 
