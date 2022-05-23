@@ -1,0 +1,506 @@
+﻿<?xml version="1.0"?>
+<SyntaxDefinition name="SQL" extensions=".sql" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
+  <Color name="Comment" foreground="Green" exampleText="// comment" />
+  <Color name="String" foreground="#b47044" exampleText="string text = &quot;Hello, World!&quot;"/>
+  <Color name="StringInterpolation" foreground="#b47044" exampleText="string text = $&quot;Hello, {name}!&quot;"/>
+  <Color name="Char" foreground="Red" exampleText="char linefeed = '\n';"/>
+  <Color name="Preprocessor" foreground="Green" exampleText="#region Title" />
+  <Color name="Punctuation" exampleText="a(b.c);" />
+  <Color name="ValueTypeKeywords" foreground="Blue" exampleText="bool b = true;" />
+  <Color name="ReferenceTypeKeywords" foreground="#4e8cc1" exampleText="object o;" />
+  <Color name="MethodCall" foreground="#c4c498" fontWeight="bold" exampleText="o.ToString();"/>
+  <Color name="NumberLiteral" foreground="DarkBlue" exampleText="3.1415f"/>
+  <Color name="ThisOrBaseReference" fontWeight="bold" exampleText="this.Do(); base.Do();"/>
+  <Color name="NullOrValueKeywords" fontWeight="bold" exampleText="if (value == null)"/>
+  <Color name="Keywords" foreground="Blue" exampleText="if (a) {} else {}"/>
+  <Color name="GotoKeywords" foreground="#4e8cc1" exampleText="continue; return null;"/>
+  <Color name="ContextKeywords" foreground="#808080" exampleText="var a = from x in y select z;"/>
+  <Color name="ExceptionKeywords" fontWeight="bold" foreground="Teal" exampleText="try {} catch {} finally {}"/>
+  <Color name="CheckedKeyword" fontWeight="bold" foreground="DarkGray" exampleText="checked {}"/>
+  <Color name="UnsafeKeywords" foreground="Olive" exampleText="unsafe { fixed (..) {} }"/>
+  <Color name="OperatorKeywords" fontWeight="bold" foreground="Pink" exampleText="public static implicit operator..."/>
+  <Color name="ParameterModifiers" fontWeight="bold" foreground="DeepPink" exampleText="(ref int a, params int[] b)"/>
+  <Color name="Modifiers" foreground="Brown" exampleText="static readonly int a;"/>
+  <Color name="Visibility" fontWeight="bold" foreground="#4e8cc1" exampleText="public override void ToString();"/>
+  <Color name="NamespaceKeywords" fontWeight="bold" foreground="#4e8cc1" exampleText="namespace A.B { using System; }"/>
+  <Color name="GetSetAddRemove" foreground="#4e8cc1" exampleText="int Prop { get; set; }"/>
+  <Color name="TrueFalse" fontWeight="bold" foreground="DarkCyan" exampleText="b = false; a = true;" />
+  <Color name="TypeKeywords" foreground="Magenta" exampleText="if (x is int) { a = x as int; type = typeof(int); size = sizeof(int); c = new object(); }"/>
+  <Color name="SemanticKeywords" fontWeight="bold" foreground="DarkCyan" exampleText="if (args == null) throw new ArgumentNullException(nameof(args));" />
+
+  <Property name="DocCommentMarker" value="///" />
+
+
+      <RuleSet name="CommentMarkerSet">
+        <Keywords fontWeight="bold" foreground="Red">
+          <Word>TODO</Word>
+          <Word>FIXME</Word>
+        </Keywords>
+        <Keywords fontWeight="bold" foreground="#E0E000">
+          <Word>HACK</Word>
+          <Word>UNDONE</Word>
+        </Keywords>
+      </RuleSet>
+
+      <RuleSet>
+        <Span color="Comment">
+          <Begin color="XmlDoc/DocComment">///(?!/)</Begin>
+          <RuleSet>
+            <Import ruleSet="XmlDoc/DocCommentSet"/>
+            <Import ruleSet="CommentMarkerSet"/>
+          </RuleSet>
+        </Span>
+
+        <Span color="Comment" ruleSet="CommentMarkerSet">
+          <Begin>--</Begin>
+        </Span>
+
+        <Span color="Comment" ruleSet="CommentMarkerSet" multiline="true">
+          <Begin>/\*</Begin>
+          <End>\*/</End>
+        </Span>
+
+        <Span color="String">
+          <Begin>"</Begin>
+          <End>"</End>
+          <RuleSet>
+            <!-- span for escape sequences -->
+            <Span begin="\\" end="."/>
+          </RuleSet>
+        </Span>
+
+        <Span color="Char" multiline="true">
+          <Begin>'</Begin>
+          <End>'</End>
+          <RuleSet>
+            <!-- span for escape sequences -->
+            <Span begin="\\" end="."/>
+          </RuleSet>
+        </Span>
+
+        <Span color="String" multiline="true">
+          <Begin>@"</Begin>
+          <End>"</End>
+          <RuleSet>
+            <!-- span for escape sequences -->
+            <Span begin='""' end=""/>
+          </RuleSet>
+        </Span>
+
+        <Span color="String">
+          <Begin>\$"</Begin>
+          <End>"</End>
+          <RuleSet>
+            <!-- span for escape sequences -->
+            <Span begin="\\" end="."/>
+            <Span begin="\{\{" end=""/>
+            <!-- string interpolation -->
+            <Span begin="{" end="}" color="StringInterpolation" ruleSet=""/>
+          </RuleSet>
+        </Span>
+
+        <!-- don't highlight "@int" as keyword -->
+        <Rule>
+          @[\w\d_]+
+        </Rule>
+
+        <Keywords color="ThisOrBaseReference">
+          <Word>this</Word>
+          <Word>base</Word>
+        </Keywords>
+
+        <Keywords color="TypeKeywords">
+          <Word>cast</Word>
+          <Word>count</Word>
+          <Word>dateadd</Word>
+          <Word>getdate</Word>
+          <Word>ltrim</Word>
+          <Word>rtrim</Word>
+          <Word>convert</Word>
+          <Word>datepart</Word>
+          <Word>max</Word>
+          <Word>min</Word>
+          <Word>sum</Word>
+          <Word>isnull</Word>
+          <Word>len</Word>
+          <Word>update</Word>
+          <Word>substring</Word>
+          <Word>datediff</Word>
+          <Word>row_number</Word>
+          <Word>charindex</Word>
+          <Word>year</Word>
+          <Word>month</Word>
+          <Word>day</Word>
+          <Word>coalesce</Word>
+          <Word>replace</Word>
+          <Word>isnumeric</Word>
+          <Word>CAST</Word>
+          <Word>COUNT</Word>
+          <Word>DATEADD</Word>
+          <Word>GETDATE</Word>
+          <Word>LTRIM</Word>
+          <Word>RTRIM</Word>
+          <Word>CONVERT</Word>
+          <Word>DATEPART</Word>
+          <Word>MAX</Word>
+          <Word>MIN</Word>
+          <Word>SUM</Word>
+          <Word>ISNULL</Word>
+          <Word>LEN</Word>
+          <Word>UPDATE</Word>
+          <Word>SUBSTRING</Word>
+          <Word>DATEDIFF</Word>
+          <Word>ROW_NUMBER</Word>
+          <Word>CHARINDEX</Word>
+          <Word>YEAR</Word>
+          <Word>MONTH</Word>
+          <Word>DAY</Word>
+          <Word>COALESCE</Word>
+          <Word>REPLACE</Word>
+          <Word>ISNUMERIC</Word>
+        </Keywords>
+
+        <Keywords color="TrueFalse">
+          <Word>true</Word>
+          <Word>false</Word>
+        </Keywords>
+
+        <Keywords color="Keywords">
+          <Word>if</Word>
+          <Word>else</Word>
+          <Word>end</Word>
+          <Word>case</Word>
+          <Word>when</Word>
+          <Word>then</Word>
+          <Word>with</Word>
+          <Word>count</Word>
+          <Word>for</Word>
+          <Word>as</Word>
+          <Word>while</Word>
+          <Word>lock</Word>
+          <Word>nolock</Word>
+          <Word>select</Word>
+          <Word>insert</Word>
+          <Word>delete</Word>
+          <Word>from</Word>
+          <Word>where</Word>
+          <Word>asc</Word>
+          <Word>desc</Word>
+          <Word>order</Word>
+          <Word>by</Word>
+          <Word>type</Word>
+          <Word>procedure</Word>
+          <Word>Procedure</Word>
+          <Word>create</Word>
+          <Word>into</Word>
+          <Word>value</Word>
+          <Word>values</Word>
+          <Word>alter</Word>
+          <Word>on</Word>
+          <Word>use</Word>
+          <Word>go</Word>
+          <Word>set</Word>
+          <Word>union</Word>
+          <Word>begin</Word>
+          <Word>declare</Word>
+          <Word>open</Word>
+          <Word>fetch</Word>
+          <Word>next</Word>
+          <Word>print</Word>
+          <Word>view</Word>
+          <Word>table</Word>
+          <Word>exec</Word>
+          <Word>drop</Word>
+          <Word>proc</Word>
+          <Word>default</Word>
+          <Word>nocount</Word>
+          <Word>deallocate</Word>
+          <Word>close</Word>
+          <Word>try</Word>
+          <Word>catch</Word>
+          <Word>group</Word>
+          <Word>truncate</Word>
+          <Word>over</Word>
+          <Word>identity</Word>
+          <Word>top</Word>
+          <Word>partition</Word>
+          <Word>add</Word>
+          <Word>key</Word>
+          <Word>primary</Word>
+          
+          <Word>IF</Word>
+          <Word>ELSE</Word>
+          <Word>END</Word>
+          <Word>CASE</Word>
+          <Word>WHEN</Word>
+          <Word>THEN</Word>
+          <Word>WITH</Word>
+          <Word>COUNT</Word>
+          <Word>FOR</Word>
+          <Word>AS</Word>
+          <Word>WHILE</Word>
+          <Word>LOCK</Word>
+          <Word>NOLOCK</Word>
+          <Word>SELECT</Word>
+          <Word>INSERT</Word>
+          <Word>DELETE</Word>
+          <Word>FROM</Word>
+          <Word>WHERE</Word>
+          <Word>ASC</Word>
+          <Word>DESC</Word>
+          <Word>ORDER</Word>
+          <Word>BY</Word>
+          <Word>TYPE</Word>
+          <Word>PROCEDURE</Word>
+          <Word>CREATE</Word>
+          <Word>INTO</Word>
+          <Word>VALUE</Word>
+          <Word>VALUES</Word>
+          <Word>ALTER</Word>
+          <Word>ON</Word>
+          <Word>USE</Word>
+          <Word>GO</Word>
+          <Word>SET</Word>
+          <Word>UNION</Word>
+          <Word>BEGIN</Word>
+          <Word>DECLARE</Word>
+          <Word>OPEN</Word>
+          <Word>FETCH</Word>
+          <Word>NEXT</Word>
+          <Word>PRINT</Word>
+          <Word>VIEW</Word>
+          <Word>TABLE</Word>
+          <Word>EXEC</Word>
+          <Word>DROP</Word>
+          <Word>PROC</Word>
+          <Word>DEFAULT</Word>
+          <Word>NOCOUNT</Word>
+          <Word>DEALLOCATE</Word>
+          <Word>CLOSE</Word>
+          <Word>TRY</Word>
+          <Word>CATCH</Word>
+          <Word>GROUP</Word>
+          <Word>TRUNCATE</Word>
+          <Word>OVER</Word>
+          <Word>IDENTITY</Word>
+          <Word>TOP</Word>
+          <Word>PARTITION</Word>
+          <Word>ADD</Word>
+          <Word>KEY</Word>
+          <Word>PRIMARY</Word>
+        </Keywords>
+
+        <Keywords color="GotoKeywords">
+          <Word>break</Word>
+          <Word>continue</Word>
+          <Word>goto</Word>
+          <Word>return</Word>
+        </Keywords>
+
+        <Keywords color="ContextKeywords">
+          <Word>in</Word>
+          <Word>is</Word>
+          <Word>left</Word>
+          <Word>right</Word>
+          <Word>inner</Word>
+          <Word>outer</Word>
+          <Word>join</Word>
+          <Word>and</Word>
+          <Word>between</Word>
+          <Word>not</Word>
+          <Word>null</Word>
+          <Word>or</Word>
+          <Word>exists</Word>
+          <Word>IN</Word>
+          <Word>IS</Word>
+          <Word>LEFT</Word>
+          <Word>RIGHT</Word>
+          <Word>INNER</Word>
+          <Word>OUTER</Word>
+          <Word>JOIN</Word>
+          <Word>AND</Word>
+          <Word>BETWEEN</Word>
+          <Word>NOT</Word>
+          <Word>NULL</Word>
+          <Word>OR</Word>
+          <Word>EXISTS</Word>
+          <Word>(</Word>
+          <Word>)</Word>
+          <Word>'</Word>
+          <Word>=</Word>
+          <Word>,</Word>
+          <Word>*</Word>
+          <Word>+</Word>
+          <Word>&lt;</Word>
+          <Word>&gt;</Word>
+        </Keywords>
+
+        <Keywords color="ExceptionKeywords">
+          <Word>try</Word>
+          <Word>throw</Word>
+          <Word>catch</Word>
+          <Word>finally</Word>
+        </Keywords>
+
+        <Keywords color="CheckedKeyword">
+          <Word>checked</Word>
+          <Word>unchecked</Word>
+        </Keywords>
+
+        <Keywords color="UnsafeKeywords">
+          <Word>fixed</Word>
+          <Word>unsafe</Word>
+        </Keywords>
+
+        <Keywords color="ValueTypeKeywords">
+          <Word>bigint</Word>
+          <Word>binary</Word>
+          <Word>bit</Word>
+          <Word>char</Word>
+          <Word>date</Word>
+          <Word>datetime</Word>
+          <Word>datetime2</Word>
+          <Word>datetimeoffset</Word>
+          <Word>decimal</Word>
+          <Word>float</Word>
+          <Word>image</Word>
+          <Word>int</Word>
+          <Word>money</Word>
+          <Word>nchar</Word>
+          <Word>ntext</Word>
+          <Word>numeric</Word>
+          <Word>nvarchar</Word>
+          <Word>real</Word>
+          <Word>smalldatetime</Word>
+          <Word>smallint</Word>
+          <Word>smallmoney</Word>
+          <Word>sql_variant</Word>
+          <Word>sysname</Word>
+          <Word>text</Word>
+          <Word>time</Word>
+          <Word>timestamp</Word>
+          <Word>tinyint</Word>
+          <Word>uniqueidentifier</Word>
+          <Word>varbinary</Word>
+          <Word>varchar</Word>
+          <Word>xml</Word>
+
+          <Word>BIGINT</Word>
+          <Word>BINARY</Word>
+          <Word>BIT</Word>
+          <Word>CHAR</Word>
+          <Word>DATE</Word>
+          <Word>DATETIME</Word>
+          <Word>DATETIME2</Word>
+          <Word>DATETIMEOFFSET</Word>
+          <Word>DECIMAL</Word>
+          <Word>FLOAT</Word>
+          <Word>IMAGE</Word>
+          <Word>INT</Word>
+          <Word>MONEY</Word>
+          <Word>NCHAR</Word>
+          <Word>NTEXT</Word>
+          <Word>NUMERIC</Word>
+          <Word>NVARCHAR</Word>
+          <Word>REAL</Word>
+          <Word>SMALLDATETIME</Word>
+          <Word>SMALLINT</Word>
+          <Word>SMALLMONEY</Word>
+          <Word>SQL_VARIANT</Word>
+          <Word>SYSNAME</Word>
+          <Word>TEXT</Word>
+          <Word>TIME</Word>
+          <Word>TIMESTAMP</Word>
+          <Word>TINYINT</Word>
+          <Word>UNIQUEIDENTIFIER</Word>
+          <Word>VARBINARY</Word>
+          <Word>VARCHAR</Word>
+          <Word>XML</Word>
+        </Keywords>
+
+        <Keywords color="ReferenceTypeKeywords">
+          <Word>class</Word>
+          <Word>interface</Word>
+          <Word>delegate</Word>
+          <Word>object</Word>
+          <Word>string</Word>
+          <Word>void</Word>
+        </Keywords>
+
+        <Keywords color="OperatorKeywords">
+          <Word>explicit</Word>
+          <Word>implicit</Word>
+          <Word>operator</Word>
+        </Keywords>
+
+        <Keywords color="ParameterModifiers">
+          <Word>params</Word>
+          <Word>ref</Word>
+          <Word>out</Word>
+        </Keywords>
+
+        <Keywords color="Modifiers">
+          <Word>abstract</Word>
+          <Word>const</Word>
+          <Word>event</Word>
+          <Word>extern</Word>
+          <Word>override</Word>
+          <Word>readonly</Word>
+          <Word>sealed</Word>
+          <Word>static</Word>
+          <Word>virtual</Word>
+          <Word>volatile</Word>
+          <Word>async</Word>
+        </Keywords>
+
+        <Keywords color="Visibility">
+          <Word>public</Word>
+          <Word>protected</Word>
+          <Word>private</Word>
+          <Word>internal</Word>
+        </Keywords>
+
+        <Keywords color="NamespaceKeywords">
+          <Word>namespace</Word>
+          <Word>using</Word>
+        </Keywords>
+
+        <Keywords color="GetSetAddRemove">
+          <Word>get</Word>
+          <Word>set</Word>
+          <Word>add</Word>
+          <Word>remove</Word>
+        </Keywords>
+
+        <Keywords color="NullOrValueKeywords">
+          <Word>null</Word>
+          <Word>value</Word>
+        </Keywords>
+
+        <Keywords color="SemanticKeywords">
+          <Word>nameof</Word>
+        </Keywords>
+
+        <!-- Mark previous rule-->
+        <Rule color="MethodCall">
+          \b
+          [\d\w_]+  # an identifier
+          (?=\s*\() # followed by (
+        </Rule>
+
+        <!-- Digits -->
+        <Rule color="NumberLiteral">
+          \b0[xX][0-9a-fA-F]+  # hex number
+          |
+          (	\b\d+(\.[0-9]+)?   #number with optional floating point
+          |	\.[0-9]+           #or just starting with floating point
+          )
+          ([eE][+-]?[0-9]+)? # optional exponent
+        </Rule>
+
+        <Rule color="Punctuation">
+          [?,.;()\[\]{}+\-/%*&lt;&gt;^+~!|&amp;]+
+        </Rule>
+      </RuleSet>
+    
+</SyntaxDefinition>

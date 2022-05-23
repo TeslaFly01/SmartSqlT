@@ -1,0 +1,59 @@
+﻿<hc:Window
+    x:Class="SmartSQL.Views.ScriptWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:controls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    Title="SQL脚本"
+    Width="600"
+    Height="410"
+    BorderThickness="0"
+    Icon="../Resources/Img/sqlScript.ico"
+    Loaded="ScriptWindow_OnLoaded"
+    ResizeMode="CanResize"
+    ShowInTaskbar="False"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid>
+        <TabControl
+            Name="TabSql"
+            Margin="5"
+            Style="{StaticResource TabControlBaseStyle}"
+            TabStripPlacement="Left">
+            <TabItem
+                Name="TabSelectSql"
+                Header="SELECT"
+                IsSelected="True">
+                <controls:SqlScript x:Name="TxtSelectSql" HasClose="True" />
+            </TabItem>
+            <TabItem Name="TabInsertSql" Header="INSERT">
+                <controls:SqlScript x:Name="TxtInsertSql" HasClose="True" />
+            </TabItem>
+            <TabItem Name="TabUpdateSql" Header="UPDATE">
+                <controls:SqlScript x:Name="TxtUpdateSql" HasClose="True" />
+            </TabItem>
+            <TabItem Name="TabDeleteSql" Header="DELETE">
+                <controls:SqlScript x:Name="TxtDeleteSql" HasClose="True" />
+            </TabItem>
+            <TabItem Name="TabCreateSql" Header="DDL">
+                <controls:SqlScript x:Name="TxtCreateSql" HasClose="True" />
+            </TabItem>
+        </TabControl>
+        <Button
+            x:Name="BtnClose"
+            Width="80"
+            Height="28"
+            Margin="0,0,10,10"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom"
+            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+            Click="BtnClose_OnClick"
+            Content="关闭"
+            Cursor="Hand" />
+    </Grid>
+</hc:Window>

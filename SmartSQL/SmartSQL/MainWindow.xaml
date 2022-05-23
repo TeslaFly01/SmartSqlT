@@ -1,0 +1,446 @@
+﻿<hc:GlowWindow
+    x:Class="SmartSQL.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:modelHelper="clr-namespace:SmartSQL"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    Title="SmartSQL"
+    Width="850"
+    Height="500"
+    Icon="favicon.ico"
+    ResizeMode="CanResize"
+    ShowTitle="True"
+    Style="{StaticResource WindowGlow}"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.InputBindings>
+        <KeyBinding Command="Copy" Gesture="Control + C" />
+    </Window.InputBindings>
+    <Window.CommandBindings>
+        <CommandBinding Command="Copy" Executed="MenuSelectedItem_OnClick" />
+    </Window.CommandBindings>
+    <hc:GlowWindow.NonClientAreaContent>
+        <StackPanel Height="29" Margin="25,0,0,0">
+            <Menu HorizontalAlignment="Left">
+                <MenuItem
+                    x:Name="SwitchMenu"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="选择连接">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource DownGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                    <MenuItem.ItemTemplate>
+                        <HierarchicalDataTemplate>
+                            <MenuItem
+                                Width="160"
+                                Margin="0"
+                                Padding="0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Stretch"
+                                Click="SwitchMenu_Click"
+                                Cursor="Hand"
+                                FontWeight="Normal"
+                                Header="{Binding ConnectName}">
+                                <MenuItem.Icon>
+                                    <Image Source="{Binding Icon}" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </HierarchicalDataTemplate>
+                    </MenuItem.ItemTemplate>
+                </MenuItem>
+                <MenuItem
+                    Name="MenuConnect"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="文件">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource FileGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                    <MenuItem
+                        Name="AddConnect"
+                        Click="AddConnect_OnClick"
+                        FontWeight="Normal"
+                        Header="新建连接">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="{StaticResource NewConnectGeometry}"
+                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="ImportMark"
+                        Click="ImportMark_OnClick"
+                        FontWeight="Normal"
+                        Header="导入备注">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="{StaticResource ImportGeometry}"
+                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="ExportDoc"
+                        Click="ExportDoc_OnClick"
+                        FontWeight="Normal"
+                        Header="导出文档">
+                        <MenuItem.Icon>
+                            <Path
+                                Data="{StaticResource ExportGeometry}"
+                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Stretch="Uniform" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </MenuItem>
+                <MenuItem
+                    Name="MenuGroup"
+                    Click="MenuGroup_OnClick"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="分组">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource GroupGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Name="MenuSetting"
+                    Click="MenuSetting_OnClick"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="设置">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource SettingGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem
+                    Name="MenuAbout"
+                    Click="MenuAbout_OnClick"
+                    Cursor="Hand"
+                    FontWeight="Bold"
+                    Foreground="{DynamicResource DarkPrimaryBrush}"
+                    Header="关于">
+                    <MenuItem.Icon>
+                        <Path
+                            Data="{StaticResource InfoGeometry}"
+                            Fill="{DynamicResource DarkPrimaryBrush}"
+                            Stretch="Uniform" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </Menu>
+        </StackPanel>
+    </hc:GlowWindow.NonClientAreaContent>
+    <Grid x:Name="GridMain" Background="{StaticResource CloudDrawingBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3.3*" MinWidth="200" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="6.6*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  左侧菜单  -->
+        <DockPanel Grid.Row="0" Grid.Column="0">
+            <hc:SimplePanel>
+                <Border
+                    Margin="5,5,0,5"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="{Binding CornerRadius}">
+                    <Grid
+                        Height="Auto"
+                        Margin="5"
+                        Background="Transparent">
+                        <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="8*" />
+                                <ColumnDefinition Width="1*" MinWidth="30" />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox
+                                x:Name="SelectDatabase"
+                                Height="30"
+                                VerticalAlignment="Top"
+                                HorizontalContentAlignment="Stretch"
+                                hc:BorderElement.CornerRadius="5"
+                                hc:InfoElement.Placeholder="请选择数据库"
+                                Cursor="Hand"
+                                IsTextSearchEnabled="True"
+                                SelectionChanged="SelectDatabase_OnSelectionChanged"
+                                Style="{StaticResource ComboBoxExtend}"
+                                Text="{Binding DbName}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                            <Image
+                                                Width="11"
+                                                Height="15"
+                                                Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                            <TextBlock
+                                                Margin="5,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding DbName}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button
+                                Name="BtnFresh"
+                                Grid.Column="2"
+                                Margin="0,0,0,0"
+                                Padding="4"
+                                VerticalAlignment="Top"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="BtnFresh_OnClick"
+                                Cursor="Hand">
+                                <Button.Content>
+                                    <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                        <hc:SearchBar
+                            x:Name="SearchMenu"
+                            Height="30"
+                            Margin="0,34,0,0"
+                            Padding="5,0,5,0"
+                            VerticalAlignment="Top"
+                            HorizontalContentAlignment="Stretch"
+                            hc:BorderElement.CornerRadius="5"
+                            hc:InfoElement.Placeholder="搜索数据表/视图/存储过程"
+                            FontSize="13"
+                            ShowClearButton="True"
+                            Style="{StaticResource SearchBarPlus}"
+                            TextChanged="SearchMenu_OnTextChanged" />
+                        <TabControl
+                            x:Name="TabLeftType"
+                            Margin="0,65,0,40"
+                            SelectionChanged="TabLeftType_OnSelectionChanged"
+                            Style="{StaticResource TabControlInLine}">
+                            <TabItem
+                                x:Name="TabAllData"
+                                Cursor="Hand"
+                                Header="全部"
+                                IsSelected="True" />
+                            <TabItem
+                                x:Name="TabGroupData"
+                                Cursor="Hand"
+                                Header="分组"
+                                IsSelected="False" />
+                            <!--<TabItem
+                                x:Name="TabFavData"
+                                Cursor="Hand"
+                                Header="收藏"
+                                IsSelected="False" />-->
+                        </TabControl>
+                        <TreeView
+                            x:Name="TreeViewTables"
+                            Margin="0,100,0,0"
+                            VerticalAlignment="Top"
+                            BorderThickness="0"
+                            ItemsSource="{Binding TreeViewData}"
+                            SelectedItemChanged="SelectedTable_OnClick">
+                            <TreeView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
+                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                    <Setter Property="FontWeight" Value="{Binding FontWeight}" />
+                                    <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="Visibility" Value="{Binding Visibility}" />
+                                    <Setter Property="Foreground" Value="{Binding TextColor}" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <!--  禁止水平滚动条自动滚动  -->
+                                    <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TreeView.ItemContainerStyle>
+                            <TreeView.ContextMenu>
+                                <!--  右键菜单  -->
+                                <ContextMenu Visibility="Visible">
+                                    <MenuItem
+                                        x:Name="MenuSelectedItem"
+                                        Padding="5,0,5,0"
+                                        VerticalAlignment="Center"
+                                        Click="MenuSelectedItem_OnClick"
+                                        Cursor="Hand"
+                                        Header="复制对象名" />
+                                </ContextMenu>
+                            </TreeView.ContextMenu>
+                            <TreeView.ItemTemplate>
+                                <HierarchicalDataTemplate DataType="{x:Type models:PropertyNodeItem}" ItemsSource="{Binding Children}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock
+                                            Width="12"
+                                            Height="12"
+                                            Margin="5,0,5,0"
+                                            FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
+                                            FontSize="12"
+                                            Foreground="{StaticResource DarkWarningBrush}"
+                                            Text="{Binding Icon}" />
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="12"
+                                            Text="{Binding DisplayName}"
+                                            ToolTip="{Binding DisplayName}" />
+                                    </StackPanel>
+                                </HierarchicalDataTemplate>
+                            </TreeView.ItemTemplate>
+                        </TreeView>
+                        <Grid
+                            x:Name="NoDataText"
+                            Margin="0,100,0,5"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            Cursor="Arrow">
+                            <local:NoDataArea
+                                x:Name="NoDataAreaText"
+                                Margin="0"
+                                HorizontalAlignment="Center" />
+                        </Grid>
+                        <Grid
+                            Margin="0"
+                            VerticalAlignment="Bottom"
+                            Visibility="Hidden">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="4*" />
+                                <ColumnDefinition Width="6*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid>
+                                <ComboBox
+                                    x:Name="CbTargetConnect"
+                                    Height="26"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalContentAlignment="Left"
+                                    hc:InfoElement.Placeholder="目标连接"
+                                    Cursor="Hand"
+                                    DisplayMemberPath="ConnectName"
+                                    IsTextSearchEnabled="True"
+                                    SelectedValuePath="DbMassterConnectString"
+                                    SelectionChanged="CbTargetConnect_OnSelectionChanged"
+                                    Style="{StaticResource ComboBoxExtend}" />
+                            </Grid>
+                            <Grid Grid.Column="1" Margin="5,0,0,0">
+                                <ComboBox
+                                    x:Name="CbTargetDatabase"
+                                    MinWidth="50"
+                                    VerticalAlignment="Bottom"
+                                    HorizontalContentAlignment="Left"
+                                    hc:InfoElement.Placeholder="目标数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    Style="{StaticResource ComboBoxExtend}" />
+                            </Grid>
+                            <Grid Grid.Column="2">
+                                <!--  差异比较按钮  -->
+                                <Button
+                                    x:Name="BtnCompare"
+                                    Height="30"
+                                    Margin="5,5,0,0"
+                                    HorizontalAlignment="Right"
+                                    hc:BorderElement.CornerRadius="6"
+                                    hc:IconElement.Geometry="{StaticResource CompareGeometry}"
+                                    Click="BtnCompare_OnClick"
+                                    Content="差异比较"
+                                    Cursor="Hand" />
+                            </Grid>
+                        </Grid>
+                        <!--  数据加载Loading  -->
+                        <hc:LoadingLine
+                            x:Name="LoadingLine"
+                            Margin="0,0,0,0"
+                            Visibility="Collapsed" />
+                    </Grid>
+                </Border>
+            </hc:SimplePanel>
+        </DockPanel>
+
+        <!--  分割线  -->
+        <GridSplitter
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="5"
+            Margin="0,5,0,5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch"
+            Background="Transparent" />
+
+        <!--  主内容  -->
+        <DockPanel Grid.Row="0" Grid.Column="2">
+            <Grid Margin="0,5,5,5">
+                <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                    <Image
+                        Width="350"
+                        Height="325"
+                        Source="Resources/Img/bg.png" />
+                </Border>
+                <userControl:MainConnect x:Name="MainConnect" Visibility="Collapsed" />
+
+                <!--  单选项卡  -->
+                <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
+
+                <!--  多选项卡  -->
+                <hc:TabControl
+                    Name="MainTabW"
+                    IsAnimationEnabled="True"
+                    IsDraggable="True"
+                    IsTabFillEnabled="False"
+                    ItemsSource="{Binding TabItemData}"
+                    ShowCloseButton="True"
+                    Visibility="Collapsed">
+                    <hc:TabControl.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <TextBlock
+                                    Width="12"
+                                    Height="12"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Left"
+                                    FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
+                                    FontSize="12"
+                                    Foreground="#e9af20"
+                                    Text="{Binding Icon}" />
+                                <TextBlock
+                                    Height="20"
+                                    Margin="16,5,0,0"
+                                    Text="{Binding DisplayName}"
+                                    ToolTip="{Binding DisplayName}" />
+                            </Grid>
+                        </DataTemplate>
+                    </hc:TabControl.ItemTemplate>
+                    <hc:TabControl.ContentTemplate>
+                        <DataTemplate>
+                            <UserControl Content="{Binding MainW}" />
+                        </DataTemplate>
+                    </hc:TabControl.ContentTemplate>
+                </hc:TabControl>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</hc:GlowWindow>
