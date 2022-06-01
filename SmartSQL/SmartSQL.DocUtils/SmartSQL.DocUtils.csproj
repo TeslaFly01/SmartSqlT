@@ -70,7 +70,7 @@
       <HintPath>..\..\packages\jint.3.0.0-beta-001\lib\net45\jint.dll</HintPath>
     </Reference>
     <Reference Include="Masuit.Tools.Core, Version=2.4.5.6, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Masuit.Tools.Core.2.4.8.6\lib\netstandard2.0\Masuit.Tools.Core.dll</HintPath>
+      <HintPath>..\..\packages\Masuit.Tools.Core.2.4.8.10\lib\netstandard2.0\Masuit.Tools.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNetCore.Antiforgery, Version=2.1.1.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.AspNetCore.Antiforgery.2.1.1\lib\netstandard2.0\Microsoft.AspNetCore.Antiforgery.dll</HintPath>

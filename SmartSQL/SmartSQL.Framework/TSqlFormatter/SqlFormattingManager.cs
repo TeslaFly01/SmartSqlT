@@ -76,7 +76,7 @@ namespace TSqlFormatter
     //This COM interface exists JUST so that we can use this class from VB6 - there is no need to expose 
     // these classes to COM in order for this library to be used in a .Net project.
     [Guid("A7FD140A-C3C3-4233-95DB-A64B50C8DF2A")]
-    [CLSCompliant(false), ComVisible(true)]
+    [ComVisible(true)]
     [InterfaceType(ComInterfaceType.InterfaceIsDual)]
     public interface _SqlFormattingManager
     {

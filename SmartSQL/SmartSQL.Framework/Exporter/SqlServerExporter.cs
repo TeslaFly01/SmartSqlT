@@ -208,7 +208,7 @@ namespace SmartSQL.Framework.Exporter
                         views.Add(key, view);
                     }
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     throw;
                 }

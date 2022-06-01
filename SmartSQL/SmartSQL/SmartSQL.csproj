@@ -62,7 +62,7 @@
     </PackageReference>
     <PackageReference Include="HandyControl" Version="3.3.0" />
     <PackageReference Include="Masuit.Tools.Core">
-      <Version>2.4.8.6</Version>
+      <Version>2.4.8.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.WindowsAPICodePack-Shell">
       <Version>1.1.0</Version>
