@@ -8,8 +8,8 @@
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="导出文档"
-    Width="540"
-    Height="350"
+    Width="850"
+    Height="500"
     BorderThickness="0"
     Icon="../Resources/Img/doc.ico"
     Loaded="ExportDoc_OnLoaded"
@@ -148,26 +148,7 @@
                     Content="选中对象"
                     IsEnabled="False" />
             </Grid>
-            <Grid Margin="20,25,20,20">
-                <TextBlock
-                    Margin="0,52,0,0"
-                    VerticalAlignment="Top"
-                    Text="导出路径" />
-                <TextBox
-                    Name="TxtPath"
-                    Margin="85,45,77,0"
-                    VerticalAlignment="Top" />
-                <Button
-                    Name="BtnLookPath"
-                    Width="55"
-                    Margin="0,45,20,0"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Click="BtnLookPath_OnClick"
-                    Content="浏览..."
-                    Cursor="Hand" />
-            </Grid>
-            <Grid Margin="20,125,20,20">
+            <Grid Margin="20,65,20,20">
                 <TextBlock
                     Margin="0,12,0,0"
                     VerticalAlignment="Top"
@@ -212,7 +193,7 @@
                     <ToggleButton
                         Name="Html"
                         Width="80"
-                        Margin="0,10,0,0"
+                        Margin="10,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Checked="Toggle_OnChecked"
@@ -221,7 +202,7 @@
                     <ToggleButton
                         Name="Xml"
                         Width="80"
-                        Margin="10,10,0,0"
+                        Margin="10,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Checked="Toggle_OnChecked"
@@ -230,7 +211,7 @@
                     <ToggleButton
                         Name="MarkDown"
                         Width="105"
-                        Margin="10,10,0,0"
+                        Margin="10,0,0,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Checked="Toggle_OnChecked"
@@ -238,7 +219,67 @@
                         Style="{StaticResource ArrowToggleStyle1}" />
                 </WrapPanel>
             </Grid>
-            <Grid Margin="20,205,20,20">
+            <Grid Margin="20 85 20 20">
+                <TextBlock
+                    Margin="0,65,0,0"
+                    VerticalAlignment="Top"
+                    Text="导出对象" />
+                <UniformGrid Margin="85,25,0,0" Rows="3" Columns="4">
+                    <RadioButton Margin="-60,0,0,0" 
+                                 Width="120"
+                                 Name="RadioAll"
+                                 Background="{DynamicResource SecondaryRegionBrush}" 
+                                 hc:IconElement.Geometry="{StaticResource CalendarGeometry}"
+                                 Style="{StaticResource RadioButtonIcon}"
+                                 Cursor="Hand"
+                                 Content="全部"/>
+                    <RadioButton Margin="-140,0,0,0" 
+                                 Width="120"
+                                 Name="RadioTable"
+                                 Background="{DynamicResource SecondaryRegionBrush}" 
+                                 hc:IconElement.Geometry="{StaticResource PageModeGeometry}"  
+                                 Style="{StaticResource RadioButtonIcon}" 
+                                 Cursor="Hand"
+                                 Content="表"
+                                 IsChecked="True"/>
+                    <RadioButton Margin="-220,0,0,0" 
+                                 Width="120"
+                                 Name="RadioView"
+                                 Background="{DynamicResource SecondaryRegionBrush}" 
+                                 hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                                 Style="{StaticResource RadioButtonIcon}" 
+                                 Cursor="Hand"
+                                 Content="视图"/>
+                    <RadioButton Margin="-300,0,0,0"
+                                 Width="120" 
+                                 Name="RadioProc"
+                                 Background="{DynamicResource SecondaryRegionBrush}" 
+                                 hc:IconElement.Geometry="{StaticResource ScrollModeGeometry}"
+                                 Style="{StaticResource RadioButtonIcon}"
+                                 Content="存储过程" 
+                                 Cursor="Hand"/>
+                </UniformGrid>
+            </Grid>
+            <Grid Margin="20,175,20,20">
+                <TextBlock
+                    Margin="0,52,0,0"
+                    VerticalAlignment="Top"
+                    Text="导出路径" />
+                <TextBox
+                    Name="TxtPath"
+                    Margin="85,45,77,0"
+                    VerticalAlignment="Top" />
+                <Button
+                    Name="BtnLookPath"
+                    Width="55"
+                    Margin="0,45,20,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Click="BtnLookPath_OnClick"
+                    Content="浏览..."
+                    Cursor="Hand" />
+            </Grid>
+            <Grid Margin="20,285,20,20">
                 <TextBlock
                     Margin="0,25,0,0"
                     VerticalAlignment="Top"
@@ -246,7 +287,8 @@
                 <hc:TextBox
                     Name="TxtFileName"
                     Height="30"
-                    Margin="85,10,77,0"
+                    Margin="85,18,77,0"
+                    VerticalAlignment="Top"
                     ShowClearButton="True" />
                 <Label
                     Name="LblFileExtend"

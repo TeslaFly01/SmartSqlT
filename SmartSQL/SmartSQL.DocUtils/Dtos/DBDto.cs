@@ -33,17 +33,16 @@ namespace SmartSQL.DocUtils.Dtos
         /// <summary>
         /// 表
         /// </summary>
-        public List<TableDto> Tables { get; set; }
+        public List<TableDto> Tables { get; set; } = new List<TableDto>();
 
         /// <summary>
         /// 视图
         /// </summary>
-        public List<ViewProDto> Views { get; set; }
-
+        public List<ViewProDto> Views { get; set; } = new List<ViewProDto>();
         /// <summary>
         /// 存储过程
         /// </summary>
-        public List<ViewProDto> Procs { get; set; }
+        public List<ViewProDto> Procs { get; set; } = new List<ViewProDto>();
 
         /// <summary>
         /// 其他一些参数数据，用法如 WinForm 控件的 Tag属性

@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using HandyControl.Controls;
-using Masuit.Tools.Logging;
 using SmartSQL.DocUtils.Dtos;
 using SmartSQL.DocUtils.Properties;
 using ZetaLongPaths;
@@ -161,7 +160,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
             var res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
 
-            LogManager.Info("生成chm信息", res);
+            //LogManager.Info("生成chm信息", res);
             return true;
             #endregion
         }

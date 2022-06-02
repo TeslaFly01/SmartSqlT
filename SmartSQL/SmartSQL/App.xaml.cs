@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 using HandyControl.Controls;
-using Masuit.Tools.Logging;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SmartSQL
@@ -13,7 +12,6 @@ namespace SmartSQL
     {
         public App()
         {
-            LogManager.LogDirectory = AppDomain.CurrentDomain.BaseDirectory + "/log";
             //首先注册开始和退出事件
             this.Startup += new StartupEventHandler(App_Startup);
             this.Exit += new ExitEventHandler(App_Exit);
@@ -41,7 +39,7 @@ namespace SmartSQL
                 e.Handled = true; //把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出
                 Growl.WarningGlobal("UI线程异常:" + e.Exception);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //此时程序出现严重异常，将强制结束退出
                 Growl.WarningGlobal("UI线程发生致命错误");

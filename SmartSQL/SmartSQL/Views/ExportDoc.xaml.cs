@@ -127,13 +127,32 @@ namespace SmartSQL.Views
             //文件名
             var fileName = TxtFileName.Text.Trim() + fileNameE;
             LoadingG.Visibility = Visibility.Visible;
+            var isAll = RadioAll.IsChecked;
+            var isTable = RadioTable.IsChecked;
+            var isView = RadioView.IsChecked;
+            var isProc = RadioProc.IsChecked;
             var dbDto = new DBDto(selectedDatabase.DbName);
             Task.Run(() =>
             {
                 dbDto.DBType = selectedConnection.DbType.ToString();
-                dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
-                dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
-                dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
+                if (isAll.Value)
+                {
+                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
+                    dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
+                    dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
+                }
+                if (isTable.Value)
+                {
+                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
+                }
+                if (isView.Value)
+                {
+                    dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
+                }
+                if (isProc.Value)
+                {
+                    dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
+                }
 
                 var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 var filePath = Path.Combine(floderPath, fileName);

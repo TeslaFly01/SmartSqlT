@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
-using Masuit.Tools.Logging;
 using ZetaLongPaths;
 
 namespace SmartSQL.DocUtils
@@ -44,9 +43,9 @@ namespace SmartSQL.DocUtils
                 AddSecurityControll2Folder(AppPath);
                 ConfigFilePath = Path.Combine(AppPath, ConfigFileName + ".db");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                LogManager.Error("ConfigUtils", ex);
+                //LogManager.Error("ConfigUtils", ex);
             }
         }
 
@@ -176,7 +175,7 @@ namespace SmartSQL.DocUtils
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //LogUtils.LogError(nameof(SearchInstallDir), Developer.SysDefault, ex);
             }
