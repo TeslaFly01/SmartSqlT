@@ -89,6 +89,12 @@
                                 Header="允许NULL值"
                                 IsReadOnly="True" />
                             <DataGridTextColumn
+                                Binding="{Binding DefaultValue}"
+                                CanUserSort="False"
+                                CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                Header="默认值"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding Comment}"
                                 Header="备注说明" />
