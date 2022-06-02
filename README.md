@@ -113,7 +113,7 @@ SmartSQL 是一款数据库文档工具！
 - [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files/116081/download)，生成chm文件时，需提前安装。
 - [PDMToCHM](https://gitee.com/dotnetchina/DBCHM/attach_files/443656/download)，将PDM表结构文件导出到CHM文件。
 
-## 🌱 附二、开发计划
+## ⚡ 附二、近期计划
 
 - [x] 收集问题，修复完善基础功能
 - [x] C#实体代码生成
