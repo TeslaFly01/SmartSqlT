@@ -84,9 +84,6 @@ SmartSQL 是一款数据库文档工具！
 ### 7 关于
 ![关于](https://gitee.com/izhaofu/pic/raw/master/About.png)
 
-### 8 更多格式的效果，请[下载体验](https://gitee.com/dotnetchina/DBCHM/releases)哈:wink:！！
-
-查看chm效果：[某微信开发框架表结构信息(示例).chm](https://gitee.com/dotnetchina/DBCHM/attach_files)
 
 ## 🎉 五、文档截图
 
