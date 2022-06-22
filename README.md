@@ -111,6 +111,7 @@ SmartSQL 是一款数据库文档工具！
 - `SmartSQL` 遵循 `Apache-2.0` 开源协议，欢迎大家提交 `PR` 或 `Issue`。
 
 ## ⬇️ 八、下载地址
+
 - **[立即下载](https://gitee.com/izhaofu/SmartSQL/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
 
 ## 🍄 附一、其他工具

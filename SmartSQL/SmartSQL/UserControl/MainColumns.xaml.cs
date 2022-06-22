@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -243,7 +243,7 @@ namespace SmartSQL.UserControl
             var searchData = ColList;
             if (!string.IsNullOrEmpty(searchText))
             {
-                searchData = ColList.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || x.Comment.ToLower().Contains(searchText.ToLower())).ToList();
+                searchData = ColList.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || (!string.IsNullOrEmpty(x.Comment) && x.Comment.ToLower().Contains(searchText.ToLower()))).ToList();
                 if (!searchData.Any())
                 {
                     NoDataText.Visibility = Visibility.Visible;
