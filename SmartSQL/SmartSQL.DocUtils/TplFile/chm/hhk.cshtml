@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <HTML>
 <HEAD>
-    <meta name="GENERATOR" content="DBCHM.exe by zfluok">
-    <!-- Sitemap 1.0 -->
-    <!-- hhkÎÄ¼şäÖÈ¾ºó£¬Ğè Replace("</LI>", "") -->
+    <meta name="GENERATOR" content="SmartSQL.exe by zfluok">
 </HEAD>
 <BODY>
 <OBJECT type="text/site properties">
@@ -12,9 +10,10 @@
     <param name="Font" value="MS Sans Serif,9,0">
 </OBJECT>
     <UL>
-        <LI><OBJECT type="text/sitemap">
-                <param name="Name" value="Êı¾İ¿âÄ¿Â¼">
-                <param name="Local" value="Êı¾İ¿âÄ¿Â¼.html">
+        <LI>
+            <OBJECT type="text/sitemap">
+                <param name="Name" value="æ•°æ®åº“ç›®å½•">
+                <param name="Local" value="æ•°æ®åº“ç›®å½•.html">
                 <param name="ImageNumber" value="11">
             </OBJECT>
         </LI>
@@ -22,23 +21,15 @@
         {
             foreach (var tab in Model.Tables)
             {
-                <LI><OBJECT type="text/sitemap">
+                <LI>
+                    <OBJECT type="text/sitemap">
                         <param name="Name" value="@tab.TableName">
-                        <param name="Local" value="±í½á¹¹\@(tab.TableName + " " + tab.Comment).html">
+                        <param name="Local" value="è¡¨ç»“æ„\@(tab.TableName + " " + tab.Comment).html">
                         <param name="ImageNumber" value="11">
                     </OBJECT>
                 </LI>
-                //hhkÎÄ¼ş²»ÄÜÌ«´ó£¬²»È»hhc±àÒëÊ±£¬»á±¨ÌáÊ¾ £ºAn internal error has occurred.An error record has been saved to .. 
+                //hhkæ–‡ä»¶ä¸èƒ½å¤ªå¤§ï¼Œä¸ç„¶hhcç¼–è¯‘æ—¶ï¼Œä¼šæŠ¥æç¤º ï¼šAn internal error has occurred.An error record has been saved to .. 
                 //https://documentation.red-gate.com/sdoc5/troubleshooting/error-messages/assertion-failure-outputting-in-chm-format
-                @*foreach (var column in tab.Columns)
-                {
-                    <LI><OBJECT type="text/sitemap">
-                            <param name="Name" value="@column.ColumnName">
-                            <param name="Local" value="±í½á¹¹\@(tab.TableName + " " + tab.Comment).html">
-                            <param name="ImageNumber" value="11">
-                        </OBJECT>
-                    </LI>
-                }*@
             }
         }
 
@@ -46,9 +37,10 @@
         {
             foreach (var item in Model.Views)
             {
-                <LI><OBJECT type="text/sitemap">
+                <LI>
+                    <OBJECT type="text/sitemap">
                         <param name="Name" value="@item.ObjectName">
-                        <param name="Local" value="ÊÓÍ¼\@(item.ObjectName).html">
+                        <param name="Local" value="è§†å›¾\@(item.ObjectName).html">
                         <param name="ImageNumber" value="11">
                     </OBJECT>
                 </LI>
@@ -60,9 +52,10 @@
         {
             foreach (var item in Model.Procs)
             {
-                <LI><OBJECT type="text/sitemap">
+                <LI>
+                    <OBJECT type="text/sitemap">
                         <param name="Name" value="@item.ObjectName">
-                        <param name="Local" value="´æ´¢¹ı³Ì\@(item.ObjectName).html">
+                        <param name="Local" value="å­˜å‚¨è¿‡ç¨‹\@(item.ObjectName).html">
                         <param name="ImageNumber" value="11">
                     </OBJECT>
                 </LI>

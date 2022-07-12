@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -30,7 +30,7 @@ namespace SmartSQL.DocUtils
 
         /// <summary>
         /// 初始化静态数据
-        /// 将sqlite数据库写入  C:\Users\用户名\AppData\Local\DBChm 目录中
+        /// 将sqlite数据库写入  C:\Users\用户名\AppData\Local\SmartSQL 目录中
         /// </summary>
         static ConfigUtils()
         {

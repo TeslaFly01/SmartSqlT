@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -92,7 +92,7 @@ namespace SmartSQL.Views
                 if (xmlContent.Contains("DBDto"))
                 {
                     #region MyRegion
-                    //通过 dbchm 导出的 XML文件 来更新 表列批注
+                    //通过 smartsql 导出的 XML文件 来更新 表列批注
                     XmlDocument doc = new XmlDocument();
                     doc.LoadXml(xmlContent);
                     if (doc.DocumentElement != null)

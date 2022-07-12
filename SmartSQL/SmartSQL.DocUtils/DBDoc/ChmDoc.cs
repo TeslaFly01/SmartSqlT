@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -94,7 +94,7 @@ namespace SmartSQL.DocUtils.DBDoc
                                 var myProcess = new Process();
                                 //"firefox.exe";// "iexplore.exe";  //chrome  //iexplore.exe //哪个浏览器打开
                                 myProcess.StartInfo.FileName = "chrome.exe";
-                                myProcess.StartInfo.Arguments = "https://gitee.com/dotnetchina/DBCHM/attach_files/116081/download";
+                                myProcess.StartInfo.Arguments = "https://gitee.com/izhaofu/SmartSQL/attach_files/1124263/download";
                                 myProcess.Start();
                             }
                             catch { }

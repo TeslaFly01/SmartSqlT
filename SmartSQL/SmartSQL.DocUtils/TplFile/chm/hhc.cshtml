@@ -1,9 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
 <HTML>
 <HEAD>
-    <meta name="GENERATOR" content="DBCHM.exe by zfluok">
+    <meta name="GENERATOR" content="SmartSQL.exe by zfluok">
     <!-- Sitemap 1.0 -->
-    <!-- hhkÎÄ¼þäÖÈ¾ºó£¬Ðè Replace("</LI>", "") -->
+    <!-- hhkæ–‡ä»¶æ¸²æŸ“åŽï¼Œéœ€ Replace("</LI>", "") -->
 </HEAD>
 <BODY>
 <OBJECT type="text/site properties">
@@ -13,15 +13,15 @@
 </OBJECT>
     <UL>
         <LI><OBJECT type="text/sitemap">
-                <param name="Name" value="Êý¾Ý¿âÄ¿Â¼">
-                <param name="Local" value="Êý¾Ý¿âÄ¿Â¼.html">
+                <param name="Name" value="æ•°æ®åº“ç›®å½•">
+                <param name="Local" value="æ•°æ®åº“ç›®å½•.html">
                 <param name="ImageNumber" value="11">
             </OBJECT>
         </LI>
         @if (Model.Tables != null && Model.Tables.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="±í½á¹¹">
+                    <param name="Name" value="è¡¨ç»“æž„">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -29,7 +29,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(table.TableName+" "+table.Comment)">
-                                <param name="Local" value="±í½á¹¹\@(table.TableName+" "+table.Comment).html">
+                                <param name="Local" value="è¡¨ç»“æž„\@(table.TableName+" "+table.Comment).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>
@@ -41,7 +41,7 @@
         @if (Model.Views != null && Model.Views.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="ÊÓÍ¼">
+                    <param name="Name" value="è§†å›¾">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -49,7 +49,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(item.ObjectName)">
-                                <param name="Local" value="ÊÓÍ¼\@(item.ObjectName).html">
+                                <param name="Local" value="è§†å›¾\@(item.ObjectName).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>
@@ -63,7 +63,7 @@
         @if (Model.Procs != null && Model.Procs.Count > 0)
         {
             <LI><OBJECT type="text/sitemap">
-                    <param name="Name" value="´æ´¢¹ý³Ì">
+                    <param name="Name" value="å­˜å‚¨è¿‡ç¨‹">
                     <param name="ImageNumber" value="1">
                 </OBJECT>
                 <UL>
@@ -71,7 +71,7 @@
                     {
                         <LI><OBJECT type="text/sitemap">
                                 <param name="Name" value="@(item.ObjectName)">
-                                <param name="Local" value="´æ´¢¹ý³Ì\@(item.ObjectName).html">
+                                <param name="Local" value="å­˜å‚¨è¿‡ç¨‹\@(item.ObjectName).html">
                                 <param name="ImageNumber" value="11">
                             </OBJECT>
                         </LI>
