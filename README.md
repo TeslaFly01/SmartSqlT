@@ -112,8 +112,8 @@ SmartSQL 是一款数据库文档工具！
 - **[立即下载](https://gitee.com/izhaofu/SmartSQL/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
 
 ## 🍄 附一、其他工具
-- [htmlhelp](https://gitee.com/dotnetchina/DBCHM/attach_files/116081/download)，生成chm文件时，需提前安装。
-- [PDMToCHM](https://gitee.com/dotnetchina/DBCHM/attach_files/443656/download)，将PDM表结构文件导出到CHM文件。
+- [htmlhelp](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，生成chm文件时，需提前安装。
+- [PDMToCHM](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，将PDM表结构文件导出到CHM文件。
 
 ## ⚡ 附二、近期计划
 
