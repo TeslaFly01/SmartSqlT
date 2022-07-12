@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -281,11 +281,12 @@ namespace SmartSQL.UserControl
         private void ChkAll_OnClick(object sender, RoutedEventArgs e)
         {
             var isChecked = ((CheckBox)sender).IsChecked;
-            ObjItems.ForEach(x =>
+            var selectedItem = ObjectsViewData;
+            selectedItem.ForEach(x =>
             {
                 x.IsSelected = isChecked;
             });
-            ObjectsViewData = ObjItems;
+            ObjectsViewData = selectedItem;
         }
 
         private void TableGrid_OnMouseDoubleClick(object sender, MouseButtonEventArgs e)
