@@ -1,4 +1,4 @@
-﻿<hc:GlowWindow
+<hc:GlowWindow
     x:Class="SmartSQL.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -6,7 +6,6 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:modelHelper="clr-namespace:SmartSQL"
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
     Title="SmartSQL"
@@ -18,12 +17,16 @@
     Style="{StaticResource WindowGlow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
+    <!--  按键/命令监听绑定  -->
     <Window.InputBindings>
         <KeyBinding Command="Copy" Gesture="Control + C" />
     </Window.InputBindings>
     <Window.CommandBindings>
         <CommandBinding Command="Copy" Executed="MenuSelectedItem_OnClick" />
     </Window.CommandBindings>
+    <!--  按键监/命令听绑定  -->
+
+    <!--  工具栏菜单  -->
     <hc:GlowWindow.NonClientAreaContent>
         <StackPanel Height="29" Margin="25,0,0,0">
             <Menu HorizontalAlignment="Left">
@@ -152,6 +155,9 @@
             </Menu>
         </StackPanel>
     </hc:GlowWindow.NonClientAreaContent>
+    <!--  工具栏菜单  -->
+
+    <!--  Main区域  -->
     <Grid x:Name="GridMain" Background="{StaticResource CloudDrawingBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -443,4 +449,5 @@
             </Grid>
         </DockPanel>
     </Grid>
+    <!--  Main区域  -->
 </hc:GlowWindow>

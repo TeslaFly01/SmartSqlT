@@ -331,7 +331,8 @@ namespace SmartSQL.UserControl
                 var selectedData = selectedCell.Column.GetCellContent(selectedCell.Item);
                 if (selectedData is TextBlock selectedText)
                 {
-                    Clipboard.SetDataObject(selectedText.Text);
+                    //Clipboard.SetDataObject(selectedText.Text);
+                    CellText = selectedText.Text;
                 }
             }
         }
