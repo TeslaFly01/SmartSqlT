@@ -9,7 +9,7 @@
 <p align="center">
 <img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-brightgreen.svg">
-<img alt="license" src="https://img.shields.io/badge/license-MIT-blue.svg">
+<img alt="license" src="https://img.shields.io/badge/license-Apache-blue.svg">
 </p>
 
 ## 🚩 一、项目介绍
