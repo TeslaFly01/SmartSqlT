@@ -101,7 +101,7 @@ SmartSQL 是一款数据库文档工具！
 
 ## 💪 六、作者
 
-- @[MicLuo](https://gitee.com/izhaofu) MicLuo
+  [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-MicLuo-green)](https://gitee.com/izhaofu)
 
 ## 🍻 七、贡献代码
 
@@ -109,11 +109,13 @@ SmartSQL 是一款数据库文档工具！
 
 ## ⬇️ 八、下载地址
 
-- **[立即下载](https://gitee.com/izhaofu/SmartSQL/releases)**，下载解压后，双击运行 `SmartSQL.exe`。
+[![立即下载](https://img.shields.io/badge/%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD----green)](https://gitee.com/izhaofu/SmartSQL/releases) 
+
+下载解压后，双击运行 `SmartSQL.exe`。
 
 ## 🍄 附一、其他工具
-- [htmlhelp](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，生成chm文件时，需提前安装。
-- [PDMToCHM](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，将PDM表结构文件导出到CHM文件。
+- [![htmlhelp](https://img.shields.io/badge/CHM%E6%8F%92%E4%BB%B6-htmlhelp-green)](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，生成chm文件时，需提前安装。
+- [![PDMToCHM](https://img.shields.io/badge/CHM%E6%8F%92%E4%BB%B6-PDMToCHM-green)](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，将PDM表结构文件导出到CHM文件。
 
 ## ⚡ 附二、近期计划
 
