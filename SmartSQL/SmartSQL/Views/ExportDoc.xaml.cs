@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -135,27 +135,31 @@ namespace SmartSQL.Views
             Task.Run(() =>
             {
                 dbDto.DBType = selectedConnection.DbType.ToString();
-                if (isAll.Value)
+                if (isAll != null && isAll.Value)
                 {
                     dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
                     dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
                     dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
                 }
-                if (isTable.Value)
+                if (isTable != null && isTable.Value)
                 {
                     dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
                 }
-                if (isView.Value)
+                if (isView != null && isView.Value)
                 {
                     dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
                 }
-                if (isProc.Value)
+                if (isProc != null && isProc.Value)
                 {
                     dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
                 }
-
-                var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
+                //判断文档路径是否存在
+                if (!Directory.Exists(floderPath))
+                {
+                    Directory.CreateDirectory(floderPath);
+                }
                 var filePath = Path.Combine(floderPath, fileName);
+                var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 var bulResult = doc.Build(filePath);
                 Dispatcher.Invoke(() =>
                 {
