@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +23,10 @@ namespace SmartSQL.Framework.SqliteModel
         /// 分组名
         /// </summary>
         public string GroupName { get; set; }
+        /// <summary>
+        /// 展开层级：1.展开当前项，2.展开子项
+        /// </summary>
+        public int? OpenLevel { get; set; }
         /// <summary>
         /// 排序标记
         /// </summary>

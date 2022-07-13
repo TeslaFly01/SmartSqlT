@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -114,6 +114,9 @@ namespace SmartSQL.Views
 
                 HidId.Text = group.Id.ToString();
                 TextGourpName.Text = group.GroupName;
+                CheckCurrent.IsChecked = group.OpenLevel == 1;
+                CheckChild.IsChecked = group.OpenLevel == 2;
+                CheckNone.IsChecked = group.OpenLevel == null || group.OpenLevel == 0;
             }
         }
 
@@ -141,8 +144,11 @@ namespace SmartSQL.Views
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
+                //分组菜单左侧默认展开层级
+                var openLevel = CheckCurrent.IsChecked == true ? 1 : (CheckChild.IsChecked == true ? 2 : 0);
                 var selectedGroup = (ObjectGroup)ListGroup.SelectedItems[0];
                 selectedGroup.GroupName = groupName;
+                selectedGroup.OpenLevel = openLevel;
                 sqLiteHelper.db.Update(selectedGroup);
             }
             else
@@ -153,16 +159,20 @@ namespace SmartSQL.Views
                     Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
+                //分组菜单左侧默认展开层级
+                var openLevel = CheckCurrent.IsChecked == true ? 1 : (CheckChild.IsChecked == true ? 2 : 0);
                 sqLiteHelper.db.Insert(new ObjectGroup()
                 {
                     ConnectId = Connection.ID,
                     DataBaseName = selectedDatabase.DbName,
                     GroupName = groupName,
+                    OpenLevel = openLevel,
                     OrderFlag = DateTime.Now
                 });
             }
             HidId.Text = "0";
             TextGourpName.Text = "";
+            CheckNone.IsChecked = true;
             BtnSave.IsEnabled = false;
             var connKey = Connection.ID;
             Task.Run(() =>
@@ -227,6 +237,7 @@ namespace SmartSQL.Views
                 {
                     HidId.Text = "0";
                     TextGourpName.Text = "";
+                    CheckNone.IsChecked = true;
                     BtnSave.IsEnabled = false;
                     DataList = datalist;
                     if (ChangeRefreshEvent != null)
@@ -249,6 +260,7 @@ namespace SmartSQL.Views
         {
             HidId.Text = "0";
             TextGourpName.Text = "";
+            CheckNone.IsChecked = true;
             BtnSave.IsEnabled = false;
         }
 
