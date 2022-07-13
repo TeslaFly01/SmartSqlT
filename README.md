@@ -14,10 +14,13 @@
 
 ## 🚩 一、项目介绍
 
-SmartSQL 是一款数据库文档工具！
-该工具从最初支持chm文档格式开始，通过开源，集思广益，不断改进，又陆续支持word、excel、pdf、html、xml、markdown等文档格式的导出。
+SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
 
-### 🎯 本项目力求做最简单、最好用的数据库文档(字典)检索生成工具！
+##### 🏅开源地址
+[![Gitee](https://img.shields.io/badge/Gitee-https%3A%2F%2Fgitee.com%2Fizhaofu%2FSmartSQL-green)](https://gitee.com/izhaofu/SmartSQL)
+[![GitHub](https://img.shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green)](https://github.com/TeslaFly01/SmartSqlT)
+
+> 🎯 本项目力求做最简单、最好用的数据库文档(字典)检索生成工具！
 
 ## 🍀 二、数据库支持
 - ✅ SqlServer
