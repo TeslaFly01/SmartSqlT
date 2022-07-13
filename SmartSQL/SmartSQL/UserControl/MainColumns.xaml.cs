@@ -332,7 +332,6 @@ namespace SmartSQL.UserControl
                 if (selectedData is TextBlock selectedText)
                 {
                     //Clipboard.SetDataObject(selectedText.Text);
-                    CellText = selectedText.Text;
                 }
             }
         }
