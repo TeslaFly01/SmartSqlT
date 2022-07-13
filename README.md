@@ -1,5 +1,5 @@
 <div align="center">
-   <img alt="SmartSQL" src="https://gitee.com/izhaofu/pic/raw/master/icon.png">
+   <img alt="SmartSQL" src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/icon.png">
 	<h2 align="center">SmartSQL</a></h2>
 </div>
 <div align="center">
@@ -55,48 +55,48 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 ## 🎉 四、工具截图
 
-![首页](https://gitee.com/izhaofu/pic/raw/master/Top.png)
+![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Top.png)
 
 ### 1 数据库连接
 
-![数据库连接](https://gitee.com/izhaofu/pic/raw/master/Connect.png)
+![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Connect.png)
 
 ### 2 分组管理
-![分组管理](https://gitee.com/izhaofu/pic/raw/master/Group.png)
+![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png)
 
-![分组管理](https://gitee.com/izhaofu/pic/raw/master/GroupObject.png)
+![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png)
 
 ### 3 快捷查询
-![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Objects.png)
+![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png)
 
-![快捷查询](https://gitee.com/izhaofu/pic/raw/master/View.png)
+![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png)
 
-![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Pro.png)
+![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Pro.png)
 
-![快捷查询](https://gitee.com/izhaofu/pic/raw/master/Column.png)
+![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Column.png)
 
 ### 4 导入备注
-![导入备注](https://gitee.com/izhaofu/pic/raw/master/Import.png)
+![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png)
 
 ### 5 导出文档
-![导出文档](https://gitee.com/izhaofu/pic/raw/master/Export.png)
+![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png)
 
 ### 6 设置
-![设置](https://gitee.com/izhaofu/pic/raw/master/Setting.png)
+![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Setting.png)
 
 ### 7 关于
-![关于](https://gitee.com/izhaofu/pic/raw/master/About.png)
+![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/About.png)
 
 
 ## 🎉 五、文档截图
 
 ### 1 CHM文档
-![CHM文档](https://gitee.com/izhaofu/pic/raw/master/docImg/chm.png)
+![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)
 
 ### 2 HTML文档
-![HTML文档](https://gitee.com/izhaofu/pic/raw/master/docImg/html.png)
+![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)
 
-![HTML文档](https://gitee.com/izhaofu/pic/raw/master/docImg/htmlt.png)
+![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
 
 ## 📘 五、更新日志
 
