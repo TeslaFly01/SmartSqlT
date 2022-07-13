@@ -1,15 +1,17 @@
 <div align="center">
    <img alt="SmartSQL" src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/icon.png">
-	<h2 align="center">SmartSQL</a></h2>
+	<h2 align="center"><b>SmartSQL</b></h2>
 </div>
 <div align="center">
-<h3 align="center">最方便、快捷的数据库文档生成工具</h3>
+<h5 align="center">一款方便、快捷的数据库文档查询、生成工具</h3>
 </div>
 
 <p align="center">
 <img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-brightgreen.svg">
 <img alt="license" src="https://img.shields.io/badge/license-Apache-blue.svg">
+<img alt="version" src="https://img.shields.io/badge/version-1.0.3.0-green">
+
 </p>
 
 ### 🚩 一、项目介绍
@@ -33,11 +35,11 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ### 🥝 三、主要功能 
 
 #### 文档的内容都包含什么？
-- 表 序号 | 列名 | 主键 | 自增 | 数据类型 | 长度 | 允许NULL值 | 默认值 | 备注说明
-- 视图 视图内容SQL脚本
-- 存储过程 存储过程内容SQL脚本
+- `表` 序号 | 列名 | 主键 | 自增 | 数据类型 | 长度 | 允许NULL值 | 默认值 | 备注说明
+- `视图` 视图内容SQL脚本
+- `存储过程` 存储过程内容SQL脚本
 
-🔹注：Oracle暂不会查询显示自增数据。
+> 🔹注：Oracle暂不会查询显示自增数据。
 
 #### 支持哪些文档格式的导出？
 - ✅ chm
@@ -98,9 +100,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 ![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
 
-### 📘 五、更新日志
-
-​	<a target='_blank' href ='./ReleaseNote.md'>ReleaseNote</a>
 
 ### 💪 六、作者
 
