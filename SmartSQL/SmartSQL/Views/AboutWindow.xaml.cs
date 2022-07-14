@@ -1,8 +1,9 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Reflection;
 using System.Windows;
 using System.Windows.Documents;
+using System.Windows.Input;
 
 namespace SmartSQL.Views
 {
@@ -18,7 +19,7 @@ namespace SmartSQL.Views
             DataContext = this;
             Description = assemblyDescription.Description;
             CopyRight = DateTime.Now.Year == 2021 ? $"Copyright ©{DateTime.Now.Year} zfluok" : $"Copyright ©2021-{DateTime.Now.Year} zfluok";
-            Version = $"v {version.ToString()}";
+            Version = $"v{version.ToString()}";
         }
 
         #region Description
@@ -59,11 +60,11 @@ namespace SmartSQL.Views
             set => SetValue(VersionProperty, value);
         }
         #endregion
-
-        private void LinkContact_OnClick(object sender, RoutedEventArgs e)
+        
+        private void SvgViewboxForkMe_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Hyperlink link = sender as Hyperlink;
-            Process.Start(link?.NavigateUri.AbsoluteUri);
+            Process.Start(new ProcessStartInfo("https://gitee.com/izhaofu/SmartSQL"));
         }
     }
 }
