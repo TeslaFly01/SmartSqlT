@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -236,7 +236,7 @@ namespace SmartSQL
                                 Icon = GROUPICON,
                                 FontWeight = "Bold",
                                 Type = ObjType.Group,
-                                IsExpanded = true
+                                IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
                             };
                             var nodeTable1 = new PropertyNodeItem
                             {
@@ -245,7 +245,8 @@ namespace SmartSQL
                                 Name = "treeTable",
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
-                                Type = ObjType.Type
+                                Type = ObjType.Type,
+                                IsExpanded = group.OpenLevel==2
                             };
                             itemChildList.Add(nodeTable1);
                             var nodeView1 = new PropertyNodeItem
@@ -255,7 +256,8 @@ namespace SmartSQL
                                 Name = "treeView",
                                 Icon = VIEWICON,
                                 Parent = nodeGroup,
-                                Type = ObjType.Type
+                                Type = ObjType.Type,
+                                IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeView1);
                             var nodeProc1 = new PropertyNodeItem
@@ -265,7 +267,8 @@ namespace SmartSQL
                                 Name = "treeProc",
                                 Icon = PROCICON,
                                 Parent = nodeGroup,
-                                Type = ObjType.Type
+                                Type = ObjType.Type,
+                                IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeProc1);
                             nodeGroup.Children = itemChildList;

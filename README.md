@@ -75,7 +75,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 #### 4.导入导出
 
 |导入备注|导出文档
-|--|--|
+|:--:|:--:|
 | ![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png) | ![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png) |
 
 #### 5.设置
