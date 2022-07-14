@@ -3,7 +3,7 @@
 	<h2 align="center"><b>SmartSQL</b></h2>
 </div>
 <div align="center">
-<h5 align="center">一款方便、快捷的数据库文档查询、生成工具</h3>
+<h5 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h3>
 </div>
 
 <p align="center">
@@ -22,7 +22,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 [![Gitee](https://img.shields.io/badge/Gitee-https%3A%2F%2Fgitee.com%2Fizhaofu%2FSmartSQL-green)](https://gitee.com/izhaofu/SmartSQL)  <br/>
 [![GitHub](https://img.shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green)](https://github.com/TeslaFly01/SmartSqlT)
 
-> 🎯 本项目力求做最简单、最好用的数据库文档(字典)检索生成工具！
+> 🚀本项目力求做最简单、最好用的数据库文档(字典)查询生成工具！
 
 ### 🍀 二、数据库支持
 - ✅ SqlServer
@@ -92,7 +92,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 ### 🎉 五、文档截图
 
-### 1.CHM文档
+#### 1.CHM文档
 ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)
 
 #### 2.HTML文档
@@ -123,9 +123,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 	✅ 收集问题，修复完善基础功能
 	✅ C#实体代码生成
-	🅰️ 计划中：对象结构对比功能
-	🅰️ 计划中：表、视图、存储过程同步功能
-	🅰️ ...
+	⏳ 计划中：对象结构对比功能
+	⏳ 计划中：表、视图、存储过程同步功能
+	⏳ ...
 
 ### 📖 附三、常见问题
 - **连接不上，怎么办？**
