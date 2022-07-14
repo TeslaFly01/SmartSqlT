@@ -375,7 +375,6 @@
     <Content Include="Resources\Img\Readme\分组管理.jpg" />
     <Content Include="Resources\Img\Readme\快捷查询.jpg" />
     <Content Include="Resources\Img\Readme\新建连接.jpg" />
-    <Content Include="Views\forkme.svg" />
     <Resource Include="Resources\svg\forkme.svg" />
     <Resource Include="Resources\Img\mssql_icon.png" />
     <Resource Include="Resources\Img\mysql_icon.png" />
