@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -375,7 +375,6 @@
     <Content Include="Resources\Img\Readme\分组管理.jpg" />
     <Content Include="Resources\Img\Readme\快捷查询.jpg" />
     <Content Include="Resources\Img\Readme\新建连接.jpg" />
-    <Content Include="Views\forkme.svg" />
     <Resource Include="Resources\svg\forkme.svg" />
     <Resource Include="Resources\Img\mssql_icon.png" />
     <Resource Include="Resources\Img\mysql_icon.png" />
