@@ -286,10 +286,24 @@ namespace SmartSQL
                                   }).ToList();
                 }
                 #endregion
-
-                var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
-                var model = dbInstance.Init();
-                dataSource = model;
+                var model = new Model();
+                try
+                {
+                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
+                    model = dbInstance.Init();
+                    dataSource = model;
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Growl.Warning(new GrowlInfo
+                        {
+                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.Message, ShowDateTime = false,
+                            Type = InfoType.Error
+                        });
+                    }));
+                }
                 var textColor = "#333444";
                 #region 数据表
                 foreach (var table in model.Tables)
