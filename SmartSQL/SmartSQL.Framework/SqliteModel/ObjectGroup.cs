@@ -24,7 +24,7 @@ namespace SmartSQL.Framework.SqliteModel
         /// </summary>
         public string GroupName { get; set; }
         /// <summary>
-        /// 展开层级：1.展开当前项，2.展开子项
+        /// 展开层级：0.不展开，1.展开当前项，2.展开子项
         /// </summary>
         public int? OpenLevel { get; set; }
         /// <summary>
