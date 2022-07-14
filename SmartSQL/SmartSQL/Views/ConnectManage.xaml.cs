@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -148,13 +148,15 @@ namespace SmartSQL.Views
                 dbType = DbType.SqlServer;
                 connectId = Convert.ToInt32(MsSql_HidId.Text);
                 connectName = MsSql_TextConnectName.Text.Trim();
-                serverAddress = MsSql_TextServerAddress.Text.Trim();
+                serverAddress = MsSql_TextServerAddress.Text.Trim().Equals(".")
+                    ? $"."
+                    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
                 serverPort = MsSql_TextServerPort.Value;
                 authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
                 userName = MsSql_TextServerName.Text.Trim();
                 password = MsSql_TextServerPassword.Password.Trim();
                 defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
-                connectionString = $"server={serverAddress},{serverPort};" +
+                connectionString = $"server={serverAddress};" +
                                    $"database=master;uid={userName};" +
                                    $"pwd={password};";
             }
