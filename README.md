@@ -1,6 +1,6 @@
 <div align="center">
    <img alt="SmartSQL" src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/icon.png">
-	<h2 align="center"><b>SmartSQL</b></h2>
+	<h2 align="center" style="color:#4da7fd"><b>SmartSQL</b></h2>
 </div>
 <div align="center">
 <h5 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h3>
@@ -22,7 +22,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 [![Gitee](https://img.shields.io/badge/Gitee-https%3A%2F%2Fgitee.com%2Fizhaofu%2FSmartSQL-green)](https://gitee.com/izhaofu/SmartSQL)  <br/>
 [![GitHub](https://img.shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green)](https://github.com/TeslaFly01/SmartSqlT)
 
-> 🚀本项目力求做最简单、最好用的数据库文档(字典)查询生成工具！
+> 🚀 本项目力求做最简单、最好用的数据库文档(字典)查询生成工具！
 
 ### 🍀 二、数据库支持
 - ✅ SqlServer
@@ -34,14 +34,12 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 ### 🥝 三、主要功能 
 
-#### 文档的内容都包含什么？
+#### 1.文档的内容都包含什么？
 - `表` 序号 | 列名 | 主键 | 自增 | 数据类型 | 长度 | 允许NULL值 | 默认值 | 备注说明
 - `视图` 视图内容SQL脚本
 - `存储过程` 存储过程内容SQL脚本
 
-> 🔹注：Oracle暂不会查询显示自增数据。
-
-#### 支持哪些文档格式的导出？
+#### 2.支持哪些文档格式的导出？
 - ✅ CHM
 - ✅ Word
 - ✅ Excel
@@ -49,7 +47,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - ✅ Html
 - ✅ Xml
 - ✅ MarkDown
-#### 更新表列的注释，有哪些方式？
+#### 3.更新表列的注释，有哪些方式？
 - 通过 `文件`➡`导入备注`，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`PowerDesigner`设计数据库时产生。
     - 	[x] xml 由`Visual Studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
@@ -64,29 +62,26 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Connect.png)
 
 #### 2.分组管理
-![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png)
-
-![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png)
+|||
+|--|--|
+| ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png) | ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png) |
 
 #### 3.快捷查询
-![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png)
+|||
+|--|--|
+| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png) |
+| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Pro.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Column.png) |
 
-![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png)
+#### 4.导入导出
 
-![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Pro.png)
+|导入备注|导出文档
+|--|--|
+| ![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png) | ![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png) |
 
-![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Column.png)
-
-#### 4.导入备注
-![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png)
-
-#### 5.导出文档
-![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png)
-
-#### 6.设置
+#### 5.设置
 ![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Setting.png)
 
-#### 7.关于
+#### 6.关于
 ![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/About.png)
 
 
@@ -96,10 +91,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)
 
 #### 2.HTML文档
-![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)
-
-![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
-
+|||
+|--|--|
+|![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)|![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)|
 
 ### 💪 六、作者
 
