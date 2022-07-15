@@ -7,6 +7,7 @@
     xmlns:local="clr-namespace:SmartSQL.Views"
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="导出文档"
     Width="850"
     Height="500"
