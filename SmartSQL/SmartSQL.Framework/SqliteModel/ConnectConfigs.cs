@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -59,9 +59,9 @@ namespace SmartSQL.Framework.SqliteModel
             {
                 switch (DbType)
                 {
-                    case DbType.SqlServer: return "/SmartSQL;component/Resources/Img/mssql_icon.png";
-                    case DbType.MySql: return "/SmartSQL;component/Resources/Img/mysql_icon.png";
-                    case DbType.PostgreSQL: return "/SmartSQL;component/Resources/Img/postgresql_icon.png";
+                    case DbType.SqlServer: return "/SmartSQL;component/Resources/svg/sqlserver.svg";
+                    case DbType.MySql: return "/SmartSQL;component/Resources/svg/mysql.svg";
+                    case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
                     default: return "";
                 }
             }
