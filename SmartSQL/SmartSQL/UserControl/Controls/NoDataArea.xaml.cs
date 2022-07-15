@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -69,8 +69,21 @@ namespace SmartSQL.UserControl.Controls
 
         private void NoDataArea_OnLoaded(object sender, RoutedEventArgs e)
         {
-            TxtNoData.Visibility = ShowType == ShowType.Txt ? Visibility.Visible : Visibility.Collapsed;
-            ImgNoData.Visibility = ShowType == ShowType.Img ? Visibility.Visible : Visibility.Collapsed;
+            TxtNoData.Visibility = Visibility.Visible;
+            ImgNoData.Visibility = Visibility.Visible;
+            switch (ShowType)
+            {
+                case ShowType.Txt:
+                    ImgNoData.Visibility = Visibility.Collapsed;
+                    break;
+                case ShowType.Img:
+                    TxtNoData.Visibility = Visibility.Collapsed;
+                    break;
+                default:
+                    TxtNoData.Margin = new Thickness(0, 65, 0, 0);
+                    ImgNoData.Margin = new Thickness(0, 0, 0, 45);
+                    break;
+            }
         }
     }
 }

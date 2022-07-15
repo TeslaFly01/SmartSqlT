@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,13 +27,17 @@ namespace SmartSQL.Models
     public enum ShowType
     {
         /// <summary>
+        /// 图片文字
+        /// </summary>
+        All = 0,
+        /// <summary>
         /// 文字
         /// </summary>
-        Txt = 0,
+        Txt = 1,
         /// <summary>
         /// 图片
         /// </summary>
-        Img = 1,
+        Img = 2,
     }
 
     /// <summary>

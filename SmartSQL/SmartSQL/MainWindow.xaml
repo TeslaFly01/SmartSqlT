@@ -333,7 +333,8 @@
                             <local:NoDataArea
                                 x:Name="NoDataAreaText"
                                 Margin="0"
-                                HorizontalAlignment="Center" />
+                                HorizontalAlignment="Center"
+                                ShowType="All" />
                         </Grid>
                         <Grid
                             Margin="0"
