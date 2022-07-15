@@ -5,11 +5,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="{Binding Title}"
     Width="640"
-    Height="330"
+    Height="380"
     BorderThickness="0"
-    Icon="../Resources/Img/SetGroup.png"
+    Icon="../Resources/Img/icon_group.png"
     Loaded="GroupManage_OnLoaded"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
@@ -65,15 +66,12 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
-                            <TextBlock
+                            <svgc:SvgViewbox
                                 Width="12"
                                 Height="12"
-                                Margin="2,0,5,0"
                                 HorizontalAlignment="Left"
-                                FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
-                                FontSize="12"
-                                Foreground="#e9af20"
-                                Text="&#xe605;" />
+                                IsHitTestVisible="False"
+                                Source="pack://application:,,,/Resources/svg/category.svg" />
                             <TextBlock
                                 Margin="20,0,0,0"
                                 Cursor="SizeAll"
