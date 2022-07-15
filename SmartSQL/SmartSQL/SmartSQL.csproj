@@ -375,6 +375,10 @@
     <Content Include="Resources\Img\Readme\分组管理.jpg" />
     <Content Include="Resources\Img\Readme\快捷查询.jpg" />
     <Content Include="Resources\Img\Readme\新建连接.jpg" />
+    <Resource Include="Resources\svg\category.svg" />
+    <Resource Include="Resources\svg\proc.svg" />
+    <Resource Include="Resources\svg\view.svg" />
+    <Resource Include="Resources\svg\table.svg" />
     <Resource Include="Resources\svg\mysql.svg" />
     <Resource Include="Resources\svg\postgresql.svg" />
     <Resource Include="Resources\svg\sqlserver.svg" />

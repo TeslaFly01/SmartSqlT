@@ -35,10 +35,10 @@ namespace SmartSQL
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        private static readonly string GROUPICON = "\ue605";
-        private static readonly string TABLEICON = "\ue6ac";
-        private static readonly string VIEWICON = "\ue601";
-        private static readonly string PROCICON = "\ue6d2";
+        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
+        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
+        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
+        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         //private string ConnectionString = "";
         private ConnectConfigs SelectendConnection = null;
         private DataBase SelectedDataBase = null;

@@ -1,4 +1,4 @@
-﻿<hc:Window
+<hc:Window
     x:Class="SmartSQL.Views.ExportDoc"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -219,45 +219,52 @@
                         Style="{StaticResource ArrowToggleStyle1}" />
                 </WrapPanel>
             </Grid>
-            <Grid Margin="20 85 20 20">
+            <Grid Margin="20,85,20,20">
                 <TextBlock
                     Margin="0,65,0,0"
                     VerticalAlignment="Top"
                     Text="导出对象" />
-                <UniformGrid Margin="85,25,0,0" Rows="3" Columns="4">
-                    <RadioButton Margin="-60,0,0,0" 
-                                 Width="120"
-                                 Name="RadioAll"
-                                 Background="{DynamicResource SecondaryRegionBrush}" 
-                                 hc:IconElement.Geometry="{StaticResource CalendarGeometry}"
-                                 Style="{StaticResource RadioButtonIcon}"
-                                 Cursor="Hand"
-                                 Content="全部"/>
-                    <RadioButton Margin="-140,0,0,0" 
-                                 Width="120"
-                                 Name="RadioTable"
-                                 Background="{DynamicResource SecondaryRegionBrush}" 
-                                 hc:IconElement.Geometry="{StaticResource PageModeGeometry}"  
-                                 Style="{StaticResource RadioButtonIcon}" 
-                                 Cursor="Hand"
-                                 Content="表"
-                                 IsChecked="True"/>
-                    <RadioButton Margin="-220,0,0,0" 
-                                 Width="120"
-                                 Name="RadioView"
-                                 Background="{DynamicResource SecondaryRegionBrush}" 
-                                 hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                                 Style="{StaticResource RadioButtonIcon}" 
-                                 Cursor="Hand"
-                                 Content="视图"/>
-                    <RadioButton Margin="-300,0,0,0"
-                                 Width="120" 
-                                 Name="RadioProc"
-                                 Background="{DynamicResource SecondaryRegionBrush}" 
-                                 hc:IconElement.Geometry="{StaticResource ScrollModeGeometry}"
-                                 Style="{StaticResource RadioButtonIcon}"
-                                 Content="存储过程" 
-                                 Cursor="Hand"/>
+                <UniformGrid
+                    Margin="85,25,0,0"
+                    Columns="4"
+                    Rows="3">
+                    <RadioButton
+                        Name="RadioAll"
+                        Width="120"
+                        Margin="-60,0,0,0"
+                        hc:IconElement.Geometry="{StaticResource CalendarGeometry}"
+                        Background="{DynamicResource SecondaryRegionBrush}"
+                        Content="全部"
+                        Cursor="Hand"
+                        Style="{StaticResource RadioButtonIcon}" />
+                    <RadioButton
+                        Name="RadioTable"
+                        Width="120"
+                        Margin="-140,0,0,0"
+                        hc:IconElement.Geometry="{StaticResource PageModeGeometry}"
+                        Background="{DynamicResource SecondaryRegionBrush}"
+                        Content="表"
+                        Cursor="Hand"
+                        IsChecked="True"
+                        Style="{StaticResource RadioButtonIcon}" />
+                    <RadioButton
+                        Name="RadioView"
+                        Width="120"
+                        Margin="-220,0,0,0"
+                        hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                        Background="{DynamicResource SecondaryRegionBrush}"
+                        Content="视图"
+                        Cursor="Hand"
+                        Style="{StaticResource RadioButtonIcon}" />
+                    <RadioButton
+                        Name="RadioProc"
+                        Width="120"
+                        Margin="-300,0,0,0"
+                        hc:IconElement.Geometry="{StaticResource ScrollModeGeometry}"
+                        Background="{DynamicResource SecondaryRegionBrush}"
+                        Content="存储过程"
+                        Cursor="Hand"
+                        Style="{StaticResource RadioButtonIcon}" />
                 </UniformGrid>
             </Grid>
             <Grid Margin="20,175,20,20">
