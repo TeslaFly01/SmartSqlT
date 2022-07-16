@@ -246,7 +246,7 @@ namespace SmartSQL
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
-                                IsExpanded = group.OpenLevel==2
+                                IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeTable1);
                             var nodeView1 = new PropertyNodeItem
@@ -299,7 +299,8 @@ namespace SmartSQL
                     {
                         Growl.Warning(new GrowlInfo
                         {
-                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.Message, ShowDateTime = false,
+                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.Message,
+                            ShowDateTime = false,
                             Type = InfoType.Error
                         });
                     }));
@@ -1082,7 +1083,10 @@ namespace SmartSQL
 
             var dic = new Dictionary<string, string>
             {
-                {"Type", "\ue605"}, {"Table", "\ue6ac"}, {"View", "\ue601"}, {"Proc", "\ue6d2"}
+                {"Type", "pack://application:,,,/Resources/svg/category.svg"},
+                {"Table", "pack://application:,,,/Resources/svg/table.svg"},
+                {"View", "pack://application:,,,/Resources/svg/view.svg"},
+                {"Proc", "pack://application:,,,/Resources/svg/proc.svg"}
             };
             var mainW = new MainW
             {

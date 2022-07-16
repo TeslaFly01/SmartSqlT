@@ -69,14 +69,14 @@
                     CanUserSort="False"
                     Header="备注说明" />
                 <DataGridTextColumn
-                    Binding="{Binding CreateDate, StringFormat='yyyy-MM-dd HH:mm:ss'}"
+                    Binding="{Binding CreateDate, StringFormat='yyyy-MM-dd'}"
                     CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                     Header="创建时间"
                     IsReadOnly="True" />
                 <DataGridTextColumn
-                    Binding="{Binding ModifyDate, StringFormat='yyyy/MM/dd HH:mm:ss'}"
+                    Binding="{Binding ModifyDate, StringFormat='yyyy/MM/dd'}"
                     CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
-                    Header="最后修改时间"
+                    Header="修改时间"
                     IsReadOnly="True" />
             </DataGrid.Columns>
         </DataGrid>

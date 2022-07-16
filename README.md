@@ -19,8 +19,8 @@
 SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
 
 ##### 🏅开源地址
-[![Gitee](https://img.shields.io/badge/Gitee-https%3A%2F%2Fgitee.com%2Fizhaofu%2FSmartSQL-green)](https://gitee.com/izhaofu/SmartSQL)  <br/>
-[![GitHub](https://img.shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green)](https://github.com/TeslaFly01/SmartSqlT)
+[![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
+[![GitHub](https://shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green?logo=github&style=flat)](https://github.com/TeslaFly01/SmartSqlT)
 
 > 🚀 本项目力求做最简单、最好用的数据库文档(字典)查询生成工具！
 
@@ -67,9 +67,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 | ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png) | ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png) |
 
 #### 3.快捷查询
-|||
-|--|--|
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png) |
+|--|--|
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Pro.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Column.png) |
 
 #### 4.导入导出

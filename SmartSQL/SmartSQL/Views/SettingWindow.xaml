@@ -9,6 +9,7 @@
     Title="设置"
     Width="550"
     Height="330"
+    Icon="../Resources/Img/icon_setting.png"
     BorderThickness="0"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"

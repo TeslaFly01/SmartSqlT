@@ -428,7 +428,7 @@
                     <hc:TabControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <TextBlock
+                                <!--<TextBlock
                                     Width="12"
                                     Height="12"
                                     Margin="0,0,5,0"
@@ -436,7 +436,13 @@
                                     FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
                                     FontSize="12"
                                     Foreground="#e9af20"
-                                    Text="{Binding Icon}" />
+                                    Text="{Binding Icon}" />-->
+                                <svgc:SvgViewbox
+                                            Width="12"
+                                            Height="12"
+                                            Margin="0,0,5,0"
+                                            HorizontalAlignment="Left"
+                                            Source="{Binding Icon}" />
                                 <TextBlock
                                     Height="20"
                                     Margin="16,5,0,0"

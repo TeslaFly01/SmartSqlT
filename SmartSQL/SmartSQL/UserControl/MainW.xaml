@@ -6,6 +6,7 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     mc:Ignorable="d">
     <Grid>
         <!--  单页面展示  -->
@@ -48,10 +49,12 @@
                                     Mark="{Binding MainTitle}"
                                     MarkBrush="#0F000000"
                                     MarkMargin="3,0" />
+
                                 <TextBlock
                                     Foreground="White"
                                     Style="{StaticResource TextBlockDefault}"
                                     Text="{Binding MainTitle}" />
+
                                 <!--  IsChecked="{Binding IsOpen, ElementName=DrawerCode}"  -->
                                 <ToggleButton
                                     Margin="0,0,6,0"
