@@ -62,9 +62,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Connect.png)
 
 #### 2.分组管理
-|||
-|--|--|
-| ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png) | ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png) |
+![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png)
+--|--
 
 #### 3.快捷查询
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png) |
@@ -73,9 +72,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 #### 4.导入导出
 
-|导入备注|导出文档
-|:--:|:--:|
-| ![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png) | ![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png) |
+![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png)|![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png)
+:--:|:--:
 
 #### 5.设置
 ![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Setting.png)
