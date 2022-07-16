@@ -12,7 +12,7 @@
     Width="850"
     Height="500"
     BorderThickness="0"
-    Icon="../Resources/Img/doc.ico"
+    Icon="../Resources/Img/icon_docfile.png"
     Loaded="ExportDoc_OnLoaded"
     ResizeMode="NoResize"
     ShowInTaskbar="False"

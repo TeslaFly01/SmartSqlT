@@ -359,6 +359,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
+    <Resource Include="Resources\Img\icon_docfile.png" />
     <Resource Include="Resources\Img\icon_group.png" />
     <Resource Include="Resources\Img\icon_connect.png" />
     <Resource Include="Resources\Img\icon_setting.png" />

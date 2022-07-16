@@ -125,13 +125,13 @@
                 Height="30"
                 Margin="20"
                 VerticalAlignment="Top"
-                hc:InfoElement.Title="分组名"
+                hc:InfoElement.Title="分组名称"
                 hc:InfoElement.TitlePlacement="Left"
                 hc:InfoElement.TitleWidth="80"
                 PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                 Style="{StaticResource TextBoxExtend}"
                 TextChanged="TextGourpName_OnTextChanged" />
-            <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">默认展开</TextBlock>
+            <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
             <Grid
                 Margin="0,90,0,0"
                 HorizontalAlignment="Left"
@@ -141,12 +141,12 @@
                     Name="CheckCurrent"
                     Margin="100,0,0,0"
                     HorizontalAlignment="Left"
-                    Content="当前项" />
+                    Content="当前节点" />
                 <RadioButton
                     Name="CheckChild"
                     Margin="200,0,0,0"
                     HorizontalAlignment="Left"
-                    Content="子菜单" />
+                    Content="子项节点" />
                 <RadioButton
                     Name="CheckNone"
                     Margin="300,0,0,0"
