@@ -6,12 +6,13 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="设置分组"
     Width="580"
     Height="380"
     Background="White"
     BorderThickness="0"
-    Icon="../Resources/Img/SetGroup.png"
+    Icon="../Resources/Img/icon_group.png"
     Loaded="SetObjectGroup_OnLoaded"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
@@ -39,15 +40,12 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <TextBlock
-                                    Width="12"
-                                    Height="12"
-                                    Margin="2,0,5,0"
-                                    HorizontalAlignment="Left"
-                                    FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
-                                    FontSize="12"
-                                    Foreground="#e9af20"
-                                    Text="{Binding Icon}" />
+                                <svgc:SvgViewbox
+                                            Width="12"
+                                            Height="12"
+                                            Margin="0,0,5,0"
+                                            HorizontalAlignment="Left"
+                                            Source="{Binding Icon}" />
                                 <TextBlock
                                     Margin="20,0,0,0"
                                     Text="{Binding DisplayName}"
