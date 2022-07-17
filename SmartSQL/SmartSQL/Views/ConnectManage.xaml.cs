@@ -174,7 +174,7 @@ namespace SmartSQL.Views
                                    $"port={serverPort};" +
                                    $"uid={userName};" +
                                    $"pwd={password};" +
-                                   $"Allow User Variables=True;";
+                                   $"Allow User Variables=True;sslmode=none;";
             }
             if (TabPostgreSql.IsSelected)
             {
@@ -490,7 +490,7 @@ namespace SmartSQL.Views
                                    $"port={MySql_TextServerPort.Value};" +
                                    $"uid={MySql_TextServerName.Text.Trim()};" +
                                    $"pwd={MySql_TextServerPassword.Password.Trim()};" +
-                                   $"Allow User Variables=True;";
+                                   $"Allow User Variables=True;sslmode=none;";
             }
             if (TabPostgreSql.IsSelected)
             {

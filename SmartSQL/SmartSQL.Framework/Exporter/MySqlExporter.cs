@@ -125,27 +125,34 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var procDic = new Procedures();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var procInfoList = dbMaintenance.GetProcInfoList(false);
-            var dbName = dbMaintenance.Context.Ado.Connection.Database;
-            var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
-            procList.ForEach(p =>
+            try
             {
-                if (procDic.ContainsKey(p.Name))
+                var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
+                var procInfoList = dbMaintenance.GetProcInfoList(false);
+                var dbName = dbMaintenance.Context.Ado.Connection.Database;
+                var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
+                procList.ForEach(p =>
                 {
-                    return;
-                }
-                var proc = new Procedure()
-                {
-                    Id = p.Name,
-                    Name = p.Name,
-                    DisplayName = p.Name,
-                    Comment = p.Description,
-                    CreateDate = p.CreateDate,
-                    ModifyDate = p.ModifyDate
-                };
-                procDic.Add(p.Name, proc);
-            });
+                    if (procDic.ContainsKey(p.Name))
+                    {
+                        return;
+                    }
+                    var proc = new Procedure()
+                    {
+                        Id = p.Name,
+                        Name = p.Name,
+                        DisplayName = p.Name,
+                        Comment = p.Description,
+                        CreateDate = p.CreateDate,
+                        ModifyDate = p.ModifyDate
+                    };
+                    procDic.Add(p.Name, proc);
+                });
+            }
+            catch (Exception)
+            {
+                //暂时屏蔽mysql.proc不存在的异常
+            }
             return procDic;
             #endregion
         }

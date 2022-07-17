@@ -85,7 +85,7 @@ namespace SmartSQL.Framework.SqliteModel
                         break;
                     case DbType.MySql:
                         connectString =
-                            $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+                            $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;sslmode=none;";
                         break;
                     case DbType.PostgreSQL:
                         connectString = $"HOST={ServerAddress};" +
@@ -140,7 +140,7 @@ namespace SmartSQL.Framework.SqliteModel
                         $"server={serAddress};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                     break;
                 case DbType.MySql:
-                    connectString = $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;";
+                    connectString = $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;sslmode=none;";
                     break;
                 case DbType.PostgreSQL:
                     connectString = $"HOST={ServerAddress};" +
