@@ -1,6 +1,6 @@
 <div align="center">
    <img alt="SmartSQL" src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/icon.png">
-	<a href="#"><h1 align="center" style="color:#4da7fd"><b>SmartSQL</b></h1></a>
+	<a href="https://gitee.com/izhaofu/SmartSQL"><h1 align="center" style="color:#4da7fd"><b>SmartSQL</b></h1></a>
 </div>
 <div align="center">
 <h5 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h3>
