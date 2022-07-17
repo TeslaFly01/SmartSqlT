@@ -318,6 +318,9 @@
                                             FontSize="12"
                                             Text="{Binding DisplayName}"
                                             ToolTip="{Binding DisplayName}" />
+                                        <!--<Border Background="AliceBlue">
+                                            <TextBlock VerticalAlignment="Center">23</TextBlock>
+                                        </Border>-->
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
@@ -428,15 +431,6 @@
                     <hc:TabControl.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <!--<TextBlock
-                                    Width="12"
-                                    Height="12"
-                                    Margin="0,0,5,0"
-                                    HorizontalAlignment="Left"
-                                    FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
-                                    FontSize="12"
-                                    Foreground="#e9af20"
-                                    Text="{Binding Icon}" />-->
                                 <svgc:SvgViewbox
                                             Width="12"
                                             Height="12"

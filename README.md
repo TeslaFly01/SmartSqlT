@@ -14,6 +14,7 @@
 
 </p>
 
+![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Top2.png)
 ### 🚩 一、项目介绍
 
 SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
@@ -54,8 +55,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
     - 	[x] xml 由`SmartSQL`的 XML导出 而产生。
 
 ### 🎉 四、工具截图
-
-![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Top.png)
 
 #### 1.数据库连接
 

@@ -403,7 +403,6 @@
     <Resource Include="Resources\Img\Refresh.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Resources\Img\SetGroup.png" />
     <Resource Include="Resources\Img\NoData2.png" />
     <Resource Include="Resources\Img\NoData1.png" />
     <Resource Include="Resources\Img\NoData.png" />
