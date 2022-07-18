@@ -142,15 +142,11 @@ namespace SmartSQL.Views
             var selectDatabase = SelectDatabase.SelectedItem;
             if (selectDatabase != null)
             {
-                var selectedDbBase = (DataBase)selectDatabase;
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
-                var sqLiteHelper = new SQLiteHelper();
-                sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
                 MenuBind(false, null);
             }
         }
 
-        private Model dataSource = new Model();
         public void MenuBind(bool isCompare, Model compareData)
         {
             #region MyRegion
@@ -270,7 +266,6 @@ namespace SmartSQL.Views
                 {
                     var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
                     model = dbInstance.Init();
-                    dataSource = model;
                 }
                 catch (Exception ex)
                 {
@@ -305,6 +300,7 @@ namespace SmartSQL.Views
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = table.Value.Id,
+                                        Parent = ppGroup,
                                         DisplayName = table.Value.DisplayName,
                                         Name = table.Value.Name,
                                         Schema = table.Value.SchemaName,
@@ -360,6 +356,7 @@ namespace SmartSQL.Views
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = view.Value.Id,
+                                        Parent = ppGroup,
                                         DisplayName = view.Value.DisplayName,
                                         Name = view.Value.Name,
                                         Schema = view.Value.SchemaName,
@@ -414,6 +411,7 @@ namespace SmartSQL.Views
                                     ppGroup.Children.Add(new PropertyNodeItem()
                                     {
                                         ObejcetId = proc.Value.Id,
+                                        Parent = ppGroup,
                                         DisplayName = proc.Value.DisplayName,
                                         Name = proc.Value.Name,
                                         Schema = proc.Value.SchemaName,
@@ -553,6 +551,7 @@ namespace SmartSQL.Views
 
         private List<ViewProDto> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
         {
+            #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
             var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString);
             var objectType = type == "View" ? DbObjectType.View : DbObjectType.Proc;
@@ -563,10 +562,18 @@ namespace SmartSQL.Views
                 {
                     continue;
                 }
+                if (group.IsChecked==false)
+                {
+                    continue;
+                }
                 if (group.Type == "Type")
                 {
                     foreach (var item in group.Children)
                     {
+                        if (item.IsChecked==false)
+                        {
+                            continue;
+                        }
                         if (item.Type == type)
                         {
                             var script = exporter.GetScriptInfoById(item.ObejcetId, objectType);
@@ -594,6 +601,7 @@ namespace SmartSQL.Views
                 }
             }
             return viewPro;
+            #endregion
         }
 
         private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
@@ -608,6 +616,10 @@ namespace SmartSQL.Views
                     int orderNo = 1;
                     foreach (var node in group.Children)
                     {
+                        if (node.IsChecked == false)
+                        {
+                            continue;
+                        }
                         TableDto tbDto = new TableDto();
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.Name;
@@ -655,7 +667,7 @@ namespace SmartSQL.Views
                     tbDto.TableOrder = groupNo.ToString();
                     tbDto.TableName = group.Name;
                     tbDto.Comment = group.Comment.FilterIllegalDir();
-                    tbDto.DBType = "SqlServer";
+                    tbDto.DBType = selectedConnection.DbType.ToString();
 
                     var lst_col_dto = new List<ColumnDto>();
                     var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,

@@ -1,19 +1,20 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSQL.DocUtils;
+using Jint;
 
 namespace SmartSQL.DocUtils
 {
     public class JS
     {
-        private static Jint.Engine jt = null;
+        private static Engine jt = null;
         static JS()
         {
-            jt = new Jint.Engine(cfg =>
+            jt = new Engine(cfg =>
             {
                 //cfg.LimitRecursion();
                 cfg.Strict();
