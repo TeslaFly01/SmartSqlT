@@ -139,7 +139,7 @@ namespace SmartSQL.UserControl
                 }
                 ObjectsViewData.ForEach(x =>
                 {
-                    x.IsSelected = false;
+                    x.IsChecked = false;
                 });
                 ObjItems = ObjectsViewData;
                 SearchObject.Text = string.Empty;
@@ -271,8 +271,8 @@ namespace SmartSQL.UserControl
             exportDoc.ExportType = ExportEnum.Partial;
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = SelectedDataBase;
-            var exportData = ObjectsViewData.Any(x => x.IsSelected == true)
-                ? ObjectsViewData.Where(x => x.IsSelected == true).ToList()
+            var exportData = ObjectsViewData.Any(x => x.IsChecked == true)
+                ? ObjectsViewData.Where(x => x.IsChecked == true).ToList()
                 : ObjectsViewData;
             exportDoc.ExportData = exportData;
             exportDoc.ShowDialog();
@@ -284,7 +284,7 @@ namespace SmartSQL.UserControl
             var selectedItem = ObjectsViewData;
             selectedItem.ForEach(x =>
             {
-                x.IsSelected = isChecked;
+                x.IsChecked = isChecked.Value;
             });
             ObjectsViewData = selectedItem;
         }
@@ -303,7 +303,7 @@ namespace SmartSQL.UserControl
                 {
                     return;
                 }
-                curItem.IsSelected = !curItem.IsSelected;
+                curItem.IsChecked = !curItem.IsChecked;
             }
         }
 
@@ -319,7 +319,7 @@ namespace SmartSQL.UserControl
                 var curCell = dataGrid.CurrentCell.Column.Header;
                 if (curCell.Equals("选择"))
                 {
-                    curItem.IsSelected = !curItem.IsSelected;
+                    curItem.IsChecked = !curItem.IsChecked;
                 }
             }
         }
@@ -339,8 +339,8 @@ namespace SmartSQL.UserControl
             //group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
             group.Connection = SelectedConnection;
             group.SelectedDataBase = SelectedDataBase.DbName;
-            var groupData = ObjectsViewData.Any(x => x.IsSelected == true)
-                ? ObjectsViewData.Where(x => x.IsSelected == true).ToList()
+            var groupData = ObjectsViewData.Any(x => x.IsChecked == true)
+                ? ObjectsViewData.Where(x => x.IsChecked == true).ToList()
                 : ObjectsViewData;
             group.SelectedObjects = groupData;
             group.Owner = mainWindow;

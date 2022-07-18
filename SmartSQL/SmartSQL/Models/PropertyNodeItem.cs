@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -13,7 +13,8 @@ namespace SmartSQL.Models
     {
         public PropertyNodeItem()
         {
-            IsSelected = false;
+            IsChecked = false;
+            IsExpanded = false;
             Children = new List<PropertyNodeItem>();
         }
         /// <summary>
@@ -63,7 +64,20 @@ namespace SmartSQL.Models
         /// <summary>
         /// 是否展开
         /// </summary>
-        public bool IsExpanded { get; set; } = false;
+        private bool _isExpanded = false;
+        public bool IsExpanded
+        {
+            get { return _isExpanded; }
+            set
+            {
+                if (value != _isExpanded)
+                {
+                    //折叠状态改变
+                    _isExpanded = value;
+                    OnPropertyChanged("IsExpanded");
+                }
+            }
+        }
         /// <summary>
         /// 字体粗细
         /// </summary>
@@ -75,66 +89,50 @@ namespace SmartSQL.Models
         /// <summary>
         /// 是否选中
         /// </summary>
-        private bool? isSelected = false;
-        public bool? IsSelected
+        private bool? _isChecked = false;
+        public bool? IsChecked
         {
-            get
-            {
-                return isSelected;
-            }
-            set
-            {
-                isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
+            get { return _isChecked; }
+            set { this.SetIsChecked(value, true, true); }
         }
         /// <summary>
         /// 子项菜单
         /// </summary>
         public List<PropertyNodeItem> Children { get; set; }
 
-        /// <summary>
-        /// 设置选中
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="checkedChildren"></param>
-        /// <param name="checkedParent"></param>
-        private void SetIsChecked(bool? value, bool checkedChildren, bool checkedParent)
+        void SetIsChecked(bool? value, bool updateChildren, bool updateParent)
         {
-            if (isSelected == value) return;
-            isSelected = value;
-            //选中和取消子类
-            if (checkedChildren && value.HasValue && Children != null)
-                Children.ForEach(ch => ch.SetIsChecked(value, true, false));
+            if (value == _isChecked)
+                return;
 
-            //选中和取消父类
-            if (checkedParent && this.Parent != null)
-                this.Parent.CheckParentCheckState();
+            _isChecked = value;
 
-            //通知更改
-            this.SetProperty(x => x.IsSelected);
+            if (updateChildren && _isChecked.HasValue)
+                this.Children.ForEach(c => c.SetIsChecked(_isChecked, true, false));
+
+            if (updateParent && Parent != null)
+                Parent.VerifyCheckState();
+
+            this.OnPropertyChanged("IsChecked");
         }
 
-        /// <summary>
-        /// 检查父类是否选 中
-        /// 如果父类的子类中有一个和第一个子类的状态不一样父类ischecked为null
-        /// </summary>
-        private void CheckParentCheckState()
+        void VerifyCheckState()
         {
-            bool? _firstState = null;
-            for (int i = 0; i < this.Children.Count(); i++)
+            bool? state = null;
+            for (int i = 0; i < this.Children.Count; ++i)
             {
-                bool? childrenState = this.Children[i].IsSelected;
+                bool? current = this.Children[i].IsChecked;
                 if (i == 0)
                 {
-                    _firstState = childrenState;
+                    state = current;
                 }
-                else if (_firstState != childrenState)
+                else if (state != current)
                 {
-                    _firstState = null;
+                    state = null;
+                    break;
                 }
             }
-            SetIsChecked(_firstState, false, true);
+            this.SetIsChecked(state, false, true);
         }
     }
 

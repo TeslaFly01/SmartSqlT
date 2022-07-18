@@ -134,6 +134,9 @@
     <Compile Include="Views\ConnectManage.xaml.cs">
       <DependentUpon>ConnectManage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ExportDocExt.xaml.cs">
+      <DependentUpon>ExportDocExt.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ExportDoc.xaml.cs">
       <DependentUpon>ExportDoc.xaml</DependentUpon>
     </Compile>
@@ -171,10 +174,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="MyTreeView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Resources\Themes\Basic\Basic.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -267,6 +266,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\ExportDocExt.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\ExportDoc.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -303,9 +306,6 @@
   <ItemGroup>
     <Compile Include="Models\NotifyPropertyBase.cs" />
     <Compile Include="Models\PropertyNodeItem.cs" />
-    <Compile Include="MyTreeView.xaml.cs">
-      <DependentUpon>MyTreeView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

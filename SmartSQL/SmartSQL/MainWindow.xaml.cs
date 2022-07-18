@@ -1284,7 +1284,7 @@ namespace SmartSQL
                 Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var exportDoc = new ExportDoc();
+            var exportDoc = new ExportDocExt();
             exportDoc.Owner = this;
             exportDoc.ExportType = ExportEnum.All;
             exportDoc.SelectedConnection = SelectendConnection;
