@@ -421,6 +421,7 @@
         <localBase:Loading
             x:Name="LoadingG"
             Grid.Column="0"
+            Grid.ColumnSpan="2"
             BackgroundOpacity="0.3"
             Visibility="Collapsed" />
         <!--  Loading动画  -->
