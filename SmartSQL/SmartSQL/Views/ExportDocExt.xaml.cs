@@ -119,7 +119,7 @@ namespace SmartSQL.Views
             SelectDatabase.ItemsSource = list;
             HidSelectDatabase.Text = SelectedDataBase.DbName;
             SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase.DbName);
-            MenuBind(null);
+            MenuBind();
         }
 
         private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)
@@ -149,7 +149,7 @@ namespace SmartSQL.Views
             if (selectDatabase != null)
             {
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
-                MenuBind(null);
+                MenuBind();
             }
         }
 
@@ -166,8 +166,7 @@ namespace SmartSQL.Views
         /// <summary>
         /// 菜单绑定
         /// </summary>
-        /// <param name="compareData"></param>
-        public void MenuBind(Model compareData)
+        public void MenuBind()
         {
             #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;

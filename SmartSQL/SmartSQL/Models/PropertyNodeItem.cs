@@ -95,13 +95,21 @@ namespace SmartSQL.Models
             get { return _isChecked; }
             set { this.SetIsChecked(value, true, true); }
         }
+
         /// <summary>
         /// 子项菜单
         /// </summary>
         public List<PropertyNodeItem> Children { get; set; }
 
+        /// <summary>
+        /// 设置选中
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="updateChildren"></param>
+        /// <param name="updateParent"></param>
         void SetIsChecked(bool? value, bool updateChildren, bool updateParent)
         {
+            #region MyRegion
             if (value == _isChecked)
                 return;
 
@@ -113,11 +121,16 @@ namespace SmartSQL.Models
             if (updateParent && Parent != null)
                 Parent.VerifyCheckState();
 
-            this.OnPropertyChanged("IsChecked");
+            this.OnPropertyChanged("IsChecked"); 
+            #endregion
         }
 
+        /// <summary>
+        /// 验证选中状态
+        /// </summary>
         void VerifyCheckState()
         {
+            #region MyRegion
             bool? state = null;
             for (int i = 0; i < this.Children.Count; ++i)
             {
@@ -132,7 +145,8 @@ namespace SmartSQL.Models
                     break;
                 }
             }
-            this.SetIsChecked(state, false, true);
+            this.SetIsChecked(state, false, true); 
+            #endregion
         }
     }
 
