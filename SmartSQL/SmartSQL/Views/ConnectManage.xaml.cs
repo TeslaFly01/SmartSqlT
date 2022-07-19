@@ -89,7 +89,7 @@ namespace SmartSQL.Views
                         MsSql_TextServerAddress.Text = connect.ServerAddress;
                         MsSql_TextServerPort.Value = connect.ServerPort;
                         MsSql_TextServerName.Text = connect.UserName;
-                        MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 0 ? SQLServer : Windows;
+                        MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SQLServer : Windows;
                         MsSql_TextServerPassword.Password = pwd;
                         MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
                         MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
