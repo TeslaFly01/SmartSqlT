@@ -884,7 +884,13 @@ namespace SmartSQL.Views
             var doctype = DocumentType();
             if (string.IsNullOrEmpty(doctype))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择输出文档类型", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择输出文档类型.", WaitTime = 1, ShowDateTime = false });
+                return;
+            }
+            var checkAny = exportData.Count(x => x.Type == "Type" && x.IsChecked == false);
+            if (checkAny == 3)
+            {
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要导出的对象.", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             if (string.IsNullOrEmpty(TxtFileName.Text))

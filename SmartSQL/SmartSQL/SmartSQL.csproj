@@ -356,6 +356,7 @@
     <Resource Include="Resources\Img\icon_group.png" />
     <Resource Include="Resources\Img\icon_connect.png" />
     <Resource Include="Resources\Img\icon_setting.png" />
+    <Resource Include="Resources\Img\icon_import.png" />
     <Content Include="Resources\Img\Readme\About.png" />
     <Content Include="Resources\Img\Readme\Column.png" />
     <Content Include="Resources\Img\Readme\Connect.png" />
