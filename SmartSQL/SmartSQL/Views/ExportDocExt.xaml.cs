@@ -1110,12 +1110,31 @@ namespace SmartSQL.Views
         }
 
         /// <summary>
+        /// 对应文档提示信息
+        /// </summary>
+        private static Dictionary<string, string> _docTypeTipMsg = new Dictionary<string, string>
+        {
+            {"chm",""},
+            {"excel","Excel文档类型仅支持导出数据表"},
+            {"word","Word文档类型仅支持导出数据表"},
+            {"pdf","PDF文档类型仅支持导出数据表"},
+            {"html","Html文档类型仅支持导出数据表"},
+            {"xml",""},
+            {"markdown",""}
+        };
+
+        /// <summary>
         /// 导出文档类型单选
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Toggle_OnChecked(object sender, RoutedEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            GridTipMsg.Visibility = Visibility.Collapsed;
             var button = (ToggleButton)sender;
             foreach (ToggleButton toggle in ToggleWarpPanel.Children)
             {
@@ -1124,12 +1143,15 @@ namespace SmartSQL.Views
                     toggle.IsChecked = false;
                 }
             }
-            if (IsLoaded)
+            var tipMsg = _docTypeTipMsg[button.Name.ToLower()];
+            if (!string.IsNullOrEmpty(tipMsg))
             {
-                var docType = (DocType)(Enum.Parse(typeof(DocType), button.Content.ToString().ToLower()));
-                var fileExtend = FileExtend(docType);
-                LblFileExtend.Content = "." + fileExtend;
+                GridTipMsg.Visibility = Visibility.Visible;
+                TextDocTipMsg.Text = tipMsg;
             }
+            var docType = (DocType)(Enum.Parse(typeof(DocType), button.Content.ToString().ToLower()));
+            var fileExtend = FileExtend(docType);
+            LblFileExtend.Content = "." + fileExtend;
         }
 
         private string DocumentType()

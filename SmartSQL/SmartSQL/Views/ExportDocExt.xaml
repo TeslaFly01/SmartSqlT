@@ -342,15 +342,18 @@
                                 Style="{StaticResource ArrowToggleStyle1}" />
                         </WrapPanel>
                     </Grid>
-                    <!--<Grid Margin="105,160,20,20">
-                        <hc:TransitioningContentControl VerticalAlignment="Top">
+                    <Grid
+                        x:Name="GridTipMsg"
+                        Margin="105,160,20,20"
+                        Visibility="Collapsed">
+                        <hc:TransitioningContentControl VerticalAlignment="Top" TransitionMode="Fade">
                             <StackPanel>
                                 <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
-                                    <TextBlock Text="pdm 由powerdesigner设计数据库时产生；" />
+                                    <TextBlock x:Name="TextDocTipMsg" Text="" />
                                 </Border>
                             </StackPanel>
                         </hc:TransitioningContentControl>
-                    </Grid>-->
+                    </Grid>
                     <Grid Margin="20,175,20,20">
                         <TextBlock
                             Margin="0,52,0,0"
