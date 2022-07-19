@@ -1123,7 +1123,7 @@ namespace SmartSQL.Views
             {"chm",""},
             {"excel","Excel文档类型仅支持导出数据表"},
             {"word","Word文档类型仅支持导出数据表"},
-            {"pdf","PDF文档类型仅支持导出数据表"},
+            {"pdf",""},
             {"html","Html文档类型仅支持导出数据表"},
             {"xml",""},
             {"markdown",""}

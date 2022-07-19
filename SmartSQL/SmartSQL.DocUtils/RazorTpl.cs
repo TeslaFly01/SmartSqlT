@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +9,7 @@ using RazorEngine;
 using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using RazorEngine.Text;
+using SmartSQL.DocUtils.Dtos;
 
 namespace SmartSQL.DocUtils
 {
@@ -40,7 +41,43 @@ namespace SmartSQL.DocUtils
             }
         }
 
-        public static string RazorRender(this string tpl_text, object model)
+        public static string RazorRender(this string tpl_text, DBDto model)
+        {
+            try
+            {
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static string RazorRender(this string tpl_text, TableDto model)
+        {
+            try
+            {
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static string RazorRender(this string tpl_text, SqlCode model)
+        {
+            try
+            {
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static string RazorRender(this string tpl_text, ChmHHP model)
         {
             try
             {

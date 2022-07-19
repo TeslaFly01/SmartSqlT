@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -167,11 +167,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
                 if (!table.DBType.StartsWith("Oracle"))
                 {
-                    pdfTable.SetWidths(new float[] { 50F, 60F, 60F, 50F, 50F, 50F, 50F, 50F, 50F });
+                    pdfTable.SetWidths(new float[] { 40F, 80F, 60F, 50F, 40F, 40F, 40F, 70F, 100F });
                 }
                 else
                 {
-                    pdfTable.SetWidths(new float[] { 50F, 80F, 70F, 50F, 50F, 50F, 50F, 70F });
+                    pdfTable.SetWidths(new float[] { 40F, 90F, 70F, 50F, 50F, 50F, 50F, 90F });
                 }
 
 
@@ -288,7 +288,7 @@ namespace SmartSQL.DocUtils.DBDoc
             //  添加列标题
             pdfTable.AddCell(CreatePdfPCell("序号", pdfFont));
             pdfTable.AddCell(CreatePdfPCell("表名", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("注释/说明", pdfFont));
+            pdfTable.AddCell(CreatePdfPCell("说明", pdfFont));
             foreach (var table in tables)
             {
                 //  添加数据行,循环数据库表字段
@@ -299,9 +299,9 @@ namespace SmartSQL.DocUtils.DBDoc
 
             //  设置表格居中
             pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfTable.TotalWidth = 330F;
+            pdfTable.TotalWidth = 480F;
             pdfTable.LockedWidth = true;
-            pdfTable.SetWidths(new float[] { 60F, 120F, 150F });
+            pdfTable.SetWidths(new float[] { 60F, 210F, 210F });
 
             //  添加表格
             pdfDocument.Add(pdfTable);
@@ -313,13 +313,13 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="text"></param>
         /// <param name="pdfFont"></param>
         /// <returns></returns>
-        private static PdfPCell CreatePdfPCell(string text, Font pdfFont)
+        private static PdfPCell CreatePdfPCell(string text, Font pdfFont, int hAlign = Element.ALIGN_CENTER)
         {
             Phrase phrase = new Phrase(text, pdfFont);
             PdfPCell pdfPCell = new PdfPCell(phrase);
 
             //  单元格垂直居中显示
-            pdfPCell.HorizontalAlignment = Element.ALIGN_CENTER;
+            pdfPCell.HorizontalAlignment = hAlign;
             pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
 
             pdfPCell.MinimumHeight = 30;
