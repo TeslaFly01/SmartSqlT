@@ -1286,10 +1286,8 @@ namespace SmartSQL
             }
             var exportDoc = new ExportDocExt();
             exportDoc.Owner = this;
-            exportDoc.ExportType = ExportEnum.All;
             exportDoc.SelectedConnection = SelectendConnection;
             exportDoc.SelectedDataBase = selectDatabase;
-            exportDoc.ExportData = TreeViewData;
             exportDoc.ShowDialog();
         }
 

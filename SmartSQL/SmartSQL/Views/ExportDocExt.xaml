@@ -177,7 +177,6 @@
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
                         </Grid>
-                        <!--  TextChanged="SearchMenu_OnTextChanged"  -->
                         <hc:SearchBar
                             x:Name="SearchMenu"
                             Height="30"
@@ -189,14 +188,15 @@
                             hc:InfoElement.Placeholder="搜索数据表/视图/存储过程"
                             FontSize="13"
                             ShowClearButton="True"
-                            Style="{StaticResource SearchBarPlus}" />
+                            Style="{StaticResource SearchBarPlus}"
+                            TextChanged="SearchMenu_OnTextChanged" />
 
                         <TreeView
                             x:Name="TreeViewTables"
                             Margin="0,70,0,0"
                             VerticalAlignment="Top"
                             BorderThickness="0"
-                            ItemsSource="{Binding ExportData}">
+                            ItemsSource="{Binding TreeViewData}">
                             <TreeView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
@@ -342,6 +342,15 @@
                                 Style="{StaticResource ArrowToggleStyle1}" />
                         </WrapPanel>
                     </Grid>
+                    <!--<Grid Margin="105,160,20,20">
+                        <hc:TransitioningContentControl VerticalAlignment="Top">
+                            <StackPanel>
+                                <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
+                                    <TextBlock Text="pdm 由powerdesigner设计数据库时产生；" />
+                                </Border>
+                            </StackPanel>
+                        </hc:TransitioningContentControl>
+                    </Grid>-->
                     <Grid Margin="20,175,20,20">
                         <TextBlock
                             Margin="0,52,0,0"
@@ -358,7 +367,7 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Click="BtnLookPath_OnClick"
-                            Content="浏览..."
+                            Content="浏览"
                             Cursor="Hand" />
                     </Grid>
                     <Grid Margin="20,285,20,20">

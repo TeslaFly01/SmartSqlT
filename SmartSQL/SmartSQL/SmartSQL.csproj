@@ -137,9 +137,6 @@
     <Compile Include="Views\ExportDocExt.xaml.cs">
       <DependentUpon>ExportDocExt.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ExportDoc.xaml.cs">
-      <DependentUpon>ExportDoc.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\GroupManage.xaml.cs">
       <DependentUpon>GroupManage.xaml</DependentUpon>
     </Compile>
@@ -269,10 +266,6 @@
     <Page Include="Views\ExportDocExt.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ExportDoc.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GroupManage.xaml">
       <SubType>Designer</SubType>

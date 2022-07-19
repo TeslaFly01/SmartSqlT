@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -89,7 +89,7 @@ namespace SmartSQL.DocUtils.DBDoc
             overviewTbWorksheet.Cells[row, 5].Value = "审核人";
             overviewTbWorksheet.Cells[row, 1, row, 5].Style.Font.Bold = true;
             overviewTbWorksheet.Cells[row, 1, row, 5].Style.Font.Size = 10;
-            overviewTbWorksheet.Row(1).Height = 20; // 行高
+            overviewTbWorksheet.Row(1).Height = 16; // 行高
 
             //  循环日志记录
             row++; // 行号+1
@@ -102,7 +102,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 overviewTbWorksheet.Cells[row, 4].Value = "";
                 overviewTbWorksheet.Cells[row, 5].Value = "";
 
-                overviewTbWorksheet.Row(row).Height = 20; // 行高
+                overviewTbWorksheet.Row(row).Height = 16; // 行高
 
                 row++; // 行号+1
             }
@@ -137,8 +137,8 @@ namespace SmartSQL.DocUtils.DBDoc
             overviewTbWorksheet.Cells[row, 2].Value = "表名";
             overviewTbWorksheet.Cells[row, 3].Value = "注释/说明";
             overviewTbWorksheet.Cells[row, 1, row, 3].Style.Font.Bold = true;
-            overviewTbWorksheet.Cells[row, 1, row, 3].Style.Font.Size = 16;
-            overviewTbWorksheet.Row(1).Height = 30; // 行高
+            overviewTbWorksheet.Cells[row, 1, row, 3].Style.Font.Size = 12;
+            overviewTbWorksheet.Row(1).Height = 16; // 行高
 
             //  循环数据库表名
             row++;
@@ -150,7 +150,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 overviewTbWorksheet.Cells[row, 2].Value = table.TableName;
                 overviewTbWorksheet.Cells[row, 3].Value = (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
 
-                overviewTbWorksheet.Row(row).Height = 30; // 行高
+                overviewTbWorksheet.Row(row).Height = 16; // 行高
 
                 row++; // 行号+1
             }
@@ -198,7 +198,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
                 tbWorksheet.Cells[rowNum, 1].Value = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
-                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 16;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 14;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
