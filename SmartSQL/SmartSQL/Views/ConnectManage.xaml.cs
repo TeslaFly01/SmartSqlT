@@ -15,6 +15,7 @@ using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
 using SmartSQL.Annotations;
+using SmartSQL.DocUtils;
 using SmartSQL.Helper;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
@@ -285,7 +286,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
+                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });
@@ -570,7 +571,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.Message, WaitTime = 1, ShowDateTime = false });
+                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });

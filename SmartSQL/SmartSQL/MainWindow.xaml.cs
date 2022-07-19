@@ -15,6 +15,7 @@ using System.Windows.Data;
 using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Annotations;
+using SmartSQL.DocUtils;
 using SmartSQL.Framework.Const;
 using SmartSQL.Helper;
 using SmartSQL.UserControl;
@@ -144,7 +145,7 @@ namespace SmartSQL
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Growl.Warning(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName}，原因：" + ex.Message, ShowDateTime = false, Type = InfoType.Error });
+                    Growl.Warning(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
             }
@@ -299,7 +300,7 @@ namespace SmartSQL
                     {
                         Growl.Warning(new GrowlInfo
                         {
-                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.Message,
+                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg(),
                             ShowDateTime = false,
                             Type = InfoType.Error
                         });

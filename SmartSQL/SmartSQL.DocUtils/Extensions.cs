@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -58,6 +58,16 @@ namespace SmartSQL.DocUtils
                 dict.Add(key, nvc[key]);
             }
             return dict;
+        }
+
+        /// <summary>
+        /// 截断异常信息，避免信息过长造成用户体验不好
+        /// </summary>
+        /// <param name="exception"></param>
+        /// <returns></returns>
+        public static string ToMsg(this Exception exception)
+        {
+            return exception.Message.Length < 200 ? exception.Message : $"{exception.Message.Substring(0, 200)}...";
         }
 
         #region MarkDown

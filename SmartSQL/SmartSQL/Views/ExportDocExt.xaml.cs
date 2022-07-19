@@ -293,7 +293,7 @@ namespace SmartSQL.Views
                     {
                         Growl.Warning(new GrowlInfo
                         {
-                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.Message,
+                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg(),
                             ShowDateTime = false,
                             Type = InfoType.Error
                         });
@@ -939,7 +939,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal($"导出失败，原因：{ex.Message}");
+                        Growl.WarningGlobal($"导出失败，原因：{ex.ToMsg()}");
                     });
                 }
             }, TaskCreationOptions.LongRunning);
