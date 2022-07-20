@@ -1133,7 +1133,23 @@ namespace SmartSQL.Views
             {"pdf",""},
             {"html","Html文档类型仅支持导出数据表"},
             {"xml",""},
-            {"markdown",""}
+            {"md",""},
+            {"json",""}
+        };
+
+        /// <summary>
+        /// 文档对应文件扩展名
+        /// </summary>
+        private static Dictionary<string, string> _docExt = new Dictionary<string, string>
+        {
+            {"chm",".chm"},
+            {"excel",".xlsx"},
+            {"word",".docx"},
+            {"pdf",".pdf"},
+            {"html",".html"},
+            {"xml",".xml"},
+            {"md",".md"},
+            {"json",".json"}
         };
 
         /// <summary>
@@ -1162,9 +1178,7 @@ namespace SmartSQL.Views
                 GridTipMsg.Visibility = Visibility.Visible;
                 TextDocTipMsg.Text = tipMsg;
             }
-            var docType = (DocType)(Enum.Parse(typeof(DocType), button.Content.ToString().ToLower()));
-            var fileExtend = FileExtend(docType);
-            LblFileExtend.Content = "." + fileExtend;
+            LblFileExtend.Content = _docExt[button.Name.ToLower()];
         }
 
         private string DocumentType()
@@ -1188,7 +1202,7 @@ namespace SmartSQL.Views
                 case DocType.chm: return "chm";
                 case DocType.excel: return "xlsx";
                 case DocType.html: return "html";
-                case DocType.markdown: return "md";
+                case DocType.md: return "md";
                 case DocType.pdf: return "pdf";
                 case DocType.xml: return "xml";
                 default: return "chm";

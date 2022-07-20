@@ -494,6 +494,7 @@
     <Compile Include="DBDoc\Doc.cs" />
     <Compile Include="DBDoc\ExcelDoc.cs" />
     <Compile Include="DBDoc\HtmlDoc.cs" />
+    <Compile Include="DBDoc\JsonDoc.cs" />
     <Compile Include="DBDoc\MarkDownDoc.cs" />
     <Compile Include="DBDoc\PdfDoc.cs" />
     <Compile Include="DBDoc\WordDoc.cs" />

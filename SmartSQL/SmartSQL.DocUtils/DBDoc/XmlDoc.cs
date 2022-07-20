@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using SmartSQL.DocUtils.Dtos;
 
 namespace SmartSQL.DocUtils.DBDoc
 {
+    /// <summary>
+    /// 生成Xml文档
+    /// </summary>
     public class XmlDoc : Doc
     {
         public XmlDoc(DBDto dto, string filter = "xml files (.xml)|*.xml") : base(dto, filter)

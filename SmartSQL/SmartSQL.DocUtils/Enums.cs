@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,7 +13,8 @@ namespace SmartSQL.DocUtils
         word,
         excel,
         pdf,
-        markdown,
-        xml
+        md,
+        xml,
+        json
     }
 }

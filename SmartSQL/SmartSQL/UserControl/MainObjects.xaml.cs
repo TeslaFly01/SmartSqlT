@@ -216,7 +216,6 @@ namespace SmartSQL.UserControl
                     var msgResult = MessageBox.Show($"确认修改{selectItem.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                     if (msgResult == MessageBoxResult.OK)
                     {
-                        var type = "";
                         var flag = false;
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                         var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);

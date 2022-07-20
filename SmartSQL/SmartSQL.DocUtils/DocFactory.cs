@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,10 +24,12 @@ namespace SmartSQL.DocUtils
                     return new ExcelDoc(dto);
                 case DocType.pdf:
                     return new PdfDoc(dto);
-                case DocType.markdown:
+                case DocType.md:
                     return new MarkDownDoc(dto);
                 case DocType.xml:
                     return new XmlDoc(dto);
+                case DocType.json:
+                    return new JsonDoc(dto);
                 default:
                     return new ChmDoc(dto);
             }

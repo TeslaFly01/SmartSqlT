@@ -17,7 +17,7 @@
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/TopMain.png)
 ### 🚩 一、项目介绍
 
-SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
+SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`Json`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
 
 ##### 🏅开源地址
 [![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
@@ -40,13 +40,14 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - `视图` 视图内容SQL脚本
 - `存储过程` 存储过程内容SQL脚本
 
-#### 2.支持哪些文档格式的导出？
+#### 2.支持导出哪些文档格式？
 - ✅ CHM
 - ✅ Word
 - ✅ Excel
 - ✅ PDF
 - ✅ Html
 - ✅ Xml
+- ✅ Json
 - ✅ MarkDown
 #### 3.更新表列的注释，有哪些方式？
 - 通过 `文件`➡`导入备注`，选择文件导入进行更新批注(注释)：
@@ -145,9 +146,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 	
 - **chm文件可以正常导出，但是文件名中文乱码，打开显示 无法访问此页**
 	
-> 	这种情况，有一种可能是win系统的**区域设置**，勾选了
-
->  `Beta 版：使用Unicode UTF-8提供全球语言支持` 。取消勾选后，可能不存在该问题。
+> 	这种情况，有一种可能是win系统的**区域设置**，勾选了；取消勾选后，可能不存在该问题。
 	
 - **其他问题**
 	

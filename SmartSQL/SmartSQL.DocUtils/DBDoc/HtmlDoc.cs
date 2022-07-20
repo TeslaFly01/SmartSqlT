@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,6 +11,9 @@ using SmartSQL.DocUtils.Properties;
 
 namespace SmartSQL.DocUtils.DBDoc
 {
+    /// <summary>
+    /// 生成Html文档
+    /// </summary>
     public class HtmlDoc : Doc
     {
         public HtmlDoc(DBDto dto, string filter = "html files (*.html)|*.html") : base(dto, filter)

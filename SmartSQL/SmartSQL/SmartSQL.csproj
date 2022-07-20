@@ -298,7 +298,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Models\NotifyPropertyBase.cs" />
-    <Compile Include="Models\PropertyNodeItem.cs" />
+    <Compile Include="Models\TreeNodeItem.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
@@ -352,6 +352,14 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
+    <Resource Include="Resources\svg\doc_chm.svg" />
+    <Resource Include="Resources\svg\doc_excel.svg" />
+    <Resource Include="Resources\svg\doc_html.svg" />
+    <Resource Include="Resources\svg\doc_json.svg" />
+    <Resource Include="Resources\svg\doc_md.svg" />
+    <Resource Include="Resources\svg\doc_pdf.svg" />
+    <Resource Include="Resources\svg\doc_word.svg" />
+    <Resource Include="Resources\svg\doc_xml.svg" />
     <Resource Include="Resources\svg\btn_add.svg" />
     <Resource Include="Resources\svg\btn_del.svg" />
     <Resource Include="Resources\Img\icon_docfile.png" />
