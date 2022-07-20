@@ -87,25 +87,19 @@
                 <hc:UniformSpacingPanel Spacing="1">
                     <Button
                         x:Name="BtnDelete"
-                        Width="20"
-                        Height="20"
                         Margin="2"
                         Click="BtnDelete_OnClick"
-                        Style="{StaticResource ButtonIconCus}">
-                        <Button.Content>
-                            <svgc:SvgViewbox
-                                Width="12"
-                                Height="12"
-                                Source="pack://application:,,,/Resources/svg/btn_del.svg"
-                                ToolTip="删除" />
-                        </Button.Content>
+                        Style="{StaticResource ButtonIconSingle}">
+                        <svgc:SvgViewbox
+                            Width="12"
+                            Height="12"
+                            Source="pack://application:,,,/Resources/svg/btn_del.svg"
+                            ToolTip="删除" />
                     </Button>
                     <Button
                         Name="BtnAdd"
-                        Width="20"
-                        Height="20"
                         Click="BtnReset_OnClick"
-                        Style="{StaticResource ButtonIconCus}">
+                        Style="{StaticResource ButtonIconSingle}">
                         <svgc:SvgViewbox
                             Width="12"
                             Height="12"

@@ -58,31 +58,29 @@
                 Margin="5"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom">
-                <hc:UniformSpacingPanel Spacing="2">
+                <hc:UniformSpacingPanel Spacing="1">
                     <Button
-                        Name="BtnDelete"
-                        Width="25"
-                        Height="25"
-                        Margin="0,0,0,0"
-                        Padding="5"
-                        HorizontalAlignment="Right"
-                        hc:IconElement.Geometry="{StaticResource SubGeometry}"
+                        x:Name="BtnDelete"
+                        Margin="2"
                         Click="BtnDelete_OnClick"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonIcon}"
-                        ToolTip="删除" />
+                        Style="{StaticResource ButtonIconSingle}">
+                        <svgc:SvgViewbox
+                            Width="12"
+                            Height="12"
+                            Source="pack://application:,,,/Resources/svg/btn_del.svg"
+                            ToolTip="删除" />
+                    </Button>
                     <Button
-                        x:Name="BtnAdd"
-                        Width="25"
-                        Height="25"
-                        Margin="0,0,0,0"
-                        Padding="5"
-                        HorizontalAlignment="Right"
-                        hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                        Name="BtnAdd"
                         Click="BtnReset_OnClick"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonIcon}"
-                        ToolTip="添加" />
+                        Style="{StaticResource ButtonIconSingle}">
+                        <svgc:SvgViewbox
+                            Width="12"
+                            Height="12"
+                            Cursor="Hand"
+                            Source="pack://application:,,,/Resources/svg/btn_add.svg"
+                            ToolTip="添加" />
+                    </Button>
                 </hc:UniformSpacingPanel>
             </hc:SimpleStackPanel>
         </Grid>
