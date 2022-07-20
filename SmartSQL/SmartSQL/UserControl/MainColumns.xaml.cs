@@ -34,7 +34,7 @@ namespace SmartSQL.UserControl
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(PropertyNodeItem), typeof(MainColumns), new PropertyMetadata(default(PropertyNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(MainColumns), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
             "SelectedDataBase", typeof(DataBase), typeof(MainColumns), new PropertyMetadata(default(DataBase)));
@@ -51,9 +51,9 @@ namespace SmartSQL.UserControl
         /// <summary>
         /// 当前选中对象
         /// </summary>
-        public PropertyNodeItem SelectedObject
+        public TreeNodeItem SelectedObject
         {
-            get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
+            get => (TreeNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
         /// <summary>
@@ -186,7 +186,7 @@ namespace SmartSQL.UserControl
         /// </summary>
         /// <param name="exporter"></param>
         /// <param name="objects"></param>
-        private void BindColumnDataSet(IExporter exporter, PropertyNodeItem objects)
+        private void BindColumnDataSet(IExporter exporter, TreeNodeItem objects)
         {
             //Task.Run(() =>
             //{
@@ -352,7 +352,7 @@ namespace SmartSQL.UserControl
             //    {
             //        return;
             //    }
-            //    var objects = TreeViewTables.SelectedItem as PropertyNodeItem;
+            //    var objects = TreeViewTables.SelectedItem as TreeNodeItem;
             //    if (objects == null || objects.ObejcetId.Equals("0") || objects.TextColor.Equals("Red"))
             //    {
             //        return;
@@ -397,7 +397,7 @@ namespace SmartSQL.UserControl
             group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
             group.Connection = SelectedConnection;
             group.SelectedDataBase = SelectedDataBase.DbName;
-            group.SelectedObjects = new List<PropertyNodeItem>() { SelectedObject };
+            group.SelectedObjects = new List<TreeNodeItem>() { SelectedObject };
             group.Owner = mainWindow;
             group.ShowDialog();
         }
@@ -478,7 +478,7 @@ namespace SmartSQL.UserControl
         /// <param name="exporter"></param>
         /// <param name="objects"></param>
         /// <param name="strWhere"></param>
-        private void BindDataSet(IExporter exporter, PropertyNodeItem objects, string strWhere)
+        private void BindDataSet(IExporter exporter, TreeNodeItem objects, string strWhere)
         {
             //LoadingLineTableData.Visibility = Visibility.Visible;
             //NoDataTextExt.Visibility = Visibility.Collapsed;

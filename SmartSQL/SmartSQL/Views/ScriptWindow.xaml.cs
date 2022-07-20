@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,13 +38,13 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(PropertyNodeItem), typeof(ScriptWindow), new PropertyMetadata(default(PropertyNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(ScriptWindow), new PropertyMetadata(default(TreeNodeItem)));
         /// <summary>
         /// 选中对象
         /// </summary>
-        public PropertyNodeItem SelectedObject
+        public TreeNodeItem SelectedObject
         {
-            get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
+            get => (TreeNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
 

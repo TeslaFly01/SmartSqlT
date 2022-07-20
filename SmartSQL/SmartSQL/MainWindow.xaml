@@ -305,7 +305,7 @@
                                 </ContextMenu>
                             </TreeView.ContextMenu>
                             <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate DataType="{x:Type models:PropertyNodeItem}" ItemsSource="{Binding Children}">
+                                <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
                                     <StackPanel Orientation="Horizontal">
                                         <svgc:SvgViewbox
                                             Width="12"

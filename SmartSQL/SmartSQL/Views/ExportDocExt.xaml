@@ -215,7 +215,7 @@
                                 </Style>
                             </TreeView.ItemContainerStyle>
                             <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate DataType="{x:Type models:PropertyNodeItem}" ItemsSource="{Binding Children, Mode=OneTime}">
+                                <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children, Mode=OneTime}">
                                     <StackPanel x:Name="staTree" Orientation="Horizontal">
                                         <CheckBox
                                             VerticalAlignment="Center"

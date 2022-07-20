@@ -71,13 +71,13 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<PropertyNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<PropertyNodeItem>)));
+            "TreeViewData", typeof(List<TreeNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 树形对象菜单
         /// </summary>
-        public List<PropertyNodeItem> TreeViewData
+        public List<TreeNodeItem> TreeViewData
         {
-            get => (List<PropertyNodeItem>)GetValue(TreeViewDataProperty);
+            get => (List<TreeNodeItem>)GetValue(TreeViewDataProperty);
             set
             {
                 SetValue(TreeViewDataProperty, value);
@@ -86,13 +86,13 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty ExportDataProperty = DependencyProperty.Register(
-            "ExportData", typeof(List<PropertyNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<PropertyNodeItem>)));
+            "ExportData", typeof(List<TreeNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 导出目标数据
         /// </summary>
-        public List<PropertyNodeItem> ExportData
+        public List<TreeNodeItem> ExportData
         {
-            get => (List<PropertyNodeItem>)GetValue(ExportDataProperty);
+            get => (List<TreeNodeItem>)GetValue(ExportDataProperty);
             set
             {
                 SetValue(ExportDataProperty, value);
@@ -100,7 +100,7 @@ namespace SmartSQL.Views
             }
         }
         private Model dataSource = new Model();
-        private List<PropertyNodeItem> itemList = new List<PropertyNodeItem>();
+        private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
         #endregion
 
         public ExportDocExt()
@@ -174,15 +174,16 @@ namespace SmartSQL.Views
             /////TreeViewTables.ItemsSource = null;
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectedConnection;
+            var selectData = ExportData;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var leftMenuType = 1; // sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
                 var curObjects = new List<SObjectDTO>();
                 var curGroups = new List<ObjectGroup>();
-                var itemParentList = new List<PropertyNodeItem>();
-                var itemList = new List<PropertyNodeItem>();
-                var nodeTable = new PropertyNodeItem
+                var itemParentList = new List<TreeNodeItem>();
+                var itemList = new List<TreeNodeItem>();
+                var nodeTable = new TreeNodeItem
                 {
                     ObejcetId = "0",
                     DisplayName = "数据表",
@@ -191,7 +192,7 @@ namespace SmartSQL.Views
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeTable);
-                var nodeView = new PropertyNodeItem
+                var nodeView = new TreeNodeItem
                 {
                     ObejcetId = "0",
                     DisplayName = "视图",
@@ -200,7 +201,7 @@ namespace SmartSQL.Views
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeView);
-                var nodeProc = new PropertyNodeItem
+                var nodeProc = new TreeNodeItem
                 {
                     ObejcetId = "0",
                     DisplayName = "存储过程",
@@ -221,8 +222,8 @@ namespace SmartSQL.Views
                     {
                         foreach (var group in curGroups)
                         {
-                            var itemChildList = new List<PropertyNodeItem>();
-                            var nodeGroup = new PropertyNodeItem
+                            var itemChildList = new List<TreeNodeItem>();
+                            var nodeGroup = new TreeNodeItem
                             {
                                 ObejcetId = "0",
                                 DisplayName = group.GroupName,
@@ -232,7 +233,7 @@ namespace SmartSQL.Views
                                 Type = ObjType.Group,
                                 IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
                             };
-                            var nodeTable1 = new PropertyNodeItem
+                            var nodeTable1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
                                 DisplayName = "数据表",
@@ -243,7 +244,7 @@ namespace SmartSQL.Views
                                 IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeTable1);
-                            var nodeView1 = new PropertyNodeItem
+                            var nodeView1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
                                 DisplayName = "视图",
@@ -254,7 +255,7 @@ namespace SmartSQL.Views
                                 IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeView1);
-                            var nodeProc1 = new PropertyNodeItem
+                            var nodeProc1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
                                 DisplayName = "存储过程",
@@ -303,6 +304,7 @@ namespace SmartSQL.Views
                 #region 数据表
                 foreach (var table in model.Tables)
                 {
+                    var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(table.Value.DisplayName));
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -317,7 +319,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = table.Value.Id,
                                         Parent = ppGroup,
@@ -337,7 +339,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeTable.Children.Add(new PropertyNodeItem()
+                        nodeTable.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = table.Value.Id,
                             Parent = nodeTable,
@@ -349,7 +351,8 @@ namespace SmartSQL.Views
                             ModifyDate = table.Value.ModifyDate,
                             TextColor = textColor,
                             Icon = TABLEICON,
-                            Type = ObjType.Table
+                            Type = ObjType.Table,
+                            IsChecked = isChecked
                         });
                     }
 
@@ -359,6 +362,7 @@ namespace SmartSQL.Views
                 #region 视图
                 foreach (var view in model.Views)
                 {
+                    var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(view.Value.DisplayName));
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -373,7 +377,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = view.Value.Id,
                                         Parent = ppGroup,
@@ -393,7 +397,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeView.Children.Add(new PropertyNodeItem()
+                        nodeView.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = view.Value.Id,
                             Parent = nodeView,
@@ -405,7 +409,8 @@ namespace SmartSQL.Views
                             ModifyDate = view.Value.ModifyDate,
                             TextColor = textColor,
                             Icon = VIEWICON,
-                            Type = ObjType.View
+                            Type = ObjType.View,
+                            IsChecked = isChecked
                         });
                     }
                 }
@@ -414,6 +419,7 @@ namespace SmartSQL.Views
                 #region 存储过程
                 foreach (var proc in model.Procedures)
                 {
+                    var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(proc.Value.DisplayName));
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -428,7 +434,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = proc.Value.Id,
                                         Parent = ppGroup,
@@ -448,7 +454,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeProc.Children.Add(new PropertyNodeItem()
+                        nodeProc.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = proc.Value.Id,
                             Parent = nodeProc,
@@ -460,7 +466,8 @@ namespace SmartSQL.Views
                             ModifyDate = proc.Value.ModifyDate,
                             TextColor = textColor,
                             Icon = PROCICON,
-                            Type = ObjType.Proc
+                            Type = ObjType.Proc,
+                            IsChecked = isChecked
                         });
                     }
                 }
@@ -522,9 +529,9 @@ namespace SmartSQL.Views
         {
             #region MyRegion
             NoDataText.Visibility = Visibility.Collapsed;
-            itemList = new List<PropertyNodeItem>();
+            itemList = new List<TreeNodeItem>();
             var searchText = SearchMenu.Text.ToLower().Trim();
-            var nodeTable = new PropertyNodeItem()
+            var nodeTable = new TreeNodeItem()
             {
                 ObejcetId = "0",
                 DisplayName = "数据表",
@@ -534,7 +541,7 @@ namespace SmartSQL.Views
                 IsExpanded = true
             };
             itemList.Add(nodeTable);
-            var nodeView = new PropertyNodeItem()
+            var nodeView = new TreeNodeItem()
             {
                 ObejcetId = "0",
                 DisplayName = "视图",
@@ -544,7 +551,7 @@ namespace SmartSQL.Views
                 IsExpanded = true
             };
             itemList.Add(nodeView);
-            var nodeProc = new PropertyNodeItem()
+            var nodeProc = new TreeNodeItem()
             {
                 ObejcetId = "0",
                 DisplayName = "存储过程",
@@ -561,7 +568,7 @@ namespace SmartSQL.Views
             var selectConnection = SelectedConnection;
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
-            var itemParentList = new List<PropertyNodeItem>();
+            var itemParentList = new List<TreeNodeItem>();
             #region 分组业务处理
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
@@ -576,8 +583,8 @@ namespace SmartSQL.Views
                 }
                 foreach (var group in currGroups)
                 {
-                    var itemChildList = new List<PropertyNodeItem>();
-                    var nodeGroup = new PropertyNodeItem
+                    var itemChildList = new List<TreeNodeItem>();
+                    var nodeGroup = new TreeNodeItem
                     {
                         ObejcetId = "0",
                         DisplayName = group.GroupName,
@@ -588,7 +595,7 @@ namespace SmartSQL.Views
                         FontWeight = "Bold",
                         Children = itemChildList
                     };
-                    var nodeTable1 = new PropertyNodeItem
+                    var nodeTable1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
                         DisplayName = "数据表",
@@ -599,7 +606,7 @@ namespace SmartSQL.Views
                         Parent = nodeGroup
                     };
                     itemChildList.Add(nodeTable1);
-                    var nodeView1 = new PropertyNodeItem
+                    var nodeView1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
                         DisplayName = "视图",
@@ -610,7 +617,7 @@ namespace SmartSQL.Views
                         Parent = nodeGroup
                     };
                     itemChildList.Add(nodeView1);
-                    var nodeProc1 = new PropertyNodeItem
+                    var nodeProc1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
                         DisplayName = "存储过程",
@@ -662,7 +669,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = table.Value.Id,
                                         Parent = ppGroup,
@@ -681,7 +688,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeTable.Children.Add(new PropertyNodeItem()
+                        nodeTable.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = table.Value.Id,
                             Parent = nodeTable,
@@ -725,7 +732,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = view.Value.Id,
                                         Parent = ppGroup,
@@ -744,7 +751,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeView.Children.Add(new PropertyNodeItem()
+                        nodeView.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = view.Value.Id,
                             Parent = nodeView,
@@ -788,7 +795,7 @@ namespace SmartSQL.Views
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new PropertyNodeItem()
+                                    ppGroup.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = proc.Value.Id,
                                         Parent = ppGroup,
@@ -807,7 +814,7 @@ namespace SmartSQL.Views
                     }
                     else
                     {
-                        nodeProc.Children.Add(new PropertyNodeItem()
+                        nodeProc.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = proc.Value.Id,
                             Parent = nodeProc,
@@ -946,7 +953,7 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private List<ViewProDto> Trans2Dictionary(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
+        private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
@@ -1001,7 +1008,7 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private List<TableDto> Trans2Table(List<PropertyNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
+        private List<TableDto> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);

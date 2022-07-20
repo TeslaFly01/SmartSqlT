@@ -37,7 +37,7 @@ namespace SmartSQL.UserControl
     {
         #region Filds
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(PropertyNodeItem), typeof(MainObjects), new PropertyMetadata(default(PropertyNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(MainObjects), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
             "SelectedDataBase", typeof(DataBase), typeof(MainObjects), new PropertyMetadata(default(DataBase)));
@@ -46,7 +46,7 @@ namespace SmartSQL.UserControl
             "SelectedConnection", typeof(ConnectConfigs), typeof(MainObjects), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty ObjectsViewDataProperty = DependencyProperty.Register(
-            "ObjectsViewData", typeof(List<PropertyNodeItem>), typeof(MainObjects), new PropertyMetadata(default(List<PropertyNodeItem>)));
+            "ObjectsViewData", typeof(List<TreeNodeItem>), typeof(MainObjects), new PropertyMetadata(default(List<TreeNodeItem>)));
 
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
             "Placeholder", typeof(string), typeof(MainObjects), new PropertyMetadata(default(string)));
@@ -54,9 +54,9 @@ namespace SmartSQL.UserControl
         /// <summary>
         /// 当前选中对象
         /// </summary>
-        public PropertyNodeItem SelectedObject
+        public TreeNodeItem SelectedObject
         {
-            get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
+            get => (TreeNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
         /// <summary>
@@ -75,9 +75,9 @@ namespace SmartSQL.UserControl
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-        public List<PropertyNodeItem> ObjectsViewData
+        public List<TreeNodeItem> ObjectsViewData
         {
-            get => (List<PropertyNodeItem>)GetValue(ObjectsViewDataProperty);
+            get => (List<TreeNodeItem>)GetValue(ObjectsViewDataProperty);
             set
             {
                 SetValue(ObjectsViewDataProperty, value);
@@ -146,7 +146,7 @@ namespace SmartSQL.UserControl
             }
         }
 
-        private List<PropertyNodeItem> ObjItems;
+        private List<TreeNodeItem> ObjItems;
         /// <summary>
         /// 实时搜索对象
         /// </summary>
@@ -163,7 +163,7 @@ namespace SmartSQL.UserControl
                 if (!obj.Any())
                 {
                     NoDataText.Visibility = Visibility.Visible;
-                    searchData = new List<PropertyNodeItem>();
+                    searchData = new List<TreeNodeItem>();
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace SmartSQL.UserControl
             var currCell = (DataGridCell)sender;
             if (currCell.Column.SortMemberPath.Equals("DisplayName"))
             {
-                var currObject = (PropertyNodeItem)currCell.DataContext;
+                var currObject = (TreeNodeItem)currCell.DataContext;
                 currCell.ToolTip = currObject.DisplayName;
             }
         }
@@ -212,7 +212,7 @@ namespace SmartSQL.UserControl
                         ((TextBox)e.EditingElement).Text = _cellEditValue;
                         return;
                     }
-                    var selectItem = (PropertyNodeItem)e.Row.Item;
+                    var selectItem = (TreeNodeItem)e.Row.Item;
                     var msgResult = MessageBox.Show($"确认修改{selectItem.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
                     if (msgResult == MessageBoxResult.OK)
                     {
@@ -283,7 +283,7 @@ namespace SmartSQL.UserControl
             var selectedItem = ObjectsViewData;
             selectedItem.ForEach(x =>
             {
-                x.IsChecked = isChecked.Value;
+                x.IsChecked = isChecked;
             });
             ObjectsViewData = selectedItem;
         }
@@ -292,7 +292,7 @@ namespace SmartSQL.UserControl
         {
             if (sender is DataGrid dataGrid)
             {
-                var curItem = (PropertyNodeItem)dataGrid.CurrentItem;
+                var curItem = (TreeNodeItem)dataGrid.CurrentItem;
                 if (curItem == null)
                 {
                     return;
@@ -310,7 +310,7 @@ namespace SmartSQL.UserControl
         {
             if (sender is DataGrid dataGrid)
             {
-                var curItem = (PropertyNodeItem)dataGrid.CurrentItem;
+                var curItem = (TreeNodeItem)dataGrid.CurrentItem;
                 if (curItem == null)
                 {
                     return;

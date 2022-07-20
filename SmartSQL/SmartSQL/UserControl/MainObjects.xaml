@@ -1,4 +1,4 @@
-﻿<local:BaseUserControl
+<local:BaseUserControl
     x:Class="SmartSQL.UserControl.MainObjects"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -55,7 +55,7 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn
                     Width="60"
-                    Binding="{Binding IsSelected}"
+                    Binding="{Binding IsChecked}"
                     CanUserSort="False"
                     CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                     Header="选择" />

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,7 +31,7 @@ namespace SmartSQL.UserControl
     public partial class UTabCode : BaseUserControl
     {
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(PropertyNodeItem), typeof(UTabCode), new PropertyMetadata(default(PropertyNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(UTabCode), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UTabCode), new PropertyMetadata(default(ConnectConfigs)));
@@ -42,9 +42,9 @@ namespace SmartSQL.UserControl
         public static readonly DependencyProperty SelectedTableColunmsProperty = DependencyProperty.Register(
             "SelectedTableColunms", typeof(List<Column>), typeof(UTabCode), new PropertyMetadata(default(List<Column>)));
 
-        public PropertyNodeItem SelectedObject
+        public TreeNodeItem SelectedObject
         {
-            get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
+            get => (TreeNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
         /// <summary>

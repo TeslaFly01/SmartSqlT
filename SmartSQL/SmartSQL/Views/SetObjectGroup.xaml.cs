@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -65,13 +65,13 @@ namespace SmartSQL.Views
         //}
 
         public static readonly DependencyProperty SelectedObjectsProperty = DependencyProperty.Register(
-            "SelectedObjects", typeof(List<PropertyNodeItem>), typeof(SetObjectGroup), new PropertyMetadata(default(List<PropertyNodeItem>)));
+            "SelectedObjects", typeof(List<TreeNodeItem>), typeof(SetObjectGroup), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 分组目标数据
         /// </summary>
-        public List<PropertyNodeItem> SelectedObjects
+        public List<TreeNodeItem> SelectedObjects
         {
-            get => (List<PropertyNodeItem>)GetValue(SelectedObjectsProperty);
+            get => (List<TreeNodeItem>)GetValue(SelectedObjectsProperty);
             set
             {
                 SetValue(SelectedObjectsProperty, value);
@@ -91,8 +91,8 @@ namespace SmartSQL.Views
             }
         }
 
-        public ObservableCollection<PropertyNodeItem> LeftObjects { get; set; } =
-            new ObservableCollection<PropertyNodeItem>();
+        public ObservableCollection<TreeNodeItem> LeftObjects { get; set; } =
+            new ObservableCollection<TreeNodeItem>();
 
 
         private List<ObjectGroup> OldGroupList = new List<ObjectGroup>();
@@ -275,7 +275,7 @@ namespace SmartSQL.Views
                 {
                     return;
                 }
-                var selectedItem = (PropertyNodeItem)listBox.SelectedItem;
+                var selectedItem = (TreeNodeItem)listBox.SelectedItem;
                 LeftObjects.Remove(selectedItem);
             }
         }

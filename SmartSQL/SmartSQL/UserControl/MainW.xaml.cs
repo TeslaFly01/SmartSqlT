@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace SmartSQL.UserControl
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(PropertyNodeItem), typeof(MainW), new PropertyMetadata(default(PropertyNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(MainW), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
             "SelectedDataBase", typeof(DataBase), typeof(MainW), new PropertyMetadata(default(DataBase)));
@@ -45,9 +45,9 @@ namespace SmartSQL.UserControl
         /// <summary>
         /// 当前选中对象
         /// </summary>
-        public PropertyNodeItem SelectedObject
+        public TreeNodeItem SelectedObject
         {
-            get => (PropertyNodeItem)GetValue(SelectedObjectProperty);
+            get => (TreeNodeItem)GetValue(SelectedObjectProperty);
             set => SetValue(SelectedObjectProperty, value);
         }
         /// <summary>
@@ -85,7 +85,7 @@ namespace SmartSQL.UserControl
             DataContext = this;
         }
 
-        public void LoadPage(List<PropertyNodeItem> objectsViewData)
+        public void LoadPage(List<TreeNodeItem> objectsViewData)
         {
             var sqLiteHelper = new SQLiteHelper();
             var isMultipleTab = sqLiteHelper.GetSysBool("IsMultipleTab");

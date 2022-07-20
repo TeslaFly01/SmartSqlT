@@ -9,13 +9,13 @@ using SmartSQL.Annotations;
 
 namespace SmartSQL.Models
 {
-    public class PropertyNodeItem : NotifyPropertyBase
+    public class TreeNodeItem : NotifyPropertyBase
     {
-        public PropertyNodeItem()
+        public TreeNodeItem()
         {
             IsChecked = false;
             IsExpanded = false;
-            Children = new List<PropertyNodeItem>();
+            Children = new List<TreeNodeItem>();
         }
         /// <summary>
         /// 对象ID
@@ -24,7 +24,7 @@ namespace SmartSQL.Models
         /// <summary>
         /// 父级菜单
         /// </summary>
-        public PropertyNodeItem Parent { get; set; }
+        public TreeNodeItem Parent { get; set; }
         /// <summary>
         /// 图标
         /// </summary>
@@ -99,7 +99,7 @@ namespace SmartSQL.Models
         /// <summary>
         /// 子项菜单
         /// </summary>
-        public List<PropertyNodeItem> Children { get; set; }
+        public List<TreeNodeItem> Children { get; set; }
 
         /// <summary>
         /// 设置选中
