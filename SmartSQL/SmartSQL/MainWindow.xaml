@@ -318,9 +318,6 @@
                                             FontSize="12"
                                             Text="{Binding DisplayName}"
                                             ToolTip="{Binding DisplayName}" />
-                                        <!--<Border Background="AliceBlue">
-                                            <TextBlock VerticalAlignment="Center">23</TextBlock>
-                                        </Border>-->
                                     </StackPanel>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
@@ -356,7 +353,7 @@
                                     Cursor="Hand"
                                     DisplayMemberPath="ConnectName"
                                     IsTextSearchEnabled="True"
-                                    SelectedValuePath="DbMassterConnectString"
+                                    SelectedValuePath="DbMasterConnectString"
                                     SelectionChanged="CbTargetConnect_OnSelectionChanged"
                                     Style="{StaticResource ComboBoxExtend}" />
                             </Grid>
@@ -432,11 +429,11 @@
                         <DataTemplate>
                             <Grid>
                                 <svgc:SvgViewbox
-                                            Width="12"
-                                            Height="12"
-                                            Margin="0,0,5,0"
-                                            HorizontalAlignment="Left"
-                                            Source="{Binding Icon}" />
+                                    Width="12"
+                                    Height="12"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Left"
+                                    Source="{Binding Icon}" />
                                 <TextBlock
                                     Height="20"
                                     Margin="16,5,0,0"
