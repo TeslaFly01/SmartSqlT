@@ -81,7 +81,7 @@ namespace SmartSQL.Views
             #region MyRegion
             if (string.IsNullOrWhiteSpace(path))
             {
-                Growl.Warning("导入文件为空.");
+                Growl.WarningGlobal("导入文件为空.");
                 return;
             }
             LoadingG.Visibility = Visibility.Visible;
