@@ -130,7 +130,7 @@ namespace SmartSQL.Views
             var groupName = TextGourpName.Text.Trim();
             if (string.IsNullOrEmpty(groupName))
             {
-                Growl.Warning(new GrowlInfo { Message = $"请填写分组名", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请填写分组名", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
@@ -141,7 +141,7 @@ namespace SmartSQL.Views
                 var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectId == Connection.ID && x.DataBaseName == selectedDatabase.DbName && x.Id != groupId && x.GroupName == groupName);
                 if (groupO != null)
                 {
-                    Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
+                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
                 //分组菜单左侧默认展开层级
@@ -156,7 +156,7 @@ namespace SmartSQL.Views
                 var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectId == Connection.ID && x.DataBaseName == selectedDatabase.DbName && x.GroupName == groupName);
                 if (groupO != null)
                 {
-                    Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
+                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的分组名", WaitTime = 1, ShowDateTime = false });
                     return;
                 }
                 //分组菜单左侧默认展开层级
@@ -211,7 +211,7 @@ namespace SmartSQL.Views
             var groupId = Convert.ToInt32(HidId.Text);
             if (groupId < 1)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请选择需要删除的分组", WaitTime = 1, ShowDateTime = false });
+                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要删除的分组", WaitTime = 1, ShowDateTime = false });
                 return;
             }
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;

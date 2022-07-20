@@ -80,7 +80,8 @@ namespace SmartSQL.UserControl.Controls
                     TxtNoData.Visibility = Visibility.Collapsed;
                     break;
                 default:
-                    TxtNoData.Margin = new Thickness(0, 65, 0, 0);
+                    TxtNoData.FontWeight = FontWeights.Normal;
+                    TxtNoData.Margin = new Thickness(0, 75, 0, 0);
                     ImgNoData.Margin = new Thickness(0, 0, 0, 45);
                     break;
             }

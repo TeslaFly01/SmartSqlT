@@ -55,7 +55,7 @@
             </ComboBox>
             <ListBox
                 Name="ListGroup"
-                Margin="5,40,5,26"
+                Margin="5,40,5,35"
                 AllowDrop="True"
                 BorderThickness="0"
                 Drop="ListGroup_OnDrop"
@@ -81,12 +81,14 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <hc:SimpleStackPanel
-                Margin="5,0,5,0"
+                Margin="5,0,5,3"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom">
                 <hc:UniformSpacingPanel Spacing="1">
                     <Button
                         x:Name="BtnDelete"
+                        Width="25"
+                        Height="25"
                         Margin="2"
                         Click="BtnDelete_OnClick"
                         Style="{StaticResource ButtonIconSingle}">
@@ -98,6 +100,8 @@
                     </Button>
                     <Button
                         Name="BtnAdd"
+                        Width="25"
+                        Height="25"
                         Click="BtnReset_OnClick"
                         Style="{StaticResource ButtonIconSingle}">
                         <svgc:SvgViewbox
@@ -114,76 +118,79 @@
             Grid.Column="1"
             Margin="0,5,5,5"
             Background="White">
-            <TextBox
-                Name="HidId"
-                Text="0"
-                Visibility="Collapsed" />
-            <TextBox
-                Name="TextGourpName"
-                Height="30"
-                Margin="20"
-                VerticalAlignment="Top"
-                hc:InfoElement.Title="分组名称"
-                hc:InfoElement.TitlePlacement="Left"
-                hc:InfoElement.TitleWidth="80"
-                PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
-                Style="{StaticResource TextBoxExtend}"
-                TextChanged="TextGourpName_OnTextChanged" />
-            <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
-            <Grid
-                Margin="0,90,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Cursor="Hand">
-                <RadioButton
-                    Name="CheckCurrent"
-                    Margin="100,0,0,0"
+            <Grid>
+                <TextBox
+                    Name="HidId"
+                    Text="0"
+                    Visibility="Collapsed" />
+                <TextBox
+                    Name="TextGourpName"
+                    Height="30"
+                    Margin="20"
+                    VerticalAlignment="Top"
+                    hc:InfoElement.Title="分组名称"
+                    hc:InfoElement.TitlePlacement="Left"
+                    hc:InfoElement.TitleWidth="80"
+                    PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
+                    Style="{StaticResource TextBoxExtend}"
+                    TextChanged="TextGourpName_OnTextChanged" />
+                <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
+                <Grid
+                    Margin="0,90,0,0"
                     HorizontalAlignment="Left"
-                    Content="当前节点" />
-                <RadioButton
-                    Name="CheckChild"
-                    Margin="200,0,0,0"
-                    HorizontalAlignment="Left"
-                    Content="子项节点" />
-                <RadioButton
-                    Name="CheckNone"
-                    Margin="300,0,0,0"
-                    HorizontalAlignment="Left"
-                    Content="不展开"
-                    IsChecked="True" />
+                    VerticalAlignment="Top"
+                    Cursor="Hand">
+                    <RadioButton
+                        Name="CheckCurrent"
+                        Margin="100,0,0,0"
+                        HorizontalAlignment="Left"
+                        Content="当前节点" />
+                    <RadioButton
+                        Name="CheckChild"
+                        Margin="200,0,0,0"
+                        HorizontalAlignment="Left"
+                        Content="子项节点" />
+                    <RadioButton
+                        Name="CheckNone"
+                        Margin="300,0,0,0"
+                        HorizontalAlignment="Left"
+                        Content="不展开"
+                        IsChecked="True" />
+                </Grid>
             </Grid>
-
-            <hc:SimpleStackPanel
-                Margin="5"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom">
-                <hc:UniformSpacingPanel Spacing="10">
-                    <Button
-                        x:Name="BtnReset"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        Click="BtnReset_OnClick"
-                        Content="重置"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        x:Name="BtnSave"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        Click="BtnSave_OnClick"
-                        Content="保存"
-                        Cursor="Hand"
-                        IsEnabled="False"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        x:Name="BtnCancel"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        Click="BtnCancel_OnClick"
-                        Content="取消"
-                        Cursor="Hand" />
-                </hc:UniformSpacingPanel>
-            </hc:SimpleStackPanel>
+            <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
+                <hc:SimpleStackPanel
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+                    <hc:UniformSpacingPanel Spacing="10">
+                        <Button
+                            x:Name="BtnReset"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnReset_OnClick"
+                            Content="重置"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonPrimary}" />
+                        <Button
+                            x:Name="BtnSave"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnSave_OnClick"
+                            Content="保存"
+                            Cursor="Hand"
+                            IsEnabled="False"
+                            Style="{StaticResource ButtonPrimary}" />
+                        <Button
+                            x:Name="BtnCancel"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnCancel_OnClick"
+                            Content="取消"
+                            Cursor="Hand" />
+                    </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+            </Grid>
         </Grid>
     </Grid>
 </hc:Window>
