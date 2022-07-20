@@ -177,7 +177,7 @@ namespace SmartSQL.Views
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
+                var leftMenuType = 1; // sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
                 var curObjects = new List<SObjectDTO>();
                 var curGroups = new List<ObjectGroup>();
                 var itemParentList = new List<PropertyNodeItem>();
