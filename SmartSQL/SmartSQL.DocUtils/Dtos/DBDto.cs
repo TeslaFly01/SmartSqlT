@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.IO;
@@ -19,6 +19,11 @@ namespace SmartSQL.DocUtils.Dtos
             this.DBName = dbName;
             this.Tag = tag;
         }
+
+        /// <summary>
+        /// 文档标题
+        /// </summary>
+        public string DocTitle { get; set; }
 
         /// <summary>
         /// 数据库名称

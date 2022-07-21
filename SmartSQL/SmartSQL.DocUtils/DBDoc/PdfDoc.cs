@@ -64,11 +64,11 @@ namespace SmartSQL.DocUtils.DBDoc
             pdfDocument.AddTitle(fileName);
 
             PdfWriter pdfWriter = PdfWriter.GetInstance(pdfDocument,
-                new System.IO.FileStream(fileName, System.IO.FileMode.Create));
+                new FileStream(fileName, FileMode.Create));
             pdfDocument.Open(); // 打开文档
 
             //  标题
-            Paragraph title = new Paragraph("数据库字典文档\n\n", BaseFont(fontPath, 30, Font.BOLD));
+            Paragraph title = new Paragraph($"{dto.DocTitle}\n\n", BaseFont(fontPath, 30, Font.BOLD));
             title.Alignment = Element.ALIGN_CENTER;
             pdfDocument.Add(title);
             Paragraph subTitle = new Paragraph(" —— " + databaseName, BaseFont(fontPath, 20, Font.NORMAL));

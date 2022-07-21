@@ -904,16 +904,21 @@ namespace SmartSQL.Views
             {
                 TxtFileName.Text = $"{SelectedDataBase.DbName}数据库设计文档";
             }
+            //文档标题
+            var docTitle = TxtFileName.Text.Trim();
             //文件扩展名
-            var fileNameE = LblFileExtend.Content;
+            var fileExt = LblFileExtend.Content;
             //文件名
-            var fileName = TxtFileName.Text.Trim() + fileNameE;
+            var fileName = docTitle + fileExt;
             LoadingG.Visibility = Visibility.Visible;
             var dbDto = new DBDto(selectedDatabase.DbName);
             Task.Factory.StartNew(() =>
             {
+                //文档标题
+                dbDto.DocTitle = docTitle;
+                //数据库类型
                 dbDto.DBType = selectedConnection.DbType.ToString();
-
+                //对象列表
                 dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
                 dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
                 dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
