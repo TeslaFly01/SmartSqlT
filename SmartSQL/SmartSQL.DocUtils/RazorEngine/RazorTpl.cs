@@ -21,7 +21,7 @@ namespace SmartSQL.DocUtils
             config.Language = Language.CSharp;
             config.EncodedStringFactory = new RawStringFactory();
             config.DisableTempFileLocking = true;
-            config.Namespaces.Add("RazorEngine");
+            config.ReferenceResolver = new RazorReferenceResolver();
             //config.EncodedStringFactory = new HtmlEncodedStringFactory();
             var service = RazorEngineService.Create(config);
             Engine.Razor = service;
@@ -45,7 +45,7 @@ namespace SmartSQL.DocUtils
         {
             try
             {
-                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(DBDto), model);
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace SmartSQL.DocUtils
         {
             try
             {
-                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(TableDto), model);
             }
             catch (Exception ex)
             {
@@ -69,7 +69,7 @@ namespace SmartSQL.DocUtils
         {
             try
             {
-                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(SqlCode), model);
             }
             catch (Exception ex)
             {
@@ -81,7 +81,7 @@ namespace SmartSQL.DocUtils
         {
             try
             {
-                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), null, model);
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(ChmHHP), model);
             }
             catch (Exception ex)
             {

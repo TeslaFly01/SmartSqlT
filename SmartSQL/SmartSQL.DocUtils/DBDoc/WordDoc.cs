@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,26 +23,26 @@ namespace SmartSQL.DocUtils.DBDoc
 
         private bool BuildDoc(string filePath)
         {
-            var docPath = Path.Combine(TplPath, "doc");
-            if (!Directory.Exists(docPath))
-            {
-                Directory.CreateDirectory(docPath);
-            }
-            var doc = Path.Combine(docPath, "doc.xml");
-            if (!File.Exists(doc))
-            {
-                File.WriteAllBytes(doc, Resources.doc);
-            }
-            var docTpl = File.ReadAllText(doc, Encoding.UTF8);
-            var docResult = docTpl.RazorRender(this.Dto);
+            //var docPath = Path.Combine(TplPath, "doc");
+            //if (!Directory.Exists(docPath))
+            //{
+            //    Directory.CreateDirectory(docPath);
+            //}
+            //var doc = Path.Combine(docPath, "doc.xml");
+            //if (!File.Exists(doc))
+            //{
+            //    File.WriteAllText(doc, Resources.doc);
+            //}
+            var docTpl = File.ReadAllText(Resources.doc, Encoding.UTF8);
+            var docContent = docTpl.RazorRender(this.Dto);
             using (var sfs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
             {
                 using (var sw = new StreamWriter(sfs))
                 {
-                    sw.Write(docResult);
+                    sw.Write(docContent);
                 }
             }
-            ZlpIOHelper.WriteAllText(filePath, docResult, Encoding.UTF8);
+            ZlpIOHelper.WriteAllText(filePath, docContent, Encoding.UTF8);
             return true;
         }
     }

@@ -55,7 +55,7 @@
               <w:rPr>
                 <w:rFonts w:hint="eastAsia"/>
               </w:rPr>
-              <w:t>@Model.DBName 数据库设计文档</w:t>
+              <w:t>@Model.DocTitle</w:t>
             </w:r>
           </w:p>
           <w:p>
