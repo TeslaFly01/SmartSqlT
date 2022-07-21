@@ -423,6 +423,7 @@
                     IsDraggable="True"
                     IsTabFillEnabled="False"
                     ItemsSource="{Binding TabItemData}"
+                    SelectionChanged="MainTabW_OnSelectionChanged"
                     ShowCloseButton="True"
                     Visibility="Collapsed">
                     <hc:TabControl.ItemTemplate>

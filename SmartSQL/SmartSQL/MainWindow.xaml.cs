@@ -1277,6 +1277,11 @@ namespace SmartSQL
             connect.ShowDialog();
         }
 
+        /// <summary>
+        /// 导出文档
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
@@ -1310,6 +1315,16 @@ namespace SmartSQL
             importMark.SelectedConnection = SelectendConnection;
             importMark.SelectedDataBase = selectDatabase;
             importMark.ShowDialog();
+        }
+
+        private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
+            MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
         }
     }
 }
