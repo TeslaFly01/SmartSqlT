@@ -1323,8 +1323,11 @@ namespace SmartSQL
             {
                 return;
             }
-            MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
-            MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
+            if (e.Source is HandyControl.Controls.TabControl)
+            {
+                MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
+                MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
+            }
         }
     }
 }
