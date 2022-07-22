@@ -22,24 +22,9 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
-            return BuildDoc(filePath);
-        }
-
-        private bool BuildDoc(string filePath)
-        {
-            //var htmlPath = Path.Combine(TplPath, "html");
-            //if (!Directory.Exists(htmlPath))
-            //{
-            //    Directory.CreateDirectory(htmlPath);
-            //}
-            //var html = Path.Combine(htmlPath, "html.cshtml");
-            //if (!File.Exists(html))
-            //{
-            //    File.WriteAllBytes(html, Resources.html);
-            //}
-            var html_tpl = Encoding.UTF8.GetString(Resources.html);
-            var html_doc = html_tpl.RazorRender(this.Dto);
-            ZlpIOHelper.WriteAllText(filePath, html_doc, Encoding.UTF8);
+            var htmlTpl = Encoding.UTF8.GetString(Resources.html);
+            var htmlContent = htmlTpl.RazorRender(this.Dto);
+            ZlpIOHelper.WriteAllText(filePath, htmlContent, Encoding.UTF8);
             return true;
         }
     }

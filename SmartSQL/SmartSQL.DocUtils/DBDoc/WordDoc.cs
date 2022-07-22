@@ -10,6 +10,9 @@ using SmartSQL.DocUtils.Properties;
 
 namespace SmartSQL.DocUtils.DBDoc
 {
+    /// <summary>
+    /// 生成Word文档
+    /// </summary>
     public class WordDoc : Doc
     {
         public WordDoc(DBDto dto, string filter = "docx files (*.docx)|*.docx") : base(dto, filter)
@@ -18,30 +21,8 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
-            return BuildDoc(filePath);
-        }
-
-        private bool BuildDoc(string filePath)
-        {
-            //var docPath = Path.Combine(TplPath, "doc");
-            //if (!Directory.Exists(docPath))
-            //{
-            //    Directory.CreateDirectory(docPath);
-            //}
-            //var doc = Path.Combine(docPath, "doc.xml");
-            //if (!File.Exists(doc))
-            //{
-            //    File.WriteAllText(doc, Resources.doc);
-            //}
-            var docTpl = File.ReadAllText(Resources.doc, Encoding.UTF8);
+            var docTpl = Resources.doc;
             var docContent = docTpl.RazorRender(this.Dto);
-            using (var sfs = new FileStream(filePath, FileMode.Create, FileAccess.Write))
-            {
-                using (var sw = new StreamWriter(sfs))
-                {
-                    sw.Write(docContent);
-                }
-            }
             ZlpIOHelper.WriteAllText(filePath, docContent, Encoding.UTF8);
             return true;
         }

@@ -78,6 +78,23 @@ namespace SmartSQL.DocUtils.Properties {
         }
         
         /// <summary>
+        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
+        ///&lt;?mso-application progid=&quot;Excel.Sheet&quot;?&gt;
+        ///&lt;Workbook xmlns=&quot;urn:schemas-microsoft-com:office:spreadsheet&quot;
+        ///    xmlns:o=&quot;urn:schemas-microsoft-com:office:office&quot;
+        ///    xmlns:x=&quot;urn:schemas-microsoft-com:office:excel&quot;
+        ///    xmlns:ss=&quot;urn:schemas-microsoft-com:office:spreadsheet&quot;
+        ///    xmlns:html=&quot;http://www.w3.org/TR/REC-html40&quot;
+        ///    xmlns:dt=&quot;uuid:C2F41010-65B3-11d1-A29F-00AA00C14882&quot;&gt;
+        ///    &lt;DocumentProperties xmlns=&quot;urn:schemas-microsoft-com:office:office [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string excel {
+            get {
+                return ResourceManager.GetString("excel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
         internal static byte[] hhc {
