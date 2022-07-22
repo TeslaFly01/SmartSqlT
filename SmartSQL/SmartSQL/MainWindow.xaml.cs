@@ -40,9 +40,7 @@ namespace SmartSQL
         private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
-        //private string ConnectionString = "";
         private ConnectConfigs SelectendConnection = null;
-        private DataBase SelectedDataBase = null;
 
         private Model dataSource = new Model();
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();

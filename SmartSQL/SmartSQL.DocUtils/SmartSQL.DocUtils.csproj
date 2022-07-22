@@ -42,17 +42,11 @@
     <Reference Include="AngleSharp.Css, Version=0.16.4.0, Culture=neutral, PublicKeyToken=e83494dcdc6d31ea, processorArchitecture=MSIL">
       <HintPath>..\..\packages\AngleSharp.Css.0.16.4\lib\net461\AngleSharp.Css.dll</HintPath>
     </Reference>
-    <Reference Include="Aspose.Words">
-      <HintPath>..\..\Lib\Aspose.Words.dll</HintPath>
-    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.6.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\..\packages\BouncyCastle.1.8.6.1\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="DnsClient, Version=1.6.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DnsClient.1.6.0\lib\net45\DnsClient.dll</HintPath>
-    </Reference>
-    <Reference Include="EPPlus">
-      <HintPath>..\..\Lib\EPPlus.dll</HintPath>
     </Reference>
     <Reference Include="Esprima, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Esprima.2.0.0-beta-1338\lib\net461\Esprima.dll</HintPath>
