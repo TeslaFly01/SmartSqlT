@@ -68,7 +68,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 #### 3.快捷查询
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-View.png) |
 |--|--|
-| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Pro.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Column.png) |
+| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Proc.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Column.png) |
 
 #### 4.导入导出
 
