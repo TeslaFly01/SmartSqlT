@@ -59,7 +59,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 #### 1.数据库连接
 
-![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Connect.png)
+![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot1.png)
 
 #### 2.分组管理
 ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png)
