@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
@@ -28,10 +28,10 @@
             margin: 20px auto;
         }
 
-        table td {
-            text-align: center;
-            line-height:30px
-        }
+            table td {
+                text-align: center;
+                line-height: 30px
+            }
 
         .tab tr td:first-child {
             width: 16.66666%;
@@ -46,14 +46,14 @@
             color: #015FB6;
         }
 
-        a:link, a:visited, a:active {
-            color: #015FB6;
-            text-decoration: none;
-        }
+            a:link, a:visited, a:active {
+                color: #015FB6;
+                text-decoration: none;
+            }
 
-        a:hover {
-            color: #E33E06;
-        }
+            a:hover {
+                color: #E33E06;
+            }
 
         .other-bg-color {
             background-color: #FCFCFC;
@@ -83,7 +83,7 @@
                     <tr>
                         <td>@item.TableOrder</td>
                         <td colspan="3" style="text-align: left; padding-left: 15px;">
-                            <a href="表结构/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
+                            <a href="table/@(item.TableName +" "+item.Comment).html">@item.TableName</a>
                         </td>
                         <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>
@@ -106,13 +106,13 @@
                 @{ var vwIndex = 1; }
                 @foreach (var item in Model.Views)
                 {
-            <tr>
-                <td>@vwIndex</td>
-                <td colspan="3" style="text-align: left; padding-left: 15px;">
-                    <a href="视图/@(item.ObjectName).html">@item.ObjectName</a>
-                </td>
-                <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
-            </tr>
+                    <tr>
+                        <td>@vwIndex</td>
+                        <td colspan="3" style="text-align: left; padding-left: 15px;">
+                            <a href="view/@(item.ObjectName).html">@item.ObjectName</a>
+                        </td>
+                        <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
+                    </tr>
                     vwIndex++;
                 }
 
@@ -137,7 +137,7 @@
                     <tr>
                         <td>@procIndex</td>
                         <td colspan="3" style="text-align: left; padding-left: 15px;">
-                            <a href="存储过程/@(item.ObjectName).html">@item.ObjectName</a>
+                            <a href="proc/@(item.ObjectName).html">@item.ObjectName</a>
                         </td>
                         <td colspan="2" style="text-align: left; padding-left: 15px;">@(string.IsNullOrEmpty(item.Comment)?"&nbsp;" : item.Comment)</td>
                     </tr>

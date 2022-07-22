@@ -23,13 +23,9 @@ namespace SmartSQL.DocUtils.DBDoc
 
         }
 
-        private Encoding CurrEncoding
-        {
-            get
-            {
-                return Encoding.GetEncoding("gbk");
-            }
-        }
+        private Encoding Gbk => Encoding.GetEncoding("GB18030");
+
+        private Encoding Utf8 => Encoding.UTF8;
 
         private string HHCPath
         {
@@ -108,55 +104,72 @@ namespace SmartSQL.DocUtils.DBDoc
 
             this.InitDirFiles();
 
-            //var dir = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TplFile\\chm");
+            var hhc_tpl = Encoding.UTF8.GetString(Resources.hhc);
 
-            var hhc_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhc.cshtml"), CurrEncoding);
-            var hhk_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhk.cshtml"), CurrEncoding);
-            var hhp_tpl = File.ReadAllText(Path.Combine(ChmPath, "hhp.cshtml"), CurrEncoding);
-            var list_tpl = File.ReadAllText(Path.Combine(ChmPath, "list.cshtml"), CurrEncoding);
-            var table_tpl = File.ReadAllText(Path.Combine(ChmPath, "table.cshtml"), CurrEncoding);
-            var sqlcode_tpl = File.ReadAllText(Path.Combine(ChmPath, "sqlcode.cshtml"), CurrEncoding);
+            var hhk_tpl = Encoding.UTF8.GetString(Resources.hhk);
+
+            var hhp_tpl = Encoding.UTF8.GetString(Resources.hhp);
+            //文档目录
+            var list_tpl = Encoding.UTF8.GetString(Resources.list);
+            //表结构
+            var table_tpl = Encoding.UTF8.GetString(Resources.table);
+            //视图、存储过程
+            var sqlcode_tpl = Encoding.UTF8.GetString(Resources.sqlcode);
+
 
             var hhc = hhc_tpl.RazorRender(this.Dto).Replace("</LI>", "");
 
             var hhk = hhk_tpl.RazorRender(this.Dto).Replace("</LI>", "");
 
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc, CurrEncoding);
+            var list = list_tpl.RazorRender(this.Dto);
 
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, CurrEncoding);
+            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhc"), hhc,Gbk);
 
-            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list_tpl.RazorRender(this.Dto), CurrEncoding);
+            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, Gbk);
+
+            ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list, Utf8);
 
             foreach (var tab in this.Dto.Tables)
             {
-                var tab_path = Path.Combine(this.WorkTmpDir, "表结构", $"{tab.TableName} {tab.Comment}.html");
+                var tab_path = Path.Combine(this.WorkTmpDir, "table", $"{tab.TableName} {tab.Comment}.html");
                 var content = table_tpl.RazorRender(tab);
-                ZlpIOHelper.WriteAllText(tab_path, content, CurrEncoding);
+                ZlpIOHelper.WriteAllText(tab_path, content, Utf8);
             }
 
 
             foreach (var item in Dto.Views)
             {
-                var vw_path = Path.Combine(this.WorkTmpDir, "视图", $"{item.ObjectName}.html");
+                var vw_path = Path.Combine(this.WorkTmpDir, "view", $"{item.ObjectName}.html");
                 var content = sqlcode_tpl.RazorRender(
-                     new SqlCode() { DBType = Dto.DBType, CodeName = item.ObjectName, Content = item.Script.Trim() }
+                     new SqlCode()
+                     {
+                         DBType = Dto.DBType,
+                         CodeName = item.ObjectName,
+                         Content = item.Script.Trim()
+                     }
                      );
-                ZlpIOHelper.WriteAllText(vw_path, content, CurrEncoding);
+                ZlpIOHelper.WriteAllText(vw_path, content, Utf8);
             }
 
 
             foreach (var item in Dto.Procs)
             {
-                var proc_path = Path.Combine(this.WorkTmpDir, "存储过程", $"{item.ObjectName}.html");
+                var proc_path = Path.Combine(this.WorkTmpDir, "proc", $"{item.ObjectName}.html");
                 var content = sqlcode_tpl.RazorRender(
-                    new SqlCode() { DBType = Dto.DBType, CodeName = item.ObjectName, Content = item.Script.Trim() }
+                    new SqlCode()
+                    {
+                        DBType = Dto.DBType,
+                        CodeName = item.ObjectName,
+                        Content = item.Script.Trim()
+                    }
                     );
-                ZlpIOHelper.WriteAllText(proc_path, content, CurrEncoding);
+                ZlpIOHelper.WriteAllText(proc_path, content, Utf8);
             }
 
             var hhp_Path = Path.Combine(this.WorkTmpDir, "chm.hhp");
+            var hhp = hhp_tpl.RazorRender(new ChmHHP(filePath, WorkTmpDir));
 
-            ZlpIOHelper.WriteAllText(hhp_Path, hhp_tpl.RazorRender(new ChmHHP(filePath, this.WorkTmpDir)), CurrEncoding);
+            ZlpIOHelper.WriteAllText(hhp_Path, hhp, Gbk);
 
             var res = StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
 
@@ -172,10 +185,9 @@ namespace SmartSQL.DocUtils.DBDoc
         {
             #region MyRegion
             var dirNames = new string[] {
-                "表结构",
-                "视图",
-                "存储过程",
-                //"函数", 
+                "table",
+                "view",
+                "proc",
                 "resources\\js"
             };
 
@@ -217,36 +229,36 @@ namespace SmartSQL.DocUtils.DBDoc
             {
                 File.AppendAllText(jQuery, Resources.jQuery);
             }
-            var hhc = Path.Combine(ChmPath, "hhc.cshtml");
-            var hhk = Path.Combine(ChmPath, "hhk.cshtml");
-            var hhp = Path.Combine(ChmPath, "hhp.cshtml");
-            var list = Path.Combine(ChmPath, "list.cshtml");
-            var sqlcode = Path.Combine(ChmPath, "sqlcode.cshtml");
-            var table = Path.Combine(ChmPath, "table.cshtml");
-            if (!File.Exists(hhc))
-            {
-                File.WriteAllBytes(hhc, Resources.hhc);
-            }
-            if (!File.Exists(hhk))
-            {
-                File.WriteAllBytes(hhk, Resources.hhk);
-            }
-            if (!File.Exists(hhp))
-            {
-                File.WriteAllBytes(hhp, Resources.hhp);
-            }
-            if (!File.Exists(list))
-            {
-                File.WriteAllBytes(list, Resources.list);
-            }
-            if (!File.Exists(sqlcode))
-            {
-                File.WriteAllBytes(sqlcode, Resources.sqlcode);
-            }
-            if (!File.Exists(table))
-            {
-                File.WriteAllBytes(table, Resources.table);
-            }
+            //var hhc = Path.Combine(ChmPath, "hhc.cshtml");
+            //var hhk = Path.Combine(ChmPath, "hhk.cshtml");
+            //var hhp = Path.Combine(ChmPath, "hhp.cshtml");
+            //var list = Path.Combine(ChmPath, "list.cshtml");
+            //var sqlcode = Path.Combine(ChmPath, "sqlcode.cshtml");
+            //var table = Path.Combine(ChmPath, "table.cshtml");
+            //if (!File.Exists(hhc))
+            //{
+            //    File.WriteAllBytes(hhc, Resources.hhc);
+            //}
+            //if (!File.Exists(hhk))
+            //{
+            //    File.WriteAllBytes(hhk, Resources.hhk);
+            //}
+            //if (!File.Exists(hhp))
+            //{
+            //    File.WriteAllBytes(hhp, Resources.hhp);
+            //}
+            //if (!File.Exists(list))
+            //{
+            //    File.WriteAllBytes(list, Resources.list);
+            //}
+            //if (!File.Exists(sqlcode))
+            //{
+            //    File.WriteAllBytes(sqlcode, Resources.sqlcode);
+            //}
+            //if (!File.Exists(table))
+            //{
+            //    File.WriteAllBytes(table, Resources.table);
+            //}
             var dir = Path.Combine(TplPath, "chm\\");
 
             var files = Directory.GetFiles(dir, "*.js", SearchOption.AllDirectories);

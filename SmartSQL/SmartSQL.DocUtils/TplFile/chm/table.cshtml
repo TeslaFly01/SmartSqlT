@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-cn">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=gbk" />
@@ -85,42 +85,44 @@
                                     返回目录
                                 </a>
                             </caption>
-                            <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
-                                <td>序号</td>
-                                <td>列名</td>
-                                <td>数据类型</td>
-                                <td>长度</td>
-                                <td>主键</td>
-                                @if (!Model.DBType.StartsWith("Oracle"))
-                                {
-                                    <td>自增</td>
-                                }
-                                <td>允许空</td>
-                                <td>默认值</td>
-                                <td>列说明</td>
-                            </tr>
-                            @{
-                                var index = 1;
-                            }
-                            @foreach (var item in Model.Columns)
-                            {
-                                <tr>
-                                    <td>@index</td>
-                                    <td style="text-align: left; padding-left: 15px;">@item.ColumnName</td>
-                                    <td>@item.ColumnTypeName</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
-
+                            <tbody style="font-size: 13px;">
+                                <tr bgcolor="#F0F0F0" style='font-weight: bold;'>
+                                    <td>序号</td>
+                                    <td>列名</td>
+                                    <td>数据类型</td>
+                                    <td>长度</td>
+                                    <td>主键</td>
                                     @if (!Model.DBType.StartsWith("Oracle"))
                                     {
-                                        <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+                                        <td>自增</td>
                                     }
-                                    <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
-                                    <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
-                                    <td style="text-align: left; padding-left: 15px;">@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
+                                    <td>允许空</td>
+                                    <td>默认值</td>
+                                    <td>列说明</td>
                                 </tr>
-                                index++;
-                            }
+                                @{
+                                    var index = 1;
+                                }
+                                @foreach (var item in Model.Columns)
+                                {
+                                    <tr>
+                                        <td>@index</td>
+                                        <td style="text-align: left; padding-left: 15px;">@item.ColumnName</td>
+                                        <td>@item.ColumnTypeName</td>
+                                        <td>@(string.IsNullOrWhiteSpace(item.Length)? "&nbsp;":item.Length)</td>
+                                        <td>@(string.IsNullOrWhiteSpace(item.IsPK)?"&nbsp;": item.IsPK)</td>
+
+                                        @if (!Model.DBType.StartsWith("Oracle"))
+                                        {
+                                            <td>@(string.IsNullOrWhiteSpace(item.IsIdentity) ?"&nbsp;": item.IsIdentity)</td>
+                                        }
+                                        <td>@(string.IsNullOrWhiteSpace(item.CanNull) ?"&nbsp;": item.CanNull)</td>
+                                        <td>@(string.IsNullOrWhiteSpace(item.DefaultVal) ?"&nbsp;": item.DefaultVal)</td>
+                                        <td style="text-align: left; padding-left: 15px;">@(string.IsNullOrWhiteSpace(item.Comment) ?"&nbsp;": item.Comment)</td>
+                                    </tr>
+                                    index++;
+                                }
+                            </tbody>
                         </table>
                     </td>
                 </tr>
