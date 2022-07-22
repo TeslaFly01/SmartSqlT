@@ -348,7 +348,8 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="htmlhelp.exe">
+    <Content Include="hha.dll" />
+    <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Img\icon.png" />
