@@ -11,15 +11,18 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
+        <StackPanel HorizontalAlignment="Left" Margin="30 20 0 0">
+            <TextBlock FontWeight="Bold">选择新连接类型</TextBlock>
+        </StackPanel>
         <ListBox
-            Margin="20"
+            Margin="15 40 15 0"
             BorderThickness="0"
             Cursor="Arrow"
             ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"
             Style="{StaticResource WrapPanelHorizontalListBox}">
             <hc:Card
                 MaxWidth="115"
-                Margin="8"
+                Margin="8 0 8 8"
                 BorderThickness="0"
                 Cursor="Hand"
                 Effect="{StaticResource EffectShadow2}">
@@ -33,31 +36,21 @@
                         Source="pack://application:,,,/Resources/svg/sqlserver@64.svg"
                         Stretch="Uniform" />
                 </Border>
-                <!--  Card 的尾部部分  -->
-                <!--
                 <hc:Card.Footer>
-                    <StackPanel Margin="10">
-                -->
-                <!--<TextBlock
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource TextBlockLargeBold}"
-                            Text="ces"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />-->
-                <!--
+                    <StackPanel Margin="5">
                         <TextBlock
-                            Margin="0,6,0,0"
-                            HorizontalAlignment="Left"
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
                             Style="{StaticResource TextBlockDefault}"
-                            Text="SqlServer"
+                            Text="SQLServer"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap" />
                     </StackPanel>
-                </hc:Card.Footer>-->
+                </hc:Card.Footer>
             </hc:Card>
             <hc:Card
                 MaxWidth="115"
-                Margin="8"
+                Margin="8 0 8 8"
                 BorderThickness="0"
                 Cursor="Hand"
                 Effect="{StaticResource EffectShadow2}">
@@ -71,10 +64,21 @@
                         Source="pack://application:,,,/Resources/svg/mysql@64.svg"
                         Stretch="Uniform" />
                 </Border>
+                <hc:Card.Footer>
+                    <StackPanel Margin="5">
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource TextBlockDefault}"
+                            Text="MySQL"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </StackPanel>
+                </hc:Card.Footer>
             </hc:Card>
             <hc:Card
                 MaxWidth="115"
-                Margin="8"
+                Margin="8 0 8 8"
                 BorderThickness="0"
                 Cursor="Hand"
                 Effect="{StaticResource EffectShadow2}">
@@ -88,48 +92,21 @@
                         Source="pack://application:,,,/Resources/svg/postgresql@64.svg"
                         Stretch="Uniform" />
                 </Border>
-            </hc:Card>
-            <hc:Card
-                MaxWidth="115"
-                Margin="8"
-                BorderThickness="0"
-                Cursor="Hand"
-                Effect="{StaticResource EffectShadow2}">
-                <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
-                    <svgc:SvgViewbox
-                        Width="80"
-                        Height="80"
-                        Margin="10"
-                        HorizontalAlignment="Center"
-                        IsHitTestVisible="False"
-                        Source="pack://application:,,,/Resources/svg/sqlserver@64.svg"
-                        Stretch="Uniform" />
-                </Border>
-                <!--  Card 的尾部部分  -->
-                <!--
                 <hc:Card.Footer>
-                    <StackPanel Margin="10">
-                -->
-                <!--<TextBlock
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource TextBlockLargeBold}"
-                            Text="ces"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />-->
-                <!--
+                    <StackPanel Margin="5">
                         <TextBlock
-                            Margin="0,6,0,0"
-                            HorizontalAlignment="Left"
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
                             Style="{StaticResource TextBlockDefault}"
-                            Text="SqlServer"
+                            Text="PostgreSQL"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap" />
                     </StackPanel>
-                </hc:Card.Footer>-->
+                </hc:Card.Footer>
             </hc:Card>
             <hc:Card
                 MaxWidth="115"
-                Margin="8"
+                Margin="8 0 8 8"
                 BorderThickness="0"
                 Cursor="Hand"
                 Effect="{StaticResource EffectShadow2}">
@@ -140,47 +117,76 @@
                         Margin="10"
                         HorizontalAlignment="Center"
                         IsHitTestVisible="False"
-                        Source="pack://application:,,,/Resources/svg/mysql@64.svg"
+                        Source="pack://application:,,,/Resources/svg/oracle@64.svg"
                         Stretch="Uniform" />
                 </Border>
-            </hc:Card>
-            <hc:Card
-                MaxWidth="115"
-                Margin="8"
-                BorderThickness="0"
-                Cursor="Hand"
-                Effect="{StaticResource EffectShadow2}">
-                <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
-                    <svgc:SvgViewbox
-                        Width="80"
-                        Height="80"
-                        Margin="10"
-                        HorizontalAlignment="Center"
-                        IsHitTestVisible="False"
-                        Source="pack://application:,,,/Resources/svg/sqlserver@64.svg"
-                        Stretch="Uniform" />
-                </Border>
-                <!--  Card 的尾部部分  -->
-                <!--
                 <hc:Card.Footer>
-                    <StackPanel Margin="10">
-                -->
-                <!--<TextBlock
-                            HorizontalAlignment="Left"
-                            Style="{StaticResource TextBlockLargeBold}"
-                            Text="ces"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />-->
-                <!--
+                    <StackPanel Margin="5">
                         <TextBlock
-                            Margin="0,6,0,0"
-                            HorizontalAlignment="Left"
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
                             Style="{StaticResource TextBlockDefault}"
-                            Text="SqlServer"
+                            Text="Oracle"
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap" />
                     </StackPanel>
-                </hc:Card.Footer>-->
+                </hc:Card.Footer>
+            </hc:Card>
+            <hc:Card
+                MaxWidth="115"
+                Margin="8 0 8 8"
+                BorderThickness="0"
+                Cursor="Hand"
+                Effect="{StaticResource EffectShadow2}">
+                <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
+                    <svgc:SvgViewbox
+                        Width="80"
+                        Height="80"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        IsHitTestVisible="False"
+                        Source="pack://application:,,,/Resources/svg/DB2@64.svg"
+                        Stretch="Uniform" />
+                </Border>
+                <hc:Card.Footer>
+                    <StackPanel Margin="5">
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource TextBlockDefault}"
+                            Text="DB2"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </StackPanel>
+                </hc:Card.Footer>
+            </hc:Card>
+            <hc:Card
+                MaxWidth="115"
+                Margin="8 0 8 8"
+                BorderThickness="0"
+                Cursor="Hand"
+                Effect="{StaticResource EffectShadow2}">
+                <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
+                    <svgc:SvgViewbox
+                        Width="80"
+                        Height="80"
+                        Margin="10"
+                        HorizontalAlignment="Center"
+                        IsHitTestVisible="False"
+                        Source="pack://application:,,,/Resources/svg/TIDB@64.svg"
+                        Stretch="Uniform" />
+                </Border>                
+                <hc:Card.Footer>
+                    <StackPanel Margin="5">
+                        <TextBlock
+                            Margin="0,5,0,0"
+                            HorizontalAlignment="Center"
+                            Style="{StaticResource TextBlockDefault}"
+                            Text="TIDB"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </StackPanel>
+                </hc:Card.Footer>
             </hc:Card>
         </ListBox>
     </Grid>

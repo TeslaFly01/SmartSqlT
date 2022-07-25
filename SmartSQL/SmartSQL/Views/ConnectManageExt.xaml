@@ -96,11 +96,13 @@
             Margin="0,5,5,5"
             Background="White">
             <Grid>
-                <TabControl
+
+                <userControl:ConnectMain />
+                <!--<TabControl
                     Name="TabDbType"
                     SelectionChanged="TabDbType_OnSelectionChanged"
                     Style="{StaticResource TabControlBaseStyle}">
-                    <!--  SqlServer  -->
+                    --><!--  SqlServer  --><!--
                     <TabItem
                         Name="TabSqlServer"
                         Cursor="Hand"
@@ -111,7 +113,7 @@
                         </Grid>
                     </TabItem>
 
-                    <!--  MySql  -->
+                    --><!--  MySql  --><!--
                     <TabItem
                         Name="TabMySql"
                         Cursor="Hand"
@@ -121,7 +123,7 @@
                         </Grid>
                     </TabItem>
 
-                    <!--  PostgreSql  -->
+                    --><!--  PostgreSql  --><!--
                     <TabItem
                         Name="TabPostgreSql"
                         Cursor="Hand"
@@ -130,11 +132,11 @@
                             <userControl:PostgreSql />
                         </Grid>
                     </TabItem>
-                </TabControl>
+                </TabControl>-->
             </Grid>
 
             <!--  操作栏  -->
-            <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
+            <Grid VerticalAlignment="Bottom" Background="#f5f5f5" Visibility="Collapsed">
                 <hc:SimpleStackPanel
                     Margin="5"
                     HorizontalAlignment="Left"
