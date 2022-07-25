@@ -59,27 +59,27 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 #### 1.数据库连接
 
-![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Connect.png)
+![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot1.png)
 
 #### 2.分组管理
-![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/GroupObject.png)
+![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-GroupObject.png)
 --|--
 
 #### 3.快捷查询
-| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/View.png) |
+| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-View.png) |
 |--|--|
-| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Pro.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Column.png) |
+| ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Proc.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Column.png) |
 
 #### 4.导入导出
 
-![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Import.png)|![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Export.png)
+![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Import.png)|![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Export.png)
 :--:|:--:
 
 #### 5.设置
-![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Setting.png)
+![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Setting.png)
 
 #### 6.关于
-![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/About.png)
+![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-About.png)
 
 
 ### 🎉 五、文档截图
