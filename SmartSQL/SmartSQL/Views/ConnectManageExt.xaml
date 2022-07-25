@@ -96,43 +96,10 @@
             Margin="0,5,5,5"
             Background="White">
             <Grid>
-
                 <userControl:ConnectMain />
-                <!--<TabControl
-                    Name="TabDbType"
-                    SelectionChanged="TabDbType_OnSelectionChanged"
-                    Style="{StaticResource TabControlBaseStyle}">
-                    --><!--  SqlServer  --><!--
-                    <TabItem
-                        Name="TabSqlServer"
-                        Cursor="Hand"
-                        Header="SqlServer"
-                        IsSelected="True">
-                        <Grid>
-                            <userControl:ConnectMain />
-                        </Grid>
-                    </TabItem>
-
-                    --><!--  MySql  --><!--
-                    <TabItem
-                        Name="TabMySql"
-                        Cursor="Hand"
-                        Header="MySql">
-                        <Grid>
-                            <userControl:MySqlUC />
-                        </Grid>
-                    </TabItem>
-
-                    --><!--  PostgreSql  --><!--
-                    <TabItem
-                        Name="TabPostgreSql"
-                        Cursor="Hand"
-                        Header="PostgreSql">
-                        <Grid>
-                            <userControl:PostgreSql />
-                        </Grid>
-                    </TabItem>
-                </TabControl>-->
+                <userControl:SqlServerUC Visibility="Collapsed"></userControl:SqlServerUC>
+                <userControl:MySqlUC Visibility="Collapsed"></userControl:MySqlUC>
+                <userControl:PostgreSql Visibility="Collapsed"></userControl:PostgreSql>                
             </Grid>
 
             <!--  操作栏  -->
