@@ -96,21 +96,13 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
   [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-MicLuo-green)](https://gitee.com/izhaofu)
 
-### 🍻 七、贡献代码
-
-- `SmartSQL` 遵循 `Apache-2.0` 开源协议，欢迎大家提交 `PR` 或 `Issue`。
-
-### ⬇️ 八、下载地址
+### ⬇️ 七、下载地址
 
 [![立即下载](https://img.shields.io/badge/%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD----green)](https://gitee.com/izhaofu/SmartSQL/releases) 
 
 下载解压后，双击运行 `SmartSQL.exe`。
 
-### 🍄 附一、其他工具
-- [![htmlhelp](https://img.shields.io/badge/CHM%E6%8F%92%E4%BB%B6-htmlhelp-green)](https://gitee.com/izhaofu/SmartSQL/attach_files/1124263/download)，生成chm文件时，需提前安装。
-- [![PDMToCHM](https://img.shields.io/badge/CHM%E6%8F%92%E4%BB%B6-PDMToCHM-green)](https://gitee.com/izhaofu/SmartSQL/attach_files/1124266/download)，将PDM表结构文件导出到CHM文件。
-
-### ⚡ 附二、近期计划
+### ⚡ 附一、近期计划
 
 	✅ 收集问题，修复完善基础功能
 	✅ C#实体代码生成
@@ -118,7 +110,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 	⏳ 计划中：表、视图、存储过程同步功能
 	⏳ ...
 
-### ❓ 附三、常见问题
+### ❓ 附二、常见问题
 - **连接不上，怎么办？**
 	
 >	1. `连接数据库`界面填写的`连接信息`真的正确无误?

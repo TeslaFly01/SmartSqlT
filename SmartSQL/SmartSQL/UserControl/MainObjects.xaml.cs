@@ -222,24 +222,12 @@ namespace SmartSQL.UserControl
                         switch (selectItem.Type)
                         {
                             case ObjType.Table:
-                                if (db.IsAnyTableRemark(selectItem.Name))
-                                {
-                                    db.DeleteTableRemark(selectItem.Name);
-                                }
                                 flag = db.AddTableRemark(selectItem.Name, newValue);
                                 break;
                             case ObjType.View:
-                                if (db.IsAnyViewRemark(selectItem.Name))
-                                {
-                                    db.DeleteViewRemark(selectItem.Name);
-                                }
                                 flag = db.AddViewRemark(selectItem.Name, newValue);
                                 break;
                             case ObjType.Proc:
-                                if (db.IsAnyProcRemark(selectItem.Name))
-                                {
-                                    db.DeleteProcRemark(selectItem.Name);
-                                }
                                 flag = db.AddProcRemark(selectItem.Name, newValue);
                                 break;
                         }
