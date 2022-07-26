@@ -17,6 +17,7 @@ using SmartSQL.Framework.Util;
 using SmartSQL.Annotations;
 using SmartSQL.DocUtils;
 using SmartSQL.Helper;
+using SmartSQL.UserControl;
 using SmartSQL.UserControl.Connect;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
@@ -43,6 +44,7 @@ namespace SmartSQL.Views
         {
             InitializeComponent();
             DataContext = this;
+            MainContent = new ConnectMainUC();
         }
 
         #region DependencyProperty
@@ -94,7 +96,9 @@ namespace SmartSQL.Views
                 switch (connect.DbType)
                 {
                     case DbType.SqlServer:
-                        MainContent = new SqlServerUC();
+                        var ucSqlServer = new SqlServerUC();
+                        ucSqlServer.ConnectConfig = connect;
+                        MainContent = ucSqlServer;
                         //TabSqlServer.IsSelected = true;
                         //MsSql_HidId.Text = connect.ID.ToString();
                         //MsSql_TextConnectName.Text = connect.ConnectName;
@@ -357,7 +361,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
-            MainContent = new ConnectMain();
+            MainContent = new ConnectMainUC();
             ResetData();
         }
 

@@ -20,9 +20,9 @@ namespace SmartSQL.UserControl.Connect
     /// <summary>
     /// SqlServerUC.xaml 的交互逻辑
     /// </summary>
-    public partial class ConnectMain : System.Windows.Controls.UserControl
+    public partial class ConnectMainUC : System.Windows.Controls.UserControl
     {
-        public ConnectMain()
+        public ConnectMainUC()
         {
             InitializeComponent();
         }

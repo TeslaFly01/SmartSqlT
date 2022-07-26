@@ -1,5 +1,5 @@
 <UserControl
-    x:Class="SmartSQL.UserControl.Connect.ConnectMain"
+    x:Class="SmartSQL.UserControl.Connect.ConnectMainUC"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:baseControl="clr-namespace:SmartSQL.UserControl.Controls"

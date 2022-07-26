@@ -11,7 +11,24 @@
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
-        <Grid>
+        <Grid
+            Height="50"
+            VerticalAlignment="Top"
+            Background="#e3e4e7">
+            <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
+                <TextBlock FontWeight="Bold" Text="SQLServer 连接设置" />
+            </StackPanel>
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                <svgc:SvgViewbox
+                    Width="50"
+                    Height="45"
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    IsHitTestVisible="False"
+                    Source="pack://application:,,,/Resources/svg/sqlserver@64.svg" />
+            </StackPanel>
+        </Grid>
+        <Grid Margin="0,50,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
@@ -52,7 +69,8 @@
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
-                    ShowClearButton="True" />
+                    ShowClearButton="True"
+                    Text="{Binding ConnectConfig.ConnectName}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="6*" />
@@ -64,7 +82,8 @@
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
-                        ShowClearButton="True" />
+                        ShowClearButton="True"
+                        Text="{Binding ConnectConfig.ServerAddress}" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="0,65,0,20"
@@ -92,7 +111,8 @@
                     Height="0"
                     Margin="0,140,20,20"
                     VerticalAlignment="Top"
-                    ShowClearButton="True" />
+                    ShowClearButton="True"
+                    Text="{Binding ConnectConfig.UserName}" />
                 <PasswordBox
                     Name="MsSql_TextServerPassword"
                     Height="30"
