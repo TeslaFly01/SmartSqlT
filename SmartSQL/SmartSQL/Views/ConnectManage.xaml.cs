@@ -17,13 +17,15 @@ using SmartSQL.Framework.Util;
 using SmartSQL.Annotations;
 using SmartSQL.DocUtils;
 using SmartSQL.Helper;
+using SmartSQL.UserControl;
+using SmartSQL.UserControl.Connect;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Views
 {
     //定义委托
-    public delegate void ConnectChangeRefreshHandler(ConnectConfigs connectConfig);
+    public delegate void ConnectChangeRefreshHandlerExt(ConnectConfigs connectConfig);
     /// <summary>
     /// GroupManage.xaml 的交互逻辑
     /// </summary>
@@ -37,12 +39,7 @@ namespace SmartSQL.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public event ConnectChangeRefreshHandler ChangeRefreshEvent;
-        public ConnectManage()
-        {
-            InitializeComponent();
-            DataContext = this;
-        }
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
 
         #region DependencyProperty
 
@@ -57,64 +54,54 @@ namespace SmartSQL.Views
                 OnPropertyChanged(nameof(DataList));
             }
         }
+
+        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register(
+            "MainContent", typeof(System.Windows.Controls.UserControl), typeof(ConnectManage), new PropertyMetadata(default(System.Windows.Controls.UserControl)));
+        /// <summary>
+        /// 主界面用户控件
+        /// </summary>
+        public System.Windows.Controls.UserControl MainContent
+        {
+            get => (System.Windows.Controls.UserControl)GetValue(MainContentProperty);
+            set => SetValue(MainContentProperty, value);
+        }
         #endregion
 
-        private void GroupManage_OnLoaded(object sender, RoutedEventArgs e)
+        public ConnectManage()
         {
-            Task.Run(() =>
-            {
-                var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    DataList = datalist;
-                });
-            });
+            InitializeComponent();
+            DataContext = this;
+            MainContent = new ConnectMainUC();
         }
 
+        /// <summary>
+        /// 加载连接信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
+                OprToolGrid.Visibility = Visibility.Visible;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
-                var pwd = EncryptHelper.Decode(connect.Password);
-                var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
                 switch (connect.DbType)
                 {
                     case DbType.SqlServer:
-                        TabSqlServer.IsSelected = true;
-                        MsSql_HidId.Text = connect.ID.ToString();
-                        MsSql_TextConnectName.Text = connect.ConnectName;
-                        MsSql_TextServerAddress.Text = connect.ServerAddress;
-                        MsSql_TextServerPort.Value = connect.ServerPort;
-                        MsSql_TextServerName.Text = connect.UserName;
-                        MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SQLServer : Windows;
-                        MsSql_TextServerPassword.Password = pwd;
-                        MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-                        MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        var ucSqlServer = new SqlServerUC();
+                        ucSqlServer.ConnectConfig = connect;
+                        MainContent = ucSqlServer;
                         break;
                     case DbType.MySql:
-                        TabMySql.IsSelected = true;
-                        MySql_HidId.Text = connect.ID.ToString();
-                        MySql_TextConnectName.Text = connect.ConnectName;
-                        MySql_TextServerAddress.Text = connect.ServerAddress;
-                        MySql_TextServerPort.Value = connect.ServerPort;
-                        MySql_TextServerName.Text = connect.UserName;
-                        MySql_TextServerPassword.Password = pwd;
-                        MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
-                        MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        var ucMySql = new MySqlUC();
+                        ucMySql.ConnectConfig = connect;
+                        MainContent = ucMySql;
                         break;
                     case DbType.PostgreSQL:
-                        TabPostgreSql.IsSelected = true;
-                        PostgreSql_HidId.Text = connect.ID.ToString();
-                        PostgreSql_TextConnectName.Text = connect.ConnectName;
-                        PostgreSql_TextServerAddress.Text = connect.ServerAddress;
-                        PostgreSql_TextServerPort.Value = connect.ServerPort;
-                        PostgreSql_TextServerName.Text = connect.UserName;
-                        PostgreSql_TextServerPassword.Password = pwd;
-                        PostgreSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-                        PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+                        var ucPostgreSql = new PostgreSqlUC();
+                        ucPostgreSql.ConnectConfig = connect;
+                        MainContent = ucPostgreSql;
                         break;
                 }
             }
@@ -144,55 +131,55 @@ namespace SmartSQL.Views
             var defaultDataBase = new DataBase();
             var connectionString = "";
             var dbType = DbType.SqlServer;
-            if (TabSqlServer.IsSelected)
-            {
-                dbType = DbType.SqlServer;
-                connectId = Convert.ToInt32(MsSql_HidId.Text);
-                connectName = MsSql_TextConnectName.Text.Trim();
-                serverAddress = MsSql_TextServerAddress.Text.Trim().Equals(".")
-                    ? $"."
-                    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
-                serverPort = MsSql_TextServerPort.Value;
-                authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-                userName = MsSql_TextServerName.Text.Trim();
-                password = MsSql_TextServerPassword.Password.Trim();
-                defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
-                connectionString = $"server={serverAddress};" +
-                                   $"database=master;uid={userName};" +
-                                   $"pwd={password};";
-            }
-            if (TabMySql.IsSelected)
-            {
-                dbType = DbType.MySql;
-                connectId = Convert.ToInt32(MySql_HidId.Text);
-                connectName = MySql_TextConnectName.Text.Trim();
-                serverAddress = MySql_TextServerAddress.Text.Trim();
-                serverPort = MySql_TextServerPort.Value;
-                userName = MySql_TextServerName.Text.Trim();
-                password = MySql_TextServerPassword.Password.Trim();
-                defaultDataBase = (DataBase)MySql_ComboDefaultDatabase.SelectedItem;
-                connectionString = $"server={serverAddress};" +
-                                   $"port={serverPort};" +
-                                   $"uid={userName};" +
-                                   $"pwd={password};" +
-                                   $"Allow User Variables=True;sslmode=none;";
-            }
-            if (TabPostgreSql.IsSelected)
-            {
-                dbType = DbType.PostgreSQL;
-                connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-                connectName = PostgreSql_TextConnectName.Text.Trim();
-                serverAddress = PostgreSql_TextServerAddress.Text.Trim();
-                serverPort = PostgreSql_TextServerPort.Value;
-                userName = PostgreSql_TextServerName.Text.Trim();
-                password = PostgreSql_TextServerPassword.Password.Trim();
-                defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
-                connectionString = $"HOST={serverAddress};" +
-                                   $"PORT={serverPort};" +
-                                   $"DATABASE=postgres;" +
-                                   $"USER ID={userName};" +
-                                   $"PASSWORD={password}";
-            }
+            //if (TabSqlServer.IsSelected)
+            //{
+            //    dbType = DbType.SqlServer;
+            //    //connectId = Convert.ToInt32(MsSql_HidId.Text);
+            //    //connectName = MsSql_TextConnectName.Text.Trim();
+            //    //serverAddress = MsSql_TextServerAddress.Text.Trim().Equals(".")
+            //    //    ? $"."
+            //    //    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
+            //    //serverPort = MsSql_TextServerPort.Value;
+            //    //authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+            //    //userName = MsSql_TextServerName.Text.Trim();
+            //    //password = MsSql_TextServerPassword.Password.Trim();
+            //    //defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
+            //    connectionString = $"server={serverAddress};" +
+            //                       $"database=master;uid={userName};" +
+            //                       $"pwd={password};";
+            //}
+            //if (TabMySql.IsSelected)
+            //{
+            //    dbType = DbType.MySql;
+            //    //connectId = Convert.ToInt32(MySql_HidId.Text);
+            //    //connectName = MySql_TextConnectName.Text.Trim();
+            //    //serverAddress = MySql_TextServerAddress.Text.Trim();
+            //    //serverPort = MySql_TextServerPort.Value;
+            //    //userName = MySql_TextServerName.Text.Trim();
+            //    //password = MySql_TextServerPassword.Password.Trim();
+            //    //defaultDataBase = (DataBase)MySql_ComboDefaultDatabase.SelectedItem;
+            //    connectionString = $"server={serverAddress};" +
+            //                       $"port={serverPort};" +
+            //                       $"uid={userName};" +
+            //                       $"pwd={password};" +
+            //                       $"Allow User Variables=True;sslmode=none;";
+            //}
+            //if (TabPostgreSql.IsSelected)
+            //{
+            //    dbType = DbType.PostgreSQL;
+            //    //connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+            //    //connectName = PostgreSql_TextConnectName.Text.Trim();
+            //    //serverAddress = PostgreSql_TextServerAddress.Text.Trim();
+            //    //serverPort = PostgreSql_TextServerPort.Value;
+            //    //userName = PostgreSql_TextServerName.Text.Trim();
+            //    //password = PostgreSql_TextServerPassword.Password.Trim();
+            //    //defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
+            //    connectionString = $"HOST={serverAddress};" +
+            //                       $"PORT={serverPort};" +
+            //                       $"DATABASE=postgres;" +
+            //                       $"USER ID={userName};" +
+            //                       $"PASSWORD={password}";
+            //}
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
 
@@ -337,7 +324,7 @@ namespace SmartSQL.Views
         }
 
         /// <summary>
-        /// 添加重置表单
+        /// 添加/重置表单
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -348,35 +335,7 @@ namespace SmartSQL.Views
 
         private void ResetData()
         {
-            var sdfs = TabDbType;
-            if (TabSqlServer.IsSelected)
-            {
-                MsSql_HidId.Text = "0";
-                MsSql_TextConnectName.Text = "";
-                MsSql_TextServerAddress.Text = "";
-                MsSql_TextServerPort.Value = 1433;
-                MsSql_TextServerName.Text = "";
-                MsSql_TextServerPassword.Password = "";
-                MsSql_ComboAuthentication.SelectedItem = SQLServer;
-            }
-            if (TabMySql.IsSelected)
-            {
-                MySql_HidId.Text = "0";
-                MySql_TextConnectName.Text = "";
-                MySql_TextServerAddress.Text = "";
-                MySql_TextServerPort.Value = 3306;
-                MySql_TextServerName.Text = "";
-                MySql_TextServerPassword.Password = "";
-            }
-            if (TabPostgreSql.IsSelected)
-            {
-                PostgreSql_HidId.Text = "0";
-                PostgreSql_TextConnectName.Text = "";
-                PostgreSql_TextServerAddress.Text = "";
-                PostgreSql_TextServerPort.Value = 5432;
-                PostgreSql_TextServerName.Text = "";
-                PostgreSql_TextServerPassword.Password = "";
-            }
+            MainContent = new ConnectMainUC();
             ListConnects.SelectedItem = null;
         }
 
@@ -386,64 +345,23 @@ namespace SmartSQL.Views
         private bool CheckConnectForm()
         {
             #region MyRegion
-            var connectName = "";
-            var serverAddress = "";
-            var serverPort = 1433d;
-            var authentication = 1;
-            var userName = "";
-            var password = "";
-            if (TabSqlServer.IsSelected)
+            //校验SqlServer
+            if (MainContent.Content is SqlServerUC ucSqlServer)
             {
-                connectName = MsSql_TextConnectName.Text.Trim();
-                serverAddress = MsSql_TextServerAddress.Text.Trim();
-                serverPort = MsSql_TextServerPort.Value;
-                authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-                userName = MsSql_TextServerName.Text.Trim();
-                password = MsSql_TextServerPassword.Password.Trim();
+                return ucSqlServer.VerifyForm();
             }
-            if (TabMySql.IsSelected)
+            //校验MySql
+            if (MainContent.Content is MySqlUC ucMySql)
             {
-                connectName = MySql_TextConnectName.Text.Trim();
-                serverAddress = MySql_TextServerAddress.Text.Trim();
-                serverPort = MySql_TextServerPort.Value;
-                userName = MySql_TextServerName.Text.Trim();
-                password = MySql_TextServerPassword.Password.Trim();
+                return ucMySql.VerifyForm();
             }
-            if (TabPostgreSql.IsSelected)
+            //校验PostgreSql
+            if (MainContent.Content is PostgreSqlUC ucPostgreSql)
             {
-                connectName = PostgreSql_TextConnectName.Text.Trim();
-                serverAddress = PostgreSql_TextServerAddress.Text.Trim();
-                serverPort = PostgreSql_TextServerPort.Value;
-                userName = PostgreSql_TextServerName.Text.Trim();
-                password = PostgreSql_TextServerPassword.Password.Trim();
+                return ucPostgreSql.VerifyForm();
             }
-            var tipMsg = new StringBuilder();
-            if (string.IsNullOrEmpty(connectName))
-            {
-                tipMsg.Append("- 请填写连接名称" + Environment.NewLine);
-            }
-            if (string.IsNullOrEmpty(serverAddress))
-            {
-                tipMsg.Append("- 请填写服务器地址" + Environment.NewLine);
-            }
-            if (serverPort < 1)
-            {
-                tipMsg.Append("- 请填写端口号" + Environment.NewLine);
-            }
-            if (string.IsNullOrEmpty(userName))
-            {
-                tipMsg.Append("- 请填写登录名" + Environment.NewLine);
-            }
-            if (string.IsNullOrEmpty(password))
-            {
-                tipMsg.Append("- 请填写密码");
-            }
-            if (tipMsg.ToString().Length > 0)
-            {
-                Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
-                return false;
-            }
-            return true;
+            return false;
+
             #endregion
         }
 
@@ -471,110 +389,110 @@ namespace SmartSQL.Views
 
             var connectId = 0;
             var connectionString = @"";
-            if (TabSqlServer.IsSelected)
-            {
-                dbType = DbType.SqlServer;
-                connectId = Convert.ToInt32(MsSql_HidId.Text);
-                var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
-                    ? $"{MsSql_TextServerAddress.Text.Trim()}"
-                    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
-                connectionString = $"server={serAddr};" +
-                                   "database=master;" +
-                                   $"uid={MsSql_TextServerName.Text.Trim()};" +
-                                   $"pwd={MsSql_TextServerPassword.Password.Trim()};";
-            }
-            if (TabMySql.IsSelected)
-            {
-                dbType = DbType.MySql;
-                connectId = Convert.ToInt32(MySql_HidId.Text);
-                connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
-                                   $"port={MySql_TextServerPort.Value};" +
-                                   $"uid={MySql_TextServerName.Text.Trim()};" +
-                                   $"pwd={MySql_TextServerPassword.Password.Trim()};" +
-                                   $"Allow User Variables=True;sslmode=none;";
-            }
-            if (TabPostgreSql.IsSelected)
-            {
-                dbType = DbType.PostgreSQL;
-                connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-                connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
-                                   $"PORT={PostgreSql_TextServerPort.Value};" +
-                                   $"DATABASE=postgres;" +
-                                   $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
-                                   $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
-            }
-            LoadingG.Visibility = Visibility.Visible;
-            Task.Run(() =>
-            {
-                try
-                {
-                    var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-                    var list = exporter.GetDatabases();
-                    Dispatcher.Invoke(() =>
-                    {
-                        if (TabSqlServer.IsSelected)
-                        {
-                            MsSql_ComboDefaultDatabase.ItemsSource = list;
-                        }
-                        if (TabMySql.IsSelected)
-                        {
-                            MySql_ComboDefaultDatabase.ItemsSource = list;
-                        }
-                        if (TabPostgreSql.IsSelected)
-                        {
-                            PostgreSql_ComboDefaultDatabase.ItemsSource = list;
-                        }
-                        if (connectId < 1)
-                        {
-                            if (TabSqlServer.IsSelected)
-                            {
-                                MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
-                            }
-                            if (TabMySql.IsSelected)
-                            {
-                                MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
-                            }
-                            if (TabPostgreSql.IsSelected)
-                            {
-                                PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
-                            }
-                        }
-                        else
-                        {
-                            var sqLiteHelper = new SQLiteHelper();
-                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                            if (connect != null)
-                            {
-                                if (TabSqlServer.IsSelected)
-                                {
-                                    MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-                                }
-                                if (TabMySql.IsSelected)
-                                {
-                                    MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-                                }
-                                if (TabPostgreSql.IsSelected)
-                                {
-                                    PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-                                }
-                            }
-                        }
-                        LoadingG.Visibility = Visibility.Collapsed;
-                        if (flag)
-                        {
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-                        }
-                    });
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
-                    });
-                }
-            });
+            //if (TabSqlServer.IsSelected)
+            //{
+            //    dbType = DbType.SqlServer;
+            //    //connectId = Convert.ToInt32(MsSql_HidId.Text);
+            //    //var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
+            //    //    ? $"{MsSql_TextServerAddress.Text.Trim()}"
+            //    //    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
+            //    //connectionString = $"server={serAddr};" +
+            //    //                   "database=master;" +
+            //    //                   $"uid={MsSql_TextServerName.Text.Trim()};" +
+            //    //                   $"pwd={MsSql_TextServerPassword.Password.Trim()};";
+            //}
+            //if (TabMySql.IsSelected)
+            //{
+            //    dbType = DbType.MySql;
+            //    //connectId = Convert.ToInt32(MySql_HidId.Text);
+            //    //connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
+            //    //                   $"port={MySql_TextServerPort.Value};" +
+            //    //                   $"uid={MySql_TextServerName.Text.Trim()};" +
+            //    //                   $"pwd={MySql_TextServerPassword.Password.Trim()};" +
+            //    //                   $"Allow User Variables=True;sslmode=none;";
+            //}
+            //if (TabPostgreSql.IsSelected)
+            //{
+            //    dbType = DbType.PostgreSQL;
+            //    //connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+            //    //connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
+            //    //                   $"PORT={PostgreSql_TextServerPort.Value};" +
+            //    //                   $"DATABASE=postgres;" +
+            //    //                   $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
+            //    //                   $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
+            //}
+            //LoadingG.Visibility = Visibility.Visible;
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
+            //        var list = exporter.GetDatabases();
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            if (TabSqlServer.IsSelected)
+            //            {
+            //                //MsSql_ComboDefaultDatabase.ItemsSource = list;
+            //            }
+            //            if (TabMySql.IsSelected)
+            //            {
+            //                //MySql_ComboDefaultDatabase.ItemsSource = list;
+            //            }
+            //            if (TabPostgreSql.IsSelected)
+            //            {
+            //                //PostgreSql_ComboDefaultDatabase.ItemsSource = list;
+            //            }
+            //            if (connectId < 1)
+            //            {
+            //                if (TabSqlServer.IsSelected)
+            //                {
+            //                   // MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+            //                }
+            //                if (TabMySql.IsSelected)
+            //                {
+            //                    //MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
+            //                }
+            //                if (TabPostgreSql.IsSelected)
+            //                {
+            //                    //PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
+            //                }
+            //            }
+            //            else
+            //            {
+            //                var sqLiteHelper = new SQLiteHelper();
+            //                var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+            //                if (connect != null)
+            //                {
+            //                    if (TabSqlServer.IsSelected)
+            //                    {
+            //                        //MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+            //                    }
+            //                    if (TabMySql.IsSelected)
+            //                    {
+            //                        //MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+            //                    }
+            //                    if (TabPostgreSql.IsSelected)
+            //                    {
+            //                        //PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+            //                    }
+            //                }
+            //            }
+            //            LoadingG.Visibility = Visibility.Collapsed;
+            //            if (flag)
+            //            {
+            //                Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+            //            }
+            //        });
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            LoadingG.Visibility = Visibility.Collapsed;
+            //            Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
+            //        });
+            //    }
+            //});
         }
 
         private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
@@ -582,32 +500,17 @@ namespace SmartSQL.Views
             TestConnect(false);
         }
 
-        /// <summary>
-        /// 数据库类型变更
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TabDbType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!IsLoaded)
+            Task.Run(() =>
             {
-                return;
-            }
-            if (TabDbType.SelectedItem == TabSqlServer)
-            {
-                var connectId = Convert.ToInt32(MsSql_HidId.Text);
-                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
-            }
-            if (TabDbType.SelectedItem == TabMySql)
-            {
-                var connectId = Convert.ToInt32(MySql_HidId.Text);
-                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
-            }
-            if (TabDbType.SelectedItem == TabPostgreSql)
-            {
-                var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-                ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
-            }
+                var sqLiteHelper = new SQLiteHelper();
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    DataList = datalist;
+                });
+            });
         }
     }
 }

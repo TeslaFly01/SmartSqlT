@@ -9,6 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="SqlServerUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
         <Grid
@@ -82,8 +83,7 @@
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
-                        ShowClearButton="True"
-                        Text="{Binding ConnectConfig.ServerAddress}" />
+                        ShowClearButton="True" />
                     <TextBlock
                         Grid.Column="1"
                         Margin="0,65,0,20"

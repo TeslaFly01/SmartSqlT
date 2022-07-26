@@ -1,0 +1,546 @@
+<hc:Window
+    x:Class="SmartSQL.Views.ConnectManageExtT"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    Title="连接管理"
+    Width="680"
+    Height="370"
+    BorderThickness="0"
+    Icon="../Resources/Img/icon_connect.png"
+    Loaded="GroupManage_OnLoaded"
+    ResizeMode="CanResize"
+    ShowInTaskbar="False"
+    ShowTitle="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Grid Background="{StaticResource CloudDrawingBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" MinWidth="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!--  左侧菜单  -->
+        <Grid
+            Name="LeftMenu"
+            Margin="5"
+            Background="#f5f5f5">
+            <ListBox
+                Name="ListConnects"
+                Margin="5,5,5,35"
+                BorderThickness="0"
+                ItemsSource="{Binding DataList}"
+                ScrollViewer.VerticalScrollBarVisibility="Visible"
+                SelectionChanged="Selector_OnSelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <svgc:SvgViewbox
+                                Width="15"
+                                Height="15"
+                                Margin="0,0,0,0"
+                                HorizontalAlignment="Left"
+                                IsHitTestVisible="False"
+                                Source="{Binding Icon}" />
+                            <TextBlock
+                                Margin="22,0,0,0"
+                                VerticalAlignment="Center"
+                                Text="{Binding ConnectName}" />
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <hc:SimpleStackPanel
+                Margin="5,0,5,3"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom">
+                <hc:UniformSpacingPanel Spacing="1">
+                    <Button
+                        x:Name="BtnDelete"
+                        Width="25"
+                        Height="25"
+                        Margin="2"
+                        Click="BtnDelete_OnClick"
+                        Style="{StaticResource ButtonIconSingle}">
+                        <svgc:SvgViewbox
+                            Width="12"
+                            Height="12"
+                            Source="pack://application:,,,/Resources/svg/btn_del.svg"
+                            ToolTip="删除" />
+                    </Button>
+                    <Button
+                        Name="BtnAdd"
+                        Width="25"
+                        Height="25"
+                        Click="BtnReset_OnClick"
+                        Style="{StaticResource ButtonIconSingle}">
+                        <svgc:SvgViewbox
+                            Width="12"
+                            Height="12"
+                            Cursor="Hand"
+                            Source="pack://application:,,,/Resources/svg/btn_add.svg"
+                            ToolTip="添加" />
+                    </Button>
+                </hc:UniformSpacingPanel>
+            </hc:SimpleStackPanel>
+        </Grid>
+
+        <!--  右侧编辑区域  -->
+        <Grid
+            Grid.Column="1"
+            Margin="0,5,5,5"
+            Background="White">
+            <Grid>
+                <TabControl
+                    Name="TabDbType"
+                    SelectionChanged="TabDbType_OnSelectionChanged"
+                    Style="{StaticResource TabControlBaseStyle}">
+                    <!--  SqlServer  -->
+                    <TabItem
+                        Name="TabSqlServer"
+                        Cursor="Hand"
+                        Header="SqlServer"
+                        IsSelected="True">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="20,0,0,0">
+                                <TextBlock
+                                    Margin="0,28,20,20"
+                                    Cursor="Arrow"
+                                    Text="连接名称" />
+                                <TextBlock
+                                    Margin="0,68,20,20"
+                                    Cursor="Arrow"
+                                    Text="服务器地址" />
+                                <TextBlock
+                                    Margin="0,108,20,20"
+                                    Cursor="Arrow"
+                                    Text="身份验证" />
+                                <TextBlock
+                                    Margin="0,148,20,20"
+                                    Cursor="Arrow"
+                                    Text="登录名" />
+                                <TextBlock
+                                    Margin="0,188,20,20"
+                                    Cursor="Arrow"
+                                    Text="密码" />
+                                <TextBlock
+                                    Margin="0,228,20,20"
+                                    Cursor="Arrow"
+                                    Text="默认数据库" />
+                            </Grid>
+                            <Grid x:Name="MsSqlConnectForm" Grid.Column="1">
+                                <TextBox
+                                    Name="MsSql_HidId"
+                                    Text="0"
+                                    Visibility="Collapsed" />
+                                <hc:TextBox
+                                    Name="MsSql_TextConnectName"
+                                    Height="30"
+                                    Margin="0,20,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="45" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <hc:TextBox
+                                        Name="MsSql_TextServerAddress"
+                                        Height="30"
+                                        Margin="0,60,15,20"
+                                        VerticalAlignment="Top"
+                                        ShowClearButton="True" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="0,65,0,20"
+                                        Text="端口" />
+                                    <hc:NumericUpDown
+                                        Name="MsSql_TextServerPort"
+                                        Grid.Column="2"
+                                        Height="30"
+                                        Margin="0,60,20,20"
+                                        VerticalAlignment="Top"
+                                        Maximum="65536"
+                                        Minimum="0"
+                                        Value="1433" />
+                                </Grid>
+                                <ComboBox
+                                    Name="MsSql_ComboAuthentication"
+                                    Height="30"
+                                    Margin="0,100,20,20"
+                                    VerticalAlignment="Top">
+                                    <ComboBoxItem Name="SQLServer" IsSelected="True">SQL Server 身份验证</ComboBoxItem>
+                                    <ComboBoxItem Name="Windows" Visibility="Collapsed">Windows 身份验证</ComboBoxItem>
+                                </ComboBox>
+                                <hc:TextBox
+                                    Name="MsSql_TextServerName"
+                                    Height="0"
+                                    Margin="0,140,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <PasswordBox
+                                    Name="MsSql_TextServerPassword"
+                                    Height="30"
+                                    Margin="0,180,20,20"
+                                    VerticalAlignment="Top" />
+                                <ComboBox
+                                    x:Name="MsSql_ComboDefaultDatabase"
+                                    Height="30"
+                                    Margin="0,220,55,20"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Stretch"
+                                    hc:BorderElement.CornerRadius="5"
+                                    hc:InfoElement.Placeholder="请选择默认数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Text="{Binding DbName}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Image
+                                                    Width="11"
+                                                    Height="15"
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DbName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button
+                                    Name="MsSql_BtnFresh"
+                                    Margin="0,220,20,20"
+                                    Padding="7"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                                    BorderThickness="0"
+                                    Click="BtnFresh_OnClick"
+                                    Cursor="Hand"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    Style="{StaticResource ButtonIconCircular}"
+                                    ToolTip="刷新数据库" />
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <!--  MySql  -->
+                    <TabItem
+                        Name="TabMySql"
+                        Cursor="Hand"
+                        Header="MySql">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="20,0,0,0">
+                                <TextBlock
+                                    Margin="0,28,20,20"
+                                    Cursor="Arrow"
+                                    Text="连接名称" />
+                                <TextBlock
+                                    Margin="0,68,20,20"
+                                    Cursor="Arrow"
+                                    Text="服务器地址" />
+                                <TextBlock
+                                    Margin="0,108,20,20"
+                                    Cursor="Arrow"
+                                    Text="登录名" />
+                                <TextBlock
+                                    Margin="0,148,20,20"
+                                    Cursor="Arrow"
+                                    Text="密码" />
+                                <TextBlock
+                                    Margin="0,188,20,20"
+                                    Cursor="Arrow"
+                                    Text="默认数据库" />
+                            </Grid>
+                            <Grid x:Name="MySqlConnectForm" Grid.Column="1">
+                                <TextBox
+                                    Name="MySql_HidId"
+                                    Text="0"
+                                    Visibility="Collapsed" />
+                                <hc:TextBox
+                                    Name="MySql_TextConnectName"
+                                    Height="30"
+                                    Margin="0,20,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="45" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <hc:TextBox
+                                        Name="MySql_TextServerAddress"
+                                        Height="30"
+                                        Margin="0,60,15,20"
+                                        VerticalAlignment="Top"
+                                        ShowClearButton="True" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="0,65,0,20"
+                                        Text="端口" />
+                                    <hc:NumericUpDown
+                                        Name="MySql_TextServerPort"
+                                        Grid.Column="2"
+                                        Height="30"
+                                        Margin="0,60,20,20"
+                                        VerticalAlignment="Top"
+                                        Maximum="65536"
+                                        Minimum="0"
+                                        Value="3306" />
+                                </Grid>
+                                <hc:TextBox
+                                    Name="MySql_TextServerName"
+                                    Height="0"
+                                    Margin="0,100,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <PasswordBox
+                                    Name="MySql_TextServerPassword"
+                                    Height="30"
+                                    Margin="0,140,20,20"
+                                    VerticalAlignment="Top" />
+                                <ComboBox
+                                    x:Name="MySql_ComboDefaultDatabase"
+                                    Height="30"
+                                    Margin="0,180,55,20"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Stretch"
+                                    hc:BorderElement.CornerRadius="5"
+                                    hc:InfoElement.Placeholder="请选择默认数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Text="{Binding DbName}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Image
+                                                    Width="11"
+                                                    Height="15"
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DbName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button
+                                    Name="MySql_BtnFresh"
+                                    Margin="0,180,20,20"
+                                    Padding="7"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                                    BorderThickness="0"
+                                    Click="BtnFresh_OnClick"
+                                    Cursor="Hand"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    Style="{StaticResource ButtonIconCircular}"
+                                    ToolTip="刷新数据库" />
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+
+                    <!--  PostgreSql  -->
+                    <TabItem
+                        Name="TabPostgreSql"
+                        Cursor="Hand"
+                        Header="PostgreSql">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid Grid.Column="0" Margin="20,0,0,0">
+                                <TextBlock
+                                    Margin="0,28,20,20"
+                                    Cursor="Arrow"
+                                    Text="连接名称" />
+                                <TextBlock
+                                    Margin="0,68,20,20"
+                                    Cursor="Arrow"
+                                    Text="服务器地址" />
+                                <TextBlock
+                                    Margin="0,108,20,20"
+                                    Cursor="Arrow"
+                                    Text="登录名" />
+                                <TextBlock
+                                    Margin="0,148,20,20"
+                                    Cursor="Arrow"
+                                    Text="密码" />
+                                <TextBlock
+                                    Margin="0,188,20,20"
+                                    Cursor="Arrow"
+                                    Text="默认数据库" />
+                            </Grid>
+                            <Grid x:Name="PostgreSqlConnectForm" Grid.Column="1">
+                                <TextBox
+                                    Name="PostgreSql_HidId"
+                                    Text="0"
+                                    Visibility="Collapsed" />
+                                <hc:TextBox
+                                    Name="PostgreSql_TextConnectName"
+                                    Height="30"
+                                    Margin="0,20,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*" />
+                                        <ColumnDefinition Width="45" />
+                                        <ColumnDefinition Width="3*" />
+                                    </Grid.ColumnDefinitions>
+                                    <hc:TextBox
+                                        Name="PostgreSql_TextServerAddress"
+                                        Height="30"
+                                        Margin="0,60,15,20"
+                                        VerticalAlignment="Top"
+                                        ShowClearButton="True" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        Margin="0,65,0,20"
+                                        Text="端口" />
+                                    <hc:NumericUpDown
+                                        Name="PostgreSql_TextServerPort"
+                                        Grid.Column="2"
+                                        Height="30"
+                                        Margin="0,60,20,20"
+                                        VerticalAlignment="Top"
+                                        Maximum="65536"
+                                        Minimum="0"
+                                        Value="5432" />
+                                </Grid>
+                                <hc:TextBox
+                                    Name="PostgreSql_TextServerName"
+                                    Height="0"
+                                    Margin="0,100,20,20"
+                                    VerticalAlignment="Top"
+                                    ShowClearButton="True" />
+                                <PasswordBox
+                                    Name="PostgreSql_TextServerPassword"
+                                    Height="30"
+                                    Margin="0,140,20,20"
+                                    VerticalAlignment="Top" />
+                                <ComboBox
+                                    x:Name="PostgreSql_ComboDefaultDatabase"
+                                    Height="30"
+                                    Margin="0,180,55,20"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Stretch"
+                                    hc:BorderElement.CornerRadius="5"
+                                    hc:InfoElement.Placeholder="请选择默认数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Text="{Binding DbName}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Image
+                                                    Width="11"
+                                                    Height="15"
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DbName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button
+                                    Name="PostgreSql_BtnFresh"
+                                    Margin="0,180,20,20"
+                                    Padding="7"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Top"
+                                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                                    BorderThickness="0"
+                                    Click="BtnFresh_OnClick"
+                                    Cursor="Hand"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    Style="{StaticResource ButtonIconCircular}"
+                                    ToolTip="刷新数据库" />
+                            </Grid>
+                        </Grid>
+                    </TabItem>
+                </TabControl>
+            </Grid>
+            <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
+                <hc:SimpleStackPanel
+                    Margin="5"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Bottom">
+                    <hc:UniformSpacingPanel Spacing="10">
+                        <Button
+                            x:Name="BtnTestConnect"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnTestConnect_OnClick"
+                            Content="测试连接"
+                            Cursor="Hand" />
+                    </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+                <hc:SimpleStackPanel
+                    Margin="5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+                    <hc:UniformSpacingPanel Spacing="10">
+                        <Button
+                            x:Name="BtnConnect"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnSave_OnClick"
+                            Content="连接"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonPrimary}"
+                            Tag="Connect" />
+                        <Button
+                            x:Name="BtnSave"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnSave_OnClick"
+                            Content="保存"
+                            Cursor="Hand"
+                            Tag="Save" />
+                        <Button
+                            x:Name="BtnCancel"
+                            Height="25"
+                            Padding="20,0,20,0"
+                            Click="BtnCancel_OnClick"
+                            Content="取消"
+                            Cursor="Hand" />
+                    </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+            </Grid>
+        </Grid>
+        <local:Loading
+            x:Name="LoadingG"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            BackgroundOpacity="0.2"
+            Visibility="Collapsed" />
+    </Grid>
+</hc:Window>

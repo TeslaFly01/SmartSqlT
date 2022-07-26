@@ -8,8 +8,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     d:DesignHeight="450"
-    Loaded="ConnectMainUC_OnLoaded"
     d:DesignWidth="800"
+    Loaded="ConnectMainUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
         <StackPanel Margin="30,20,0,0" HorizontalAlignment="Left">

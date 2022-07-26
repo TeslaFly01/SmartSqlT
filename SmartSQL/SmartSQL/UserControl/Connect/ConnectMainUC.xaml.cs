@@ -35,7 +35,7 @@ namespace SmartSQL.UserControl.Connect
         private void ConnectType_OnClickCard(object sender, RoutedEventArgs e)
         {
             var senderInfo = (ConnectType)sender;
-            var mainWindow = (ConnectManageExt)Window.GetWindow(this);
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
             if (mainWindow == null)
             {
                 return;
@@ -59,7 +59,7 @@ namespace SmartSQL.UserControl.Connect
 
         private void ConnectMainUC_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (ConnectManageExt)Window.GetWindow(this);
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
             if (mainWindow != null) mainWindow.OprToolGrid.Visibility = Visibility.Collapsed;
         }
     }

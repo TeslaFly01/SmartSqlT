@@ -1269,7 +1269,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void AddConnect_OnClick(object sender, RoutedEventArgs e)
         {
-            var connect = new ConnectManageExt();
+            var connect = new ConnectManage();
             connect.Owner = this;
             connect.ChangeRefreshEvent += SwitchConnect;
             connect.ShowDialog();

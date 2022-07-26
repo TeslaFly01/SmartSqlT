@@ -9,6 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="PostgreSqlUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
         <Grid

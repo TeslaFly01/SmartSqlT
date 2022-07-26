@@ -146,11 +146,11 @@
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectManageExt.xaml.cs">
-      <DependentUpon>ConnectManageExt.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConnectManage.xaml.cs">
       <DependentUpon>ConnectManage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectManageExtT.xaml.cs">
+      <DependentUpon>ConnectManageExtT.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ExportDocExt.xaml.cs">
       <DependentUpon>ExportDocExt.xaml</DependentUpon>
@@ -297,11 +297,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectManageExt.xaml">
+    <Page Include="Views\ConnectManage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectManage.xaml">
+    <Page Include="Views\ConnectManageExtT.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
