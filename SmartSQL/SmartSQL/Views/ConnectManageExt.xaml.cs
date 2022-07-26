@@ -17,6 +17,7 @@ using SmartSQL.Framework.Util;
 using SmartSQL.Annotations;
 using SmartSQL.DocUtils;
 using SmartSQL.Helper;
+using SmartSQL.UserControl.Connect;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
 
@@ -57,6 +58,16 @@ namespace SmartSQL.Views
                 OnPropertyChanged(nameof(DataList));
             }
         }
+
+
+        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register(
+            "MainContent", typeof(System.Windows.Controls.UserControl), typeof(ConnectManageExt), new PropertyMetadata(default(System.Windows.Controls.UserControl)));
+
+        public System.Windows.Controls.UserControl MainContent
+        {
+            get => (System.Windows.Controls.UserControl)GetValue(MainContentProperty);
+            set => SetValue(MainContentProperty, value);
+        }
         #endregion
 
         private void GroupManage_OnLoaded(object sender, RoutedEventArgs e)
@@ -83,6 +94,7 @@ namespace SmartSQL.Views
                 switch (connect.DbType)
                 {
                     case DbType.SqlServer:
+                        MainContent = new SqlServerUC();
                         //TabSqlServer.IsSelected = true;
                         //MsSql_HidId.Text = connect.ID.ToString();
                         //MsSql_TextConnectName.Text = connect.ConnectName;
@@ -95,6 +107,7 @@ namespace SmartSQL.Views
                         //MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
                     case DbType.MySql:
+                        MainContent = new MySqlUC();
                         //TabMySql.IsSelected = true;
                         //MySql_HidId.Text = connect.ID.ToString();
                         //MySql_TextConnectName.Text = connect.ConnectName;
@@ -106,6 +119,7 @@ namespace SmartSQL.Views
                         //MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
                     case DbType.PostgreSQL:
+                        MainContent = new PostgreSql();
                         //TabPostgreSql.IsSelected = true;
                         //PostgreSql_HidId.Text = connect.ID.ToString();
                         //PostgreSql_TextConnectName.Text = connect.ConnectName;
@@ -343,6 +357,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnReset_OnClick(object sender, RoutedEventArgs e)
         {
+            MainContent = new ConnectMain();
             ResetData();
         }
 

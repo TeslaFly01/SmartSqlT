@@ -1,0 +1,60 @@
+<UserControl
+    x:Class="SmartSQL.UserControl.Controls.ConnectType"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="ConnectType_OnLoaded"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style
+            x:Key="ConnectCard"
+            BasedOn="{StaticResource CardBaseStyle}"
+            TargetType="hc:Card">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Bisque" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <hc:Card
+            Name="Card"
+            MaxWidth="115"
+            Margin="8,0,8,8"
+            BorderThickness="0"
+            Cursor="Hand"
+            Effect="{StaticResource EffectShadow2}"
+            IsEnabled="{Binding IsEnabled}"
+            MouseLeftButtonUp="Card_OnMouseLeftButtonUp"
+            Style="{StaticResource ConnectCard}">
+            <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
+                <svgc:SvgViewbox
+                    Width="80"
+                    Height="80"
+                    Margin="10"
+                    HorizontalAlignment="Center"
+                    IsHitTestVisible="False"
+                    Source="{Binding DataBaseIcon}"
+                    Stretch="Uniform" />
+            </Border>
+            <hc:Card.Footer>
+                <StackPanel Margin="5">
+                    <TextBlock
+                        Margin="0,5,0,0"
+                        HorizontalAlignment="Center"
+                        Style="{StaticResource TextBlockDefault}"
+                        Text="{Binding DataBaseName}"
+                        TextTrimming="CharacterEllipsis"
+                        TextWrapping="NoWrap" />
+                </StackPanel>
+            </hc:Card.Footer>
+        </hc:Card>
+    </Grid>
+</UserControl>

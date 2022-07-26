@@ -120,6 +120,9 @@
     <Compile Include="UserControl\Connect\SqlServerUC.xaml.cs">
       <DependentUpon>SqlServerUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Controls\ConnectType.xaml.cs">
+      <DependentUpon>ConnectType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Controls\NoDataArea.xaml.cs">
       <DependentUpon>NoDataArea.xaml</DependentUpon>
     </Compile>
@@ -259,6 +262,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Connect\SqlServerUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Controls\ConnectType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

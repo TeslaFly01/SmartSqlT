@@ -96,14 +96,17 @@
             Margin="0,5,5,5"
             Background="White">
             <Grid>
-                <userControl:ConnectMain />
-                <userControl:SqlServerUC Visibility="Collapsed"></userControl:SqlServerUC>
-                <userControl:MySqlUC Visibility="Collapsed"></userControl:MySqlUC>
-                <userControl:PostgreSql Visibility="Collapsed"></userControl:PostgreSql>                
+                <UserControl Content="{Binding MainContent}" />
+                <!--<userControl:SqlServerUC Visibility="Collapsed" />
+                <userControl:MySqlUC Visibility="Collapsed" />
+                <userControl:PostgreSql Visibility="Collapsed" />-->
             </Grid>
 
             <!--  操作栏  -->
-            <Grid VerticalAlignment="Bottom" Background="#f5f5f5" Visibility="Collapsed">
+            <Grid
+                VerticalAlignment="Bottom"
+                Background="#f5f5f5"
+                Visibility="Collapsed">
                 <hc:SimpleStackPanel
                     Margin="5"
                     HorizontalAlignment="Left"

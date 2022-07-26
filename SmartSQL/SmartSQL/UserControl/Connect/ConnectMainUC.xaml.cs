@@ -24,5 +24,15 @@ namespace SmartSQL.UserControl.Connect
         {
             InitializeComponent();
         }
+
+        /// <summary>
+        /// 选中连接类型
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConnectType_OnClickCard(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
