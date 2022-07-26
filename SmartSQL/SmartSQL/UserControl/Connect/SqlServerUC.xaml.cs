@@ -48,7 +48,7 @@ namespace SmartSQL.UserControl.Connect
         }
 
         /// <summary>
-        /// 首次加载页面数据
+        /// 初始化加载页面
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -115,8 +115,13 @@ namespace SmartSQL.UserControl.Connect
             #endregion
         }
 
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <param name="isTest"></param>
         public void TestConnect(bool isTest)
         {
+            #region MyRegion
             if (!VerifyForm())
             {
                 return;
@@ -161,7 +166,15 @@ namespace SmartSQL.UserControl.Connect
                         Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                     }
                 });
-            });
+            }); 
+            #endregion
+        }
+
+        /// <summary>
+        /// 保存连接
+        /// </summary>
+        public void SaveForm()
+        {
 
         }
     }

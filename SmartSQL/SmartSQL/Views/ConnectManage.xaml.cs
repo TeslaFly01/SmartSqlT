@@ -346,31 +346,22 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void BtnTestConnect_OnClick(object sender, RoutedEventArgs e)
         {
-            TestConnect(true);
-        }
-
-        /// <summary>
-        /// 测试连接
-        /// </summary>
-        /// <param name="flag"></param>
-        private void TestConnect(bool flag)
-        {
             #region MyRegion
             //测试SqlServer
             if (MainContent is SqlServerUC ucSqlServer)
             {
-                ucSqlServer.TestConnect(flag);
+                ucSqlServer.TestConnect(true);
             }
             //测试MySql
             if (MainContent is MySqlUC ucMySql)
             {
-                ucMySql.TestConnect(flag);
+                ucMySql.TestConnect(true);
             }
             //测试PostgreSql
             if (MainContent is PostgreSqlUC ucPostgreSql)
             {
-                ucPostgreSql.TestConnect(flag);
-            } 
+                ucPostgreSql.TestConnect(true);
+            }
             #endregion
         }
 

@@ -45,8 +45,14 @@ namespace SmartSQL.UserControl.Connect
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 初始化加载页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void PostgreSqlUC_OnLoaded(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded || ConnectConfig == null)
             {
                 return;
@@ -61,7 +67,8 @@ namespace SmartSQL.UserControl.Connect
             PostgreSql_TextServerName.Text = connect.UserName;
             PostgreSql_TextServerPassword.Password = pwd;
             PostgreSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-            PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+            PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            #endregion
         }
 
         /// <summary>
@@ -111,6 +118,7 @@ namespace SmartSQL.UserControl.Connect
         /// <param name="isTest"></param>
         public void TestConnect(bool isTest)
         {
+            #region MyRegion
             if (!VerifyForm())
             {
                 return;
@@ -153,8 +161,8 @@ namespace SmartSQL.UserControl.Connect
                         Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                     }
                 });
-            });
-
+            }); 
+            #endregion
         }
     }
 }

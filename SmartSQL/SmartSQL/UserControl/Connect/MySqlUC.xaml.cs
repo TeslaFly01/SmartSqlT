@@ -45,8 +45,14 @@ namespace SmartSQL.UserControl.Connect
             InitializeComponent();
         }
 
+        /// <summary>
+        /// 初始化加载页面
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MySqlUC_OnLoaded(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded || ConnectConfig == null)
             {
                 return;
@@ -61,7 +67,8 @@ namespace SmartSQL.UserControl.Connect
             MySql_TextServerName.Text = connect.UserName;
             MySql_TextServerPassword.Password = pwd;
             MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
-            MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+            MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            #endregion
         }
 
         /// <summary>
