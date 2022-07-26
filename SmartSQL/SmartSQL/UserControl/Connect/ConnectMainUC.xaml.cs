@@ -40,6 +40,7 @@ namespace SmartSQL.UserControl.Connect
             {
                 return;
             }
+            mainWindow.OprToolGrid.Visibility = Visibility.Visible;
             switch (senderInfo.DataBaseName)
             {
                 case "SQLServer":
@@ -54,6 +55,12 @@ namespace SmartSQL.UserControl.Connect
                 default:
                     return;
             }
+        }
+
+        private void ConnectMainUC_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = (ConnectManageExt)Window.GetWindow(this);
+            if (mainWindow != null) mainWindow.OprToolGrid.Visibility = Visibility.Collapsed;
         }
     }
 }

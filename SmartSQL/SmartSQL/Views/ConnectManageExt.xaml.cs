@@ -71,25 +71,14 @@ namespace SmartSQL.Views
             set => SetValue(MainContentProperty, value);
         }
         #endregion
-
-        private void GroupManage_OnLoaded(object sender, RoutedEventArgs e)
-        {
-            Task.Run(() =>
-            {
-                var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    DataList = datalist;
-                });
-            });
-        }
+        
 
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
+                OprToolGrid.Visibility = Visibility.Visible;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 var pwd = EncryptHelper.Decode(connect.Password);
                 var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
@@ -627,6 +616,24 @@ namespace SmartSQL.Views
             //    //var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
             //    //ListConnects.SelectedItem = connectId > 0 ? DataList.First(x => x.ID == connectId) : null;
             //}
+        }
+
+        private void ConnectManageExt_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            //OprToolGrid.Visibility = Visibility.Visible;
+            //if (UcMainContent.Content is ConnectMainUC)
+            //{
+            //    OprToolGrid.Visibility = Visibility.Collapsed;
+            //}
+            Task.Run(() =>
+            {
+                var sqLiteHelper = new SQLiteHelper();
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    DataList = datalist;
+                });
+            });
         }
     }
 }

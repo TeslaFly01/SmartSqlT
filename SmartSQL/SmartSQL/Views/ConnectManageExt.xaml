@@ -13,7 +13,7 @@
     Height="450"
     BorderThickness="0"
     Icon="../Resources/Img/icon_connect.png"
-    Loaded="GroupManage_OnLoaded"
+    Loaded="ConnectManageExt_OnLoaded"
     ResizeMode="CanResize"
     ShowInTaskbar="False"
     ShowTitle="True"
@@ -96,17 +96,14 @@
             Margin="0,5,5,5"
             Background="White">
             <Grid>
-                <UserControl Content="{Binding MainContent}" />
-                <!--<userControl:SqlServerUC Visibility="Collapsed" />
-                <userControl:MySqlUC Visibility="Collapsed" />
-                <userControl:PostgreSql Visibility="Collapsed" />-->
+                <UserControl Name="UcMainContent" Content="{Binding MainContent}" />
             </Grid>
 
             <!--  操作栏  -->
             <Grid
+                Name="OprToolGrid"
                 VerticalAlignment="Bottom"
-                Background="#f5f5f5"
-                Visibility="Collapsed">
+                Background="#f5f5f5">
                 <hc:SimpleStackPanel
                     Margin="5"
                     HorizontalAlignment="Left"

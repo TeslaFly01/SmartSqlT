@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     d:DesignHeight="450"
+    Loaded="ConnectMainUC_OnLoaded"
     d:DesignWidth="800"
     mc:Ignorable="d">
     <Grid>
