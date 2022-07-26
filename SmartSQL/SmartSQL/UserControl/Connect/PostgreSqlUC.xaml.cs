@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,9 +15,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
+using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Views;
+using SqlSugar;
+using Window = System.Windows.Window;
 
 namespace SmartSQL.UserControl.Connect
 {
@@ -42,7 +47,7 @@ namespace SmartSQL.UserControl.Connect
 
         private void PostgreSqlUC_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!IsLoaded)
+            if (!IsLoaded || ConnectConfig == null)
             {
                 return;
             }
@@ -64,6 +69,7 @@ namespace SmartSQL.UserControl.Connect
         /// </summary>
         public bool VerifyForm()
         {
+            #region MyRegion
             var connectName = PostgreSql_TextConnectName.Text.Trim();
             var serverAddress = PostgreSql_TextServerAddress.Text.Trim();
             var serverPort = PostgreSql_TextServerPort.Value;
@@ -95,7 +101,60 @@ namespace SmartSQL.UserControl.Connect
                 Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
-            return true;
+            return true; 
+            #endregion
+        }
+
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <param name="isTest"></param>
+        public void TestConnect(bool isTest)
+        {
+            if (!VerifyForm())
+            {
+                return;
+            }
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
+            if (mainWindow == null)
+            {
+                return;
+            }
+            mainWindow.LoadingG.Visibility = Visibility.Visible;
+            var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+            var connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
+                               $"PORT={PostgreSql_TextServerPort.Value};" +
+                               $"DATABASE=postgres;" +
+                               $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
+                               $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
+            Task.Run(() =>
+            {
+                var exporter = ExporterFactory.CreateInstance(DbType.PostgreSQL, connectionString);
+                var list = exporter.GetDatabases();
+                Dispatcher.Invoke(() =>
+                {
+                    PostgreSql_ComboDefaultDatabase.ItemsSource = list;
+                    if (connectId < 1)
+                    {
+                        PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
+                    }
+                    else
+                    {
+                        var sqLiteHelper = new SQLiteHelper();
+                        var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                        if (connect != null)
+                        {
+                            PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                        }
+                    }
+                    mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                    if (isTest)
+                    {
+                        Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                    }
+                });
+            });
+
         }
     }
 }

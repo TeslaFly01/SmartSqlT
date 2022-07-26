@@ -14,10 +14,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
+using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
 using SmartSQL.Views;
+using SqlSugar;
+using Window = System.Windows.Window;
 
 namespace SmartSQL.UserControl.Connect
 {
@@ -52,7 +55,7 @@ namespace SmartSQL.UserControl.Connect
         private void SqlServerUC_OnLoaded(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            if (!IsLoaded)
+            if (!IsLoaded || ConnectConfig == null)
             {
                 return;
             }
@@ -76,6 +79,7 @@ namespace SmartSQL.UserControl.Connect
         /// </summary>
         public bool VerifyForm()
         {
+            #region MyRegion
             var connectName = MsSql_TextConnectName.Text.Trim();
             var serverAddress = MsSql_TextServerAddress.Text.Trim();
             var serverPort = MsSql_TextServerPort.Value;
@@ -108,6 +112,57 @@ namespace SmartSQL.UserControl.Connect
                 return false;
             }
             return true;
+            #endregion
+        }
+
+        public void TestConnect(bool isTest)
+        {
+            if (!VerifyForm())
+            {
+                return;
+            }
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
+            if (mainWindow == null)
+            {
+                return;
+            }
+            mainWindow.LoadingG.Visibility = Visibility.Visible;
+            var connectId = Convert.ToInt32(MsSql_HidId.Text);
+            var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
+                ? $"{MsSql_TextServerAddress.Text.Trim()}"
+                : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
+            var connectionString = $"server={serAddr};" +
+                                "database=master;" +
+                                $"uid={MsSql_TextServerName.Text.Trim()};" +
+                                $"pwd={MsSql_TextServerPassword.Password.Trim()};";
+            Task.Run(() =>
+            {
+                var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
+                var list = exporter.GetDatabases();
+                Dispatcher.Invoke(() =>
+                {
+                    MsSql_ComboDefaultDatabase.ItemsSource = list;
+                    if (connectId < 1)
+                    {
+                        MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+                    }
+                    else
+                    {
+                        var sqLiteHelper = new SQLiteHelper();
+                        var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                        if (connect != null)
+                        {
+                            MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                        }
+                    }
+                    mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                    if (isTest)
+                    {
+                        Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                    }
+                });
+            });
+
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms.VisualStyles;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -14,9 +15,13 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
+using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Views;
+using SqlSugar;
+using Window = System.Windows.Window;
 
 namespace SmartSQL.UserControl.Connect
 {
@@ -42,7 +47,7 @@ namespace SmartSQL.UserControl.Connect
 
         private void MySqlUC_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!IsLoaded)
+            if (!IsLoaded || ConnectConfig == null)
             {
                 return;
             }
@@ -64,6 +69,7 @@ namespace SmartSQL.UserControl.Connect
         /// </summary>
         public bool VerifyForm()
         {
+            #region MyRegion
             var connectName = MySql_TextConnectName.Text.Trim();
             var serverAddress = MySql_TextServerAddress.Text.Trim();
             var serverPort = MySql_TextServerPort.Value;
@@ -95,7 +101,61 @@ namespace SmartSQL.UserControl.Connect
                 Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
-            return true;
+            return true; 
+            #endregion
+        }
+        
+        /// <summary>
+        /// 测试连接
+        /// </summary>
+        /// <param name="isTest"></param>
+        public void TestConnect(bool isTest)
+        {
+            #region MyRegion
+            if (!VerifyForm())
+            {
+                return;
+            }
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
+            if (mainWindow == null)
+            {
+                return;
+            }
+            mainWindow.LoadingG.Visibility = Visibility.Visible;
+            var connectId = Convert.ToInt32(MySql_HidId.Text);
+            var connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
+                               $"port={MySql_TextServerPort.Value};" +
+                               $"uid={MySql_TextServerName.Text.Trim()};" +
+                               $"pwd={MySql_TextServerPassword.Password.Trim()};" +
+                               $"Allow User Variables=True;sslmode=none;";
+            Task.Run(() =>
+            {
+                var exporter = ExporterFactory.CreateInstance(DbType.MySql, connectionString);
+                var list = exporter.GetDatabases();
+                Dispatcher.Invoke(() =>
+                {
+                    MySql_ComboDefaultDatabase.ItemsSource = list;
+                    if (connectId < 1)
+                    {
+                        MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
+                    }
+                    else
+                    {
+                        var sqLiteHelper = new SQLiteHelper();
+                        var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                        if (connect != null)
+                        {
+                            MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                        }
+                    }
+                    mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                    if (isTest)
+                    {
+                        Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                    }
+                });
+            }); 
+            #endregion
         }
     }
 }

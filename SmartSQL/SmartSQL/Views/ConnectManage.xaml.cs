@@ -115,10 +115,10 @@ namespace SmartSQL.Views
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            if (!CheckConnectForm())
-            {
-                return;
-            }
+            //if (!CheckConnectForm())
+            //{
+            //    return;
+            //}
             var tag = ((Button)sender).Tag;
             var isConnect = tag != null && (string)tag == $"Connect";
             var connectId = 0;
@@ -340,32 +340,6 @@ namespace SmartSQL.Views
         }
 
         /// <summary>
-        /// 校验表单数据
-        /// </summary>
-        private bool CheckConnectForm()
-        {
-            #region MyRegion
-            //校验SqlServer
-            if (MainContent.Content is SqlServerUC ucSqlServer)
-            {
-                return ucSqlServer.VerifyForm();
-            }
-            //校验MySql
-            if (MainContent.Content is MySqlUC ucMySql)
-            {
-                return ucMySql.VerifyForm();
-            }
-            //校验PostgreSql
-            if (MainContent.Content is PostgreSqlUC ucPostgreSql)
-            {
-                return ucPostgreSql.VerifyForm();
-            }
-            return false;
-
-            #endregion
-        }
-
-        /// <summary>
         /// 测试连接
         /// </summary>
         /// <param name="sender"></param>
@@ -381,124 +355,29 @@ namespace SmartSQL.Views
         /// <param name="flag"></param>
         private void TestConnect(bool flag)
         {
-            if (!CheckConnectForm())
+            #region MyRegion
+            //测试SqlServer
+            if (MainContent is SqlServerUC ucSqlServer)
             {
-                return;
+                ucSqlServer.TestConnect(flag);
             }
-            var dbType = DbType.SqlServer;
-
-            var connectId = 0;
-            var connectionString = @"";
-            //if (TabSqlServer.IsSelected)
-            //{
-            //    dbType = DbType.SqlServer;
-            //    //connectId = Convert.ToInt32(MsSql_HidId.Text);
-            //    //var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
-            //    //    ? $"{MsSql_TextServerAddress.Text.Trim()}"
-            //    //    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
-            //    //connectionString = $"server={serAddr};" +
-            //    //                   "database=master;" +
-            //    //                   $"uid={MsSql_TextServerName.Text.Trim()};" +
-            //    //                   $"pwd={MsSql_TextServerPassword.Password.Trim()};";
-            //}
-            //if (TabMySql.IsSelected)
-            //{
-            //    dbType = DbType.MySql;
-            //    //connectId = Convert.ToInt32(MySql_HidId.Text);
-            //    //connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
-            //    //                   $"port={MySql_TextServerPort.Value};" +
-            //    //                   $"uid={MySql_TextServerName.Text.Trim()};" +
-            //    //                   $"pwd={MySql_TextServerPassword.Password.Trim()};" +
-            //    //                   $"Allow User Variables=True;sslmode=none;";
-            //}
-            //if (TabPostgreSql.IsSelected)
-            //{
-            //    dbType = DbType.PostgreSQL;
-            //    //connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-            //    //connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
-            //    //                   $"PORT={PostgreSql_TextServerPort.Value};" +
-            //    //                   $"DATABASE=postgres;" +
-            //    //                   $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
-            //    //                   $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
-            //}
-            //LoadingG.Visibility = Visibility.Visible;
-            //Task.Run(() =>
-            //{
-            //    try
-            //    {
-            //        var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-            //        var list = exporter.GetDatabases();
-            //        Dispatcher.Invoke(() =>
-            //        {
-            //            if (TabSqlServer.IsSelected)
-            //            {
-            //                //MsSql_ComboDefaultDatabase.ItemsSource = list;
-            //            }
-            //            if (TabMySql.IsSelected)
-            //            {
-            //                //MySql_ComboDefaultDatabase.ItemsSource = list;
-            //            }
-            //            if (TabPostgreSql.IsSelected)
-            //            {
-            //                //PostgreSql_ComboDefaultDatabase.ItemsSource = list;
-            //            }
-            //            if (connectId < 1)
-            //            {
-            //                if (TabSqlServer.IsSelected)
-            //                {
-            //                   // MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
-            //                }
-            //                if (TabMySql.IsSelected)
-            //                {
-            //                    //MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
-            //                }
-            //                if (TabPostgreSql.IsSelected)
-            //                {
-            //                    //PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
-            //                }
-            //            }
-            //            else
-            //            {
-            //                var sqLiteHelper = new SQLiteHelper();
-            //                var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-            //                if (connect != null)
-            //                {
-            //                    if (TabSqlServer.IsSelected)
-            //                    {
-            //                        //MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-            //                    }
-            //                    if (TabMySql.IsSelected)
-            //                    {
-            //                        //MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-            //                    }
-            //                    if (TabPostgreSql.IsSelected)
-            //                    {
-            //                        //PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-            //                    }
-            //                }
-            //            }
-            //            LoadingG.Visibility = Visibility.Collapsed;
-            //            if (flag)
-            //            {
-            //                Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-            //            }
-            //        });
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Dispatcher.Invoke(() =>
-            //        {
-            //            LoadingG.Visibility = Visibility.Collapsed;
-            //            Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
-            //        });
-            //    }
-            //});
+            //测试MySql
+            if (MainContent is MySqlUC ucMySql)
+            {
+                ucMySql.TestConnect(flag);
+            }
+            //测试PostgreSql
+            if (MainContent is PostgreSqlUC ucPostgreSql)
+            {
+                ucPostgreSql.TestConnect(flag);
+            } 
+            #endregion
         }
 
-        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
-        {
-            TestConnect(false);
-        }
+        //private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
+        //{
+        //    TestConnect(false);
+        //}
 
         private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
         {
