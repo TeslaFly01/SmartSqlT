@@ -18,9 +18,9 @@ namespace SmartSQL.UserControl.Connect
     /// <summary>
     /// SqlServerUC.xaml 的交互逻辑
     /// </summary>
-    public partial class PostgreSql : System.Windows.Controls.UserControl
+    public partial class PostgreSqlUC : System.Windows.Controls.UserControl
     {
-        public PostgreSql()
+        public PostgreSqlUC()
         {
             InitializeComponent();
         }

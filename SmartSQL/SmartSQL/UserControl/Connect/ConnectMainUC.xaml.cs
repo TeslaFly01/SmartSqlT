@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartSQL.UserControl.Controls;
+using SmartSQL.Views;
 
 namespace SmartSQL.UserControl.Connect
 {
@@ -32,7 +34,26 @@ namespace SmartSQL.UserControl.Connect
         /// <param name="e"></param>
         private void ConnectType_OnClickCard(object sender, RoutedEventArgs e)
         {
-            
+            var senderInfo = (ConnectType)sender;
+            var mainWindow = (ConnectManageExt)Window.GetWindow(this);
+            if (mainWindow == null)
+            {
+                return;
+            }
+            switch (senderInfo.DataBaseName)
+            {
+                case "SQLServer":
+                    mainWindow.MainContent = new SqlServerUC();
+                    break;
+                case "MySQL":
+                    mainWindow.MainContent = new MySqlUC();
+                    break;
+                case "PostgreSQL":
+                    mainWindow.MainContent = new PostgreSqlUC();
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }

@@ -119,7 +119,7 @@ namespace SmartSQL.Views
                         //MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
                         break;
                     case DbType.PostgreSQL:
-                        MainContent = new PostgreSql();
+                        MainContent = new PostgreSqlUC();
                         //TabPostgreSql.IsSelected = true;
                         //PostgreSql_HidId.Text = connect.ID.ToString();
                         //PostgreSql_TextConnectName.Text = connect.ConnectName;

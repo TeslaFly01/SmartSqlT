@@ -114,8 +114,8 @@
     <Compile Include="UserControl\Connect\MySqlUC.xaml.cs">
       <DependentUpon>MySqlUC.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Connect\PostgreSql.xaml.cs">
-      <DependentUpon>PostgreSql.xaml</DependentUpon>
+    <Compile Include="UserControl\Connect\PostgreSqlUC.xaml.cs">
+      <DependentUpon>PostgreSqlUC.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Connect\SqlServerUC.xaml.cs">
       <DependentUpon>SqlServerUC.xaml</DependentUpon>
@@ -257,7 +257,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Connect\PostgreSql.xaml">
+    <Page Include="UserControl\Connect\PostgreSqlUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
