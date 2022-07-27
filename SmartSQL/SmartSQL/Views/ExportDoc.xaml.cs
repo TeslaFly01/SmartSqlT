@@ -34,7 +34,7 @@ namespace SmartSQL.Views
     /// <summary>
     /// ExportDoc.xaml 的交互逻辑
     /// </summary>
-    public partial class ExportDocExt : INotifyPropertyChanged
+    public partial class ExportDoc : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -49,7 +49,7 @@ namespace SmartSQL.Views
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         #region DependencyProperty
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(ExportDocExt), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(ExportDoc), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前连接
         /// </summary>
@@ -60,7 +60,7 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(DataBase), typeof(ExportDocExt), new PropertyMetadata(default(DataBase)));
+            "SelectedDataBase", typeof(DataBase), typeof(ExportDoc), new PropertyMetadata(default(DataBase)));
         /// <summary>
         /// 当前数据库
         /// </summary>
@@ -71,7 +71,7 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<TreeNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<TreeNodeItem>)));
+            "TreeViewData", typeof(List<TreeNodeItem>), typeof(ExportDoc), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 树形对象菜单
         /// </summary>
@@ -86,7 +86,7 @@ namespace SmartSQL.Views
         }
 
         public static readonly DependencyProperty ExportDataProperty = DependencyProperty.Register(
-            "ExportData", typeof(List<TreeNodeItem>), typeof(ExportDocExt), new PropertyMetadata(default(List<TreeNodeItem>)));
+            "ExportData", typeof(List<TreeNodeItem>), typeof(ExportDoc), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 导出目标数据
         /// </summary>
@@ -103,7 +103,7 @@ namespace SmartSQL.Views
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
         #endregion
 
-        public ExportDocExt()
+        public ExportDoc()
         {
             InitializeComponent();
             DataContext = this;

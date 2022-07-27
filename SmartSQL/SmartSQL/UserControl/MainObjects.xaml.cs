@@ -253,7 +253,7 @@ namespace SmartSQL.UserControl
         private void BtnExport_OnClick(object sender, RoutedEventArgs e)
         {
             var mainWindow = System.Windows.Window.GetWindow(this);
-            ExportDocExt exportDoc = new ExportDocExt();
+            var exportDoc = new ExportDoc();
             exportDoc.Owner = mainWindow;
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = SelectedDataBase;

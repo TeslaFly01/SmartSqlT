@@ -411,8 +411,6 @@
                         Height="325"
                         Source="Resources/Img/bg.png" />
                 </Border>
-                <userControl:MainConnect x:Name="MainConnect" Visibility="Collapsed" />
-
                 <!--  单选项卡  -->
                 <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
 

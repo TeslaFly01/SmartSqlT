@@ -91,8 +91,6 @@ namespace SmartSQL
             TabLeftType.SelectedIndex = leftMenuType - 1;
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
-
-            MainConnect.ConnectConfigs = connectConfigs;
             //var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
             //if (!string.IsNullOrWhiteSpace(selectedConn))
             //{
@@ -1288,7 +1286,7 @@ namespace SmartSQL
                 Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
                 return;
             }
-            var exportDoc = new ExportDocExt();
+            var exportDoc = new ExportDoc();
             exportDoc.Owner = this;
             exportDoc.SelectedConnection = SelectendConnection;
             exportDoc.SelectedDataBase = selectDatabase;

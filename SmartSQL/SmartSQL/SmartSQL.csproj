@@ -146,11 +146,8 @@
     <Compile Include="Views\ConnectManage.xaml.cs">
       <DependentUpon>ConnectManage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectManageExtT.xaml.cs">
-      <DependentUpon>ConnectManageExtT.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\ExportDocExt.xaml.cs">
-      <DependentUpon>ExportDocExt.xaml</DependentUpon>
+    <Compile Include="Views\ExportDoc.xaml.cs">
+      <DependentUpon>ExportDoc.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\GroupManage.xaml.cs">
       <DependentUpon>GroupManage.xaml</DependentUpon>
@@ -294,11 +291,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\ConnectManageExtT.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\ExportDocExt.xaml">
+    <Page Include="Views\ExportDoc.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
