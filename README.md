@@ -101,7 +101,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 下载解压后，双击运行 `SmartSQL.exe`。
 
 ### 🔥七、沟通交流
-![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact.png)
+![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png)
 
 ### ⚡ 附一、近期计划
 
