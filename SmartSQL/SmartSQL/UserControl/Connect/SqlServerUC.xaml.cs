@@ -30,6 +30,7 @@ namespace SmartSQL.UserControl.Connect
     /// </summary>
     public partial class SqlServerUC : System.Windows.Controls.UserControl
     {
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
 
         public static readonly DependencyProperty ConnectConfigProperty = DependencyProperty.Register(
             "ConnectConfig", typeof(ConnectConfigs), typeof(SqlServerUC), new PropertyMetadata(default(ConnectConfigs)));
@@ -63,15 +64,15 @@ namespace SmartSQL.UserControl.Connect
             var connect = ConnectConfig;
             var pwd = EncryptHelper.Decode(connect.Password);
             var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-            MsSql_HidId.Text = connect.ID.ToString();
-            MsSql_TextConnectName.Text = connect.ConnectName;
-            MsSql_TextServerAddress.Text = connect.ServerAddress;
-            MsSql_TextServerPort.Value = connect.ServerPort;
-            MsSql_TextServerName.Text = connect.UserName;
-            MsSql_ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SQLServer : Windows;
-            MsSql_TextServerPassword.Password = pwd;
-            MsSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-            MsSql_ComboDefaultDatabase.SelectedItem = defaultBase.First();
+            HidId.Text = connect.ID.ToString();
+            TextConnectName.Text = connect.ConnectName;
+            TextServerAddress.Text = connect.ServerAddress;
+            TextServerPort.Value = connect.ServerPort;
+            TextServerName.Text = connect.UserName;
+            ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SQLServer : Windows;
+            TextServerPassword.Password = pwd;
+            ComboDefaultDatabase.ItemsSource = defaultBase;
+            ComboDefaultDatabase.SelectedItem = defaultBase.First();
             #endregion
         }
 
@@ -81,11 +82,11 @@ namespace SmartSQL.UserControl.Connect
         public bool VerifyForm()
         {
             #region MyRegion
-            var connectName = MsSql_TextConnectName.Text.Trim();
-            var serverAddress = MsSql_TextServerAddress.Text.Trim();
-            var serverPort = MsSql_TextServerPort.Value;
-            var userName = MsSql_TextServerName.Text.Trim();
-            var password = MsSql_TextServerPassword.Password.Trim();
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
             {
@@ -133,24 +134,24 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
-            var connectId = Convert.ToInt32(MsSql_HidId.Text);
-            var serAddr = MsSql_TextServerAddress.Text.Trim().Equals(".")
-                ? $"{MsSql_TextServerAddress.Text.Trim()}"
-                : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
+            var connectId = Convert.ToInt32(HidId.Text);
+            var serAddr = TextServerAddress.Text.Trim().Equals(".")
+                ? $"{TextServerAddress.Text.Trim()}"
+                : $"{TextServerAddress.Text.Trim()},{TextServerPort.Value}";
             var connectionString = $"server={serAddr};" +
                                 "database=master;" +
-                                $"uid={MsSql_TextServerName.Text.Trim()};" +
-                                $"pwd={MsSql_TextServerPassword.Password.Trim()};";
+                                $"uid={TextServerName.Text.Trim()};" +
+                                $"pwd={TextServerPassword.Password.Trim()};";
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
                 var list = exporter.GetDatabases();
                 Dispatcher.Invoke(() =>
                 {
-                    MsSql_ComboDefaultDatabase.ItemsSource = list;
+                    ComboDefaultDatabase.ItemsSource = list;
                     if (connectId < 1)
                     {
-                        MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
+                        ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("master"));
                     }
                     else
                     {
@@ -158,7 +159,7 @@ namespace SmartSQL.UserControl.Connect
                         var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                         if (connect != null)
                         {
-                            MsSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
                         }
                     }
                     mainWindow.LoadingG.Visibility = Visibility.Collapsed;
@@ -187,17 +188,17 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
 
-            var connectId = Convert.ToInt32(MsSql_HidId.Text);
-            var connectName = MsSql_TextConnectName.Text.Trim();
-            var serverAddress = MsSql_TextServerAddress.Text.Trim();
-            var serverPort = MsSql_TextServerPort.Value;
-            var server = MsSql_TextServerAddress.Text.Trim().Equals(".")
+            var connectId = Convert.ToInt32(HidId.Text);
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var server = TextServerAddress.Text.Trim().Equals(".")
                 ? $"."
-                : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
-            var authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-            var userName = MsSql_TextServerName.Text.Trim();
-            var password = MsSql_TextServerPassword.Password.Trim();
-            var defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
+                : $"{TextServerAddress.Text.Trim()},{TextServerPort.Value}";
+            var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
+            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
             var connectionString = $"server={server};" +
                                $"database=master;uid={userName};" +
                                $"pwd={password};";
@@ -279,11 +280,11 @@ namespace SmartSQL.UserControl.Connect
                                 {
                                     Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
                                 }
-                                //if (isConnect && mainWindow.ChangeRefreshEvent != null)
-                                //{
-                                //   mainWindow.ChangeRefreshEvent(connectConfig);
-                                //    mainWindow.Close();
-                                //}
+                                if (isConnect && ChangeRefreshEvent != null)
+                                {
+                                    ChangeRefreshEvent(connectConfig);
+                                    mainWindow.Close();
+                                }
                             });
                         });
                     });

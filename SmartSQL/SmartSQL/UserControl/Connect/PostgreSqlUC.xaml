@@ -58,11 +58,11 @@
             </Grid>
             <Grid x:Name="PostgreSqlConnectForm" Grid.Column="1">
                 <TextBox
-                    Name="PostgreSql_HidId"
+                    Name="HidId"
                     Text="0"
                     Visibility="Collapsed" />
                 <hc:TextBox
-                    Name="PostgreSql_TextConnectName"
+                    Name="TextConnectName"
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
@@ -74,7 +74,7 @@
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <hc:TextBox
-                        Name="PostgreSql_TextServerAddress"
+                        Name="TextServerAddress"
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
@@ -84,7 +84,7 @@
                         Margin="0,65,0,20"
                         Text="端口" />
                     <hc:NumericUpDown
-                        Name="PostgreSql_TextServerPort"
+                        Name="TextServerPort"
                         Grid.Column="2"
                         Height="30"
                         Margin="0,60,20,20"
@@ -94,18 +94,18 @@
                         Value="5432" />
                 </Grid>
                 <hc:TextBox
-                    Name="PostgreSql_TextServerName"
+                    Name="TextServerName"
                     Height="0"
                     Margin="0,100,20,20"
                     VerticalAlignment="Top"
                     ShowClearButton="True" />
                 <PasswordBox
-                    Name="PostgreSql_TextServerPassword"
+                    Name="TextServerPassword"
                     Height="30"
                     Margin="0,140,20,20"
                     VerticalAlignment="Top" />
                 <ComboBox
-                    x:Name="PostgreSql_ComboDefaultDatabase"
+                    x:Name="ComboDefaultDatabase"
                     Height="30"
                     Margin="0,180,55,20"
                     VerticalAlignment="Top"
@@ -133,7 +133,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Button
-                    Name="PostgreSql_BtnFresh"
+                    Name="BtnFresh"
                     Margin="0,180,20,20"
                     Padding="7"
                     HorizontalAlignment="Right"

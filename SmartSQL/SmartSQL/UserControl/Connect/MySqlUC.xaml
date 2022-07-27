@@ -59,11 +59,11 @@
             </Grid>
             <Grid x:Name="MySqlConnectForm" Grid.Column="1">
                 <TextBox
-                    Name="MySql_HidId"
+                    Name="HidId"
                     Text="0"
                     Visibility="Collapsed" />
                 <hc:TextBox
-                    Name="MySql_TextConnectName"
+                    Name="TextConnectName"
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
@@ -75,7 +75,7 @@
                         <ColumnDefinition Width="3*" />
                     </Grid.ColumnDefinitions>
                     <hc:TextBox
-                        Name="MySql_TextServerAddress"
+                        Name="TextServerAddress"
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
@@ -85,7 +85,7 @@
                         Margin="0,65,0,20"
                         Text="端口" />
                     <hc:NumericUpDown
-                        Name="MySql_TextServerPort"
+                        Name="TextServerPort"
                         Grid.Column="2"
                         Height="30"
                         Margin="0,60,20,20"
@@ -95,18 +95,18 @@
                         Value="3306" />
                 </Grid>
                 <hc:TextBox
-                    Name="MySql_TextServerName"
+                    Name="TextServerName"
                     Height="0"
                     Margin="0,100,20,20"
                     VerticalAlignment="Top"
                     ShowClearButton="True" />
                 <PasswordBox
-                    Name="MySql_TextServerPassword"
+                    Name="TextServerPassword"
                     Height="30"
                     Margin="0,140,20,20"
                     VerticalAlignment="Top" />
                 <ComboBox
-                    x:Name="MySql_ComboDefaultDatabase"
+                    x:Name="ComboDefaultDatabase"
                     Height="30"
                     Margin="0,180,55,20"
                     VerticalAlignment="Top"
@@ -134,7 +134,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <Button
-                    Name="MySql_BtnFresh"
+                    Name="BtnFresh"
                     Margin="0,180,20,20"
                     Padding="7"
                     HorizontalAlignment="Right"

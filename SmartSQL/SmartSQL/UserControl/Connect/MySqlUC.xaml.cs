@@ -31,6 +31,8 @@ namespace SmartSQL.UserControl.Connect
     /// </summary>
     public partial class MySqlUC : System.Windows.Controls.UserControl
     {
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
+
         public static readonly DependencyProperty ConnectConfigProperty = DependencyProperty.Register(
             "ConnectConfig", typeof(ConnectConfigs), typeof(MySqlUC), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
@@ -61,14 +63,14 @@ namespace SmartSQL.UserControl.Connect
             var connect = ConnectConfig;
             var pwd = EncryptHelper.Decode(connect.Password);
             var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-            MySql_HidId.Text = connect.ID.ToString();
-            MySql_TextConnectName.Text = connect.ConnectName;
-            MySql_TextServerAddress.Text = connect.ServerAddress;
-            MySql_TextServerPort.Value = connect.ServerPort;
-            MySql_TextServerName.Text = connect.UserName;
-            MySql_TextServerPassword.Password = pwd;
-            MySql_ComboDefaultDatabase.ItemsSource = defaultBase;
-            MySql_ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            HidId.Text = connect.ID.ToString();
+            TextConnectName.Text = connect.ConnectName;
+            TextServerAddress.Text = connect.ServerAddress;
+            TextServerPort.Value = connect.ServerPort;
+            TextServerName.Text = connect.UserName;
+            TextServerPassword.Password = pwd;
+            ComboDefaultDatabase.ItemsSource = defaultBase;
+            ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
             #endregion
         }
 
@@ -78,11 +80,11 @@ namespace SmartSQL.UserControl.Connect
         public bool VerifyForm()
         {
             #region MyRegion
-            var connectName = MySql_TextConnectName.Text.Trim();
-            var serverAddress = MySql_TextServerAddress.Text.Trim();
-            var serverPort = MySql_TextServerPort.Value;
-            var userName = MySql_TextServerName.Text.Trim();
-            var password = MySql_TextServerPassword.Password.Trim();
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
             {
@@ -130,11 +132,11 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
-            var connectId = Convert.ToInt32(MySql_HidId.Text);
-            var connectionString = $"server={MySql_TextServerAddress.Text.Trim()};" +
-                               $"port={MySql_TextServerPort.Value};" +
-                               $"uid={MySql_TextServerName.Text.Trim()};" +
-                               $"pwd={MySql_TextServerPassword.Password.Trim()};" +
+            var connectId = Convert.ToInt32(HidId.Text);
+            var connectionString = $"server={TextServerAddress.Text.Trim()};" +
+                               $"port={TextServerPort.Value};" +
+                               $"uid={TextServerName.Text.Trim()};" +
+                               $"pwd={TextServerPassword.Password.Trim()};" +
                                $"Allow User Variables=True;sslmode=none;";
             Task.Run(() =>
             {
@@ -142,10 +144,10 @@ namespace SmartSQL.UserControl.Connect
                 var list = exporter.GetDatabases();
                 Dispatcher.Invoke(() =>
                 {
-                    MySql_ComboDefaultDatabase.ItemsSource = list;
+                    ComboDefaultDatabase.ItemsSource = list;
                     if (connectId < 1)
                     {
-                        MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
+                        ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
                     }
                     else
                     {
@@ -153,7 +155,7 @@ namespace SmartSQL.UserControl.Connect
                         var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                         if (connect != null)
                         {
-                            MySql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
                         }
                     }
                     mainWindow.LoadingG.Visibility = Visibility.Collapsed;
@@ -181,13 +183,13 @@ namespace SmartSQL.UserControl.Connect
             {
                 return;
             }
-            var connectId = Convert.ToInt32(MySql_HidId.Text);
-            var connectName = MySql_TextConnectName.Text.Trim();
-            var serverAddress = MySql_TextServerAddress.Text.Trim();
-            var serverPort = MySql_TextServerPort.Value;
-            var userName = MySql_TextServerName.Text.Trim();
-            var password = MySql_TextServerPassword.Password.Trim();
-            var defaultDataBase = (DataBase)MySql_ComboDefaultDatabase.SelectedItem;
+            var connectId = Convert.ToInt32(HidId.Text);
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
+            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
             var connectionString = $"server={serverAddress};" +
                                    $"port={serverPort};" +
                                    $"uid={userName};" +
@@ -272,11 +274,11 @@ namespace SmartSQL.UserControl.Connect
                                 {
                                     Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
                                 }
-                                //if (isConnect && ChangeRefreshEvent != null)
-                                //{
-                                //    ChangeRefreshEvent(connectConfig);
-                                //    this.Close();
-                                //}
+                                if (isConnect && ChangeRefreshEvent != null)
+                                {
+                                    ChangeRefreshEvent(connectConfig);
+                                    mainWindow.Close();
+                                }
                             });
                         });
                     });

@@ -91,6 +91,7 @@ namespace SmartSQL.Views
                     case DbType.SqlServer:
                         var ucSqlServer = new SqlServerUC();
                         ucSqlServer.ConnectConfig = connect;
+                        ucSqlServer.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucSqlServer;
                         break;
                     case DbType.MySql:

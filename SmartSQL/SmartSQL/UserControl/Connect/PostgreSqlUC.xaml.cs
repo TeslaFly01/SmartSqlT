@@ -31,6 +31,8 @@ namespace SmartSQL.UserControl.Connect
     /// </summary>
     public partial class PostgreSqlUC : System.Windows.Controls.UserControl
     {
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
+
         public static readonly DependencyProperty ConnectConfigProperty = DependencyProperty.Register(
             "ConnectConfig", typeof(ConnectConfigs), typeof(PostgreSqlUC), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
@@ -61,14 +63,14 @@ namespace SmartSQL.UserControl.Connect
             var connect = ConnectConfig;
             var pwd = EncryptHelper.Decode(connect.Password);
             var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
-            PostgreSql_HidId.Text = connect.ID.ToString();
-            PostgreSql_TextConnectName.Text = connect.ConnectName;
-            PostgreSql_TextServerAddress.Text = connect.ServerAddress;
-            PostgreSql_TextServerPort.Value = connect.ServerPort;
-            PostgreSql_TextServerName.Text = connect.UserName;
-            PostgreSql_TextServerPassword.Password = pwd;
-            PostgreSql_ComboDefaultDatabase.ItemsSource = defaultBase;
-            PostgreSql_ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            HidId.Text = connect.ID.ToString();
+            TextConnectName.Text = connect.ConnectName;
+            TextServerAddress.Text = connect.ServerAddress;
+            TextServerPort.Value = connect.ServerPort;
+            TextServerName.Text = connect.UserName;
+            TextServerPassword.Password = pwd;
+            ComboDefaultDatabase.ItemsSource = defaultBase;
+            ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
             #endregion
         }
 
@@ -78,11 +80,11 @@ namespace SmartSQL.UserControl.Connect
         public bool VerifyForm()
         {
             #region MyRegion
-            var connectName = PostgreSql_TextConnectName.Text.Trim();
-            var serverAddress = PostgreSql_TextServerAddress.Text.Trim();
-            var serverPort = PostgreSql_TextServerPort.Value;
-            var userName = PostgreSql_TextServerName.Text.Trim();
-            var password = PostgreSql_TextServerPassword.Password.Trim();
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
             {
@@ -130,22 +132,22 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
-            var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-            var connectionString = $"HOST={PostgreSql_TextServerAddress.Text.Trim()};" +
-                               $"PORT={PostgreSql_TextServerPort.Value};" +
+            var connectId = Convert.ToInt32(HidId.Text);
+            var connectionString = $"HOST={TextServerAddress.Text.Trim()};" +
+                               $"PORT={TextServerPort.Value};" +
                                $"DATABASE=postgres;" +
-                               $"USER ID={PostgreSql_TextServerName.Text.Trim()};" +
-                               $"PASSWORD={PostgreSql_TextServerPassword.Password.Trim()}";
+                               $"USER ID={TextServerName.Text.Trim()};" +
+                               $"PASSWORD={TextServerPassword.Password.Trim()}";
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.PostgreSQL, connectionString);
                 var list = exporter.GetDatabases();
                 Dispatcher.Invoke(() =>
                 {
-                    PostgreSql_ComboDefaultDatabase.ItemsSource = list;
+                    ComboDefaultDatabase.ItemsSource = list;
                     if (connectId < 1)
                     {
-                        PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
+                        ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
                     }
                     else
                     {
@@ -153,7 +155,7 @@ namespace SmartSQL.UserControl.Connect
                         var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                         if (connect != null)
                         {
-                            PostgreSql_ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
                         }
                     }
                     mainWindow.LoadingG.Visibility = Visibility.Collapsed;
@@ -181,13 +183,13 @@ namespace SmartSQL.UserControl.Connect
             {
                 return;
             }
-            var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-            var connectName = PostgreSql_TextConnectName.Text.Trim();
-            var serverAddress = PostgreSql_TextServerAddress.Text.Trim();
-            var serverPort = PostgreSql_TextServerPort.Value;
-            var userName = PostgreSql_TextServerName.Text.Trim();
-            var password = PostgreSql_TextServerPassword.Password.Trim();
-            var defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
+            var connectId = Convert.ToInt32(HidId.Text);
+            var connectName = TextConnectName.Text.Trim();
+            var serverAddress = TextServerAddress.Text.Trim();
+            var serverPort = TextServerPort.Value;
+            var userName = TextServerName.Text.Trim();
+            var password = TextServerPassword.Password.Trim();
+            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
             var connectionString = $"HOST={serverAddress};" +
                                $"PORT={serverPort};" +
                                $"DATABASE=postgres;" +
@@ -272,11 +274,11 @@ namespace SmartSQL.UserControl.Connect
                                 {
                                     Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
                                 }
-                                //if (isConnect && ChangeRefreshEvent != null)
-                                //{
-                                //    ChangeRefreshEvent(connectConfig);
-                                //    this.Close();
-                                //}
+                                if (isConnect && ChangeRefreshEvent != null)
+                                {
+                                    ChangeRefreshEvent(connectConfig);
+                                    mainWindow.Close();
+                                }
                             });
                         });
                     });
