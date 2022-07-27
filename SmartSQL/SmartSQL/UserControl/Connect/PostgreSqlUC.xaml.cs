@@ -171,6 +171,7 @@ namespace SmartSQL.UserControl.Connect
         /// </summary>
         public void SaveForm(bool isConnect)
         {
+            #region MyRegion
             if (!VerifyForm())
             {
                 return;
@@ -289,6 +290,17 @@ namespace SmartSQL.UserControl.Connect
                     });
                 }
             });
+            #endregion
+        }
+
+        /// <summary>
+        /// 刷新数据库
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
+        {
+            TestConnect(false);
         }
     }
 }

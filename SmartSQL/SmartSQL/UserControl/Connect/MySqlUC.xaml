@@ -141,6 +141,7 @@
                     VerticalAlignment="Top"
                     hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
                     BorderThickness="0"
+                    Click="BtnFresh_OnClick"
                     Cursor="Hand"
                     Foreground="{DynamicResource PrimaryTextBrush}"
                     Style="{StaticResource ButtonIconCircular}"

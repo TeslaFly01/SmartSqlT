@@ -115,13 +115,8 @@ namespace SmartSQL.Views
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            //if (!CheckConnectForm())
-            //{
-            //    return;
-            //}
             var tag = ((Button)sender).Tag;
             var isConnect = tag != null && (string)tag == $"Connect";
-
             //SqlServer
             if (MainContent is SqlServerUC ucSqlServer)
             {
@@ -137,162 +132,6 @@ namespace SmartSQL.Views
             {
                 ucPostgreSql.SaveForm(isConnect);
             }
-            //var connectId = 0;
-            //var connectName = "";
-            //var serverAddress = "";
-            //var serverPort = 1433d;
-            //var authentication = 1;
-            //var userName = "";
-            //var password = "";
-            //var defaultDataBase = new DataBase();
-            //var connectionString = "";
-            //var dbType = DbType.SqlServer;
-            //if (TabSqlServer.IsSelected)
-            //{
-            //    dbType = DbType.SqlServer;
-            //    //connectId = Convert.ToInt32(MsSql_HidId.Text);
-            //    //connectName = MsSql_TextConnectName.Text.Trim();
-            //    //serverAddress = MsSql_TextServerAddress.Text.Trim().Equals(".")
-            //    //    ? $"."
-            //    //    : $"{MsSql_TextServerAddress.Text.Trim()},{MsSql_TextServerPort.Value}";
-            //    //serverPort = MsSql_TextServerPort.Value;
-            //    //authentication = MsSql_ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
-            //    //userName = MsSql_TextServerName.Text.Trim();
-            //    //password = MsSql_TextServerPassword.Password.Trim();
-            //    //defaultDataBase = (DataBase)MsSql_ComboDefaultDatabase.SelectedItem;
-            //    connectionString = $"server={serverAddress};" +
-            //                       $"database=master;uid={userName};" +
-            //                       $"pwd={password};";
-            //}
-            //if (TabMySql.IsSelected)
-            //{
-            //    dbType = DbType.MySql;
-            //    //connectId = Convert.ToInt32(MySql_HidId.Text);
-            //    //connectName = MySql_TextConnectName.Text.Trim();
-            //    //serverAddress = MySql_TextServerAddress.Text.Trim();
-            //    //serverPort = MySql_TextServerPort.Value;
-            //    //userName = MySql_TextServerName.Text.Trim();
-            //    //password = MySql_TextServerPassword.Password.Trim();
-            //    //defaultDataBase = (DataBase)MySql_ComboDefaultDatabase.SelectedItem;
-            //    connectionString = $"server={serverAddress};" +
-            //                       $"port={serverPort};" +
-            //                       $"uid={userName};" +
-            //                       $"pwd={password};" +
-            //                       $"Allow User Variables=True;sslmode=none;";
-            //}
-            //if (TabPostgreSql.IsSelected)
-            //{
-            //    dbType = DbType.PostgreSQL;
-            //    //connectId = Convert.ToInt32(PostgreSql_HidId.Text);
-            //    //connectName = PostgreSql_TextConnectName.Text.Trim();
-            //    //serverAddress = PostgreSql_TextServerAddress.Text.Trim();
-            //    //serverPort = PostgreSql_TextServerPort.Value;
-            //    //userName = PostgreSql_TextServerName.Text.Trim();
-            //    //password = PostgreSql_TextServerPassword.Password.Trim();
-            //    //defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
-            //    connectionString = $"HOST={serverAddress};" +
-            //                       $"PORT={serverPort};" +
-            //                       $"DATABASE=postgres;" +
-            //                       $"USER ID={userName};" +
-            //                       $"PASSWORD={password}";
-            //}
-            //var sqLiteHelper = new SQLiteHelper();
-            //ConnectConfigs connectConfig;
-
-            //LoadingG.Visibility = Visibility.Visible;
-            //Task.Run(() =>
-            //{
-            //    try
-            //    {
-            //        if (isConnect)
-            //        {
-            //            var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-            //            exporter.GetDatabases();
-            //        }
-            //        Dispatcher.Invoke(() =>
-            //        {
-            //            LoadingG.Visibility = Visibility.Collapsed;
-            //            if (isConnect)
-            //            {
-            //                Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-            //            }
-            //            if (connectId > 0)
-            //            {
-            //                connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-            //                if (connectConfig == null)
-            //                {
-            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
-            //                    return;
-            //                }
-            //                var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
-            //                if (connectAny != null)
-            //                {
-            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
-            //                    return;
-            //                }
-            //                connectConfig.ConnectName = connectName;
-            //                connectConfig.DbType = dbType;
-            //                connectConfig.ServerAddress = serverAddress;
-            //                connectConfig.ServerPort = Convert.ToInt32(serverPort);
-            //                connectConfig.UserName = userName;
-            //                connectConfig.Password = EncryptHelper.Encode(password);
-            //                connectConfig.DefaultDatabase = defaultDataBase.DbName;
-            //                connectConfig.Authentication = authentication;
-            //                sqLiteHelper.db.Update(connectConfig);
-            //            }
-            //            else
-            //            {
-            //                var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
-            //                if (connect != null)
-            //                {
-            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
-            //                    return;
-            //                }
-            //                connectConfig = new ConnectConfigs()
-            //                {
-            //                    ConnectName = connectName,
-            //                    DbType = dbType,
-            //                    ServerAddress = serverAddress,
-            //                    ServerPort = Convert.ToInt32(serverPort),
-            //                    Authentication = authentication,
-            //                    UserName = userName,
-            //                    Password = EncryptHelper.Encode(password),
-            //                    CreateDate = DateTime.Now,
-            //                    DefaultDatabase = defaultDataBase.DbName
-
-            //                };
-            //                sqLiteHelper.db.Insert(connectConfig);
-            //            }
-
-            //            Task.Run(() =>
-            //            {
-            //                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
-            //                    ToList();
-            //                Dispatcher.Invoke(() =>
-            //                {
-            //                    DataList = datalist;
-            //                    if (!isConnect)
-            //                    {
-            //                        Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
-            //                    }
-            //                    if (isConnect && ChangeRefreshEvent != null)
-            //                    {
-            //                        ChangeRefreshEvent(connectConfig);
-            //                        this.Close();
-            //                    }
-            //                });
-            //            });
-            //        });
-            //    }
-            //    catch (Exception ex)
-            //    {
-            //        Dispatcher.Invoke(() =>
-            //        {
-            //            LoadingG.Visibility = Visibility.Collapsed;
-            //            Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
-            //        });
-            //    }
-            //});
             #endregion
         }
 
@@ -380,11 +219,6 @@ namespace SmartSQL.Views
             }
             #endregion
         }
-
-        //private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
-        //{
-        //    TestConnect(false);
-        //}
 
         private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
         {
