@@ -93,15 +93,15 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)|![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
 |--|--|
 
-### 💪 六、作者
 
-  [![作者](https://img.shields.io/badge/%E4%BD%9C%E8%80%85-MicLuo-green)](https://gitee.com/izhaofu)
-
-### ⬇️ 七、下载地址
+### ⬇️ 六、下载地址
 
 [![立即下载](https://img.shields.io/badge/%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD----green)](https://gitee.com/izhaofu/SmartSQL/releases) 
 
 下载解压后，双击运行 `SmartSQL.exe`。
+
+### 🔥七、沟通交流
+![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact.png)
 
 ### ⚡ 附一、近期计划
 
