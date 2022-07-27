@@ -121,16 +121,32 @@ namespace SmartSQL.Views
             //}
             var tag = ((Button)sender).Tag;
             var isConnect = tag != null && (string)tag == $"Connect";
-            var connectId = 0;
-            var connectName = "";
-            var serverAddress = "";
-            var serverPort = 1433d;
-            var authentication = 1;
-            var userName = "";
-            var password = "";
-            var defaultDataBase = new DataBase();
-            var connectionString = "";
-            var dbType = DbType.SqlServer;
+
+            //SqlServer
+            if (MainContent is SqlServerUC ucSqlServer)
+            {
+                ucSqlServer.SaveForm(isConnect);
+            }
+            //MySql
+            if (MainContent is MySqlUC ucMySql)
+            {
+                ucMySql.SaveForm(isConnect);
+            }
+            //PostgreSql
+            if (MainContent is PostgreSqlUC ucPostgreSql)
+            {
+                ucPostgreSql.SaveForm(isConnect);
+            }
+            //var connectId = 0;
+            //var connectName = "";
+            //var serverAddress = "";
+            //var serverPort = 1433d;
+            //var authentication = 1;
+            //var userName = "";
+            //var password = "";
+            //var defaultDataBase = new DataBase();
+            //var connectionString = "";
+            //var dbType = DbType.SqlServer;
             //if (TabSqlServer.IsSelected)
             //{
             //    dbType = DbType.SqlServer;
@@ -180,103 +196,103 @@ namespace SmartSQL.Views
             //                       $"USER ID={userName};" +
             //                       $"PASSWORD={password}";
             //}
-            var sqLiteHelper = new SQLiteHelper();
-            ConnectConfigs connectConfig;
+            //var sqLiteHelper = new SQLiteHelper();
+            //ConnectConfigs connectConfig;
 
-            LoadingG.Visibility = Visibility.Visible;
-            Task.Run(() =>
-            {
-                try
-                {
-                    if (isConnect)
-                    {
-                        var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
-                        exporter.GetDatabases();
-                    }
-                    Dispatcher.Invoke(() =>
-                    {
-                        LoadingG.Visibility = Visibility.Collapsed;
-                        if (isConnect)
-                        {
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-                        }
-                        if (connectId > 0)
-                        {
-                            connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                            if (connectConfig == null)
-                            {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
-                                return;
-                            }
-                            var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
-                            if (connectAny != null)
-                            {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
-                                return;
-                            }
-                            connectConfig.ConnectName = connectName;
-                            connectConfig.DbType = dbType;
-                            connectConfig.ServerAddress = serverAddress;
-                            connectConfig.ServerPort = Convert.ToInt32(serverPort);
-                            connectConfig.UserName = userName;
-                            connectConfig.Password = EncryptHelper.Encode(password);
-                            connectConfig.DefaultDatabase = defaultDataBase.DbName;
-                            connectConfig.Authentication = authentication;
-                            sqLiteHelper.db.Update(connectConfig);
-                        }
-                        else
-                        {
-                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
-                            if (connect != null)
-                            {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
-                                return;
-                            }
-                            connectConfig = new ConnectConfigs()
-                            {
-                                ConnectName = connectName,
-                                DbType = dbType,
-                                ServerAddress = serverAddress,
-                                ServerPort = Convert.ToInt32(serverPort),
-                                Authentication = authentication,
-                                UserName = userName,
-                                Password = EncryptHelper.Encode(password),
-                                CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase.DbName
+            //LoadingG.Visibility = Visibility.Visible;
+            //Task.Run(() =>
+            //{
+            //    try
+            //    {
+            //        if (isConnect)
+            //        {
+            //            var exporter = ExporterFactory.CreateInstance(dbType, connectionString);
+            //            exporter.GetDatabases();
+            //        }
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            LoadingG.Visibility = Visibility.Collapsed;
+            //            if (isConnect)
+            //            {
+            //                Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+            //            }
+            //            if (connectId > 0)
+            //            {
+            //                connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+            //                if (connectConfig == null)
+            //                {
+            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
+            //                    return;
+            //                }
+            //                var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
+            //                if (connectAny != null)
+            //                {
+            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+            //                    return;
+            //                }
+            //                connectConfig.ConnectName = connectName;
+            //                connectConfig.DbType = dbType;
+            //                connectConfig.ServerAddress = serverAddress;
+            //                connectConfig.ServerPort = Convert.ToInt32(serverPort);
+            //                connectConfig.UserName = userName;
+            //                connectConfig.Password = EncryptHelper.Encode(password);
+            //                connectConfig.DefaultDatabase = defaultDataBase.DbName;
+            //                connectConfig.Authentication = authentication;
+            //                sqLiteHelper.db.Update(connectConfig);
+            //            }
+            //            else
+            //            {
+            //                var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
+            //                if (connect != null)
+            //                {
+            //                    Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+            //                    return;
+            //                }
+            //                connectConfig = new ConnectConfigs()
+            //                {
+            //                    ConnectName = connectName,
+            //                    DbType = dbType,
+            //                    ServerAddress = serverAddress,
+            //                    ServerPort = Convert.ToInt32(serverPort),
+            //                    Authentication = authentication,
+            //                    UserName = userName,
+            //                    Password = EncryptHelper.Encode(password),
+            //                    CreateDate = DateTime.Now,
+            //                    DefaultDatabase = defaultDataBase.DbName
 
-                            };
-                            sqLiteHelper.db.Insert(connectConfig);
-                        }
+            //                };
+            //                sqLiteHelper.db.Insert(connectConfig);
+            //            }
 
-                        Task.Run(() =>
-                        {
-                            var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
-                                ToList();
-                            Dispatcher.Invoke(() =>
-                            {
-                                DataList = datalist;
-                                if (!isConnect)
-                                {
-                                    Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
-                                }
-                                if (isConnect && ChangeRefreshEvent != null)
-                                {
-                                    ChangeRefreshEvent(connectConfig);
-                                    this.Close();
-                                }
-                            });
-                        });
-                    });
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.Invoke(() =>
-                    {
-                        LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
-                    });
-                }
-            });
+            //            Task.Run(() =>
+            //            {
+            //                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
+            //                    ToList();
+            //                Dispatcher.Invoke(() =>
+            //                {
+            //                    DataList = datalist;
+            //                    if (!isConnect)
+            //                    {
+            //                        Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
+            //                    }
+            //                    if (isConnect && ChangeRefreshEvent != null)
+            //                    {
+            //                        ChangeRefreshEvent(connectConfig);
+            //                        this.Close();
+            //                    }
+            //                });
+            //            });
+            //        });
+            //    }
+            //    catch (Exception ex)
+            //    {
+            //        Dispatcher.Invoke(() =>
+            //        {
+            //            LoadingG.Visibility = Visibility.Collapsed;
+            //            Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
+            //        });
+            //    }
+            //});
             #endregion
         }
 

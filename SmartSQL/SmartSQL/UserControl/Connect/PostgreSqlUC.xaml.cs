@@ -15,6 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Controls;
 using HandyControl.Data;
+using SmartSQL.DocUtils;
 using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
@@ -163,6 +164,131 @@ namespace SmartSQL.UserControl.Connect
                 });
             }); 
             #endregion
+        }
+
+        /// <summary>
+        /// 保存表单
+        /// </summary>
+        public void SaveForm(bool isConnect)
+        {
+            if (!VerifyForm())
+            {
+                return;
+            }
+            var mainWindow = (ConnectManage)Window.GetWindow(this);
+            if (mainWindow == null)
+            {
+                return;
+            }
+            var connectId = Convert.ToInt32(PostgreSql_HidId.Text);
+            var connectName = PostgreSql_TextConnectName.Text.Trim();
+            var serverAddress = PostgreSql_TextServerAddress.Text.Trim();
+            var serverPort = PostgreSql_TextServerPort.Value;
+            var userName = PostgreSql_TextServerName.Text.Trim();
+            var password = PostgreSql_TextServerPassword.Password.Trim();
+            var defaultDataBase = (DataBase)PostgreSql_ComboDefaultDatabase.SelectedItem;
+            var connectionString = $"HOST={serverAddress};" +
+                               $"PORT={serverPort};" +
+                               $"DATABASE=postgres;" +
+                               $"USER ID={userName};" +
+                               $"PASSWORD={password}";
+            var sqLiteHelper = new SQLiteHelper();
+            ConnectConfigs connectConfig;
+
+            mainWindow.LoadingG.Visibility = Visibility.Visible;
+            Task.Run(() =>
+            {
+                try
+                {
+                    if (isConnect)
+                    {
+                        var exporter = ExporterFactory.CreateInstance(DbType.PostgreSQL, connectionString);
+                        exporter.GetDatabases();
+                    }
+                    Dispatcher.Invoke(() =>
+                    {
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                        if (isConnect)
+                        {
+                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                        }
+                        if (connectId > 0)
+                        {
+                            connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                            if (connectConfig == null)
+                            {
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
+                                return;
+                            }
+                            var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
+                            if (connectAny != null)
+                            {
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                return;
+                            }
+                            connectConfig.ConnectName = connectName;
+                            connectConfig.DbType = DbType.PostgreSQL;
+                            connectConfig.ServerAddress = serverAddress;
+                            connectConfig.ServerPort = Convert.ToInt32(serverPort);
+                            connectConfig.UserName = userName;
+                            connectConfig.Password = EncryptHelper.Encode(password);
+                            connectConfig.DefaultDatabase = defaultDataBase.DbName;
+                            connectConfig.Authentication = 1;
+                            sqLiteHelper.db.Update(connectConfig);
+                        }
+                        else
+                        {
+                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
+                            if (connect != null)
+                            {
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                return;
+                            }
+                            connectConfig = new ConnectConfigs()
+                            {
+                                ConnectName = connectName,
+                                DbType = DbType.PostgreSQL,
+                                ServerAddress = serverAddress,
+                                ServerPort = Convert.ToInt32(serverPort),
+                                Authentication = 1,
+                                UserName = userName,
+                                Password = EncryptHelper.Encode(password),
+                                CreateDate = DateTime.Now,
+                                DefaultDatabase = defaultDataBase.DbName
+
+                            };
+                            sqLiteHelper.db.Insert(connectConfig);
+                        }
+
+                        Task.Run(() =>
+                        {
+                            var datalist = sqLiteHelper.db.Table<ConnectConfigs>().
+                                ToList();
+                            Dispatcher.Invoke(() =>
+                            {
+                                mainWindow.DataList = datalist;
+                                if (!isConnect)
+                                {
+                                    Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
+                                }
+                                //if (isConnect && ChangeRefreshEvent != null)
+                                //{
+                                //    ChangeRefreshEvent(connectConfig);
+                                //    this.Close();
+                                //}
+                            });
+                        });
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
+                    });
+                }
+            });
         }
     }
 }
