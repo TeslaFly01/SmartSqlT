@@ -27,7 +27,7 @@ using Window = System.Windows.Window;
 namespace SmartSQL.UserControl.Connect
 {
     /// <summary>
-    /// SqlServerUC.xaml 的交互逻辑
+    /// MySqlUC.xaml 的交互逻辑
     /// </summary>
     public partial class MySqlUC : System.Windows.Controls.UserControl
     {

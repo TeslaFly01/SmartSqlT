@@ -71,7 +71,6 @@ namespace SmartSQL.Views
         {
             InitializeComponent();
             DataContext = this;
-            MainContent = new ConnectMainUC();
         }
 
         /// <summary>
@@ -97,11 +96,13 @@ namespace SmartSQL.Views
                     case DbType.MySql:
                         var ucMySql = new MySqlUC();
                         ucMySql.ConnectConfig = connect;
+                        ucMySql.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucMySql;
                         break;
                     case DbType.PostgreSQL:
                         var ucPostgreSql = new PostgreSqlUC();
                         ucPostgreSql.ConnectConfig = connect;
+                        ucPostgreSql.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucPostgreSql;
                         break;
                 }
@@ -223,6 +224,13 @@ namespace SmartSQL.Views
 
         private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var ucConnectMain = new ConnectMainUC();
+            ucConnectMain.ChangeRefreshEvent += ChangeRefreshEvent;
+            MainContent = ucConnectMain;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();

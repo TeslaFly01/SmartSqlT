@@ -18,10 +18,12 @@ using SmartSQL.Views;
 namespace SmartSQL.UserControl.Connect
 {
     /// <summary>
-    /// SqlServerUC.xaml 的交互逻辑
+    /// ConnectMainUC.xaml 的交互逻辑
     /// </summary>
     public partial class ConnectMainUC : System.Windows.Controls.UserControl
     {
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
+
         public ConnectMainUC()
         {
             InitializeComponent();
@@ -44,13 +46,19 @@ namespace SmartSQL.UserControl.Connect
             switch (senderInfo.DataBaseName)
             {
                 case "SQLServer":
-                    mainWindow.MainContent = new SqlServerUC();
+                    var ucSqlServerUc = new SqlServerUC();
+                    ucSqlServerUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucSqlServerUc;
                     break;
                 case "MySQL":
-                    mainWindow.MainContent = new MySqlUC();
+                    var ucMySqlUc = new MySqlUC();
+                    ucMySqlUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucMySqlUc;
                     break;
                 case "PostgreSQL":
-                    mainWindow.MainContent = new PostgreSqlUC();
+                    var ucPostgreSqlUc = new PostgreSqlUC();
+                    ucPostgreSqlUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucPostgreSqlUc;
                     break;
                 default:
                     return;

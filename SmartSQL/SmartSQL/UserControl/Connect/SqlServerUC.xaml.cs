@@ -263,7 +263,7 @@ namespace SmartSQL.UserControl.Connect
                                 UserName = userName,
                                 Password = EncryptHelper.Encode(password),
                                 CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase.DbName
+                                DefaultDatabase = "master"
 
                             };
                             sqLiteHelper.db.Insert(connectConfig);
@@ -297,10 +297,10 @@ namespace SmartSQL.UserControl.Connect
                         Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
                     });
                 }
-            }); 
+            });
             #endregion
         }
-        
+
         /// <summary>
         /// 刷新数据库
         /// </summary>

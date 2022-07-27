@@ -27,7 +27,7 @@ using Window = System.Windows.Window;
 namespace SmartSQL.UserControl.Connect
 {
     /// <summary>
-    /// SqlServerUC.xaml 的交互逻辑
+    /// PostgreSqlUC.xaml 的交互逻辑
     /// </summary>
     public partial class PostgreSqlUC : System.Windows.Controls.UserControl
     {
