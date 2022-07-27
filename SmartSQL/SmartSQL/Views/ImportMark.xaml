@@ -34,7 +34,7 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     Click="BtnFindFile_OnClick"
-                    Content="浏览..."
+                    Content="浏览"
                     Cursor="Hand" />
                 <TextBlock
                     Margin="10,75,0,0"
@@ -43,10 +43,10 @@
                 <hc:TransitioningContentControl Margin="13,0,0,0" VerticalAlignment="Bottom">
                     <StackPanel>
                         <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
-                            <TextBlock Text="pdm 由powerdesigner设计数据库时产生；" />
+                            <TextBlock Text="pdm 由PowerDesigner设计数据库时产生；" />
                         </Border>
                         <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
-                            <TextBlock Text="xml 由visual studio设置实体类库的项目属性,勾选XML文档文件后生成项目时产生；" />
+                            <TextBlock Text="xml 由Visual Studio设置实体类库的项目属性,勾选XML文档文件后生成项目时产生；" />
                         </Border>
                         <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
                             <TextBlock Text="xml 由SmartSQL导出文档为XML类型而产生；" />
