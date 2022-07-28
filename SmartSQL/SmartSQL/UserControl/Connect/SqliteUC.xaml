@@ -16,7 +16,7 @@
             VerticalAlignment="Top"
             Background="#e3e4e7">
             <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
-                <TextBlock FontWeight="Bold" Text="SQLServer 连接设置" />
+                <TextBlock FontWeight="Bold" Text="SQLite 连接设置" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                 <svgc:SvgViewbox
@@ -43,7 +43,7 @@
                     Cursor="Arrow"
                     Text="DB路径" />
                 <TextBlock
-                    Margin="0,228,20,20"
+                    Margin="0,108,20,20"
                     Cursor="Arrow"
                     Text="默认数据库" />
             </Grid>
@@ -61,21 +61,29 @@
                     Text="{Binding ConnectConfig.ConnectName}" />
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*" />
-                        <ColumnDefinition Width="45" />
-                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="9*" />
+                        <ColumnDefinition Width="85" />
                     </Grid.ColumnDefinitions>
                     <hc:TextBox
                         Name="TextServerAddress"
                         Height="30"
-                        Margin="0,60,15,20"
+                        Margin="0,60,5,20"
                         VerticalAlignment="Top"
                         ShowClearButton="True" />
+                    <Button
+                        Name="BtnLookPath"
+                        Grid.Column="1"
+                        Width="65"
+                        Margin="0,60,20,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="浏览"
+                        Cursor="Hand" />
                 </Grid>
                 <ComboBox
                     x:Name="ComboDefaultDatabase"
                     Height="30"
-                    Margin="0,220,55,20"
+                    Margin="0,100,55,20"
                     VerticalAlignment="Top"
                     HorizontalContentAlignment="Stretch"
                     hc:BorderElement.CornerRadius="5"
@@ -102,7 +110,7 @@
                 </ComboBox>
                 <Button
                     Name="BtnFresh"
-                    Margin="0,220,20,20"
+                    Margin="0,100,20,20"
                     Padding="7"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"

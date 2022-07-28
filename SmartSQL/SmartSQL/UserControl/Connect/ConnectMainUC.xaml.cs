@@ -60,6 +60,11 @@ namespace SmartSQL.UserControl.Connect
                     ucPostgreSqlUc.ChangeRefreshEvent += ChangeRefreshEvent;
                     mainWindow.MainContent = ucPostgreSqlUc;
                     break;
+                case "SQLite":
+                    var ucSqliteUc = new SqliteUC();
+                    ucSqliteUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucSqliteUc;
+                    break;
                 default:
                     return;
             }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartSQL.Views;
 
 namespace SmartSQL.UserControl.Connect
 {
@@ -20,6 +21,7 @@ namespace SmartSQL.UserControl.Connect
     /// </summary>
     public partial class SqliteUC : System.Windows.Controls.UserControl
     {
+        public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
         public SqliteUC()
         {
             InitializeComponent();

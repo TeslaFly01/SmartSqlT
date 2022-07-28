@@ -41,6 +41,13 @@
                 DataBaseName="PostgreSQL"
                 IsEnabled="True" />
 
+            <!--  SQLite  -->
+            <baseControl:ConnectType
+                ClickCard="ConnectType_OnClickCard"
+                DataBaseIcon="pack://application:,,,/Resources/svg/sqlite@64.svg"
+                DataBaseName="SQLite"
+                IsEnabled="False" />
+
             <!--  Oracle  -->
             <baseControl:ConnectType
                 ClickCard="ConnectType_OnClickCard"

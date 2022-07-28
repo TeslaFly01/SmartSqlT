@@ -18,7 +18,10 @@
             TargetType="hc:Card">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="Bisque" />
+                    <Setter Property="Background" Value="#e3e4e6" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Background" Value="#e3e4e6" />
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -34,10 +37,10 @@
             IsEnabled="{Binding IsEnabled}"
             MouseLeftButtonUp="Card_OnMouseLeftButtonUp"
             Style="{StaticResource ConnectCard}">
-            <Border CornerRadius="4,4,0,0" Style="{StaticResource BorderClip}">
+            <Border CornerRadius="5,5,0,0" Style="{StaticResource BorderClip}">
                 <svgc:SvgViewbox
-                    Width="80"
-                    Height="80"
+                    Width="65"
+                    Height="65"
                     Margin="10"
                     HorizontalAlignment="Center"
                     IsHitTestVisible="False"
@@ -47,7 +50,7 @@
             <hc:Card.Footer>
                 <StackPanel Margin="5">
                     <TextBlock
-                        Margin="0,5,0,0"
+                        Margin="0,3,0,0"
                         HorizontalAlignment="Center"
                         Style="{StaticResource TextBlockDefault}"
                         Text="{Binding DataBaseName}"

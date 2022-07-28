@@ -91,10 +91,10 @@ namespace SmartSQL.UserControl.Controls
 
         private void ConnectType_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (!IsEnabled)
-            {
-                DataBaseName = $"{DataBaseName}(开发中)";
-            }
+            //if (!IsEnabled)
+            //{
+            //    DataBaseName = $"{DataBaseName}(开发中)";
+            //}
         }
     }
 }
