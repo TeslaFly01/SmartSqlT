@@ -128,14 +128,7 @@ namespace SmartSQL
                 var list = dbInstance.GetDatabases();
                 SelectDatabase.ItemsSource = list;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-                if (!list.Any())
-                {
-                    MenuBind(false,null);
-                }
-                else
-                {
-                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
-                }
+                SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
 
                 var sqLiteHelper = new SQLiteHelper();
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedConnection, connectConfig.ConnectName);
