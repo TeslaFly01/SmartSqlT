@@ -62,6 +62,7 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.SqlServer: return "/SmartSQL;component/Resources/svg/sqlserver.svg";
                     case DbType.MySql: return "/SmartSQL;component/Resources/svg/mysql.svg";
                     case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
+                    case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
                     default: return "";
                 }
             }
@@ -94,6 +95,9 @@ namespace SmartSQL.Framework.SqliteModel
                                         $"USER ID={UserName};" +
                                         $"PASSWORD={EncryptHelper.Decode(Password)}";
                         break;
+                    case DbType.Sqlite:
+                        connectString = $"DataSource={ServerAddress}";
+                        break;
                 }
                 return connectString;
             }
@@ -124,11 +128,19 @@ namespace SmartSQL.Framework.SqliteModel
                                         $"USER ID={UserName};" +
                                         $"PASSWORD={EncryptHelper.Decode(Password)}";
                         break;
+                    case DbType.Sqlite:
+                        connectString = $"DataSource={ServerAddress}";
+                        break;
                 }
                 return connectString;
             }
         }
 
+        /// <summary>
+        /// 当前选中数据库连接
+        /// </summary>
+        /// <param name="selectedDatabase"></param>
+        /// <returns></returns>
         public string SelectedDbConnectString(string selectedDatabase)
         {
             var connectString = string.Empty;
@@ -148,6 +160,9 @@ namespace SmartSQL.Framework.SqliteModel
                                     $"DATABASE={selectedDatabase};" +
                                     $"USER ID={UserName};" +
                                     $"PASSWORD={EncryptHelper.Decode(Password)}";
+                    break;
+                case DbType.Sqlite:
+                    connectString = $"DataSource={ServerAddress}";
                     break;
             }
             return connectString;

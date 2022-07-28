@@ -29,9 +29,8 @@ namespace SmartSQL.Framework.Exporter
             var model = new Model { Database = "Sqlite" };
             try
             {
-                //model.Tables = this.GetTables();
-                //model.Views = this.GetViews();
-                //model.Procedures = this.GetProcedures();
+                model.Tables = this.GetTables();
+                model.Views = this.GetViews();
                 return model;
             }
             catch (Exception ex)
@@ -42,27 +41,59 @@ namespace SmartSQL.Framework.Exporter
 
         public override List<DataBase> GetDatabases()
         {
-            #region MyRegion
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
-            var dbClient = SugarFactory.GetInstance(DbType.Sqlite, DbConnectString);
-            var dataBaseList = dbMaintenance.GetDataBaseList(dbClient);
-            var list = new List<DataBase>();
-            dataBaseList.ForEach(dbName =>
+            return new List<DataBase>
             {
-                var dBase = new DataBase
+                new DataBase
                 {
-                    DbName = dbName,
-                    IsSelected = false
-                };
-                list.Add(dBase);
-            });
-            return list;
-            #endregion
+                    DbName = "default",
+                    IsSelected = true
+                }
+            };
         }
 
         public override Columns GetColumnInfoById(string objectId)
         {
-            throw new NotImplementedException();
+            var columns = new Columns(500);
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+            var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            viewList.ForEach(v =>
+            {
+                if (columns.ContainsKey(v.DbColumnName))
+                {
+                    return;
+                }
+                var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
+                column.Length = "";
+                switch (v.DataType)
+                {
+                    case "char":
+                    case "nchar":
+                    case "time":
+                    case "text":
+                    case "binary":
+                    case "varchar":
+                    case "nvarchar":
+                    case "varbinary":
+                    case "datetime2":
+                    case "datetimeoffset":
+                        column.Length = $"({v.Length})"; break;
+                    case "numeric":
+                    case "decimal":
+                        column.Length = $"({v.Length},{v.Scale})"; break;
+                }
+
+                column.ObjectId = objectId.ToString();
+                column.ObjectName = v.DbColumnName;
+                column.IsIdentity = v.IsIdentity;
+                column.IsNullable = v.IsNullable;
+                column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
+                column.DataType = v.DataType;
+                column.OriginalName = v.DbColumnName;
+                column.Comment = v.ColumnDescription;
+                column.IsPrimaryKey = v.IsPrimarykey;
+                columns.Add(v.DbColumnName, column);
+            });
+            return columns;
         }
 
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
@@ -108,6 +139,60 @@ namespace SmartSQL.Framework.Exporter
         public override string DropColumnSql()
         {
             throw new NotImplementedException();
+        }
+
+        private Tables GetTables()
+        {
+            #region MyRegion
+            var tables = new Tables();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+            var tableList = dbMaintenance.GetTableInfoList(false);
+            tableList.ForEach(tb =>
+            {
+                if (tables.ContainsKey(tb.Name))
+                {
+                    return;
+                }
+                var table = new Table
+                {
+                    Id = tb.Name,
+                    Name = tb.Name,
+                    DisplayName = tb.Name,
+                    Comment = tb.Description,
+                    CreateDate = tb.CreateDate,
+                    ModifyDate = tb.ModifyDate
+                };
+                tables.Add(tb.Name, table);
+            });
+            return tables;
+            #endregion
+        }
+
+        private Views GetViews()
+        {
+            #region MyRegion
+            var views = new Views();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+            var viewList = dbMaintenance.GetViewInfoList(false);
+            viewList.ForEach(v =>
+            {
+                if (views.ContainsKey(v.Name))
+                {
+                    return;
+                }
+                var view = new View()
+                {
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Description,
+                    CreateDate = v.CreateDate,
+                    ModifyDate = v.ModifyDate
+                };
+                views.Add(v.Name, view);
+            });
+            return views;
+            #endregion
         }
     }
 }

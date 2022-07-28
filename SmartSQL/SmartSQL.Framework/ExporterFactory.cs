@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using SmartSQL.Framework.Exporter;
 using SmartSQL.Framework.PhysicalDataModel;
@@ -21,6 +21,7 @@ namespace SmartSQL.Framework
                 case DbType.SqlServer: return new SqlServerExporter(dbConnectionString);
                 case DbType.MySql: return new MySqlExporter(dbConnectionString);
                 case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString);
+                case DbType.Sqlite: return new SqliteExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
@@ -31,6 +32,7 @@ namespace SmartSQL.Framework
                 case DbType.SqlServer: return new SqlServerExporter(tableName, columns);
                 case DbType.MySql: return new MySqlExporter(tableName, columns);
                 case DbType.PostgreSQL: return new PostgreSqlExporter(tableName, columns);
+                case DbType.Sqlite: return new SqliteExporter(tableName, columns);
                 default: return new SqlServerExporter(tableName, columns);
             }
         }

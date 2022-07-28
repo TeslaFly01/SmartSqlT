@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +17,12 @@ namespace SmartSQL.Framework.PhysicalDataModel
         protected Views _views;
         protected Procedures _procs;
 
-        public Model() { }
+        public Model()
+        {
+            _tables = new Tables();
+            _views = new Views();
+            _procs = new Procedures();
+        }
 
         public Model(Tables tables)
         {

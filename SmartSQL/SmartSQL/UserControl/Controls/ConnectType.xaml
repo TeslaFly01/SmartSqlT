@@ -30,7 +30,7 @@
         <hc:Card
             Name="Card"
             MaxWidth="115"
-            Margin="8,0,8,8"
+            Margin="8,0,8,20"
             BorderThickness="0"
             Cursor="Hand"
             Effect="{StaticResource EffectShadow2}"

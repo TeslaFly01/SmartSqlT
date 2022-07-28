@@ -46,7 +46,7 @@
                 ClickCard="ConnectType_OnClickCard"
                 DataBaseIcon="pack://application:,,,/Resources/svg/sqlite@64.svg"
                 DataBaseName="SQLite"
-                IsEnabled="False" />
+                IsEnabled="True" />
 
             <!--  Oracle  -->
             <baseControl:ConnectType

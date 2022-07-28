@@ -105,6 +105,12 @@ namespace SmartSQL.Views
                         ucPostgreSql.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucPostgreSql;
                         break;
+                    case DbType.Sqlite:
+                        var ucSqlite = new SqliteUC();
+                        ucSqlite.ConnectConfig = connect;
+                        ucSqlite.ChangeRefreshEvent += ChangeRefreshEvent;
+                        MainContent = ucSqlite;
+                        break;
                 }
             }
         }
@@ -133,6 +139,11 @@ namespace SmartSQL.Views
             if (MainContent is PostgreSqlUC ucPostgreSql)
             {
                 ucPostgreSql.SaveForm(isConnect);
+            }
+            //Sqlite
+            if (MainContent is SqliteUC ucSqlite)
+            {
+                ucSqlite.SaveForm(isConnect);
             }
             #endregion
         }
@@ -218,6 +229,11 @@ namespace SmartSQL.Views
             if (MainContent is PostgreSqlUC ucPostgreSql)
             {
                 ucPostgreSql.TestConnect(true);
+            }
+            //测试Sqlite
+            if (MainContent is SqliteUC ucSqlite)
+            {
+                ucSqlite.TestConnect(true);
             }
             #endregion
         }
