@@ -17,21 +17,24 @@
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/TopContent.png)
 ### 🚩 一、项目介绍
 
-SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`Json`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`等多种数据库的文档查询和导出功能。
+SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`Json`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`、`SQLite`等多种数据库的文档查询和导出功能。
 
 ##### 🏅开源地址
 [![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
 [![GitHub](https://shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green?logo=github&style=flat)](https://github.com/TeslaFly01/SmartSqlT)
 
-> 🚀 本项目力求做最简单、最好用的数据库文档(字典)查询生成工具！
+> 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
 ### 🥝 二、数据库支持
 - ✅ SqlServer
 - ✅ MySQL
 - ✅ PostgreSQL
+- ✅ SQLite
 - - [x] Oracle
 - - [x] DB2
-- - [x] SQLite
+- - [x] TIDB
+- - [x] 达梦
+- - [x] 人大金仓
 
 ### 📖 三、主要功能 
 
@@ -41,8 +44,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - `存储过程` 存储过程内容SQL脚本
 
 #### 2.支持导出哪些文档格式？
-![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/chm.png) ![Excel文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/excel.png) ![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/word.png) ![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/pdf.png)
-![Html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/html.png) ![Xml文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/xml.png) ![Json](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/json.png) ![MarkDown](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/markdown.png)
+![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/chm.png) | ![Excel文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/excel.png) | ![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/word.png) | ![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/pdf.png)
+--|--|--|--
+![Html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/html.png) | ![Xml文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/xml.png) | ![Json](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/json.png) | ![MarkDown](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/markdown.png)
 
 #### 3.更新表列的注释，有哪些方式？
 - 通过 `文件`➡`导入备注`，选择文件导入进行更新批注(注释)：
@@ -57,9 +61,21 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ConnectType.png)|![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Connect.png)
 --|--
 
+> 连接管理里面可以对当前添加的连接进行`添加`、`删除`和`修改`等操作。
+ 
+> 目前支持对`SQLServer`、`MySQL`、`PostgreSQL`、`SQLite`等4种数据库的支持。
+
+> 对`Oracle`、`DB2`、`TIDB`、`达梦`等其他关系型数据库的支持也正在紧张进行中。
+
 #### 2.分组管理
 ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-GroupObject.png)
 --|--
+
+>  在此可以对数据库中的`表`、`视图`、`存储过程`等对象实现自定义分组，方便后续管理
+
+>  同时还支持对分组进行排序，将鼠标放在需要排序的分组上，当鼠标箭头变成➕就可以进行拖动排序了
+
+>  对`常用的分组`可以置为默认`展开`，`不常用的分组`置为默认`不展开`，保持左侧菜单界面干净、清爽
 
 #### 3.快捷查询
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-View.png) |
@@ -71,11 +87,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Import.png)|![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Export.png)
 :--:|:--:
 
-#### 5.设置
-![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Setting.png)
-
-#### 6.关于
-![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-About.png)
+#### 5.设置/关于
+![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Setting.png) | ![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-About.png)
+--|--
 
 
 ### 🎉 五、文档截图
