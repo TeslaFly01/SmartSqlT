@@ -76,18 +76,18 @@ namespace SmartSQL.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({v.Length})"; break;
+                        column.Length = v.Length == 2147483647 ? "" : $"({v.Length})"; break;
                     case "numeric":
                     case "decimal":
                         column.Length = $"({v.Length},{v.Scale})"; break;
                 }
 
-                column.ObjectId = objectId.ToString();
+                 column.ObjectId = objectId.ToString();
                 column.ObjectName = v.DbColumnName;
                 column.IsIdentity = v.IsIdentity;
                 column.IsNullable = v.IsNullable;
                 column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
-                column.DataType = v.DataType;
+                column.DataType = v.DataType.ToUpper();
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
                 column.IsPrimaryKey = v.IsPrimarykey;

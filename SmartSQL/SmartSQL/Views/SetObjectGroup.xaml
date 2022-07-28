@@ -33,7 +33,7 @@
             </StackPanel>
             <ListBox
                 Name="ListGroup"
-                Margin="5,35,5,5"
+                Margin="0,35,0,5"
                 BorderThickness="0"
                 ItemsSource="{Binding LeftObjects}"
                 MouseDoubleClick="ListGroup_OnMouseDoubleClick"

@@ -392,6 +392,14 @@ namespace SmartSQL.UserControl
                 Growl.WarningGlobal(new GrowlInfo { Message = $"请选择对应的数据表", ShowDateTime = false, WaitTime = 1 });
                 return;
             }
+            var sqLiteHelper = new SQLiteHelper();
+            var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
+                x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
+            if (!list.Any())
+            {
+                Growl.WarningGlobal(new GrowlInfo { Message = $"暂无分组，请先添加分组", WaitTime = 1, ShowDateTime = false });
+                return;
+            }
             var mainWindow = System.Windows.Window.GetWindow(this);
             var group = new SetObjectGroup();
             group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
