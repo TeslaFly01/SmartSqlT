@@ -41,14 +41,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - `存储过程` 存储过程内容SQL脚本
 
 #### 2.支持导出哪些文档格式？
-- ✅ CHM
-- ✅ Word
-- ✅ Excel
-- ✅ PDF
-- ✅ Html
-- ✅ Xml
-- ✅ Json
-- ✅ MarkDown
+![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/chm.png) ![Excel文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/excel.png) ![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/word.png) ![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/pdf.png)
+![Html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/html.png) ![Xml文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/xml.png) ![Json](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/json.png) ![MarkDown](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/markdown.png)
+
 #### 3.更新表列的注释，有哪些方式？
 - 通过 `文件`➡`导入备注`，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`PowerDesigner`设计数据库时产生。
