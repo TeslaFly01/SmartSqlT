@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +26,7 @@ namespace SmartSQL.Framework.Exporter
             try
             {
                 model.Tables = this.GetTables();
-                model.Views = new Views();// this.GetViews();
+                model.Views =  this.GetViews();
                 model.Procedures = new Procedures();// this.GetProcedures();
                 return model;
             }
