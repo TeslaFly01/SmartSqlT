@@ -146,6 +146,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Donation.xaml.cs">
+      <DependentUpon>Donation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\AboutWindow.xaml.cs">
       <DependentUpon>AboutWindow.xaml</DependentUpon>
     </Compile>
@@ -293,6 +296,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Donation.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\AboutWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -390,7 +397,11 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\donation\alipay.png" />
+    <Resource Include="Resources\Img\donation\wxpay.png" />
     <Content Include="Resources\Img\icon.png" />
+    <Resource Include="Resources\svg\icon_logo.svg" />
+    <Resource Include="Resources\svg\icon_money.svg" />
     <Resource Include="Resources\svg\sqlite%4064.svg" />
     <Resource Include="Resources\svg\TIDB%4064.svg" />
     <Resource Include="Resources\svg\DB2%4064.svg" />

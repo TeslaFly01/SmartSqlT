@@ -146,17 +146,42 @@
                 </MenuItem>
                 <MenuItem
                     Name="MenuAbout"
-                    Click="MenuAbout_OnClick"
                     Cursor="Hand"
                     FontWeight="Bold"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
-                    Header="关于">
+                    Header="帮助">
                     <MenuItem.Icon>
                         <Path
                             Data="{StaticResource InfoGeometry}"
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
+                    <MenuItem
+                        Name="MenuDonation"
+                        FontWeight="Normal"
+                        Click="MenuDonation_OnClick"
+                        Header="打赏作者">
+                        <MenuItem.Icon>
+                            <svgc:SvgViewbox
+                                Width="15"
+                                Height="15"
+                                VerticalAlignment="Center"
+                                Source="pack://application:,,,/Resources/svg/icon_money.svg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="MenuAboutThis"
+                        Click="MenuAbout_OnClick"
+                        FontWeight="Normal"
+                        Header="关于SmartSQL">
+                        <MenuItem.Icon>
+                            <svgc:SvgViewbox
+                                Width="15"
+                                Height="15"
+                                VerticalAlignment="Center"
+                                Source="pack://application:,,,/Resources/svg/icon_logo.svg" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
             </Menu>
         </StackPanel>

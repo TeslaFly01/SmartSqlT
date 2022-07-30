@@ -1325,5 +1325,17 @@ namespace SmartSQL
                 MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
             }
         }
+
+        /// <summary>
+        /// 打赏作者
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuDonation_OnClick(object sender, RoutedEventArgs e)
+        {
+            var donation = new Donation();
+            donation.Owner = this;
+            donation.ShowDialog();
+        }
     }
 }
