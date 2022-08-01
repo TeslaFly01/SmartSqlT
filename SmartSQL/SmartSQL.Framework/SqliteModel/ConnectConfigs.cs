@@ -82,21 +82,21 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.SqlServer:
                         var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                         connectString =
-                            $"server={serAddress};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                            $@"server={serAddress};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                         break;
                     case DbType.MySql:
                         connectString =
-                            $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;sslmode=none;";
+                            $@"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;sslmode=none;";
                         break;
                     case DbType.PostgreSQL:
-                        connectString = $"HOST={ServerAddress};" +
+                        connectString = $@"HOST={ServerAddress};" +
                                         $"PORT={ServerPort};" +
                                         $"DATABASE={DefaultDatabase};" +
                                         $"USER ID={UserName};" +
                                         $"PASSWORD={EncryptHelper.Decode(Password)}";
                         break;
                     case DbType.Sqlite:
-                        connectString = $"DataSource={ServerAddress}";
+                        connectString = $@"DataSource={ServerAddress}";
                         break;
                 }
                 return connectString;
@@ -116,13 +116,13 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.SqlServer:
                         var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                         connectString =
-                            $"server={serAddress};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                            $@"server={serAddress};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                         break;
                     case DbType.MySql:
-                        connectString = $"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;";
+                        connectString = $@"Server={ServerAddress};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;;sslmode=none;";
                         break;
                     case DbType.PostgreSQL:
-                        connectString = $"HOST={ServerAddress};" +
+                        connectString = $@"HOST={ServerAddress};" +
                                         $"PORT={ServerPort};" +
                                         $"DATABASE={DefaultDatabase};" +
                                         $"USER ID={UserName};" +
@@ -149,13 +149,13 @@ namespace SmartSQL.Framework.SqliteModel
                 case DbType.SqlServer:
                     var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
                     connectString =
-                        $"server={serAddress};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        $@"server={serAddress};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
                     break;
                 case DbType.MySql:
-                    connectString = $"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;sslmode=none;";
+                    connectString = $@"Server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;sslmode=none;";
                     break;
                 case DbType.PostgreSQL:
-                    connectString = $"HOST={ServerAddress};" +
+                    connectString = $@"HOST={ServerAddress};" +
                                     $"PORT={ServerPort};" +
                                     $"DATABASE={selectedDatabase};" +
                                     $"USER ID={UserName};" +
