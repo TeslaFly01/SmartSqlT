@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Xml.Serialization;
 using HandyControl.Controls;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
+using HandyControl.Data;
 
 namespace SmartSQL.Views
 {
@@ -89,128 +90,139 @@ namespace SmartSQL.Views
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             Task.Run(() =>
             {
-                if (xmlContent.Contains("DBDto"))
+                try
                 {
-                    #region MyRegion
-                    //通过 smartsql 导出的 XML文件 来更新 表列批注
-                    XmlDocument doc = new XmlDocument();
-                    doc.LoadXml(xmlContent);
-                    if (doc.DocumentElement != null)
+                    if (xmlContent.Contains("DBDto"))
                     {
-                        var dbName = doc.DocumentElement.GetAttribute("databaseName");
-                        //if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
-                        //{
-                        //    //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
-                        //    //{
-                        //    //    return;
-                        //    //}
-                        //}
-                    }
-                    var dbDTO = new DBDto().DeserializeXml(xmlContent);
-                    foreach (var tabInfo in dbDTO.Tables)
-                    {
-                        var tableName = tabInfo.TableName;
-                        //更新表描述
-                        if (dbMaintenance.IsAnyTable(tabInfo.TableName))
+                        #region MyRegion
+                        //通过 smartsql 导出的 XML文件 来更新 表列批注
+                        XmlDocument doc = new XmlDocument();
+                        doc.LoadXml(xmlContent);
+                        if (doc.DocumentElement != null)
                         {
-                            if (!string.IsNullOrWhiteSpace(tabInfo.Comment))
+                            var dbName = doc.DocumentElement.GetAttribute("databaseName");
+                            //if (!SelectedDataBase.DbName.Equals(dbName, StringComparison.OrdinalIgnoreCase))
+                            //{
+                            //    //if (MessageBox.Show("检测到数据库名称不一致，确定要继续吗？", "提示", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.Cancel)
+                            //    //{
+                            //    //    return;
+                            //    //}
+                            //}
+                        }
+                        var dbDTO = new DBDto().DeserializeXml(xmlContent);
+                        foreach (var tabInfo in dbDTO.Tables)
+                        {
+                            var tableName = tabInfo.TableName;
+                            //更新表描述
+                            if (dbMaintenance.IsAnyTable(tabInfo.TableName))
                             {
-                                if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
+                                if (!string.IsNullOrWhiteSpace(tabInfo.Comment))
                                 {
-                                    dbMaintenance.DeleteTableRemark(tabInfo.TableName);
-                                }
-                                dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
-                            }
-                            //更新表列的描述
-                            tabInfo.Columns.ForEach(colInfo =>
-                            {
-                                var colName = colInfo.ColumnName;
-                                var comment = colInfo.Comment;
-                                if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
-                                {
-                                    if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                    if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
                                     {
-                                        dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                        dbMaintenance.DeleteTableRemark(tabInfo.TableName);
                                     }
-                                    dbMaintenance.AddColumnRemark(colName, tableName, comment);
+                                    dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
                                 }
-                            });
-                        }
-                    }
-                    //更新视图描述
-                    dbDTO.Views.ForEach(view =>
-                    {
-                        var viewName = view.ObjectName;
-                        var comment = view.Comment;
-                        if (!string.IsNullOrWhiteSpace(comment))
-                        {
-                            if (dbMaintenance.IsAnyViewRemark(viewName))
-                            {
-                                dbMaintenance.DeleteViewRemark(viewName);
-                            }
-                            dbMaintenance.AddViewRemark(viewName, comment);
-                        }
-                    });
-                    //更新存储过程描述
-                    dbDTO.Procs.ForEach(proc =>
-                    {
-                        var procName = proc.ObjectName;
-                        var comment = proc.Comment;
-                        if (!string.IsNullOrWhiteSpace(comment))
-                        {
-                            if (dbMaintenance.IsAnyProcRemark(procName))
-                            {
-                                dbMaintenance.DeleteProcRemark(procName);
-                            }
-                            dbMaintenance.AddProcRemark(procName, comment);
-                        }
-                    });
-                    #endregion
-                }
-                else
-                {
-                    #region MyRegion
-                    //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
-                    XmlAnalyze analyze = new XmlAnalyze(path);
-                    var data = analyze.Data;
-                    foreach (var item in data)
-                    {
-                        var tableName = item.Key.Key;
-                        var tableComment = item.Key.Value;
-                        //更新表描述
-                        if (dbMaintenance.IsAnyTable(tableName))
-                        {
-                            if (!string.IsNullOrWhiteSpace(tableComment))
-                            {
-                                if (dbMaintenance.IsAnyTableRemark(tableName))
+                                //更新表列的描述
+                                tabInfo.Columns.ForEach(colInfo =>
                                 {
-                                    dbMaintenance.DeleteTableRemark(tableName);
-                                }
-                                dbMaintenance.AddTableRemark(tableName, tableComment);
-                            }
-                            //更新表的列描述
-                            item.Value.ForEach(colKV =>
-                            {
-                                var colName = colKV.Key;
-                                var colComment = colKV.Value;
-                                if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
-                                {
-                                    if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                    var colName = colInfo.ColumnName;
+                                    var comment = colInfo.Comment;
+                                    if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
                                     {
-                                        dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                        if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                        {
+                                            dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                        }
+                                        dbMaintenance.AddColumnRemark(colName, tableName, comment);
                                     }
-                                    dbMaintenance.AddColumnRemark(colName, tableName, colComment);
-                                }
-                            });
+                                });
+                            }
                         }
+                        //更新视图描述
+                        dbDTO.Views.ForEach(view =>
+                        {
+                            var viewName = view.ObjectName;
+                            var comment = view.Comment;
+                            if (!string.IsNullOrWhiteSpace(comment))
+                            {
+                                if (dbMaintenance.IsAnyViewRemark(viewName))
+                                {
+                                    dbMaintenance.DeleteViewRemark(viewName);
+                                }
+                                dbMaintenance.AddViewRemark(viewName, comment);
+                            }
+                        });
+                        //更新存储过程描述
+                        dbDTO.Procs.ForEach(proc =>
+                        {
+                            var procName = proc.ObjectName;
+                            var comment = proc.Comment;
+                            if (!string.IsNullOrWhiteSpace(comment))
+                            {
+                                if (dbMaintenance.IsAnyProcRemark(procName))
+                                {
+                                    dbMaintenance.DeleteProcRemark(procName);
+                                }
+                                dbMaintenance.AddProcRemark(procName, comment);
+                            }
+                        });
+                        #endregion
                     }
-                    #endregion
+                    else
+                    {
+                        #region MyRegion
+                        //通过 有 VS 生成的 实体类库 XML文档文件 来更新 表列批注
+                        XmlAnalyze analyze = new XmlAnalyze(path);
+                        var data = analyze.Data;
+                        foreach (var item in data)
+                        {
+                            var tableName = item.Key.Key;
+                            var tableComment = item.Key.Value;
+                            //更新表描述
+                            if (dbMaintenance.IsAnyTable(tableName))
+                            {
+                                if (!string.IsNullOrWhiteSpace(tableComment))
+                                {
+                                    if (dbMaintenance.IsAnyTableRemark(tableName))
+                                    {
+                                        dbMaintenance.DeleteTableRemark(tableName);
+                                    }
+                                    dbMaintenance.AddTableRemark(tableName, tableComment);
+                                }
+                                //更新表的列描述
+                                item.Value.ForEach(colKV =>
+                                {
+                                    var colName = colKV.Key;
+                                    var colComment = colKV.Value;
+                                    if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
+                                    {
+                                        if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                        {
+                                            dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                        }
+                                        dbMaintenance.AddColumnRemark(colName, tableName, colComment);
+                                    }
+                                });
+                            }
+                        }
+                        #endregion
+                    }
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoadingG.Visibility = Visibility.Collapsed;
+                        Growl.SuccessGlobal("导入成功.");
+                    });
                 }
-                Dispatcher.Invoke(() =>
+                catch (Exception ex)
                 {
-                    LoadingG.Visibility = Visibility.Collapsed;
-                    Growl.SuccessGlobal("导入成功.");
-                });
+                    Dispatcher.Invoke(() =>
+                    {
+                        LoadingG.Visibility = Visibility.Collapsed;
+                        Growl.Warning(new GrowlInfo { Message = $"导入失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                    });
+                }
             });
 
             #endregion
