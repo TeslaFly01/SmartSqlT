@@ -37,7 +37,11 @@ namespace SmartSQL.Framework.Util
         public static string MySqlString(string serverAddress, int port, string database, string userName, string password)
         {
             var connectString =
-                 $@"server={serverAddress};port={port};uid={userName};pwd={EncryptHelper.Decode(password)};database={database};Allow User Variables=True;sslmode=none;";
+                 $@"server={serverAddress};port={port};uid={userName};pwd={EncryptHelper.Decode(password)};Allow User Variables=True;sslmode=none;";
+            if (!string.IsNullOrEmpty(database))
+            {
+                connectString += $@"database ={ database};";
+            }
             return connectString;
         }
 
@@ -50,7 +54,7 @@ namespace SmartSQL.Framework.Util
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static string PostgreSqlString(string serverAddress,int port,string database,string userName,string password)
+        public static string PostgreSqlString(string serverAddress, int port, string database, string userName, string password)
         {
             var connectString = $@"HOST={serverAddress};" +
                             $"PORT={port};" +

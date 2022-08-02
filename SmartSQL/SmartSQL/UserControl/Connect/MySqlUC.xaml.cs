@@ -70,7 +70,7 @@ namespace SmartSQL.UserControl.Connect
             TextServerName.Text = connect.UserName;
             TextServerPassword.Password = pwd;
             ComboDefaultDatabase.ItemsSource = defaultBase;
-            ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            ComboDefaultDatabase.SelectedItem = defaultBase.First();
             #endregion
         }
 
@@ -111,10 +111,10 @@ namespace SmartSQL.UserControl.Connect
                 Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
-            return true; 
+            return true;
             #endregion
         }
-        
+
         /// <summary>
         /// 测试连接
         /// </summary>
@@ -133,11 +133,9 @@ namespace SmartSQL.UserControl.Connect
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
             var connectId = Convert.ToInt32(HidId.Text);
-            var connectionString = $"server={TextServerAddress.Text.Trim()};" +
-                               $"port={TextServerPort.Value};" +
-                               $"uid={TextServerName.Text.Trim()};" +
-                               $"pwd={TextServerPassword.Password.Trim()};" +
-                               $"Allow User Variables=True;sslmode=none;";
+            var connectionString = ConnectionStringUtil.MySqlString(TextServerAddress.Text.Trim(),
+                Convert.ToInt32(TextServerPort.Value), string.Empty,
+                TextServerName.Text.Trim(), EncryptHelper.Encode(TextServerPassword.Password.Trim()));
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.MySql, connectionString);
@@ -186,15 +184,13 @@ namespace SmartSQL.UserControl.Connect
             var connectId = Convert.ToInt32(HidId.Text);
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = TextServerPort.Value;
+            var serverPort = Convert.ToInt32(TextServerPort.Value);
             var userName = TextServerName.Text.Trim();
-            var password = TextServerPassword.Password.Trim();
+            var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
             var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
-            var connectionString = $"server={serverAddress};" +
-                                   $"port={serverPort};" +
-                                   $"uid={userName};" +
-                                   $"pwd={password};" +
-                                   $"Allow User Variables=True;sslmode=none;";
+            var connectionString =
+                ConnectionStringUtil.MySqlString(serverAddress, serverPort, string.Empty, userName, password);
+
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
 
@@ -232,9 +228,9 @@ namespace SmartSQL.UserControl.Connect
                             connectConfig.ConnectName = connectName;
                             connectConfig.DbType = DbType.MySql;
                             connectConfig.ServerAddress = serverAddress;
-                            connectConfig.ServerPort = Convert.ToInt32(serverPort);
+                            connectConfig.ServerPort = serverPort;
                             connectConfig.UserName = userName;
-                            connectConfig.Password = EncryptHelper.Encode(password);
+                            connectConfig.Password = password;
                             connectConfig.DefaultDatabase = defaultDataBase.DbName;
                             connectConfig.Authentication = 1;
                             sqLiteHelper.db.Update(connectConfig);
@@ -252,10 +248,10 @@ namespace SmartSQL.UserControl.Connect
                                 ConnectName = connectName,
                                 DbType = DbType.MySql,
                                 ServerAddress = serverAddress,
-                                ServerPort = Convert.ToInt32(serverPort),
+                                ServerPort = serverPort,
                                 Authentication = 1,
                                 UserName = userName,
-                                Password = EncryptHelper.Encode(password),
+                                Password = password,
                                 CreateDate = DateTime.Now,
                                 DefaultDatabase = defaultDataBase.DbName
 

@@ -135,13 +135,9 @@ namespace SmartSQL.UserControl.Connect
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
             var connectId = Convert.ToInt32(HidId.Text);
-            var serAddr = TextServerAddress.Text.Trim().Equals(".")
-                ? $"{TextServerAddress.Text.Trim()}"
-                : $"{TextServerAddress.Text.Trim()},{TextServerPort.Value}";
-            var connectionString = $"server={serAddr};" +
-                                "database=master;" +
-                                $"uid={TextServerName.Text.Trim()};" +
-                                $"pwd={TextServerPassword.Password.Trim()};";
+            var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
+            var connectionString = ConnectionStringUtil.SqlServerString(TextServerAddress.Text.Trim(),
+                Convert.ToInt32(TextServerPort.Value), "master", TextServerName.Text.Trim(), password);
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.SqlServer, connectionString);
@@ -191,17 +187,13 @@ namespace SmartSQL.UserControl.Connect
             var connectId = Convert.ToInt32(HidId.Text);
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = TextServerPort.Value;
-            var server = TextServerAddress.Text.Trim().Equals(".")
-                ? $"."
-                : $"{TextServerAddress.Text.Trim()},{TextServerPort.Value}";
+            var serverPort = Convert.ToInt32(TextServerPort.Value);
             var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
             var userName = TextServerName.Text.Trim();
-            var password = TextServerPassword.Password.Trim();
+            var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
             var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
-            var connectionString = $"server={server};" +
-                               $"database=master;uid={userName};" +
-                               $"pwd={password};";
+            var connectionString =
+                ConnectionStringUtil.SqlServerString(serverAddress, serverPort, "master", userName, password);
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
             mainWindow.LoadingG.Visibility = Visibility.Visible;
@@ -238,9 +230,9 @@ namespace SmartSQL.UserControl.Connect
                             connectConfig.ConnectName = connectName;
                             connectConfig.DbType = DbType.SqlServer;
                             connectConfig.ServerAddress = serverAddress;
-                            connectConfig.ServerPort = Convert.ToInt32(serverPort);
+                            connectConfig.ServerPort = serverPort;
                             connectConfig.UserName = userName;
-                            connectConfig.Password = EncryptHelper.Encode(password);
+                            connectConfig.Password = password;
                             connectConfig.DefaultDatabase = defaultDataBase.DbName;
                             connectConfig.Authentication = authentication;
                             sqLiteHelper.db.Update(connectConfig);
@@ -258,10 +250,10 @@ namespace SmartSQL.UserControl.Connect
                                 ConnectName = connectName,
                                 DbType = DbType.SqlServer,
                                 ServerAddress = serverAddress,
-                                ServerPort = Convert.ToInt32(serverPort),
+                                ServerPort = serverPort,
                                 Authentication = authentication,
                                 UserName = userName,
-                                Password = EncryptHelper.Encode(password),
+                                Password = password,
                                 CreateDate = DateTime.Now,
                                 DefaultDatabase = "master"
 

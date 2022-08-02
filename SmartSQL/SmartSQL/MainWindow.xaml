@@ -15,6 +15,7 @@
     Icon="favicon.ico"
     ResizeMode="CanResize"
     ShowTitle="True"
+    Loaded="MainWindow_OnLoaded"
     Style="{StaticResource WindowGlow}"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -35,6 +36,7 @@
                     x:Name="SwitchMenu"
                     Cursor="Hand"
                     FontWeight="Bold"
+                    Click="SwitchMenu_OnClick"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="选择连接">
                     <MenuItem.Icon>

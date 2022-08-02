@@ -70,7 +70,7 @@ namespace SmartSQL.UserControl.Connect
             TextServerName.Text = connect.UserName;
             TextServerPassword.Password = pwd;
             ComboDefaultDatabase.ItemsSource = defaultBase;
-            ComboDefaultDatabase.SelectedItem = defaultBase.First(); 
+            ComboDefaultDatabase.SelectedItem = defaultBase.First();
             #endregion
         }
 
@@ -111,7 +111,7 @@ namespace SmartSQL.UserControl.Connect
                 Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
-            return true; 
+            return true;
             #endregion
         }
 
@@ -133,11 +133,9 @@ namespace SmartSQL.UserControl.Connect
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
             var connectId = Convert.ToInt32(HidId.Text);
-            var connectionString = $"HOST={TextServerAddress.Text.Trim()};" +
-                               $"PORT={TextServerPort.Value};" +
-                               $"DATABASE=postgres;" +
-                               $"USER ID={TextServerName.Text.Trim()};" +
-                               $"PASSWORD={TextServerPassword.Password.Trim()}";
+            var connectionString = ConnectionStringUtil.PostgreSqlString(TextServerAddress.Text.Trim(),
+                Convert.ToInt32(TextServerPort.Value), "postgres", TextServerName.Text.Trim(),
+                EncryptHelper.Encode(TextServerPassword.Password.Trim()));
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.PostgreSQL, connectionString);
@@ -164,7 +162,7 @@ namespace SmartSQL.UserControl.Connect
                         Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                     }
                 });
-            }); 
+            });
             #endregion
         }
 
@@ -186,15 +184,12 @@ namespace SmartSQL.UserControl.Connect
             var connectId = Convert.ToInt32(HidId.Text);
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
-            var serverPort = TextServerPort.Value;
+            var serverPort = Convert.ToInt32(TextServerPort.Value);
             var userName = TextServerName.Text.Trim();
-            var password = TextServerPassword.Password.Trim();
+            var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
             var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
-            var connectionString = $"HOST={serverAddress};" +
-                               $"PORT={serverPort};" +
-                               $"DATABASE=postgres;" +
-                               $"USER ID={userName};" +
-                               $"PASSWORD={password}";
+            var connectionString =
+                ConnectionStringUtil.PostgreSqlString(serverAddress, serverPort, "postgres", userName, password);
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
 
@@ -232,9 +227,9 @@ namespace SmartSQL.UserControl.Connect
                             connectConfig.ConnectName = connectName;
                             connectConfig.DbType = DbType.PostgreSQL;
                             connectConfig.ServerAddress = serverAddress;
-                            connectConfig.ServerPort = Convert.ToInt32(serverPort);
+                            connectConfig.ServerPort = serverPort;
                             connectConfig.UserName = userName;
-                            connectConfig.Password = EncryptHelper.Encode(password);
+                            connectConfig.Password = password;
                             connectConfig.DefaultDatabase = defaultDataBase.DbName;
                             connectConfig.Authentication = 1;
                             sqLiteHelper.db.Update(connectConfig);
@@ -252,13 +247,12 @@ namespace SmartSQL.UserControl.Connect
                                 ConnectName = connectName,
                                 DbType = DbType.PostgreSQL,
                                 ServerAddress = serverAddress,
-                                ServerPort = Convert.ToInt32(serverPort),
+                                ServerPort = serverPort,
                                 Authentication = 1,
                                 UserName = userName,
-                                Password = EncryptHelper.Encode(password),
+                                Password = password,
                                 CreateDate = DateTime.Now,
                                 DefaultDatabase = defaultDataBase.DbName
-
                             };
                             sqLiteHelper.db.Insert(connectConfig);
                         }

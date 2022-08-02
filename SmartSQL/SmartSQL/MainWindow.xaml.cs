@@ -77,26 +77,27 @@ namespace SmartSQL
         {
             InitializeComponent();
             DataContext = this;
-            LoadConnects();
         }
 
-        public void LoadConnects()
+        /// <summary>
+        /// 页面初始化加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = new SQLiteHelper();
             var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
-            CbTargetConnect.ItemsSource = connectConfigs;
+            if (!connectConfigs.Any())
+            {
+                SwitchMenu.Header = @"新建连接";
+            }
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             TabLeftType.SelectedIndex = leftMenuType - 1;
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
-            //var selectedConn = sqLiteHelper.GetSysString(SysConst.Sys_SelectedConnection);
-            //if (!string.IsNullOrWhiteSpace(selectedConn))
-            //{
-            //    var connectConfig = sqLiteHelper.FirstOrDefault<ConnectConfigs>(x => x.ConnectName.Equals(selectedConn));
-            //    SwitchConnect(connectConfig);
-            //}
             MainTabW.DataContext = TabItemData;
             MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
         }
@@ -135,7 +136,6 @@ namespace SmartSQL
                 var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
                 SwitchMenu.ItemsSource = null;
                 SwitchMenu.ItemsSource = connectConfigs;
-                CbTargetConnect.ItemsSource = connectConfigs;
             }
             catch (Exception ex)
             {
@@ -1258,6 +1258,23 @@ namespace SmartSQL
         private void EventSetter_OnHandler(object sender, RequestBringIntoViewEventArgs e)
         {
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// 新建连接
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SwitchMenu_OnClick(object sender, RoutedEventArgs e)
+        {
+            var menuItem = (MenuItem)sender;
+            if (menuItem.Header.Equals("新建连接"))
+            {
+                var connect = new ConnectManage();
+                connect.Owner = this;
+                connect.ChangeRefreshEvent += SwitchConnect;
+                connect.ShowDialog();
+            }
         }
 
         /// <summary>
