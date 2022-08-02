@@ -23,6 +23,7 @@ using PathF = System.IO.Path;
 using TextBox = System.Windows.Controls.TextBox;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
+using SmartSQL.DocUtils;
 
 namespace SmartSQL.UserControl
 {
@@ -301,16 +302,23 @@ namespace SmartSQL.UserControl
                         return;
                     }
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                    var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
-                    if (db.IsAnyColumnRemark(selectItem.Name, SelectedObject.Name))
+                    try
                     {
-                        db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);
+                        var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
+                        if (db.IsAnyColumnRemark(selectItem.Name, SelectedObject.Name))
+                        {
+                            db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);
+                        }
+                        var flag = db.AddColumnRemark(selectItem.Name, SelectedObject.Name, newValue);
+                        if (flag)
+                            Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
+                        else
+                            Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
                     }
-                    var flag = db.AddColumnRemark(selectItem.Name, SelectedObject.Name, newValue);
-                    if (flag)
-                        Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
-                    else
-                        Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
+                    catch (Exception ex)
+                    {
+                        Growl.Warning(new GrowlInfo { Message = $"更新失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                    }
                 }
             }
             #endregion

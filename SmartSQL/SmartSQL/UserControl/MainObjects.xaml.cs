@@ -27,6 +27,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using UserControlE = System.Windows.Controls.UserControl;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
+using SmartSQL.DocUtils;
 
 namespace SmartSQL.UserControl
 {
@@ -219,22 +220,29 @@ namespace SmartSQL.UserControl
                         var flag = false;
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                         var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
-                        switch (selectItem.Type)
+                        try
                         {
-                            case ObjType.Table:
-                                flag = db.AddTableRemark(selectItem.Name, newValue);
-                                break;
-                            case ObjType.View:
-                                flag = db.AddViewRemark(selectItem.Name, newValue);
-                                break;
-                            case ObjType.Proc:
-                                flag = db.AddProcRemark(selectItem.Name, newValue);
-                                break;
+                            switch (selectItem.Type)
+                            {
+                                case ObjType.Table:
+                                    flag = db.AddTableRemark(selectItem.Name, newValue);
+                                    break;
+                                case ObjType.View:
+                                    flag = db.AddViewRemark(selectItem.Name, newValue);
+                                    break;
+                                case ObjType.Proc:
+                                    flag = db.AddProcRemark(selectItem.Name, newValue);
+                                    break;
+                            }
+                            if (flag)
+                                Growl.SuccessGlobal(new GrowlInfo { Message = $"更新成功", ShowDateTime = false });
+                            else
+                                Growl.WarningGlobal(new GrowlInfo { Message = $"更新失败", ShowDateTime = false });
                         }
-                        if (flag)
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
-                        else
-                            Growl.WarningGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
+                        catch (Exception ex)
+                        {
+                            Growl.Warning(new GrowlInfo { Message = $"更新失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                        }
                     }
                     else
                     {
