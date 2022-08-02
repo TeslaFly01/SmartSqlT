@@ -80,20 +80,15 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
-                        var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
-                        connectString =
-                            $@"server={serAddress};database=master;uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, "master",
+                            UserName, Password);
                         break;
                     case DbType.MySql:
-                        connectString =
-                            $@"server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;sslmode=none;";
+                        connectString = ConnectionStringUtil.MySqlString(ServerAddress, ServerPort, DefaultDatabase,
+                            UserName, Password);
                         break;
                     case DbType.PostgreSQL:
-                        connectString = $@"HOST={ServerAddress};" +
-                                        $"PORT={ServerPort};" +
-                                        $"DATABASE={DefaultDatabase};" +
-                                        $"USER ID={UserName};" +
-                                        $"PASSWORD={EncryptHelper.Decode(Password)}";
+                        connectString = ConnectionStringUtil.PostgreSqlString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
                     case DbType.Sqlite:
                         connectString = $@"DataSource={ServerAddress}";
@@ -114,19 +109,15 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
-                        var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
-                        connectString =
-                            $@"server={serAddress};database={DefaultDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, DefaultDatabase,
+                            UserName, Password);
                         break;
                     case DbType.MySql:
-                        connectString = $@"server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={DefaultDatabase};Allow User Variables=True;;sslmode=none;";
+                        connectString = ConnectionStringUtil.MySqlString(ServerAddress, ServerPort, DefaultDatabase,
+                            UserName, Password);
                         break;
                     case DbType.PostgreSQL:
-                        connectString = $@"HOST={ServerAddress};" +
-                                        $"PORT={ServerPort};" +
-                                        $"DATABASE={DefaultDatabase};" +
-                                        $"USER ID={UserName};" +
-                                        $"PASSWORD={EncryptHelper.Decode(Password)}";
+                        connectString = ConnectionStringUtil.PostgreSqlString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
                     case DbType.Sqlite:
                         connectString = $"DataSource={ServerAddress}";
@@ -147,19 +138,15 @@ namespace SmartSQL.Framework.SqliteModel
             switch (DbType)
             {
                 case DbType.SqlServer:
-                    var serAddress = ServerAddress.Equals(".") ? "." : $"{ServerAddress},{ServerPort}";
-                    connectString =
-                        $@"server={serAddress};database={selectedDatabase};uid={UserName};pwd={EncryptHelper.Decode(Password)};";
+                    connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, selectedDatabase,
+                        UserName, Password);
                     break;
                 case DbType.MySql:
-                    connectString = $@"server={ServerAddress};port={ServerPort};uid={UserName};pwd={EncryptHelper.Decode(Password)};database={selectedDatabase};Allow User Variables=True;sslmode=none;";
+                    connectString = ConnectionStringUtil.MySqlString(ServerAddress, ServerPort, selectedDatabase,
+                        UserName, Password);
                     break;
                 case DbType.PostgreSQL:
-                    connectString = $@"HOST={ServerAddress};" +
-                                    $"PORT={ServerPort};" +
-                                    $"DATABASE={selectedDatabase};" +
-                                    $"USER ID={UserName};" +
-                                    $"PASSWORD={EncryptHelper.Decode(Password)}";
+                    connectString = ConnectionStringUtil.PostgreSqlString(ServerAddress, ServerPort, selectedDatabase, UserName, Password);
                     break;
                 case DbType.Sqlite:
                     connectString = $"DataSource={ServerAddress}";

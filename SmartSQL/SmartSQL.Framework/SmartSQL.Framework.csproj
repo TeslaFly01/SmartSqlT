@@ -227,6 +227,7 @@
     <Compile Include="TSqlFormatter\TokenList.cs" />
     <Compile Include="TSqlFormatter\Utils.cs" />
     <Compile Include="Util\AssemblyHelper.cs" />
+    <Compile Include="Util\ConnectionStringUtil.cs" />
     <Compile Include="Util\ConvertHelper.cs" />
     <Compile Include="Util\EncryptHelper.cs" />
     <Compile Include="Util\Logging\InternalTrace.cs" />
