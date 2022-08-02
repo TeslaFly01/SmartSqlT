@@ -65,6 +65,11 @@ namespace SmartSQL.UserControl.Connect
                     ucSqliteUc.ChangeRefreshEvent += ChangeRefreshEvent;
                     mainWindow.MainContent = ucSqliteUc;
                     break;
+                case "Oracle":
+                    var ucOracleUc = new OracleUC();
+                    ucOracleUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucOracleUc;
+                    break;
                 default:
                     return;
             }

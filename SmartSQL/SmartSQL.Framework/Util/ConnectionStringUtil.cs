@@ -63,5 +63,13 @@ namespace SmartSQL.Framework.Util
                             $"PASSWORD={EncryptHelper.Decode(password)}";
             return connectString;
         }
+
+
+        public static string OracleString(string serverAddress, int port, string database, string userName, string password)
+        {
+            var connectString =
+                $@"data source={serverAddress}:{port};user id={userName};password={EncryptHelper.Decode(password)};pooling=true;max pool size=2";
+            return connectString;
+        }
     }
 }

@@ -63,6 +63,7 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.MySql: return "/SmartSQL;component/Resources/svg/mysql.svg";
                     case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
                     case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
+                    case DbType.Oracle: return "/SmartSQL;component/Resources/svg/oracle@64.svg";
                     default: return "";
                 }
             }
@@ -93,6 +94,10 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.Sqlite:
                         connectString = $@"DataSource={ServerAddress}";
                         break;
+                    case DbType.Oracle:
+                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase,
+                            UserName, Password);
+                        break;
                 }
                 return connectString;
             }
@@ -122,6 +127,10 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.Sqlite:
                         connectString = $"DataSource={ServerAddress}";
                         break;
+                    case DbType.Oracle:
+                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase,
+                            UserName, Password);
+                        break;
                 }
                 return connectString;
             }
@@ -150,6 +159,10 @@ namespace SmartSQL.Framework.SqliteModel
                     break;
                 case DbType.Sqlite:
                     connectString = $"DataSource={ServerAddress}";
+                    break;
+                case DbType.Oracle:
+                    connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, selectedDatabase,
+                        UserName, Password);
                     break;
             }
             return connectString;

@@ -114,6 +114,9 @@
     <Compile Include="UserControl\Connect\ConnectMainUC.xaml.cs">
       <DependentUpon>ConnectMainUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Connect\OracleUC.xaml.cs">
+      <DependentUpon>OracleUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Connect\MySqlUC.xaml.cs">
       <DependentUpon>MySqlUC.xaml</DependentUpon>
     </Compile>
@@ -253,6 +256,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Connect\ConnectMainUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Connect\OracleUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
