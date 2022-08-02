@@ -37,7 +37,7 @@ namespace SmartSQL.Framework.Util
         public static string MySqlString(string serverAddress, int port, string database, string userName, string password)
         {
             var connectString =
-                 $@"server={serverAddress};port={port};uid={userName};pwd={EncryptHelper.Decode(password)};Allow User Variables=True;sslmode=none;";
+                 $@"server={serverAddress};port={port};uid={userName};pwd={EncryptHelper.Decode(password)};Allow User Variables=True;allowPublicKeyRetrieval=true;sslmode=none;";
             if (!string.IsNullOrEmpty(database))
             {
                 connectString += $@"database ={ database};";

@@ -111,28 +111,31 @@ namespace SmartSQL.Views
                     {
                         var tableName = tabInfo.TableName;
                         //更新表描述
-                        if (dbMaintenance.IsAnyTable(tabInfo.TableName) && !string.IsNullOrWhiteSpace(tabInfo.Comment))
+                        if (dbMaintenance.IsAnyTable(tabInfo.TableName))
                         {
-                            if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
+                            if (!string.IsNullOrWhiteSpace(tabInfo.Comment))
                             {
-                                dbMaintenance.DeleteTableRemark(tabInfo.TableName);
-                            }
-                            dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
-                        }
-                        //更新表列的描述
-                        tabInfo.Columns.ForEach(colInfo =>
-                        {
-                            var colName = colInfo.ColumnName;
-                            var comment = colInfo.Comment;
-                            if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
-                            {
-                                if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                if (dbMaintenance.IsAnyTableRemark(tabInfo.TableName))
                                 {
-                                    dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                    dbMaintenance.DeleteTableRemark(tabInfo.TableName);
                                 }
-                                dbMaintenance.AddColumnRemark(colName, tableName, comment);
+                                dbMaintenance.AddTableRemark(tabInfo.TableName, tabInfo.Comment);
                             }
-                        });
+                            //更新表列的描述
+                            tabInfo.Columns.ForEach(colInfo =>
+                            {
+                                var colName = colInfo.ColumnName;
+                                var comment = colInfo.Comment;
+                                if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
+                                {
+                                    if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                    {
+                                        dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                    }
+                                    dbMaintenance.AddColumnRemark(colName, tableName, comment);
+                                }
+                            });
+                        }
                     }
                     //更新视图描述
                     dbDTO.Views.ForEach(view =>
@@ -175,28 +178,31 @@ namespace SmartSQL.Views
                         var tableName = item.Key.Key;
                         var tableComment = item.Key.Value;
                         //更新表描述
-                        if (dbMaintenance.IsAnyTable(tableName) && !string.IsNullOrWhiteSpace(tableComment))
+                        if (dbMaintenance.IsAnyTable(tableName))
                         {
-                            if (dbMaintenance.IsAnyTableRemark(tableName))
+                            if (!string.IsNullOrWhiteSpace(tableComment))
                             {
-                                dbMaintenance.DeleteTableRemark(tableName);
-                            }
-                            dbMaintenance.AddTableRemark(tableName, tableComment);
-                        }
-                        //更新表的列描述
-                        item.Value.ForEach(colKV =>
-                        {
-                            var colName = colKV.Key;
-                            var colComment = colKV.Value;
-                            if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
-                            {
-                                if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                if (dbMaintenance.IsAnyTableRemark(tableName))
                                 {
-                                    dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                    dbMaintenance.DeleteTableRemark(tableName);
                                 }
-                                dbMaintenance.AddColumnRemark(colName, tableName, colComment);
+                                dbMaintenance.AddTableRemark(tableName, tableComment);
                             }
-                        });
+                            //更新表的列描述
+                            item.Value.ForEach(colKV =>
+                            {
+                                var colName = colKV.Key;
+                                var colComment = colKV.Value;
+                                if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(colComment))
+                                {
+                                    if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
+                                    {
+                                        dbMaintenance.DeleteColumnRemark(colName, tableName);
+                                    }
+                                    dbMaintenance.AddColumnRemark(colName, tableName, colComment);
+                                }
+                            });
+                        }
                     }
                     #endregion
                 }
