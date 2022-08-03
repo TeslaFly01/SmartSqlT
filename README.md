@@ -26,7 +26,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
-### 🥝 数据库支持
+### 💎 数据库支持
 - ✅ SqlServer
 - ✅ MySQL
 - ✅ PostgreSQL
@@ -97,7 +97,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 --|--
 
 
-### 🎉 文档截图
+### 📰 文档截图
 
 #### 1.CHM文档
 ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)|![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chmd.png)
@@ -124,6 +124,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 	✅ 收集问题，修复完善基础功能
 	✅ C#实体代码生成
+	⏳ 进行中：优化现有Issues中反馈的bug
+	⏳ 计划中：Oracle、DB2、达梦等数据库支持
 	⏳ 计划中：对象结构对比功能
 	⏳ 计划中：表、视图、存储过程同步功能
 	⏳ ...
