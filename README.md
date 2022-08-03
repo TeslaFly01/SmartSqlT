@@ -13,7 +13,7 @@
 <img alt="release" src="https://img.shields.io/badge/release-1.0.3.2-green">
 </p>
 
-![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/TopContent.png)
+![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner.png)
 
 ### 🚩 项目介绍
 
