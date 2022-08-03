@@ -200,6 +200,18 @@ namespace SmartSQL.Framework.Exporter
             return "";
         }
 
+        /// <summary>
+        /// ¸üÐÂÁÐ×¢ÊÍ
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        {
+            throw new NotImplementedException();
+        }
+
         public override string CreateTableSql()
         {
             return "";

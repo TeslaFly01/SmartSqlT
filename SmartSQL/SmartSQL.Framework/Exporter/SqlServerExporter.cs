@@ -438,6 +438,18 @@ namespace SmartSQL.Framework.Exporter
             return scriptInfo.Definition;
         }
 
+        /// <summary>
+        /// 更新列注释
+        /// </summary>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        {
+            throw new NotImplementedException();
+        }
+
         #region 获取sql脚本
         /// <summary>
         /// 创建表结构sql脚本

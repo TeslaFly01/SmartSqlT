@@ -19,13 +19,15 @@ namespace SmartSQL.Framework.Util
         /// <returns></returns>
         public static string SqlServerString(string serverAddress, int port, string database, string userName, string password)
         {
-            var serAddress = serverAddress.Equals(".") ? "." : $"{serverAddress},{port}";
-            if (serAddress.Contains(@"\\"))
+            var serAddress = $"{serverAddress},{port}";
+            if (serverAddress.Equals(".") || serverAddress.Contains(@"\"))
             {
-                serAddress = serverAddress.Replace(@"\\", @"\");
+                serAddress = serverAddress;
             }
-            var connectString =
-                $@"server={serAddress};database={database};uid={userName};pwd={EncryptHelper.Decode(password)};";
+            var connectString = $@"server={serAddress};
+                                 database={database};
+                                      uid={userName};
+                                      pwd={EncryptHelper.Decode(password)};";
             return connectString;
         }
 
@@ -40,8 +42,13 @@ namespace SmartSQL.Framework.Util
         /// <returns></returns>
         public static string MySqlString(string serverAddress, int port, string database, string userName, string password)
         {
-            var connectString =
-                 $@"server={serverAddress};port={port};uid={userName};pwd={EncryptHelper.Decode(password)};Allow User Variables=True;allowPublicKeyRetrieval=true;sslmode=none;";
+            var connectString = $@"server={serverAddress};
+                                     port={port};
+                                      uid={userName};
+                                      pwd={EncryptHelper.Decode(password)};
+                                  sslmode=none;
+                     Allow User Variables=True;
+                  AllowPublicKeyRetrieval=true;";
             if (!string.IsNullOrEmpty(database))
             {
                 connectString += $@"database ={ database};";
@@ -60,19 +67,22 @@ namespace SmartSQL.Framework.Util
         /// <returns></returns>
         public static string PostgreSqlString(string serverAddress, int port, string database, string userName, string password)
         {
-            var connectString = $@"HOST={serverAddress};" +
-                            $"PORT={port};" +
-                            $"DATABASE={database};" +
-                            $"USER ID={userName};" +
-                            $"PASSWORD={EncryptHelper.Decode(password)}";
+            var connectString = $@"HOST={serverAddress};
+                                   PORT={port};
+                               DATABASE={database};
+                                USER ID={userName};
+                               PASSWORD={EncryptHelper.Decode(password)}";
             return connectString;
         }
 
 
         public static string OracleString(string serverAddress, int port, string database, string userName, string password)
         {
-            var connectString =
-                $@"data source={serverAddress}:{port};user id={userName};password={EncryptHelper.Decode(password)};pooling=true;max pool size=2";
+            var connectString = $@"data source={serverAddress}:{port};
+                                       user id={userName};
+                                      password={EncryptHelper.Decode(password)};
+                                       pooling=true;
+                                 max pool size=2";
             return connectString;
         }
     }
