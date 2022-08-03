@@ -25,6 +25,7 @@ using SmartSQL.Framework.Exporter;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Helper;
 using SmartSQL.Models;
 using SqlSugar;
 using DbType = SqlSugar.DbType;
@@ -891,13 +892,13 @@ namespace SmartSQL.Views
             var doctype = DocumentType();
             if (string.IsNullOrEmpty(doctype))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择输出文档类型.", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("请选择输出文档类型");
                 return;
             }
             var checkAny = exportData.Count(x => x.Type == "Type" && x.IsChecked == false);
             if (checkAny == 3)
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要导出的对象.", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("请选择需要导出的对象");
                 return;
             }
             if (string.IsNullOrEmpty(TxtFileName.Text))
@@ -938,11 +939,11 @@ namespace SmartSQL.Views
                         LoadingG.Visibility = Visibility.Collapsed;
                         if (bulResult)
                         {
-                            Growl.SuccessGlobal("导出成功.");
+                            Oops.SuccessGlobal("导出成功.");
                         }
                         else
                         {
-                            Growl.WarningGlobal($"导出失败.");
+                            Oops.GodGlobal("导出失败.");
                         }
                     });
                 }
@@ -951,7 +952,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal($"导出失败，原因：{ex.ToMsg()}");
+                        Oops.GodGlobal($"导出失败，原因：{ex.ToMsg()}");
                     });
                 }
             }, TaskCreationOptions.LongRunning);
@@ -1132,7 +1133,7 @@ namespace SmartSQL.Views
         /// </summary>
         private static Dictionary<string, string> _docTypeTipMsg = new Dictionary<string, string>
         {
-            {"chm",""},
+            {"chm","CHM文档类型支持导出表、视图、存储过程"},
             {"excel","Excel文档类型仅支持导出数据表"},
             {"word","Word文档类型仅支持导出数据表"},
             {"pdf",""},

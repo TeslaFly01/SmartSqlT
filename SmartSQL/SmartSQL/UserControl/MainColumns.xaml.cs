@@ -309,15 +309,22 @@ namespace SmartSQL.UserControl
                         {
                             db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);
                         }
+
                         var flag = db.AddColumnRemark(selectItem.Name, SelectedObject.Name, newValue);
                         if (flag)
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"修改成功", ShowDateTime = false });
+                            Oops.Success("修改成功");
                         else
-                            Growl.ErrorGlobal(new GrowlInfo { Message = $"修改失败", ShowDateTime = false });
+                            Oops.God("修改失败");
+                    }
+                    catch (NotSupportedException)
+                    {
+                        ((TextBox)e.EditingElement).Text = _cellEditValue;
+                        Oops.Oh($"{SelectedConnection.DbType}类型数据库暂不支持此操作");
                     }
                     catch (Exception ex)
                     {
-                        Growl.Warning(new GrowlInfo { Message = $"更新失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                        ((TextBox)e.EditingElement).Text = _cellEditValue;
+                        Oops.God($"更新失败，原因：" + ex.ToMsg());
                     }
                 }
             }
@@ -397,7 +404,7 @@ namespace SmartSQL.UserControl
             //选中的表对象
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择对应的数据表", ShowDateTime = false, WaitTime = 1 });
+                Oops.Oh("请选择对应的数据表");
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
@@ -405,7 +412,7 @@ namespace SmartSQL.UserControl
                 x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
             if (!list.Any())
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"暂无分组，请先添加分组", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("暂无分组，请先添加分组");
                 return;
             }
             var mainWindow = System.Windows.Window.GetWindow(this);
@@ -431,7 +438,7 @@ namespace SmartSQL.UserControl
             {
                 if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
                 {
-                    Growl.WarningGlobal(new GrowlInfo { Message = $"请选择对应的数据表", ShowDateTime = false, WaitTime = 1 });
+                    Oops.Oh("请选择对应的数据表");
                     return;
                 }
                 selectRows = SourceColunmData;
@@ -477,13 +484,12 @@ namespace SmartSQL.UserControl
             }
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"请选择需要生成实体的数据表", ShowDateTime = false, WaitTime = 1 });
+                Oops.Oh("请选择需要生成实体的数据表");
                 return;
             }
             var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.Name}.cs");
             StrUtil.CreateClass(filePath, SelectedObject.Name, SourceColunmData);
-
-            Growl.SuccessGlobal(new GrowlInfo { Message = "实体生成成功", WaitTime = 1, ShowDateTime = false });
+            Oops.Success("实体生成成功");
             Process.Start(baseDirectoryPath);
             #endregion
         }
@@ -528,7 +534,7 @@ namespace SmartSQL.UserControl
             {
                 TextSqlEditor.SelectAll();
                 Clipboard.SetDataObject(TextSqlEditor.Text);
-                Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
+                Oops.Success("脚本已复制到剪切板");
             }
         }
 

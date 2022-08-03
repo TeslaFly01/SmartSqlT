@@ -141,7 +141,7 @@ namespace SmartSQL
             {
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    Growl.Warning(new GrowlInfo { Message = $"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                    Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
             }
@@ -294,12 +294,7 @@ namespace SmartSQL
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Growl.Warning(new GrowlInfo
-                        {
-                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg(),
-                            ShowDateTime = false,
-                            Type = InfoType.Error
-                        });
+                        Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
                     }));
                 }
                 var textColor = "#333444";
@@ -1184,12 +1179,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void MenuGroup_OnClick(object sender, RoutedEventArgs e)
         {
-            if (SelectendConnection == null)
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            if (SelectendConnection == null || selectDatabase == null)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请选择连接", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("请选择数据库");
                 return;
             }
-            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             var group = new GroupManage();
             group.Connection = SelectendConnection;
             group.SelectedDataBase = selectDatabase.DbName;
@@ -1300,7 +1295,7 @@ namespace SmartSQL
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("请选择数据库");
                 return;
             }
             var exportDoc = new ExportDoc();
@@ -1320,7 +1315,7 @@ namespace SmartSQL
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
-                Growl.Warning(new GrowlInfo { Message = $"请选择数据库", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("请选择数据库");
                 return;
             }
             var importMark = new ImportMark();

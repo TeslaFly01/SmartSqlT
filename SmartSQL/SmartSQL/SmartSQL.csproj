@@ -104,6 +104,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\Oops.cs" />
     <Compile Include="Helper\SoftReg.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
