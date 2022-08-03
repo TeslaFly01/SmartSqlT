@@ -1,6 +1,6 @@
 <div align="center">
    <img alt="SmartSQL" src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/icon.png">
-	<a href="https://gitee.com/izhaofu/SmartSQL"><h1 align="center" style="color:#4da7fd"><b>SmartSQL</b></h1></a>
+	<h1 align="center" style="color:#4da7fd"><b>SmartSQL</b></h1>
 </div>
 <div align="center">
 <h5 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h3>
@@ -11,19 +11,14 @@
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-brightgreen.svg">
 <img alt="license" src="https://img.shields.io/badge/license-Apache-blue.svg">
 <img alt="release" src="https://img.shields.io/badge/release-1.0.3.2-green">
-
 </p>
 
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/TopContent.png)
-### 🚩 一、项目介绍
+
+### 🚩 项目介绍
 
 SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该工具从最初支持`CHM`文档格式开始，通过不断地探索开发、集思广益和不断改进，又陆续支持`Word`、`Excel`、`PDF`、`Html`、`Xml`、`Json`、`MarkDown`等文档格式的导出。同时支持`SqlServer`、`MySql`、`PostgreSQL`、`SQLite`等多种数据库的文档查询和导出功能。
 
-## 特别声明
-
-SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织。<br/>
-
-![dotnetchina](https://gitee.com/dotnetchina/home/raw/master/assets/dotnetchina-raw.png "dotNET China LOGO")
 
 ##### 🏅开源地址
 [![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
@@ -31,7 +26,7 @@ SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织�
 
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
-### 🥝 二、数据库支持
+### 🥝 数据库支持
 - ✅ SqlServer
 - ✅ MySQL
 - ✅ PostgreSQL
@@ -42,7 +37,7 @@ SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织�
 - - [x] 达梦
 - - [x] 人大金仓
 
-### 📖 三、主要功能 
+### 📖 主要功能 
 
 #### 1.文档的内容都包含什么？
 - `表` 序号 | 列名 | 主键 | 自增 | 数据类型 | 长度 | 允许NULL值 | 默认值 | 备注说明
@@ -59,8 +54,12 @@ SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织�
     - 	[x] pdm 由`PowerDesigner`设计数据库时产生。
     - 	[x] xml 由`Visual Studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
     - 	[x] xml 由`SmartSQL`的 XML导出 而产生。
+  
+#### 4.什么是分组管理
+- 可以对数据库中的表、视图、存储过程进行自定义分组
+- 可以对分组对象进行文档批量导出
 
-### 🎉 四、工具截图
+### 🎉 工具截图
 
 #### 1.数据库连接
 
@@ -98,7 +97,7 @@ SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织�
 --|--
 
 
-### 🎉 五、文档截图
+### 🎉 文档截图
 
 #### 1.CHM文档
 ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)|![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chmd.png)
@@ -109,13 +108,13 @@ SmartSQL 项目已加入 [dotNET China](https://gitee.com/dotnetchina)  组织�
 |--|--|
 
 
-### ⬇️ 六、下载地址
+### ⬇️ 下载地址
 
-[![立即下载](https://img.shields.io/badge/%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD----green)](https://gitee.com/izhaofu/SmartSQL/releases) 
+[![立即下载](https://img.shields.io/badge/download-%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD-blue)](https://gitee.com/izhaofu/SmartSQL/releases)  
 
-下载解压后，双击运行 `SmartSQL.exe`。
+> 下载解压后，双击运行 `SmartSQL.exe`即可
 
-### 🔥七、沟通交流
+### 🔥 沟通交流
 
 <div align=center>
 <img src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png" width="50%" >
