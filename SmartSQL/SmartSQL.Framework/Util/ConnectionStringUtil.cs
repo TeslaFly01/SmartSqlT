@@ -20,6 +20,10 @@ namespace SmartSQL.Framework.Util
         public static string SqlServerString(string serverAddress, int port, string database, string userName, string password)
         {
             var serAddress = serverAddress.Equals(".") ? "." : $"{serverAddress},{port}";
+            if (serAddress.Contains(@"\\"))
+            {
+                serAddress = serverAddress.Replace(@"\\", @"\");
+            }
             var connectString =
                 $@"server={serAddress};database={database};uid={userName};pwd={EncryptHelper.Decode(password)};";
             return connectString;

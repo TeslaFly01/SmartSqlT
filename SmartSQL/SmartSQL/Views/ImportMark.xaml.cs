@@ -6,6 +6,7 @@ using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
 using SmartSQL.DocUtils;
@@ -87,6 +88,7 @@ namespace SmartSQL.Views
             }
             LoadingG.Visibility = Visibility.Visible;
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             Task.Run(() =>
             {
@@ -113,6 +115,7 @@ namespace SmartSQL.Views
                         foreach (var tabInfo in dbDTO.Tables)
                         {
                             var tableName = tabInfo.TableName;
+                            var tableColumns = dbInstance.GetColumnInfoById(tableName);
                             //更新表描述
                             if (dbMaintenance.IsAnyTable(tabInfo.TableName))
                             {
@@ -129,7 +132,7 @@ namespace SmartSQL.Views
                                 {
                                     var colName = colInfo.ColumnName;
                                     var comment = colInfo.Comment;
-                                    if (dbMaintenance.IsAnyColumn(tableName, colName) && !string.IsNullOrWhiteSpace(comment))
+                                    if (tableColumns.Any(x => x.Value.Name.Equals(colName)) && !string.IsNullOrWhiteSpace(comment))
                                     {
                                         if (dbMaintenance.IsAnyColumnRemark(colName, tableName))
                                         {
