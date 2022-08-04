@@ -19,7 +19,7 @@ namespace SmartSQL.Framework.PhysicalDataModel
         protected string _languageType = string.Empty;
         protected string _languageTypeAlias = string.Empty;
         protected string _languageDefaultValue = string.Empty;
-        protected string _length;
+        protected string _lengthName;
         protected int _ordinal = -1;
         protected bool _isNullable;
         protected bool _hasDefault;
@@ -95,10 +95,12 @@ namespace SmartSQL.Framework.PhysicalDataModel
             set { this._dataType = value; }
         }
 
-        public string Length
+        public int Length { get; set; }
+
+        public string LengthName
         {
-            get { return this._length; }
-            set { this._length = value; }
+            get { return this._lengthName; }
+            set { this._lengthName = value; }
         }
 
         public bool IsIdentity

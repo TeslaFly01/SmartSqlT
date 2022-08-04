@@ -159,7 +159,7 @@ namespace SmartSQL.Framework.Exporter
                     return;
                 }
                 var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
-                column.Length = "";
+                column.LengthName = "";
                 switch (v.DataType)
                 {
                     case "char":
@@ -174,12 +174,12 @@ namespace SmartSQL.Framework.Exporter
                     case "datetimeoffset":
                         if (v.Length > 0)
                         {
-                            column.Length = $"({v.Length})";
+                            column.LengthName = $"({v.Length})";
                         }
                         break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({v.Length},{v.Scale})"; break;
+                        column.LengthName = $"({v.Length},{v.Scale})"; break;
                 }
                 column.ObjectId = objectId.ToString();
                 column.ObjectName = v.DbColumnName;
@@ -203,13 +203,24 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
+        /// 更新表/视图/存储过程对象注释
+        /// </summary>
+        /// <param name="objectName"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateObjectRemark(string objectName, string remark)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
         /// 更新列注释
         /// </summary>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        public override bool UpdateColumnRemark(Column columnInfo, string remark)
         {
             throw new NotImplementedException();
         }

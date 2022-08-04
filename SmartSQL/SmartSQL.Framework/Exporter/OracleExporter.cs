@@ -66,6 +66,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override Columns GetColumnInfoById(string objectId)
         {
+            #region MyRegion
             var columns = new Columns(500);
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
             var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
@@ -76,7 +77,7 @@ namespace SmartSQL.Framework.Exporter
                     return;
                 }
                 var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
-                column.Length = "";
+                column.LengthName = "";
                 switch (v.DataType)
                 {
                     case "char":
@@ -89,10 +90,10 @@ namespace SmartSQL.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({v.Length})"; break;
+                        column.LengthName = $"({v.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({v.Length},{v.Scale})"; break;
+                        column.LengthName = $"({v.Length},{v.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
@@ -106,14 +107,28 @@ namespace SmartSQL.Framework.Exporter
                 column.IsPrimaryKey = v.IsPrimarykey;
                 columns.Add(v.DbColumnName, column);
             });
-            return columns;
+            return columns; 
+            #endregion
         }
 
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
+            #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
             var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
-            return scriptInfo.Definition;
+            return scriptInfo.Definition; 
+            #endregion
+        }
+
+        /// <summary>
+        /// 更新表/视图/存储过程对象注释
+        /// </summary>
+        /// <param name="objectName"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateObjectRemark(string objectName, string remark)
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -123,7 +138,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="columnName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        public override bool UpdateColumnRemark(Column columnInfo, string remark)
         {
             throw new NotImplementedException();
         }

@@ -66,7 +66,7 @@ namespace SmartSQL.Framework.Exporter
                     return;
                 }
                 var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
-                column.Length = "";
+                column.LengthName = "";
                 switch (v.DataType)
                 {
                     case "char":
@@ -79,10 +79,10 @@ namespace SmartSQL.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = v.Length == 2147483647 ? "" : $"({v.Length})"; break;
+                        column.LengthName = v.Length == 2147483647 ? "" : $"({v.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({v.Length},{v.Scale})"; break;
+                        column.LengthName = $"({v.Length},{v.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
@@ -107,55 +107,65 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
-        /// 更新列注释
+        /// 更新表/视图/存储过程对象注释
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
+        /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 更新列注释
+        /// </summary>
+        /// <param name="columnInfo"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateColumnRemark(Column columnInfo, string remark)
         {
             throw new NotImplementedException();
         }
 
         public override string CreateTableSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string SelectSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string InsertSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string UpdateSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string DeleteSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string AddColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string AlterColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         public override string DropColumnSql()
         {
-            throw new NotImplementedException();
+            return "";
         }
 
         private Tables GetTables()

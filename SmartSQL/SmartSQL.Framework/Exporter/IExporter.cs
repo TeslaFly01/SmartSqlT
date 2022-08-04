@@ -35,13 +35,19 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         string GetScriptInfoById(string objectId, DbObjectType objectType);
         /// <summary>
-        /// 更新列注释
+        /// 更新表/视图/存储过程等对象备注
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
+        /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        bool UpdateColumnRemark(string tableName, string columnName, string remark);
+        bool UpdateObjectRemark(string objectName, string remark);
+        /// <summary>
+        /// 更新列注释
+        /// </summary>
+        /// <param name="columnInfo"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        bool UpdateColumnRemark(Column columnInfo, string remark);
         /// <summary>
         /// 创建表SQL
         /// </summary>

@@ -109,8 +109,12 @@ namespace SmartSQL.UserControl
             TextSqlEditor.TextArea.SelectionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFADD6FF"));
         }
 
+        /// <summary>
+        /// 页面初始化加载数据
+        /// </summary>
         public void LoadPageData()
         {
+            #region MyRegion
             NoDataText.Visibility = Visibility.Collapsed;
             var selectedObject = SelectedObject;
             var selectedConnection = SelectedConnection;
@@ -179,6 +183,7 @@ namespace SmartSQL.UserControl
                     }));
                 });
             }
+            #endregion
         }
 
 
@@ -262,6 +267,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void TableGrid_OnBeginningEdit(object sender, DataGridBeginningEditEventArgs e)
         {
+            #region MyRegion
             if (((DataGrid)sender).SelectedCells.Any())
             {
                 //获取选中单元格(仅限单选)
@@ -274,6 +280,7 @@ namespace SmartSQL.UserControl
                     _cellEditValue = selectedText.Text;
                 }
             }
+            #endregion
         }
 
         /// <summary>
@@ -304,14 +311,9 @@ namespace SmartSQL.UserControl
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                     try
                     {
-                        var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
-                        if (db.IsAnyColumnRemark(selectItem.Name, SelectedObject.Name))
-                        {
-                            db.DeleteColumnRemark(selectItem.Name, SelectedObject.Name);
-                        }
-
-                        var flag = db.AddColumnRemark(selectItem.Name, SelectedObject.Name, newValue);
-                        if (flag)
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString);
+                        var editResult = dbInstance.UpdateColumnRemark(selectItem, newValue);
+                        if (editResult)
                             Oops.Success("修改成功");
                         else
                             Oops.God("修改失败");
@@ -338,6 +340,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void TableGrid_OnSelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
+            #region MyRegion
             if (((DataGrid)sender).SelectedCells.Any())
             {
                 //获取选中单元格(仅限单选)
@@ -350,6 +353,7 @@ namespace SmartSQL.UserControl
                     //
                 }
             }
+            #endregion
         }
 
         private void Handled_OnSelectionChanged(object sender, SelectionChangedEventArgs e)

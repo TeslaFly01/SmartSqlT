@@ -75,7 +75,7 @@
                                 Header="数据类型"
                                 IsReadOnly="True" />
                             <DataGridTextColumn
-                                Binding="{Binding Length}"
+                                Binding="{Binding LengthName}"
                                 CanUserSort="False"
                                 CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                                 Header="长度"

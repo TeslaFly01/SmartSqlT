@@ -23,15 +23,14 @@ namespace SmartSQL.Framework.Exporter
         {
 
         }
-
-        #region IExporter Members
+        
         /// <summary>
         /// 初始化获取对象列表
         /// </summary>
-        /// <param name="connectionString"></param>
         /// <returns></returns>
         public override Model Init()
         {
+            #region MyRegion
             var model = new Model { Database = "SqlServer2008" };
             try
             {
@@ -43,10 +42,9 @@ namespace SmartSQL.Framework.Exporter
             catch (Exception ex)
             {
                 throw ex;
-            }
+            } 
+            #endregion
         }
-
-        #endregion
 
         /// <summary>
         /// 获取数据库列表
@@ -54,6 +52,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override List<DataBase> GetDatabases()
         {
+            #region MyRegion
             var sqlCmd = "SELECT name FROM sysdatabases ORDER BY name ASC";
             SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
             var list = new List<DataBase>();
@@ -67,7 +66,8 @@ namespace SmartSQL.Framework.Exporter
                 };
                 list.Add(dBase);
             }
-            return list;
+            return list; 
+            #endregion
         }
 
         #region 获取数据库对象私有方法
@@ -391,7 +391,7 @@ namespace SmartSQL.Framework.Exporter
                     return;
                 }
                 var column = new Column(col.DbColumnId.ToString(), col.DbColumnName, col.DbColumnName, col.DataType, col.ColumnDescription);
-                column.Length = "";
+                column.LengthName = "";
                 switch (col.DataType)
                 {
                     case "char":
@@ -404,10 +404,10 @@ namespace SmartSQL.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({col.Length})"; break;
+                        column.LengthName = $"({col.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({col.Length},{col.Scale})"; break;
+                        column.LengthName = $"({col.Length},{col.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
@@ -440,15 +440,32 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
-        /// 更新列注释
+        /// 更新对象备注
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
+        /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark)
         {
             throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// 更新列注释
+        /// </summary>
+        /// <param name="columnInfo"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateColumnRemark(Column columnInfo, string remark)
+        {
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            var columnName = columnInfo.Name;
+            var tableName = columnInfo.ObjectName;
+            if (dbMaintenance.IsAnyColumnRemark(columnName,tableName))
+            {
+                dbMaintenance.DeleteColumnRemark(columnName, tableName);
+            }
+            return dbMaintenance.AddColumnRemark(columnName, tableName, remark);
         }
 
         #region 获取sql脚本
@@ -469,7 +486,7 @@ namespace SmartSQL.Framework.Exporter
             Columns.ForEach(col =>
             {
                 tempStr.Append(Environment.NewLine);
-                tempStr.Append($"\t{col.DisplayName} {col.DataType}{col.Length} ");
+                tempStr.Append($"\t{col.DisplayName} {col.DataType}{col.LengthName} ");
                 if (col.IsIdentity)
                 {
                     tempStr.Append("IDENTITY(1,1) ");
@@ -636,7 +653,7 @@ namespace SmartSQL.Framework.Exporter
                 strSql.Append($"ALTER TABLE {TableName} ADD {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
-                    strSql.Append($"{col.Length} ");
+                    strSql.Append($"{col.LengthName} ");
                 }
                 var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
                 strSql.Append(isNull);
@@ -674,7 +691,7 @@ namespace SmartSQL.Framework.Exporter
                 strSql.Append($"ALTER TABLE {TableName} ALTER {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
-                    strSql.Append($"{col.Length} ");
+                    strSql.Append($"{col.LengthName} ");
                 }
                 var isNull = col.IsNullable ? "NULL " : "NOT NULL ";
                 strSql.Append(isNull);

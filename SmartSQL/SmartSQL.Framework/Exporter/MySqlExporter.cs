@@ -166,6 +166,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override Columns GetColumnInfoById(string objectId)
         {
+            #region MyRegion
             var columns = new Columns(500);
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
@@ -176,7 +177,7 @@ namespace SmartSQL.Framework.Exporter
                     return;
                 }
                 var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
-                column.Length = "";
+                column.LengthName = "";
                 switch (v.DataType)
                 {
                     case "char":
@@ -189,10 +190,10 @@ namespace SmartSQL.Framework.Exporter
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
-                        column.Length = $"({v.Length})"; break;
+                        column.LengthName = $"({v.Length})"; break;
                     case "numeric":
                     case "decimal":
-                        column.Length = $"({v.Length},{v.Scale})"; break;
+                        column.LengthName = $"({v.Length},{v.Scale})"; break;
                 }
 
                 column.ObjectId = objectId.ToString();
@@ -208,6 +209,7 @@ namespace SmartSQL.Framework.Exporter
                 columns.Add(v.DbColumnName, column);
             });
             return columns;
+            #endregion
         }
 
         /// <summary>
@@ -224,15 +226,46 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
-        /// 更新列注释
+        /// 更新表/视图/存储过程对象注释
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
+        /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(string tableName, string columnName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark)
         {
-            throw new NotImplementedException();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
+            return dbMaintenance.AddTableRemark(objectName, remark);
+        }
+
+        /// <summary>
+        /// 更新列注释
+        /// </summary>
+        /// <param name="columnInfo"></param>
+        /// <param name="remark"></param>
+        /// <returns></returns>
+        public override bool UpdateColumnRemark(Column columnInfo, string remark)
+        {
+            throw new NotSupportedException();
+            //var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
+            //return dbMaintenance.AddRemark(new EntityInfo
+            //{
+            //    DbTableName = columnInfo.ObjectName,
+            //    Columns = new List<EntityColumnInfo>
+            //    {
+            //        new EntityColumnInfo
+            //        {
+            //            DbTableName = columnInfo.ObjectName,
+            //            DbColumnName = columnInfo.Name,
+            //            Length = columnInfo.Length,
+            //            ColumnDescription = remark,
+            //            DataType = columnInfo.DataType,
+            //            IsPrimarykey = columnInfo.IsPrimaryKey,
+            //            DefaultValue = columnInfo.DefaultValue,
+            //            IsNullable = columnInfo.IsNullable,
+            //            IsIdentity = columnInfo.IsIdentity
+            //        }
+            //    }
+            //});
         }
 
         public override string CreateTableSql()
@@ -246,7 +279,7 @@ namespace SmartSQL.Framework.Exporter
             sb.Append(Environment.NewLine);
             Columns.ForEach(col =>
             {
-                sb.Append($" `{col.DisplayName}` {col.DataType}{col.Length} ");
+                sb.Append($" `{col.DisplayName}` {col.DataType}{col.LengthName} ");
                 if (col.IsIdentity)
                 {
                     sb.Append("IDENTITY(1,1) ");

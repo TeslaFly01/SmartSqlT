@@ -1050,17 +1050,17 @@ namespace SmartSQL.Views
                             // 数据类型
                             colDto.ColumnTypeName = col.Value.DataType;
                             // 长度
-                            colDto.Length = col.Value.Length;
+                            colDto.Length = col.Value.LengthName;
                             // 小数位
                             //colDto.Scale = "";//(col.Scale.HasValue ? col.Scale.Value.ToString() : "");
                             // 主键
-                            colDto.IsPK = (col.Value.IsPrimaryKey ? "√" : "");
+                            colDto.IsPK = col.Value.IsPrimaryKey ? "√" : "";
                             // 自增
-                            colDto.IsIdentity = (col.Value.IsIdentity ? "√" : "");
+                            colDto.IsIdentity = col.Value.IsIdentity ? "√" : "";
                             // 允许空
-                            colDto.CanNull = (col.Value.IsNullable ? "√" : "");
+                            colDto.CanNull = col.Value.IsNullable ? "√" : "";
                             // 默认值
-                            colDto.DefaultVal = (!string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "");
+                            colDto.DefaultVal = !string.IsNullOrWhiteSpace(col.Value.DefaultValue) ? col.Value.DefaultValue : "";
                             // 列注释（说明）
                             colDto.Comment = col.Value.Comment.FilterIllegalDir();
 
@@ -1093,7 +1093,7 @@ namespace SmartSQL.Views
                         // 数据类型
                         colDto.ColumnTypeName = col.Value.DataType;
                         // 长度
-                        colDto.Length = col.Value.Length;
+                        colDto.Length = col.Value.LengthName;
                         // 小数位
                         //colDto.Scale = "";//(col.Scale.HasValue ? col.Scale.Value.ToString() : "");
                         // 主键
