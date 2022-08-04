@@ -28,6 +28,8 @@ using UserControlE = System.Windows.Controls.UserControl;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
 using SmartSQL.DocUtils;
+using SqlSugar;
+using SmartSQL.Helper;
 
 namespace SmartSQL.UserControl
 {
@@ -214,34 +216,31 @@ namespace SmartSQL.UserControl
                         return;
                     }
                     var selectItem = (TreeNodeItem)e.Row.Item;
-                    var msgResult = MessageBox.Show($"确认修改{selectItem.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                    var msgResult = MessageBox.Show(
+                        $"确认修改{selectItem.DisplayName}的备注为{newValue}？",
+                        "温馨提示",
+                        MessageBoxButton.OKCancel,
+                        MessageBoxImage.Question);
                     if (msgResult == MessageBoxResult.OK)
                     {
-                        var flag = false;
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                        var db = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, dbConnectionString);
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString);
                         try
                         {
-                            switch (selectItem.Type)
+                            var objectType = selectItem.Type.Equals(ObjType.Table) ? DbObjectType.Table : (selectItem.Type.Equals(ObjType.View) ? DbObjectType.View : DbObjectType.Proc);
+                            var editResult = dbInstance.UpdateObjectRemark(selectItem.Name, newValue, objectType);
+                            if (editResult)
                             {
-                                case ObjType.Table:
-                                    flag = db.AddTableRemark(selectItem.Name, newValue);
-                                    break;
-                                case ObjType.View:
-                                    flag = db.AddViewRemark(selectItem.Name, newValue);
-                                    break;
-                                case ObjType.Proc:
-                                    flag = db.AddProcRemark(selectItem.Name, newValue);
-                                    break;
+                                Oops.Success("更新成功");
                             }
-                            if (flag)
-                                Growl.SuccessGlobal(new GrowlInfo { Message = $"更新成功", ShowDateTime = false });
                             else
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"更新失败", ShowDateTime = false });
+                            {
+                                Oops.Oh("更新失败");
+                            }
                         }
                         catch (Exception ex)
                         {
-                            Growl.Warning(new GrowlInfo { Message = $"更新失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                            Oops.Oh($"更新失败，原因：" + ex.ToMsg());
                         }
                     }
                     else

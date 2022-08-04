@@ -126,7 +126,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateObjectRemark(string objectName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
             throw new NotImplementedException();
         }

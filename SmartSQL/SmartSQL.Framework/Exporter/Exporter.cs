@@ -62,7 +62,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public abstract bool UpdateObjectRemark(string objectName, string remark);
+        public abstract bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table);
         /// <summary>
         /// 更新列注释
         /// </summary>

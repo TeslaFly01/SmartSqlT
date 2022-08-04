@@ -37,10 +37,11 @@ namespace SmartSQL.Framework.Exporter
         /// <summary>
         /// 更新表/视图/存储过程等对象备注
         /// </summary>
-        /// <param name="objectName"></param>
-        /// <param name="remark"></param>
+        /// <param name="objectName">对象名</param>
+        /// <param name="remark">备注</param>
+        /// <param name="objectType">对象类型</param>
         /// <returns></returns>
-        bool UpdateObjectRemark(string objectName, string remark);
+        bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table);
         /// <summary>
         /// 更新列注释
         /// </summary>

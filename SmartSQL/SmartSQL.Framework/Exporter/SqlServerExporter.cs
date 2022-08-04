@@ -23,7 +23,7 @@ namespace SmartSQL.Framework.Exporter
         {
 
         }
-        
+
         /// <summary>
         /// 初始化获取对象列表
         /// </summary>
@@ -42,7 +42,7 @@ namespace SmartSQL.Framework.Exporter
             catch (Exception ex)
             {
                 throw ex;
-            } 
+            }
             #endregion
         }
 
@@ -66,7 +66,7 @@ namespace SmartSQL.Framework.Exporter
                 };
                 list.Add(dBase);
             }
-            return list; 
+            return list;
             #endregion
         }
 
@@ -445,9 +445,23 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateObjectRemark(string objectName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
-            throw new NotImplementedException();
+            var result = false;
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            if (objectType == DbObjectType.Table)
+            {
+                result = dbMaintenance.AddTableRemark(objectName, remark);
+            }
+            if (objectType == DbObjectType.View)
+            {
+                result = dbMaintenance.AddViewRemark(objectName, remark);
+            }
+            if (objectType == DbObjectType.Proc)
+            {
+                result = dbMaintenance.AddProcRemark(objectName, remark);
+            }
+            return result;
         }
 
         /// <summary>
@@ -461,7 +475,7 @@ namespace SmartSQL.Framework.Exporter
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
             var columnName = columnInfo.Name;
             var tableName = columnInfo.ObjectName;
-            if (dbMaintenance.IsAnyColumnRemark(columnName,tableName))
+            if (dbMaintenance.IsAnyColumnRemark(columnName, tableName))
             {
                 dbMaintenance.DeleteColumnRemark(columnName, tableName);
             }

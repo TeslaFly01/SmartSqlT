@@ -231,10 +231,23 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="objectName"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateObjectRemark(string objectName, string remark)
+        public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
+            var result = false;
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            return dbMaintenance.AddTableRemark(objectName, remark);
+            if (objectType == DbObjectType.Table)
+            {
+                result = dbMaintenance.AddTableRemark(objectName, remark);
+            }
+            if (objectType == DbObjectType.View)
+            {
+                throw new NotSupportedException();
+            }
+            if (objectType == DbObjectType.Proc)
+            {
+                throw new NotSupportedException();
+            }
+            return result;
         }
 
         /// <summary>

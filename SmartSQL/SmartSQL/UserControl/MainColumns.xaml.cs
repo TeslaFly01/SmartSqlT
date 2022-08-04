@@ -405,6 +405,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnSetGroup_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             //选中的表对象
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
@@ -426,7 +427,8 @@ namespace SmartSQL.UserControl
             group.SelectedDataBase = SelectedDataBase.DbName;
             group.SelectedObjects = new List<TreeNodeItem>() { SelectedObject };
             group.Owner = mainWindow;
-            group.ShowDialog();
+            group.ShowDialog(); 
+            #endregion
         }
 
         /// <summary>
@@ -506,6 +508,7 @@ namespace SmartSQL.UserControl
         /// <param name="strWhere"></param>
         private void BindDataSet(IExporter exporter, TreeNodeItem objects, string strWhere)
         {
+            #region MyRegion
             //LoadingLineTableData.Visibility = Visibility.Visible;
             //NoDataTextExt.Visibility = Visibility.Collapsed;
             //var connectionString = SelectedConnection.DbMasterConnectString;
@@ -524,7 +527,8 @@ namespace SmartSQL.UserControl
             //            NoDataTextExt.Visibility = Visibility.Visible;
             //        }
             //    }));
-            //});
+            //}); 
+            #endregion
         }
 
         /// <summary>
