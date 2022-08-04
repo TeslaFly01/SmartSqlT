@@ -43,6 +43,7 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
             mainWindow.OprToolGrid.Visibility = Visibility.Visible;
+            mainWindow.BtnPrev.Visibility = Visibility.Visible;
             switch (senderInfo.DataBaseName)
             {
                 case "SQLServer":

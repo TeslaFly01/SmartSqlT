@@ -74,16 +74,45 @@ namespace SmartSQL.Views
         }
 
         /// <summary>
+        /// 连接页面数据初始化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var ucConnectMain = new ConnectMainUC();
+            ucConnectMain.ChangeRefreshEvent += ChangeRefreshEvent;
+            MainContent = ucConnectMain;
+            Task.Run(() =>
+            {
+                var sqLiteHelper = new SQLiteHelper();
+                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    DataList = datalist;
+                });
+            });
+            #endregion
+        }
+
+        /// <summary>
         /// 加载连接信息
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
                 OprToolGrid.Visibility = Visibility.Visible;
+                BtnPrev.Visibility = Visibility.Collapsed;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 switch (connect.DbType)
                 {
@@ -112,7 +141,8 @@ namespace SmartSQL.Views
                         MainContent = ucSqlite;
                         break;
                 }
-            }
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -201,10 +231,15 @@ namespace SmartSQL.Views
             ResetData();
         }
 
+        /// <summary>
+        /// 重置表单
+        /// </summary>
         private void ResetData()
         {
+            #region MyRegion
             MainContent = new ConnectMainUC();
-            ListConnects.SelectedItem = null;
+            ListConnects.SelectedItem = null; 
+            #endregion
         }
 
         /// <summary>
@@ -238,24 +273,14 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private void ConnectManage_OnLoaded(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 返回上一步
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnPrev_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!IsLoaded)
-            {
-                return;
-            }
-            var ucConnectMain = new ConnectMainUC();
-            ucConnectMain.ChangeRefreshEvent += ChangeRefreshEvent;
-            MainContent = ucConnectMain;
-            Task.Run(() =>
-            {
-                var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ConnectConfigs>().ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    DataList = datalist;
-                });
-            });
+            ResetData();
         }
     }
 }
