@@ -16,6 +16,7 @@ using System.Xml.Serialization;
 using HandyControl.Controls;
 using Microsoft.WindowsAPICodePack.Shell.PropertySystem;
 using HandyControl.Data;
+using SmartSQL.Helper;
 
 namespace SmartSQL.Views
 {
@@ -83,7 +84,7 @@ namespace SmartSQL.Views
             #region MyRegion
             if (string.IsNullOrWhiteSpace(path))
             {
-                Growl.WarningGlobal("导入文件为空.");
+                Oops.Oh("导入文件为空.");
                 return;
             }
             LoadingG.Visibility = Visibility.Visible;
@@ -215,7 +216,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.SuccessGlobal("导入成功.");
+                        Oops.Success("导入成功");
                     });
                 }
                 catch (Exception ex)
@@ -223,7 +224,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.Warning(new GrowlInfo { Message = $"导入失败，原因：" + ex.ToMsg(), ShowDateTime = false, Type = InfoType.Error });
+                        Oops.God($"导入失败，原因：" + ex.ToMsg());
                     });
                 }
             });

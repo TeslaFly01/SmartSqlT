@@ -41,6 +41,7 @@ namespace SmartSQL.Framework.Exporter
 
         public override List<DataBase> GetDatabases()
         {
+            #region MyRegion
             return new List<DataBase>
             {
                 new DataBase
@@ -49,10 +50,12 @@ namespace SmartSQL.Framework.Exporter
                     IsSelected = true
                 }
             };
+            #endregion
         }
 
         public override Columns GetColumnInfoById(string objectId)
         {
+            #region MyRegion
             var columns = new Columns(500);
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
             var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
@@ -82,7 +85,7 @@ namespace SmartSQL.Framework.Exporter
                         column.Length = $"({v.Length},{v.Scale})"; break;
                 }
 
-                 column.ObjectId = objectId.ToString();
+                column.ObjectId = objectId.ToString();
                 column.ObjectName = v.DbColumnName;
                 column.IsIdentity = v.IsIdentity;
                 column.IsNullable = v.IsNullable;
@@ -91,9 +94,11 @@ namespace SmartSQL.Framework.Exporter
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
                 column.IsPrimaryKey = v.IsPrimarykey;
+                column.CSharpType = SqliteDbTypeMapHelper.MapCsharpType(v.DataType, v.IsNullable);
                 columns.Add(v.DbColumnName, column);
             });
             return columns;
+            #endregion
         }
 
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)

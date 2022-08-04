@@ -419,6 +419,7 @@ namespace SmartSQL.Framework.Exporter
                 column.OriginalName = col.DbColumnName;
                 column.Comment = col.ColumnDescription;
                 column.IsPrimaryKey = col.IsPrimarykey;
+                column.CSharpType = SqlServerDbTypeMapHelper.MapCsharpType(col.DataType, col.IsNullable);
                 columns.Add(col.DbColumnName, column);
             });
             return columns;

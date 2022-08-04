@@ -173,12 +173,6 @@ namespace SmartSQL.Framework.PhysicalDataModel
             get { return "column"; }
         }
 
-        public string CSharpType
-        {
-            get
-            {
-                return SqlServerDbTypeMapHelper.MapCsharpType(DataType, IsNullable);
-            }
-        }
+        public string CSharpType { get; set; }
     }
 }
