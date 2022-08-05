@@ -34,7 +34,7 @@ namespace SmartSQL.UserControl.Connect
         public event ConnectChangeRefreshHandlerExt ChangeRefreshEvent;
 
         public static readonly DependencyProperty ConnectConfigProperty = DependencyProperty.Register(
-            "ConnectConfig", typeof(ConnectConfigs), typeof(MySqlUC), new PropertyMetadata(default(ConnectConfigs)));
+            "ConnectConfig", typeof(ConnectConfigs), typeof(OracleUC), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 连接配置信息
         /// </summary>

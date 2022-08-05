@@ -1,0 +1,36 @@
+<hc:Window
+    x:Class="SmartSQL.Views.Fontawesome"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    Title="打赏作者"
+    Width="460"
+    Height="300"
+    BorderThickness="0"
+    Icon="/favicon.ico"
+    Loaded="Fontawesome_OnLoaded"
+    ShowInTaskbar="False"
+    ShowTitle="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <ListBox
+        Margin="10"
+        BorderThickness="0"
+        ItemsSource="{Binding IconList}">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
+                <Grid>
+                    <fa:FontAwesome
+                        FontSize="20"
+                        Foreground="#183153"
+                        Icon="{Binding Name, Mode=TwoWay}" />
+
+                </Grid>
+            </DataTemplate>
+        </ListBox.ItemTemplate>
+    </ListBox>
+</hc:Window>

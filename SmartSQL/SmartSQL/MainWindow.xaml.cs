@@ -21,6 +21,7 @@ using SmartSQL.Helper;
 using SmartSQL.UserControl;
 using SmartSQL.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
+using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 
@@ -1346,6 +1347,13 @@ namespace SmartSQL
         private void MenuDonation_OnClick(object sender, RoutedEventArgs e)
         {
             var donation = new Donation();
+            donation.Owner = this;
+            donation.ShowDialog();
+        }
+
+        private void MenuFontAwesome_OnClick(object sender, RoutedEventArgs e)
+        {
+            var donation = new Fontawesome();
             donation.Owner = this;
             donation.ShowDialog();
         }
