@@ -120,10 +120,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 |:--:|:--:|
 | QQ交流群 | 微信交流群 |
 
-<div align=center>
-<img src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png" width="50%" >
-</div>
-
 ### ⚡ 近期计划
 
 	✅ 收集问题，修复完善基础功能
