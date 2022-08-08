@@ -52,8 +52,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 #### 更新表列的注释，有哪些方式？
 - 通过 `文件`➡`导入备注`，选择文件导入进行更新批注(注释)：
     - 	[x] pdm 由`PowerDesigner`设计数据库时产生。
-    - 	[x] xml 由`Visual Studio`设置 实体类库的项目属性，勾选  XML文档文件 后生成项目时产生。
-    - 	[x] xml 由`SmartSQL`的 XML导出 而产生。
+    - 	[x] xml 由`Visual Studio`设置 实体类库的项目属性，勾选`XML文档文件`后生成项目时产生。
+    - 	[x] xml 由`SmartSQL`的 XML导出而产生。
   
 #### 什么是分组管理
 - 可以对数据库中的表、视图、存储过程进行自定义分组
@@ -82,21 +82,35 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 >  对`常用的分组`可以置为默认`展开`，`不常用的分组`置为默认`不展开`，保持左侧菜单界面干净、清爽
 
-#### 快捷查询
+#### 快捷检索
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-View.png) |
 |--|--|
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Proc.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Column.png) |
+
+> 支持左侧菜单快速检索对象
+
+> 同时支持右侧主界面快速检索`表`、`列`、`视图`等信息
+
+> 最大亮点是支持双击`备注说明`列对应单元格快速设置对象注释信息
+
+> 对`视图`、`存储过程`支持一键查看内容结构、一键复制
+
 
 #### 导入导出
 
 ![导入备注](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Import.png)|![导出文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Export.png)
 :--:|:--:
 
+> 支持对`表`、`视图`、`存储过程`进行导出成多种格式的离线文档
+
+> 支持对`XML`格式的文档进行导入`表`、`列`、`视图`、`存储过程`注释
+
 #### 设置/关于
 ![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Setting.png) | ![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-About.png)
 --|--
 
 > 支持搜索时设置根据前缀模糊搜索和全量模糊搜索
+
 > 支持对右侧主界面设置多选项卡和单选项卡设置
 
 
@@ -117,16 +131,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 > 下载解压后，双击运行 `SmartSQL.exe`即可
 
-### 🔥 沟通交流
-
- ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ContactQQ.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png) 
-|:--:|:--:|
-| QQ交流群：`666483672` | 微信交流群 |
-
- > 由于`微信群`限制超`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
-
-![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-mp.png)
-
 
 ### ⚡ 近期计划
 
@@ -137,6 +141,18 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 	⏳ 计划中：对象结构对比功能
 	⏳ 计划中：表、视图、存储过程同步功能
 	⏳ ...
+	
+
+### 🔥 沟通交流
+
+ ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ContactQQ.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png) 
+|:--:|:--:|
+| QQ交流群：`666483672` | 微信交流群 |
+
+ > 由于`微信群`限制超`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
+
+![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-mp.png)
+
 
 ### ❓ 常见问题
 
