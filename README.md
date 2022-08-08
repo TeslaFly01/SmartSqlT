@@ -96,6 +96,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ![设置](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Setting.png) | ![关于](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-About.png)
 --|--
 
+> 支持搜索时设置根据前缀模糊搜索和全量模糊搜索
+> 支持对右侧主界面设置多选项卡和单选项卡设置
+
 
 ### 📰 文档截图
 
@@ -118,7 +121,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
  ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ContactQQ.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png) 
 |:--:|:--:|
-| QQ交流群 | 微信交流群 |
+| QQ交流群：`666483672` | 微信交流群 |
 
  > 由于`微信群`限制超`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
 

@@ -17,20 +17,22 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <ListBox
-        Margin="10"
-        BorderThickness="0"
-        ItemsSource="{Binding IconList}">
-        <ListBox.ItemTemplate>
-            <DataTemplate>
-                <Grid>
-                    <fa:FontAwesome
-                        FontSize="20"
-                        Foreground="#183153"
-                        Icon="{Binding Name, Mode=TwoWay}" />
+    <Grid>
+        <ListBox
+            Margin="10"
+            BorderThickness="0"
+            ItemsSource="{Binding IconList}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <fa:FontAwesome
+                            FontSize="20"
+                            Foreground="#183153"
+                            Icon="{Binding Name, Mode=TwoWay}" />
 
-                </Grid>
-            </DataTemplate>
-        </ListBox.ItemTemplate>
-    </ListBox>
+                    </Grid>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
 </hc:Window>

@@ -166,11 +166,11 @@ namespace SmartSQL
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
                 var sqLiteHelper = new SQLiteHelper();
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
-                MenuBind(false, null);
+                MenuBind();
             }
         }
 
-        public void MenuBind(bool isCompare, Model compareData)
+        public void MenuBind()
         {
             #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;
@@ -302,76 +302,52 @@ namespace SmartSQL
                 #region 数据表
                 foreach (var table in model.Tables)
                 {
-                    if (isCompare)
+                    //是否业务分组
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
-                        var tableAny = compareData.Tables.Any(x => x.Key.Equals(table.Key));
-                        if (!tableAny)
+                        var hasGroup = curObjects.Where(x => x.ObjectName == table.Key).
+                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                            .ToList();
+                        foreach (var group in hasGroup)
                         {
-                            textColor = "Blue";
-                            nodeTable.Children.Add(new TreeNodeItem()
+                            var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
+                            if (pGroup != null)
                             {
-                                ObejcetId = table.Value.Id,
-                                DisplayName = table.Value.DisplayName,
-                                Name = table.Value.Name,
-                                Schema = table.Value.SchemaName,
-                                Comment = table.Value.Comment,
-                                CreateDate = table.Value.CreateDate,
-                                ModifyDate = table.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = TABLEICON,
-                                Type = ObjType.Table
-                            });
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                if (ppGroup != null)
+                                {
+                                    ppGroup.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = table.Value.Id,
+                                        DisplayName = table.Value.DisplayName,
+                                        Name = table.Value.Name,
+                                        Schema = table.Value.SchemaName,
+                                        Comment = table.Value.Comment,
+                                        CreateDate = table.Value.CreateDate,
+                                        ModifyDate = table.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = TABLEICON,
+                                        Type = ObjType.Table
+                                    });
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        //是否业务分组
-                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
+                        nodeTable.Children.Add(new TreeNodeItem()
                         {
-                            var hasGroup = curObjects.Where(x => x.ObjectName == table.Key).
-                                GroupBy(x => x.GroupName).Select(x => x.Key)
-                                .ToList();
-                            foreach (var group in hasGroup)
-                            {
-                                var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
-                                if (pGroup != null)
-                                {
-                                    var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
-                                    if (ppGroup != null)
-                                    {
-                                        ppGroup.Children.Add(new TreeNodeItem()
-                                        {
-                                            ObejcetId = table.Value.Id,
-                                            DisplayName = table.Value.DisplayName,
-                                            Name = table.Value.Name,
-                                            Schema = table.Value.SchemaName,
-                                            Comment = table.Value.Comment,
-                                            CreateDate = table.Value.CreateDate,
-                                            ModifyDate = table.Value.ModifyDate,
-                                            TextColor = textColor,
-                                            Icon = TABLEICON,
-                                            Type = ObjType.Table
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            nodeTable.Children.Add(new TreeNodeItem()
-                            {
-                                ObejcetId = table.Value.Id,
-                                DisplayName = table.Value.DisplayName,
-                                Name = table.Value.Name,
-                                Schema = table.Value.SchemaName,
-                                Comment = table.Value.Comment,
-                                CreateDate = table.Value.CreateDate,
-                                ModifyDate = table.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = TABLEICON,
-                                Type = ObjType.Table
-                            });
-                        }
+                            ObejcetId = table.Value.Id,
+                            DisplayName = table.Value.DisplayName,
+                            Name = table.Value.Name,
+                            Schema = table.Value.SchemaName,
+                            Comment = table.Value.Comment,
+                            CreateDate = table.Value.CreateDate,
+                            ModifyDate = table.Value.ModifyDate,
+                            TextColor = textColor,
+                            Icon = TABLEICON,
+                            Type = ObjType.Table
+                        });
                     }
                 }
                 #endregion
@@ -379,76 +355,52 @@ namespace SmartSQL
                 #region 视图
                 foreach (var view in model.Views)
                 {
-                    if (isCompare)
+                    //是否业务分组
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
-                        var viewAny = compareData.Views.Any(x => x.Key.Equals(view.Key));
-                        if (!viewAny)
+                        var hasGroup = curObjects.Where(x => x.ObjectName == view.Key).
+                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                            .ToList();
+                        foreach (var group in hasGroup)
                         {
-                            textColor = "Blue";
-                            nodeView.Children.Add(new TreeNodeItem()
+                            var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
+                            if (pGroup != null)
                             {
-                                ObejcetId = view.Value.Id,
-                                DisplayName = view.Value.DisplayName,
-                                Name = view.Value.Name,
-                                Schema = view.Value.SchemaName,
-                                Comment = view.Value.Comment,
-                                CreateDate = view.Value.CreateDate,
-                                ModifyDate = view.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = VIEWICON,
-                                Type = ObjType.View
-                            });
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
+                                if (ppGroup != null)
+                                {
+                                    ppGroup.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = view.Value.Id,
+                                        DisplayName = view.Value.DisplayName,
+                                        Name = view.Value.Name,
+                                        Schema = view.Value.SchemaName,
+                                        Comment = view.Value.Comment,
+                                        CreateDate = view.Value.CreateDate,
+                                        ModifyDate = view.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = VIEWICON,
+                                        Type = ObjType.View
+                                    });
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        //是否业务分组
-                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
+                        nodeView.Children.Add(new TreeNodeItem()
                         {
-                            var hasGroup = curObjects.Where(x => x.ObjectName == view.Key).
-                                GroupBy(x => x.GroupName).Select(x => x.Key)
-                                .ToList();
-                            foreach (var group in hasGroup)
-                            {
-                                var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
-                                if (pGroup != null)
-                                {
-                                    var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
-                                    if (ppGroup != null)
-                                    {
-                                        ppGroup.Children.Add(new TreeNodeItem()
-                                        {
-                                            ObejcetId = view.Value.Id,
-                                            DisplayName = view.Value.DisplayName,
-                                            Name = view.Value.Name,
-                                            Schema = view.Value.SchemaName,
-                                            Comment = view.Value.Comment,
-                                            CreateDate = view.Value.CreateDate,
-                                            ModifyDate = view.Value.ModifyDate,
-                                            TextColor = textColor,
-                                            Icon = VIEWICON,
-                                            Type = ObjType.View
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            nodeView.Children.Add(new TreeNodeItem()
-                            {
-                                ObejcetId = view.Value.Id,
-                                DisplayName = view.Value.DisplayName,
-                                Name = view.Value.Name,
-                                Schema = view.Value.SchemaName,
-                                Comment = view.Value.Comment,
-                                CreateDate = view.Value.CreateDate,
-                                ModifyDate = view.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = VIEWICON,
-                                Type = ObjType.View
-                            });
-                        }
+                            ObejcetId = view.Value.Id,
+                            DisplayName = view.Value.DisplayName,
+                            Name = view.Value.Name,
+                            Schema = view.Value.SchemaName,
+                            Comment = view.Value.Comment,
+                            CreateDate = view.Value.CreateDate,
+                            ModifyDate = view.Value.ModifyDate,
+                            TextColor = textColor,
+                            Icon = VIEWICON,
+                            Type = ObjType.View
+                        });
                     }
                 }
                 #endregion
@@ -456,133 +408,52 @@ namespace SmartSQL
                 #region 存储过程
                 foreach (var proc in model.Procedures)
                 {
-                    if (isCompare)
+                    //是否业务分组
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
-                        var procAny = compareData.Procedures.Any(x => x.Key.Equals(proc.Key));
-                        if (!procAny)
+                        var hasGroup = curObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
+                            .Select(x => x.Key)
+                            .ToList();
+                        foreach (var group in hasGroup)
                         {
-                            textColor = "Blue";
-                            nodeProc.Children.Add(new TreeNodeItem()
+                            var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
+                            if (pGroup != null)
                             {
-                                ObejcetId = proc.Value.Id,
-                                DisplayName = proc.Value.DisplayName,
-                                Name = proc.Value.Name,
-                                Schema = proc.Value.SchemaName,
-                                Comment = proc.Value.Comment,
-                                CreateDate = proc.Value.CreateDate,
-                                ModifyDate = proc.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = PROCICON,
-                                Type = ObjType.Proc
-                            });
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
+                                if (ppGroup != null)
+                                {
+                                    ppGroup.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = proc.Value.Id,
+                                        DisplayName = proc.Value.DisplayName,
+                                        Name = proc.Value.Name,
+                                        Schema = proc.Value.SchemaName,
+                                        Comment = proc.Value.Comment,
+                                        CreateDate = proc.Value.CreateDate,
+                                        ModifyDate = proc.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = PROCICON,
+                                        Type = ObjType.Proc
+                                    });
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        //是否业务分组
-                        if (leftMenuType == LeftMenuType.Group.GetHashCode())
+                        nodeProc.Children.Add(new TreeNodeItem()
                         {
-                            var hasGroup = curObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
-                                .Select(x => x.Key)
-                                .ToList();
-                            foreach (var group in hasGroup)
-                            {
-                                var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
-                                if (pGroup != null)
-                                {
-                                    var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
-                                    if (ppGroup != null)
-                                    {
-                                        ppGroup.Children.Add(new TreeNodeItem()
-                                        {
-                                            ObejcetId = proc.Value.Id,
-                                            DisplayName = proc.Value.DisplayName,
-                                            Name = proc.Value.Name,
-                                            Schema = proc.Value.SchemaName,
-                                            Comment = proc.Value.Comment,
-                                            CreateDate = proc.Value.CreateDate,
-                                            ModifyDate = proc.Value.ModifyDate,
-                                            TextColor = textColor,
-                                            Icon = PROCICON,
-                                            Type = ObjType.Proc
-                                        });
-                                    }
-                                }
-                            }
-                        }
-                        else
-                        {
-                            nodeProc.Children.Add(new TreeNodeItem()
-                            {
-                                ObejcetId = proc.Value.Id,
-                                DisplayName = proc.Value.DisplayName,
-                                Name = proc.Value.Name,
-                                Schema = proc.Value.SchemaName,
-                                Comment = proc.Value.Comment,
-                                CreateDate = proc.Value.CreateDate,
-                                ModifyDate = proc.Value.ModifyDate,
-                                TextColor = textColor,
-                                Icon = PROCICON,
-                                Type = ObjType.Proc
-                            });
-                        }
-                    }
-                }
-                #endregion
-
-                #region 数据比较
-                if (isCompare)
-                {
-                    foreach (var compareTable in compareData.Tables)
-                    {
-                        if (!model.Tables.Any(x => x.Key.Equals(compareTable.Key)))
-                        {
-                            textColor = "Red";
-                            nodeTable.Children.Add(new TreeNodeItem
-                            {
-                                ObejcetId = compareTable.Value.Id,
-                                DisplayName = compareTable.Value.DisplayName,
-                                Name = compareTable.Value.Name,
-                                Schema = compareTable.Value.SchemaName,
-                                TextColor = textColor,
-                                Icon = TABLEICON,
-                                Type = ObjType.Table
-                            });
-                        }
-                    }
-                    foreach (var compareView in compareData.Views)
-                    {
-                        if (!model.Views.Any(x => x.Key.Equals(compareView.Key)))
-                        {
-                            textColor = "Red";
-                            nodeView.Children.Add(new TreeNodeItem()
-                            {
-                                ObejcetId = compareView.Value.Id,
-                                DisplayName = compareView.Value.DisplayName,
-                                Name = compareView.Value.Name,
-                                Schema = compareView.Value.SchemaName,
-                                TextColor = textColor,
-                                Icon = VIEWICON,
-                                Type = ObjType.View
-                            });
-                        }
-                    }
-                    foreach (var compareProc in compareData.Procedures)
-                    {
-                        if (!model.Procedures.Any(x => x.Key.Equals(compareProc.Key)))
-                        {
-                            textColor = "Red";
-                            nodeProc.Children.Add(new TreeNodeItem()
-                            {
-                                ObejcetId = compareProc.Value.Id,
-                                DisplayName = compareProc.Value.DisplayName,
-                                Name = compareProc.Value.Name,
-                                Schema = compareProc.Value.SchemaName,
-                                TextColor = textColor,
-                                Icon = VIEWICON,
-                                Type = ObjType.View
-                            });
-                        }
+                            ObejcetId = proc.Value.Id,
+                            DisplayName = proc.Value.DisplayName,
+                            Name = proc.Value.Name,
+                            Schema = proc.Value.SchemaName,
+                            Comment = proc.Value.Comment,
+                            CreateDate = proc.Value.CreateDate,
+                            ModifyDate = proc.Value.ModifyDate,
+                            TextColor = textColor,
+                            Icon = PROCICON,
+                            Type = ObjType.Proc
+                        });
                     }
                 }
                 #endregion
@@ -592,7 +463,7 @@ namespace SmartSQL
                     LoadingLine.Visibility = Visibility.Hidden;
                     //编写获取数据并显示在界面的代码
                     //是否业务分组
-                    if (leftMenuType == LeftMenuType.Group.GetHashCode() && !isCompare)
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
                         if (!itemParentList.Any())
                         {
@@ -618,10 +489,6 @@ namespace SmartSQL
                         if (!itemList.Any(x => x.Children.Count > 0))
                         {
                             NoDataAreaText.TipText = "暂无数据";
-                            if (isCompare)
-                            {
-                                NoDataAreaText.TipText = "暂无差异数据";
-                            }
                             NoDataText.Visibility = Visibility.Visible;
                         }
                         itemList.ForEach(obj =>
@@ -671,7 +538,7 @@ namespace SmartSQL
             }
             else
             {
-                MenuBind(false, null);
+                MenuBind();
             }
         }
 
@@ -1100,68 +967,6 @@ namespace SmartSQL
         }
 
         /// <summary>
-        /// 切换目标连接
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CbTargetConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var comboBoxItem = (ComboBox)sender;
-            var dataBase = (ConnectConfigs)comboBoxItem.SelectedItem;
-            if (dataBase == null)
-            {
-                return;
-            }
-            Task.Run(() =>
-            {
-                var dbInstance = ExporterFactory.CreateInstance(dataBase.DbType, dataBase.DbMasterConnectString);
-                var list = dbInstance.GetDatabases();
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    CbTargetDatabase.ItemsSource = list;
-                    CbTargetDatabase.DisplayMemberPath = "DbName";
-                    list.ForEach(x =>
-                    {
-                        if (!(SelectDatabase.SelectedItem is DataBase selectDatabase)) return;
-                        if (x.DbName == selectDatabase.DbName)
-                        {
-                            CbTargetDatabase.SelectedItem = x;
-                        }
-                    });
-                }));
-            });
-        }
-
-        /// <summary>
-        /// 数据库比较
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnCompare_OnClick(object sender, RoutedEventArgs e)
-        {
-            #region MyRegion
-            if (SelectendConnection == null)
-            {
-                Growl.Warning(new GrowlInfo { Message = $"请选择源数据库", WaitTime = 1, ShowDateTime = false });
-                return;
-            }
-            var targetConnect = (ConnectConfigs)CbTargetConnect.SelectedItem;
-            var targetData = (DataBase)CbTargetDatabase.SelectedItem;
-            if (targetConnect == null || targetData == null || string.IsNullOrEmpty(targetData.DbName))
-            {
-                Growl.Warning(new GrowlInfo { Message = $"请选择目标数据库", WaitTime = 1, ShowDateTime = false });
-                return;
-            }
-            var dbInstance = ExporterFactory.CreateInstance(targetConnect.DbType, targetConnect.SelectedDbConnectString(targetData.DbName));
-            LoadingLine.Visibility = Visibility.Visible;
-
-            var model = dbInstance.Init();
-            MenuBind(true, model);
-
-            #endregion
-        }
-
-        /// <summary>
         /// 关于SmartSQL
         /// </summary>
         /// <param name="sender"></param>
@@ -1201,7 +1006,7 @@ namespace SmartSQL
         {
             if (TabGroupData.IsSelected)
             {
-                MenuBind(false, null);
+                MenuBind();
             }
         }
 
@@ -1231,7 +1036,7 @@ namespace SmartSQL
                 SearchMenuBind();
                 return;
             }
-            MenuBind(false, null);
+            MenuBind();
         }
 
         /// <summary>

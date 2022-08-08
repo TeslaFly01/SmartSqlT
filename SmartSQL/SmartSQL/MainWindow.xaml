@@ -159,11 +159,11 @@
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
-                    <MenuItem
+                    <!--<MenuItem
                         Name="MenuFontAwesome"
                         Click="MenuFontAwesome_OnClick"
                         FontWeight="Normal"
-                        Header="工具图标" />
+                        Header="工具图标" />-->
                     <MenuItem
                         Name="MenuDonation"
                         Click="MenuDonation_OnClick"
@@ -183,11 +183,15 @@
                         FontWeight="Normal"
                         Header="关于SmartSQL">
                         <MenuItem.Icon>
-                            <svgc:SvgViewbox
+                            <!--<svgc:SvgViewbox
                                 Width="15"
                                 Height="15"
                                 VerticalAlignment="Center"
-                                Source="pack://application:,,,/Resources/svg/icon_logo.svg" />
+                                Source="pack://application:,,,/Resources/svg/icon_logo.svg" />-->
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                Foreground="#183153"
+                                Icon="AddressCard" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -366,54 +370,6 @@
                                 Margin="0"
                                 HorizontalAlignment="Center"
                                 ShowType="All" />
-                        </Grid>
-                        <Grid
-                            Margin="0"
-                            VerticalAlignment="Bottom"
-                            Visibility="Hidden">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="4*" />
-                                <ColumnDefinition Width="6*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Grid>
-                                <ComboBox
-                                    x:Name="CbTargetConnect"
-                                    Height="26"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalContentAlignment="Left"
-                                    hc:InfoElement.Placeholder="目标连接"
-                                    Cursor="Hand"
-                                    DisplayMemberPath="ConnectName"
-                                    IsTextSearchEnabled="True"
-                                    SelectedValuePath="DbMasterConnectString"
-                                    SelectionChanged="CbTargetConnect_OnSelectionChanged"
-                                    Style="{StaticResource ComboBoxExtend}" />
-                            </Grid>
-                            <Grid Grid.Column="1" Margin="5,0,0,0">
-                                <ComboBox
-                                    x:Name="CbTargetDatabase"
-                                    MinWidth="50"
-                                    VerticalAlignment="Bottom"
-                                    HorizontalContentAlignment="Left"
-                                    hc:InfoElement.Placeholder="目标数据库"
-                                    Cursor="Hand"
-                                    IsTextSearchEnabled="True"
-                                    Style="{StaticResource ComboBoxExtend}" />
-                            </Grid>
-                            <Grid Grid.Column="2">
-                                <!--  差异比较按钮  -->
-                                <Button
-                                    x:Name="BtnCompare"
-                                    Height="30"
-                                    Margin="5,5,0,0"
-                                    HorizontalAlignment="Right"
-                                    hc:BorderElement.CornerRadius="6"
-                                    hc:IconElement.Geometry="{StaticResource CompareGeometry}"
-                                    Click="BtnCompare_OnClick"
-                                    Content="差异比较"
-                                    Cursor="Hand" />
-                            </Grid>
                         </Grid>
                         <!--  数据加载Loading  -->
                         <hc:LoadingLine
