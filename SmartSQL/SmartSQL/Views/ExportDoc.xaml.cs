@@ -356,8 +356,8 @@ namespace SmartSQL.Views
                             IsChecked = isChecked
                         });
                     }
-
                 }
+                nodeTable.IsChecked = ParentIsChecked(nodeTable);
                 #endregion
 
                 #region 视图
@@ -415,6 +415,7 @@ namespace SmartSQL.Views
                         });
                     }
                 }
+                nodeView.IsChecked = ParentIsChecked(nodeView);
                 #endregion
 
                 #region 存储过程
@@ -472,6 +473,7 @@ namespace SmartSQL.Views
                         });
                     }
                 }
+                nodeProc.IsChecked = ParentIsChecked(nodeProc);
                 #endregion
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
@@ -521,6 +523,22 @@ namespace SmartSQL.Views
                 }));
             });
             #endregion
+        }
+
+        public bool? ParentIsChecked(TreeNodeItem node)
+        {
+            bool? viewIsCheck = null;
+            var viewCount = node.Children.Count;
+            var viewCheckCount = node.Children.Count(x => x.IsChecked == true);
+            if (viewCount == viewCheckCount)
+            {
+                viewIsCheck = true;
+            }
+            if (viewCheckCount == 0)
+            {
+                viewIsCheck = false;
+            }
+            return viewIsCheck;
         }
 
         /// <summary>

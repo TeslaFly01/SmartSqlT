@@ -3,8 +3,6 @@
   <Costura  IncludeDebugSymbols ='true'>
     <ExcludeAssemblies>
       RazorEngine
-      SmartSQL.DocUtils
-      SmartSQL.Framework
     </ExcludeAssemblies>
   </Costura>
 </Weavers>

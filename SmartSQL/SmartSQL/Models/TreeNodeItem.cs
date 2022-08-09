@@ -68,7 +68,7 @@ namespace SmartSQL.Models
                 {
                     //折叠状态改变
                     _isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
+                    OnPropertyChanged(nameof(IsExpanded));
                 }
             }
         }
@@ -110,12 +110,15 @@ namespace SmartSQL.Models
             _isChecked = value;
 
             if (updateChildren && _isChecked.HasValue)
+            {
                 this.Children.ForEach(c => c.SetIsChecked(_isChecked, true, false));
-
+            }
             if (updateParent && Parent != null)
+            {
                 Parent.VerifyCheckState();
+            }
 
-            this.OnPropertyChanged("IsChecked"); 
+            this.OnPropertyChanged(nameof(IsChecked));
             #endregion
         }
 
@@ -139,7 +142,7 @@ namespace SmartSQL.Models
                     break;
                 }
             }
-            this.SetIsChecked(state, false, true); 
+            this.SetIsChecked(state, false, true);
             #endregion
         }
     }
