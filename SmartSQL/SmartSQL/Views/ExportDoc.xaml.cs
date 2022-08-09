@@ -100,7 +100,25 @@ namespace SmartSQL.Views
                 OnPropertyChanged(nameof(ExportData));
             }
         }
-        private Model dataSource = new Model();
+
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
+            "MenuData", typeof(Model), typeof(ExportDoc), new PropertyMetadata(default(Model)));
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        public Model MenuData
+        {
+            get => (Model)GetValue(MenuDataProperty);
+            set
+            {
+                SetValue(MenuDataProperty, value);
+                OnPropertyChanged(nameof(MenuData));
+            }
+        }
+
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
         #endregion
 
@@ -150,7 +168,7 @@ namespace SmartSQL.Views
             if (selectDatabase != null)
             {
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
-                MenuBind();
+                MenuBind(true);
             }
         }
 
@@ -167,7 +185,7 @@ namespace SmartSQL.Views
         /// <summary>
         /// 菜单绑定
         /// </summary>
-        public void MenuBind()
+        public void MenuBind(bool isSelectDb = false)
         {
             #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;
@@ -176,6 +194,7 @@ namespace SmartSQL.Views
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectedConnection;
             var selectData = ExportData;
+            var menuData = MenuData;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
@@ -282,28 +301,36 @@ namespace SmartSQL.Views
                                   }).ToList();
                 }
                 #endregion
-                var model = new Model();
-                try
+
+                if (isSelectDb)
                 {
-                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
-                    model = dbInstance.Init();
-                    dataSource = model;
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.BeginInvoke(new Action(() =>
+                    #region 更新左侧菜单
+                    var model = new Model();
+                    try
                     {
-                        Growl.Warning(new GrowlInfo
+                        var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType,
+                            selectConnection.SelectedDbConnectString(selectDataBase));
+                        model = dbInstance.Init();
+                        menuData = model;
+                    }
+                    catch (Exception ex)
+                    {
+                        Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg(),
-                            ShowDateTime = false,
-                            Type = InfoType.Error
-                        });
-                    }));
+                            Growl.Warning(new GrowlInfo
+                            {
+                                Message = $"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg(),
+                                ShowDateTime = false,
+                                Type = InfoType.Error
+                            });
+                        }));
+                    } 
+                    #endregion
                 }
+
                 var textColor = "#333444";
                 #region 数据表
-                foreach (var table in model.Tables)
+                foreach (var table in menuData.Tables)
                 {
                     var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(table.Value.DisplayName));
                     //是否业务分组
@@ -361,7 +388,7 @@ namespace SmartSQL.Views
                 #endregion
 
                 #region 视图
-                foreach (var view in model.Views)
+                foreach (var view in menuData.Views)
                 {
                     var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(view.Value.DisplayName));
                     //是否业务分组
@@ -419,7 +446,7 @@ namespace SmartSQL.Views
                 #endregion
 
                 #region 存储过程
-                foreach (var proc in model.Procedures)
+                foreach (var proc in menuData.Procedures)
                 {
                     var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(proc.Value.DisplayName));
                     //是否业务分组
@@ -585,6 +612,7 @@ namespace SmartSQL.Views
             var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectedConnection;
+            var menuData = MenuData;
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
             var itemParentList = new List<TreeNodeItem>();
@@ -662,9 +690,9 @@ namespace SmartSQL.Views
             #endregion
 
             #region 数据表
-            if (dataSource.Tables != null)
+            if (menuData.Tables != null)
             {
-                foreach (var table in dataSource.Tables)
+                foreach (var table in menuData.Tables)
                 {
                     var isStartWith = !table.Key.ToLower().StartsWith(searchText, true, null) &&
                                      !table.Value.Name.ToLower().StartsWith(searchText, true, null);
@@ -726,9 +754,9 @@ namespace SmartSQL.Views
             #endregion
 
             #region 视图
-            if (dataSource.Views != null)
+            if (menuData.Views != null)
             {
-                foreach (var view in dataSource.Views)
+                foreach (var view in menuData.Views)
                 {
                     var isStartWith = !view.Key.ToLower().StartsWith(searchText, true, null) && !view.Value.Name.ToLower().StartsWith(searchText, true, null);
                     var isContains = !view.Key.ToLower().Contains(searchText) && !view.Key.ToLower().Contains(searchText);
@@ -789,9 +817,9 @@ namespace SmartSQL.Views
             #endregion
 
             #region 存储过程
-            if (dataSource.Procedures != null)
+            if (menuData.Procedures != null)
             {
-                foreach (var proc in dataSource.Procedures)
+                foreach (var proc in menuData.Procedures)
                 {
                     var isStartWith = !proc.Key.ToLower().StartsWith(searchText, true, null) && !proc.Value.Name.ToLower().StartsWith(searchText, true, null);
                     var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Key.ToLower().Contains(searchText);
