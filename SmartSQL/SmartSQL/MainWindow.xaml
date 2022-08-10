@@ -279,7 +279,7 @@
                             VerticalAlignment="Top"
                             HorizontalContentAlignment="Stretch"
                             hc:BorderElement.CornerRadius="5"
-                            hc:InfoElement.Placeholder="搜索数据表/视图/存储过程"
+                            hc:InfoElement.Placeholder="搜索表/视图/存储过程"
                             FontSize="13"
                             ShowClearButton="True"
                             Style="{StaticResource SearchBarPlus}"
@@ -343,19 +343,31 @@
                             </TreeView.ContextMenu>
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
-                                    <StackPanel Orientation="Horizontal">
-                                        <svgc:SvgViewbox
-                                            Width="12"
-                                            Height="12"
-                                            Margin="0,0,5,0"
-                                            HorizontalAlignment="Left"
-                                            Source="{Binding Icon}" />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            FontSize="12"
-                                            Text="{Binding DisplayName}"
-                                            ToolTip="{Binding DisplayName}" />
-                                    </StackPanel>
+                                    <Grid>
+                                        <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                            <svgc:SvgViewbox
+                                                Width="12"
+                                                Height="12"
+                                                Margin="0,0,5,0"
+                                                HorizontalAlignment="Left"
+                                                Source="{Binding Icon}" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontSize="12"
+                                                Text="{Binding DisplayName}"
+                                                ToolTip="{Binding DisplayName}" />
+                                        </hc:SimpleStackPanel>
+                                        <hc:SimpleStackPanel HorizontalAlignment="Right" Visibility="{Binding IsShowCount}">
+                                            <Border Background="#fffffe" CornerRadius="3">
+                                                <TextBlock
+                                                    Margin="5,1,5,1"
+                                                    VerticalAlignment="Center"
+                                                    FontWeight="Bold"
+                                                    Foreground="{StaticResource ThirdlyTextBrush}"
+                                                    Text="{Binding ChildrenCount}" />
+                                            </Border>
+                                        </hc:SimpleStackPanel>
+                                    </Grid>
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>

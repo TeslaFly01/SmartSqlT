@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace SmartSQL.Models
 {
@@ -68,7 +69,7 @@ namespace SmartSQL.Models
                 {
                     //折叠状态改变
                     _isExpanded = value;
-                    OnPropertyChanged("IsExpanded");
+                    OnPropertyChanged(nameof(IsExpanded));
                 }
             }
         }
@@ -91,6 +92,16 @@ namespace SmartSQL.Models
         }
 
         /// <summary>
+        /// 子项数量
+        /// </summary>
+        public int ChildrenCount { get; set; }
+
+        /// <summary>
+        /// 是否显示总量
+        /// </summary>
+        public Visibility IsShowCount { get; set; } = System.Windows.Visibility.Collapsed;
+
+        /// <summary>
         /// 子项菜单
         /// </summary>
         public List<TreeNodeItem> Children { get; set; }
@@ -110,12 +121,15 @@ namespace SmartSQL.Models
             _isChecked = value;
 
             if (updateChildren && _isChecked.HasValue)
+            {
                 this.Children.ForEach(c => c.SetIsChecked(_isChecked, true, false));
-
+            }
             if (updateParent && Parent != null)
+            {
                 Parent.VerifyCheckState();
+            }
 
-            this.OnPropertyChanged("IsChecked"); 
+            this.OnPropertyChanged(nameof(IsChecked));
             #endregion
         }
 
@@ -139,7 +153,7 @@ namespace SmartSQL.Models
                     break;
                 }
             }
-            this.SetIsChecked(state, false, true); 
+            this.SetIsChecked(state, false, true);
             #endregion
         }
     }

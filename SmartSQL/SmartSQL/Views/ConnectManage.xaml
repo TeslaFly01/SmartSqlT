@@ -30,9 +30,19 @@
             Name="LeftMenu"
             Margin="5"
             Background="#f5f5f5">
+            <Grid
+                Margin="5"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top">
+                <Button
+                    Width="200"
+                    Click="BtnReset_OnClick"
+                    Content="添加连接"
+                    Cursor="Hand" />
+            </Grid>
             <ListBox
                 Name="ListConnects"
-                Margin="5,5,5,35"
+                Margin="5,40,5,35"
                 BorderThickness="0"
                 ItemsSource="{Binding DataList}"
                 ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -73,7 +83,7 @@
                             Source="pack://application:,,,/Resources/svg/btn_del.svg"
                             ToolTip="删除" />
                     </Button>
-                    <Button
+                    <!--<Button
                         Name="BtnAdd"
                         Width="25"
                         Height="25"
@@ -85,7 +95,7 @@
                             Cursor="Hand"
                             Source="pack://application:,,,/Resources/svg/btn_add.svg"
                             ToolTip="添加" />
-                    </Button>
+                    </Button>-->
                 </hc:UniformSpacingPanel>
             </hc:SimpleStackPanel>
         </Grid>

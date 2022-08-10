@@ -43,21 +43,28 @@ namespace SmartSQL
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         private ConnectConfigs SelectendConnection = null;
 
-        private Model dataSource = new Model();
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
+
+
+        #region 
+        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
+            "MenuData", typeof(Model), typeof(MainWindow), new PropertyMetadata(default(Model)));
+
+        public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
+            "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainWindow), new PropertyMetadata(default(List<TreeNodeItem>)));
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
             "CornerRadius", typeof(int), typeof(MainWindow), new PropertyMetadata(default(int)));
 
-        public int CornerRadius
+        /// <summary>
+        /// 菜单源数据
+        /// </summary>
+        public Model MenuData
         {
-            get => (int)GetValue(CornerRadiusProperty);
-            set => SetValue(CornerRadiusProperty, value);
+            get => (Model)GetValue(MenuDataProperty);
+            set => SetValue(MenuDataProperty, value);
         }
 
-        #region TreeViewData
-        public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainWindow), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
         /// 左侧菜单数据
         /// </summary>
@@ -69,6 +76,15 @@ namespace SmartSQL
                 SetValue(TreeViewDataProperty, value);
                 OnPropertyChanged(nameof(TreeViewData));
             }
+        }
+
+        /// <summary>
+        /// 选项卡圆角度数
+        /// </summary>
+        public int CornerRadius
+        {
+            get => (int)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
         }
         #endregion
 
@@ -121,6 +137,7 @@ namespace SmartSQL
         /// <param name="connectConfig"></param>
         public void SwitchConnect(ConnectConfigs connectConfig)
         {
+            #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;
             SwitchMenu.Header = connectConfig.ConnectName;
             SelectendConnection = connectConfig;
@@ -146,6 +163,7 @@ namespace SmartSQL
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
             }
+            #endregion
         }
 
         /// <summary>
@@ -155,6 +173,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -168,6 +187,7 @@ namespace SmartSQL
                 sqLiteHelper.SetSysValue(SysConst.Sys_SelectedDataBase, selectedDbBase.DbName);
                 MenuBind();
             }
+            #endregion
         }
 
         public void MenuBind()
@@ -178,6 +198,7 @@ namespace SmartSQL
             /////TreeViewTables.ItemsSource = null;
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectendConnection;
+            var menuData = MenuData;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
@@ -189,7 +210,7 @@ namespace SmartSQL
                 var nodeTable = new TreeNodeItem
                 {
                     ObejcetId = "0",
-                    DisplayName = "数据表",
+                    DisplayName = "表",
                     Name = "treeTable",
                     Icon = TABLEICON,
                     Type = ObjType.Type
@@ -232,14 +253,15 @@ namespace SmartSQL
                                 DisplayName = group.GroupName,
                                 Name = "treeGroup",
                                 Icon = GROUPICON,
-                                FontWeight = "Bold",
+                                //FontWeight = "Bold",
                                 Type = ObjType.Group,
-                                IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
+                                IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0),
+                                IsShowCount = Visibility.Visible
                             };
                             var nodeTable1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
-                                DisplayName = "数据表",
+                                DisplayName = "表",
                                 Name = "treeTable",
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
@@ -289,7 +311,7 @@ namespace SmartSQL
                 {
                     var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
                     model = dbInstance.Init();
-                    dataSource = model;
+                    menuData = model;
                 }
                 catch (Exception ex)
                 {
@@ -299,7 +321,7 @@ namespace SmartSQL
                     }));
                 }
                 var textColor = "#333444";
-                #region 数据表
+                #region 表
                 foreach (var table in model.Tables)
                 {
                     //是否业务分组
@@ -313,7 +335,7 @@ namespace SmartSQL
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()
@@ -480,6 +502,7 @@ namespace SmartSQL
                                 }
                                 obj.DisplayName += $"（{obj.Children.Count}）";
                             });
+                            group.ChildrenCount = group.Children[0].Children.Count + group.Children[1].Children.Count + group.Children[2].Children.Count;
                         });
                         TreeViewData = itemParentList;
                         SearchMenu.Text = string.Empty;
@@ -502,6 +525,7 @@ namespace SmartSQL
                         TreeViewData = itemList;
                         SearchMenu.Text = string.Empty;
                     }
+                    MenuData = menuData;
                 }));
             });
             #endregion
@@ -514,6 +538,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             var sqLiteHelper = new SQLiteHelper();
             var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
             if (selectedItem.Name == "TabAllData")
@@ -540,6 +565,7 @@ namespace SmartSQL
             {
                 MenuBind();
             }
+            #endregion
         }
 
         /// <summary>
@@ -564,7 +590,7 @@ namespace SmartSQL
             var nodeTable = new TreeNodeItem()
             {
                 ObejcetId = "0",
-                DisplayName = "数据表",
+                DisplayName = "表",
                 Name = "treeTable",
                 Icon = TABLEICON,
                 Type = ObjType.Type,
@@ -628,7 +654,7 @@ namespace SmartSQL
                     var nodeTable1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
-                        DisplayName = "数据表",
+                        DisplayName = "表",
                         Name = "treeTable",
                         Icon = TABLEICON,
                         Type = ObjType.Type,
@@ -672,10 +698,10 @@ namespace SmartSQL
             }
             #endregion
 
-            #region 数据表
-            if (dataSource.Tables != null)
+            #region 表
+            if (MenuData.Tables != null)
             {
-                foreach (var table in dataSource.Tables)
+                foreach (var table in MenuData.Tables)
                 {
                     var isStartWith = !table.Key.ToLower().StartsWith(searchText, true, null) &&
                                      !table.Value.Name.ToLower().StartsWith(searchText, true, null);
@@ -696,7 +722,7 @@ namespace SmartSQL
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()
@@ -735,9 +761,9 @@ namespace SmartSQL
             #endregion
 
             #region 视图
-            if (dataSource.Views != null)
+            if (MenuData.Views != null)
             {
-                foreach (var view in dataSource.Views)
+                foreach (var view in MenuData.Views)
                 {
                     var isStartWith = !view.Key.ToLower().StartsWith(searchText, true, null) && !view.Value.Name.ToLower().StartsWith(searchText, true, null);
                     var isContains = !view.Key.ToLower().Contains(searchText) && !view.Key.ToLower().Contains(searchText);
@@ -796,9 +822,9 @@ namespace SmartSQL
             #endregion
 
             #region 存储过程
-            if (dataSource.Procedures != null)
+            if (MenuData.Procedures != null)
             {
-                foreach (var proc in dataSource.Procedures)
+                foreach (var proc in MenuData.Procedures)
                 {
                     var isStartWith = !proc.Key.ToLower().StartsWith(searchText, true, null) && !proc.Value.Name.ToLower().StartsWith(searchText, true, null);
                     var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Key.ToLower().Contains(searchText);
@@ -925,6 +951,7 @@ namespace SmartSQL
                 MainW.Visibility = Visibility.Visible;
                 MainTabW.Visibility = Visibility.Collapsed;
                 MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
+                MainW.MenuData = MenuData;
                 MainW.SelectedConnection = SelectendConnection;
                 MainW.SelectedDataBase = selectDatabase;
                 MainW.SelectedObject = objects;
@@ -953,6 +980,7 @@ namespace SmartSQL
                 SelectedConnection = SelectendConnection,
                 SelectedDataBase = selectDatabase,
                 SelectedObject = objects,
+                MenuData = MenuData
             };
             mainW.LoadPage(TreeViewData);
             var tabItem = new MainTabWModel
@@ -1106,6 +1134,7 @@ namespace SmartSQL
             }
             var exportDoc = new ExportDoc();
             exportDoc.Owner = this;
+            exportDoc.MenuData = MenuData;
             exportDoc.SelectedConnection = SelectendConnection;
             exportDoc.SelectedDataBase = selectDatabase;
             exportDoc.ShowDialog();

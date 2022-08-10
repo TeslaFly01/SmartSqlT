@@ -39,6 +39,9 @@ namespace SmartSQL.UserControl
     public partial class MainObjects : BaseUserControl
     {
         #region Filds
+        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
+            "MenuData", typeof(Model), typeof(MainObjects), new PropertyMetadata(default(Model)));
+
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(TreeNodeItem), typeof(MainObjects), new PropertyMetadata(default(TreeNodeItem)));
 
@@ -53,6 +56,15 @@ namespace SmartSQL.UserControl
 
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
             "Placeholder", typeof(string), typeof(MainObjects), new PropertyMetadata(default(string)));
+
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        public Model MenuData
+        {
+            get => (Model)GetValue(MenuDataProperty);
+            set => SetValue(MenuDataProperty, value);
+        }
 
         /// <summary>
         /// 当前选中对象
@@ -262,6 +274,7 @@ namespace SmartSQL.UserControl
             var mainWindow = System.Windows.Window.GetWindow(this);
             var exportDoc = new ExportDoc();
             exportDoc.Owner = mainWindow;
+            exportDoc.MenuData = MenuData;
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = SelectedDataBase;
             var exportData = ObjectsViewData.Any(x => x.IsChecked == true)

@@ -12,11 +12,11 @@
     Loaded="ConnectMainUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel Margin="30,20,0,0" HorizontalAlignment="Left">
+        <StackPanel Margin="25,15,0,0" HorizontalAlignment="Left">
             <TextBlock FontWeight="Bold">选择连接类型</TextBlock>
         </StackPanel>
         <ListBox
-            Margin="15,40,15,0"
+            Margin="15,30,15,0"
             BorderThickness="0"
             Cursor="Arrow"
             ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"
@@ -27,6 +27,7 @@
                 DataBaseIcon="pack://application:,,,/Resources/svg/sqlserver@64.svg"
                 DataBaseName="SQLServer"
                 IsEnabled="True" />
+
             <!--  MySQL  -->
             <baseControl:ConnectType
                 ClickCard="ConnectType_OnClickCard"

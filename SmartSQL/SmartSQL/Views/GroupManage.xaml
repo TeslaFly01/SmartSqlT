@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="{Binding Title}"
@@ -80,6 +81,19 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+            <Grid
+                x:Name="NoDataText"
+                Margin="5,100,5,65"
+                HorizontalAlignment="Stretch"
+                Background="White"
+                Cursor="Arrow"
+                Visibility="Collapsed">
+                <local:NoDataArea
+                    x:Name="NoDataAreaText"
+                    Margin="0"
+                    HorizontalAlignment="Center"
+                    ShowType="All" />
+            </Grid>
             <hc:SimpleStackPanel
                 Margin="5,0,5,3"
                 HorizontalAlignment="Right"
@@ -102,7 +116,7 @@
                         Name="BtnAdd"
                         Width="25"
                         Height="25"
-                        Click="BtnReset_OnClick"
+                        Click="BtnAdd_OnClick"
                         Style="{StaticResource ButtonIconSingle}">
                         <svgc:SvgViewbox
                             Width="12"
@@ -164,14 +178,6 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
                     <hc:UniformSpacingPanel Spacing="10">
-                        <Button
-                            x:Name="BtnReset"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            Click="BtnReset_OnClick"
-                            Content="重置"
-                            Cursor="Hand"
-                            Style="{StaticResource ButtonPrimary}" />
                         <Button
                             x:Name="BtnSave"
                             Height="25"

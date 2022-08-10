@@ -30,6 +30,10 @@ namespace SmartSQL.UserControl
     {
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
+
+        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
+            "MenuData", typeof(Model), typeof(MainW), new PropertyMetadata(default(Model)));
+
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
             "SelectedObject", typeof(TreeNodeItem), typeof(MainW), new PropertyMetadata(default(TreeNodeItem)));
 
@@ -41,6 +45,15 @@ namespace SmartSQL.UserControl
 
         public static readonly DependencyProperty MainTitleProperty = DependencyProperty.Register(
             "MainTitle", typeof(string), typeof(MainW), new PropertyMetadata(default(string)));
+
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        public Model MenuData
+        {
+            get => (Model)GetValue(MenuDataProperty);
+            set => SetValue(MenuDataProperty, value);
+        }
 
         /// <summary>
         /// 当前选中对象
@@ -97,6 +110,7 @@ namespace SmartSQL.UserControl
                 {
                     MainColumns.Visibility = Visibility.Collapsed;
                     MainObjects.Visibility = Visibility.Visible;
+                    MainObjects.MenuData = MenuData;
                     MainObjects.SelectedConnection = SelectedConnection;
                     MainObjects.SelectedDataBase = SelectedDataBase;
                     MainObjects.SelectedObject = SelectedObject;
@@ -123,6 +137,7 @@ namespace SmartSQL.UserControl
                 {
                     MainColumn.Visibility = Visibility.Collapsed;
                     MainObject.Visibility = Visibility.Visible;
+                    MainObject.MenuData = MenuData;
                     MainObject.SelectedConnection = SelectedConnection;
                     MainObject.SelectedDataBase = SelectedDataBase;
                     MainObject.SelectedObject = SelectedObject;

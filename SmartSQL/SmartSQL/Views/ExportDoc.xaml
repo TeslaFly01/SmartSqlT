@@ -204,7 +204,7 @@
                             VerticalAlignment="Top"
                             HorizontalContentAlignment="Stretch"
                             hc:BorderElement.CornerRadius="5"
-                            hc:InfoElement.Placeholder="搜索数据表/视图/存储过程"
+                            hc:InfoElement.Placeholder="搜索表/视图/存储过程"
                             FontSize="13"
                             ShowClearButton="True"
                             Style="{StaticResource SearchBarPlus}"
