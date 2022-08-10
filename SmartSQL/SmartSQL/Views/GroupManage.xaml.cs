@@ -92,6 +92,10 @@ namespace SmartSQL.Views
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
+                    if (!datalist.Any())
+                    {
+                        NoDataText.Visibility = Visibility.Visible;
+                    }
                 });
                 var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
                 var list = exporter.GetDatabases();
@@ -276,6 +280,7 @@ namespace SmartSQL.Views
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
+                    NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
                 });
             });
         }

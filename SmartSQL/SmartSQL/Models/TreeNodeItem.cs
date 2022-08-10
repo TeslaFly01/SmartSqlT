@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Windows;
 
 namespace SmartSQL.Models
 {
@@ -89,6 +90,16 @@ namespace SmartSQL.Models
             get { return _isChecked; }
             set { this.SetIsChecked(value, true, true); }
         }
+
+        /// <summary>
+        /// 子项数量
+        /// </summary>
+        public int ChildrenCount { get; set; }
+
+        /// <summary>
+        /// 是否显示总量
+        /// </summary>
+        public Visibility IsShowCount { get; set; } = System.Windows.Visibility.Collapsed;
 
         /// <summary>
         /// 子项菜单

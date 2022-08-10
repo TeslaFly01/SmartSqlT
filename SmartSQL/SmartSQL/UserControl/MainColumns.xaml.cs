@@ -129,7 +129,7 @@ namespace SmartSQL.UserControl
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
                 BtnCreateSqlScript.IsEnabled = !isView;
-                var objName = isView ? "视图" : "数据表";
+                var objName = isView ? "视图" : "表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
@@ -409,7 +409,7 @@ namespace SmartSQL.UserControl
             //选中的表对象
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
-                Oops.Oh("请选择对应的数据表");
+                Oops.Oh("请选择对应的表");
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
@@ -444,7 +444,7 @@ namespace SmartSQL.UserControl
             {
                 if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
                 {
-                    Oops.Oh("请选择对应的数据表");
+                    Oops.Oh("请选择对应的表");
                     return;
                 }
                 selectRows = SourceColunmData;
@@ -490,7 +490,7 @@ namespace SmartSQL.UserControl
             }
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
-                Oops.Oh("请选择需要生成实体的数据表");
+                Oops.Oh("请选择需要生成实体的表");
                 return;
             }
             var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.Name}.cs");

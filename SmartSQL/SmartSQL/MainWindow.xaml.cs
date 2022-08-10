@@ -210,7 +210,7 @@ namespace SmartSQL
                 var nodeTable = new TreeNodeItem
                 {
                     ObejcetId = "0",
-                    DisplayName = "数据表",
+                    DisplayName = "表",
                     Name = "treeTable",
                     Icon = TABLEICON,
                     Type = ObjType.Type
@@ -255,12 +255,13 @@ namespace SmartSQL
                                 Icon = GROUPICON,
                                 //FontWeight = "Bold",
                                 Type = ObjType.Group,
-                                IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
+                                IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0),
+                                IsShowCount = Visibility.Visible
                             };
                             var nodeTable1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
-                                DisplayName = "数据表",
+                                DisplayName = "表",
                                 Name = "treeTable",
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
@@ -320,7 +321,7 @@ namespace SmartSQL
                     }));
                 }
                 var textColor = "#333444";
-                #region 数据表
+                #region 表
                 foreach (var table in model.Tables)
                 {
                     //是否业务分组
@@ -334,7 +335,7 @@ namespace SmartSQL
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()
@@ -501,6 +502,7 @@ namespace SmartSQL
                                 }
                                 obj.DisplayName += $"（{obj.Children.Count}）";
                             });
+                            group.ChildrenCount = group.Children[0].Children.Count + group.Children[1].Children.Count + group.Children[2].Children.Count;
                         });
                         TreeViewData = itemParentList;
                         SearchMenu.Text = string.Empty;
@@ -588,7 +590,7 @@ namespace SmartSQL
             var nodeTable = new TreeNodeItem()
             {
                 ObejcetId = "0",
-                DisplayName = "数据表",
+                DisplayName = "表",
                 Name = "treeTable",
                 Icon = TABLEICON,
                 Type = ObjType.Type,
@@ -652,7 +654,7 @@ namespace SmartSQL
                     var nodeTable1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
-                        DisplayName = "数据表",
+                        DisplayName = "表",
                         Name = "treeTable",
                         Icon = TABLEICON,
                         Type = ObjType.Type,
@@ -696,7 +698,7 @@ namespace SmartSQL
             }
             #endregion
 
-            #region 数据表
+            #region 表
             if (MenuData.Tables != null)
             {
                 foreach (var table in MenuData.Tables)
@@ -720,7 +722,7 @@ namespace SmartSQL
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()

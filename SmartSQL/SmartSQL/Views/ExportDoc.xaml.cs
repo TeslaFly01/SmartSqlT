@@ -206,7 +206,7 @@ namespace SmartSQL.Views
                 var nodeTable = new TreeNodeItem
                 {
                     ObejcetId = "0",
-                    DisplayName = "数据表",
+                    DisplayName = "表",
                     Name = "treeTable",
                     Icon = TABLEICON,
                     Type = ObjType.Type
@@ -256,7 +256,7 @@ namespace SmartSQL.Views
                             var nodeTable1 = new TreeNodeItem
                             {
                                 ObejcetId = "0",
-                                DisplayName = "数据表",
+                                DisplayName = "表",
                                 Name = "treeTable",
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
@@ -329,7 +329,7 @@ namespace SmartSQL.Views
                 }
 
                 var textColor = "#333444";
-                #region 数据表
+                #region 表
                 foreach (var table in menuData.Tables)
                 {
                     var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(table.Value.DisplayName));
@@ -344,7 +344,7 @@ namespace SmartSQL.Views
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()
@@ -580,7 +580,7 @@ namespace SmartSQL.Views
             var nodeTable = new TreeNodeItem()
             {
                 ObejcetId = "0",
-                DisplayName = "数据表",
+                DisplayName = "表",
                 Name = "treeTable",
                 Icon = TABLEICON,
                 Type = ObjType.Type,
@@ -645,7 +645,7 @@ namespace SmartSQL.Views
                     var nodeTable1 = new TreeNodeItem
                     {
                         ObejcetId = "0",
-                        DisplayName = "数据表",
+                        DisplayName = "表",
                         Name = "treeTable",
                         Icon = TABLEICON,
                         Type = ObjType.Type,
@@ -689,7 +689,7 @@ namespace SmartSQL.Views
             }
             #endregion
 
-            #region 数据表
+            #region 表
             if (menuData.Tables != null)
             {
                 foreach (var table in menuData.Tables)
@@ -713,7 +713,7 @@ namespace SmartSQL.Views
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
                             if (pGroup != null)
                             {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "数据表");
+                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
                                     ppGroup.Children.Add(new TreeNodeItem()
@@ -1180,10 +1180,10 @@ namespace SmartSQL.Views
         private static Dictionary<string, string> _docTypeTipMsg = new Dictionary<string, string>
         {
             {"chm","CHM文档类型支持导出表、视图、存储过程"},
-            {"excel","Excel文档类型仅支持导出数据表"},
-            {"word","Word文档类型仅支持导出数据表"},
+            {"excel","Excel文档类型仅支持导出表"},
+            {"word","Word文档类型仅支持导出表"},
             {"pdf",""},
-            {"html","Html文档类型仅支持导出数据表"},
+            {"html","Html文档类型仅支持导出表"},
             {"xml",""},
             {"md",""},
             {"json",""}
