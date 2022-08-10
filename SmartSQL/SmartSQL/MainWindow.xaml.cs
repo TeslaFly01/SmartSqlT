@@ -253,7 +253,7 @@ namespace SmartSQL
                                 DisplayName = group.GroupName,
                                 Name = "treeGroup",
                                 Icon = GROUPICON,
-                                FontWeight = "Bold",
+                                //FontWeight = "Bold",
                                 Type = ObjType.Group,
                                 IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
                             };

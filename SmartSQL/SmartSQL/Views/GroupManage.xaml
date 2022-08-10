@@ -102,7 +102,7 @@
                         Name="BtnAdd"
                         Width="25"
                         Height="25"
-                        Click="BtnReset_OnClick"
+                        Click="BtnAdd_OnClick"
                         Style="{StaticResource ButtonIconSingle}">
                         <svgc:SvgViewbox
                             Width="12"
@@ -164,14 +164,6 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Bottom">
                     <hc:UniformSpacingPanel Spacing="10">
-                        <Button
-                            x:Name="BtnReset"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            Click="BtnReset_OnClick"
-                            Content="重置"
-                            Cursor="Hand"
-                            Style="{StaticResource ButtonPrimary}" />
                         <Button
                             x:Name="BtnSave"
                             Height="25"

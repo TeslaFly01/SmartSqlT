@@ -256,7 +256,7 @@ namespace SmartSQL.Views
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void BtnReset_OnClick(object sender, RoutedEventArgs e)
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             HidId.Text = "0";
             TextGourpName.Text = "";
