@@ -33,6 +33,7 @@
     <hc:GlowWindow.NonClientAreaContent>
         <StackPanel Height="29" Margin="25,0,0,0">
             <Menu HorizontalAlignment="Left">
+                <!--  选择连接  -->
                 <MenuItem
                     x:Name="SwitchMenu"
                     Click="SwitchMenu_OnClick"
@@ -70,6 +71,8 @@
                         </HierarchicalDataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
+
+                <!--  文件  -->
                 <MenuItem
                     Name="MenuConnect"
                     Cursor="Hand"
@@ -90,7 +93,7 @@
                         <MenuItem.Icon>
                             <Path
                                 Data="{StaticResource NewConnectGeometry}"
-                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Fill="#ff7c4b"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
@@ -102,7 +105,7 @@
                         <MenuItem.Icon>
                             <Path
                                 Data="{StaticResource ImportGeometry}"
-                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Fill="{DynamicResource WarningBrush}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
@@ -114,14 +117,15 @@
                         <MenuItem.Icon>
                             <Path
                                 Data="{StaticResource ExportGeometry}"
-                                Fill="{DynamicResource DarkPrimaryBrush}"
+                                Fill="{DynamicResource SuccessBrush}"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+
+                <!--  分组  -->
                 <MenuItem
                     Name="MenuGroup"
-                    Click="MenuGroup_OnClick"
                     Cursor="Hand"
                     FontWeight="Bold"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
@@ -132,7 +136,34 @@
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
+                    <MenuItem
+                        Name="MenuGroupManage"
+                        Click="MenuGroup_OnClick"
+                        FontWeight="Normal"
+                        Header="分组管理">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                Foreground="#fdab03"
+                                Icon="Group" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="MenuGroupManage1"
+                        Click="MenuDonation_OnClick"
+                        FontWeight="Normal"
+                        Header="标签管理"
+                        IsEnabled="False">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                Foreground="#1890ff"
+                                Icon="Tags" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
+
+                <!--  设置  -->
                 <MenuItem
                     Name="MenuSetting"
                     Click="MenuSetting_OnClick"
@@ -147,6 +178,8 @@
                             Stretch="Uniform" />
                     </MenuItem.Icon>
                 </MenuItem>
+
+                <!--  关于  -->
                 <MenuItem
                     Name="MenuAbout"
                     Cursor="Hand"
@@ -159,11 +192,6 @@
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
-                    <!--<MenuItem
-                        Name="MenuFontAwesome"
-                        Click="MenuFontAwesome_OnClick"
-                        FontWeight="Normal"
-                        Header="工具图标" />-->
                     <MenuItem
                         Name="MenuDonation"
                         Click="MenuDonation_OnClick"
@@ -183,15 +211,10 @@
                         FontWeight="Normal"
                         Header="关于SmartSQL">
                         <MenuItem.Icon>
-                            <!--<svgc:SvgViewbox
-                                Width="15"
-                                Height="15"
-                                VerticalAlignment="Center"
-                                Source="pack://application:,,,/Resources/svg/icon_logo.svg" />-->
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
-                                Foreground="#183153"
-                                Icon="AddressCard" />
+                            <Path
+                                Data="{StaticResource InfoGeometry}"
+                                Fill="{DynamicResource SuccessBrush}"
+                                Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
