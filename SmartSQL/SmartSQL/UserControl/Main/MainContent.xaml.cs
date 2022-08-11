@@ -1,12 +1,18 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
+using System.Text;
+using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using HandyControl.Controls;
-using HandyControl.Data;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Models;
 using System.Threading.Tasks;
@@ -25,36 +31,39 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 
-namespace SmartSQL
+namespace SmartSQL.UserControl
 {
-    public partial class MainWindow : INotifyPropertyChanged
+    /// <summary>
+    /// MainContent.xaml 的交互逻辑
+    /// </summary>
+    public partial class MainContent : BaseUserControl
     {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
         private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
         private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
-        private ConnectConfigs SelectendConnection = null;
 
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
 
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(MainContent), new PropertyMetadata(default(ConnectConfigs)));
 
-        #region 
         public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(MainWindow), new PropertyMetadata(default(Model)));
+            "MenuData", typeof(Model), typeof(MainContent), new PropertyMetadata(default(Model)));
 
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainWindow), new PropertyMetadata(default(List<TreeNodeItem>)));
+            "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainContent), new PropertyMetadata(default(List<TreeNodeItem>)));
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof(int), typeof(MainWindow), new PropertyMetadata(default(int)));
+            "CornerRadius", typeof(int), typeof(MainContent), new PropertyMetadata(default(int)));
+        /// <summary>
+        /// 菜单源数据
+        /// </summary>
+        public ConnectConfigs SelectedConnection
+        {
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
+        }
 
         /// <summary>
         /// 菜单源数据
@@ -86,11 +95,10 @@ namespace SmartSQL
             get => (int)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
-        #endregion
 
         public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
 
-        public MainWindow()
+        public MainContent()
         {
             InitializeComponent();
             DataContext = this;
@@ -99,73 +107,14 @@ namespace SmartSQL
         /// <summary>
         /// 页面初始化加载
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        public void PageLoad(ConnectConfigs connectConfig)
         {
-            var sqLiteHelper = new SQLiteHelper();
-            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
-            SwitchMenu.ItemsSource = null;
-            SwitchMenu.ItemsSource = connectConfigs;
-            if (!connectConfigs.Any())
-            {
-                SwitchMenu.Header = @"新建连接";
-            }
-            var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
-            TabLeftType.SelectedIndex = leftMenuType - 1;
-            var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
-            CornerRadius = isMultipleTab ? 0 : 10;
-            MainTabW.DataContext = TabItemData;
-            MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
-        }
-
-        /// <summary>
-        /// 切换数据库连接
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SwitchMenu_Click(object sender, RoutedEventArgs e)
-        {
-            var menuItem = (MenuItem)sender;
-            var connectConfig = (ConnectConfigs)menuItem.DataContext;
-            SwitchConnect(connectConfig);
-        }
-
-        /// <summary>
-        /// 切换连接
-        /// </summary>
-        /// <param name="connectConfig"></param>
-        public void SwitchConnect(ConnectConfigs connectConfig)
-        {
-            #region MyRegion
-            LoadingLine.Visibility = Visibility.Visible;
-            SwitchMenu.Header = connectConfig.ConnectName;
-            SelectendConnection = connectConfig;
-            try
-            {
-                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
-                var list = dbInstance.GetDatabases();
-                SelectDatabase.ItemsSource = list;
-                HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-                SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
-
-                var sqLiteHelper = new SQLiteHelper();
-                sqLiteHelper.SetSysValue(SysConst.Sys_SelectedConnection, connectConfig.ConnectName);
-                var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
-                SwitchMenu.ItemsSource = null;
-                SwitchMenu.ItemsSource = connectConfigs;
-
-                MainContent.PageLoad(connectConfig);
-            }
-            catch (Exception ex)
-            {
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
-                    LoadingLine.Visibility = Visibility.Collapsed;
-                }));
-            }
-            #endregion
+            SelectedConnection = connectConfig;
+            var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
+            var list = dbInstance.GetDatabases();
+            SelectDatabase.ItemsSource = list;
+            HidSelectDatabase.Text = connectConfig.DefaultDatabase;
+            SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
         }
 
         /// <summary>
@@ -197,9 +146,8 @@ namespace SmartSQL
             #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;
             NoDataText.Visibility = Visibility.Collapsed;
-            /////TreeViewTables.ItemsSource = null;
             var selectDataBase = HidSelectDatabase.Text;
-            var selectConnection = SelectendConnection;
+            var selectConnection = SelectedConnection;
             var menuData = MenuData;
             Task.Run(() =>
             {
@@ -534,40 +482,23 @@ namespace SmartSQL
         }
 
         /// <summary>
-        /// 菜单类型变更事件
+        /// 刷新菜单列表
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
         {
-            #region MyRegion
-            var sqLiteHelper = new SQLiteHelper();
-            var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
-            if (selectedItem.Name == "TabAllData")
-            {
-                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "1");
-            }
-            else if (selectedItem.Name == "TabGroupData")
-            {
-                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "2");
-            }
-            else
-            {
-                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "3");
-            }
-            if (SelectendConnection == null)
+            if (SelectedConnection == null)
             {
                 return;
             }
-            if (!string.IsNullOrEmpty(SearchMenu.Text))
+            var searchText = SearchMenu.Text.Trim();
+            if (!string.IsNullOrEmpty(searchText))
             {
                 SearchMenuBind();
+                return;
             }
-            else
-            {
-                MenuBind();
-            }
-            #endregion
+            MenuBind();
         }
 
         /// <summary>
@@ -623,7 +554,7 @@ namespace SmartSQL
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
             var selectDataBase = HidSelectDatabase.Text;
-            var selectConnection = SelectendConnection;
+            var selectConnection = SelectedConnection;
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
             var itemParentList = new List<TreeNodeItem>();
@@ -929,6 +860,43 @@ namespace SmartSQL
         }
 
         /// <summary>
+        /// 菜单类型变更事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            #region MyRegion
+            var sqLiteHelper = new SQLiteHelper();
+            var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
+            if (selectedItem.Name == "TabAllData")
+            {
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "1");
+            }
+            else if (selectedItem.Name == "TabGroupData")
+            {
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "2");
+            }
+            else
+            {
+                sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "3");
+            }
+            if (SelectedConnection == null)
+            {
+                return;
+            }
+            if (!string.IsNullOrEmpty(SearchMenu.Text))
+            {
+                SearchMenuBind();
+            }
+            else
+            {
+                MenuBind();
+            }
+            #endregion
+        }
+
+        /// <summary>
         /// 选中表加载主内容对应数据
         /// </summary>
         /// <param name="sender"></param>
@@ -954,7 +922,7 @@ namespace SmartSQL
                 MainTabW.Visibility = Visibility.Collapsed;
                 MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
                 MainW.MenuData = MenuData;
-                MainW.SelectedConnection = SelectendConnection;
+                MainW.SelectedConnection = SelectedConnection;
                 MainW.SelectedDataBase = selectDatabase;
                 MainW.SelectedObject = objects;
                 MainW.LoadPage(TreeViewData);
@@ -979,7 +947,7 @@ namespace SmartSQL
             };
             var mainW = new MainW
             {
-                SelectedConnection = SelectendConnection,
+                SelectedConnection = SelectedConnection,
                 SelectedDataBase = selectDatabase,
                 SelectedObject = objects,
                 MenuData = MenuData
@@ -997,39 +965,6 @@ namespace SmartSQL
         }
 
         /// <summary>
-        /// 关于SmartSQL
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuAbout_OnClick(object sender, RoutedEventArgs e)
-        {
-            var about = new AboutWindow();
-            about.Owner = this;
-            about.ShowDialog();
-        }
-
-        /// <summary>
-        /// 分组管理
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuGroup_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            if (SelectendConnection == null || selectDatabase == null)
-            {
-                Oops.Oh("请选择数据库");
-                return;
-            }
-            var group = new GroupManage();
-            group.Connection = SelectendConnection;
-            group.SelectedDataBase = selectDatabase.DbName;
-            group.Owner = this;
-            group.ChangeRefreshEvent += Group_ChangeRefreshEvent;
-            group.ShowDialog();
-        }
-
-        /// <summary>
         /// 子窗体刷新左侧菜单
         /// </summary>
         public void Group_ChangeRefreshEvent()
@@ -1038,47 +973,6 @@ namespace SmartSQL
             {
                 MenuBind();
             }
-        }
-
-        private void MenuSelectedItem_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
-            {
-                return;
-            }
-            Clipboard.SetDataObject(selectedObjects.Name);
-        }
-
-        /// <summary>
-        /// 刷新菜单列表
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
-        {
-            if (SelectendConnection == null)
-            {
-                return;
-            }
-            var searchText = SearchMenu.Text.Trim();
-            if (!string.IsNullOrEmpty(searchText))
-            {
-                SearchMenuBind();
-                return;
-            }
-            MenuBind();
-        }
-
-        /// <summary>
-        /// 全局设置
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuSetting_OnClick(object sender, RoutedEventArgs e)
-        {
-            var set = new SettingWindow();
-            set.Owner = this;
-            set.ShowDialog();
         }
 
         /// <summary>
@@ -1091,75 +985,13 @@ namespace SmartSQL
             e.Handled = true;
         }
 
-        /// <summary>
-        /// 新建连接
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void SwitchMenu_OnClick(object sender, RoutedEventArgs e)
+        private void MenuSelectedItem_OnClick(object sender, RoutedEventArgs e)
         {
-            var menuItem = (MenuItem)sender;
-            if (menuItem.Header.Equals("新建连接"))
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
             {
-                var connect = new ConnectManage();
-                connect.Owner = this;
-                connect.ChangeRefreshEvent += SwitchConnect;
-                connect.ShowDialog();
-            }
-        }
-
-        /// <summary>
-        /// 新建连接
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AddConnect_OnClick(object sender, RoutedEventArgs e)
-        {
-            var connect = new ConnectManage();
-            connect.Owner = this;
-            connect.ChangeRefreshEvent += SwitchConnect;
-            connect.ShowDialog();
-        }
-
-        /// <summary>
-        /// 导出文档
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            if (SelectendConnection == null || selectDatabase == null)
-            {
-                Oops.Oh("请选择数据库");
                 return;
             }
-            var exportDoc = new ExportDoc();
-            exportDoc.Owner = this;
-            exportDoc.MenuData = MenuData;
-            exportDoc.SelectedConnection = SelectendConnection;
-            exportDoc.SelectedDataBase = selectDatabase;
-            exportDoc.ShowDialog();
-        }
-
-        /// <summary>
-        /// 导入备注
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void ImportMark_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            if (SelectendConnection == null || selectDatabase == null)
-            {
-                Oops.Oh("请选择数据库");
-                return;
-            }
-            var importMark = new ImportMark();
-            importMark.Owner = this;
-            importMark.SelectedConnection = SelectendConnection;
-            importMark.SelectedDataBase = selectDatabase;
-            importMark.ShowDialog();
+            Clipboard.SetDataObject(selectedObjects.Name);
         }
 
         private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1173,25 +1005,6 @@ namespace SmartSQL
                 MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
                 MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
             }
-        }
-
-        /// <summary>
-        /// 打赏作者
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MenuDonation_OnClick(object sender, RoutedEventArgs e)
-        {
-            var donation = new Donation();
-            donation.Owner = this;
-            donation.ShowDialog();
-        }
-
-        private void MenuFontAwesome_OnClick(object sender, RoutedEventArgs e)
-        {
-            var donation = new Fontawesome();
-            donation.Owner = this;
-            donation.ShowDialog();
         }
     }
 }

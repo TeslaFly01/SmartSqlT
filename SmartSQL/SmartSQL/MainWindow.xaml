@@ -29,7 +29,7 @@
     </Window.CommandBindings>
     <!--  按键监/命令听绑定  -->
 
-    <!--  工具栏菜单  -->
+    <!--  顶部栏菜单  -->
     <hc:GlowWindow.NonClientAreaContent>
         <StackPanel Height="29" Margin="25,0,0,0">
             <Menu HorizontalAlignment="Left">
@@ -221,257 +221,263 @@
             </Menu>
         </StackPanel>
     </hc:GlowWindow.NonClientAreaContent>
-    <!--  工具栏菜单  -->
+    <!--  顶部栏菜单  -->
 
     <!--  Main区域  -->
     <Grid x:Name="GridMain" Background="{StaticResource CloudDrawingBrush}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3.3*" MinWidth="200" />
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="6.6*" />
-        </Grid.ColumnDefinitions>
+        <userControl:MainContent x:Name="MainContent" />
+        <Grid Visibility="Collapsed">
 
-        <!--  左侧菜单  -->
-        <DockPanel Grid.Row="0" Grid.Column="0">
-            <hc:SimplePanel>
-                <Border
-                    Margin="5,5,0,5"
-                    Background="{DynamicResource RegionBrush}"
-                    CornerRadius="{Binding CornerRadius}">
-                    <Grid
-                        Height="Auto"
-                        Margin="5"
-                        Background="Transparent">
-                        <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" MinWidth="30" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                x:Name="SelectDatabase"
+            <!--  Main布局  -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3.3*" MinWidth="200" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="6.6*" />
+            </Grid.ColumnDefinitions>
+            <!--  Main布局  -->
+
+            <!--  左侧菜单  -->
+            <DockPanel Grid.Row="0" Grid.Column="0">
+                <hc:SimplePanel>
+                    <Border
+                        Margin="5,5,0,5"
+                        Background="{DynamicResource RegionBrush}"
+                        CornerRadius="{Binding CornerRadius}">
+                        <Grid
+                            Height="Auto"
+                            Margin="5"
+                            Background="Transparent">
+                            <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*" />
+                                    <ColumnDefinition Width="1*" MinWidth="30" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox
+                                    x:Name="SelectDatabase"
+                                    Height="30"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Stretch"
+                                    hc:BorderElement.CornerRadius="5"
+                                    hc:InfoElement.Placeholder="请选择数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    SelectionChanged="SelectDatabase_OnSelectionChanged"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Text="{Binding DbName}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Image
+                                                    Width="11"
+                                                    Height="15"
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DbName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button
+                                    Name="BtnFresh"
+                                    Grid.Column="2"
+                                    Margin="0,0,0,0"
+                                    Padding="4"
+                                    VerticalAlignment="Top"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="BtnFresh_OnClick"
+                                    Cursor="Hand">
+                                    <Button.Content>
+                                        <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                            <hc:SearchBar
+                                x:Name="SearchMenu"
                                 Height="30"
+                                Margin="0,34,0,0"
+                                Padding="5,0,5,0"
                                 VerticalAlignment="Top"
                                 HorizontalContentAlignment="Stretch"
                                 hc:BorderElement.CornerRadius="5"
-                                hc:InfoElement.Placeholder="请选择数据库"
-                                Cursor="Hand"
-                                IsTextSearchEnabled="True"
-                                SelectionChanged="SelectDatabase_OnSelectionChanged"
-                                Style="{StaticResource ComboBoxExtend}"
-                                Text="{Binding DbName}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                            <Image
-                                                Width="11"
-                                                Height="15"
-                                                Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Text="{Binding DbName}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button
-                                Name="BtnFresh"
-                                Grid.Column="2"
-                                Margin="0,0,0,0"
-                                Padding="4"
-                                VerticalAlignment="Top"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Click="BtnFresh_OnClick"
-                                Cursor="Hand">
-                                <Button.Content>
-                                    <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                        <hc:SearchBar
-                            x:Name="SearchMenu"
-                            Height="30"
-                            Margin="0,34,0,0"
-                            Padding="5,0,5,0"
-                            VerticalAlignment="Top"
-                            HorizontalContentAlignment="Stretch"
-                            hc:BorderElement.CornerRadius="5"
-                            hc:InfoElement.Placeholder="搜索表/视图/存储过程"
-                            FontSize="13"
-                            ShowClearButton="True"
-                            Style="{StaticResource SearchBarPlus}"
-                            TextChanged="SearchMenu_OnTextChanged" />
-                        <TabControl
-                            x:Name="TabLeftType"
-                            Margin="0,65,0,40"
-                            SelectionChanged="TabLeftType_OnSelectionChanged"
-                            Style="{StaticResource TabControlInLine}">
-                            <TabItem
-                                x:Name="TabAllData"
-                                Cursor="Hand"
-                                Header="全部"
-                                IsSelected="True" />
-                            <TabItem
-                                x:Name="TabGroupData"
-                                Cursor="Hand"
-                                Header="分组"
-                                IsSelected="False" />
-                            <!--<TabItem
+                                hc:InfoElement.Placeholder="搜索表/视图/存储过程"
+                                FontSize="13"
+                                ShowClearButton="True"
+                                Style="{StaticResource SearchBarPlus}"
+                                TextChanged="SearchMenu_OnTextChanged" />
+                            <TabControl
+                                x:Name="TabLeftType"
+                                Margin="0,65,0,40"
+                                SelectionChanged="TabLeftType_OnSelectionChanged"
+                                Style="{StaticResource TabControlInLine}">
+                                <TabItem
+                                    x:Name="TabAllData"
+                                    Cursor="Hand"
+                                    Header="全部"
+                                    IsSelected="True" />
+                                <TabItem
+                                    x:Name="TabGroupData"
+                                    Cursor="Hand"
+                                    Header="分组"
+                                    IsSelected="False" />
+                                <!--<TabItem
                                 x:Name="TabFavData"
                                 Cursor="Hand"
                                 Header="收藏"
                                 IsSelected="False" />-->
-                        </TabControl>
-                        <TreeView
-                            x:Name="TreeViewTables"
-                            Margin="0,100,0,0"
-                            VerticalAlignment="Top"
-                            BorderThickness="0"
-                            ItemsSource="{Binding TreeViewData}"
-                            SelectedItemChanged="SelectedTable_OnClick">
-                            <TreeView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
-                                    <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-                                    <Setter Property="FontWeight" Value="{Binding FontWeight}" />
-                                    <Setter Property="FontSize" Value="12" />
-                                    <Setter Property="Visibility" Value="{Binding Visibility}" />
-                                    <Setter Property="Foreground" Value="{Binding TextColor}" />
-                                    <Setter Property="Cursor" Value="Hand" />
-                                    <!--  禁止水平滚动条自动滚动  -->
-                                    <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                        </Trigger>
-                                    </Style.Triggers>
-                                </Style>
-                            </TreeView.ItemContainerStyle>
-                            <TreeView.ContextMenu>
-                                <!--  右键菜单  -->
-                                <ContextMenu Visibility="Visible">
-                                    <MenuItem
-                                        x:Name="MenuSelectedItem"
-                                        Padding="5,0,5,0"
-                                        VerticalAlignment="Center"
-                                        Click="MenuSelectedItem_OnClick"
-                                        Cursor="Hand"
-                                        Header="复制对象名" />
-                                </ContextMenu>
-                            </TreeView.ContextMenu>
-                            <TreeView.ItemTemplate>
-                                <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
-                                    <Grid>
-                                        <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                            <svgc:SvgViewbox
-                                                Width="12"
-                                                Height="12"
-                                                Margin="0,0,5,0"
-                                                HorizontalAlignment="Left"
-                                                Source="{Binding Icon}" />
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                FontSize="12"
-                                                Text="{Binding DisplayName}"
-                                                ToolTip="{Binding DisplayName}" />
-                                        </hc:SimpleStackPanel>
-                                        <hc:SimpleStackPanel HorizontalAlignment="Right" Visibility="{Binding IsShowCount}">
-                                            <Border Background="#fffffe" CornerRadius="3">
+                            </TabControl>
+                            <TreeView
+                                x:Name="TreeViewTables"
+                                Margin="0,100,0,0"
+                                VerticalAlignment="Top"
+                                BorderThickness="0"
+                                ItemsSource="{Binding TreeViewData}"
+                                SelectedItemChanged="SelectedTable_OnClick">
+                                <TreeView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
+                                        <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
+                                        <Setter Property="FontWeight" Value="{Binding FontWeight}" />
+                                        <Setter Property="FontSize" Value="12" />
+                                        <Setter Property="Visibility" Value="{Binding Visibility}" />
+                                        <Setter Property="Foreground" Value="{Binding TextColor}" />
+                                        <Setter Property="Cursor" Value="Hand" />
+                                        <!--  禁止水平滚动条自动滚动  -->
+                                        <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
+                                        <Style.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Setter Property="FontWeight" Value="Bold" />
+                                            </Trigger>
+                                        </Style.Triggers>
+                                    </Style>
+                                </TreeView.ItemContainerStyle>
+                                <TreeView.ContextMenu>
+                                    <!--  右键菜单  -->
+                                    <ContextMenu Visibility="Visible">
+                                        <MenuItem
+                                            x:Name="MenuSelectedItem"
+                                            Padding="5,0,5,0"
+                                            VerticalAlignment="Center"
+                                            Click="MenuSelectedItem_OnClick"
+                                            Cursor="Hand"
+                                            Header="复制对象名" />
+                                    </ContextMenu>
+                                </TreeView.ContextMenu>
+                                <TreeView.ItemTemplate>
+                                    <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
+                                        <Grid>
+                                            <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                                <svgc:SvgViewbox
+                                                    Width="12"
+                                                    Height="12"
+                                                    Margin="0,0,5,0"
+                                                    HorizontalAlignment="Left"
+                                                    Source="{Binding Icon}" />
                                                 <TextBlock
-                                                    Margin="5,1,5,1"
                                                     VerticalAlignment="Center"
-                                                    FontWeight="Bold"
-                                                    Foreground="{StaticResource ThirdlyTextBrush}"
-                                                    Text="{Binding ChildrenCount}" />
-                                            </Border>
-                                        </hc:SimpleStackPanel>
-                                    </Grid>
-                                </HierarchicalDataTemplate>
-                            </TreeView.ItemTemplate>
-                        </TreeView>
-                        <Grid
-                            x:Name="NoDataText"
-                            Margin="0,100,0,5"
-                            HorizontalAlignment="Stretch"
-                            Background="White"
-                            Cursor="Arrow">
-                            <local:NoDataArea
-                                x:Name="NoDataAreaText"
-                                Margin="0"
-                                HorizontalAlignment="Center"
-                                ShowType="All" />
-                        </Grid>
-                        <!--  数据加载Loading  -->
-                        <hc:LoadingLine
-                            x:Name="LoadingLine"
-                            Margin="0,0,0,0"
-                            Visibility="Collapsed" />
-                    </Grid>
-                </Border>
-            </hc:SimplePanel>
-        </DockPanel>
-
-        <!--  分割线  -->
-        <GridSplitter
-            Grid.Row="0"
-            Grid.Column="1"
-            Width="5"
-            Margin="0,5,0,5"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Stretch"
-            Background="Transparent" />
-
-        <!--  主内容  -->
-        <DockPanel Grid.Row="0" Grid.Column="2">
-            <Grid Margin="0,5,5,5">
-                <Border Background="White" CornerRadius="{Binding CornerRadius}">
-                    <Image
-                        Width="350"
-                        Height="325"
-                        Source="Resources/Img/bg.png" />
-                </Border>
-                <!--  单选项卡  -->
-                <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
-                <!--  多选项卡  -->
-                <hc:TabControl
-                    Name="MainTabW"
-                    IsAnimationEnabled="True"
-                    IsDraggable="True"
-                    IsTabFillEnabled="False"
-                    ItemsSource="{Binding TabItemData}"
-                    SelectionChanged="MainTabW_OnSelectionChanged"
-                    ShowCloseButton="True"
-                    Visibility="Collapsed">
-                    <hc:TabControl.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <svgc:SvgViewbox
-                                    Width="12"
-                                    Height="12"
-                                    Margin="0,0,5,0"
-                                    HorizontalAlignment="Left"
-                                    Source="{Binding Icon}" />
-                                <TextBlock
-                                    Height="20"
-                                    Margin="16,5,0,0"
-                                    Text="{Binding DisplayName}"
-                                    ToolTip="{Binding DisplayName}" />
+                                                    FontSize="12"
+                                                    Text="{Binding DisplayName}"
+                                                    ToolTip="{Binding DisplayName}" />
+                                            </hc:SimpleStackPanel>
+                                            <hc:SimpleStackPanel HorizontalAlignment="Right" Visibility="{Binding IsShowCount}">
+                                                <Border Background="#fffffe" CornerRadius="3">
+                                                    <TextBlock
+                                                        Margin="5,1,5,1"
+                                                        VerticalAlignment="Center"
+                                                        FontWeight="Bold"
+                                                        Foreground="{StaticResource ThirdlyTextBrush}"
+                                                        Text="{Binding ChildrenCount}" />
+                                                </Border>
+                                            </hc:SimpleStackPanel>
+                                        </Grid>
+                                    </HierarchicalDataTemplate>
+                                </TreeView.ItemTemplate>
+                            </TreeView>
+                            <Grid
+                                x:Name="NoDataText"
+                                Margin="0,100,0,5"
+                                HorizontalAlignment="Stretch"
+                                Background="White"
+                                Cursor="Arrow">
+                                <local:NoDataArea
+                                    x:Name="NoDataAreaText"
+                                    Margin="0"
+                                    HorizontalAlignment="Center"
+                                    ShowType="All" />
                             </Grid>
-                        </DataTemplate>
-                    </hc:TabControl.ItemTemplate>
-                    <hc:TabControl.ContentTemplate>
-                        <DataTemplate>
-                            <UserControl Content="{Binding MainW}" />
-                        </DataTemplate>
-                    </hc:TabControl.ContentTemplate>
-                </hc:TabControl>
-            </Grid>
-        </DockPanel>
+                            <!--  数据加载Loading  -->
+                            <hc:LoadingLine
+                                x:Name="LoadingLine"
+                                Margin="0,0,0,0"
+                                Visibility="Collapsed" />
+                        </Grid>
+                    </Border>
+                </hc:SimplePanel>
+            </DockPanel>
+
+            <!--  分割线  -->
+            <GridSplitter
+                Grid.Row="0"
+                Grid.Column="1"
+                Width="5"
+                Margin="0,5,0,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch"
+                Background="Transparent" />
+
+            <!--  主内容  -->
+            <DockPanel Grid.Row="0" Grid.Column="2">
+                <Grid Margin="0,5,5,5">
+                    <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                        <Image
+                            Width="350"
+                            Height="325"
+                            Source="Resources/Img/bg.png" />
+                    </Border>
+                    <!--  单选项卡  -->
+                    <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
+                    <!--  多选项卡  -->
+                    <hc:TabControl
+                        Name="MainTabW"
+                        IsAnimationEnabled="True"
+                        IsDraggable="True"
+                        IsTabFillEnabled="False"
+                        ItemsSource="{Binding TabItemData}"
+                        SelectionChanged="MainTabW_OnSelectionChanged"
+                        ShowCloseButton="True"
+                        Visibility="Collapsed">
+                        <hc:TabControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <svgc:SvgViewbox
+                                        Width="12"
+                                        Height="12"
+                                        Margin="0,0,5,0"
+                                        HorizontalAlignment="Left"
+                                        Source="{Binding Icon}" />
+                                    <TextBlock
+                                        Height="20"
+                                        Margin="16,5,0,0"
+                                        Text="{Binding DisplayName}"
+                                        ToolTip="{Binding DisplayName}" />
+                                </Grid>
+                            </DataTemplate>
+                        </hc:TabControl.ItemTemplate>
+                        <hc:TabControl.ContentTemplate>
+                            <DataTemplate>
+                                <UserControl Content="{Binding MainW}" />
+                            </DataTemplate>
+                        </hc:TabControl.ContentTemplate>
+                    </hc:TabControl>
+                </Grid>
+            </DockPanel>
+        </Grid>
     </Grid>
     <!--  Main区域  -->
 </hc:GlowWindow>
