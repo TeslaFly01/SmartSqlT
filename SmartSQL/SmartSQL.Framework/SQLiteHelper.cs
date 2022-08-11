@@ -18,6 +18,25 @@ namespace SmartSQL.Framework
             "SmartSQL");
         public string connstr = Path.Combine(BasePath, "SmartSQL.db");//没有数据库会创建数据库
         public SQLiteConnection db;
+
+        private static SQLiteHelper _instance;
+
+        private static readonly object obj = new object();
+        public static SQLiteHelper GetInstance()
+        {
+            if (_instance == null)
+            {
+                lock (obj)  //加锁防止多线程
+                {
+                    if (_instance == null)
+                    {
+                        _instance = new SQLiteHelper();
+                    }
+                }
+            }
+            return _instance;
+        }
+
         public SQLiteHelper()
         {
             if (!Directory.Exists(BasePath))

@@ -109,12 +109,32 @@ namespace SmartSQL.UserControl
         /// </summary>
         public void PageLoad(ConnectConfigs connectConfig)
         {
+            var sqLiteHelper = new SQLiteHelper();
+            var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
+            TabLeftType.SelectedIndex = leftMenuType - 1;
+            var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
+            CornerRadius = isMultipleTab ? 0 : 10;
+            MainTabW.DataContext = TabItemData;
+            MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
+
+            LoadingLine.Visibility = Visibility.Visible;
             SelectedConnection = connectConfig;
-            var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
-            var list = dbInstance.GetDatabases();
-            SelectDatabase.ItemsSource = list;
-            HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-            SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+            try
+            {
+                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
+                var list = dbInstance.GetDatabases();
+                SelectDatabase.ItemsSource = list;
+                HidSelectDatabase.Text = connectConfig.DefaultDatabase;
+                SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+            }
+            catch (Exception ex)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
+                    LoadingLine.Visibility = Visibility.Collapsed;
+                }));
+            }
         }
 
         /// <summary>
@@ -125,10 +145,10 @@ namespace SmartSQL.UserControl
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion
-            if (!IsLoaded)
-            {
-                return;
-            }
+            //if (!IsLoaded)
+            //{
+            //    return;
+            //}
             var selectDatabase = SelectDatabase.SelectedItem;
             if (selectDatabase != null)
             {

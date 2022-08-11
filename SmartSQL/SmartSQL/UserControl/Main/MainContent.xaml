@@ -14,6 +14,14 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
+    <!--  按键/命令监听绑定  -->
+    <!--<Window.InputBindings>
+        <KeyBinding Command="Copy" Gesture="Control + C" />
+    </Window.InputBindings>-->
+    <UserControl.CommandBindings>
+        <CommandBinding Command="Copy" Executed="MenuSelectedItem_OnClick" />
+    </UserControl.CommandBindings>
+    <!--  按键监/命令听绑定  -->
     <Grid>
         <!--  Main布局  -->
         <Grid.RowDefinitions>
@@ -225,7 +233,7 @@
                     <Image
                         Width="350"
                         Height="325"
-                        Source="../Resources/Img/bg.png" />
+                        Source="/SmartSQL;component/Resources/Img/bg.png" />
                 </Border>
                 <!--  单选项卡  -->
                 <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
