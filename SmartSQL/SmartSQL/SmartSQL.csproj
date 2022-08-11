@@ -156,6 +156,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Contact.xaml.cs">
+      <DependentUpon>Contact.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Fontawesome.xaml.cs">
       <DependentUpon>Fontawesome.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Contact.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Fontawesome.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -422,8 +429,19 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\contact_weixin_card.png" />
+    <Resource Include="Resources\Img\contact_mp.png" />
+    <Resource Include="Resources\svg\undraw\undraw_collaborators_re_hont.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_conference_re_2yld.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_happy_announcement_re_tsm0.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_in_the_office_re_jtgc.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_project_team_lc5a.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_reviewed_docs_re_9lmr.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_spreadsheets_re_alt0.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_work_together_re_5yhn.svg" />
     <Resource Include="Resources\Img\donation\alipay.png" />
     <Resource Include="Resources\Img\donation\wxpay.png" />
+    <Resource Include="Resources\Img\contact_mp_card.png" />
     <Content Include="Resources\Img\icon.png" />
     <Resource Include="Resources\svg\icon_logo.svg" />
     <Resource Include="Resources\svg\icon_money.svg" />

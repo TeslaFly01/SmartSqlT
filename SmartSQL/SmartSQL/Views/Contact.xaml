@@ -1,0 +1,37 @@
+<hc:Window
+    x:Class="SmartSQL.Views.Contact"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    Title="联系作者"
+    Width="600"
+    Height="400"
+    BorderThickness="0"
+    Icon="/favicon.ico"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    ShowTitle="True"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <hc:SimplePanel Background="White">
+        <Image
+            Width="220"
+            Height="320"
+            Margin="60,20,0,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Source="../Resources/Img/contact_weixin_card.png"
+            Stretch="Uniform" />
+        <Image
+            Width="220"
+            Height="320"
+            Margin="0,20,60,0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Top"
+            Source="../Resources/Img/contact_mp_card.png"
+            Stretch="Uniform" />
+    </hc:SimplePanel>
+</hc:Window>

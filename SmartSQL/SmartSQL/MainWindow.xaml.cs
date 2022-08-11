@@ -248,5 +248,17 @@ namespace SmartSQL
             donation.Owner = this;
             donation.ShowDialog();
         }
+
+        /// <summary>
+        /// 联系作者
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuCallMe_Click(object sender, RoutedEventArgs e)
+        {
+            var donation = new Contact();
+            donation.Owner = this;
+            donation.ShowDialog();
+        }
     }
 }

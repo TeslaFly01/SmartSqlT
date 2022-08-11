@@ -195,12 +195,26 @@
                         FontWeight="Normal"
                         Header="请作者喝一杯咖啡">
                         <MenuItem.Icon>
-                            <!--<svgc:SvgViewbox
-                                Width="15"
-                                Height="15"
-                                VerticalAlignment="Center"
-                                Source="pack://application:,,,/Resources/svg/icon_money.svg" />-->
                             <fa:FontAwesome Icon="Coffee" VerticalAlignment="Center" FontSize="16" Foreground="#faad14"></fa:FontAwesome>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="MenuCallMe"
+                        Click="MenuCallMe_Click"
+                        FontWeight="Normal"
+                        Header="联系作者">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome Icon="Wechat" VerticalAlignment="Center" FontSize="14" Foreground="#21d86e"></fa:FontAwesome>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="MenuHelpBook" 
+                        Command="hc:ControlCommands.OpenLink"
+                        CommandParameter="https://gitee.com/dotnetchina/SmartSQL#smartsql"
+                        FontWeight="Normal"
+                        Header="帮助文档">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome Icon="Book" VerticalAlignment="Center" FontSize="16" Foreground="#40a9ff"></fa:FontAwesome>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
