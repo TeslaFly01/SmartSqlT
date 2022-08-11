@@ -6,7 +6,7 @@
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
-    Title="打赏作者"
+    Title="请作者喝一杯咖啡"
     Width="460"
     Height="300"
     BorderThickness="0"
@@ -39,14 +39,14 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Bottom"
             FontSize="18"
-            Foreground="{StaticResource ThirdlyTextBrush}"
+            Foreground="#1890ff"
             Text="支付宝" />
         <TextBlock
             Margin="0,0,98,20"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             FontSize="18"
-            Foreground="{StaticResource ThirdlyTextBrush}"
+            Foreground="#01c158"
             Text="微信" />
     </hc:SimplePanel>
 </hc:Window>

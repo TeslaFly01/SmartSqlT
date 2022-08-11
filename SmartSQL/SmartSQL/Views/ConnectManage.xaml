@@ -142,7 +142,7 @@
                         <Button
                             x:Name="BtnTestConnect"
                             Height="25"
-                            Padding="20,0,20,0"
+                            Padding="10,0,10,0"
                             Click="BtnTestConnect_OnClick"
                             Content="测试连接"
                             Cursor="Hand" />

@@ -193,13 +193,14 @@
                         Name="MenuDonation"
                         Click="MenuDonation_OnClick"
                         FontWeight="Normal"
-                        Header="打赏作者">
+                        Header="请作者喝一杯咖啡">
                         <MenuItem.Icon>
-                            <svgc:SvgViewbox
+                            <!--<svgc:SvgViewbox
                                 Width="15"
                                 Height="15"
                                 VerticalAlignment="Center"
-                                Source="pack://application:,,,/Resources/svg/icon_money.svg" />
+                                Source="pack://application:,,,/Resources/svg/icon_money.svg" />-->
+                            <fa:FontAwesome Icon="Coffee" VerticalAlignment="Center" FontSize="16" Foreground="#faad14"></fa:FontAwesome>
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
