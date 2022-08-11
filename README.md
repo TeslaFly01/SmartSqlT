@@ -24,6 +24,13 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 [![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
 [![GitHub](https://shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green?logo=github&style=flat)](https://github.com/TeslaFly01/SmartSqlT)
 
+
+##### 🎯下载地址
+
+[![立即下载](https://img.shields.io/badge/download-%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD-blue)](https://gitee.com/izhaofu/SmartSQL/releases)  
+
+> 文件下载解压后，双击运行 `SmartSQL.exe`即可
+
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
 ### 💎 数据库支持
@@ -59,7 +66,10 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - 可以对数据库中的表、视图、存储过程进行自定义分组
 - 可以对分组对象进行文档批量导出
 
-### 🎉 工具截图
+### 🎉 功能介绍
+
+#### Dashbord
+![数据库连接](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Dashbord.png)
 
 #### 数据库连接
 
@@ -123,13 +133,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 #### HTML文档
 ![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)|![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
 |--|--|
-
-
-### ⬇️ 下载地址
-
-[![立即下载](https://img.shields.io/badge/download-%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD-blue)](https://gitee.com/izhaofu/SmartSQL/releases)  
-
-> 下载解压后，双击运行 `SmartSQL.exe`即可
 
 
 ### ⚡ 近期计划
