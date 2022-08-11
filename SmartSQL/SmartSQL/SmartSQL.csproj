@@ -142,13 +142,16 @@
     <Compile Include="UserControl\Controls\SqlScript.xaml.cs">
       <DependentUpon>SqlScript.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MainObjects.xaml.cs">
+    <Compile Include="UserControl\Main\MainContent.xaml.cs">
+      <DependentUpon>MainContent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Main\MainObjects.xaml.cs">
       <DependentUpon>MainObjects.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MainW.xaml.cs">
+    <Compile Include="UserControl\Main\MainW.xaml.cs">
       <DependentUpon>MainW.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\UTabCode.xaml.cs">
+    <Compile Include="UserControl\Main\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
@@ -171,7 +174,7 @@
     <Compile Include="Views\GroupManage.xaml.cs">
       <DependentUpon>GroupManage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\MainColumns.xaml.cs">
+    <Compile Include="UserControl\Main\MainColumns.xaml.cs">
       <DependentUpon>MainColumns.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Controls\Loading.xaml.cs">
@@ -298,15 +301,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MainObjects.xaml">
+    <Page Include="UserControl\Main\MainContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MainW.xaml">
+    <Page Include="UserControl\Main\MainObjects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\UTabCode.xaml">
+    <Page Include="UserControl\Main\MainW.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Main\UTabCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,7 +341,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\MainColumns.xaml">
+    <Page Include="UserControl\Main\MainColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
