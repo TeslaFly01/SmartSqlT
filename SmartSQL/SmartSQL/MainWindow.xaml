@@ -225,7 +225,7 @@
                         <MenuItem.Icon>
                             <Path
                                 Data="{StaticResource InfoGeometry}"
-                                Fill="{DynamicResource SuccessBrush}"
+                                Fill="#8c8c8c"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
