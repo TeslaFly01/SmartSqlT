@@ -1,7 +1,10 @@
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Navigation;
 using System.Windows.Threading;
 using HandyControl.Controls;
 using MessageBox = System.Windows.MessageBox;
@@ -10,26 +13,30 @@ namespace SmartSQL
 {
     public partial class App
     {
+
+        [SuppressMessage("ReSharper", "NotAccessedField.Local")]
+        private static Mutex AppMutex;
         public App()
         {
-            //首先注册开始和退出事件
-            this.Startup += new StartupEventHandler(App_Startup);
-            this.Exit += new ExitEventHandler(App_Exit);
+
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            //var splashScreen = new SplashScreen("/Resources/Img/Readme/Cover.png");
+            //splashScreen.Show(true);
+            //splashScreen.Close(new TimeSpan(0, 0, 23));
+            //UI线程未捕获异常处理事件
+            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
+            base.OnStartup(e);
         }
 
         void App_Startup(object sender, StartupEventArgs e)
         {
-            //UI线程未捕获异常处理事件
-            this.DispatcherUnhandledException += App_DispatcherUnhandledException;
             //Task线程内未捕获异常处理事件
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
             //非UI线程未捕获异常处理事件
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
-        }
-
-        void App_Exit(object sender, ExitEventArgs e)
-        {
-            //程序退出时需要处理的业务
         }
 
         void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
