@@ -22,7 +22,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 ##### 🏅开源地址
 [![Gitee](https://shields.io/badge/Gitee-https://gitee.com/izhaofu/SmartSQL-green?logo=gitee&style=flat&logoColor=red)](https://gitee.com/izhaofu/SmartSQL)  <br/>
-[![GitHub](https://shields.io/badge/GitHub-https%3A%2F%2Fgithub.com%2FTeslaFly01%2FSmartSqlT-green?logo=github&style=flat)](https://github.com/TeslaFly01/SmartSqlT)
+[![GitHub](https://shields.io/badge/GitHub-https://github.com/TeslaFly01/SmartSqlT-green?logo=github&style=flat)](https://github.com/TeslaFly01/SmartSqlT)
 
 
 ##### 🎯下载地址
