@@ -29,7 +29,7 @@
         <Grid
             Name="LeftMenu"
             Margin="5"
-            Background="#f5f5f5">
+            Background="#ffffff">
             <Grid
                 Margin="5"
                 HorizontalAlignment="Stretch"
@@ -40,6 +40,7 @@
                     Content="添加连接"
                     Cursor="Hand" />
             </Grid>
+
             <ListBox
                 Name="ListConnects"
                 Margin="5,40,5,35"
@@ -65,25 +66,29 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <hc:SimpleStackPanel
-                Margin="5,0,5,3"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom">
-                <hc:UniformSpacingPanel Spacing="1">
-                    <Button
-                        x:Name="BtnDelete"
-                        Width="25"
-                        Height="25"
-                        Margin="2"
-                        Click="BtnDelete_OnClick"
-                        Style="{StaticResource ButtonIconSingle}">
-                        <svgc:SvgViewbox
-                            Width="12"
-                            Height="12"
-                            Source="pack://application:,,,/Resources/svg/btn_del.svg"
-                            ToolTip="删除" />
-                    </Button>
-                    <!--<Button
+            <Grid
+                Height="35"
+                VerticalAlignment="Bottom"
+                Background="#f5f5f5">
+                <hc:SimpleStackPanel
+                    Margin="5,0,5,3"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom">
+                    <hc:UniformSpacingPanel Spacing="1">
+                        <Button
+                            x:Name="BtnDelete"
+                            Width="25"
+                            Height="25"
+                            Margin="2"
+                            Click="BtnDelete_OnClick"
+                            Style="{StaticResource ButtonIconSingle}">
+                            <svgc:SvgViewbox
+                                Width="12"
+                                Height="12"
+                                Source="pack://application:,,,/Resources/svg/btn_del.svg"
+                                ToolTip="删除" />
+                        </Button>
+                        <!--<Button
                         Name="BtnAdd"
                         Width="25"
                         Height="25"
@@ -96,8 +101,9 @@
                             Source="pack://application:,,,/Resources/svg/btn_add.svg"
                             ToolTip="添加" />
                     </Button>-->
-                </hc:UniformSpacingPanel>
-            </hc:SimpleStackPanel>
+                    </hc:UniformSpacingPanel>
+                </hc:SimpleStackPanel>
+            </Grid>
         </Grid>
 
         <!--  右侧编辑区域  -->
@@ -133,7 +139,8 @@
             <Grid
                 Name="OprToolGrid"
                 VerticalAlignment="Bottom"
-                Background="#f5f5f5">
+                Background="#f5f5f5"
+                Visibility="Collapsed">
                 <hc:SimpleStackPanel
                     Margin="5"
                     HorizontalAlignment="Left"
@@ -191,11 +198,14 @@
             </Grid>
             <!--  操作栏  -->
         </Grid>
+
+        <!--  Loading  -->
         <local:Loading
             x:Name="LoadingG"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             BackgroundOpacity="0.2"
             Visibility="Collapsed" />
+        <!--  Loading  -->
     </Grid>
 </hc:Window>

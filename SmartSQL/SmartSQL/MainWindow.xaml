@@ -195,7 +195,11 @@
                         FontWeight="Normal"
                         Header="请作者喝一杯咖啡">
                         <MenuItem.Icon>
-                            <fa:FontAwesome Icon="Coffee" VerticalAlignment="Center" FontSize="16" Foreground="#faad14"></fa:FontAwesome>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="#faad14"
+                                Icon="Coffee" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -204,17 +208,25 @@
                         FontWeight="Normal"
                         Header="联系作者">
                         <MenuItem.Icon>
-                            <fa:FontAwesome Icon="Wechat" VerticalAlignment="Center" FontSize="14" Foreground="#21d86e"></fa:FontAwesome>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#21d86e"
+                                Icon="Wechat" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Name="MenuHelpBook" 
+                        Name="MenuHelpBook"
                         Command="hc:ControlCommands.OpenLink"
                         CommandParameter="https://gitee.com/dotnetchina/SmartSQL#smartsql"
                         FontWeight="Normal"
                         Header="帮助文档">
                         <MenuItem.Icon>
-                            <fa:FontAwesome Icon="Book" VerticalAlignment="Center" FontSize="16" Foreground="#40a9ff"></fa:FontAwesome>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="#40a9ff"
+                                Icon="Book" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem

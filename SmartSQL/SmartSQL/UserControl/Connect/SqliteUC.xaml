@@ -12,12 +12,15 @@
     Loaded="SqliteUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
-        <Grid
-            Height="50"
-            VerticalAlignment="Top"
-            Background="#e3e4e7">
-            <StackPanel Margin="20,0,0,0" VerticalAlignment="Center">
-                <TextBlock FontWeight="Bold" Text="SQLite 连接设置" />
+        <Grid Height="50" VerticalAlignment="Top">
+            <Image Source="pack://application:,,,/Resources/Img/connect_bg.png" Stretch="Fill" />
+            <StackPanel>
+                <TextBlock
+                    Margin="20,18"
+                    HorizontalAlignment="Left"
+                    FontWeight="Bold"
+                    Foreground="#697b8c"
+                    Text="SQLite 连接设置" />
             </StackPanel>
             <StackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
                 <svgc:SvgViewbox
