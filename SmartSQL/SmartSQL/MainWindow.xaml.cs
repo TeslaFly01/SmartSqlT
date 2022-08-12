@@ -39,21 +39,10 @@ namespace SmartSQL
         }
         private ConnectConfigs SelectendConnection = null;
 
-        #region 
-        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(MainWindow), new PropertyMetadata(default(Model)));
+        #region
 
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
             "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainWindow), new PropertyMetadata(default(List<TreeNodeItem>)));
-
-        /// <summary>
-        /// 菜单源数据
-        /// </summary>
-        public Model MenuData
-        {
-            get => (Model)GetValue(MenuDataProperty);
-            set => SetValue(MenuDataProperty, value);
-        }
 
         /// <summary>
         /// 左侧菜单数据
@@ -202,7 +191,7 @@ namespace SmartSQL
             var exportDoc = new ExportDoc
             {
                 Owner = this,
-                MenuData = MenuData,
+                MenuData = MainContent.MenuData,
                 SelectedConnection = SelectendConnection,
                 SelectedDataBase = selectDatabase
             };
@@ -256,6 +245,18 @@ namespace SmartSQL
         private void MenuFontAwesome_OnClick(object sender, RoutedEventArgs e)
         {
             var donation = new Fontawesome();
+            donation.Owner = this;
+            donation.ShowDialog();
+        }
+
+        /// <summary>
+        /// 联系作者
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuCallMe_Click(object sender, RoutedEventArgs e)
+        {
+            var donation = new Contact();
             donation.Owner = this;
             donation.ShowDialog();
         }

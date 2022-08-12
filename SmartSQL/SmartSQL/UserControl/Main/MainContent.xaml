@@ -230,10 +230,9 @@
         <DockPanel Grid.Row="0" Grid.Column="2">
             <Grid Margin="0,5,5,5">
                 <Border Background="White" CornerRadius="{Binding CornerRadius}">
-                    <Image
+                    <svgc:SvgViewbox
                         Width="350"
-                        Height="325"
-                        Source="/SmartSQL;component/Resources/Img/bg.png" />
+                        Height="325" Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"></svgc:SvgViewbox>
                 </Border>
                 <!--  单选项卡  -->
                 <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
