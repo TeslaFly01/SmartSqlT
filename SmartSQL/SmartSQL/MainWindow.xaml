@@ -237,7 +237,67 @@
 
     <!--  Main区域  -->
     <Grid Background="{StaticResource CloudDrawingBrush}">
-        <userControl:MainContent x:Name="MainContent" />
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Border
+                    Margin="5 5 5 5"
+                    Background="#f9f9f9"
+                    CornerRadius="10">
+                <ListBox Margin="0 20 0 0" BorderThickness="0" Background="#f9f9f9">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle}">
+                            <Setter Property="Height" Value="55"></Setter>
+                            <Setter Property="Margin" Value="3"></Setter>
+                            <Setter Property="Cursor" Value="Hand"></Setter>
+                            <Setter Property="Foreground" Value="#40a9ff"></Setter>
+                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#40a9ff"></Setter>
+                                    <Setter Property="Foreground" Value="#ffffff"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                            <Style.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="15"/>
+                                </Style>
+                            </Style.Resources>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBoxItem> 
+                        <StackPanel>
+                            <fa:FontAwesome Icon="Book" FontSize="16"></fa:FontAwesome>
+                            <TextBlock Text="管理" Margin=" 0 5 0 0"></TextBlock>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <fa:FontAwesome Icon="Compass" FontSize="16"></fa:FontAwesome>
+                            <TextBlock Text="比较" Margin=" 0 5 0 0"></TextBlock>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <fa:FontAwesome Icon="CloudUpload"  FontSize="16"></fa:FontAwesome>
+                            <TextBlock Text="同步" Margin=" 0 5 0 0"></TextBlock>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <fa:FontAwesome Icon="Heart" FontSize="16"></fa:FontAwesome>
+                            <TextBlock Text="收藏" Margin=" 0 5 0 0"></TextBlock>
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </Border>
+        </Grid>
+        <Grid Grid.Column="1">
+            <userControl:MainContent x:Name="MainContent" />
+        </Grid>
     </Grid>
     <!--  Main区域  -->
 </hc:GlowWindow>
