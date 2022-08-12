@@ -12,11 +12,14 @@
     Loaded="ConnectMainUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
-        <StackPanel Margin="25,15,0,0" HorizontalAlignment="Left">
-            <TextBlock FontWeight="Bold">选择连接类型</TextBlock>
-        </StackPanel>
+        <Grid Height="40" VerticalAlignment="Top">
+            <Image Source="pack://application:,,,/Resources/Img/connect_bg.png" Stretch="Fill" />
+            <StackPanel Margin="20,12,0,0" HorizontalAlignment="Left">
+                <TextBlock FontWeight="Bold" Foreground="#697b8c">选择连接类型</TextBlock>
+            </StackPanel>
+        </Grid>
         <ListBox
-            Margin="15,30,15,0"
+            Margin="15,40,15,0"
             BorderThickness="0"
             Cursor="Arrow"
             ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"

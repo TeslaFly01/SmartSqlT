@@ -232,7 +232,8 @@
                 <Border Background="White" CornerRadius="{Binding CornerRadius}">
                     <svgc:SvgViewbox
                         Width="350"
-                        Height="325" Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"></svgc:SvgViewbox>
+                        Height="325"
+                        Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg" />
                 </Border>
                 <!--  单选项卡  -->
                 <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
