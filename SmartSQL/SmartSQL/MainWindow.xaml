@@ -253,12 +253,12 @@
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
+        <DockPanel Grid.Column="0">
             <Border
-                    Margin="5 5 5 5"
+                    Margin="5 5 0 5"
                     Background="#f9f9f9"
                     CornerRadius="10">
-                <ListBox Margin="0 20 0 0" BorderThickness="0" Background="#f9f9f9">
+                <ListBox Margin="0 10 0 0" BorderThickness="0" Background="#f9f9f9">
                     <ListBox.ItemContainerStyle>
                         <Style TargetType="ListBoxItem" BasedOn="{StaticResource ListBoxItemBaseStyle}">
                             <Setter Property="Height" Value="55"></Setter>
@@ -282,7 +282,7 @@
                             </Style.Resources>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                    <ListBoxItem>
+                    <ListBoxItem IsSelected="True">
                         <StackPanel>
                             <fa:FontAwesome Icon="Book" FontSize="16"></fa:FontAwesome>
                             <TextBlock Text="管理" Margin=" 0 5 0 0"></TextBlock>
@@ -302,10 +302,10 @@
                     </ListBoxItem>
                 </ListBox>
             </Border>
-        </Grid>
-        <Grid Grid.Column="1">
+        </DockPanel>
+        <DockPanel Grid.Column="1">
             <userControl:MainContent x:Name="MainContent" />
-        </Grid>
+        </DockPanel>
     </Grid>
     <!--  Main区域  -->
 </hc:GlowWindow>
