@@ -193,7 +193,7 @@
                         Name="MenuDonation"
                         Click="MenuDonation_OnClick"
                         FontWeight="Normal"
-                        Header="请作者喝一杯咖啡">
+                        Header="请作者喝杯咖啡">
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -264,14 +264,16 @@
                             <Setter Property="Height" Value="55"></Setter>
                             <Setter Property="Margin" Value="3"></Setter>
                             <Setter Property="Cursor" Value="Hand"></Setter>
-                            <Setter Property="Foreground" Value="#40a9ff"></Setter>
+                            <Setter Property="Foreground" Value="#a2a2a2"></Setter>
                             <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
                             <Setter Property="HorizontalContentAlignment" Value="Center"></Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#40a9ff"></Setter>
-                                    <Setter Property="Foreground" Value="#ffffff"></Setter>
+                                    <!--<Setter Property="Background" Value="#40a9ff"></Setter>-->
+                                    <Setter Property="Background" Value="#ffffff"></Setter>
+                                    <Setter Property="Foreground" Value="#1890ff"></Setter>
                                 </Trigger>
+                                
                             </Style.Triggers>
                             <Style.Resources>
                                 <Style TargetType="Border">
@@ -280,7 +282,7 @@
                             </Style.Resources>
                         </Style>
                     </ListBox.ItemContainerStyle>
-                    <ListBoxItem> 
+                    <ListBoxItem>
                         <StackPanel>
                             <fa:FontAwesome Icon="Book" FontSize="16"></fa:FontAwesome>
                             <TextBlock Text="管理" Margin=" 0 5 0 0"></TextBlock>
@@ -290,12 +292,6 @@
                         <StackPanel>
                             <fa:FontAwesome Icon="Compass" FontSize="16"></fa:FontAwesome>
                             <TextBlock Text="比较" Margin=" 0 5 0 0"></TextBlock>
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem>
-                        <StackPanel>
-                            <fa:FontAwesome Icon="CloudUpload"  FontSize="16"></fa:FontAwesome>
-                            <TextBlock Text="同步" Margin=" 0 5 0 0"></TextBlock>
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem>
