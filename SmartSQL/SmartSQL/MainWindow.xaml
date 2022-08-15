@@ -291,19 +291,19 @@
                             <TextBlock Margin="0,5,0,0" Text="管理" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem>
+                    <ListBoxItem IsEnabled="False">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Compass" />
                             <TextBlock Margin="0,5,0,0" Text="比较" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem>
+                    <ListBoxItem IsEnabled="False">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Inbox" />
                             <TextBlock Margin="0,5,0,0" Text="工具" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem>
+                    <ListBoxItem IsEnabled="False">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Heart" />
                             <TextBlock Margin="0,5,0,0" Text="收藏" />
