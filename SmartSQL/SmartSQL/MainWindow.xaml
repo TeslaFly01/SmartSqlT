@@ -267,7 +267,7 @@
                             <Setter Property="Height" Value="55" />
                             <Setter Property="Margin" Value="3" />
                             <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Foreground" Value="#a2a2a2" />
+                            <Setter Property="Foreground" Value="#595959" />
                             <Setter Property="Background" Value="#f9f9f9" />
                             <Setter Property="HorizontalAlignment" Value="Stretch" />
                             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -291,13 +291,19 @@
                             <TextBlock Margin="0,5,0,0" Text="管理" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem IsEnabled="False">
+                    <ListBoxItem>
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Compass" />
                             <TextBlock Margin="0,5,0,0" Text="比较" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem IsEnabled="False">
+                    <ListBoxItem>
+                        <StackPanel>
+                            <fa:FontAwesome FontSize="16" Icon="Inbox" />
+                            <TextBlock Margin="0,5,0,0" Text="工具" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem>
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Heart" />
                             <TextBlock Margin="0,5,0,0" Text="收藏" />

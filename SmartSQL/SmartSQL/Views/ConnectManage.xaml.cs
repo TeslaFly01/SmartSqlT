@@ -95,6 +95,10 @@ namespace SmartSQL.Views
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
+                    if (!datalist.Any())
+                    {
+                        NoDataText.Visibility = Visibility.Visible;
+                    }
                 });
             });
             #endregion
@@ -141,7 +145,7 @@ namespace SmartSQL.Views
                         MainContent = ucSqlite;
                         break;
                 }
-            } 
+            }
             #endregion
         }
 
@@ -212,6 +216,10 @@ namespace SmartSQL.Views
                 {
                     ResetData();
                     DataList = datalist;
+                    if (!datalist.Any())
+                    {
+                        NoDataText.Visibility = Visibility.Visible;
+                    }
                     if (ChangeRefreshEvent != null)
                     {
                         //ChangeRefreshEvent();
@@ -238,7 +246,7 @@ namespace SmartSQL.Views
         {
             #region MyRegion
             MainContent = new ConnectMainUC();
-            ListConnects.SelectedItem = null; 
+            ListConnects.SelectedItem = null;
             #endregion
         }
 

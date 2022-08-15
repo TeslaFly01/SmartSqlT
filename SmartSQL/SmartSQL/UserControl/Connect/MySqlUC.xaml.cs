@@ -253,7 +253,7 @@ namespace SmartSQL.UserControl.Connect
                                 UserName = userName,
                                 Password = password,
                                 CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase.DbName
+                                DefaultDatabase = defaultDataBase == null ? "MySql" : defaultDataBase.DbName
 
                             };
                             sqLiteHelper.db.Insert(connectConfig);
@@ -265,6 +265,7 @@ namespace SmartSQL.UserControl.Connect
                                 ToList();
                             Dispatcher.Invoke(() =>
                             {
+                                mainWindow.NoDataText.Visibility = Visibility.Collapsed;
                                 mainWindow.DataList = datalist;
                                 if (!isConnect)
                                 {

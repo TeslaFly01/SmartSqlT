@@ -224,6 +224,7 @@ namespace SmartSQL.UserControl.Connect
                                 ToList();
                             Dispatcher.Invoke(() =>
                             {
+                                mainWindow.NoDataText.Visibility = Visibility.Collapsed;
                                 mainWindow.DataList = datalist;
                                 if (!isConnect)
                                 {

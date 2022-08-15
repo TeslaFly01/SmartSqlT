@@ -67,6 +67,19 @@
                 </ListBox.ItemTemplate>
             </ListBox>
             <Grid
+                x:Name="NoDataText"
+                Margin="5,100,5,65"
+                HorizontalAlignment="Stretch"
+                Background="White"
+                Cursor="Arrow"
+                Visibility="Collapsed">
+                <local:NoDataArea
+                    x:Name="NoDataAreaText"
+                    Margin="0"
+                    HorizontalAlignment="Center"
+                    ShowType="All" />
+            </Grid>
+            <Grid
                 Height="35"
                 VerticalAlignment="Bottom"
                 Background="#f5f5f5">
