@@ -28,7 +28,10 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3.3*" MinWidth="200" />
+            <ColumnDefinition
+                Width="3.3*"
+                MinWidth="200"
+                MaxWidth="450" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="6.6*" />
         </Grid.ColumnDefinitions>
@@ -140,7 +143,7 @@
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
                                     <Setter Property="FontWeight" Value="{Binding FontWeight}" />
                                     <Setter Property="FontSize" Value="12" />
-                                    <Setter Property="Padding" Value="0 0 5 0"></Setter>
+                                    <Setter Property="Padding" Value="0,0,5,0" />
                                     <Setter Property="Visibility" Value="{Binding Visibility}" />
                                     <Setter Property="Foreground" Value="{Binding TextColor}" />
                                     <Setter Property="Cursor" Value="Hand" />
@@ -156,13 +159,25 @@
                             <TreeView.ContextMenu>
                                 <!--  右键菜单  -->
                                 <ContextMenu Visibility="Visible">
+                                    <ContextMenu.ItemContainerStyle>
+                                        <Style BasedOn="{StaticResource MenuItemBaseStyle}" TargetType="MenuItem">
+                                            <Setter Property="Width" Value="180" />
+                                        </Style>
+                                    </ContextMenu.ItemContainerStyle>
                                     <MenuItem
                                         x:Name="MenuSelectedItem"
-                                        Padding="5,0,5,0"
+                                        Padding="5,3,5,3"
                                         VerticalAlignment="Center"
                                         Click="MenuSelectedItem_OnClick"
-                                        Cursor="Hand"
-                                        Header="复制对象名" />
+                                        Header="复制名称">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Copy" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                 </ContextMenu>
                             </TreeView.ContextMenu>
                             <TreeView.ItemTemplate>

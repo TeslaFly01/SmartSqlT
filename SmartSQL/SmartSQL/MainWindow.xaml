@@ -237,7 +237,7 @@
                         <MenuItem.Icon>
                             <Path
                                 Data="{StaticResource InfoGeometry}"
-                                Fill="#8c8c8c"
+                                Fill="#ff9c6e"
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
@@ -259,8 +259,8 @@
                 Background="#f9f9f9"
                 CornerRadius="10">
                 <ListBox
-                    Margin="0,10,0,0"
-                    Background="#f9f9f9"
+                    Margin="0,10,0,10"
+                    Background="Transparent"
                     BorderThickness="0">
                     <ListBox.ItemContainerStyle>
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
