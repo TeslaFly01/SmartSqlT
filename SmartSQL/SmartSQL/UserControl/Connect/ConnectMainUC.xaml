@@ -62,7 +62,7 @@
             <!--  DB2  -->
             <baseControl:ConnectType
                 ClickCard="ConnectType_OnClickCard"
-                DataBaseIcon="pack://application:,,,/Resources/svg/DB2@64.svg"
+                DataBaseIcon="pack://application:,,,/Resources/svg/ibm.svg"
                 DataBaseName="DB2"
                 IsEnabled="False" />
 
@@ -71,6 +71,27 @@
                 ClickCard="ConnectType_OnClickCard"
                 DataBaseIcon="pack://application:,,,/Resources/svg/TIDB@64.svg"
                 DataBaseName="TIDB"
+                IsEnabled="False" />
+
+            <!--  达梦  -->
+            <baseControl:ConnectType
+                ClickCard="ConnectType_OnClickCard"
+                DataBaseIcon="pack://application:,,,/Resources/svg/dameng.svg"
+                DataBaseName="达梦"
+                IsEnabled="False" />
+
+            <!--  瀚高  -->
+            <baseControl:ConnectType
+                ClickCard="ConnectType_OnClickCard"
+                DataBaseIcon="pack://application:,,,/Resources/svg/hangao.svg"
+                DataBaseName="瀚高"
+                IsEnabled="False" />
+
+            <!--  人大金仓  -->
+            <baseControl:ConnectType
+                ClickCard="ConnectType_OnClickCard"
+                DataBaseIcon="pack://application:,,,/Resources/svg/kingbase.svg"
+                DataBaseName="人大金仓"
                 IsEnabled="False" />
         </ListBox>
     </Grid>

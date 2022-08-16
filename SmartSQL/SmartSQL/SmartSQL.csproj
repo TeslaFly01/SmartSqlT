@@ -429,6 +429,10 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\ibm.svg" />
+    <Resource Include="Resources\svg\kingbase.svg" />
+    <Resource Include="Resources\svg\hangao.svg" />
+    <Resource Include="Resources\svg\dameng.svg" />
     <Resource Include="Resources\Img\contact_weixin_card.png" />
     <Resource Include="Resources\Img\contact_mp.png" />
     <Resource Include="Resources\svg\undraw\undraw_collaborators_re_hont.svg" />
