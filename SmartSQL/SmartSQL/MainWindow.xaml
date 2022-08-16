@@ -250,7 +250,7 @@
     <!--  Main区域  -->
     <Grid Background="{StaticResource CloudDrawingBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="55" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <DockPanel Grid.Column="0">
@@ -265,7 +265,7 @@
                     <ListBox.ItemContainerStyle>
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
                             <Setter Property="Height" Value="55" />
-                            <Setter Property="Margin" Value="3" />
+                            <Setter Property="Margin" Value="3,3,2,3" />
                             <Setter Property="Cursor" Value="Hand" />
                             <Setter Property="Foreground" Value="#595959" />
                             <Setter Property="Background" Value="#f9f9f9" />
