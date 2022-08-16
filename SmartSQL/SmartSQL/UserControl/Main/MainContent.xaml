@@ -140,6 +140,7 @@
                                     <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
                                     <Setter Property="FontWeight" Value="{Binding FontWeight}" />
                                     <Setter Property="FontSize" Value="12" />
+                                    <Setter Property="Padding" Value="0 0 5 0"></Setter>
                                     <Setter Property="Visibility" Value="{Binding Visibility}" />
                                     <Setter Property="Foreground" Value="{Binding TextColor}" />
                                     <Setter Property="Cursor" Value="Hand" />
