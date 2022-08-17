@@ -61,7 +61,7 @@
                 <TextBlock
                     Margin="0,188,20,20"
                     Cursor="Arrow"
-                    Text="服务名/数据库" />
+                    Text="服务名称" />
             </Grid>
             <Grid x:Name="MySqlConnectForm" Grid.Column="1">
                 <TextBox
@@ -114,22 +114,9 @@
                 <hc:TextBox
                     Name="TextDefaultDatabase"
                     Height="0"
-                    Margin="0,180,55,20"
+                    Margin="0,180,20,20"
                     VerticalAlignment="Top"
                     ShowClearButton="True" />
-                <Button
-                    Name="BtnFresh"
-                    Margin="0,180,20,20"
-                    Padding="7"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
-                    BorderThickness="0"
-                    Click="BtnFresh_OnClick"
-                    Cursor="Hand"
-                    Foreground="{DynamicResource PrimaryTextBrush}"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="刷新数据库" />
             </Grid>
         </Grid>
     </Grid>
