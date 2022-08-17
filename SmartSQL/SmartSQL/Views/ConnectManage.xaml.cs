@@ -116,7 +116,7 @@ namespace SmartSQL.Views
             if (listBox.SelectedItems.Count > 0)
             {
                 OprToolGrid.Visibility = Visibility.Visible;
-                BtnPrev.Visibility = Visibility.Collapsed;
+                BtnPrev.Visibility = Visibility.Hidden;
                 var connect = (ConnectConfigs)listBox.SelectedItems[0];
                 switch (connect.DbType)
                 {

@@ -181,7 +181,7 @@
                             Content="上一步"
                             Cursor="Hand"
                             Tag="Save"
-                            Visibility="Collapsed" />
+                            Visibility="Hidden" />
                         <Button
                             x:Name="BtnConnect"
                             Height="25"

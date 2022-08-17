@@ -432,6 +432,7 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\database\icon_oracle_64.svg" />
     <Resource Include="Resources\svg\ibm.svg" />
     <Resource Include="Resources\svg\kingbase.svg" />
     <Resource Include="Resources\svg\hangao.svg" />

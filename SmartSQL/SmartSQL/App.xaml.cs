@@ -13,9 +13,6 @@ namespace SmartSQL
 {
     public partial class App
     {
-
-        [SuppressMessage("ReSharper", "NotAccessedField.Local")]
-        private static Mutex AppMutex;
         public App()
         {
 

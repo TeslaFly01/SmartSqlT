@@ -63,7 +63,7 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.MySql: return "/SmartSQL;component/Resources/svg/mysql.svg";
                     case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
                     case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
-                    case DbType.Oracle: return "/SmartSQL;component/Resources/svg/oracle@64.svg";
+                    case DbType.Oracle: return "/SmartSQL;component/Resources/svg/database/icon_oracle_64.svg";
                     default: return "";
                 }
             }
