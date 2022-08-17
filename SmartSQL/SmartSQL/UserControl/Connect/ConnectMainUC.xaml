@@ -20,6 +20,7 @@
         </Grid>
         <ListBox
             Margin="15,40,15,0"
+            Padding="0,20,0,30"
             BorderThickness="0"
             Cursor="Arrow"
             ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"

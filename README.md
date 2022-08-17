@@ -13,7 +13,7 @@
 <img alt="release" src="https://img.shields.io/badge/release-1.0.3.3-green">
 </p>
 
-![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner.png)
+![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner_01.png)
 
 ### 🚩 项目介绍
 
@@ -34,6 +34,8 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
 ### 💎 数据库支持
+[](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-database.png)
+
 - ✅ SqlServer
 - ✅ MySQL
 - ✅ PostgreSQL
@@ -42,6 +44,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - - [x] DB2
 - - [x] TIDB
 - - [x] 达梦
+- - [x] 瀚高
 - - [x] 人大金仓
 
 ### 📖 主要功能 

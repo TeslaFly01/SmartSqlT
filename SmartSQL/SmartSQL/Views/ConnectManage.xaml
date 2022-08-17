@@ -9,7 +9,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl.Connect"
     Title="连接管理"
-    Width="800"
+    Width="780"
     Height="450"
     BorderThickness="0"
     Icon="../Resources/Img/icon_connect.png"
