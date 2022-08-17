@@ -22,6 +22,7 @@ namespace SmartSQL.Framework
                 case DbType.MySql: return new MySqlExporter(dbConnectionString);
                 case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString);
                 case DbType.Sqlite: return new SqliteExporter(dbConnectionString);
+                case DbType.Oracle: return new OracleExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
@@ -33,6 +34,7 @@ namespace SmartSQL.Framework
                 case DbType.MySql: return new MySqlExporter(tableName, columns);
                 case DbType.PostgreSQL: return new PostgreSqlExporter(tableName, columns);
                 case DbType.Sqlite: return new SqliteExporter(tableName, columns);
+                case DbType.Oracle: return new OracleExporter(tableName, columns);
                 default: return new SqlServerExporter(tableName, columns);
             }
         }

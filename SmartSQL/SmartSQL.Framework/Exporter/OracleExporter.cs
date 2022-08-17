@@ -28,9 +28,9 @@ namespace SmartSQL.Framework.Exporter
             var model = new Model { Database = "MySql" };
             try
             {
-                //model.Tables = this.GetTables();
-                //model.Views = this.GetViews();
-                //model.Procedures = this.GetProcedures();
+                model.Tables = this.GetTables();
+                model.Views = this.GetViews();
+                model.Procedures = this.GetProcedures();
                 return model;
             }
             catch (Exception ex)
@@ -38,7 +38,90 @@ namespace SmartSQL.Framework.Exporter
                 throw ex;
             }
         }
+        #region Private
+        private Tables GetTables()
+        {
+            #region MyRegion
+            var tables = new Tables();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+            var tableList = dbMaintenance.GetTableInfoList(false);
+            tableList.ForEach(tb =>
+            {
+                if (tables.ContainsKey(tb.Name))
+                {
+                    return;
+                }
+                var table = new Table
+                {
+                    Id = tb.Name,
+                    Name = tb.Name,
+                    DisplayName = tb.Name,
+                    Comment = tb.Description,
+                    CreateDate = tb.CreateDate,
+                    ModifyDate = tb.ModifyDate
+                };
+                tables.Add(tb.Name, table);
+            });
+            return tables;
+            #endregion
+        }
 
+        private Views GetViews()
+        {
+            #region MyRegion
+            var views = new Views();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+            var viewList = dbMaintenance.GetViewInfoList(false);
+            viewList.ForEach(v =>
+            {
+                if (views.ContainsKey(v.Name))
+                {
+                    return;
+                }
+                var view = new View()
+                {
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Description,
+                    CreateDate = v.CreateDate,
+                    ModifyDate = v.ModifyDate
+                };
+                views.Add(v.Name, view);
+            });
+            return views;
+            #endregion
+        }
+
+        private Procedures GetProcedures()
+        {
+            #region MyRegion
+            var procDic = new Procedures();
+            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+            var procInfoList = dbMaintenance.GetProcInfoList(false);
+            var dbName = dbMaintenance.Context.Ado.Connection.Database;
+            var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
+            procList.ForEach(p =>
+            {
+                if (procDic.ContainsKey(p.Name))
+                {
+                    return;
+                }
+                var proc = new Procedure()
+                {
+                    Id = p.Name,
+                    Name = p.Name,
+                    DisplayName = p.Name,
+                    Comment = p.Description,
+                    CreateDate = p.CreateDate,
+                    ModifyDate = p.ModifyDate
+                };
+                procDic.Add(p.Name, proc);
+            });
+            return procDic;
+            #endregion
+        }
+        #endregion
         public override List<DataBase> GetDatabases()
         {
             #region MyRegion

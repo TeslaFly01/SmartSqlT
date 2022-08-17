@@ -144,6 +144,12 @@ namespace SmartSQL.Views
                         ucSqlite.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucSqlite;
                         break;
+                    case DbType.Oracle:
+                        var ucOracle = new OracleUC();
+                        ucOracle.ConnectConfig = connect;
+                        ucOracle.ChangeRefreshEvent += ChangeRefreshEvent;
+                        MainContent = ucOracle;
+                        break;
                 }
             }
             #endregion
