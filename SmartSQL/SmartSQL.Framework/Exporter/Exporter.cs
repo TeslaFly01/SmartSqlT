@@ -41,8 +41,9 @@ namespace SmartSQL.Framework.Exporter
         /// <summary>
         /// 获取数据库列表
         /// </summary>
+        /// <param name="defaultDatabase"></param>
         /// <returns></returns>
-        public abstract List<DataBase> GetDatabases();
+        public abstract List<DataBase> GetDatabases(string defaultDatabase = "");
         /// <summary>
         /// 获取对象列信息
         /// </summary>

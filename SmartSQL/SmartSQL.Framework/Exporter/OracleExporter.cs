@@ -30,7 +30,7 @@ namespace SmartSQL.Framework.Exporter
             {
                 model.Tables = this.GetTables();
                 model.Views = this.GetViews();
-                model.Procedures = this.GetProcedures();
+                model.Procedures = new Procedures();//暂时不支持存储过程 this.GetProcedures();
                 return model;
             }
             catch (Exception ex)
@@ -38,6 +38,7 @@ namespace SmartSQL.Framework.Exporter
                 throw ex;
             }
         }
+
         #region Private
         private Tables GetTables()
         {
@@ -122,23 +123,20 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
         #endregion
-        public override List<DataBase> GetDatabases()
+
+        public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
-            var dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
-            var dataBaseList = dbMaintenance.GetDataBaseList(dbClient);
-            var list = new List<DataBase>();
-            dataBaseList.ForEach(dbName =>
+            var tableList = dbMaintenance.GetTableInfoList(false);
+            return new List<DataBase>
             {
-                var dBase = new DataBase
+                new DataBase
                 {
-                    DbName = dbName,
-                    IsSelected = false
-                };
-                list.Add(dBase);
-            });
-            return list;
+                    DbName = defaultDatabase,
+                    IsSelected = true
+                }
+            };
             #endregion
         }
 
@@ -190,7 +188,7 @@ namespace SmartSQL.Framework.Exporter
                 column.IsPrimaryKey = v.IsPrimarykey;
                 columns.Add(v.DbColumnName, column);
             });
-            return columns; 
+            return columns;
             #endregion
         }
 
@@ -199,7 +197,7 @@ namespace SmartSQL.Framework.Exporter
             #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
             var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
-            return scriptInfo.Definition; 
+            return scriptInfo.Definition;
             #endregion
         }
 

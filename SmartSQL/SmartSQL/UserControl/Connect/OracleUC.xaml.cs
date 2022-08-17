@@ -69,8 +69,7 @@ namespace SmartSQL.UserControl.Connect
             TextServerPort.Value = connect.ServerPort;
             TextServerName.Text = connect.UserName;
             TextServerPassword.Password = pwd;
-            ComboDefaultDatabase.ItemsSource = defaultBase;
-            ComboDefaultDatabase.SelectedItem = defaultBase.First();
+            TextDefaultDatabase.Text = connect.DefaultDatabase;
             #endregion
         }
 
@@ -85,6 +84,7 @@ namespace SmartSQL.UserControl.Connect
             var serverPort = TextServerPort.Value;
             var userName = TextServerName.Text.Trim();
             var password = TextServerPassword.Password.Trim();
+            var serviceName = TextDefaultDatabase.Text.Trim();
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))
             {
@@ -105,6 +105,10 @@ namespace SmartSQL.UserControl.Connect
             if (string.IsNullOrEmpty(password))
             {
                 tipMsg.Append("- 请填写密码");
+            }
+            if (string.IsNullOrEmpty(password))
+            {
+                tipMsg.Append("- 请填写服务名");
             }
             if (tipMsg.ToString().Length > 0)
             {
@@ -132,30 +136,17 @@ namespace SmartSQL.UserControl.Connect
                 return;
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
-            var connectId = Convert.ToInt32(HidId.Text);
             var connectionString = ConnectionStringUtil.OracleString(TextServerAddress.Text.Trim(),
-                Convert.ToInt32(TextServerPort.Value), string.Empty,
-                TextServerName.Text.Trim(), EncryptHelper.Encode(TextServerPassword.Password.Trim()));
+                Convert.ToInt32(TextServerPort.Value),
+                TextDefaultDatabase.Text.Trim(),
+                TextServerName.Text.Trim(),
+                EncryptHelper.Encode(TextServerPassword.Password.Trim()));
             Task.Run(() =>
             {
                 var exporter = ExporterFactory.CreateInstance(DbType.Oracle, connectionString);
-                var list = exporter.GetDatabases();
+                exporter.GetDatabases();
                 Dispatcher.Invoke(() =>
                 {
-                    ComboDefaultDatabase.ItemsSource = list;
-                    if (connectId < 1)
-                    {
-                        ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
-                    }
-                    else
-                    {
-                        var sqLiteHelper = new SQLiteHelper();
-                        var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                        if (connect != null)
-                        {
-                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-                        }
-                    }
                     mainWindow.LoadingG.Visibility = Visibility.Collapsed;
                     if (isTest)
                     {
@@ -187,9 +178,9 @@ namespace SmartSQL.UserControl.Connect
             var serverPort = Convert.ToInt32(TextServerPort.Value);
             var userName = TextServerName.Text.Trim();
             var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
-            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
+            var defaultDataBase = TextDefaultDatabase.Text.Trim();
             var connectionString =
-                ConnectionStringUtil.OracleString(serverAddress, serverPort, string.Empty, userName, password);
+                ConnectionStringUtil.OracleString(serverAddress, serverPort, defaultDataBase, userName, password);
 
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
@@ -231,7 +222,7 @@ namespace SmartSQL.UserControl.Connect
                             connectConfig.ServerPort = serverPort;
                             connectConfig.UserName = userName;
                             connectConfig.Password = password;
-                            connectConfig.DefaultDatabase = defaultDataBase.DbName;
+                            connectConfig.DefaultDatabase = defaultDataBase;
                             connectConfig.Authentication = 1;
                             sqLiteHelper.db.Update(connectConfig);
                         }
@@ -253,7 +244,7 @@ namespace SmartSQL.UserControl.Connect
                                 UserName = userName,
                                 Password = password,
                                 CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase.DbName
+                                DefaultDatabase = defaultDataBase
 
                             };
                             sqLiteHelper.db.Insert(connectConfig);

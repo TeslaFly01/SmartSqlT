@@ -75,14 +75,18 @@ namespace SmartSQL.Framework.Util
             return connectString;
         }
 
-
-        public static string OracleString(string serverAddress, int port, string database, string userName, string password)
+        /// <summary>
+        /// Oracle数据库字符串
+        /// </summary>
+        /// <param name="serverAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="serviceName"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string OracleString(string serverAddress, int port, string serviceName, string userName, string password)
         {
-            var connectString = $@"data source={serverAddress}:{port};
-                                       user id={userName};
-                                      password={EncryptHelper.Decode(password)};
-                                       pooling=true;
-                                 max pool size=2";
+            var connectString = $@"Data Source={serverAddress}:{port}/{serviceName};User ID={userName};Password={EncryptHelper.Decode(password)};Pooling=False;";
             return connectString;
         }
     }

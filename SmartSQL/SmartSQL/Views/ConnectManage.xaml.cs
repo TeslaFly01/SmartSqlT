@@ -185,6 +185,11 @@ namespace SmartSQL.Views
             {
                 ucSqlite.SaveForm(isConnect);
             }
+            //Oracle
+            if (MainContent is OracleUC ucOracle)
+            {
+                ucOracle.SaveForm(isConnect);
+            }
             #endregion
         }
 
@@ -283,6 +288,11 @@ namespace SmartSQL.Views
             if (MainContent is SqliteUC ucSqlite)
             {
                 ucSqlite.TestConnect(true);
+            }
+            //测试Oracle
+            if (MainContent is OracleUC ucOracle)
+            {
+                ucOracle.TestConnect(true);
             }
             #endregion
         }

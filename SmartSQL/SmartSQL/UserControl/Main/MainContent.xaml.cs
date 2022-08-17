@@ -122,7 +122,7 @@ namespace SmartSQL.UserControl
             try
             {
                 var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
-                var list = dbInstance.GetDatabases();
+                var list = dbInstance.GetDatabases(connectConfig.DefaultDatabase);
                 SelectDatabase.ItemsSource = list;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
                 SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);

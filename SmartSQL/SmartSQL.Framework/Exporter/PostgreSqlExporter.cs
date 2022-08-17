@@ -37,7 +37,7 @@ namespace SmartSQL.Framework.Exporter
             }
         }
 
-        public override List<DataBase> GetDatabases()
+        public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
             var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);

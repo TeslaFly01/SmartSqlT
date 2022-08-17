@@ -50,7 +50,7 @@ namespace SmartSQL.Framework.Exporter
         /// 获取数据库列表
         /// </summary>
         /// <returns></returns>
-        public override List<DataBase> GetDatabases()
+        public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
             var sqlCmd = "SELECT name FROM sysdatabases ORDER BY name ASC";

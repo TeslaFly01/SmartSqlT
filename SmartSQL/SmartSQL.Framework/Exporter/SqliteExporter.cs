@@ -39,7 +39,7 @@ namespace SmartSQL.Framework.Exporter
             }
         }
 
-        public override List<DataBase> GetDatabases()
+        public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
             return new List<DataBase>
