@@ -85,6 +85,9 @@
     <Reference Include="AduSkin">
       <HintPath>..\..\Lib\AduSkin.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess">
+      <HintPath>..\..\..\..\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="ReachFramework" />
     <Reference Include="SqlSugar">

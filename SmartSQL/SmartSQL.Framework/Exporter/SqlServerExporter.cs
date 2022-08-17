@@ -31,7 +31,7 @@ namespace SmartSQL.Framework.Exporter
         public override Model Init()
         {
             #region MyRegion
-            var model = new Model { Database = "SqlServer2008" };
+            var model = new Model { Database = "SqlServer" };
             try
             {
                 model.Tables = this.GetTables();

@@ -58,7 +58,7 @@
                 ClickCard="ConnectType_OnClickCard"
                 DataBaseIcon="pack://application:,,,/Resources/svg/oracle@64.svg"
                 DataBaseName="Oracle"
-                IsEnabled="False" />
+                IsEnabled="True" />
 
             <!--  DB2  -->
             <baseControl:ConnectType
