@@ -95,7 +95,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 
 >  对`常用的分组`可置为默认`展开`，`不常用的分组`置为默认`不展开`
 
-#### 快捷检索
+#### 快捷查询
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Objects.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-View.png) |
 |--|--|
 | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Proc.png) | ![快捷查询](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Column.png) |
@@ -143,7 +143,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 	✅ 收集问题，修复完善基础功能
 	✅ C#实体代码生成
 	⏳ 进行中：优化现有Issues中反馈的bug
-	⏳ 计划中：Oracle、DB2、达梦等数据库支持
+	⏳ 计划中：DB2、TIDB、达梦等数据库支持
 	⏳ 计划中：对象结构对比功能
 	⏳ 计划中：表、视图、存储过程同步功能
 	⏳ ...
@@ -155,7 +155,10 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 |:--:|:--:|
 | QQ交流群：`666483672` | 微信交流群 |
 
- > 由于`微信群`限制超`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
+ > 由于`微信群`限制`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
+
+ > 公众号也将每日定期分享`有趣`、`有料`、`有用`的开源项目，助力共同成长✌️
+
 
 ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-mp.png)
 
@@ -163,5 +166,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 ### ❓ 常见问题
 
 -  [SmartSQL使用常见问题列表](https://gitee.com/dotnetchina/SmartSQL/blob/master/Question.md)
+- [Bug反馈](https://gitee.com/dotnetchina/SmartSQL/issues/new)
 
 > PS：如果你有更好方法，欢迎提供改善建议，助力✊该工具越来越好使！
