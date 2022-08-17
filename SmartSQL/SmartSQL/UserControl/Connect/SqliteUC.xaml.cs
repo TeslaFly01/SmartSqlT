@@ -21,6 +21,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Helper;
 using SmartSQL.Views;
 using SqlSugar;
 
@@ -124,7 +125,7 @@ namespace SmartSQL.UserControl.Connect
                         mainWindow.LoadingG.Visibility = Visibility.Collapsed;
                         if (isTest)
                         {
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                            Oops.Success("连接成功");
                         }
                     });
                 }
@@ -132,8 +133,8 @@ namespace SmartSQL.UserControl.Connect
                 {
                     Dispatcher.Invoke(() =>
                     {
+                        Oops.God($"连接失败，原因：" + ex.ToMsg());
                         mainWindow.LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });

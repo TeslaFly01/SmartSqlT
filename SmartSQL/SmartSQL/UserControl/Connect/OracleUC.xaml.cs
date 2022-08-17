@@ -20,6 +20,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Helper;
 using SmartSQL.Views;
 using SqlSugar;
 using Window = System.Windows.Window;
@@ -143,16 +144,27 @@ namespace SmartSQL.UserControl.Connect
                 EncryptHelper.Encode(TextServerPassword.Password.Trim()));
             Task.Run(() =>
             {
-                var exporter = ExporterFactory.CreateInstance(DbType.Oracle, connectionString);
-                exporter.GetDatabases();
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    mainWindow.LoadingG.Visibility = Visibility.Collapsed;
-                    if (isTest)
+                    var exporter = ExporterFactory.CreateInstance(DbType.Oracle, connectionString);
+                    exporter.GetDatabases();
+                    Dispatcher.Invoke(() =>
                     {
-                        Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-                    }
-                });
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                        if (isTest)
+                        {
+                            Oops.Success("连接成功");
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Oops.God($"连接失败，原因：" + ex.ToMsg());
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                    }));
+                }
             });
             #endregion
         }

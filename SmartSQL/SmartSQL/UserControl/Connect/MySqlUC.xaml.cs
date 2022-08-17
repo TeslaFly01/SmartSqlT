@@ -20,6 +20,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
+using SmartSQL.Helper;
 using SmartSQL.Views;
 using SqlSugar;
 using Window = System.Windows.Window;
@@ -138,30 +139,41 @@ namespace SmartSQL.UserControl.Connect
                 TextServerName.Text.Trim(), EncryptHelper.Encode(TextServerPassword.Password.Trim()));
             Task.Run(() =>
             {
-                var exporter = ExporterFactory.CreateInstance(DbType.MySql, connectionString);
-                var list = exporter.GetDatabases();
-                Dispatcher.Invoke(() =>
+                try
                 {
-                    ComboDefaultDatabase.ItemsSource = list;
-                    if (connectId < 1)
+                    var exporter = ExporterFactory.CreateInstance(DbType.MySql, connectionString);
+                    var list = exporter.GetDatabases();
+                    Dispatcher.Invoke(() =>
                     {
-                        ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
-                    }
-                    else
-                    {
-                        var sqLiteHelper = new SQLiteHelper();
-                        var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                        if (connect != null)
+                        ComboDefaultDatabase.ItemsSource = list;
+                        if (connectId < 1)
                         {
-                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("mysql"));
                         }
-                    }
-                    mainWindow.LoadingG.Visibility = Visibility.Collapsed;
-                    if (isTest)
+                        else
+                        {
+                            var sqLiteHelper = new SQLiteHelper();
+                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
+                            if (connect != null)
+                            {
+                                ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
+                            }
+                        }
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                        if (isTest)
+                        {
+                            Oops.Success("连接成功");
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
-                    }
-                });
+                        Oops.God($"连接失败，原因：" + ex.ToMsg());
+                        mainWindow.LoadingG.Visibility = Visibility.Collapsed;
+                    }));
+                }
             });
             #endregion
         }
