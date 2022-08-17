@@ -34,7 +34,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
 
 ### 💎 数据库支持
-[](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-database.png)
+![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-database.png)
 
 - ✅ SqlServer
 - ✅ MySQL
