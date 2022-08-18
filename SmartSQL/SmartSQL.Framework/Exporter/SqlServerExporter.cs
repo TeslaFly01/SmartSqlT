@@ -15,9 +15,10 @@ namespace SmartSQL.Framework.Exporter
 
     public class SqlServerExporter : Exporter, IExporter
     {
+        private readonly IDbMaintenance _dbMaintenance;
         public SqlServerExporter(string connectionString) : base(connectionString)
         {
-
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
         }
         public SqlServerExporter(string table, List<Column> columns) : base(table, columns)
         {
@@ -382,8 +383,7 @@ namespace SmartSQL.Framework.Exporter
                 }
                 objectId = tableInfo.Values.First().Id;
             }
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
-            var colList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            var colList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             colList.ForEach(col =>
             {
                 if (columns.ContainsKey(col.DbColumnName))
@@ -434,8 +434,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
-            var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
+            var scriptInfo = _dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
 
@@ -448,18 +447,17 @@ namespace SmartSQL.Framework.Exporter
         public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
             var result = false;
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
             if (objectType == DbObjectType.Table)
             {
-                result = dbMaintenance.AddTableRemark(objectName, remark);
+                result = _dbMaintenance.AddTableRemark(objectName, remark);
             }
             if (objectType == DbObjectType.View)
             {
-                result = dbMaintenance.AddViewRemark(objectName, remark);
+                result = _dbMaintenance.AddViewRemark(objectName, remark);
             }
             if (objectType == DbObjectType.Proc)
             {
-                result = dbMaintenance.AddProcRemark(objectName, remark);
+                result = _dbMaintenance.AddProcRemark(objectName, remark);
             }
             return result;
         }
@@ -472,14 +470,13 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override bool UpdateColumnRemark(Column columnInfo, string remark)
         {
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
             var columnName = columnInfo.Name;
             var tableName = columnInfo.ObjectName;
-            if (dbMaintenance.IsAnyColumnRemark(columnName, tableName))
+            if (_dbMaintenance.IsAnyColumnRemark(columnName, tableName))
             {
-                dbMaintenance.DeleteColumnRemark(columnName, tableName);
+                _dbMaintenance.DeleteColumnRemark(columnName, tableName);
             }
-            return dbMaintenance.AddColumnRemark(columnName, tableName, remark);
+            return _dbMaintenance.AddColumnRemark(columnName, tableName, remark);
         }
 
         #region 获取sql脚本

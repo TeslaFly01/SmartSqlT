@@ -16,8 +16,10 @@ namespace SmartSQL.Framework.Exporter
     /// </summary>
     public class SqliteExporter : Exporter, IExporter
     {
+        private readonly IDbMaintenance _dbMaintenance;
         public SqliteExporter(string connectionString) : base(connectionString)
         {
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
         }
 
         public SqliteExporter(string tableName, List<Column> columns) : base(tableName, columns)
@@ -57,8 +59,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
-            var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
@@ -172,8 +173,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
-            var tableList = dbMaintenance.GetTableInfoList(false);
+            var tableList = _dbMaintenance.GetTableInfoList(false);
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -199,8 +199,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
-            var viewList = dbMaintenance.GetViewInfoList(false);
+            var viewList = _dbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
             {
                 if (views.ContainsKey(v.Name))

@@ -11,9 +11,10 @@ namespace SmartSQL.Framework.Exporter
 {
     public class PostgreSqlExporter : Exporter, IExporter
     {
+        private readonly IDbMaintenance _dbMaintenance;
         public PostgreSqlExporter(string connectionString) : base(connectionString)
         {
-
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
         }
 
         public PostgreSqlExporter(string tableName, List<Column> columns) : base(tableName, columns)
@@ -40,9 +41,8 @@ namespace SmartSQL.Framework.Exporter
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
             var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            var dataBaseList = dbMaintenance.GetDataBaseList(dbClient);
+            var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
             var list = new List<DataBase>();
             dataBaseList.ForEach(dbName =>
             {
@@ -66,8 +66,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
-            var tableList = dbMaintenance.GetTableInfoList(false);
+            var tableList = _dbMaintenance.GetTableInfoList(false);
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -93,8 +92,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
-            var viewList = dbMaintenance.GetViewInfoList(false);
+            var viewList = _dbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
             {
                 if (views.ContainsKey(v.Name))
@@ -120,9 +118,8 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var procDic = new Procedures();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
-            var procInfoList = dbMaintenance.GetProcInfoList(false);
-            var dbName = dbMaintenance.Context.Ado.Connection.Database;
+            var procInfoList = _dbMaintenance.GetProcInfoList(false);
+            var dbName = _dbMaintenance.Context.Ado.Connection.Database;
             var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
             procList.ForEach(p =>
             {
@@ -150,8 +147,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
-            var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))

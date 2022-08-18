@@ -1066,6 +1066,8 @@ namespace SmartSQL.Views
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
             var tables = new List<TableDto>();
             var groupNo = 1;
+            var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
+                selectedConnectionString);
             foreach (var group in treeViewData)
             {
                 if (group.Type == "Type" && group.Name.Equals("treeTable"))
@@ -1084,8 +1086,6 @@ namespace SmartSQL.Views
                         tbDto.DBType = nameof(DbType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
-                        var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
-                            selectedConnectionString);
                         var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
                         var columnIndex = 1;
                         foreach (var col in columns)
@@ -1127,8 +1127,6 @@ namespace SmartSQL.Views
                     tbDto.DBType = selectedConnection.DbType.ToString();
 
                     var lst_col_dto = new List<ColumnDto>();
-                    var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
-                        selectedConnectionString);
                     var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
                     var columnIndex = 1;
                     foreach (var col in columns)

@@ -14,10 +14,12 @@ namespace SmartSQL.Framework.Exporter
 {
     public class MySqlExporter : Exporter, IExporter
     {
+        private readonly IDbMaintenance _dbMaintenance;
         public MySqlExporter(string connectionString) : base(connectionString)
         {
-
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
         }
+
         public MySqlExporter(string tableName, List<Column> columns) : base(tableName, columns)
         {
 
@@ -47,12 +49,11 @@ namespace SmartSQL.Framework.Exporter
         /// 获取数据库列表
         /// </summary>
         /// <returns></returns>
-        public override List<DataBase> GetDatabases(string defaultDatabase="")
+        public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             var dbClient = SugarFactory.GetInstance(DbType.MySql, DbConnectString);
-            var dataBaseList = dbMaintenance.GetDataBaseList(dbClient);
+            var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
             var list = new List<DataBase>();
             dataBaseList.ForEach(dbName =>
             {
@@ -72,8 +73,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var tableList = dbMaintenance.GetTableInfoList(false);
+            var tableList = _dbMaintenance.GetTableInfoList(false);
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -99,8 +99,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var viewList = dbMaintenance.GetViewInfoList(false);
+            var viewList = _dbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
             {
                 if (views.ContainsKey(v.Name))
@@ -128,9 +127,8 @@ namespace SmartSQL.Framework.Exporter
             var procDic = new Procedures();
             try
             {
-                var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-                var procInfoList = dbMaintenance.GetProcInfoList(false);
-                var dbName = dbMaintenance.Context.Ado.Connection.Database;
+                var procInfoList = _dbMaintenance.GetProcInfoList(false);
+                var dbName = _dbMaintenance.Context.Ado.Connection.Database;
                 var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
                 procList.ForEach(p =>
                 {
@@ -168,8 +166,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var viewList = dbMaintenance.GetColumnInfosByTableName(objectId);
+            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
@@ -220,8 +217,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            var scriptInfo = dbMaintenance.GetScriptInfo(objectId, objectType);
+            var scriptInfo = _dbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
         }
 
@@ -234,10 +230,9 @@ namespace SmartSQL.Framework.Exporter
         public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
             var result = false;
-            var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
             if (objectType == DbObjectType.Table)
             {
-                result = dbMaintenance.AddTableRemark(objectName, remark);
+                result = _dbMaintenance.AddTableRemark(objectName, remark);
             }
             if (objectType == DbObjectType.View)
             {
@@ -259,26 +254,6 @@ namespace SmartSQL.Framework.Exporter
         public override bool UpdateColumnRemark(Column columnInfo, string remark)
         {
             throw new NotSupportedException();
-            //var dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
-            //return dbMaintenance.AddRemark(new EntityInfo
-            //{
-            //    DbTableName = columnInfo.ObjectName,
-            //    Columns = new List<EntityColumnInfo>
-            //    {
-            //        new EntityColumnInfo
-            //        {
-            //            DbTableName = columnInfo.ObjectName,
-            //            DbColumnName = columnInfo.Name,
-            //            Length = columnInfo.Length,
-            //            ColumnDescription = remark,
-            //            DataType = columnInfo.DataType,
-            //            IsPrimarykey = columnInfo.IsPrimaryKey,
-            //            DefaultValue = columnInfo.DefaultValue,
-            //            IsNullable = columnInfo.IsNullable,
-            //            IsIdentity = columnInfo.IsIdentity
-            //        }
-            //    }
-            //});
         }
 
         public override string CreateTableSql()
