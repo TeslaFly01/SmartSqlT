@@ -67,7 +67,11 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 - 可以对数据库中的表、视图、存储过程进行自定义分组
 - 可以对分组对象进行文档批量导出
 
-![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/MindMap.jpg)
+#### 功能架构
+
+<div align="center">
+<image src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/MindMap.jpg" width="80%">
+</div>
 
 ### 🎉 功能介绍
 
