@@ -24,6 +24,7 @@ using ComboBox = System.Windows.Controls.ComboBox;
 using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
+using SmartSQL.Views.Category;
 
 namespace SmartSQL
 {
@@ -131,6 +132,26 @@ namespace SmartSQL
             group.Owner = this;
             group.ChangeRefreshEvent += MainContent.Group_ChangeRefreshEvent;
             group.ShowDialog();
+        }
+
+        /// <summary>
+        /// 标签管理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuTag_Click(object sender, RoutedEventArgs e)
+        {
+            var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
+            if (SelectendConnection == null || selectDatabase == null)
+            {
+                Oops.Oh("请选择数据库");
+                return;
+            }
+            var tags = new TagsView();
+            tags.Connection = SelectendConnection;
+            tags.SelectedDataBase = selectDatabase.DbName;
+            tags.Owner = this;
+            tags.ShowDialog();
         }
 
         /// <summary>

@@ -159,6 +159,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Category\TagsView.xaml.cs">
+      <DependentUpon>TagsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
     </Compile>
@@ -177,14 +180,14 @@
     <Compile Include="Views\ExportDoc.xaml.cs">
       <DependentUpon>ExportDoc.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GroupManage.xaml.cs">
-      <DependentUpon>GroupManage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="UserControl\Main\MainColumns.xaml.cs">
       <DependentUpon>MainColumns.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Controls\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\GroupManage.xaml.cs">
+      <DependentUpon>GroupManage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportMark.xaml.cs">
       <DependentUpon>ImportMark.xaml</DependentUpon>
@@ -323,6 +326,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Category\TagsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Contact.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -347,10 +354,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\GroupManage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="UserControl\Main\MainColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -358,6 +361,10 @@
     <Page Include="UserControl\Controls\Loading.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\GroupManage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ImportMark.xaml">
       <SubType>Designer</SubType>

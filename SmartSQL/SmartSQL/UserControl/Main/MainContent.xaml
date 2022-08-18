@@ -126,9 +126,9 @@
                                 Header="分组"
                                 IsSelected="False" />
                             <!--<TabItem
-                                x:Name="TabFavData"
+                                x:Name="TabTagData"
                                 Cursor="Hand"
-                                Header="收藏"
+                                Header="标签"
                                 IsSelected="False" />-->
                         </TabControl>
                         <TreeView
@@ -196,7 +196,10 @@
                                                 Text="{Binding DisplayName}"
                                                 ToolTip="{Binding DisplayName}" />
                                         </hc:SimpleStackPanel>
-                                        <hc:SimpleStackPanel HorizontalAlignment="Right" Visibility="{Binding IsShowCount}">
+                                        <hc:SimpleStackPanel
+                                            Margin="0,0,8,0"
+                                            HorizontalAlignment="Right"
+                                            Visibility="{Binding IsShowCount}">
                                             <Border Background="#fffffe" CornerRadius="3">
                                                 <TextBlock
                                                     Margin="5,1,5,1"

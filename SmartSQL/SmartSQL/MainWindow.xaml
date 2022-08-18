@@ -126,7 +126,7 @@
                     Cursor="Hand"
                     FontWeight="Bold"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
-                    Header="分组">
+                    Header="类目">
                     <MenuItem.Icon>
                         <Path
                             Data="{StaticResource GroupGeometry}"
@@ -146,8 +146,8 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Name="MenuGroupManage1"
-                        Click="MenuDonation_OnClick"
+                        Name="MenuTag"
+                        Click="MenuTag_Click"
                         FontWeight="Normal"
                         Header="标签管理"
                         IsEnabled="False">
