@@ -70,7 +70,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！该�
 #### 功能架构
 
 <div align="center">
-<image src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/MindMap.jpg" width="80%">
+<img src="https://gitee.com/izhaofu/SmartSQL/raw/master/Img/MindMap.jpg" width="80%">
 </div>
 
 ### 🎉 功能介绍
