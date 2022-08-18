@@ -233,12 +233,13 @@
     <Compile Include="Util\Logging\InternalTrace.cs" />
     <Compile Include="Util\Logging\InternalTraceWriter.cs" />
     <Compile Include="Util\Logging\Logger.cs" />
-    <Compile Include="Util\MySqlDbTypeMapHelper.cs" />
+    <Compile Include="Util\MapHelper\MySqlDbTypeMapHelper.cs" />
+    <Compile Include="Util\MapHelper\OracleDbTypeMapHelper.cs" />
     <Compile Include="Util\PathHelper.cs" />
-    <Compile Include="Util\PostgreSqlDbTypeMapHelper.cs" />
+    <Compile Include="Util\MapHelper\PostgreSqlDbTypeMapHelper.cs" />
     <Compile Include="Util\SerializeHelper.cs" />
-    <Compile Include="Util\SqliteDbTypeMapHelper.cs" />
-    <Compile Include="Util\SqlServerDbTypeMapHelper.cs" />
+    <Compile Include="Util\MapHelper\SqliteDbTypeMapHelper.cs" />
+    <Compile Include="Util\MapHelper\SqlServerDbTypeMapHelper.cs" />
     <Compile Include="Util\StringExtension.cs" />
   </ItemGroup>
   <ItemGroup>

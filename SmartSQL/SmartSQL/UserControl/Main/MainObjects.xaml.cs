@@ -337,7 +337,7 @@ namespace SmartSQL.UserControl
                 x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
             if (!list.Any())
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = $"暂无分组，请先添加分组", WaitTime = 1, ShowDateTime = false });
+                Oops.Oh("暂无分组，请先添加分组");
                 return;
             }
             var mainWindow = System.Windows.Window.GetWindow(this);
