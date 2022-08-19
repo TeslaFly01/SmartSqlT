@@ -20,7 +20,8 @@
         <Border
             Margin="20"
             Background="White"
-            CornerRadius="8">
+            CornerRadius="8"
+            Effect="{StaticResource EffectShadow5}">
             <hc:SimplePanel>
                 <svgc:SvgViewbox
                     Name="SvgViewboxForkMe"

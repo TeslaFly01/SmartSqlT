@@ -52,7 +52,7 @@
                     FontSize="18"
                     FontWeight="Bold"
                     Foreground="#01c158">
-                    <fa:FontAwesome Margin="0,0,0,0" Icon="Weixin" />
+                    <fa:FontAwesome Margin="0" Icon="Weixin" />
                     <TextBlock Text="微信支付" />
                 </TextBlock>
             </Grid>
