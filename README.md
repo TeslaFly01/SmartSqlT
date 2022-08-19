@@ -10,7 +10,7 @@
 <img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-brightgreen.svg">
 <img alt="license" src="https://img.shields.io/badge/license-Apache-blue.svg">
-<img alt="release" src="https://img.shields.io/badge/release-1.0.3.3-green">
+<img alt="release" src="https://img.shields.io/badge/release-1.0.3.4-green">
 </p>
 
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner_01.png)
