@@ -9,8 +9,8 @@
     Title="设置"
     Width="550"
     Height="330"
-    Icon="../Resources/Img/icon_setting.png"
     BorderThickness="0"
+    Icon="../Resources/Img/icon_setting.png"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
@@ -19,71 +19,94 @@
             <ColumnDefinition Width="180" MinWidth="180" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Background="#f5f5f5">
-            <ListBox
-                Name="ListGroup"
-                Margin="5"
-                BorderThickness="0"
-                ScrollViewer.VerticalScrollBarVisibility="Visible">
-                <ListBoxItem
-                    Name="ListItemRoutine"
-                    Focusable="True"
-                    IsSelected="True">
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock
-                            Width="12"
-                            Height="12"
-                            Margin="2,0,0,0"
-                            HorizontalAlignment="Left"
-                            FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
-                            FontSize="12"
-                            Foreground="#e9af20"
-                            Text="&#xe605;" />
-                        <TextBlock Margin="10,0,0,0" Text="常规" />
-                    </StackPanel>
-                </ListBoxItem>
-            </ListBox>
-        </Grid>
-        <Grid
+
+        <!--  左侧菜单  -->
+        <Border
+            Margin="5"
+            Background="#ffffff"
+            CornerRadius="8">
+            <Grid>
+                <ListBox
+                    Name="ListGroup"
+                    Margin="8"
+                    BorderThickness="0"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListBoxItem
+                        Name="ListItemRoutine"
+                        Focusable="True"
+                        IsSelected="True">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock
+                                Width="12"
+                                Height="12"
+                                Margin="2,0,0,0"
+                                HorizontalAlignment="Left"
+                                FontFamily="pack://application:,,,/Resources/Fonts/#IconFont"
+                                FontSize="12"
+                                Foreground="#e9af20"
+                                Text="&#xe605;" />
+                            <TextBlock Margin="10,0,0,0" Text="常规" />
+                        </StackPanel>
+                    </ListBoxItem>
+                </ListBox>
+            </Grid>
+        </Border>
+
+        <!--  右侧内容栏  -->
+        <Border
             Grid.Column="1"
             Margin="0,5,5,5"
-            Background="White">
-            <CheckBox
-                Name="ChkIsMultipleTab"
-                Margin="36,30,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="主窗口多标签展示"
-                IsChecked="True" />
-            <CheckBox
-                Name="ChkIsLikeSearch"
-                Margin="36,60,0,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top"
-                Content="对象名模糊搜索"
-                IsChecked="True" />
-            <hc:SimpleStackPanel
-                Margin="5"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom">
-                <hc:UniformSpacingPanel Spacing="10">
-                    <Button
-                        x:Name="BtnSave"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        Click="BtnSave_OnClick"
-                        Content="保存"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        x:Name="BtnCancel"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        Click="BtnCancel_OnClick"
-                        Content="取消"
-                        Cursor="Hand" />
-                </hc:UniformSpacingPanel>
-            </hc:SimpleStackPanel>
-        </Grid>
+            Background="White"
+            CornerRadius="8">
+            <Grid>
+                <!--  内容栏  -->
+                <Grid>
+                    <CheckBox
+                        Name="ChkIsMultipleTab"
+                        Margin="36,30,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="主窗口多标签展示"
+                        IsChecked="True" />
+                    <CheckBox
+                        Name="ChkIsLikeSearch"
+                        Margin="36,60,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="对象名模糊搜索"
+                        IsChecked="True" />
+                </Grid>
+
+                <!--  操作栏  -->
+                <Border
+                    Height="35"
+                    VerticalAlignment="Bottom"
+                    Background="#f5f5f5"
+                    CornerRadius="0 0 8 8">
+                    <hc:SimpleStackPanel
+                        Margin="5"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center">
+                        <hc:UniformSpacingPanel Spacing="10">
+                            <Button
+                                x:Name="BtnSave"
+                                Height="25"
+                                Padding="20,0,20,0"
+                                Click="BtnSave_OnClick"
+                                Content="保存"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                x:Name="BtnCancel"
+                                Height="25"
+                                Padding="20,0,20,0"
+                                Click="BtnCancel_OnClick"
+                                Content="取消"
+                                Cursor="Hand" />
+                        </hc:UniformSpacingPanel>
+                    </hc:SimpleStackPanel>
+                </Border>
+            </Grid>
+        </Border>
     </Grid>
 </hc:Window>

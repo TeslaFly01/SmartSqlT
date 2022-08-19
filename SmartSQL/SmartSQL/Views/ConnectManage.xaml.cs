@@ -257,6 +257,7 @@ namespace SmartSQL.Views
         {
             #region MyRegion
             MainContent = new ConnectMainUC();
+            OprToolGrid.Visibility = Visibility.Visible;
             ListConnects.SelectedItem = null;
             #endregion
         }

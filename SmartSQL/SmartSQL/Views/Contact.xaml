@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="联系作者"
-    Width="600"
+    Width="650"
     Height="400"
     BorderThickness="0"
     Icon="/favicon.ico"
@@ -16,22 +16,34 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <hc:SimplePanel Background="White">
-        <Image
-            Width="220"
-            Height="320"
-            Margin="60,20,0,0"
+    <Grid Background="#f5f5f5">
+        <Border
+            Margin="40,20,0,0"
+            Padding="20,20,20,0"
             HorizontalAlignment="Left"
             VerticalAlignment="Top"
-            Source="../Resources/Img/contact_weixin_card.png"
-            Stretch="Uniform" />
-        <Image
-            Width="220"
-            Height="320"
-            Margin="0,20,60,0"
+            Background="White"
+            CornerRadius="8"
+            Effect="{StaticResource EffectShadow5}">
+            <Image
+                Width="220"
+                Height="300"
+                Source="../Resources/Img/contact_weixin_card.png"
+                Stretch="Uniform" />
+        </Border>
+        <Border
+            Margin="0,20,40,0"
+            Padding="20,20,20,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Top"
-            Source="../Resources/Img/contact_mp_card.png"
-            Stretch="Uniform" />
-    </hc:SimplePanel>
+            Background="White"
+            CornerRadius="8"
+            Effect="{StaticResource EffectShadow5}">
+            <Image
+                Width="220"
+                Height="300"
+                Source="../Resources/Img/contact_mp_card.png"
+                Stretch="Uniform" />
+        </Border>
+    </Grid>
 </hc:Window>

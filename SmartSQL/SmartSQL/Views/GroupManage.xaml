@@ -23,180 +23,202 @@
             <ColumnDefinition Width="200" MinWidth="220" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <Grid Margin="5" Background="#f5f5f5">
+        <Border
+            Margin="5"
+            Background="#ffffff"
+            CornerRadius="10">
+            <Grid>
+                <ComboBox
+                    x:Name="SelectDatabase"
+                    Height="30"
+                    Margin="5"
+                    VerticalAlignment="Top"
+                    HorizontalContentAlignment="Stretch"
+                    hc:BorderElement.CornerRadius="5"
+                    hc:InfoElement.Placeholder="请选择数据库"
+                    Cursor="Hand"
+                    IsTextSearchEnabled="True"
+                    SelectionChanged="SelectDatabase_OnSelectionChanged"
+                    Style="{StaticResource ComboBoxExtend}"
+                    Text="{Binding DbName}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                <Image
+                                    Width="11"
+                                    Height="15"
+                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                <TextBlock
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding DbName}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ListBox
+                    Name="ListGroup"
+                    Margin="5,40,5,35"
+                    AllowDrop="True"
+                    BorderThickness="0"
+                    Drop="ListGroup_OnDrop"
+                    ItemsSource="{Binding DataList}"
+                    PreviewMouseMove="ListGroup_OnPreviewMouseMove"
+                    ScrollViewer.VerticalScrollBarVisibility="Visible"
+                    SelectionChanged="Selector_OnSelectionChanged">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <svgc:SvgViewbox
+                                    Width="12"
+                                    Height="12"
+                                    HorizontalAlignment="Left"
+                                    IsHitTestVisible="False"
+                                    Source="pack://application:,,,/Resources/svg/category.svg" />
+                                <TextBlock
+                                    Margin="20,0,0,0"
+                                    Cursor="SizeAll"
+                                    Text="{Binding GroupName}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
 
-            <ComboBox
-                x:Name="SelectDatabase"
-                Height="30"
-                Margin="5"
-                VerticalAlignment="Top"
-                HorizontalContentAlignment="Stretch"
-                hc:BorderElement.CornerRadius="5"
-                hc:InfoElement.Placeholder="请选择数据库"
-                Cursor="Hand"
-                IsTextSearchEnabled="True"
-                SelectionChanged="SelectDatabase_OnSelectionChanged"
-                Style="{StaticResource ComboBoxExtend}"
-                Text="{Binding DbName}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                            <Image
-                                Width="11"
-                                Height="15"
-                                Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                            <TextBlock
-                                Margin="5,0,0,0"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Center"
-                                Text="{Binding DbName}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <ListBox
-                Name="ListGroup"
-                Margin="5,40,5,35"
-                AllowDrop="True"
-                BorderThickness="0"
-                Drop="ListGroup_OnDrop"
-                ItemsSource="{Binding DataList}"
-                PreviewMouseMove="ListGroup_OnPreviewMouseMove"
-                ScrollViewer.VerticalScrollBarVisibility="Visible"
-                SelectionChanged="Selector_OnSelectionChanged">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid>
-                            <svgc:SvgViewbox
-                                Width="12"
-                                Height="12"
-                                HorizontalAlignment="Left"
-                                IsHitTestVisible="False"
-                                Source="pack://application:,,,/Resources/svg/category.svg" />
-                            <TextBlock
-                                Margin="20,0,0,0"
-                                Cursor="SizeAll"
-                                Text="{Binding GroupName}" />
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid
-                x:Name="NoDataText"
-                Margin="5,100,5,65"
-                HorizontalAlignment="Stretch"
-                Background="White"
-                Cursor="Arrow"
-                Visibility="Collapsed">
-                <local:NoDataArea
-                    x:Name="NoDataAreaText"
-                    Margin="0"
-                    HorizontalAlignment="Center"
-                    ShowType="All" />
+                <!--  暂无数据  -->
+                <Grid
+                    x:Name="NoDataText"
+                    Margin="5,100,5,65"
+                    HorizontalAlignment="Stretch"
+                    Background="White"
+                    Cursor="Arrow"
+                    Visibility="Collapsed">
+                    <local:NoDataArea
+                        x:Name="NoDataAreaText"
+                        Margin="0"
+                        HorizontalAlignment="Center"
+                        ShowType="All" />
+                </Grid>
+                <!--  暂无数据  -->
+
+                <!--  操作栏  -->
+                <Border
+                    Height="35"
+                    VerticalAlignment="Bottom"
+                    Background="#f5f5f5"
+                    CornerRadius="0 0 8 8">
+                    <hc:SimpleStackPanel Margin="0,3,5,0" HorizontalAlignment="Right">
+                        <hc:UniformSpacingPanel Spacing="1">
+                            <Button
+                                x:Name="BtnDelete"
+                                Width="25"
+                                Height="25"
+                                Margin="2"
+                                Click="BtnDelete_OnClick"
+                                Style="{StaticResource ButtonIconSingle}">
+                                <svgc:SvgViewbox
+                                    Width="12"
+                                    Height="12"
+                                    Source="pack://application:,,,/Resources/svg/btn_del.svg"
+                                    ToolTip="删除" />
+                            </Button>
+                            <Button
+                                Name="BtnAdd"
+                                Width="25"
+                                Height="25"
+                                Click="BtnAdd_OnClick"
+                                Style="{StaticResource ButtonIconSingle}">
+                                <svgc:SvgViewbox
+                                    Width="12"
+                                    Height="12"
+                                    Cursor="Hand"
+                                    Source="pack://application:,,,/Resources/svg/btn_add.svg"
+                                    ToolTip="添加" />
+                            </Button>
+                        </hc:UniformSpacingPanel>
+                    </hc:SimpleStackPanel>
+                </Border>
+                <!--  操作栏  -->
             </Grid>
-            <hc:SimpleStackPanel
-                Margin="5,0,5,3"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom">
-                <hc:UniformSpacingPanel Spacing="1">
-                    <Button
-                        x:Name="BtnDelete"
-                        Width="25"
-                        Height="25"
-                        Margin="2"
-                        Click="BtnDelete_OnClick"
-                        Style="{StaticResource ButtonIconSingle}">
-                        <svgc:SvgViewbox
-                            Width="12"
-                            Height="12"
-                            Source="pack://application:,,,/Resources/svg/btn_del.svg"
-                            ToolTip="删除" />
-                    </Button>
-                    <Button
-                        Name="BtnAdd"
-                        Width="25"
-                        Height="25"
-                        Click="BtnAdd_OnClick"
-                        Style="{StaticResource ButtonIconSingle}">
-                        <svgc:SvgViewbox
-                            Width="12"
-                            Height="12"
-                            Cursor="Hand"
-                            Source="pack://application:,,,/Resources/svg/btn_add.svg"
-                            ToolTip="添加" />
-                    </Button>
-                </hc:UniformSpacingPanel>
-            </hc:SimpleStackPanel>
-        </Grid>
-        <Grid
+        </Border>
+
+        <Border
             Grid.Column="1"
             Margin="0,5,5,5"
-            Background="White">
+            Background="White"
+            CornerRadius="8">
             <Grid>
-                <TextBox
-                    Name="HidId"
-                    Text="0"
-                    Visibility="Collapsed" />
-                <TextBox
-                    Name="TextGourpName"
-                    Height="30"
-                    Margin="20"
-                    VerticalAlignment="Top"
-                    hc:InfoElement.Title="分组名称"
-                    hc:InfoElement.TitlePlacement="Left"
-                    hc:InfoElement.TitleWidth="80"
-                    PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
-                    Style="{StaticResource TextBoxExtend}"
-                    TextChanged="TextGourpName_OnTextChanged" />
-                <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
-                <Grid
-                    Margin="0,90,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Cursor="Hand">
-                    <RadioButton
-                        Name="CheckCurrent"
-                        Margin="100,0,0,0"
+                <Grid>
+                    <TextBox
+                        Name="HidId"
+                        Text="0"
+                        Visibility="Collapsed" />
+                    <TextBox
+                        Name="TextGourpName"
+                        Height="30"
+                        Margin="20"
+                        VerticalAlignment="Top"
+                        hc:InfoElement.Title="分组名称"
+                        hc:InfoElement.TitlePlacement="Left"
+                        hc:InfoElement.TitleWidth="80"
+                        PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
+                        Style="{StaticResource TextBoxExtend}"
+                        TextChanged="TextGourpName_OnTextChanged" />
+                    <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
+                    <Grid
+                        Margin="0,90,0,0"
                         HorizontalAlignment="Left"
-                        Content="当前节点" />
-                    <RadioButton
-                        Name="CheckChild"
-                        Margin="200,0,0,0"
-                        HorizontalAlignment="Left"
-                        Content="子项节点" />
-                    <RadioButton
-                        Name="CheckNone"
-                        Margin="300,0,0,0"
-                        HorizontalAlignment="Left"
-                        Content="不展开"
-                        IsChecked="True" />
+                        VerticalAlignment="Top"
+                        Cursor="Hand">
+                        <RadioButton
+                            Name="CheckCurrent"
+                            Margin="100,0,0,0"
+                            HorizontalAlignment="Left"
+                            Content="当前节点" />
+                        <RadioButton
+                            Name="CheckChild"
+                            Margin="200,0,0,0"
+                            HorizontalAlignment="Left"
+                            Content="子项节点" />
+                        <RadioButton
+                            Name="CheckNone"
+                            Margin="300,0,0,0"
+                            HorizontalAlignment="Left"
+                            Content="不展开"
+                            IsChecked="True" />
+                    </Grid>
                 </Grid>
+                <Border
+                    VerticalAlignment="Bottom"
+                    Background="#f5f5f5"
+                    CornerRadius="0 0 8 8">
+                    <Grid>
+                        <hc:SimpleStackPanel
+                            Margin="5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom">
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Button
+                                    x:Name="BtnSave"
+                                    Height="25"
+                                    Padding="20,0,20,0"
+                                    Click="BtnSave_OnClick"
+                                    Content="保存"
+                                    Cursor="Hand"
+                                    IsEnabled="False"
+                                    Style="{StaticResource ButtonPrimary}" />
+                                <Button
+                                    x:Name="BtnCancel"
+                                    Height="25"
+                                    Padding="20,0,20,0"
+                                    Click="BtnCancel_OnClick"
+                                    Content="取消"
+                                    Cursor="Hand" />
+                            </hc:UniformSpacingPanel>
+                        </hc:SimpleStackPanel>
+                    </Grid>
+                </Border>
             </Grid>
-            <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
-                <hc:SimpleStackPanel
-                    Margin="5"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom">
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <Button
-                            x:Name="BtnSave"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            Click="BtnSave_OnClick"
-                            Content="保存"
-                            Cursor="Hand"
-                            IsEnabled="False"
-                            Style="{StaticResource ButtonPrimary}" />
-                        <Button
-                            x:Name="BtnCancel"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            Click="BtnCancel_OnClick"
-                            Content="取消"
-                            Cursor="Hand" />
-                    </hc:UniformSpacingPanel>
-                </hc:SimpleStackPanel>
-            </Grid>
-        </Grid>
+        </Border>
     </Grid>
 </hc:Window>

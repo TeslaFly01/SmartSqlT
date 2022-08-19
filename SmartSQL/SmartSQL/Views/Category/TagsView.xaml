@@ -76,7 +76,10 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     hc:IconElement.Geometry="{StaticResource AddGeometry}"
-                    Click="BtnAdd_OnClick" />
+                    Background="#1890ff"
+                    BorderThickness="0"
+                    Click="BtnAdd_OnClick"
+                    Foreground="#ffffff" />
                 <ListBox
                     Name="ListGroup"
                     Margin="5,40,5,35"

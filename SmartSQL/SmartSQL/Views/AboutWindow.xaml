@@ -8,7 +8,7 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     Title="关于SmartSQL"
     Width="460"
-    Height="260"
+    Height="320"
     BorderThickness="0"
     Icon="/favicon.ico"
     ResizeMode="NoResize"
@@ -16,63 +16,71 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <hc:SimplePanel Background="White">
-        <svgc:SvgViewbox
-            Name="SvgViewboxForkMe"
-            Width="80"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Top"
-            Cursor="Hand"
-            MouseLeftButtonUp="SvgViewboxForkMe_OnMouseLeftButtonUp"
-            Source="../Resources/svg/forkme.svg" />
-        <Image
-            Width="40"
-            Height="40"
-            Margin="0,16,0,0"
-            VerticalAlignment="Top"
-            Source="../favicon.ico"
-            Stretch="Uniform" />
-        <StackPanel
-            Margin="0,64,0,0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top">
-            <TextBlock
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                FontSize="30"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="SmartSQL" />
-            <TextBlock
-                Margin="0,15,0,0"
-                HorizontalAlignment="Center"
-                FontWeight="Bold"
-                Foreground="{StaticResource PrimaryBrush}"
-                Text="{Binding Description}" />
-        </StackPanel>
-        <hc:Shield
-            Margin="55,0,0,48"
-            VerticalAlignment="Bottom"
-            Status="zfluok"
-            Subject="author"
-            Color="#4eb899" />
-        <hc:Shield
-            Margin="0,0,0,48"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Status="Apache"
-            Subject="license"
-            Color="#d8624c" />
-        <hc:Shield
-            Margin="315,0,0,48"
-            VerticalAlignment="Bottom"
-            Status="{Binding Version}"
-            Subject="version"
-            Color="#1192d1" />
-        <TextBlock
-            Margin="0,0,0,8"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Bottom"
-            Foreground="{StaticResource ThirdlyTextBrush}"
-            Text="{Binding CopyRight}" />
-    </hc:SimplePanel>
+    <Grid Background="#f5f5f5">
+        <Border
+            Margin="20"
+            Background="White"
+            CornerRadius="8">
+            <hc:SimplePanel>
+                <svgc:SvgViewbox
+                    Name="SvgViewboxForkMe"
+                    Width="80"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Cursor="Hand"
+                    MouseLeftButtonUp="SvgViewboxForkMe_OnMouseLeftButtonUp"
+                    Source="../Resources/svg/forkme.svg" />
+                <Image
+                    Width="40"
+                    Height="40"
+                    Margin="0,16,0,0"
+                    VerticalAlignment="Top"
+                    Source="../favicon.ico"
+                    Stretch="Uniform" />
+                <StackPanel
+                    Margin="0,64,0,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Top"
+                        FontSize="30"
+                        Foreground="#1890ff"
+                        Text="SmartSQL" />
+                    <TextBlock
+                        Margin="0,15,0,0"
+                        HorizontalAlignment="Center"
+                        FontWeight="Bold"
+                        Foreground="#1890ff"
+                        Text="{Binding Description}" />
+                </StackPanel>
+                <WrapPanel
+                    Margin="0,0,0,50"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom">
+                    <hc:Shield
+                        Margin="5"
+                        Status="zfluok"
+                        Subject="author"
+                        Color="#4eb899" />
+                    <hc:Shield
+                        Margin="5"
+                        Status="Apache"
+                        Subject="license"
+                        Color="#d8624c" />
+                    <hc:Shield
+                        Margin="5"
+                        Status="{Binding Version}"
+                        Subject="version"
+                        Color="#1192d1" />
+                </WrapPanel>
+                <TextBlock
+                    Margin="0,0,0,8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Bottom"
+                    Foreground="{StaticResource ThirdlyTextBrush}"
+                    Text="{Binding CopyRight}" />
+            </hc:SimplePanel>
+        </Border>
+    </Grid>
 </hc:Window>
