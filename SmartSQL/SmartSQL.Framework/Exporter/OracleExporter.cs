@@ -126,7 +126,8 @@ namespace SmartSQL.Framework.Exporter
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
-           _dbMaintenance.GetTableInfoList(false);
+            var dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
+            var dataBaseList = dbClient.Ado.SqlQuery<string>("SELECT USERNAME FROM ALL_USERS ORDER BY USERNAME");
             return new List<DataBase>
             {
                 new DataBase

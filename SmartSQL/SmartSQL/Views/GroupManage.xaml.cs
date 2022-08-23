@@ -98,7 +98,7 @@ namespace SmartSQL.Views
                     }
                 });
                 var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
-                var list = exporter.GetDatabases();
+                var list = exporter.GetDatabases(selectDataBase);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     var DBase = list;

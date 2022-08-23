@@ -134,7 +134,7 @@ namespace SmartSQL.Views
             Title = $"{SelectedDataBase.DbName} - {Title}";
             TxtFileName.Text = SelectedDataBase.DbName + "数据库设计文档";
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbMasterConnectString);
-            var list = dbInstance.GetDatabases();
+            var list = dbInstance.GetDatabases(SelectedDataBase.DbName);
             SelectDatabase.ItemsSource = list;
             HidSelectDatabase.Text = SelectedDataBase.DbName;
             SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase.DbName);
@@ -324,7 +324,7 @@ namespace SmartSQL.Views
                                 Type = InfoType.Error
                             });
                         }));
-                    } 
+                    }
                     #endregion
                 }
 

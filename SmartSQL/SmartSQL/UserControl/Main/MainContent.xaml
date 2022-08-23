@@ -226,10 +226,15 @@
                                 ShowType="All" />
                         </Grid>
                         <!--  数据加载Loading  -->
-                        <hc:LoadingLine
+                        <localControls:Loading
+                            x:Name="LoadingLine"
+                            Margin="-5"
+                            BackgroundOpacity="0.2"
+                            Visibility="Collapsed" />
+                        <!--<hc:LoadingLine
                             x:Name="LoadingLine"
                             Margin="0,0,0,0"
-                            Visibility="Collapsed" />
+                            Visibility="Collapsed" />-->
                     </Grid>
                 </Border>
             </hc:SimplePanel>
