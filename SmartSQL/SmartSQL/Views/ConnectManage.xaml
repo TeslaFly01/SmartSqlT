@@ -170,6 +170,7 @@
                             x:Name="BtnCancelClose"
                             Height="25"
                             Padding="20,0,20,0"
+                            BorderThickness="0.4"
                             Click="BtnCancel_OnClick"
                             Content="取消"
                             Cursor="Hand" />
@@ -191,6 +192,7 @@
                             x:Name="BtnTestConnect"
                             Height="25"
                             Padding="10,0,10,0"
+                            BorderThickness="0.4"
                             Click="BtnTestConnect_OnClick"
                             Content="测试连接"
                             Cursor="Hand" />
@@ -205,6 +207,7 @@
                             x:Name="BtnPrev"
                             Height="25"
                             Padding="20,0,20,0"
+                            BorderThickness="0.4"
                             Click="BtnPrev_OnClick"
                             Content="上一步"
                             Cursor="Hand"
@@ -223,6 +226,7 @@
                             x:Name="BtnSave"
                             Height="25"
                             Padding="20,0,20,0"
+                            BorderThickness="0.4"
                             Click="BtnSave_OnClick"
                             Content="保存"
                             Cursor="Hand"
@@ -231,6 +235,7 @@
                             x:Name="BtnCancel"
                             Height="25"
                             Padding="20,0,20,0"
+                            BorderThickness="0.4"
                             Click="BtnCancel_OnClick"
                             Content="取消"
                             Cursor="Hand" />

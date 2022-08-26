@@ -79,7 +79,7 @@
 
                 <!--  操作栏  -->
                 <Border
-                    Height="35"
+                    Height="36"
                     VerticalAlignment="Bottom"
                     Background="#f5f5f5"
                     CornerRadius="0 0 8 8">
@@ -100,6 +100,7 @@
                                 x:Name="BtnCancel"
                                 Height="25"
                                 Padding="20,0,20,0"
+                                BorderThickness="0.4"
                                 Click="BtnCancel_OnClick"
                                 Content="取消"
                                 Cursor="Hand" />

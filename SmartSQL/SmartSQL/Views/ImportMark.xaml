@@ -86,6 +86,7 @@
                                 x:Name="BtnCancel"
                                 Height="25"
                                 Padding="20,0,20,0"
+                                BorderThickness="0.4"
                                 Click="BtnCancel_OnClick"
                                 Content="取消"
                                 Cursor="Hand" />

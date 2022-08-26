@@ -43,12 +43,12 @@
                             CornerRadius="10,10,0,0"
                             Style="{StaticResource BorderClip}">
                             <hc:SimplePanel>
-                                <hc:Watermark
+                                <!--<hc:Watermark
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Mark="{Binding MainTitle}"
                                     MarkBrush="#0F000000"
-                                    MarkMargin="3,0" />
+                                    MarkMargin="3,0" />-->
 
                                 <TextBlock
                                     Foreground="White"

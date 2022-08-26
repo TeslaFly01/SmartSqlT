@@ -303,6 +303,9 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <localBase:Loading x:Name="LoadingG" Visibility="Collapsed" />
+        <localBase:Loading
+            x:Name="LoadingG"
+            BackgroundOpacity="0.1"
+            Visibility="Collapsed" />
     </Grid>
 </local:BaseUserControl>

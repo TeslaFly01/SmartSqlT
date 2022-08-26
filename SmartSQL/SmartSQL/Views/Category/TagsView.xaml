@@ -94,6 +94,7 @@
                                 <fa:FontAwesome
                                     HorizontalAlignment="Left"
                                     FontSize="15"
+                                    Foreground="#faad14"
                                     Icon="Tag"
                                     IsHitTestVisible="False" />
                                 <TextBlock
@@ -169,30 +170,9 @@
                         PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                         Style="{StaticResource TextBoxExtend}"
                         TextChanged="TextGourpName_OnTextChanged" />
-                    <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
-                    <Grid
-                        Margin="0,90,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Cursor="Hand">
-                        <RadioButton
-                            Name="CheckCurrent"
-                            Margin="100,0,0,0"
-                            HorizontalAlignment="Left"
-                            Content="当前节点" />
-                        <RadioButton
-                            Name="CheckChild"
-                            Margin="200,0,0,0"
-                            HorizontalAlignment="Left"
-                            Content="子项节点" />
-                        <RadioButton
-                            Name="CheckNone"
-                            Margin="300,0,0,0"
-                            HorizontalAlignment="Left"
-                            Content="不展开"
-                            IsChecked="True" />
-                    </Grid>
                 </Grid>
+
+                <!--  操作栏  -->
                 <Border
                     VerticalAlignment="Bottom"
                     Background="#f5f5f5"
@@ -222,8 +202,8 @@
                             </hc:UniformSpacingPanel>
                         </hc:SimpleStackPanel>
                     </Grid>
-
                 </Border>
+                <!--  操作栏  -->
             </Grid>
         </Border>
     </Grid>

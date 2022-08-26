@@ -125,12 +125,17 @@
                                 Cursor="Hand"
                                 Header="分组"
                                 IsSelected="False" />
-                            <!--<TabItem
-                                x:Name="TabTagData"
-                                Cursor="Hand"
-                                Header="标签"
-                                IsSelected="False" />-->
                         </TabControl>
+                        <!--<hc:ButtonGroup Margin="0,102,0,0" Style="{StaticResource ButtonGroupSolid}">
+                            <RadioButton
+                                Height="28"
+                                Content="分组"
+                                Cursor="Hand" />
+                            <RadioButton
+                                Height="28"
+                                Content="标签"
+                                Cursor="Hand" />
+                        </hc:ButtonGroup>-->
                         <TreeView
                             x:Name="TreeViewTables"
                             Margin="0,100,0,0"
