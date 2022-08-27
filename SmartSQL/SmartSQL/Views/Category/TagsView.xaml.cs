@@ -65,10 +65,10 @@ namespace SmartSQL.Views.Category
         }
 
         public static readonly DependencyProperty DataListProperty = DependencyProperty.Register(
-            "DataList", typeof(List<ObjectGroup>), typeof(TagsView), new PropertyMetadata(default(List<ObjectGroup>)));
-        public List<ObjectGroup> DataList
+            "DataList", typeof(List<ObjectTag>), typeof(TagsView), new PropertyMetadata(default(List<ObjectTag>)));
+        public List<ObjectTag> DataList
         {
-            get => (List<ObjectGroup>)GetValue(DataListProperty);
+            get => (List<ObjectTag>)GetValue(DataListProperty);
             set
             {
                 SetValue(DataListProperty, value);
@@ -85,15 +85,15 @@ namespace SmartSQL.Views.Category
 
         private void TagsView_Loaded(object sender, RoutedEventArgs e)
         {
-            Title = $"{Connection.ConnectName} - 分组管理";
+            Title = $"{Connection.ConnectName} - 标签管理";
             var conn = Connection;
             var selectDataBase = SelectedDataBase;
             var dbConnectionString = conn.DbMasterConnectString;
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                    Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
+                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                    Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectDataBase).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
@@ -114,15 +114,19 @@ namespace SmartSQL.Views.Category
             });
         }
 
+        /// <summary>
+        /// 选择标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
-                var group = (ObjectGroup)listBox.SelectedItems[0];
-
-                HidId.Text = group.Id.ToString();
-                TextGourpName.Text = group.GroupName;
+                var tag = (ObjectTag)listBox.SelectedItems[0];
+                HidId.Text = tag.TagId.ToString();
+                TextGourpName.Text = tag.TagName;
             }
         }
 
@@ -178,8 +182,8 @@ namespace SmartSQL.Views.Category
             var connKey = Connection.ID;
             Task.Run(() =>
             {
-                var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                    Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).OrderBy(x => x.OrderFlag).ToList();
+                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                    Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
@@ -208,18 +212,18 @@ namespace SmartSQL.Views.Category
         /// <param name="e"></param>
         private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            var sqLiteHelper = new SQLiteHelper();
+            var sqLiteHelper = SQLiteHelper.GetInstance();
             var groupId = Convert.ToInt32(HidId.Text);
             if (groupId < 1)
             {
-                Oops.Oh("请选择需要删除的分组.");
+                Oops.Oh("请选择需要删除的标签.");
                 return;
             }
             var selectedDatabase = (DataBase)SelectDatabase.SelectedItem;
             var connKey = Connection.ID;
             Task.Run(() =>
             {
-                sqLiteHelper.db.Delete<ObjectGroup>(groupId);
+                sqLiteHelper.db.Delete<ObjectTag>(groupId);
 
                 var list = sqLiteHelper.db.Table<SObjects>().Where(x =>
                     x.ConnectId == connKey &&
@@ -232,7 +236,7 @@ namespace SmartSQL.Views.Category
                         sqLiteHelper.db.Delete<SObjects>(sobj.Id);
                     }
                 }
-                var datalist = sqLiteHelper.db.Table<ObjectGroup>().
+                var datalist = sqLiteHelper.db.Table<ObjectTag>().
                     Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -251,6 +255,8 @@ namespace SmartSQL.Views.Category
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var tagAdd = new TagAddView();
+            tagAdd.SelectedConnection = Connection;
+            tagAdd.SelectedDataBase = SelectedDataBase;
             tagAdd.Owner = this;
             tagAdd.ShowDialog();
 
@@ -267,8 +273,8 @@ namespace SmartSQL.Views.Category
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ObjectGroup>().
-                    Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectedDatabase.DbName).OrderBy(x => x.OrderFlag).ToList();
+                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                    Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;

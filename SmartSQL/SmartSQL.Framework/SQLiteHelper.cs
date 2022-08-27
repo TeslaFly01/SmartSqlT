@@ -47,6 +47,7 @@ namespace SmartSQL.Framework
             //表已存在不会重复创建
             db.CreateTable<ConnectConfigs>();
             db.CreateTable<ObjectGroup>();
+            db.CreateTable<ObjectTag>();
             db.CreateTable<SObjects>();
             db.CreateTable<SystemSet>();
             Init();

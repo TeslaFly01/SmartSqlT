@@ -1,4 +1,9 @@
-﻿using System;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
+using SmartSQL.Framework;
+using SmartSQL.Framework.SqliteModel;
+using SmartSQL.Helper;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +25,72 @@ namespace SmartSQL.Views.Category
     /// </summary>
     public partial class TagAddView
     {
+        #region DependencyProperty
+
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(TagAddView), new PropertyMetadata(default(ConnectConfigs)));
+        public ConnectConfigs SelectedConnection
+        {
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
+        }
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(TagAddView), new PropertyMetadata(default(string)));
+        public string SelectedDataBase
+        {
+            get => (string)GetValue(SelectedDataBaseProperty);
+            set => SetValue(SelectedDataBaseProperty, value);
+        }
+        #endregion
+
         public TagAddView()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// 保存标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
+        {
+            var tagName = TagName.Text.Trim();
+            if (string.IsNullOrEmpty(tagName))
+            {
+                Oops.Oh("标签名称为空.");
+                return;
+            }
+            var sqLiteInstance = SQLiteHelper.GetInstance();
+            var tag = sqLiteInstance.db.Table<ObjectTag>().FirstOrDefault(x =>
+            x.ConnectId == SelectedConnection.ID &&
+            x.DataBaseName == SelectedDataBase &&
+            x.TagName == tagName);
+            if (tag != null)
+            {
+                Oops.Oh("已存在相同名称的标签.");
+                return;
+            }
+            //插入标签数据
+            sqLiteInstance.db.Insert(new ObjectTag()
+            {
+                ConnectId = SelectedConnection.ID,
+                DataBaseName = SelectedDataBase,
+                TagName = tagName
+            });
+            this.Close();
+            Oops.Success("保存成功.");
+        }
+
+        /// <summary>
+        /// 取消
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

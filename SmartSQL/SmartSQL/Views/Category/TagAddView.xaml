@@ -23,12 +23,12 @@
             CornerRadius="8">
             <Grid>
                 <hc:TextBox
+                    Name="TagName"
                     Height="60"
                     Margin="20"
                     VerticalAlignment="Top"
                     hc:InfoElement.Placeholder="请输入标签名称"
                     hc:InfoElement.Title="标签名称" />
-
                 <Border
                     VerticalAlignment="Bottom"
                     Background="#f5f5f5"
@@ -43,15 +43,16 @@
                                     x:Name="BtnSave"
                                     Height="25"
                                     Padding="20,0,20,0"
+                                    Click="BtnSave_Click"
                                     Content="保存"
                                     Cursor="Hand"
-                                    IsEnabled="False"
                                     Style="{StaticResource ButtonPrimary}" />
                                 <Button
                                     x:Name="BtnCancel"
                                     Height="25"
                                     Padding="20,0,20,0"
                                     BorderThickness="0.4"
+                                    Click="BtnCancel_Click"
                                     Content="取消"
                                     Cursor="Hand" />
                             </hc:UniformSpacingPanel>

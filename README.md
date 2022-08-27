@@ -3,7 +3,8 @@
 	<h1 align="center" style="color:#4da7fd"><b>SmartSQL</b></h1>
 </div>
 <div align="center">
-<h5 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h3>
+<h3 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h4>
+<h5 align="center">致力成为一款帮助企业快速实现数字化转型的元数据管理工具</h5>
 </div>
 
 <p align="center">
