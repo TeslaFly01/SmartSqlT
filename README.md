@@ -4,7 +4,7 @@
 </div>
 <div align="center">
 <h4 align="center">⚡一款方便、快捷的数据库文档查询、生成工具</h4>
-<span align="center">致力成为一款帮助企业快速实现数字化转型的元数据管理工具</span>
+<span align="center" style="letter-spacing:1.8px" >致力于成为一款帮助企业快速实现数字化转型的元数据管理工具</span>
 </div>
 <br>
 <p align="center">
