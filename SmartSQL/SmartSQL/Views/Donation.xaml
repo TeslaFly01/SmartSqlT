@@ -11,7 +11,7 @@
     Width="550"
     Height="350"
     BorderThickness="0"
-    Icon="/favicon.ico"
+    Icon="/Resources/Img/donation/caffe.png"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     ShowTitle="True"

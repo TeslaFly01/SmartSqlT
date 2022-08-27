@@ -10,7 +10,7 @@
     Width="650"
     Height="400"
     BorderThickness="0"
-    Icon="/favicon.ico"
+    Icon="/Resources/Img/icon/icon_weixin.png"
     ResizeMode="NoResize"
     ShowInTaskbar="False"
     ShowTitle="True"

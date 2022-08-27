@@ -470,6 +470,7 @@
     <Resource Include="Resources\Img\donation\wxpay.png" />
     <Resource Include="Resources\Img\contact_mp_card.png" />
     <Resource Include="Resources\Img\connect_bg.png" />
+    <Resource Include="Resources\Img\donation\caffe.png" />
     <Content Include="Resources\Img\icon.png" />
     <Resource Include="Resources\svg\icon_logo.svg" />
     <Resource Include="Resources\svg\icon_money.svg" />
@@ -495,6 +496,7 @@
     <Resource Include="Resources\Img\icon_connect.png" />
     <Resource Include="Resources\Img\icon_setting.png" />
     <Resource Include="Resources\Img\icon_import.png" />
+    <Resource Include="Resources\Img\icon\icon_weixin.png" />
     <Content Include="Resources\Img\Readme\About.png" />
     <Content Include="Resources\Img\Readme\Column.png" />
     <Content Include="Resources\Img\Readme\Connect.png" />
