@@ -66,6 +66,7 @@
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索标签"
                     FontSize="13"
+                    MaxLength="30"
                     ShowClearButton="True"
                     Style="{StaticResource SearchBarPlus}" />
                 <Button
@@ -83,7 +84,6 @@
                 <ListBox
                     Name="ListGroup"
                     Margin="5,40,5,35"
-                    AllowDrop="True"
                     BorderThickness="0"
                     ItemsSource="{Binding DataList}"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -99,8 +99,8 @@
                                     IsHitTestVisible="False" />
                                 <TextBlock
                                     Margin="20,0,0,0"
-                                    Cursor="SizeAll"
-                                    Text="{Binding TagName}" />
+                                    Text="{Binding TagName}"
+                                    TextTrimming="CharacterEllipsis" />
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

@@ -155,38 +155,39 @@
                         Visibility="Collapsed" />
                     <TextBox
                         Name="TextGourpName"
-                        Height="30"
                         Margin="20"
                         VerticalAlignment="Top"
                         hc:InfoElement.Title="分组名称"
-                        hc:InfoElement.TitlePlacement="Left"
                         hc:InfoElement.TitleWidth="80"
                         PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
                         Style="{StaticResource TextBoxExtend}"
                         TextChanged="TextGourpName_OnTextChanged" />
-                    <TextBlock Margin="20,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
-                    <Grid
-                        Margin="0,90,0,0"
-                        HorizontalAlignment="Left"
+                    <TextBlock Margin="30,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
+                    <UniformGrid
+                        Height="80"
+                        Margin="20,110,20,0"
                         VerticalAlignment="Top"
-                        Cursor="Hand">
+                        Columns="3"
+                        Rows="2">
                         <RadioButton
                             Name="CheckCurrent"
-                            Margin="100,0,0,0"
-                            HorizontalAlignment="Left"
-                            Content="当前节点" />
+                            Background="{DynamicResource SecondaryRegionBrush}"
+                            Content="当前节点"
+                            Style="{StaticResource RadioButtonIcon}" />
                         <RadioButton
                             Name="CheckChild"
-                            Margin="200,0,0,0"
-                            HorizontalAlignment="Left"
-                            Content="子项节点" />
+                            Margin="10,0,0,0"
+                            Background="{DynamicResource SecondaryRegionBrush}"
+                            Content="子项节点"
+                            Style="{StaticResource RadioButtonIcon}" />
                         <RadioButton
                             Name="CheckNone"
-                            Margin="300,0,0,0"
-                            HorizontalAlignment="Left"
+                            Margin="10,0,0,0"
+                            Background="{DynamicResource SecondaryRegionBrush}"
                             Content="不展开"
-                            IsChecked="True" />
-                    </Grid>
+                            IsChecked="True"
+                            Style="{StaticResource RadioButtonIcon}" />
+                    </UniformGrid>
                 </Grid>
                 <Border
                     VerticalAlignment="Bottom"

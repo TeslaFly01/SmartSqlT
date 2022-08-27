@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -112,6 +113,24 @@ namespace SmartSQL.Views.Category
 
                 }));
             });
+        }
+
+        public void Tag_ChangeRefreshEvent()
+        {
+            ReloadMenu();
+        }
+
+        /// <summary>
+        /// 重新加载标签菜单
+        /// </summary>
+        private void ReloadMenu()
+        {
+            var sqliteInstance = SQLiteHelper.GetInstance();
+            var datalist = sqliteInstance.db.Table<ObjectTag>().
+                Where(x => x.ConnectId == Connection.ID &&
+                x.DataBaseName == SelectedDataBase
+                ).ToList();
+            DataList = datalist;
         }
 
         /// <summary>
@@ -257,6 +276,7 @@ namespace SmartSQL.Views.Category
             var tagAdd = new TagAddView();
             tagAdd.SelectedConnection = Connection;
             tagAdd.SelectedDataBase = SelectedDataBase;
+            tagAdd.ChangeRefreshEvent += Tag_ChangeRefreshEvent;
             tagAdd.Owner = this;
             tagAdd.ShowDialog();
 

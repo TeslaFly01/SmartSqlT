@@ -25,6 +25,7 @@ namespace SmartSQL.Views.Category
     /// </summary>
     public partial class TagAddView
     {
+        public event ChangeRefreshHandler ChangeRefreshEvent;
         #region DependencyProperty
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
@@ -79,8 +80,25 @@ namespace SmartSQL.Views.Category
                 DataBaseName = SelectedDataBase,
                 TagName = tagName
             });
+            if (ChangeRefreshEvent!=null)
+            {
+                ChangeRefreshEvent();
+            }
             this.Close();
             Oops.Success("保存成功.");
+        }
+
+        /// <summary>
+        /// Enter键一键保存
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TagName_PreviewKeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                BtnSave_Click(sender, e);
+            }
         }
 
         /// <summary>
