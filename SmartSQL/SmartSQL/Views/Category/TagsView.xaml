@@ -12,6 +12,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     BorderThickness="0"
+    Icon="/Resources/Img/icon/icon_tag.png"
     Loaded="TagsView_Loaded"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
@@ -58,7 +59,7 @@
                     </ComboBox.ItemTemplate>
                 </ComboBox>
                 <hc:SearchBar
-                    x:Name="SearchMenu"
+                    x:Name="SearchTag"
                     Height="30"
                     Margin="5,5,45,5"
                     Padding="5,0,5,0"
@@ -68,7 +69,8 @@
                     FontSize="13"
                     MaxLength="30"
                     ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}" />
+                    Style="{StaticResource SearchBarPlus}"
+                    TextChanged="SearchMenu_TextChanged" />
                 <Button
                     Name="BtnAdd"
                     Width="35"

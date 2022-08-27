@@ -318,5 +318,23 @@ namespace SmartSQL.Views.Category
                 BtnSave_OnClick(sender, e);
             }
         }
+
+        /// <summary>
+        /// 实时搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchMenu_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchTag = SearchTag.Text.Trim();
+            var sqlLiteInstance = SQLiteHelper.GetInstance();
+            var datalist = sqlLiteInstance.db.Table<ObjectTag>().
+                Where(x => x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase&& x.TagName.Contains(searchTag)).ToList();
+            //Dispatcher.Invoke(() =>
+            //{
+            DataList = datalist;
+            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
+            //});
+        }
     }
 }

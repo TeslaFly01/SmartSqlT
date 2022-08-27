@@ -497,6 +497,7 @@
     <Resource Include="Resources\Img\icon_setting.png" />
     <Resource Include="Resources\Img\icon_import.png" />
     <Resource Include="Resources\Img\icon\icon_weixin.png" />
+    <Resource Include="Resources\Img\icon\icon_tag.png" />
     <Content Include="Resources\Img\Readme\About.png" />
     <Content Include="Resources\Img\Readme\Column.png" />
     <Content Include="Resources\Img\Readme\Connect.png" />

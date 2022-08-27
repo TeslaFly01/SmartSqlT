@@ -307,5 +307,19 @@ namespace SmartSQL.Views
         {
             ResetData();
         }
+
+        /// <summary>
+        /// 实时搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextSearchConnect_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchConenct = TextSearchConnect.Text.Trim();
+            var sqLiteInstance = SQLiteHelper.GetInstance();
+            var datalist = sqLiteInstance.db.Table<ConnectConfigs>().Where(x => x.ConnectName.Contains(searchConenct)).ToList();
+            DataList = datalist;
+            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 }

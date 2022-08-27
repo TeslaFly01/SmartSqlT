@@ -42,9 +42,10 @@
                         Margin="0,0,40,0"
                         hc:InfoElement.Placeholder="搜索连接"
                         FontSize="13"
-                        IsEnabled="False"
+                        MaxLength="20"
                         ShowClearButton="True"
-                        Style="{StaticResource SearchBarPlus}" />
+                        Style="{StaticResource SearchBarPlus}"
+                        TextChanged="TextSearchConnect_TextChanged" />
                     <Button
                         Name="BtnAdd"
                         Width="35"
@@ -68,7 +69,8 @@
                     SelectionChanged="Selector_OnSelectionChanged">
                     <ListBox.ItemContainerStyle>
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
-                            <Setter Property="Cursor" Value="Hand" />
+                            <!--<Setter Property="Cursor" Value="Hand" />-->
+                            <Setter Property="Height" Value="40" />
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Background" Value="#EDF0F8" />
