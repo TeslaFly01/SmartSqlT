@@ -64,7 +64,7 @@ namespace SmartSQL.Views.Category
                 return;
             }
             var sqLiteInstance = SQLiteHelper.GetInstance();
-            var tag = sqLiteInstance.db.Table<ObjectTag>().FirstOrDefault(x =>
+            var tag = sqLiteInstance.db.Table<TagInfo>().FirstOrDefault(x =>
             x.ConnectId == SelectedConnection.ID &&
             x.DataBaseName == SelectedDataBase &&
             x.TagName == tagName);
@@ -74,7 +74,7 @@ namespace SmartSQL.Views.Category
                 return;
             }
             //插入标签数据
-            sqLiteInstance.db.Insert(new ObjectTag()
+            sqLiteInstance.db.Insert(new TagInfo()
             {
                 ConnectId = SelectedConnection.ID,
                 DataBaseName = SelectedDataBase,

@@ -196,7 +196,8 @@
     <Compile Include="SQLiteHelper.cs" />
     <Compile Include="SqliteModel\ConnectConfigs.cs" />
     <Compile Include="SqliteModel\ObjectGroup.cs" />
-    <Compile Include="SqliteModel\ObjectTag.cs" />
+    <Compile Include="SqliteModel\TagObjects.cs" />
+    <Compile Include="SqliteModel\TagInfo.cs" />
     <Compile Include="SqliteModel\SObjects.cs" />
     <Compile Include="SqliteModel\SystemSet.cs" />
     <Compile Include="SugarFactory.cs" />

@@ -10,6 +10,9 @@ using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Framework.SqliteModel
 {
+    /// <summary>
+    /// 连接信息
+    /// </summary>
     public class ConnectConfigs
     {
         [PrimaryKey, AutoIncrement]

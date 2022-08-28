@@ -66,10 +66,10 @@ namespace SmartSQL.Views.Category
         }
 
         public static readonly DependencyProperty DataListProperty = DependencyProperty.Register(
-            "DataList", typeof(List<ObjectTag>), typeof(TagsView), new PropertyMetadata(default(List<ObjectTag>)));
-        public List<ObjectTag> DataList
+            "DataList", typeof(List<TagInfo>), typeof(TagsView), new PropertyMetadata(default(List<TagInfo>)));
+        public List<TagInfo> DataList
         {
-            get => (List<ObjectTag>)GetValue(DataListProperty);
+            get => (List<TagInfo>)GetValue(DataListProperty);
             set
             {
                 SetValue(DataListProperty, value);
@@ -93,7 +93,7 @@ namespace SmartSQL.Views.Category
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                var datalist = sqLiteHelper.db.Table<TagInfo>().
                     Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectDataBase).ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -126,11 +126,15 @@ namespace SmartSQL.Views.Category
         private void ReloadMenu()
         {
             var sqliteInstance = SQLiteHelper.GetInstance();
-            var datalist = sqliteInstance.db.Table<ObjectTag>().
-                Where(x => x.ConnectId == Connection.ID &&
+            var datalist = sqliteInstance.ToList<TagInfo>(x =>
+                x.ConnectId == Connection.ID &&
                 x.DataBaseName == SelectedDataBase
-                ).ToList();
+                );
+            //Where(x => x.ConnectId == Connection.ID &&
+            //x.DataBaseName == SelectedDataBase
+            //).ToList();
             DataList = datalist;
+            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
@@ -143,7 +147,7 @@ namespace SmartSQL.Views.Category
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
-                var tag = (ObjectTag)listBox.SelectedItems[0];
+                var tag = (TagInfo)listBox.SelectedItems[0];
                 HidId.Text = tag.TagId.ToString();
                 TextGourpName.Text = tag.TagName;
             }
@@ -201,7 +205,7 @@ namespace SmartSQL.Views.Category
             var connKey = Connection.ID;
             Task.Run(() =>
             {
-                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                var datalist = sqLiteHelper.db.Table<TagInfo>().
                     Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -242,7 +246,7 @@ namespace SmartSQL.Views.Category
             var connKey = Connection.ID;
             Task.Run(() =>
             {
-                sqLiteHelper.db.Delete<ObjectTag>(groupId);
+                sqLiteHelper.db.Delete<TagInfo>(groupId);
 
                 var list = sqLiteHelper.db.Table<SObjects>().Where(x =>
                     x.ConnectId == connKey &&
@@ -255,7 +259,7 @@ namespace SmartSQL.Views.Category
                         sqLiteHelper.db.Delete<SObjects>(sobj.Id);
                     }
                 }
-                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                var datalist = sqLiteHelper.db.Table<TagInfo>().
                     Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -263,10 +267,7 @@ namespace SmartSQL.Views.Category
                     TextGourpName.Text = "";
                     BtnSave.IsEnabled = false;
                     DataList = datalist;
-                    if (ChangeRefreshEvent != null)
-                    {
-                        ChangeRefreshEvent();
-                    }
+                    ReloadMenu();
                 });
             });
         }
@@ -293,7 +294,7 @@ namespace SmartSQL.Views.Category
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<ObjectTag>().
+                var datalist = sqLiteHelper.db.Table<TagInfo>().
                     Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectedDatabase.DbName).ToList();
                 Dispatcher.Invoke(() =>
                 {
@@ -328,7 +329,7 @@ namespace SmartSQL.Views.Category
         {
             var searchTag = SearchTag.Text.Trim();
             var sqlLiteInstance = SQLiteHelper.GetInstance();
-            var datalist = sqlLiteInstance.db.Table<ObjectTag>().
+            var datalist = sqlLiteInstance.db.Table<TagInfo>().
                 Where(x => x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase&& x.TagName.Contains(searchTag)).ToList();
             //Dispatcher.Invoke(() =>
             //{

@@ -86,6 +86,7 @@
                 <ListBox
                     Name="ListGroup"
                     Margin="5,40,5,35"
+                    HorizontalContentAlignment="Stretch"
                     BorderThickness="0"
                     ItemsSource="{Binding DataList}"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -93,16 +94,28 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <fa:FontAwesome
-                                    HorizontalAlignment="Left"
-                                    FontSize="15"
-                                    Foreground="#faad14"
-                                    Icon="Tag"
-                                    IsHitTestVisible="False" />
-                                <TextBlock
-                                    Margin="20,0,0,0"
-                                    Text="{Binding TagName}"
-                                    TextTrimming="CharacterEllipsis" />
+                                <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <fa:FontAwesome
+                                        HorizontalAlignment="Left"
+                                        FontSize="15"
+                                        Foreground="#faad14"
+                                        Icon="Tag"
+                                        IsHitTestVisible="False" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        Text="{Binding TagName}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </hc:SimpleStackPanel>
+                                <hc:SimpleStackPanel Margin="0,0,8,0" HorizontalAlignment="Right">
+                                    <Border Background="#fffffe" CornerRadius="3">
+                                        <!--<TextBlock
+                                            Margin="5,1,5,1"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource ThirdlyTextBrush}"
+                                            Text="删除" />-->
+                                    </Border>
+                                </hc:SimpleStackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
