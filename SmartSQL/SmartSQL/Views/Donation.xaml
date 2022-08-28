@@ -28,12 +28,18 @@
             <Grid Margin="10">
                 <Image VerticalAlignment="Top" Source="../Resources/Img/donation/alipay.png" />
                 <TextBlock
-                    Margin="70,0,0,10"
+                    Margin="50,0,0,10"
                     VerticalAlignment="Bottom"
                     FontSize="18"
                     FontWeight="Bold"
-                    Foreground="#1890ff"
-                    Text="支付宝支付" />
+                    Foreground="#1890ff">
+                    <Image
+                        Width="25"
+                        Height="25"
+                        Margin="0,0,0,-7"
+                        Source="../Resources/Img/icon/icon_alipay.png" />
+                    <TextBlock Text="支付宝支付" />
+                </TextBlock>
             </Grid>
         </Border>
         <Border

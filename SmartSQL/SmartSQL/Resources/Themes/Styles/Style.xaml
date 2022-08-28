@@ -63,6 +63,34 @@
     </Style>
 
     <Style
+        x:Key="ListBoxItemSmart"
+        BasedOn="{StaticResource ListBoxItemBaseStyle}"
+        TargetType="ListBoxItem">
+        <!--<Setter Property="Cursor" Value="Hand" />-->
+        <Setter Property="FontSize" Value="12" />
+        <Setter Property="Height" Value="40" />
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background" Value="#EDF0F8" />
+                <Setter Property="Foreground" Value="{StaticResource PrimaryBrush}" />
+                <Setter Property="FontWeight" Value="Bold" />
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#efefef" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <Style
+        x:Key="ListBoxSmart"
+        BasedOn="{StaticResource ListBoxBaseStyle}"
+        TargetType="ListBox">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemSmart}" />
+    </Style>
+
+    <Style
         x:Key="ListBoxItemNew"
         BasedOn="{StaticResource ListBoxItemTransparent}"
         TargetType="ListBoxItem">

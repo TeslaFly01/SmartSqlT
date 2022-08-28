@@ -52,6 +52,11 @@
                         SelectedCellsChanged="TableGrid_OnSelectedCellsChanged"
                         SelectionChanged="Handled_OnSelectionChanged"
                         SelectionUnit="CellOrRowHeader">
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content.Text}" />
+                            </Style>
+                        </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Binding="{Binding Name}"
