@@ -53,7 +53,7 @@
                         SelectionChanged="Handled_OnSelectionChanged"
                         SelectionUnit="CellOrRowHeader">
                         <DataGrid.CellStyle>
-                            <Style TargetType="DataGridCell">
+                            <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
                                 <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content.Text}" />
                             </Style>
                         </DataGrid.CellStyle>
