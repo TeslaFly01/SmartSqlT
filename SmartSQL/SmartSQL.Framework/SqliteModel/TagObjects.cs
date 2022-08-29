@@ -15,7 +15,7 @@ namespace SmartSQL.Framework.SqliteModel
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         /// <summary>
-        /// 所属分组ID
+        /// 所属标签ID
         /// </summary>
         public int TagId { get; set; }
         /// <summary>

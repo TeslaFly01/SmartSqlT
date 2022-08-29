@@ -22,42 +22,14 @@
             <ColumnDefinition Width="280" MinWidth="280" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <!--  左侧菜单  -->
         <Border
             Margin="5"
             Padding="5,6,5,5"
             Background="#ffffff"
             CornerRadius="8">
             <Grid>
-                <ComboBox
-                    x:Name="SelectDatabase"
-                    Height="30"
-                    Margin="5"
-                    VerticalAlignment="Top"
-                    HorizontalContentAlignment="Stretch"
-                    hc:BorderElement.CornerRadius="5"
-                    hc:InfoElement.Placeholder="请选择数据库"
-                    Cursor="Hand"
-                    IsTextSearchEnabled="True"
-                    SelectionChanged="SelectDatabase_OnSelectionChanged"
-                    Style="{StaticResource ComboBoxExtend}"
-                    Text="{Binding DbName}"
-                    Visibility="Collapsed">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <Image
-                                    Width="11"
-                                    Height="15"
-                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                                <TextBlock
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding DbName}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
                 <hc:SearchBar
                     x:Name="SearchTag"
                     Height="30"
@@ -84,11 +56,11 @@
                     Click="BtnAdd_OnClick"
                     Foreground="#ffffff" />
                 <ListBox
-                    Name="ListGroup"
+                    Name="ListTag"
                     Margin="5,40,5,35"
                     HorizontalContentAlignment="Stretch"
                     BorderThickness="0"
-                    ItemsSource="{Binding DataList}"
+                    ItemsSource="{Binding TagMenuList}"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                     SelectionChanged="Selector_OnSelectionChanged">
                     <ListBox.ItemTemplate>
@@ -163,6 +135,9 @@
                 </Border>
             </Grid>
         </Border>
+        <!--  左侧菜单  -->
+
+        <!--  右侧内容区  -->
         <Border
             Grid.Column="1"
             Margin="0,5,5,5"
@@ -170,21 +145,30 @@
             CornerRadius="8">
             <Grid>
                 <Grid>
-                    <TextBox
-                        Name="HidId"
-                        Text="0"
-                        Visibility="Collapsed" />
-                    <TextBox
-                        Name="TextGourpName"
-                        Height="30"
-                        Margin="20"
-                        VerticalAlignment="Top"
-                        hc:InfoElement.Title="分组名称"
-                        hc:InfoElement.TitlePlacement="Left"
-                        hc:InfoElement.TitleWidth="80"
-                        PreviewKeyUp="TextGourpName_OnPreviewKeyUp"
-                        Style="{StaticResource TextBoxExtend}"
-                        TextChanged="TextGourpName_OnTextChanged" />
+                    <DataGrid
+                        x:Name="TableGrid"
+                        Margin="0,38,0,32"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                        hc:DataGridAttach.ShowRowNumber="True"
+                        AutoGenerateColumns="False"
+                        Background="Transparent"
+                        Cursor="Arrow"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding TagObjectList}"
+                        RowHeaderWidth="60"
+                        SelectionUnit="CellOrRowHeader">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Binding="{Binding ObjectName}"
+                                Header="对象名称"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Binding="{Binding DatabaseName}"
+                                CanUserSort="False"
+                                Header="数据库名称"
+                                IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
                 </Grid>
 
                 <!--  操作栏  -->
@@ -221,5 +205,6 @@
                 <!--  操作栏  -->
             </Grid>
         </Border>
+        <!--  右侧内容区  -->
     </Grid>
 </hc:Window>
