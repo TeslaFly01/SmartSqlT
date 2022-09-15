@@ -616,6 +616,7 @@ namespace SmartSQL.Views
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
             var itemParentList = new List<TreeNodeItem>();
+            leftMenuType = LeftMenuType.All.GetHashCode();
             #region 分组业务处理
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {

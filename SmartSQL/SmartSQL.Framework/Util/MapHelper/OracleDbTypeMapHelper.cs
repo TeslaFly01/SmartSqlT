@@ -19,8 +19,8 @@ namespace SmartSQL.Framework.Util
                 case "integer":
                 case "interval year to  month":
                 case "interval day to  second":
-                case "number": csharpType = "int"; break;
-                case "decimal": csharpType = "decimal"; break;
+                case "number": csharpType = isNullable ? "int?" : "int"; break;
+                case "decimal": csharpType = isNullable ? "decimal?" : "decimal"; break;
                 case "varchar":
                 case "varchar2":
                 case "nvarchar2":
@@ -33,7 +33,7 @@ namespace SmartSQL.Framework.Util
                 case "date":
                 case "timestamp":
                 case "timestamp with local time zone":
-                case "timestamp with time zone": csharpType = "DateTime"; break;
+                case "timestamp with time zone": csharpType = isNullable ? "DateTime?" : "DateTime"; break;
                 default: csharpType = "object"; break;
             }
             return csharpType;

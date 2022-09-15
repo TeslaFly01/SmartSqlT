@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSQL.Framework.PhysicalDataModel;
+using SmartSQL.Framework.Util;
 using SqlSugar;
 
 namespace SmartSQL.Framework.Exporter
@@ -184,6 +185,7 @@ namespace SmartSQL.Framework.Exporter
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
                 column.IsPrimaryKey = v.IsPrimarykey;
+                column.CSharpType = OracleDbTypeMapHelper.MapCsharpType(v.DataType, v.IsNullable);
                 columns.Add(v.DbColumnName, column);
             });
             return columns;
