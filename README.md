@@ -157,7 +157,10 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 SmartNBI是一款为企业解决了数据孤岛，允许企业接入所有业务数据，通过简单、直观、多维、探索式分析来洞察业务经营状况，提升企业决策能力的一站式数据可视化分析平台。
 - 演示地址：http://123.56.229.208:8088/
 - 如需购买，请关注下方公众号获取作者联系方式，添加微信沟通	
-- ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/sourceData.png)
+- |![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/sourceData.png)|![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/maketp.png) |
+  |--|--|
+  | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/template1.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/template2.png) |
+  | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/template3.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/SmartNBI/template4.png) |
 
 ### 🔥 沟通交流
 
