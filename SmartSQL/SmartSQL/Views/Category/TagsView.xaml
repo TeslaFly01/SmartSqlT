@@ -54,7 +54,8 @@
                     Background="{StaticResource PrimaryBrush}"
                     BorderThickness="0"
                     Click="BtnAdd_OnClick"
-                    Foreground="#ffffff" />
+                    Foreground="#ffffff"
+                    ToolTip="新增标签" />
                 <ListBox
                     Name="ListTag"
                     Margin="5,40,5,35"
@@ -144,31 +145,73 @@
             Background="White"
             CornerRadius="8">
             <Grid>
+                <Border
+                    Height="60"
+                    Margin="10"
+                    VerticalAlignment="Top"
+                    Background="#f8f8f8"
+                    CornerRadius="8">
+                    <Grid>
+                        <hc:SearchBar
+                            x:Name="SearchObjects"
+                            Height="30"
+                            Margin="10,0,110,0"
+                            Padding="5,0,5,0"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            hc:BorderElement.CornerRadius="5"
+                            hc:InfoElement.Placeholder="搜索表、视图、存储过程"
+                            FontSize="13"
+                            ShowClearButton="True"
+                            Style="{StaticResource SearchBarPlus}" />
+                        <Button
+                            Name="BtnSetTag"
+                            Width="90"
+                            Margin="0,0,10,0"
+                            Padding="8,8"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                            Background="{StaticResource PrimaryBrush}"
+                            BorderThickness="0"
+                            Click="BtnAdd_OnClick"
+                            Content="标签设置"
+                            Foreground="#ffffff" />
+                    </Grid>
+                </Border>
                 <Grid>
-                    <DataGrid
-                        x:Name="TableGrid"
-                        Margin="0,38,0,32"
-                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                        hc:DataGridAttach.ShowRowNumber="True"
-                        AutoGenerateColumns="False"
-                        Background="Transparent"
-                        Cursor="Arrow"
-                        HeadersVisibility="All"
-                        ItemsSource="{Binding TagObjectList}"
-                        RowHeaderWidth="60"
-                        SelectionUnit="CellOrRowHeader">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Binding="{Binding ObjectName}"
-                                Header="对象名称"
-                                IsReadOnly="True" />
-                            <DataGridTextColumn
-                                Binding="{Binding DatabaseName}"
-                                CanUserSort="False"
-                                Header="数据库名称"
-                                IsReadOnly="True" />
-                        </DataGrid.Columns>
-                    </DataGrid>
+                    <Border
+                        Margin="10,80,10,42"
+                        Background="#f8f8f8"
+                        CornerRadius="8">
+                        <DataGrid
+                            x:Name="TableGrid"
+                            Margin="2"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                            hc:DataGridAttach.ShowRowNumber="True"
+                            AutoGenerateColumns="False"
+                            Background="#f8f8f8"
+                            Cursor="Arrow"
+                            HeadersVisibility="All"
+                            ItemsSource="{Binding TagObjectList}"
+                            RowHeaderWidth="60"
+                            SelectionUnit="FullRow">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding ObjectName}"
+                                    Header="表名"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding ObjectName}"
+                                    Header="表注释"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding ObjectName}"
+                                    Header="操作"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Border>
                 </Grid>
 
                 <!--  操作栏  -->
