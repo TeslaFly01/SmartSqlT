@@ -8,6 +8,7 @@
     xmlns:local="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:ucTag="clr-namespace:SmartSQL.UserControl.Tags"
     Title="{Binding Title}"
     d:DesignHeight="450"
     d:DesignWidth="800"
@@ -142,111 +143,9 @@
         <Border
             Grid.Column="1"
             Margin="0,5,5,5"
-            Background="White"
+            Background="#f8f8f8"
             CornerRadius="8">
-            <Grid>
-                <Border
-                    Height="60"
-                    Margin="10"
-                    VerticalAlignment="Top"
-                    Background="#f8f8f8"
-                    CornerRadius="8">
-                    <Grid>
-                        <hc:SearchBar
-                            x:Name="SearchObjects"
-                            Height="30"
-                            Margin="10,0,110,0"
-                            Padding="5,0,5,0"
-                            HorizontalAlignment="Stretch"
-                            VerticalAlignment="Center"
-                            hc:BorderElement.CornerRadius="5"
-                            hc:InfoElement.Placeholder="搜索表、视图、存储过程"
-                            FontSize="13"
-                            ShowClearButton="True"
-                            Style="{StaticResource SearchBarPlus}" />
-                        <Button
-                            Name="BtnSetTag"
-                            Width="90"
-                            Margin="0,0,10,0"
-                            Padding="8,8"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
-                            hc:IconElement.Geometry="{StaticResource AddGeometry}"
-                            Background="{StaticResource PrimaryBrush}"
-                            BorderThickness="0"
-                            Click="BtnAdd_OnClick"
-                            Content="标签设置"
-                            Foreground="#ffffff" />
-                    </Grid>
-                </Border>
-                <Grid>
-                    <Border
-                        Margin="10,80,10,42"
-                        Background="#f8f8f8"
-                        CornerRadius="8">
-                        <DataGrid
-                            x:Name="TableGrid"
-                            Margin="2"
-                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                            hc:DataGridAttach.ShowRowNumber="True"
-                            AutoGenerateColumns="False"
-                            Background="#f8f8f8"
-                            Cursor="Arrow"
-                            HeadersVisibility="All"
-                            ItemsSource="{Binding TagObjectList}"
-                            RowHeaderWidth="60"
-                            SelectionUnit="FullRow">
-                            <DataGrid.Columns>
-                                <DataGridTextColumn
-                                    Binding="{Binding ObjectName}"
-                                    Header="表名"
-                                    IsReadOnly="True" />
-                                <DataGridTextColumn
-                                    Binding="{Binding ObjectName}"
-                                    Header="表注释"
-                                    IsReadOnly="True" />
-                                <DataGridTextColumn
-                                    Binding="{Binding ObjectName}"
-                                    Header="操作"
-                                    IsReadOnly="True" />
-                            </DataGrid.Columns>
-                        </DataGrid>
-                    </Border>
-                </Grid>
-
-                <!--  操作栏  -->
-                <Border
-                    VerticalAlignment="Bottom"
-                    Background="#f5f5f5"
-                    CornerRadius="0 0 8 8">
-                    <Grid>
-                        <hc:SimpleStackPanel
-                            Margin="5"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
-                            <hc:UniformSpacingPanel Spacing="10">
-                                <Button
-                                    x:Name="BtnSave"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    Click="BtnSave_OnClick"
-                                    Content="保存"
-                                    Cursor="Hand"
-                                    IsEnabled="False"
-                                    Style="{StaticResource ButtonPrimary}" />
-                                <Button
-                                    x:Name="BtnCancel"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    Click="BtnCancel_OnClick"
-                                    Content="取消"
-                                    Cursor="Hand" />
-                            </hc:UniformSpacingPanel>
-                        </hc:SimpleStackPanel>
-                    </Grid>
-                </Border>
-                <!--  操作栏  -->
-            </Grid>
+            <UserControl Name="UcMainContent" Content="{Binding MainContent}" />
         </Border>
         <!--  右侧内容区  -->
     </Grid>

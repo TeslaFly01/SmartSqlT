@@ -80,19 +80,15 @@ namespace SmartSQL.Views.Category
             }
         }
 
+        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register(
+            "MainContent", typeof(System.Windows.Controls.UserControl), typeof(TagsView), new PropertyMetadata(default(System.Windows.Controls.UserControl)));
         /// <summary>
-        /// 标签对象数据列表
+        /// 主界面用户控件
         /// </summary>
-        public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<TagObjects>), typeof(TagsView), new PropertyMetadata(default(List<TagObjects>)));
-        public List<TagObjects> TagObjectList
+        public System.Windows.Controls.UserControl MainContent
         {
-            get => (List<TagObjects>)GetValue(TagObjectListProperty);
-            set
-            {
-                SetValue(TagObjectListProperty, value);
-                OnPropertyChanged(nameof(TagObjectList));
-            }
+            get => (System.Windows.Controls.UserControl)GetValue(MainContentProperty);
+            set => SetValue(MainContentProperty, value);
         }
         #endregion
 
@@ -122,15 +118,8 @@ namespace SmartSQL.Views.Category
                         NoDataText.Visibility = Visibility.Visible;
                     }
                 });
-                //var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
-                //var list = exporter.GetDatabases();
-                //Dispatcher.BeginInvoke(new Action(() =>
-                //{
-                //    var DBase = list;
-                //    SelectDatabase.ItemsSource = DBase;
-                //    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase);
-                //}));
             });
+            MainContent = new SmartSQL.UserControl.Tags.TagObjects();
         }
 
         public void Tag_ChangeRefreshEvent()
@@ -148,9 +137,6 @@ namespace SmartSQL.Views.Category
                 x.ConnectId == Connection.ID &&
                 x.DataBaseName == SelectedDataBase
                 );
-            //Where(x => x.ConnectId == Connection.ID &&
-            //x.DataBaseName == SelectedDataBase
-            //).ToList();
             TagMenuList = datalist;
             NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -169,12 +155,13 @@ namespace SmartSQL.Views.Category
             {
                 var tag = (TagInfo)listBox.SelectedItems[0];
 
-                var sqLiteInstance = SQLiteHelper.GetInstance();
-                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
-                    x.ConnectId == conn.ID &&
-                    x.DatabaseName == selectDataBase &&
-                    x.TagId == tag.TagId);
-                TagObjectList = tagObjectList;
+                var ucTagObjects = new UserControl.Tags.TagObjects();
+                ucTagObjects.SelectedConnection = conn;
+                ucTagObjects.SelectedDataBase = selectDataBase;
+                ucTagObjects.SelectedTag= tag;
+                ucTagObjects.LoadPageData();
+                MainContent = ucTagObjects;
+ 
             }
         }
 
@@ -216,7 +203,7 @@ namespace SmartSQL.Views.Category
                     OrderFlag = DateTime.Now
                 });
             }
-            BtnSave.IsEnabled = false;
+            //ucTagObjects.BtnSave.IsEnabled = false;
             var connKey = Connection.ID;
             Task.Run(() =>
             {
