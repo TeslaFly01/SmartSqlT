@@ -9,7 +9,7 @@
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Grid Background="#f5f5f5">
+    <Grid Background="#f9f9f9">
         <!--  对象搜索框  -->
         <hc:SearchBar
             x:Name="SearchObject"

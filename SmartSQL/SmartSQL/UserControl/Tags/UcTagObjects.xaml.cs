@@ -25,7 +25,7 @@ namespace SmartSQL.UserControl.Tags
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class TagObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcTagObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +38,7 @@ namespace SmartSQL.UserControl.Tags
 
         #region PropertyFiled
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(TagObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "Connection", typeof(ConnectConfigs), typeof(UcTagObjects), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -49,7 +49,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(TagObjects), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(UcTagObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -60,7 +60,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(TagObjects), new PropertyMetadata(default(TagInfo)));
+            "SelectedTag", typeof(TagInfo), typeof(UcTagObjects), new PropertyMetadata(default(TagInfo)));
         /// <summary>
         /// 当前选中标签
         /// </summary>
@@ -74,19 +74,19 @@ namespace SmartSQL.UserControl.Tags
         /// 标签对象数据列表
         /// </summary>
         public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<Framework.SqliteModel.TagObjects>), typeof(TagObjects), new PropertyMetadata(default(List<Framework.SqliteModel.TagObjects>)));
-        public List<Framework.SqliteModel.TagObjects> TagObjectList
+            "TagObjectList", typeof(List<TagObjects>), typeof(UcTagObjects), new PropertyMetadata(default(List<TagObjects>)));
+        public List<TagObjects> TagObjectList
         {
-            get => (List<Framework.SqliteModel.TagObjects>)GetValue(TagObjectListProperty);
+            get => (List<TagObjects>)GetValue(TagObjectListProperty);
             set
             {
                 SetValue(TagObjectListProperty, value);
                 OnPropertyChanged(nameof(TagObjectList));
             }
-        } 
+        }
         #endregion
 
-        public TagObjects()
+        public UcTagObjects()
         {
             InitializeComponent();
             DataContext = this;
@@ -101,7 +101,7 @@ namespace SmartSQL.UserControl.Tags
             var selDatabase = SelectedDataBase;
             var selTag = SelectedTag;
             var sqLiteInstance = SQLiteHelper.GetInstance();
-            var tagObjectList = sqLiteInstance.ToList<Framework.SqliteModel.TagObjects>(x =>
+            var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
                 x.ConnectId == conn.ID &&
                 x.DatabaseName == selDatabase &&
                 x.TagId == selTag.TagId);
@@ -109,7 +109,29 @@ namespace SmartSQL.UserControl.Tags
             {
                 MainNoDataText.Visibility = Visibility.Collapsed;
             }
+            TagObjectItems = tagObjectList;
             TagObjectList = tagObjectList;
+        }
+        private List<TagObjects> TagObjectItems;
+
+        private void SearchObjects_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchData = TagObjectItems;
+            var searchText = SearchObjects.Text.Trim();
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                var tagObjs = TagObjectItems.Where(x => x.ObjectName.ToLower().Contains(searchText.ToLower()));
+                if (tagObjs.Any())
+                {
+                    searchData = tagObjs.ToList();
+                }
+                else
+                {
+                    searchData = new List<TagObjects>();
+                }
+            }
+            MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
+            TagObjectList = searchData;
         }
 
         /// <summary>
@@ -136,7 +158,7 @@ namespace SmartSQL.UserControl.Tags
                 return;
             }
             var parentWindow = (TagsView)Window.GetWindow(this);
-            var ucAddObjects= new AddObjects();
+            var ucAddObjects = new UcAddObjects();
             ucAddObjects.SelectedConnection = SelectedConnection;
             ucAddObjects.SelectedDataBase = SelectedDataBase;
             ucAddObjects.SelectedTag = SelectedTag;

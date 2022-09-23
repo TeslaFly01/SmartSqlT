@@ -26,7 +26,7 @@ namespace SmartSQL.UserControl.Tags
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class AddObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcAddObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -39,7 +39,7 @@ namespace SmartSQL.UserControl.Tags
 
         #region PropertyFiled
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(AddObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "Connection", typeof(ConnectConfigs), typeof(UcAddObjects), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -50,7 +50,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(AddObjects), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(UcAddObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -61,7 +61,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(AddObjects), new PropertyMetadata(default(TagInfo)));
+            "SelectedTag", typeof(TagInfo), typeof(UcAddObjects), new PropertyMetadata(default(TagInfo)));
         /// <summary>
         /// 当前选中标签
         /// </summary>
@@ -75,10 +75,10 @@ namespace SmartSQL.UserControl.Tags
         /// 标签对象数据列表
         /// </summary>
         public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<TreeNodeItem>), typeof(AddObjects), new PropertyMetadata(default(List<TreeNodeItem>)));
-        public List<TreeNodeItem> TagObjectList
+            "TagObjectList", typeof(List<TagObjectDTO>), typeof(UcAddObjects), new PropertyMetadata(default(List<TagObjectDTO>)));
+        public List<TagObjectDTO> TagObjectList
         {
-            get => (List<TreeNodeItem>)GetValue(TagObjectListProperty);
+            get => (List<TagObjectDTO>)GetValue(TagObjectListProperty);
             set
             {
                 SetValue(TagObjectListProperty, value);
@@ -87,7 +87,7 @@ namespace SmartSQL.UserControl.Tags
         }
         #endregion
 
-        public AddObjects()
+        public UcAddObjects()
         {
             InitializeComponent();
             DataContext = this;
@@ -107,19 +107,14 @@ namespace SmartSQL.UserControl.Tags
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
                 SelectedConnection.SelectedDbConnectString(SelectedDataBase));
             var model = dbInstance.Init();
-            var list = new List<TreeNodeItem>();
+            var list = new List<TagObjectDTO>();
             foreach (var table in model.Tables)
             {
-                var tb = new TreeNodeItem()
+                var tb = new TagObjectDTO()
                 {
-                    ObejcetId = table.Value.Id,
-                    DisplayName = table.Value.DisplayName,
+                    ObjectId = table.Value.Id,
                     Name = table.Value.Name,
-                    Schema = table.Value.SchemaName,
-                    Comment = table.Value.Comment,
-                    CreateDate = table.Value.CreateDate,
-                    ModifyDate = table.Value.ModifyDate,
-                    Type = ObjType.Table
+                    Comment = table.Value.Comment
                 };
                 list.Add(tb);
             }
@@ -137,7 +132,30 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            var checkedObjects = TagObjectList.Where(x => x.IsChecked == true).ToList();
+            var sqLiteInstance = SQLiteHelper.GetInstance();
+            var listObjects = new List<TagObjects>();
+            foreach (var obj in checkedObjects)
+            {
+                var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                x.ConnectId == SelectedConnection.ID &&
+                x.DatabaseName == SelectedDataBase &&
+                x.TagId == SelectedTag.TagId &&
+                x.ObjectId == obj.ObjectId
+                );
+                if (!isAny)
+                {
+                    listObjects.Add(new TagObjects
+                    {
+                        ConnectId = SelectedConnection.ID,
+                        DatabaseName = SelectedDataBase,
+                        ObjectId = obj.ObjectId,
+                        ObjectName = obj.Name,
+                        TagId = SelectedTag.TagId
+                    });
+                }
+            }
+            sqLiteInstance.Add(listObjects);
         }
 
         /// <summary>
@@ -148,16 +166,15 @@ namespace SmartSQL.UserControl.Tags
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             var parentWindow = (TagsView)Window.GetWindow(this);
-            var ucTagObjects = new TagObjects();
+            var ucTagObjects = new UcTagObjects();
             ucTagObjects.SelectedConnection = SelectedConnection;
             ucTagObjects.SelectedDataBase = SelectedDataBase;
             ucTagObjects.SelectedTag = SelectedTag;
+            ucTagObjects.LoadPageData();
             parentWindow.MainContent = ucTagObjects;
         }
 
 
-        private ObservableCollection<TreeNodeItem> _TreeNodeList = new ObservableCollection<TreeNodeItem>();
-        public ObservableCollection<TreeNodeItem> TreeNodeList { get { return _TreeNodeList; } }
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
             foreach (var item in TagObjectList)
@@ -171,6 +188,15 @@ namespace SmartSQL.UserControl.Tags
             foreach (var item in TagObjectList)
             {
                 item.IsChecked = false;
+            }
+        }
+
+        private void SearchComObjType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selItem = (ComboBoxItem)SearchComObjType.SelectedItem;
+            if (selItem.Content == "视图")
+            {
+
             }
         }
     }

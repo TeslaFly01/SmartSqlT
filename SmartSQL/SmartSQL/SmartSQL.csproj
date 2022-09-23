@@ -121,6 +121,7 @@
     <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
+    <Compile Include="Models\TagObjectDTO.cs" />
     <Compile Include="UserControl\BaseUserControl.cs" />
     <Compile Include="UserControl\Connect\ConnectMainUC.xaml.cs">
       <DependentUpon>ConnectMainUC.xaml</DependentUpon>
@@ -161,11 +162,11 @@
     <Compile Include="UserControl\Main\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Tags\AddObjects.xaml.cs">
-      <DependentUpon>AddObjects.xaml</DependentUpon>
+    <Compile Include="UserControl\Tags\UcAddObjects.xaml.cs">
+      <DependentUpon>UcAddObjects.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Tags\TagObjects.xaml.cs">
-      <DependentUpon>TagObjects.xaml</DependentUpon>
+    <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
+      <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -339,11 +340,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Tags\AddObjects.xaml">
+    <Page Include="UserControl\Tags\UcAddObjects.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Tags\TagObjects.xaml">
+    <Page Include="UserControl\Tags\UcTagObjects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

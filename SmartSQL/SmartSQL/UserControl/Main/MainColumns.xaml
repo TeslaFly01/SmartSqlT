@@ -21,7 +21,7 @@
                 Cursor="Hand"
                 Header="数据表"
                 IsSelected="True">
-                <Grid Background="#f5f5f5">
+                <Grid Background="#f9f9f9">
                     <!--  列名搜索框  -->
                     <hc:SearchBar
                         x:Name="SearchColumns"

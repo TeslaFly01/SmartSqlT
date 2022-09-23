@@ -5,6 +5,7 @@ using SmartSQL.Framework;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Helper;
+using SmartSQL.UserControl.Tags;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -119,7 +120,7 @@ namespace SmartSQL.Views.Category
                     }
                 });
             });
-            MainContent = new SmartSQL.UserControl.Tags.TagObjects();
+            MainContent = new UcTagObjects();
         }
 
         public void Tag_ChangeRefreshEvent()
@@ -155,7 +156,7 @@ namespace SmartSQL.Views.Category
             {
                 var tag = (TagInfo)listBox.SelectedItems[0];
 
-                var ucTagObjects = new UserControl.Tags.TagObjects();
+                var ucTagObjects = new UserControl.Tags.UcTagObjects();
                 ucTagObjects.SelectedConnection = conn;
                 ucTagObjects.SelectedDataBase = selectDataBase;
                 ucTagObjects.SelectedTag= tag;

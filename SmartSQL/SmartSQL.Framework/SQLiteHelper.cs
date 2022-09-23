@@ -80,6 +80,11 @@ namespace SmartSQL.Framework
             return db.Insert(model);
         }
 
+        public int Add<T>(List<T> model)
+        {
+            return db.InsertAll(model);
+        }
+
         public int Update<T>(T model)
         {
             return db.Update(model);
@@ -109,6 +114,12 @@ namespace SmartSQL.Framework
         {
             return db.Query<T>(sql);
         }
+
+        public bool IsAny<T>(Expression<Func<T, bool>> predExpr) where T : new()
+        {
+            return db.Table<T>().Count(predExpr) > 0;
+        }
+
         public int Execute(string sql)
         {
             return db.Execute(sql);
