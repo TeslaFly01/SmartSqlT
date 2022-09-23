@@ -250,11 +250,8 @@ namespace SmartSQL.UserControl
             if (!string.IsNullOrEmpty(searchText))
             {
                 searchData = ColList.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || (!string.IsNullOrEmpty(x.Comment) && x.Comment.ToLower().Contains(searchText.ToLower()))).ToList();
-                if (!searchData.Any())
-                {
-                    NoDataText.Visibility = Visibility.Visible;
-                }
             }
+            NoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
             ObjectColumns = searchData;
             #endregion
         }
@@ -427,7 +424,7 @@ namespace SmartSQL.UserControl
             group.SelectedDataBase = SelectedDataBase.DbName;
             group.SelectedObjects = new List<TreeNodeItem>() { SelectedObject };
             group.Owner = mainWindow;
-            group.ShowDialog(); 
+            group.ShowDialog();
             #endregion
         }
 

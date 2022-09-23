@@ -150,7 +150,7 @@
                         Click="MenuTag_Click"
                         FontWeight="Normal"
                         Header="标签管理"
-                        IsEnabled="True">
+                        IsEnabled="False">
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"

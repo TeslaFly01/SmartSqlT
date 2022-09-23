@@ -177,7 +177,6 @@ namespace SmartSQL.UserControl
                 var obj = ObjItems.Where(x => x.DisplayName.ToLower().Contains(searchText.ToLower()) || (!string.IsNullOrEmpty(x.Comment) && x.Comment.ToLower().Contains(searchText.ToLower())));
                 if (!obj.Any())
                 {
-                    NoDataText.Visibility = Visibility.Visible;
                     searchData = new List<TreeNodeItem>();
                 }
                 else
@@ -185,6 +184,7 @@ namespace SmartSQL.UserControl
                     searchData = obj.ToList();
                 }
             }
+            NoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
             ObjectsViewData = searchData;
         }
 
