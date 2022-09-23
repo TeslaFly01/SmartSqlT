@@ -1,0 +1,287 @@
+﻿<!--  在线工具网https://www.zxgj.cn/  -->
+<local:BaseUserControl
+    x:Class="SmartSQL.UserControl.UcMainTools"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="BaseUserControl_Loaded"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <Style x:Key="ToolCard" TargetType="Border">
+                <Setter Property="Background" Value="White" />
+                <Setter Property="Height" Value="100" />
+                <Setter Property="CornerRadius" Value="8" />
+                <Setter Property="Margin" Value="10" />
+                <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                <Style.Triggers>
+                    <MultiTrigger>
+                        <MultiTrigger.Conditions>
+                            <Condition Property="IsMouseOver" Value="True" />
+                        </MultiTrigger.Conditions>
+                        <MultiTrigger.Setters>
+                            <Setter Property="Effect" Value="{StaticResource EffectShadow3}" />
+                        </MultiTrigger.Setters>
+                    </MultiTrigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid>
+        <!--  Main布局  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  Main布局  -->
+
+        <!--  左侧菜单  -->
+        <!--<DockPanel Grid.Row="0" Grid.Column="0">
+            <hc:SimplePanel>
+                <Border
+                    Margin="5,5,0,5"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="8">
+                    <Grid
+                        Height="Auto"
+                        Margin="8"
+                        Background="Transparent">
+                        <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
+                        <hc:SearchBar
+                            x:Name="SearchMenu"
+                            Height="30"
+                            Margin="0"
+                            Padding="5,0,5,0"
+                            VerticalAlignment="Top"
+                            HorizontalContentAlignment="Stretch"
+                            hc:BorderElement.CornerRadius="5"
+                            hc:InfoElement.Placeholder="搜索工具"
+                            FontSize="13"
+                            ShowClearButton="True"
+                            Style="{StaticResource SearchBarPlus}" />
+
+        -->
+        <!--  连接列表  -->
+        <!--
+                        <ListBox
+                            Name="ListConnects"
+                            Margin="0,40,0,0"
+                            BorderThickness="0"
+                            ItemsSource="{Binding ToolMenuList}"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible">
+                            <ListBox.ItemContainerStyle>
+
+                                <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
+                                    <Setter Property="Height" Value="55" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Margin" Value="0,2.5,0,2.5" />
+                                    <Setter Property="Background" Value="#f8f8f8" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                <Border
+                                                    x:Name="border"
+                                                    Margin="2"
+                                                    Background="#f8f8f8"
+                                                    BorderThickness="1"
+                                                    CornerRadius="8">
+                                                    <ContentPresenter
+                                                        Margin="10,0,0,0"
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                                </Border>
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Foreground" Value="#FF46679A" />
+                                                        <Setter TargetName="border" Property="BorderBrush" Value="#FF46679A" />
+                                                        <Setter TargetName="border" Property="BorderThickness" Value="4,0,0,0" />
+                                                        <Setter TargetName="border" Property="Effect" Value="{StaticResource EffectShadow2}" />
+                                                    </Trigger>
+                                                    <MultiTrigger>
+                                                        <MultiTrigger.Conditions>
+                                                            <Condition Property="IsMouseOver" Value="True" />
+                                                            <Condition Property="IsSelected" Value="False" />
+                                                        </MultiTrigger.Conditions>
+                                                        <MultiTrigger.Setters>
+                                                            <Setter TargetName="border" Property="Effect" Value="{StaticResource EffectShadow2}" />
+                                                            <Setter Property="Foreground" Value="#FF46679A" />
+                                                            <Setter TargetName="border" Property="Background" Value="white" />
+                                                            <Setter TargetName="border" Property="BorderBrush" Value="#FF46679A" />
+                                                            <Setter TargetName="border" Property="BorderThickness" Value="0" />
+                                                        </MultiTrigger.Setters>
+                                                    </MultiTrigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#EDF0F8" />
+                                            <Setter Property="Foreground" Value="#1890ff" />
+                                            <Setter Property="FontWeight" Value="Bold" />
+                                        </Trigger>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter Property="Background" Value="#EDF0F8" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Border CornerRadius="8">
+                                        <Grid>
+                                            <svgc:SvgViewbox
+                                                Width="15"
+                                                Height="15"
+                                                Margin="0,0,0,0"
+                                                HorizontalAlignment="Left"
+                                                IsHitTestVisible="False"
+                                                Source="{Binding Icon}" />
+                                            <TextBlock
+                                                Margin="22,0,0,0"
+                                                VerticalAlignment="Center"
+                                                Text="{Binding Name}" />
+                                        </Grid>
+                                    </Border>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                        <Grid
+                            x:Name="NoDataText"
+                            Margin="0,100,0,5"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            Cursor="Arrow"
+                            Visibility="Collapsed">
+                            <localControls:NoDataArea
+                                x:Name="NoDataAreaText"
+                                Margin="0"
+                                HorizontalAlignment="Center"
+                                ShowType="All" />
+                        </Grid>
+        -->
+        <!--  数据加载Loading  -->
+        <!--
+                        <localControls:Loading
+                            x:Name="LoadingLine"
+                            Margin="-5"
+                            BackgroundOpacity="0.2"
+                            Visibility="Collapsed" />
+                    </Grid>
+                </Border>
+            </hc:SimplePanel>
+        </DockPanel>-->
+
+        <!--  主内容  -->
+        <DockPanel Grid.Row="0" Grid.Column="2">
+            <Grid Margin="5">
+                <Border Background="White" CornerRadius="8">
+                    <Grid>
+                        <svgc:SvgViewbox
+                            Width="350"
+                            Height="325"
+                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
+                            Visibility="Collapsed" />
+                        <hc:ScrollViewer Margin="0,15,0,15">
+                            <hc:WaterfallPanel
+                                VerticalAlignment="Center"
+                                hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}"
+                                Groups="4">
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="SQL格式化" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="Json格式化" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="密码生成器" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="UUID生成器" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="MD5加密" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="Unix时间戳转换" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="随机数生成器" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="AES加密/解密" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="Base64编码/解码" />
+                                </Border>
+                                <Border Style="{StaticResource ToolCard}">
+                                    <TextBlock
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        FontWeight="Bold"
+                                        Foreground="#1890ff"
+                                        Text="汉字转拼音" />
+                                </Border>
+                            </hc:WaterfallPanel>
+                        </hc:ScrollViewer>
+                    </Grid>
+                </Border>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</local:BaseUserControl>

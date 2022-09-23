@@ -150,6 +150,9 @@
     <Compile Include="UserControl\Controls\SqlScript.xaml.cs">
       <DependentUpon>SqlScript.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Main\UcMainTools.xaml.cs">
+      <DependentUpon>UcMainTools.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Main\MainContent.xaml.cs">
       <DependentUpon>MainContent.xaml</DependentUpon>
     </Compile>
@@ -323,6 +326,10 @@
     <Page Include="UserControl\Controls\SqlScript.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Main\UcMainTools.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Main\MainContent.xaml">
       <SubType>Designer</SubType>

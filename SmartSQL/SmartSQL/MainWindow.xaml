@@ -313,7 +313,11 @@
             </Border>
         </DockPanel>
         <DockPanel Grid.Column="1">
+            <!--  库表管理  -->
             <userControl:MainContent x:Name="MainContent" />
+
+            <!--  工具箱  -->
+            <!--<userControl:UcMainTools x:Name="UcMainTools" Visibility="Hidden" />-->
         </DockPanel>
     </Grid>
     <!--  Main区域  -->
