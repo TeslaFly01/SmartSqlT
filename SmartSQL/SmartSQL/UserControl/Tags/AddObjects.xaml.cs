@@ -1,10 +1,11 @@
 ﻿using SmartSQL.Annotations;
 using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
-using SmartSQL.Helper;
+using SmartSQL.Models;
 using SmartSQL.Views.Category;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -25,7 +26,7 @@ namespace SmartSQL.UserControl.Tags
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class TagObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class AddObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +39,7 @@ namespace SmartSQL.UserControl.Tags
 
         #region PropertyFiled
         public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(TagObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "Connection", typeof(ConnectConfigs), typeof(AddObjects), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -49,7 +50,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(TagObjects), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(AddObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -60,7 +61,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(TagObjects), new PropertyMetadata(default(TagInfo)));
+            "SelectedTag", typeof(TagInfo), typeof(AddObjects), new PropertyMetadata(default(TagInfo)));
         /// <summary>
         /// 当前选中标签
         /// </summary>
@@ -74,22 +75,27 @@ namespace SmartSQL.UserControl.Tags
         /// 标签对象数据列表
         /// </summary>
         public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<Framework.SqliteModel.TagObjects>), typeof(TagObjects), new PropertyMetadata(default(List<Framework.SqliteModel.TagObjects>)));
-        public List<Framework.SqliteModel.TagObjects> TagObjectList
+            "TagObjectList", typeof(List<TreeNodeItem>), typeof(AddObjects), new PropertyMetadata(default(List<TreeNodeItem>)));
+        public List<TreeNodeItem> TagObjectList
         {
-            get => (List<Framework.SqliteModel.TagObjects>)GetValue(TagObjectListProperty);
+            get => (List<TreeNodeItem>)GetValue(TagObjectListProperty);
             set
             {
                 SetValue(TagObjectListProperty, value);
                 OnPropertyChanged(nameof(TagObjectList));
             }
-        } 
+        }
         #endregion
 
-        public TagObjects()
+        public AddObjects()
         {
             InitializeComponent();
             DataContext = this;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
 
         /// <summary>
@@ -97,51 +103,75 @@ namespace SmartSQL.UserControl.Tags
         /// </summary>
         public void LoadPageData()
         {
-            var conn = SelectedConnection;
-            var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
-            var sqLiteInstance = SQLiteHelper.GetInstance();
-            var tagObjectList = sqLiteInstance.ToList<Framework.SqliteModel.TagObjects>(x =>
-                x.ConnectId == conn.ID &&
-                x.DatabaseName == selDatabase &&
-                x.TagId == selTag.TagId);
-            if (tagObjectList.Any())
+            UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
+                SelectedConnection.SelectedDbConnectString(SelectedDataBase));
+            var model = dbInstance.Init();
+            var list = new List<TreeNodeItem>();
+            foreach (var table in model.Tables)
+            {
+                var tb = new TreeNodeItem()
+                {
+                    ObejcetId = table.Value.Id,
+                    DisplayName = table.Value.DisplayName,
+                    Name = table.Value.Name,
+                    Schema = table.Value.SchemaName,
+                    Comment = table.Value.Comment,
+                    CreateDate = table.Value.CreateDate,
+                    ModifyDate = table.Value.ModifyDate,
+                    Type = ObjType.Table
+                };
+                list.Add(tb);
+            }
+            if (list.Any())
             {
                 MainNoDataText.Visibility = Visibility.Collapsed;
             }
-            TagObjectList = tagObjectList;
+            TagObjectList = list;
         }
 
         /// <summary>
-        /// 取消
+        /// 确定
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnCancel_Click(object sender, RoutedEventArgs e)
+        private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = Window.GetWindow(this);
-            parentWindow.Close();
+
         }
 
         /// <summary>
-        /// 设置标签
+        /// 返回
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnSetTag_Click(object sender, RoutedEventArgs e)
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedTag == null)
-            {
-                Oops.Oh("请选择标签.");
-                return;
-            }
             var parentWindow = (TagsView)Window.GetWindow(this);
-            var ucAddObjects= new AddObjects();
-            ucAddObjects.SelectedConnection = SelectedConnection;
-            ucAddObjects.SelectedDataBase = SelectedDataBase;
-            ucAddObjects.SelectedTag = SelectedTag;
-            ucAddObjects.LoadPageData();
-            parentWindow.MainContent = ucAddObjects;
+            var ucTagObjects = new TagObjects();
+            ucTagObjects.SelectedConnection = SelectedConnection;
+            ucTagObjects.SelectedDataBase = SelectedDataBase;
+            ucTagObjects.SelectedTag = SelectedTag;
+            parentWindow.MainContent = ucTagObjects;
+        }
+
+
+        private ObservableCollection<TreeNodeItem> _TreeNodeList = new ObservableCollection<TreeNodeItem>();
+        public ObservableCollection<TreeNodeItem> TreeNodeList { get { return _TreeNodeList; } }
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in TagObjectList)
+            {
+                item.IsChecked = true;
+            }
+        }
+
+        private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in TagObjectList)
+            {
+                item.IsChecked = false;
+            }
         }
     }
 }

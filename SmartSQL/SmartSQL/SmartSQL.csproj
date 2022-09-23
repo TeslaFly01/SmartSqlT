@@ -161,6 +161,9 @@
     <Compile Include="UserControl\Main\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tags\AddObjects.xaml.cs">
+      <DependentUpon>AddObjects.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tags\TagObjects.xaml.cs">
       <DependentUpon>TagObjects.xaml</DependentUpon>
     </Compile>
@@ -335,6 +338,10 @@
     <Page Include="UserControl\Main\UTabCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Tags\AddObjects.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Tags\TagObjects.xaml">
       <SubType>Designer</SubType>
