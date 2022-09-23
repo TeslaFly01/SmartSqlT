@@ -144,6 +144,9 @@
     <Compile Include="UserControl\Controls\ConnectType.xaml.cs">
       <DependentUpon>ConnectType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Controls\UcToolCard.xaml.cs">
+      <DependentUpon>UcToolCard.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Controls\NoDataArea.xaml.cs">
       <DependentUpon>NoDataArea.xaml</DependentUpon>
     </Compile>
@@ -318,6 +321,10 @@
     <Page Include="UserControl\Controls\ConnectType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Controls\UcToolCard.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Controls\NoDataArea.xaml">
       <SubType>Designer</SubType>

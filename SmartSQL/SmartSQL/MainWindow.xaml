@@ -150,7 +150,7 @@
                         Click="MenuTag_Click"
                         FontWeight="Normal"
                         Header="标签管理"
-                        IsEnabled="False">
+                        IsEnabled="True">
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -295,7 +295,7 @@
                     </ListBoxItem>
                     <ListBoxItem
                         x:Name="MenuTool"
-                        IsEnabled="False"
+                        IsEnabled="True"
                         Selected="MenuTool_Selected">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Inbox" />
