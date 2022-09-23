@@ -281,5 +281,21 @@ namespace SmartSQL
             donation.Owner = this;
             donation.ShowDialog();
         }
+
+        private void MenuManager_Selected(object sender, RoutedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            DockUcManager.Visibility=Visibility.Visible;
+            DockUcTools.Visibility=Visibility.Collapsed;
+        }
+
+        private void MenuTool_Selected(object sender, RoutedEventArgs e)
+        {
+            DockUcTools.Visibility=Visibility.Visible;
+            DockUcManager.Visibility=Visibility.Collapsed;
+        }
     }
 }

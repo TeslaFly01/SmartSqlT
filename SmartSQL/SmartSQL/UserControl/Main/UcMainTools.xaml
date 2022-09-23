@@ -192,90 +192,160 @@
                             Height="325"
                             Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
                             Visibility="Collapsed" />
-                        <hc:ScrollViewer Margin="0,15,0,15">
+                        <hc:ScrollViewer Margin="10,15,10,15">
                             <hc:WaterfallPanel
-                                VerticalAlignment="Center"
+                                VerticalAlignment="Top"
                                 hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}"
                                 Groups="4">
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="SQL格式化" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/sql-formatter@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="SQL格式化" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="Json格式化" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/json@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="Json格式化" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="密码生成器" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/password-generator@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="密码生成器" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="UUID生成器" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/uuid@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="UUID生成器" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="MD5加密" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/uuid@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="MD5加密" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="Unix时间戳转换" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/timestamp-convert@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="Unix时间戳转换" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="随机数生成器" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/randomizer@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="随机数生成器" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="AES加密/解密" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="AES加密/解密" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="Base64编码/解码" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/base64@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="Base64编码/解码" />
+                                    </StackPanel>
                                 </Border>
                                 <Border Style="{StaticResource ToolCard}">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontWeight="Bold"
-                                        Foreground="#1890ff"
-                                        Text="汉字转拼音" />
+                                    <StackPanel VerticalAlignment="Center">
+                                        <Image
+                                            Width="40"
+                                            Height="40"
+                                            Source="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png" />
+                                        <TextBlock
+                                            Margin="0,5,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="#242424"
+                                            Text="汉字转拼音" />
+                                    </StackPanel>
                                 </Border>
                             </hc:WaterfallPanel>
                         </hc:ScrollViewer>

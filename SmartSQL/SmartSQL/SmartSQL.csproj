@@ -472,6 +472,16 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\aes%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\md5%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\pinyin%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\base64%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\json%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\password-generator%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\randomizer%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\sql-formatter%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\timestamp-convert%402x.png" />
+    <Resource Include="Resources\Img\toolIcon\uuid%402x.png" />
     <Resource Include="Resources\svg\logo\alipay.svg" />
     <Resource Include="Resources\svg\database\icon_oracle_64.svg" />
     <Resource Include="Resources\svg\ibm.svg" />
