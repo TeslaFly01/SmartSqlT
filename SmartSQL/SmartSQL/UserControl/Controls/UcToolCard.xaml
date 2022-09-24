@@ -27,7 +27,7 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border Style="{StaticResource ToolCard}">
+    <Border MouseLeftButtonUp="Border_MouseLeftButtonUp" Style="{StaticResource ToolCard}">
         <Grid>
             <TextBlock
                 Height="25"

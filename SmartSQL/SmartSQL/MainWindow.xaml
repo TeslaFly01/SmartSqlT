@@ -329,7 +329,7 @@
             Grid.Column="1"
             Visibility="Collapsed">
             <!--  工具箱  -->
-            <userControl:UcMainTools x:Name="UcMainTools" />
+            <UserControl x:Name="UcMainTools" />
         </DockPanel>
     </Grid>
     <!--  Main区域  -->

@@ -16,27 +16,6 @@
     d:DesignWidth="800"
     Loaded="BaseUserControl_Loaded"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <ResourceDictionary>
-            <Style x:Key="ToolCard" TargetType="Border">
-                <Setter Property="Background" Value="White" />
-                <Setter Property="Height" Value="100" />
-                <Setter Property="CornerRadius" Value="8" />
-                <Setter Property="Margin" Value="10" />
-                <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
-                <Style.Triggers>
-                    <MultiTrigger>
-                        <MultiTrigger.Conditions>
-                            <Condition Property="IsMouseOver" Value="True" />
-                        </MultiTrigger.Conditions>
-                        <MultiTrigger.Setters>
-                            <Setter Property="Effect" Value="{StaticResource EffectShadow3}" />
-                        </MultiTrigger.Setters>
-                    </MultiTrigger>
-                </Style.Triggers>
-            </Style>
-        </ResourceDictionary>
-    </UserControl.Resources>
     <Grid>
         <!--  Main布局  -->
         <Grid.RowDefinitions>
@@ -183,7 +162,7 @@
         </DockPanel>-->
 
         <!--  主内容  -->
-        <DockPanel Grid.Row="0" Grid.Column="2">
+        <DockPanel>
             <Grid Margin="5">
                 <Border Background="White" CornerRadius="8">
                     <Grid>
@@ -192,7 +171,7 @@
                             Height="325"
                             Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
                             Visibility="Collapsed" />
-                        <hc:ScrollViewer Margin="10,15,10,15">
+                        <!--<hc:ScrollViewer Margin="10,15,10,15">
                             <hc:WaterfallPanel
                                 VerticalAlignment="Top"
                                 hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}"
@@ -208,7 +187,8 @@
                                 <localControls:UcToolCard Title="Base64编码/解码" Icon="/SmartSQL;component/Resources/Img/toolIcon/base64@2x.png" />
                                 <localControls:UcToolCard Title="汉字转拼音" Icon="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png" />
                             </hc:WaterfallPanel>
-                        </hc:ScrollViewer>
+                        </hc:ScrollViewer>-->
+                        <local:UcToolMenu />
                     </Grid>
                 </Border>
             </Grid>

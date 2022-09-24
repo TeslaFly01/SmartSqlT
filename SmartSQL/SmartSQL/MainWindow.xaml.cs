@@ -294,6 +294,7 @@ namespace SmartSQL
 
         private void MenuTool_Selected(object sender, RoutedEventArgs e)
         {
+            UcMainTools.Content=new UcMainTools();
             DockUcTools.Visibility=Visibility.Visible;
             DockUcManager.Visibility=Visibility.Collapsed;
         }

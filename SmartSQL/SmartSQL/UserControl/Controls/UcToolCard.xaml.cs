@@ -46,13 +46,30 @@ namespace SmartSQL.UserControl.Controls
             set => SetValue(IconProperty, value);
         }
 
+        /// <summary>
+        /// 单击事件
+        /// </summary>
+        public static readonly RoutedEvent ClickEvent =
+            EventManager.RegisterRoutedEvent("ClickCard", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(UcToolCard));
+
+        /// <summary>
+        /// 点击卡片的操作.
+        /// </summary>
+        public event RoutedEventHandler ClickCard
+        {
+            add => AddHandler(ClickEvent, value);
+            remove => RemoveHandler(ClickEvent, value);
+        }
+
         public UcToolCard()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-
-    
-}
+        private void Border_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            RaiseEvent(new RoutedEventArgs(ClickEvent, this));
+        }
+    }
 }
