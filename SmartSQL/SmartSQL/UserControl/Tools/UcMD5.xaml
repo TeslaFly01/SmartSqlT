@@ -32,7 +32,8 @@
                 Margin="0,30,190,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Top"
-                hc:InfoElement.Placeholder="请输入加密文本" />
+                hc:InfoElement.Placeholder="请输入加密文本"
+                Style="{StaticResource TextBoxExtend}" />
             <Button
                 x:Name="BtnEncrypt"
                 Width="80"
@@ -76,28 +77,32 @@
                             Margin="30,60,30,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            IsReadOnly="True" />
                         <TextBox
                             Name="TextOutputU16"
                             Height="30"
                             Margin="30,30,30,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            IsReadOnly="True" />
                         <TextBox
                             Name="TextOutputL32"
                             Height="30"
                             Margin="30,30,30,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            IsReadOnly="True" />
                         <TextBox
                             Name="TextOutputU32"
                             Height="30"
                             Margin="30,30,30,0"
                             HorizontalAlignment="Stretch"
                             VerticalAlignment="Top"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            IsReadOnly="True" />
                     </StackPanel>
                 </Grid>
             </Border>

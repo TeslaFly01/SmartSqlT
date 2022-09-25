@@ -57,6 +57,8 @@ namespace SmartSQL.UserControl
                     parentWindow.UcMainTools.Content=new UcJsonFormatter(); break;
                 case "md5":
                     parentWindow.UcMainTools.Content=new UcMD5(); break;
+                case "passwordGen":
+                    parentWindow.UcMainTools.Content=new UcPasswordGen(); break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }

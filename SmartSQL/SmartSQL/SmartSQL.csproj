@@ -114,11 +114,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\TextEncryptHelper.cs" />
     <Compile Include="Helper\Oops.cs" />
     <Compile Include="Helper\SoftReg.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
+    <Compile Include="Models\PasswordResultDTO.cs" />
     <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
@@ -177,6 +179,9 @@
     </Compile>
     <Compile Include="UserControl\Tools\UcJsonFormatter.xaml.cs">
       <DependentUpon>UcJsonFormatter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Tools\UcPasswordGen.xaml.cs">
+      <DependentUpon>UcPasswordGen.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tools\UcSqlFormatter.xaml.cs">
       <DependentUpon>UcSqlFormatter.xaml</DependentUpon>
@@ -376,6 +381,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\Tools\UcJsonFormatter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Tools\UcPasswordGen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
