@@ -55,7 +55,10 @@ namespace SmartSQL.UserControl
                     parentWindow.UcMainTools.Content=new UcSqlFormatter(); break;
                 case "jsonformatter":
                     parentWindow.UcMainTools.Content=new UcJsonFormatter(); break;
-
+                case "md5":
+                    parentWindow.UcMainTools.Content=new UcMD5(); break;
+                default:
+                    Oops.Oh("敬请期待"); return;
             }
         }
     }

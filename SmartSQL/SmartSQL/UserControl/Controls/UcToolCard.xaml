@@ -27,9 +27,12 @@
             </Style>
         </ResourceDictionary>
     </UserControl.Resources>
-    <Border MouseLeftButtonUp="Border_MouseLeftButtonUp" Style="{StaticResource ToolCard}">
+    <Border
+        Cursor="Hand"
+        MouseLeftButtonUp="Border_MouseLeftButtonUp"
+        Style="{StaticResource ToolCard}">
         <Grid>
-            <TextBlock
+            <!--<TextBlock
                 Height="25"
                 Padding="5"
                 HorizontalAlignment="Right"
@@ -37,7 +40,7 @@
                 Foreground="#757575"
                 RenderTransformOrigin=".5,.5">
                 开发中
-            </TextBlock>
+            </TextBlock>-->
             <StackPanel VerticalAlignment="Center">
                 <Image
                     Width="40"

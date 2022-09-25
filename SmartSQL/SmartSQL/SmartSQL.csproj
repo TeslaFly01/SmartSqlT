@@ -114,6 +114,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\TextEncryptHelper.cs" />
     <Compile Include="Helper\Oops.cs" />
     <Compile Include="Helper\SoftReg.cs" />
     <Compile Include="Helper\StrUtil.cs" />

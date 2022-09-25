@@ -73,6 +73,7 @@
                 Margin="90,0,5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
+                Click="BtnCopyScript_Click"
                 hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
                 Content="复制"
                 Cursor="Hand"
@@ -84,8 +85,8 @@
                 Margin="180,0,0,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Click="BtnReturn_Click"
                 hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                Click="BtnReturn_Click"
                 Content="返回"
                 Cursor="Hand"
                 Style="{StaticResource ButtonWarning}" />

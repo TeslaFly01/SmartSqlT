@@ -29,6 +29,8 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using HandyControl.Data;
+using HandyControl.Controls;
+using SqlSugar.DistributedSystem.Snowflake;
 
 namespace SmartSQL.UserControl
 {
@@ -51,13 +53,30 @@ namespace SmartSQL.UserControl
 
         private void BtnFormatter_Click(object sender, RoutedEventArgs e)
         {
-            TextEditor.Text = TextEditor.Text.SqlFormat();
+            try
+            {
+                TextEditor.Text = StrUtil.JsonFormatter(TextEditor.Text);
+            }
+            catch (Exception)
+            {
+                Oops.Oh("Json解析失败，请检查");
+            }
         }
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (MainWindow)Window.GetWindow(this);
+            var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
             parentWindow.UcMainTools.Content=new UcMainTools();
+        }
+
+        private void BtnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(TextEditor.Text))
+            {
+                TextEditor.SelectAll();
+                Clipboard.SetDataObject(TextEditor.Text);
+                Oops.Success("文本已复制到剪切板");
+            }
         }
     }
 }

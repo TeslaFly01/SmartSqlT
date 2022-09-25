@@ -40,7 +40,7 @@
                         Padding="5,5,0,0"
                         Background="#f9f9f9"
                         FontFamily="新宋体"
-                        FontSize="13"
+                        FontSize="15"
                         ShowLineNumbers="True"
                         WordWrap="True">
                         <avalonedit:TextEditor.Options>
@@ -67,13 +67,14 @@
                 Cursor="Hand"
                 Style="{StaticResource ButtonSuccess}" />
             <Button
-                x:Name="BtnCopyScript"
+                x:Name="BtnCopy"
                 Width="80"
                 Height="28"
                 Margin="90,0,5,0"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
                 hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                Click="BtnCopy_Click"
                 Content="复制"
                 Cursor="Hand"
                 Style="{StaticResource ButtonPrimary}" />

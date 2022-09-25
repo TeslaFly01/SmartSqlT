@@ -29,6 +29,9 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using HandyControl.Data;
+using ICSharpCode.AvalonEdit;
+using HandyControl.Controls;
+using System.Xml;
 
 namespace SmartSQL.UserControl
 {
@@ -37,37 +40,6 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcSqlFormatter : BaseUserControl
     {
-        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
-        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
-        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
-        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
-
-        private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
-
-
-        public static readonly DependencyProperty ToolMenuListProperty = DependencyProperty.Register(
-            "ToolMenuList", typeof(List<TreeNodeItem>), typeof(UcToolMenu), new PropertyMetadata(default(List<TreeNodeItem>)));
-
-
-        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof(int), typeof(UcToolMenu), new PropertyMetadata(default(int)));
-
-
-        /// <summary>
-        /// 左侧菜单数据
-        /// </summary>
-        public List<TreeNodeItem> ToolMenuList
-        {
-            get => (List<TreeNodeItem>)GetValue(ToolMenuListProperty);
-            set
-            {
-                SetValue(ToolMenuListProperty, value);
-                OnPropertyChanged(nameof(ToolMenuList));
-            }
-        }
-
-        public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
-
         public UcSqlFormatter()
         {
             InitializeComponent();
@@ -87,8 +59,18 @@ namespace SmartSQL.UserControl
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (MainWindow)Window.GetWindow(this);
+            var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
             parentWindow.UcMainTools.Content=new UcMainTools();
+        }
+
+        private void BtnCopyScript_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(TextEditor.Text))
+            {
+                TextEditor.SelectAll();
+                Clipboard.SetDataObject(TextEditor.Text);
+                Oops.Success("文本已复制到剪切板");
+            }
         }
     }
 }

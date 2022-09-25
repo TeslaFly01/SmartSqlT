@@ -3,7 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
+using System.Xml;
 using SmartSQL.Framework.PhysicalDataModel;
 
 namespace SmartSQL.Helper
@@ -39,6 +43,25 @@ namespace SmartSQL.Helper
                     sw.WriteLine("}");
                 }
             }
+        }
+
+        /// <summary>
+        /// Json格式化
+        /// </summary>
+        /// <param name="str"></param>
+        /// <returns></returns>
+        public static string JsonFormatter(string str)
+        {
+            var jsonDocument = JsonDocument.Parse(str);
+            var formatJson = JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
+            {
+                // 整齐打印
+                WriteIndented = true,
+                
+                //重新编码，解决中文乱码问题
+                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+            });
+            return formatJson;
         }
     }
 }
