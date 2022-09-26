@@ -65,7 +65,7 @@
                     Title="Base64编码/解码"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/base64@2x.png"
-                    IsEnabled="False" />
+                    Tag="base64" />
                 <localControls:UcToolCard
                     Title="汉字转拼音"
                     ClickCard="UcToolCard_ClickCard"

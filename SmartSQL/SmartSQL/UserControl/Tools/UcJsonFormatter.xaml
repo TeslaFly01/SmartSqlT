@@ -27,8 +27,13 @@
                 VerticalAlignment="Top"
                 Background="#f9f9f9">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock
+                    <fa:FontAwesome
                         Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77"
+                        Icon="Inbox" />
+                    <TextBlock
+                        Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Foreground="#5c6b77">
                         工具箱

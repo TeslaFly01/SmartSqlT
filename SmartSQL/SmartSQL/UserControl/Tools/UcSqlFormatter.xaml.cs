@@ -98,19 +98,5 @@ namespace SmartSQL.UserControl
         {
             TextEditor.Text = string.Empty;
         }
-
-        /// <summary>
-        /// 编辑器获取焦点自动粘贴剪切板文本
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void TextEditor_GotFocus(object sender, RoutedEventArgs e)
-        {
-            var clipboardText = Clipboard.GetText();
-            if (string.IsNullOrEmpty(TextEditor.Text) && !string.IsNullOrEmpty(clipboardText))
-            {
-                TextEditor.Text = clipboardText;
-            }
-        }
     }
 }
