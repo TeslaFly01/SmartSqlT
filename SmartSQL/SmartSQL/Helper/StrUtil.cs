@@ -68,12 +68,13 @@ namespace SmartSQL.Helper
         /// 生成随机密码
         /// </summary>
         /// <param name="genlen"></param>
+        /// <param name="genNum">生成个数</param>
         /// <param name="usenumbers"></param>
         /// <param name="uselowalphabets"></param>
         /// <param name="usehighalphabets"></param>
         /// <param name="usesymbols"></param>
         /// <returns></returns>
-        public static string GeneratePassword(int genlen = 21, bool usenumbers = true, bool uselowalphabets = true, bool usehighalphabets = true, bool usesymbols = true)
+        public static List<string> GeneratePassword(int genlen = 21, int genNum = 1, bool usenumbers = true, bool uselowalphabets = true, bool usehighalphabets = true, bool usesymbols = true)
         {
 
             var upperCase = new char[]
@@ -102,15 +103,17 @@ namespace SmartSQL.Helper
                             .Concat(usenumbers ? numerals : new char[0])
                             .Concat(usesymbols ? symbols : new char[0])
                             .ToArray();
-
+            var listGen = new List<string>();
             var rnd = new Random();
-
-            var chars = Enumerable
-                .Repeat<int>(0, genlen)
-                .Select(i => total[rnd.Next(total.Length)])
-                .ToArray();
-
-            return new string(chars);
+            for (int i = 0; i < genNum; i++)
+            {
+                var chars = Enumerable
+                    .Repeat<int>(0, genlen)
+                    .Select(j => total[rnd.Next(total.Length)])
+                    .ToArray();
+                listGen.Add(new string(chars));
+            }
+            return listGen;
         }
     }
 }

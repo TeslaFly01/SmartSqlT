@@ -59,33 +59,41 @@ namespace SmartSQL.UserControl
         {
             InitializeComponent();
             DataContext = this;
+            TableGrid.PreviewMouseWheel += (sender, e) =>
+            {
+                var eventArg = new System.Windows.Input.MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
+                eventArg.RoutedEvent = System.Windows.UIElement.MouseWheelEvent;
+                eventArg.Source = sender;
+                this.TableGrid.RaiseEvent(eventArg);
+            };
         }
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
-            parentWindow.UcMainTools.Content=new UcMainTools();
+            parentWindow.UcMainTools.Content = new UcMainTools();
         }
 
         private void BtnGen_Click(object sender, RoutedEventArgs e)
         {
-            var pwdNums = TextPwdNums.Value;
+            var pwdNums = Convert.ToInt32(TextPwdNums.Value);
             var pwdLens = Convert.ToInt32(TextPwdLens.Value);
             var isNums = CheckNums.IsChecked;
             var isLowerCase = CheckLowerCase.IsChecked;
             var isUpperCase = CheckUpperCase.IsChecked;
             var isSymbol = CheckSymbol.IsChecked;
             var pwds = new List<PasswordResultDTO>();
-            for (int i = 0; i < pwdNums; i++)
-            {
 
-                var pwd = StrUtil.GeneratePassword(pwdLens, isNums.Value, isLowerCase.Value, isUpperCase.Value, isSymbol.Value);
+            var strPwds = StrUtil.GeneratePassword(pwdLens, pwdNums, isNums.Value, isLowerCase.Value, isUpperCase.Value, isSymbol.Value);
+            strPwds.ForEach(pwd =>
+            {
                 pwds.Add(new PasswordResultDTO
                 {
                     Password = pwd
                 });
-            }
-            PaswordList=pwds;
+            });
+
+            PaswordList = pwds;
         }
     }
 }
