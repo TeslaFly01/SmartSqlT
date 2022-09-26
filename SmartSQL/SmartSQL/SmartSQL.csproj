@@ -182,6 +182,9 @@
     <Compile Include="UserControl\Tools\UcJsonFormatter.xaml.cs">
       <DependentUpon>UcJsonFormatter.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcUnixToConvert.xaml.cs">
+      <DependentUpon>UcUnixToConvert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcUUIDGen.xaml.cs">
       <DependentUpon>UcUUIDGen.xaml</DependentUpon>
     </Compile>
@@ -386,6 +389,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\Tools\UcJsonFormatter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Tools\UcUnixToConvert.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

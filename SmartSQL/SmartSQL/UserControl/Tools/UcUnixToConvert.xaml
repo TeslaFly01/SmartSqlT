@@ -1,0 +1,170 @@
+﻿<local:BaseUserControl
+    x:Class="SmartSQL.UserControl.UcUnixToConvert"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border
+        Margin="5"
+        Background="White"
+        CornerRadius="8">
+        <Grid Margin="18">
+            <Grid
+                Height="40"
+                Margin="0,-5,0,0"
+                VerticalAlignment="Top"
+                Background="#f9f9f9">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        工具箱
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        /
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        UNIX时间戳转换
+                    </TextBlock>
+                </StackPanel>
+
+                <TextBlock
+                    Margin="10,10,10,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource TextBlockSubTitleBold}"
+                    Text="UNIX时间戳转换" />
+                <Button
+                    x:Name="BtnReturn"
+                    Width="60"
+                    Height="28"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Right"
+                    BorderThickness="0.4"
+                    Click="BtnReturn_Click"
+                    Content="返回"
+                    Cursor="Hand" />
+            </Grid>
+            <ScrollViewer Margin="0,45,0,0" VerticalScrollBarVisibility="Auto">
+                <Grid>
+                    <Border
+                        Height="220"
+                        Margin="0,0,0,0"
+                        VerticalAlignment="Top"
+                        Background="#f9f9f9"
+                        CornerRadius="8">
+                        <StackPanel Margin="20,20,20,0">
+                            <hc:NumericUpDown
+                                Name="TextPwdNums"
+                                VerticalAlignment="Top"
+                                hc:InfoElement.Placeholder="请输入生成个数"
+                                hc:InfoElement.Title="Unix时间戳"
+                                hc:InfoElement.TitlePlacement="Left"
+                                hc:InfoElement.TitleWidth="80"
+                                Maximum="100"
+                                Minimum="1"
+                                Style="{StaticResource NumericUpDownExtend}" />
+
+                            <Button
+                                x:Name="BtnGen"
+                                Width="100"
+                                Margin="0,20,0,0"
+                                VerticalAlignment="Top"
+                                Click="BtnGen_Click"
+                                Content="开始转换"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonSuccess}" />
+                            <StackPanel Orientation="Horizontal">
+                                <hc:NumericUpDown
+                                    Name="TextPwdLens"
+                                    Width="160"
+                                    Margin="0,25,0,0"
+                                    VerticalAlignment="Top"
+                                    hc:InfoElement.Placeholder="请输入密码长度"
+                                    hc:InfoElement.Title="北京时间"
+                                    hc:InfoElement.TitlePlacement="Left"
+                                    hc:InfoElement.TitleWidth="75"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                                <hc:NumericUpDown
+                                    Name="TextPwdL1ens"
+                                    Width="80"
+                                    Margin="15,25,0,0"
+                                    VerticalAlignment="Top"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                                <hc:NumericUpDown
+                                    Name="TextPwdL1e2ns"
+                                    Width="80"
+                                    Margin="15,25,0,0"
+                                    VerticalAlignment="Top"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                                <hc:NumericUpDown
+                                    Name="TextPwd22L1ens"
+                                    Width="80"
+                                    Margin="15,25,0,0"
+                                    VerticalAlignment="Top"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                                <hc:NumericUpDown
+                                    Name="TextPwdL231ens"
+                                    Width="80"
+                                    Margin="15,25,0,0"
+                                    VerticalAlignment="Top"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                                <hc:NumericUpDown
+                                    Name="TextPwdL134ens"
+                                    Width="80"
+                                    Margin="15,25,0,0"
+                                    VerticalAlignment="Top"
+                                    Minimum="6"
+                                    Style="{StaticResource NumericUpDownExtend}"
+                                    Value="15" />
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Border>
+
+                    <Border
+                        Margin="0,230,0,0"
+                        Background="#f9f9f9"
+                        CornerRadius="8">
+                        <Grid>
+                            <TextBlock
+                                Margin="10,10,10,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Top"
+                                Style="{StaticResource TextBlockSubTitleBold}"
+                                Text="生成结果" />
+
+                        </Grid>
+                    </Border>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Border>
+</local:BaseUserControl>
