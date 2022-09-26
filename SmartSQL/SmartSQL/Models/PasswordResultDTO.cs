@@ -10,6 +10,6 @@ namespace SmartSQL.Models
     {
         public string Password { get; set; }
 
-        public string Struang { get; set; }
+        public int PasswordStrength { get; set; }
     }
 }

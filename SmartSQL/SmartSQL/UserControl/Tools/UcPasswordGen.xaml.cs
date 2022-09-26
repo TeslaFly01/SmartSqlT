@@ -89,10 +89,10 @@ namespace SmartSQL.UserControl
             {
                 pwds.Add(new PasswordResultDTO
                 {
-                    Password = pwd
+                    Password = pwd,
+                    PasswordStrength = StrUtil.PasswordStrength(pwd)
                 });
             });
-
             PaswordList = pwds;
         }
     }

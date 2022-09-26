@@ -61,7 +61,29 @@ namespace SmartSQL.UserControl
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
-            parentWindow.UcMainTools.Content=new UcMainTools();
+            parentWindow.UcMainTools.Content = new UcMainTools();
+        }
+
+        private void BtnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            var btnCopy = (Button)sender;
+            var copyText = string.Empty;
+            switch (btnCopy.Tag)
+            {
+                case "L16":
+                    copyText = TextOutputL16.Text; break;
+                case "U16":
+                    copyText = TextOutputU16.Text; break;
+                case "L32":
+                    copyText = TextOutputL32.Text; break;
+                case "U32":
+                    copyText = TextOutputU32.Text; break;
+            }
+            if (copyText != string.Empty)
+            {
+                Clipboard.SetDataObject(copyText);
+                Oops.Success("文本已复制到剪切板");
+            }
         }
     }
 }

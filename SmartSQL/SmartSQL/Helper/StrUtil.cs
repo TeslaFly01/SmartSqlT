@@ -76,12 +76,12 @@ namespace SmartSQL.Helper
         /// <returns></returns>
         public static List<string> GeneratePassword(int genlen = 21, int genNum = 1, bool usenumbers = true, bool uselowalphabets = true, bool usehighalphabets = true, bool usesymbols = true)
         {
-
+            #region MyRegion
             var upperCase = new char[]
-                {
+                    {
                 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U',
                 'V', 'W', 'X', 'Y', 'Z'
-                };
+                    };
 
             var lowerCase = new char[]
                 {
@@ -114,6 +114,36 @@ namespace SmartSQL.Helper
                 listGen.Add(new string(chars));
             }
             return listGen;
+            #endregion
+        }
+
+        /// <summary>
+        /// 密码强度计算
+        /// </summary>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static int PasswordStrength(string password)
+        {
+            //空字符串强度值为0
+            if (password == "") return 0;
+            //字符统计
+            int iNum = 0, iLtt = 0, iSym = 0;
+            foreach (char c in password)
+            {
+                if (c >= '0' && c <= '9') iNum++;
+                else if (c >= 'a' && c <= 'z') iLtt++;
+                else if (c >= 'A' && c <= 'Z') iLtt++;
+                else iSym++;
+            }
+            if (iLtt == 0 && iSym == 0) return 1; //纯数字密码
+            if (iNum == 0 && iLtt == 0) return 1; //纯符号密码
+            if (iNum == 0 && iSym == 0) return 1; //纯字母密码
+            if (password.Length <= 6) return 1; //长度不大于6的密码
+            if (iLtt == 0) return 2; //数字和符号构成的密码
+            if (iSym == 0) return 2; //数字和字母构成的密码
+            if (iNum == 0) return 2; //字母和符号构成的密码
+            if (password.Length <= 10) return 2; //长度不大于10的密码
+            return 3; //由数字、字母、符号构成的密码
         }
     }
 }
