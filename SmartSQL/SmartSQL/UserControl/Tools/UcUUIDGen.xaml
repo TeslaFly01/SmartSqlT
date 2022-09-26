@@ -1,5 +1,5 @@
 ﻿<local:BaseUserControl
-    x:Class="SmartSQL.UserControl.UcPasswordGen"
+    x:Class="SmartSQL.UserControl.UcUUIDGen"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -41,7 +41,7 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Foreground="#5c6b77">
-                        密码生成器
+                        UUID生成器
                     </TextBlock>
                 </StackPanel>
 
@@ -50,7 +50,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Style="{StaticResource TextBlockSubTitleBold}"
-                    Text="密码生成器" />
+                    Text="UUID生成器" />
                 <Button
                     x:Name="BtnReturn"
                     Width="60"
@@ -66,13 +66,13 @@
                 <Grid>
                     <Border
                         Height="220"
-                        Margin="0,0,0,0"
+                        Margin="0"
                         VerticalAlignment="Top"
                         Background="#f9f9f9"
                         CornerRadius="8">
                         <Grid Margin="20,20,20,0">
                             <hc:NumericUpDown
-                                Name="TextPwdNums"
+                                Name="TextUUIDNums"
                                 VerticalAlignment="Top"
                                 hc:InfoElement.Placeholder="请输入生成个数"
                                 hc:InfoElement.Title="生成个数"
@@ -81,59 +81,48 @@
                                 Maximum="100"
                                 Minimum="1"
                                 Style="{StaticResource NumericUpDownExtend}" />
-                            <hc:NumericUpDown
-                                Name="TextPwdLens"
-                                Margin="0,55,0,0"
+                            <StackPanel
+                                Margin="0,60,0,0"
+                                HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
-                                hc:InfoElement.Placeholder="请输入密码长度"
-                                hc:InfoElement.Title="密码长度"
-                                hc:InfoElement.TitlePlacement="Left"
-                                hc:InfoElement.TitleWidth="65"
-                                Minimum="6"
-                                Style="{StaticResource NumericUpDownExtend}"
-                                Value="15" />
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Margin="0,0,18,0"
+                                    Cursor="Hand"
+                                    Text="生成结果" />
+                                <RadioButton
+                                    x:Name="CheckUpper"
+                                    Margin="0,0,20,0"
+                                    Content="大写"
+                                    Cursor="Hand"
+                                    IsChecked="True" />
+                                <RadioButton
+                                    x:Name="CheckLower"
+                                    Content="小写"
+                                    Cursor="Hand" />
+                            </StackPanel>
                             <StackPanel
                                 Margin="0,115,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Top"
                                 Orientation="Horizontal">
-                                <TextBlock Margin="0,0,18,0" Text="密码包含" />
+                                <TextBlock Margin="0,0,18,0" Text="其它选项" />
                                 <CheckBox
-                                    x:Name="CheckNums"
+                                    x:Name="CheckRemoveHLine"
                                     Margin="0,0,20,0"
-                                    Content="数字 0-9"
-                                    Cursor="Hand"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    x:Name="CheckLowerCase"
-                                    Margin="0,0,20,0"
-                                    Content="小写字母 a-z"
-                                    Cursor="Hand"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    x:Name="CheckUpperCase"
-                                    Margin="0,0,20,0"
-                                    Content="大写字母 A-Z"
-                                    Cursor="Hand"
-                                    IsChecked="True" />
-                                <CheckBox
-                                    x:Name="CheckSymbol"
-                                    Margin="0,0,20,0"
-                                    Content="特殊字符"
-                                    Cursor="Hand"
-                                    IsChecked="True" />
+                                    Content="去掉UUID的中横线"
+                                    Cursor="Hand" />
                             </StackPanel>
                             <StackPanel
-                                Margin="0,120,0,0"
+                                Margin="0,150,0,0"
                                 HorizontalAlignment="Center"
                                 Orientation="Horizontal">
                                 <Button
                                     x:Name="BtnGen"
-                                    Width="100"
-                                    Margin="0,30,10,0"
+                                    Width="80"
                                     VerticalAlignment="Top"
                                     Click="BtnGen_Click"
-                                    Content="生成随机密码"
+                                    Content="生成UUID"
                                     Cursor="Hand"
                                     Style="{StaticResource ButtonSuccess}" />
                             </StackPanel>
@@ -161,33 +150,19 @@
                                 Background="#f9f9f9"
                                 Cursor="Arrow"
                                 HeadersVisibility="All"
-                                ItemsSource="{Binding PaswordList}"
+                                ItemsSource="{Binding UUIDList}"
                                 RowHeaderWidth="60"
                                 SelectionUnit="Cell"
                                 VerticalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn
                                         Width="*"
-                                        Binding="{Binding Password}"
-                                        Header="密码"
+                                        Binding="{Binding UUID}"
+                                        Header="UUID"
                                         IsReadOnly="True" />
                                     <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
                                         <DataGridTemplateColumn.Header>
-                                            <TextBlock>密码强度</TextBlock>
-                                        </DataGridTemplateColumn.Header>
-                                        <DataGridTemplateColumn.CellTemplate>
-                                            <DataTemplate>
-                                                <hc:Rate
-                                                    Count="3"
-                                                    Foreground="{DynamicResource SuccessBrush}"
-                                                    IsReadOnly="True"
-                                                    Value="{Binding PasswordStrength}" />
-                                            </DataTemplate>
-                                        </DataGridTemplateColumn.CellTemplate>
-                                    </DataGridTemplateColumn>
-                                    <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
-                                        <DataGridTemplateColumn.Header>
-                                            <TextBlock>操作</TextBlock>
+                                            <TextBlock>复制</TextBlock>
                                         </DataGridTemplateColumn.Header>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>

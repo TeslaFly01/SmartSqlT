@@ -125,6 +125,7 @@
     <Compile Include="Models\MainTabWModel.cs" />
     <Compile Include="Models\SObjectDTO.cs" />
     <Compile Include="Models\TagObjectDTO.cs" />
+    <Compile Include="Models\UUIDResultDTO.cs" />
     <Compile Include="UserControl\BaseUserControl.cs" />
     <Compile Include="UserControl\Connect\ConnectMainUC.xaml.cs">
       <DependentUpon>ConnectMainUC.xaml</DependentUpon>
@@ -179,6 +180,9 @@
     </Compile>
     <Compile Include="UserControl\Tools\UcJsonFormatter.xaml.cs">
       <DependentUpon>UcJsonFormatter.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Tools\UcUUIDGen.xaml.cs">
+      <DependentUpon>UcUUIDGen.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tools\UcPasswordGen.xaml.cs">
       <DependentUpon>UcPasswordGen.xaml</DependentUpon>
@@ -381,6 +385,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\Tools\UcJsonFormatter.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Tools\UcUUIDGen.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

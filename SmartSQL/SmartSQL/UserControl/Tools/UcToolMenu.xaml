@@ -1,5 +1,4 @@
-﻿<!--  在线工具网https://www.zxgj.cn/  -->
-<local:BaseUserControl
+﻿<local:BaseUserControl
     x:Class="SmartSQL.UserControl.UcToolMenu"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -45,7 +44,7 @@
                     Title="UUID生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/uuid@2x.png"
-                    IsEnabled="False" />
+                    Tag="uuidGen" />
                 <localControls:UcToolCard
                     Title="Unix时间戳转换"
                     ClickCard="UcToolCard_ClickCard"
