@@ -54,13 +54,13 @@
                 <Button
                     x:Name="BtnReturn"
                     Width="60"
-                    Height="26"
-                    Margin="10,0,8,0"
+                    Height="28"
+                    Margin="0,0,8,0"
                     HorizontalAlignment="Right"
+                    BorderThickness="0.4"
                     Click="BtnReturn_Click"
                     Content="返回"
-                    Cursor="Hand"
-                    Style="{StaticResource ButtonDanger}" />
+                    Cursor="Hand" />
             </Grid>
             <ScrollViewer Margin="0,45,0,0" VerticalScrollBarVisibility="Auto">
                 <Grid>

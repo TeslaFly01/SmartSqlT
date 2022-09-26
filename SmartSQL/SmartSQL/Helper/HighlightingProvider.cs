@@ -62,7 +62,8 @@ namespace SmartSQL
             {
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("XML")),
                 ["C#"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("C#")),
-                ["SQL"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("SQL"))
+                ["SQL"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("SQL")),
+                ["Json"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Json"))
             };
         }
     }
@@ -76,19 +77,8 @@ namespace SmartSQL
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("XML-Dark")),
                 ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Dark")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL-Dark")),
+                ["Json"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Json")),
             };
         }
     }
-
-    //internal class HighlightingProviderDefault : HighlightingProvider
-    //{
-    //    protected override void InitDefinitions()
-    //    {
-    //        Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
-    //        {
-    //            ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp")),
-    //            ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL"))
-    //        };
-    //    }
-    //}
 }

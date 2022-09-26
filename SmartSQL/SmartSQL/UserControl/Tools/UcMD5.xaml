@@ -54,13 +54,13 @@
                 <Button
                     x:Name="BtnReturn"
                     Width="60"
-                    Height="26"
-                    Margin="10,0,8,0"
+                    Height="28"
+                    Margin="0,0,8,0"
                     HorizontalAlignment="Right"
+                    BorderThickness="0.4"
                     Click="BtnReturn_Click"
                     Content="返回"
-                    Cursor="Hand"
-                    Style="{StaticResource ButtonDanger}" />
+                    Cursor="Hand" />
             </Grid>
 
             <Border
@@ -72,22 +72,37 @@
                 <StackPanel>
                     <TextBox
                         Name="TextInput"
-                        Height="30"
-                        Margin="10"
+                        Height="50"
+                        Margin="15,10,15,0"
                         HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
                         hc:InfoElement.Placeholder="请输入加密文本"
-                        Style="{StaticResource TextBoxExtend}" />
-                    <Button
-                        x:Name="BtnEncrypt"
-                        Width="80"
-                        Height="28"
+                        Style="{StaticResource TextBoxExtend}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
                         Margin="0,10,0,0"
                         HorizontalAlignment="Center"
-                        hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                        Click="BtnEncrypt_Click"
-                        Content="加密"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonSuccess}" />
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="BtnEncrypt"
+                            Width="80"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                            Click="BtnEncrypt_Click"
+                            Content="加密"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
+                        <Button
+                            x:Name="BtnClear"
+                            Width="80"
+                            Height="28"
+                            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+                            BorderThickness="0.4"
+                            Click="BtnClear_Click"
+                            Content="清空"
+                            Cursor="Hand" />
+                    </StackPanel>
                 </StackPanel>
             </Border>
             <Border

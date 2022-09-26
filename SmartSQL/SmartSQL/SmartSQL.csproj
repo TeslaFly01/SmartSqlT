@@ -120,6 +120,7 @@
     <Compile Include="Helper\SoftReg.cs" />
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
+    <Compile Include="Helper\TruncateLongLines.cs" />
     <Compile Include="Models\PasswordResultDTO.cs" />
     <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
@@ -494,6 +495,20 @@
     <None Include="FodyWeavers.xsd">
       <SubType>Designer</SubType>
     </None>
+    <Resource Include="Resources\xshd\Coco-Mode.xshd" />
+    <Resource Include="Resources\xshd\CPP-Mode.xshd" />
+    <Resource Include="Resources\xshd\CSharp-Mode.xshd" />
+    <Resource Include="Resources\xshd\CSS-Mode.xshd" />
+    <Resource Include="Resources\xshd\HTML-Mode.xshd" />
+    <Resource Include="Resources\xshd\Java-Mode.xshd" />
+    <Resource Include="Resources\xshd\JavaScript-Mode.xshd" />
+    <Resource Include="Resources\xshd\Json.xshd" />
+    <Resource Include="Resources\xshd\MarkDown-Mode.xshd" />
+    <Resource Include="Resources\xshd\PHP-Mode.xshd" />
+    <Resource Include="Resources\xshd\Python-Mode.xshd" />
+    <Resource Include="Resources\xshd\Tex-Mode.xshd" />
+    <Resource Include="Resources\xshd\TSQL-Mode.xshd" />
+    <Resource Include="Resources\xshd\XML-Mode.xshd" />
     <Resource Include="Resources\Fonts\iconfont.ttf">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

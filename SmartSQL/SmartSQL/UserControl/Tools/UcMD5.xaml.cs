@@ -85,5 +85,10 @@ namespace SmartSQL.UserControl
                 Oops.Success("文本已复制到剪切板");
             }
         }
+
+        private void BtnClear_Click(object sender, RoutedEventArgs e)
+        {
+            TextInput.Text = string.Empty;
+        }
     }
 }
