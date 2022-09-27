@@ -70,6 +70,11 @@
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png"
                     Tag="nPinYin" />
+                <localControls:UcToolCard
+                    Title="文本两端插入字符"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/text-insert@2x.png"
+                    Tag="textInsert" />
             </hc:WaterfallPanel>
         </hc:ScrollViewer>
     </Grid>

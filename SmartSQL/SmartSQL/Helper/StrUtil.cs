@@ -53,11 +53,12 @@ namespace SmartSQL.Helper
         public static string JsonFormatter(string str)
         {
             var jsonDocument = JsonDocument.Parse(str);
+
             var formatJson = JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
             {
                 // 整齐打印
                 WriteIndented = true,
-
+                
                 //重新编码，解决中文乱码问题
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             });

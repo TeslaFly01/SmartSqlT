@@ -183,6 +183,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcTextInsert.xaml.cs">
+      <DependentUpon>UcTextInsert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcNPinYin.xaml.cs">
       <DependentUpon>UcNPinYin.xaml</DependentUpon>
     </Compile>
@@ -398,6 +401,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Tools\UcTextInsert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcNPinYin.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -565,6 +572,7 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\text-insert%402x.png" />
     <Resource Include="Resources\Img\toolIcon\aes%402x.png" />
     <Resource Include="Resources\Img\toolIcon\md5%402x.png" />
     <Resource Include="Resources\Img\toolIcon\pinyin%402x.png" />

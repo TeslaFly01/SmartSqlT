@@ -92,24 +92,31 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var viewList = _dbMaintenance.GetViewInfoList(false);
-            viewList.ForEach(v =>
+            try
             {
-                if (views.ContainsKey(v.Name))
+                var viewList = _dbMaintenance.GetViewInfoList(false);
+                viewList.ForEach(v =>
                 {
-                    return;
-                }
-                var view = new View()
-                {
-                    Id = v.Name,
-                    Name = v.Name,
-                    DisplayName = v.Name,
-                    Comment = v.Description,
-                    CreateDate = v.CreateDate,
-                    ModifyDate = v.ModifyDate
-                };
-                views.Add(v.Name, view);
-            });
+                    if (views.ContainsKey(v.Name))
+                    {
+                        return;
+                    }
+                    var view = new View()
+                    {
+                        Id = v.Name,
+                        Name = v.Name,
+                        DisplayName = v.Name,
+                        Comment = v.Description,
+                        CreateDate = v.CreateDate,
+                        ModifyDate = v.ModifyDate
+                    };
+                    views.Add(v.Name, view);
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
             return views;
             #endregion
         }
@@ -118,26 +125,33 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var procDic = new Procedures();
-            var procInfoList = _dbMaintenance.GetProcInfoList(false);
-            var dbName = _dbMaintenance.Context.Ado.Connection.Database;
-            var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
-            procList.ForEach(p =>
+            try
             {
-                if (procDic.ContainsKey(p.Name))
+                var procInfoList = _dbMaintenance.GetProcInfoList(false);
+                var dbName = _dbMaintenance.Context.Ado.Connection.Database;
+                var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
+                procList.ForEach(p =>
                 {
-                    return;
-                }
-                var proc = new Procedure()
-                {
-                    Id = p.Name,
-                    Name = p.Name,
-                    DisplayName = p.Name,
-                    Comment = p.Description,
-                    CreateDate = p.CreateDate,
-                    ModifyDate = p.ModifyDate
-                };
-                procDic.Add(p.Name, proc);
-            });
+                    if (procDic.ContainsKey(p.Name))
+                    {
+                        return;
+                    }
+                    var proc = new Procedure()
+                    {
+                        Id = p.Name,
+                        Name = p.Name,
+                        DisplayName = p.Name,
+                        Comment = p.Description,
+                        CreateDate = p.CreateDate,
+                        ModifyDate = p.ModifyDate
+                    };
+                    procDic.Add(p.Name, proc);
+                });
+            }
+            catch (Exception ex)
+            {
+                
+            }
             return procDic;
             #endregion
         }
