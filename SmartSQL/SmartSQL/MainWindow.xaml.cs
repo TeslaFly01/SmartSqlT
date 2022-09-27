@@ -290,12 +290,21 @@ namespace SmartSQL
             }
             DockUcManager.Visibility=Visibility.Visible;
             DockUcTools.Visibility=Visibility.Collapsed;
+            DockUcDbCompare.Visibility=Visibility.Collapsed;
         }
 
         private void MenuTool_Selected(object sender, RoutedEventArgs e)
         {
             UcMainTools.Content=new UcMainTools();
             DockUcTools.Visibility=Visibility.Visible;
+            DockUcManager.Visibility=Visibility.Collapsed;
+            DockUcDbCompare.Visibility=Visibility.Collapsed;
+        }
+
+        private void MenuDbCompare_Selected(object sender, RoutedEventArgs e)
+        {
+            DockUcDbCompare.Visibility=Visibility.Visible;
+            DockUcTools.Visibility=Visibility.Collapsed;
             DockUcManager.Visibility=Visibility.Collapsed;
         }
     }

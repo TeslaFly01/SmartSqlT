@@ -302,7 +302,10 @@
                             <TextBlock Margin="0,5,0,0" Text="工具" />
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem IsEnabled="False">
+                    <ListBoxItem
+                        x:Name="MenuDbCompare"
+                        IsEnabled="True"
+                        Selected="MenuDbCompare_Selected">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Compass" />
                             <TextBlock Margin="0,5,0,0" Text="比较" />
@@ -330,6 +333,13 @@
             Visibility="Collapsed">
             <!--  工具箱  -->
             <UserControl x:Name="UcMainTools" />
+        </DockPanel>
+        <DockPanel
+            x:Name="DockUcDbCompare"
+            Grid.Column="1"
+            Visibility="Collapsed">
+            <!--  DB比较  -->
+            <userControl:UcMainDbCompare />
         </DockPanel>
     </Grid>
     <!--  Main区域  -->
