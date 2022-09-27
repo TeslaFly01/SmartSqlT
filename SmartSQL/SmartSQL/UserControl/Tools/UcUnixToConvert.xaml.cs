@@ -40,40 +40,40 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcUnixToConvert : BaseUserControl
     {
-        /// <summary>
-        /// 结果数据列表
-        /// </summary>
-        public static readonly DependencyProperty PaswordListProperty = DependencyProperty.Register(
-            "PaswordList", typeof(List<PasswordResultDTO>), typeof(UcUnixToConvert), new PropertyMetadata(default(List<PasswordResultDTO>)));
-        public List<PasswordResultDTO> PaswordList
-        {
-            get => (List<PasswordResultDTO>)GetValue(PaswordListProperty);
-            set
-            {
-                SetValue(PaswordListProperty, value);
-                OnPropertyChanged(nameof(PaswordList));
-            }
-        }
-
         public UcUnixToConvert()
         {
             InitializeComponent();
             DataContext = this;
         }
 
-        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 初始化加载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BaseUserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
-            parentWindow.UcMainTools.Content = new UcMainTools();
+            var nowTime = DateTime.Now;
+            var unixTime = DateTimeHelper.DateTimeToUnix(nowTime);
+            TextUnixTime.Value = unixTime;
         }
 
         private void BtnGen_Click(object sender, RoutedEventArgs e)
         {
-            var pwdNums = Convert.ToInt32(TextPwdNums.Value);
-            var pwdLens = Convert.ToInt32(TextPwdLens.Value);
-            var pwds = new List<PasswordResultDTO>();
+            var unixTime = Convert.ToInt64(TextUnixTime.Value);
+            var datetime = DateTimeHelper.UnixToDateTime(unixTime);
+            TextDateTime.Text = datetime.ToString("F");
+        }
 
-            PaswordList = pwds;
+        /// <summary>
+        /// 返回
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
+            parentWindow.UcMainTools.Content = new UcMainTools();
         }
     }
 }

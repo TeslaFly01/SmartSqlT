@@ -145,5 +145,27 @@ namespace SmartSQL.Helper
             if (password.Length <= 10) return 2; //长度不大于10的密码
             return 3; //由数字、字母、符号构成的密码
         }
+
+        /// <summary>
+        /// Base64编码
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string Base46_Encode(string text)
+        {
+            byte[] bytes = Encoding.Default.GetBytes(text);
+            return Convert.ToBase64String(bytes);
+        }
+
+        /// <summary>
+        /// Base64解码
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string Base46_Decode(string text)
+        {
+            byte[] outputb = Convert.FromBase64String(text);
+            return Encoding.Default.GetString(outputb);
+        }
     }
 }

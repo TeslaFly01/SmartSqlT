@@ -43,37 +43,67 @@ namespace SmartSQL.UserControl
             DataContext = this;
         }
 
-        private void BtnEncrypt_Click(object sender, RoutedEventArgs e)
-        {
-            if (string.IsNullOrEmpty(TextInput.Text))
-            {
-                Oops.Oh("请输入加密文本");
-                return;
-            }
-            var textU32 = TextEncryptHelper.GetMD5_32(TextInput.Text);
-            var textU16 = TextEncryptHelper.GetMD5_16(TextInput.Text);
-        }
-
+        /// <summary>
+        /// 返回
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
             var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
             parentWindow.UcMainTools.Content = new UcMainTools();
         }
 
-        private void BtnCopy_Click(object sender, RoutedEventArgs e)
-        {
-            var btnCopy = (Button)sender;
-            var copyText = string.Empty;
-            if (copyText != string.Empty)
-            {
-                Clipboard.SetDataObject(copyText);
-                Oops.Success("文本已复制到剪切板");
-            }
-        }
-
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             TextInput.Text = string.Empty;
+            TextOutput.Text = string.Empty;
+        }
+
+        /// <summary>
+        /// 编码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnEncode_Click(object sender, RoutedEventArgs e)
+        {
+            var inputText = TextInput.Text;
+            if (inputText == string.Empty)
+            {
+                return;
+            }
+            var rText = StrUtil.Base46_Encode(inputText);
+            TextOutput.Text = rText;
+        }
+
+        private void BtnDecode_Click(object sender, RoutedEventArgs e)
+        {
+            var inputText = TextInput.Text;
+            if (inputText == string.Empty)
+            {
+                return;
+            }
+            try
+            {
+                var rText = StrUtil.Base46_Decode(inputText);
+                TextOutput.Text = rText;
+            }
+            catch (Exception ex)
+            {
+                TextOutput.Text = ex.Message;
+            }
+        }
+
+        private void BtnExchange_Click(object sender, RoutedEventArgs e)
+        {
+            var inputText = TextInput.Text;
+            var outputText = TextOutput.Text;
+            if (inputText == string.Empty && outputText == string.Empty)
+            {
+                return;
+            }
+            TextInput.Text = outputText;
+            TextOutput.Text = inputText;
         }
     }
 }

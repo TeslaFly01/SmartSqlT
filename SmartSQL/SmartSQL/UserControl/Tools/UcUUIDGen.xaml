@@ -124,8 +124,9 @@
                                 Orientation="Horizontal">
                                 <Button
                                     x:Name="BtnGen"
-                                    Width="80"
+                                    Width="95"
                                     VerticalAlignment="Top"
+                                    hc:IconElement.Geometry="{StaticResource StartGeometry}"
                                     Click="BtnGen_Click"
                                     Content="生成UUID"
                                     Cursor="Hand"

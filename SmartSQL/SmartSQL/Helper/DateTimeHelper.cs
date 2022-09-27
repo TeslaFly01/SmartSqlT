@@ -15,10 +15,10 @@ namespace SmartSQL.Helper
         /// <returns></returns>
         public static DateTime UnixToDateTime(long timeStamp)
         {
-            DateTime startDt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), TimeZoneInfo.Local);
-            long lTime = timeStamp * 10000;
+            DateTime dtStart = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1), TimeZoneInfo.Local); //表示本地时区
+            long lTime = long.Parse(timeStamp.ToString() + "0000000");
             TimeSpan toNow = new TimeSpan(lTime);
-            return startDt.Add(toNow);
+            return dtStart.Add(toNow);
         }
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace SmartSQL.Helper
         public static long DateTimeToUnix(DateTime time)
         {
             DateTime startDt = TimeZoneInfo.ConvertTime(new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc), TimeZoneInfo.Local);
-            return (long)(time - startDt).TotalMilliseconds;
+            return (long)(time - startDt).TotalSeconds;
         }
     }
 }

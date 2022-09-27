@@ -49,7 +49,6 @@
                     Title="Unix时间戳转换"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/timestamp-convert@2x.png"
-                    IsEnabled="False"
                     Tag="unixConvert" />
                 <localControls:UcToolCard
                     Title="随机数生成器"
@@ -70,7 +69,7 @@
                     Title="汉字转拼音"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png"
-                    IsEnabled="False" />
+                    Tag="nPinYin" />
             </hc:WaterfallPanel>
         </hc:ScrollViewer>
     </Grid>

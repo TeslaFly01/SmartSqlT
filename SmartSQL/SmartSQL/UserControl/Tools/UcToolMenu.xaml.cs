@@ -52,19 +52,21 @@ namespace SmartSQL.UserControl
             switch (selCard.Tag)
             {
                 case "sqlformatter":
-                    parentWindow.UcMainTools.Content=new UcSqlFormatter(); break;
+                    parentWindow.UcMainTools.Content = new UcSqlFormatter(); break;
                 case "jsonformatter":
-                    parentWindow.UcMainTools.Content=new UcJsonFormatter(); break;
+                    parentWindow.UcMainTools.Content = new UcJsonFormatter(); break;
                 case "md5":
-                    parentWindow.UcMainTools.Content=new UcMD5(); break;
+                    parentWindow.UcMainTools.Content = new UcMD5(); break;
                 case "passwordGen":
-                    parentWindow.UcMainTools.Content=new UcPasswordGen(); break;
+                    parentWindow.UcMainTools.Content = new UcPasswordGen(); break;
                 case "uuidGen":
-                    parentWindow.UcMainTools.Content = new UcUUIDGen();break;
+                    parentWindow.UcMainTools.Content = new UcUUIDGen(); break;
                 case "unixConvert":
-                    parentWindow.UcMainTools.Content=new UcUnixToConvert();break;
+                    parentWindow.UcMainTools.Content = new UcUnixToConvert(); break;
                 case "base64":
-                    parentWindow.UcMainTools.Content=new UcBase64();break;
+                    parentWindow.UcMainTools.Content = new UcBase64(); break;
+                case "nPinYin":
+                    parentWindow.UcMainTools.Content = new UcNPinYin(); break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }
