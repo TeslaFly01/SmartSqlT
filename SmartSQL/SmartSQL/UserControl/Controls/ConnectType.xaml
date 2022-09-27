@@ -18,7 +18,7 @@
             TargetType="hc:Card">
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#e3e4e6" />
+                    <Setter Property="Background" Value="#f9f9f9" />
                 </Trigger>
                 <Trigger Property="IsEnabled" Value="False">
                     <Setter Property="Background" Value="#e3e4e6" />
