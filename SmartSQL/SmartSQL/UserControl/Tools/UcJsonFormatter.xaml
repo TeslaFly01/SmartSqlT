@@ -92,35 +92,48 @@
                     </avalonedit:TextEditor>
                 </Grid>
             </Border>
+            <StackPanel
+                Height="30"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="BtnFormatter"
+                    Width="80"
+                    Height="28"
+                    hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
+                    Click="BtnFormatter_Click"
+                    Content="格式化"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonSuccess}" />
+                <Button
+                    x:Name="BtnCompress"
+                    Width="80"
+                    Height="28"
+                    Margin="10,0,0,0"
+                    hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
+                    Click="BtnCompress_Click"
+                    Content="压缩"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonWarning}" />
+                <Button
+                    x:Name="BtnCopy"
+                    Width="80"
+                    Height="28"
+                    Margin="10,0,0,0"
+                    hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                    Click="BtnCopy_Click"
+                    Content="复制"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonPrimary}" />
 
-            <Button
-                x:Name="BtnFormatter"
-                Width="80"
-                Height="28"
-                Margin="0,0,5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
-                Click="BtnFormatter_Click"
-                Content="格式化"
-                Cursor="Hand"
-                Style="{StaticResource ButtonSuccess}" />
-            <Button
-                x:Name="BtnCopy"
-                Width="80"
-                Height="28"
-                Margin="90,0,5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                Click="BtnCopy_Click"
-                Content="复制"
-                Cursor="Hand"
-                Style="{StaticResource ButtonPrimary}" />
+            </StackPanel>
             <Button
                 x:Name="BtnClear"
                 Width="80"
                 Height="28"
+                Margin="0,10,0,0"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
                 hc:IconElement.Geometry="{StaticResource ClearGeometry}"

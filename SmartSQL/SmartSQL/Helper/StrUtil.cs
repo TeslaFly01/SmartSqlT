@@ -16,6 +16,7 @@ namespace SmartSQL.Helper
     {
         public static void CreateClass(string filePath, string objectName, List<Column> columns)
         {
+            #region MyRegion
             using (var aFile = new FileStream(filePath, FileMode.Create))
             {
                 using (var sw = new StreamWriter(aFile, Encoding.UTF8))
@@ -42,7 +43,8 @@ namespace SmartSQL.Helper
                     sw.WriteLine("\t}");
                     sw.WriteLine("}");
                 }
-            }
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -52,17 +54,18 @@ namespace SmartSQL.Helper
         /// <returns></returns>
         public static string JsonFormatter(string str)
         {
+            #region MyRegion
             var jsonDocument = JsonDocument.Parse(str);
-
             var formatJson = JsonSerializer.Serialize(jsonDocument, new JsonSerializerOptions()
             {
                 // 整齐打印
                 WriteIndented = true,
-                
+
                 //重新编码，解决中文乱码问题
                 Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
             });
-            return formatJson;
+            return formatJson; 
+            #endregion
         }
 
         /// <summary>
@@ -125,6 +128,7 @@ namespace SmartSQL.Helper
         /// <returns></returns>
         public static int PasswordStrength(string password)
         {
+            #region MyRegion
             //空字符串强度值为0
             if (password == "") return 0;
             //字符统计
@@ -144,7 +148,8 @@ namespace SmartSQL.Helper
             if (iSym == 0) return 2; //数字和字母构成的密码
             if (iNum == 0) return 2; //字母和符号构成的密码
             if (password.Length <= 10) return 2; //长度不大于10的密码
-            return 3; //由数字、字母、符号构成的密码
+            return 3; //由数字、字母、符号构成的密码 
+            #endregion
         }
 
         /// <summary>
@@ -167,6 +172,42 @@ namespace SmartSQL.Helper
         {
             byte[] outputb = Convert.FromBase64String(text);
             return Encoding.Default.GetString(outputb);
+        }
+
+        /// <summary>
+        /// Json压缩
+        /// </summary>
+        /// <param name="json"></param>
+        /// <returns></returns>
+        public static string JsonCompress(string json)
+        {
+            StringBuilder sb = new StringBuilder();
+            using (StringReader reader = new StringReader(json))
+            {
+                int ch = -1;
+                int lastch = -1;
+                bool isQuoteStart = false;
+                while ((ch = reader.Read()) > -1)
+                {
+                    if ((char)lastch != '\\' && (char)ch == '\"')
+                    {
+                        if (!isQuoteStart)
+                        {
+                            isQuoteStart = true;
+                        }
+                        else
+                        {
+                            isQuoteStart = false;
+                        }
+                    }
+                    if (!Char.IsWhiteSpace((char)ch) || isQuoteStart)
+                    {
+                        sb.Append((char)ch);
+                    }
+                    lastch = ch;
+                }
+            }
+            return sb.ToString();
         }
     }
 }

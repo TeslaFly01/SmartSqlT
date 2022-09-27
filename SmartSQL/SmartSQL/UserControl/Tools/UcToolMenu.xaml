@@ -51,15 +51,10 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/timestamp-convert@2x.png"
                     Tag="unixConvert" />
                 <localControls:UcToolCard
-                    Title="随机数生成器"
+                    Title="文本两端插入字符"
                     ClickCard="UcToolCard_ClickCard"
-                    Icon="/SmartSQL;component/Resources/Img/toolIcon/randomizer@2x.png"
-                    IsEnabled="False" />
-                <localControls:UcToolCard
-                    Title="AES加密/解密"
-                    ClickCard="UcToolCard_ClickCard"
-                    Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"
-                    IsEnabled="False" />
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/text-insert@2x.png"
+                    Tag="textInsert" />
                 <localControls:UcToolCard
                     Title="Base64编码/解码"
                     ClickCard="UcToolCard_ClickCard"
@@ -71,10 +66,10 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png"
                     Tag="nPinYin" />
                 <localControls:UcToolCard
-                    Title="文本两端插入字符"
+                    Title="AES加密/解密"
                     ClickCard="UcToolCard_ClickCard"
-                    Icon="/SmartSQL;component/Resources/Img/toolIcon/text-insert@2x.png"
-                    Tag="textInsert" />
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"
+                    IsEnabled="False" />
             </hc:WaterfallPanel>
         </hc:ScrollViewer>
     </Grid>

@@ -76,6 +76,28 @@ namespace SmartSQL.UserControl
         }
 
         /// <summary>
+        /// 压缩Json
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCompress_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(TextEditor.Text))
+                {
+                    Oops.Oh("请输入Json文本");
+                    return;
+                }
+                TextEditor.Text = StrUtil.JsonCompress(TextEditor.Text);
+            }
+            catch (Exception)
+            {
+                Oops.Oh("Json解析失败，请检查");
+            }
+        }
+
+        /// <summary>
         /// 返回
         /// </summary>
         /// <param name="sender"></param>
