@@ -24,6 +24,7 @@ using SmartSQL.Framework.Const;
 using SmartSQL.Helper;
 using SmartSQL.UserControl;
 using SmartSQL.Views;
+using SqlSugar;
 using ComboBox = System.Windows.Controls.ComboBox;
 using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
@@ -124,7 +125,14 @@ namespace SmartSQL.UserControl
                 var list = dbInstance.GetDatabases(connectConfig.DefaultDatabase);
                 SelectDatabase.ItemsSource = list;
                 HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-                SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+                if (connectConfig.DbType == DbType.PostgreSQL)
+                {
+                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
+                }
+                else
+                {
+                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+                }
             }
             catch (Exception ex)
             {
@@ -278,7 +286,7 @@ namespace SmartSQL.UserControl
                 var model = new Model();
                 try
                 {
-                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase));
+                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase),selectDataBase);
                     model = dbInstance.Init();
                     menuData = model;
                 }

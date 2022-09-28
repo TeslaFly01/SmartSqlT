@@ -236,7 +236,7 @@ namespace SmartSQL.UserControl
                     if (msgResult == MessageBoxResult.OK)
                     {
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString);
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString,SelectedDataBase.DbName);
                         try
                         {
                             var objectType = selectItem.Type.Equals(ObjType.Table) ? DbObjectType.Table : (selectItem.Type.Equals(ObjType.View) ? DbObjectType.View : DbObjectType.Proc);

@@ -16,6 +16,10 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
         }
+        public PostgreSqlExporter(string connectionString, string dbName) : base(connectionString, dbName)
+        {
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+        }
 
         public PostgreSqlExporter(string tableName, List<Column> columns) : base(tableName, columns)
         {
@@ -42,17 +46,15 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
+            var schemaSql = "SELECT nspname AS NspName FROM pg_catalog.pg_namespace order by nspname asc ";
+            var schemaList = dbClient.SqlQueryable<SchemaInfo>(schemaSql).ToList();
+            //var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
             var list = new List<DataBase>();
-            dataBaseList.ForEach(dbName =>
+            schemaList.ForEach(schema =>
             {
-                if (dbName.Equals("template0") || dbName.Equals("template1"))
-                {
-                    return;
-                }
                 var dBase = new DataBase
                 {
-                    DbName = dbName,
+                    DbName = $"{defaultDatabase}:{schema.NspName}",
                     IsSelected = false
                 };
                 list.Add(dBase);
@@ -66,7 +68,17 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var tableList = _dbMaintenance.GetTableInfoList(false);
+            var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
+            var tbSql = $@"SELECT DISTINCT
+                                table_name AS Name,
+                                obj_description(oid, 'pg_class') AS Description
+                           FROM
+                                information_schema.tables t,pg_class p
+                           WHERE
+                                    table_schema = '{schema}'
+                           AND t.table_name = p.relname";
+            var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
+            var tableList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -150,19 +162,44 @@ namespace SmartSQL.Framework.Exporter
             }
             catch (Exception ex)
             {
-                
+
             }
             return procDic;
             #endregion
         }
         #endregion
 
-        public override Columns GetColumnInfoById(string objectId)
+        public override Columns GetColumnInfoById(string objectId, string schema)
         {
             #region MyRegion
             var columns = new Columns(500);
-            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
-            viewList.ForEach(v =>
+            var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
+            var sql = $@"select cast (pclass.oid as int4) as TableId,cast(ptables.tablename as varchar) as TableName,
+                                pcolumn.column_name as DbColumnName,pcolumn.udt_name as DataType,
+                                CASE WHEN pcolumn.numeric_scale > 0 THEN pcolumn.numeric_precision ELSE pcolumn.character_maximum_length END   as Length,
+                                pcolumn.column_default as DefaultValue,
+                                pcolumn.numeric_scale as DecimalDigits,
+                                pcolumn.numeric_scale as Scale,
+                                col_description(pclass.oid, pcolumn.ordinal_position) as ColumnDescription,
+                                case when pkey.colname = pcolumn.column_name
+                                then true else false end as IsPrimaryKey,
+                                case when pcolumn.column_default like 'nextval%'
+                                then true else false end as IsIdentity,
+                                case when pcolumn.is_nullable = 'YES'
+                                then true else false end as IsNullable
+                                 from(select * from pg_tables where upper(tablename) = upper('{objectId}') and schemaname = '{schema}') ptables inner join pg_class pclass
+                                 on ptables.tablename = pclass.relname inner join(SELECT*
+                                 FROM information_schema.columns ) pcolumn on pcolumn.table_name = ptables.tablename
+                                left join(
+                                    select pg_class.relname, pg_attribute.attname as colname from
+                                    pg_constraint inner join pg_class on pg_constraint.conrelid = pg_class.oid
+                                   inner join pg_attribute on pg_attribute.attrelid = pg_class.oid and  pg_attribute.attnum = pg_constraint.conkey[1] inner join pg_type on pg_type.oid = pg_attribute.atttypid 
+                                    where pg_constraint.contype = 'p'
+                                ) pkey on pcolumn.table_name = pkey.relname
+                                order by ptables.tablename";
+            var colList = dbClient.SqlQueryable<DbColumnInfo>(sql).ToList();
+            //var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
+            colList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
                 {
@@ -364,5 +401,10 @@ namespace SmartSQL.Framework.Exporter
         {
             return "";
         }
+    }
+
+    public class SchemaInfo
+    {
+        public string NspName { get; set; }
     }
 }

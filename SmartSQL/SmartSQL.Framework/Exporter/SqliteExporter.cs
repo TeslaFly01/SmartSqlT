@@ -21,6 +21,10 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
         }
+        public SqliteExporter(string connectionString, string dbName) : base(connectionString, dbName)
+        {
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+        }
 
         public SqliteExporter(string tableName, List<Column> columns) : base(tableName, columns)
         {
@@ -55,7 +59,7 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        public override Columns GetColumnInfoById(string objectId)
+        public override Columns GetColumnInfoById(string objectId, string schema)
         {
             #region MyRegion
             var columns = new Columns(500);

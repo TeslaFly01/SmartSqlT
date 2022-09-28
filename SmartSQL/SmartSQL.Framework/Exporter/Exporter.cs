@@ -15,7 +15,11 @@ namespace SmartSQL.Framework.Exporter
         {
             DbConnectString = connectionString;
         }
-
+        public Exporter(string connectionString, string dbName)
+        {
+            DbConnectString = connectionString;
+            DbName = dbName;
+        }
         public Exporter(string tableName, List<Column> columns)
         {
             TableName = tableName;
@@ -25,6 +29,10 @@ namespace SmartSQL.Framework.Exporter
         /// 数据库连接
         /// </summary>
         public string DbConnectString { get; private set; }
+        /// <summary>
+        /// 数据库
+        /// </summary>
+        public string DbName { get; set; }
         /// <summary>
         /// 表名
         /// </summary>
@@ -48,8 +56,9 @@ namespace SmartSQL.Framework.Exporter
         /// 获取对象列信息
         /// </summary>
         /// <param name="objectId"></param>
+        /// <param name="schema"></param>
         /// <returns></returns>
-        public abstract Columns GetColumnInfoById(string objectId);
+        public abstract Columns GetColumnInfoById(string objectId, string schema);
         /// <summary>
         /// 获取脚本信息
         /// </summary>

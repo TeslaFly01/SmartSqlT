@@ -49,67 +49,69 @@
                         Margin="5"
                         Background="Transparent">
                         <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="8*" />
-                                <ColumnDefinition Width="1*" MinWidth="30" />
-                            </Grid.ColumnDefinitions>
-                            <ComboBox
-                                x:Name="SelectDatabase"
+                        <StackPanel>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="8*" />
+                                    <ColumnDefinition Width="1*" MinWidth="30" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox
+                                    x:Name="SelectDatabase"
+                                    Height="30"
+                                    VerticalAlignment="Top"
+                                    HorizontalContentAlignment="Stretch"
+                                    hc:BorderElement.CornerRadius="5"
+                                    hc:InfoElement.Placeholder="请选择数据库"
+                                    Cursor="Hand"
+                                    IsTextSearchEnabled="True"
+                                    SelectionChanged="SelectDatabase_OnSelectionChanged"
+                                    Style="{StaticResource ComboBoxExtend}"
+                                    Text="{Binding DbName}">
+                                    <ComboBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                <Image
+                                                    Width="11"
+                                                    Height="15"
+                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <TextBlock
+                                                    Margin="5,0,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DbName}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ComboBox.ItemTemplate>
+                                </ComboBox>
+                                <Button
+                                    Name="BtnFresh"
+                                    Grid.Column="1"
+                                    Margin="0,0,0,0"
+                                    Padding="4"
+                                    VerticalAlignment="Top"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="BtnFresh_OnClick"
+                                    Cursor="Hand">
+                                    <Button.Content>
+                                        <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
+                                    </Button.Content>
+                                </Button>
+                            </Grid>
+                            <hc:SearchBar
+                                x:Name="SearchMenu"
                                 Height="30"
+                                Margin="0,5,0,0"
+                                Padding="5,0,5,0"
                                 VerticalAlignment="Top"
                                 HorizontalContentAlignment="Stretch"
                                 hc:BorderElement.CornerRadius="5"
-                                hc:InfoElement.Placeholder="请选择数据库"
-                                Cursor="Hand"
-                                IsTextSearchEnabled="True"
-                                SelectionChanged="SelectDatabase_OnSelectionChanged"
-                                Style="{StaticResource ComboBoxExtend}"
-                                Text="{Binding DbName}">
-                                <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                            <Image
-                                                Width="11"
-                                                Height="15"
-                                                Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                                            <TextBlock
-                                                Margin="5,0,0,0"
-                                                HorizontalAlignment="Center"
-                                                VerticalAlignment="Center"
-                                                Text="{Binding DbName}" />
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ComboBox.ItemTemplate>
-                            </ComboBox>
-                            <Button
-                                Name="BtnFresh"
-                                Grid.Column="2"
-                                Margin="0,0,0,0"
-                                Padding="4"
-                                VerticalAlignment="Top"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                Click="BtnFresh_OnClick"
-                                Cursor="Hand">
-                                <Button.Content>
-                                    <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
-                                </Button.Content>
-                            </Button>
-                        </Grid>
-                        <hc:SearchBar
-                            x:Name="SearchMenu"
-                            Height="30"
-                            Margin="0,34,0,0"
-                            Padding="5,0,5,0"
-                            VerticalAlignment="Top"
-                            HorizontalContentAlignment="Stretch"
-                            hc:BorderElement.CornerRadius="5"
-                            hc:InfoElement.Placeholder="搜索表/视图/存储过程"
-                            FontSize="13"
-                            ShowClearButton="True"
-                            Style="{StaticResource SearchBarPlus}"
-                            TextChanged="SearchMenu_OnTextChanged" />
+                                hc:InfoElement.Placeholder="搜索表/视图/存储过程"
+                                FontSize="13"
+                                ShowClearButton="True"
+                                Style="{StaticResource SearchBarPlus}"
+                                TextChanged="SearchMenu_OnTextChanged" />
+                        </StackPanel>
                         <TabControl
                             x:Name="TabLeftType"
                             Margin="0,65,0,40"

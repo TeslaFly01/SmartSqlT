@@ -63,15 +63,13 @@ namespace SmartSQL.UserControl.Connect
             }
             var connect = ConnectConfig;
             var pwd = EncryptHelper.Decode(connect.Password);
-            var defaultBase = new List<DataBase> { new DataBase { DbName = connect.DefaultDatabase } };
             HidId.Text = connect.ID.ToString();
             TextConnectName.Text = connect.ConnectName;
             TextServerAddress.Text = connect.ServerAddress;
             TextServerPort.Value = connect.ServerPort;
             TextServerName.Text = connect.UserName;
             TextServerPassword.Password = pwd;
-            ComboDefaultDatabase.ItemsSource = defaultBase;
-            ComboDefaultDatabase.SelectedItem = defaultBase.First();
+            TextDefaultDatabase.Text = connect.DefaultDatabase;
             #endregion
         }
 
@@ -142,23 +140,9 @@ namespace SmartSQL.UserControl.Connect
                 try
                 {
                     var exporter = ExporterFactory.CreateInstance(DbType.PostgreSQL, connectionString);
-                    var list = exporter.GetDatabases();
+                    exporter.GetDatabases();
                     Dispatcher.Invoke(() =>
                     {
-                        ComboDefaultDatabase.ItemsSource = list;
-                        if (connectId < 1)
-                        {
-                            ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals("postgres"));
-                        }
-                        else
-                        {
-                            var sqLiteHelper = new SQLiteHelper();
-                            var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
-                            if (connect != null)
-                            {
-                                ComboDefaultDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.Equals(connect.DefaultDatabase));
-                            }
-                        }
                         mainWindow.LoadingG.Visibility = Visibility.Collapsed;
                         if (isTest)
                         {
@@ -199,9 +183,9 @@ namespace SmartSQL.UserControl.Connect
             var serverPort = Convert.ToInt32(TextServerPort.Value);
             var userName = TextServerName.Text.Trim();
             var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
-            var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
+            var defaultDataBase = TextDefaultDatabase.Text.Trim();
             var connectionString =
-                ConnectionStringUtil.PostgreSqlString(serverAddress, serverPort, "postgres", userName, password);
+                ConnectionStringUtil.PostgreSqlString(serverAddress, serverPort, defaultDataBase, userName, password);
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
 
@@ -242,7 +226,7 @@ namespace SmartSQL.UserControl.Connect
                             connectConfig.ServerPort = serverPort;
                             connectConfig.UserName = userName;
                             connectConfig.Password = password;
-                            connectConfig.DefaultDatabase = defaultDataBase.DbName;
+                            connectConfig.DefaultDatabase = defaultDataBase;
                             connectConfig.Authentication = 1;
                             sqLiteHelper.db.Update(connectConfig);
                         }
@@ -264,7 +248,7 @@ namespace SmartSQL.UserControl.Connect
                                 UserName = userName,
                                 Password = password,
                                 CreateDate = DateTime.Now,
-                                DefaultDatabase = defaultDataBase == null ? "postgresql" : defaultDataBase.DbName
+                                DefaultDatabase = defaultDataBase
                             };
                             sqLiteHelper.db.Insert(connectConfig);
                         }
@@ -300,16 +284,6 @@ namespace SmartSQL.UserControl.Connect
                 }
             });
             #endregion
-        }
-
-        /// <summary>
-        /// 刷新数据库
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
-        {
-            TestConnect(false);
         }
     }
 }

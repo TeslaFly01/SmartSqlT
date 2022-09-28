@@ -67,6 +67,7 @@ namespace SmartSQL.Framework.Util
         /// <returns></returns>
         public static string PostgreSqlString(string serverAddress, int port, string database, string userName, string password)
         {
+            database = database.Contains(":") ? database.Split(':')[0] : database;
             var connectString = $@"HOST={serverAddress};
                                    PORT={port};
                                DATABASE={database};

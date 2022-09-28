@@ -107,47 +107,12 @@
                     Height="30"
                     Margin="0,140,20,20"
                     VerticalAlignment="Top" />
-                <ComboBox
-                    x:Name="ComboDefaultDatabase"
-                    Height="30"
-                    Margin="0,180,55,20"
-                    VerticalAlignment="Top"
-                    HorizontalContentAlignment="Stretch"
-                    hc:BorderElement.CornerRadius="5"
-                    hc:InfoElement.Placeholder="请选择默认数据库"
-                    Cursor="Hand"
-                    IsTextSearchEnabled="True"
-                    Style="{StaticResource ComboBoxExtend}"
-                    Text="{Binding DbName}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <Image
-                                    Width="11"
-                                    Height="15"
-                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                                <TextBlock
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding DbName}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button
-                    Name="BtnFresh"
+                <hc:TextBox
+                    Name="TextDefaultDatabase"
+                    Height="0"
                     Margin="0,180,20,20"
-                    Padding="7"
-                    HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
-                    BorderThickness="0"
-                    Click="BtnFresh_OnClick"
-                    Cursor="Hand"
-                    Foreground="{DynamicResource PrimaryTextBrush}"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="刷新数据库" />
+                    ShowClearButton="True" />
             </Grid>
         </Grid>
     </Grid>

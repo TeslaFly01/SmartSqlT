@@ -105,7 +105,7 @@ namespace SmartSQL.UserControl.Tags
         {
             UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
-                SelectedConnection.SelectedDbConnectString(SelectedDataBase));
+                SelectedConnection.SelectedDbConnectString(SelectedDataBase),SelectedDataBase);
             var model = dbInstance.Init();
             var list = new List<TagObjectDTO>();
             foreach (var table in model.Tables)

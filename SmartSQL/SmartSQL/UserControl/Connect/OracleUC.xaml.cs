@@ -294,15 +294,5 @@ namespace SmartSQL.UserControl.Connect
             });
             #endregion
         }
-
-        /// <summary>
-        /// 刷新数据库
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
-        {
-            TestConnect(false);
-        }
     }
 }

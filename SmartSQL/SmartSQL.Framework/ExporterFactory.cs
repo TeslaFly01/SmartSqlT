@@ -26,6 +26,20 @@ namespace SmartSQL.Framework
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
+
+        public static Exporter.Exporter CreateInstance(DbType type, string dbConnectionString, string dbName)
+        {
+            switch (type)
+            {
+                case DbType.SqlServer: return new SqlServerExporter(dbConnectionString, dbName);
+                case DbType.MySql: return new MySqlExporter(dbConnectionString, dbName);
+                case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString, dbName);
+                case DbType.Sqlite: return new SqliteExporter(dbConnectionString, dbName);
+                case DbType.Oracle: return new OracleExporter(dbConnectionString, dbName);
+                default: return new SqlServerExporter(dbConnectionString, dbName);
+            }
+        }
+
         public static Exporter.Exporter CreateInstance(DbType type, string tableName, List<Column> columns)
         {
             switch (type)

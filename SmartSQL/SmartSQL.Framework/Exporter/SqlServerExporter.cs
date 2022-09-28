@@ -20,6 +20,10 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
         }
+        public SqlServerExporter(string connectionString,string dbName) : base(connectionString, dbName)
+        {
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+        }
         public SqlServerExporter(string table, List<Column> columns) : base(table, columns)
         {
 
@@ -369,7 +373,7 @@ namespace SmartSQL.Framework.Exporter
         }
         #endregion
 
-        public override Columns GetColumnInfoById(string objectId)
+        public override Columns GetColumnInfoById(string objectId, string schema)
         {
             #region MyRegion
             var columns = new Columns();

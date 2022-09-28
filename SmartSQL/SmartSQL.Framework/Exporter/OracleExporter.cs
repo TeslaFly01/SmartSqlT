@@ -16,6 +16,10 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
         }
+        public OracleExporter(string connectionString,string dbName) : base(connectionString,dbName)
+        {
+            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+        }
 
         public OracleExporter(string tableName, List<Column> columns) : base(tableName, columns)
         {
@@ -144,8 +148,9 @@ namespace SmartSQL.Framework.Exporter
         /// 根据对象ID获取列信息
         /// </summary>
         /// <param name="objectId"></param>
+        /// <param name="schema"></param>
         /// <returns></returns>
-        public override Columns GetColumnInfoById(string objectId)
+        public override Columns GetColumnInfoById(string objectId, string schema)
         {
             #region MyRegion
             var columns = new Columns(500);

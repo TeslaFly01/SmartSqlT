@@ -97,7 +97,7 @@ namespace SmartSQL.Views
                         NoDataText.Visibility = Visibility.Visible;
                     }
                 });
-                var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString);
+                var exporter = ExporterFactory.CreateInstance(conn.DbType, dbConnectionString,selectDataBase);
                 var list = exporter.GetDatabases(selectDataBase);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {

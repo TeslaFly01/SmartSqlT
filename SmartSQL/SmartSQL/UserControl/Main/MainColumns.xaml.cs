@@ -118,6 +118,7 @@ namespace SmartSQL.UserControl
             NoDataText.Visibility = Visibility.Collapsed;
             var selectedObject = SelectedObject;
             var selectedConnection = SelectedConnection;
+            var selectedDatabase = SelectedDataBase;
             var dbConnectionString = selectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
             if (selectedObject.Type == ObjType.Table || selectedObject.Type == ObjType.View)
             {
@@ -132,10 +133,10 @@ namespace SmartSQL.UserControl
                 var objName = isView ? "视图" : "表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
-                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString,selectedDatabase.DbName);
                 Task.Run(() =>
                 {
-                    var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
+                    var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId, selectedDatabase.Schema);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
@@ -172,7 +173,7 @@ namespace SmartSQL.UserControl
                 TabCode.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
-                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString,selectedDatabase.DbName);
                 Task.Run(() =>
                 {
                     var script = dbInstance.GetScriptInfoById(selectedObject.ObejcetId, DbObjectType.Proc);
@@ -217,7 +218,7 @@ namespace SmartSQL.UserControl
             if (selectedItem.Name.Equals("TabData"))
             {
                 var connectionString = SelectedConnection.DbMasterConnectString;
-                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString);
+                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString,SelectedDataBase.DbName);
                 if (TabData.IsSelected)
                 {
                     SearchTableExt2.Text = "";
@@ -308,7 +309,7 @@ namespace SmartSQL.UserControl
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                     try
                     {
-                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString);
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString,SelectedDataBase.DbName);
                         var editResult = dbInstance.UpdateColumnRemark(selectItem, newValue);
                         if (editResult)
                             Oops.Success("修改成功");

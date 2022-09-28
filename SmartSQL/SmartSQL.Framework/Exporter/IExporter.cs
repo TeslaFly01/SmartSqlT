@@ -26,8 +26,9 @@ namespace SmartSQL.Framework.Exporter
         /// 获取对象列信息
         /// </summary>
         /// <param name="objectId"></param>
+        /// <param name="schema"></param>
         /// <returns></returns>
-        Columns GetColumnInfoById(string objectId);
+        Columns GetColumnInfoById(string objectId, string schema = "");
         /// <summary>
         /// 获取脚本信息
         /// </summary>

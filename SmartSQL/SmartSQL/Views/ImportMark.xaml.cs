@@ -87,9 +87,10 @@ namespace SmartSQL.Views
                 Oops.Oh("导入文件为空.");
                 return;
             }
+            var selectedDatabase = SelectedDataBase;
             LoadingG.Visibility = Visibility.Visible;
             var dbMaintenance = SugarFactory.GetDbMaintenance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
-            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString);
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbDefaultConnectString,selectedDatabase.DbName);
             var xmlContent = File.ReadAllText(path, Encoding.UTF8);
             Task.Run(() =>
             {
@@ -116,7 +117,7 @@ namespace SmartSQL.Views
                         foreach (var tabInfo in dbDTO.Tables)
                         {
                             var tableName = tabInfo.TableName;
-                            var tableColumns = dbInstance.GetColumnInfoById(tableName);
+                            var tableColumns = dbInstance.GetColumnInfoById(tableName, selectedDatabase.Schema);
                             //更新表描述
                             if (dbMaintenance.IsAnyTable(tabInfo.TableName))
                             {
