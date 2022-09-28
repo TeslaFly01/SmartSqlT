@@ -32,6 +32,8 @@ using ICSharpCode.AvalonEdit;
 using SmartSQL.UserControl.Tags;
 using SmartSQL.Framework.Util;
 using System.Dynamic;
+using System.Windows.Threading;
+using AduSkin.Controls.Metro;
 
 namespace SmartSQL.UserControl
 {
@@ -40,10 +42,51 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcUnixToConvert : BaseUserControl
     {
+        DispatcherTimer timerHeartBeat = new DispatcherTimer();
         public UcUnixToConvert()
         {
             InitializeComponent();
             DataContext = this;
+            timerHeartBeat.Tick += SendHeartBeatToServer;
+            timerHeartBeat.Interval = TimeSpan.FromSeconds(1);
+            timerHeartBeat.Start();
+        }
+
+        private void SendHeartBeatToServer(object sender, EventArgs e)
+        {
+            var unixTime = DateTimeHelper.DateTimeToUnix(DateTime.Now);
+            TextNowUnixTime.Text=unixTime.ToString();
+        }
+
+        /// <summary>
+        /// 停止
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnNowStop_Click(object sender, RoutedEventArgs e)
+        {
+            timerHeartBeat.Stop();
+        }
+
+        /// <summary>
+        /// 开始
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnNowStart_Click(object sender, RoutedEventArgs e)
+        {
+            timerHeartBeat.Start();
+        }
+
+        /// <summary>
+        /// 刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnNowRefresh_Click(object sender, RoutedEventArgs e)
+        {
+            var unixTime = DateTimeHelper.DateTimeToUnix(DateTime.Now);
+            TextNowUnixTime.Text=unixTime.ToString();
         }
 
         /// <summary>
@@ -55,14 +98,15 @@ namespace SmartSQL.UserControl
         {
             var nowTime = DateTime.Now;
             var unixTime = DateTimeHelper.DateTimeToUnix(nowTime);
-            TextUnixTime.Value = unixTime;
+            //TextUnixTime.Value = unixTime;
+            //TextDateTime.Text = nowTime.ToString("F");
         }
 
         private void BtnGen_Click(object sender, RoutedEventArgs e)
         {
-            var unixTime = Convert.ToInt64(TextUnixTime.Value);
-            var datetime = DateTimeHelper.UnixToDateTime(unixTime);
-            TextDateTime.Text = datetime.ToString("F");
+            //var unixTime = Convert.ToInt64(TextUnixTime.Value);
+            //var datetime = DateTimeHelper.UnixToDateTime(unixTime);
+            //TextDateTime.Text = datetime.ToString("F");
         }
 
         /// <summary>

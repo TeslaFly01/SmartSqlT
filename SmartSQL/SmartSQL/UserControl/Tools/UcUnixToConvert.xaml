@@ -71,34 +71,82 @@
             <ScrollViewer Margin="0,45,0,0" VerticalScrollBarVisibility="Auto">
                 <Grid>
                     <Border
-                        Height="170"
+                        Height="72"
                         Margin="0,0,0,0"
                         VerticalAlignment="Top"
                         Background="#f9f9f9"
                         CornerRadius="8">
-                        <StackPanel Margin="20,20,20,0">
-                            <hc:NumericUpDown
+                        <StackPanel
+                            Margin="20"
+                            HorizontalAlignment="Stretch"
+                            Orientation="Horizontal">
+                            <TextBox
+                                Name="TextNowUnixTime"
+                                Width="295"
+                                VerticalAlignment="Center"
+                                hc:InfoElement.Title="当前Unix时间戳"
+                                hc:InfoElement.TitlePlacement="Left"
+                                hc:InfoElement.TitleWidth="100"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <Button
+                                x:Name="BtnNowStop"
+                                Margin="10,0,0,0"
+                                Click="BtnNowStop_Click"
+                                Content="停止"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonDanger}" />
+                            <Button
+                                x:Name="BtnNowStart"
+                                Margin="10,0,0,0"
+                                Click="BtnNowStart_Click"
+                                Content="开始"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonPrimary}" />
+                            <Button
+                                x:Name="BtnNowRefresh"
+                                Margin="10,0,0,0"
+                                Click="BtnNowRefresh_Click"
+                                Content="刷新"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonSuccess}" />
+
+                        </StackPanel>
+                    </Border>
+
+                    <Border
+                        Height="72"
+                        Margin="0,90,0,0"
+                        VerticalAlignment="Top"
+                        Background="#f9f9f9"
+                        CornerRadius="8">
+                        <Grid Margin="20,20,20,0" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
                                 Name="TextUnixTime"
+                                Grid.Column="0"
                                 VerticalAlignment="Top"
-                                hc:InfoElement.Placeholder="请输入Unix时间"
+                                hc:InfoElement.Placeholder="请输入Unix时间戳"
                                 hc:InfoElement.Title="Unix时间戳"
                                 hc:InfoElement.TitlePlacement="Left"
-                                hc:InfoElement.TitleWidth="80"
-                                Minimum="1"
-                                Style="{StaticResource NumericUpDownExtend}" />
+                                hc:InfoElement.TitleWidth="100"
+                                Style="{StaticResource TextBoxExtend}" />
                             <Button
-                                x:Name="BtnGen"
+                                x:Name="BtnUnixConvert"
+                                Grid.Column="1"
                                 Width="100"
-                                Margin="0,20,0,0"
                                 VerticalAlignment="Top"
                                 hc:IconElement.Geometry="{StaticResource StartGeometry}"
                                 Click="BtnGen_Click"
                                 Content="开始转换"
                                 Cursor="Hand"
                                 Style="{StaticResource ButtonSuccess}" />
-                            <hc:TextBox
-                                Name="TextDateTime"
-                                Margin="0,20,0,0"
+                            <TextBox
+                                Name="TextUnixResult"
+                                Grid.Column="2"
                                 VerticalAlignment="Top"
                                 hc:InfoElement.Title="北京时间"
                                 hc:InfoElement.TitlePlacement="Left"
@@ -107,7 +155,52 @@
                                 IsReadOnly="True"
                                 Style="{StaticResource TextBoxExtend}" />
 
-                        </StackPanel>
+                        </Grid>
+                    </Border>
+
+                    <Border
+                        Height="72"
+                        Margin="0,180,0,0"
+                        VerticalAlignment="Top"
+                        Background="#f9f9f9"
+                        CornerRadius="8">
+                        <Grid Margin="20,20,20,0" HorizontalAlignment="Stretch">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="120" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Name="TextBjTime"
+                                Grid.Column="0"
+                                VerticalAlignment="Top"
+                                hc:InfoElement.Placeholder="请输入北京时间"
+                                hc:InfoElement.Title="北京时间"
+                                hc:InfoElement.TitlePlacement="Left"
+                                hc:InfoElement.TitleWidth="100"
+                                Style="{StaticResource TextBoxExtend}" />
+                            <Button
+                                x:Name="BtnBjConvert"
+                                Grid.Column="1"
+                                Width="100"
+                                VerticalAlignment="Top"
+                                hc:IconElement.Geometry="{StaticResource StartGeometry}"
+                                Click="BtnGen_Click"
+                                Content="开始转换"
+                                Cursor="Hand"
+                                Style="{StaticResource ButtonSuccess}" />
+                            <TextBox
+                                Name="TextBjResult"
+                                Grid.Column="2"
+                                VerticalAlignment="Top"
+                                hc:InfoElement.Title="Unix时间戳"
+                                hc:InfoElement.TitlePlacement="Left"
+                                hc:InfoElement.TitleWidth="80"
+                                BorderThickness="0"
+                                IsReadOnly="True"
+                                Style="{StaticResource TextBoxExtend}" />
+
+                        </Grid>
                     </Border>
 
                     <Border
