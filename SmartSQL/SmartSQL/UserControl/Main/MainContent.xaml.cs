@@ -99,6 +99,7 @@ namespace SmartSQL.UserControl
         public MainContent()
         {
             InitializeComponent();
+            CornerRadius = 10;
             DataContext = this;
         }
 

@@ -164,7 +164,7 @@
         <!--  主内容  -->
         <DockPanel>
             <Grid Margin="5">
-                <Border Background="White" CornerRadius="8">
+                <Border Background="White" CornerRadius="10">
                     <Grid>
                         <svgc:SvgViewbox
                             Width="350"

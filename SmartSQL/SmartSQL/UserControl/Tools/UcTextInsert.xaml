@@ -160,6 +160,13 @@
                             Click="BtnClear_Click"
                             Content="清空"
                             Cursor="Hand" />
+                        <TextBlock
+                            Margin="0,0,0,3"
+                            VerticalAlignment="Bottom"
+                            FontSize="10"
+                            Foreground="#5c6b77">
+                            提示：为空时默认生成为SQL语句的IN参数文本
+                        </TextBlock>
                     </StackPanel>
                     <Grid Margin="15,10,15,0">
                         <Button

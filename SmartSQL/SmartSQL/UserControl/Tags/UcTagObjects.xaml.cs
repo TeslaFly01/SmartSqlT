@@ -100,17 +100,24 @@ namespace SmartSQL.UserControl.Tags
             var conn = SelectedConnection;
             var selDatabase = SelectedDataBase;
             var selTag = SelectedTag;
-            var sqLiteInstance = SQLiteHelper.GetInstance();
-            var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
-                x.ConnectId == conn.ID &&
-                x.DatabaseName == selDatabase &&
-                x.TagId == selTag.TagId);
-            if (tagObjectList.Any())
+
+            Task.Run(() =>
             {
-                MainNoDataText.Visibility = Visibility.Collapsed;
-            }
-            TagObjectItems = tagObjectList;
-            TagObjectList = tagObjectList;
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                    x.ConnectId == conn.ID &&
+                    x.DatabaseName == selDatabase &&
+                    x.TagId == selTag.TagId);
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    if (tagObjectList.Any())
+                    {
+                        MainNoDataText.Visibility = Visibility.Collapsed;
+                    }
+                    TagObjectItems = tagObjectList;
+                    TagObjectList = tagObjectList;
+                }));
+            });
         }
         private List<TagObjects> TagObjectItems;
 
@@ -132,6 +139,34 @@ namespace SmartSQL.UserControl.Tags
             }
             MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
             TagObjectList = searchData;
+        }
+
+        /// <summary>
+        /// 行删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnRowDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (TagObjects)TableGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                var conn = SelectedConnection;
+                var selDatabase = SelectedDataBase;
+                var selTag = SelectedTag;
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+                sqLiteInstance.db.Delete(selectedItem);
+                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                    x.ConnectId == conn.ID &&
+                    x.DatabaseName == selDatabase &&
+                    x.TagId == selTag.TagId);
+                if (tagObjectList.Any())
+                {
+                    MainNoDataText.Visibility = Visibility.Collapsed;
+                }
+                TagObjectItems = tagObjectList;
+                TagObjectList = tagObjectList;
+            }
         }
 
         /// <summary>

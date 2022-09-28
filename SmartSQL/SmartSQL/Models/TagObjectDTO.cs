@@ -12,6 +12,8 @@ namespace SmartSQL.Models
 
         public string Name { get; set; }
 
+        public int ObjectType { get; set; }
+
         public string Comment { get; set; }
 
         public bool _IsChecked;

@@ -114,6 +114,7 @@ namespace SmartSQL.UserControl.Tags
                 {
                     ObjectId = table.Value.Id,
                     Name = table.Value.Name,
+                    ObjectType = 1,
                     Comment = table.Value.Comment
                 };
                 list.Add(tb);
@@ -151,6 +152,7 @@ namespace SmartSQL.UserControl.Tags
                         DatabaseName = SelectedDataBase,
                         ObjectId = obj.ObjectId,
                         ObjectName = obj.Name,
+                        ObjectType = obj.ObjectType,
                         TagId = SelectedTag.TagId
                     });
                 }

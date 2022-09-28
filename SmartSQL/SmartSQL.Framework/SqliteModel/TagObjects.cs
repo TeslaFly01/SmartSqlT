@@ -27,6 +27,10 @@ namespace SmartSQL.Framework.SqliteModel
         /// </summary>
         public string ObjectName { get; set; }
         /// <summary>
+        /// 对象类型（1.表，2.视图，3.存储过程）
+        /// </summary>
+        public int ObjectType { get; set; }
+        /// <summary>
         /// 所属连接ID
         /// </summary>
         public int ConnectId { get; set; }

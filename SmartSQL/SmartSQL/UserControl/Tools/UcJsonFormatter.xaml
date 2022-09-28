@@ -112,7 +112,7 @@
                     Width="80"
                     Height="28"
                     Margin="10,0,0,0"
-                    hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
+                    hc:IconElement.Geometry="{StaticResource YaSuoGeometry}"
                     Click="BtnCompress_Click"
                     Content="压缩"
                     Cursor="Hand"

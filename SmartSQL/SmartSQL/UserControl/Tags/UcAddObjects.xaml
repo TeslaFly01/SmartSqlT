@@ -61,10 +61,10 @@
                 Margin="10,90,10,10"
                 Background="#ffffff"
                 CornerRadius="8">
-                <Grid>
+                <Grid Margin="10">
                     <DataGrid
                         x:Name="TableGrid"
-                        Margin="5,5,5,42"
+                        Margin="0,0,0,35"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
                         hc:DataGridAttach.ShowRowNumber="True"
                         AutoGenerateColumns="False"
@@ -111,7 +111,7 @@
                             Visibility="Collapsed"
                             PageIndex="5" />
                         <hc:SimpleStackPanel
-                            Margin="5"
+                            Margin="0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom">
                             <hc:UniformSpacingPanel Spacing="10">

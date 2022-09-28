@@ -56,10 +56,9 @@
                 Margin="10,80,10,45"
                 Background="#ffffff"
                 CornerRadius="8">
-                <Grid>
+                <Grid Margin="10">
                     <DataGrid
                         x:Name="TableGrid"
-                        Margin="5"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
                         hc:DataGridAttach.ShowRowNumber="True"
                         AutoGenerateColumns="False"
@@ -87,10 +86,11 @@
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button
-                                            x:Name="BtnDelete"
+                                            x:Name="BtnRowDelete"
                                             Width="20"
                                             Height="20"
                                             Margin="0"
+                                            Click="BtnRowDelete_OnClick"
                                             Style="{StaticResource ButtonIconSingle}">
                                             <svgc:SvgViewbox
                                                 Width="12"
@@ -106,6 +106,7 @@
                     <!--  暂无数据  -->
                     <Grid
                         x:Name="MainNoDataText"
+                        Margin="5"
                         HorizontalAlignment="Stretch"
                         Visibility="Visible">
                         <localbase:NoDataArea
