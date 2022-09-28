@@ -169,10 +169,11 @@ namespace SmartSQL.Framework.Exporter
         }
         #endregion
 
-        public override Columns GetColumnInfoById(string objectId, string schema)
+        public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
             var columns = new Columns(500);
+            var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
             var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
             var sql = $@"select cast (pclass.oid as int4) as TableId,cast(ptables.tablename as varchar) as TableName,
                                 pcolumn.column_name as DbColumnName,pcolumn.udt_name as DataType,

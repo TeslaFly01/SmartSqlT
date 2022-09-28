@@ -58,7 +58,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="objectId"></param>
         /// <param name="schema"></param>
         /// <returns></returns>
-        public abstract Columns GetColumnInfoById(string objectId, string schema);
+        public abstract Columns GetColumnInfoById(string objectId);
         /// <summary>
         /// 获取脚本信息
         /// </summary>

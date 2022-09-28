@@ -59,7 +59,7 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        public override Columns GetColumnInfoById(string objectId, string schema)
+        public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
             var columns = new Columns(500);

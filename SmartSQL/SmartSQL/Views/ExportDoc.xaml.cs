@@ -1088,7 +1088,7 @@ namespace SmartSQL.Views
                         tbDto.DBType = nameof(DbType.SqlServer);
 
                         var lst_col_dto = new List<ColumnDto>();
-                        var columns = dbInstance.GetColumnInfoById(node.ObejcetId,selectedDatabase.Schema);
+                        var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
                         var columnIndex = 1;
                         foreach (var col in columns)
                         {
@@ -1129,7 +1129,7 @@ namespace SmartSQL.Views
                     tbDto.DBType = selectedConnection.DbType.ToString();
 
                     var lst_col_dto = new List<ColumnDto>();
-                    var columns = dbInstance.GetColumnInfoById(group.ObejcetId,selectedDatabase.Schema);
+                    var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
                     var columnIndex = 1;
                     foreach (var col in columns)
                     {

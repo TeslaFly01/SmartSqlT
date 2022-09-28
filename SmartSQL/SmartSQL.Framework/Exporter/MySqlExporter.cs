@@ -165,9 +165,8 @@ namespace SmartSQL.Framework.Exporter
         /// 根据对象ID获取列信息
         /// </summary>
         /// <param name="objectId"></param>
-        /// <param name="schema"></param>
         /// <returns></returns>
-        public override Columns GetColumnInfoById(string objectId, string schema)
+        public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
             var columns = new Columns(500);

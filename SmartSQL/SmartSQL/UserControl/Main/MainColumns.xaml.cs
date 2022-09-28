@@ -136,7 +136,7 @@ namespace SmartSQL.UserControl
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString,selectedDatabase.DbName);
                 Task.Run(() =>
                 {
-                    var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId, selectedDatabase.Schema);
+                    var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
                     var list = tableColumns.Values.ToList();
                     Dispatcher.BeginInvoke(new Action(() =>
                     {

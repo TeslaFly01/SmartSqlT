@@ -117,7 +117,7 @@ namespace SmartSQL.Views
                         foreach (var tabInfo in dbDTO.Tables)
                         {
                             var tableName = tabInfo.TableName;
-                            var tableColumns = dbInstance.GetColumnInfoById(tableName, selectedDatabase.Schema);
+                            var tableColumns = dbInstance.GetColumnInfoById(tableName);
                             //更新表描述
                             if (dbMaintenance.IsAnyTable(tabInfo.TableName))
                             {
