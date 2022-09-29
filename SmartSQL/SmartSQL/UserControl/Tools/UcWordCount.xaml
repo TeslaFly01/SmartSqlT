@@ -107,19 +107,19 @@
                                 Margin="0,20,0,0"
                                 Status="0"
                                 Subject="汉字字数"
-                                Color="#d8624c" />
+                                Color="#1890ff" />
                             <hc:Shield
                                 Name="ShieldZiMu"
                                 Margin="0,10,0,0"
                                 Status="0"
                                 Subject="字母字数"
-                                Color="#d8624c" />
+                                Color="#faad14" />
                             <hc:Shield
                                 Name="ShieldShuZi"
                                 Margin="0,10,0,0"
                                 Status="0"
                                 Subject="数字字数"
-                                Color="#d8624c" />
+                                Color="#21d86e" />
                             <hc:Shield
                                 Name="ShieldBiaoDian"
                                 Margin="0,10,0,0"
@@ -131,7 +131,7 @@
                                 Margin="0,10,0,0"
                                 Status="0"
                                 Subject="字数总计"
-                                Color="#4eb899" />
+                                Color="#ff9c6e" />
                             <hc:Shield
                                 Name="ShieldTotalZiFu"
                                 Margin="0,10,0,0"
