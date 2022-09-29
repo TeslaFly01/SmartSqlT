@@ -74,11 +74,11 @@
                                 Binding="{Binding ObjectName}"
                                 Header="表名"
                                 IsReadOnly="True" />
-                            <DataGridTextColumn
+                            <!--<DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding Comment}"
                                 Header="表注释"
-                                IsReadOnly="True" />
+                                IsReadOnly="True" />-->
                             <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock>操作</TextBlock>
@@ -87,8 +87,6 @@
                                     <DataTemplate>
                                         <Button
                                             x:Name="BtnRowDelete"
-                                            Width="20"
-                                            Height="20"
                                             Margin="0"
                                             Click="BtnRowDelete_OnClick"
                                             Style="{StaticResource ButtonIconSingle}">

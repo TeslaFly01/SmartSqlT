@@ -14,7 +14,6 @@
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="BaseUserControl_Loaded"
     mc:Ignorable="d">
     <Grid>
         <!--  Main布局  -->
@@ -166,28 +165,6 @@
             <Grid Margin="5">
                 <Border Background="White" CornerRadius="10">
                     <Grid>
-                        <svgc:SvgViewbox
-                            Width="350"
-                            Height="325"
-                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
-                            Visibility="Collapsed" />
-                        <!--<hc:ScrollViewer Margin="10,15,10,15">
-                            <hc:WaterfallPanel
-                                VerticalAlignment="Top"
-                                hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}"
-                                Groups="5">
-                                <localControls:UcToolCard Title="SQL格式化" Icon="/SmartSQL;component/Resources/Img/toolIcon/sql-formatter@2x.png" />
-                                <localControls:UcToolCard Title="JSON格式化" Icon="/SmartSQL;component/Resources/Img/toolIcon/json@2x.png" />
-                                <localControls:UcToolCard Title="密码生成器" Icon="/SmartSQL;component/Resources/Img/toolIcon/password-generator@2x.png" />
-                                <localControls:UcToolCard Title="UUID生成器" Icon="/SmartSQL;component/Resources/Img/toolIcon/md5@2x.png" />
-                                <localControls:UcToolCard Title="MD5加密" Icon="/SmartSQL;component/Resources/Img/toolIcon/uuid@2x.png" />
-                                <localControls:UcToolCard Title="Unix时间戳转换" Icon="/SmartSQL;component/Resources/Img/toolIcon/timestamp-convert@2x.png" />
-                                <localControls:UcToolCard Title="随机数生成器" Icon="/SmartSQL;component/Resources/Img/toolIcon/randomizer@2x.png" />
-                                <localControls:UcToolCard Title="AES加密/解密" Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png" />
-                                <localControls:UcToolCard Title="Base64编码/解码" Icon="/SmartSQL;component/Resources/Img/toolIcon/base64@2x.png" />
-                                <localControls:UcToolCard Title="汉字转拼音" Icon="/SmartSQL;component/Resources/Img/toolIcon/pinyin@2x.png" />
-                            </hc:WaterfallPanel>
-                        </hc:ScrollViewer>-->
                         <local:UcToolMenu />
                     </Grid>
                 </Border>

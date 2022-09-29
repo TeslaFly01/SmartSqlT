@@ -65,6 +65,38 @@
                     ItemsSource="{Binding TagMenuList}"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
                     SelectionChanged="Selector_OnSelectionChanged">
+                    <!--  右键菜单  -->
+                    <ListBox.ContextMenu>
+                        <ContextMenu Width="180" Visibility="Visible">
+                            <MenuItem
+                                x:Name="MenuEdit"
+                                Padding="5,3,5,3"
+                                VerticalAlignment="Center"
+                                Header="修改">
+                                <MenuItem.Icon>
+                                    <fa:FontAwesome
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="#1890ff"
+                                        Icon="Edit" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem
+                                x:Name="MenuDelete"
+                                Padding="5,3,5,3"
+                                VerticalAlignment="Center"
+                                Header="删除">
+                                <MenuItem.Icon>
+                                    <fa:FontAwesome
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="#1890ff"
+                                        Icon="Remove" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
+                    <!--  右键菜单  -->
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
@@ -82,12 +114,12 @@
                                 </hc:SimpleStackPanel>
                                 <hc:SimpleStackPanel Margin="0,0,8,0" HorizontalAlignment="Right">
                                     <Border Background="#fffffe" CornerRadius="3">
-                                        <!--<TextBlock
+                                        <TextBlock
                                             Margin="5,1,5,1"
                                             VerticalAlignment="Center"
                                             FontWeight="Bold"
                                             Foreground="{StaticResource ThirdlyTextBrush}"
-                                            Text="删除" />-->
+                                            Text="123" />
                                     </Border>
                                 </hc:SimpleStackPanel>
                             </Grid>
