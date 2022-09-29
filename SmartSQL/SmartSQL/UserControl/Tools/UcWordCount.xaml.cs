@@ -199,12 +199,6 @@ namespace SmartSQL.UserControl
             ShieldBiaoDian.Status = iChinesePnct + iEnglishPnct;
             ShieldTotalZiShu.Status = iChineseChr + iEnglishChr;
             ShieldTotalZiFu.Status = iAllChr;
-            //string sStats = string.Format(string.Concat(
-            //        "字符总数：{0}\r\n", "中文字符数：{1}\r\n", "中文标点数：{2}\r\n",
-            //        "英文字符数：{3}\r\n", "英文标点数：{4}\r\n", "数字字符数：{5}\r\n"),
-            //    iAllChr.ToString(), iChineseChr.ToString(), iEnglishChr.ToString(),
-            //    iEnglishChr.ToString(), iEnglishPnct.ToString(), iNumber.ToString());
-            //txtStats.Text = sStats;
         }
     }
 }

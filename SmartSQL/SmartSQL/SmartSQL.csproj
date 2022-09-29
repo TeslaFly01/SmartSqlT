@@ -586,6 +586,7 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\word-count%402x.png" />
     <Resource Include="Resources\Img\toolIcon\text-insert%402x.png" />
     <Resource Include="Resources\Img\toolIcon\aes%402x.png" />
     <Resource Include="Resources\Img\toolIcon\md5%402x.png" />
