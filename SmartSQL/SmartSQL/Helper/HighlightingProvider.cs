@@ -63,7 +63,8 @@ namespace SmartSQL
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("XML")),
                 ["C#"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("C#")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("SQL")),
-                ["Json"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Json"))
+                ["Json"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Json")),
+                ["Text"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Text"))
             };
         }
     }
@@ -78,6 +79,7 @@ namespace SmartSQL
                 ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Dark")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL-Dark")),
                 ["Json"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Json")),
+                ["Text"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Text-Mode")),
             };
         }
     }

@@ -158,7 +158,7 @@
                                 HeadersVisibility="All"
                                 ItemsSource="{Binding UUIDList}"
                                 RowHeaderWidth="60"
-                                SelectionUnit="Cell"
+                                SelectionUnit="FullRow"
                                 VerticalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn
@@ -173,12 +173,13 @@
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button
-                                                    x:Name="BtnCopy"
+                                                    x:Name="BtnCopyRow"
                                                     Width="80"
                                                     Height="28"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Bottom"
                                                     hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                                                    Click="BtnCopyRow_OnClick"
                                                     Content="复制"
                                                     Cursor="Hand"
                                                     Style="{StaticResource ButtonWarning}" />

@@ -52,6 +52,10 @@ namespace SmartSQL.Framework.Exporter
             var list = new List<DataBase>();
             schemaList.ForEach(schema =>
             {
+                if (schema.Equals("pg_toast")|| schema.Equals("pg_catalog") || schema.Equals("information_schema"))
+                {
+                    return;
+                }
                 var dBase = new DataBase
                 {
                     DbName = $"{defaultDatabase}:{schema.NspName}",

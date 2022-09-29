@@ -43,15 +43,15 @@ namespace SmartSQL.UserControl
         /// <summary>
         /// 结果数据列表
         /// </summary>
-        public static readonly DependencyProperty PaswordListProperty = DependencyProperty.Register(
-            "PaswordList", typeof(List<PasswordResultDTO>), typeof(UcPasswordGen), new PropertyMetadata(default(List<PasswordResultDTO>)));
-        public List<PasswordResultDTO> PaswordList
+        public static readonly DependencyProperty PasswordListProperty = DependencyProperty.Register(
+            "PasswordList", typeof(List<PasswordResultDTO>), typeof(UcPasswordGen), new PropertyMetadata(default(List<PasswordResultDTO>)));
+        public List<PasswordResultDTO> PasswordList
         {
-            get => (List<PasswordResultDTO>)GetValue(PaswordListProperty);
+            get => (List<PasswordResultDTO>)GetValue(PasswordListProperty);
             set
             {
-                SetValue(PaswordListProperty, value);
-                OnPropertyChanged(nameof(PaswordList));
+                SetValue(PasswordListProperty, value);
+                OnPropertyChanged(nameof(PasswordList));
             }
         }
 
@@ -93,7 +93,22 @@ namespace SmartSQL.UserControl
                     PasswordStrength = StrUtil.PasswordStrength(pwd)
                 });
             });
-            PaswordList = pwds;
+            PasswordList = pwds;
+        }
+
+        /// <summary>
+        /// 复制行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCopyRow_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (PasswordResultDTO)TableGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                Clipboard.SetDataObject(selectedItem.Password);
+                Oops.Success("文本已复制到剪切板");
+            }
         }
     }
 }

@@ -69,6 +69,8 @@ namespace SmartSQL.UserControl
                     parentWindow.UcMainTools.Content = new UcNPinYin(); break;
                 case "textInsert":
                     parentWindow.UcMainTools.Content = new UcTextInsert(); break;
+                case "wordCount":
+                    parentWindow.UcMainTools.Content = new UcWordCount(); break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }

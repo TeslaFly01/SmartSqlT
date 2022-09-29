@@ -70,6 +70,11 @@
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"
                     IsEnabled="False" />
+                <localControls:UcToolCard
+                    Title="字数统计"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"
+                    Tag="wordCount" />
             </hc:WaterfallPanel>
         </hc:ScrollViewer>
     </Grid>

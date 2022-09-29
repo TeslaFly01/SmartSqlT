@@ -92,5 +92,20 @@ namespace SmartSQL.UserControl
             }
             UUIDList = uuids;
         }
+
+        /// <summary>
+        /// 复制行
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCopyRow_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (UUIDResultDTO)TableGrid.SelectedItem;
+            if (selectedItem != null)
+            {
+                Clipboard.SetDataObject(selectedItem.UUID);
+                Oops.Success("文本已复制到剪切板");
+            }
+        }
     }
 }
