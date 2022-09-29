@@ -94,7 +94,11 @@
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
-                                        <CheckBox IsChecked="{Binding IsChecked}" />
+                                        <CheckBox
+                                            x:Name="CheckedRow"
+                                            Checked="CheckedRow_Checked"
+                                            IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                            Unchecked="CheckedRow_Unchecked" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>

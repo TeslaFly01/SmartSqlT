@@ -11,6 +11,7 @@
     Title="新增标签"
     Width="400"
     Height="200"
+    Loaded="Window_Loaded"
     BorderThickness="0"
     Icon="/Resources/Img/icon/icon_tag.png"
     ResizeMode="CanMinimize"

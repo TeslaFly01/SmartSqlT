@@ -17,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace SmartSQL.Views.Category
 {
@@ -109,6 +110,15 @@ namespace SmartSQL.Views.Category
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+             (Action)(() =>
+             {
+                 Keyboard.Focus(TagName);
+             }));
         }
     }
 }

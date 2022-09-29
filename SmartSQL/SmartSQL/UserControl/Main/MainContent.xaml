@@ -114,7 +114,7 @@
                         </StackPanel>
                         <TabControl
                             x:Name="TabLeftType"
-                            Margin="0,65,0,40"
+                            Margin="0,70,0,40"
                             SelectionChanged="TabLeftType_OnSelectionChanged"
                             Style="{StaticResource TabControlInLine}">
                             <TabItem
@@ -140,7 +140,7 @@
                         </hc:ButtonGroup>-->
                         <TreeView
                             x:Name="TreeViewTables"
-                            Margin="0,100,0,0"
+                            Margin="0,103,0,0"
                             VerticalAlignment="Top"
                             BorderThickness="0"
                             ItemsSource="{Binding TreeViewData}"
@@ -222,7 +222,7 @@
                         </TreeView>
                         <Grid
                             x:Name="NoDataText"
-                            Margin="0,100,0,5"
+                            Margin="0,105,0,5"
                             HorizontalAlignment="Stretch"
                             Background="White"
                             Cursor="Arrow">

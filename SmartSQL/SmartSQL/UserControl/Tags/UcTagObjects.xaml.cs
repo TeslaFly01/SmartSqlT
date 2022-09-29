@@ -160,10 +160,7 @@ namespace SmartSQL.UserControl.Tags
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.TagId == selTag.TagId);
-                if (tagObjectList.Any())
-                {
-                    MainNoDataText.Visibility = Visibility.Collapsed;
-                }
+                MainNoDataText.Visibility =tagObjectList.Any() ? Visibility.Collapsed : Visibility.Visible;
                 TagObjectItems = tagObjectList;
                 TagObjectList = tagObjectList;
             }

@@ -105,7 +105,7 @@ namespace SmartSQL.UserControl.Tags
         {
             UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
-                SelectedConnection.SelectedDbConnectString(SelectedDataBase),SelectedDataBase);
+                SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
             var model = dbInstance.Init();
             var list = new List<TagObjectDTO>();
             foreach (var table in model.Tables)
@@ -199,6 +199,36 @@ namespace SmartSQL.UserControl.Tags
             if (selItem.Content == "视图")
             {
 
+            }
+        }
+
+        private void CheckedRow_Checked(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
+            if (selectedItem!=null)
+            {
+                foreach (var item in TagObjectList)
+                {
+                    if (item.ObjectId==selectedItem.ObjectId&&item.Name==selectedItem.Name)
+                    {
+                        item.IsChecked = true;
+                    }
+                }
+            }
+        }
+
+        private void CheckedRow_Unchecked(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
+            if (selectedItem!=null)
+            {
+                foreach (var item in TagObjectList)
+                {
+                    if (item.ObjectId==selectedItem.ObjectId&&item.Name==selectedItem.Name)
+                    {
+                        item.IsChecked = false;
+                    }
+                }
             }
         }
     }
