@@ -156,11 +156,13 @@ namespace SmartSQL.UserControl.Tags
                 var selTag = SelectedTag;
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 sqLiteInstance.db.Delete(selectedItem);
+                selTag.SubCount -= 1;
+                sqLiteInstance.db.Update(selTag);
                 var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.TagId == selTag.TagId);
-                MainNoDataText.Visibility =tagObjectList.Any() ? Visibility.Collapsed : Visibility.Visible;
+                MainNoDataText.Visibility = tagObjectList.Any() ? Visibility.Collapsed : Visibility.Visible;
                 TagObjectItems = tagObjectList;
                 TagObjectList = tagObjectList;
             }

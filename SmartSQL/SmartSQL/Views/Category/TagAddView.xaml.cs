@@ -118,7 +118,8 @@ namespace SmartSQL.Views.Category
                 {
                     ConnectId = SelectedConnection.ID,
                     DataBaseName = SelectedDataBase,
-                    TagName = tagName
+                    TagName = tagName,
+                    SubCount = 0
                 });
             }
             else

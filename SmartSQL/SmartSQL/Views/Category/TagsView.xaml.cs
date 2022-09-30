@@ -168,111 +168,6 @@ namespace SmartSQL.Views.Category
         }
 
         /// <summary>
-        /// 保存
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnSave_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectedDatabase = SelectedDataBase;
-            var sqLiteHelper = new SQLiteHelper();
-            var groupId = Convert.ToInt32(0);
-            if (groupId > 0)
-            {
-                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectId == Connection.ID && x.DataBaseName == selectedDatabase && x.Id != groupId);
-                if (groupO != null)
-                {
-                    Oops.Oh("已存在相同名称的分组名.");
-                    return;
-                }
-                //分组菜单左侧默认展开层级
-                var selectedGroup = (TagInfo)ListTag.SelectedItems[0];
-                sqLiteHelper.db.Update(selectedGroup);
-            }
-            else
-            {
-                var groupO = sqLiteHelper.db.Table<ObjectGroup>().FirstOrDefault(x => x.ConnectId == Connection.ID && x.DataBaseName == selectedDatabase);
-                if (groupO != null)
-                {
-                    Oops.Oh("已存在相同名称的分组名.");
-                    return;
-                }
-                //分组菜单左侧默认展开层级
-                sqLiteHelper.db.Insert(new ObjectGroup()
-                {
-                    ConnectId = Connection.ID,
-                    DataBaseName = selectedDatabase,
-                    OrderFlag = DateTime.Now
-                });
-            }
-            //ucTagObjects.BtnSave.IsEnabled = false;
-            var connKey = Connection.ID;
-            Task.Run(() =>
-            {
-                var datalist = sqLiteHelper.db.Table<TagInfo>().
-                    Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase).ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    TagMenuList = datalist;
-                    if (ChangeRefreshEvent != null)
-                    {
-                        ChangeRefreshEvent();
-                    }
-                });
-            });
-        }
-
-        /// <summary>
-        /// 取消
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
-
-        /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnDelete_OnClick(object sender, RoutedEventArgs e)
-        {
-            var selectedTag = (TagInfo)ListTag.SelectedItem;
-            if (selectedTag == null)
-            {
-                Oops.Oh("请选择需要删除的标签.");
-                return;
-            }
-            var sqLiteHelper = SQLiteHelper.GetInstance();
-            var selectedDatabase = SelectedDataBase;
-            var connKey = Connection.ID;
-            Task.Run(() =>
-            {
-                sqLiteHelper.db.Delete<TagInfo>(selectedTag.TagId);
-                //var list = sqLiteHelper.db.Table<TagInfo>().Where(x =>
-                //    x.ConnectId == connKey &&
-                //    x.DatabaseName == selectedDatabase &&
-                //    x.GroupId == selectedTag.TagId).ToList();
-                //if (list.Any())
-                //{
-                //    foreach (var sobj in list)
-                //    {
-                //        sqLiteHelper.db.Delete<SObjects>(sobj.Id);
-                //    }
-                //}
-                var datalist = sqLiteHelper.db.Table<TagInfo>().
-                    Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase).ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    TagMenuList = datalist;
-                    ReloadMenu();
-                });
-            });
-        }
-
-        /// <summary>
         /// 新增
         /// </summary>
         /// <param name="sender"></param>
@@ -287,23 +182,6 @@ namespace SmartSQL.Views.Category
             tagAdd.ShowDialog();
         }
 
-        private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var selectedDatabase = SelectedDataBase;
-            var conn = Connection;
-            Task.Run(() =>
-            {
-                var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<TagInfo>().
-                    Where(x => x.ConnectId == conn.ID && x.DataBaseName == selectedDatabase).ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    TagMenuList = datalist;
-                    NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
-                });
-            });
-        }
-
         /// <summary>
         /// 实时搜索
         /// </summary>
@@ -315,11 +193,8 @@ namespace SmartSQL.Views.Category
             var sqlLiteInstance = SQLiteHelper.GetInstance();
             var datalist = sqlLiteInstance.db.Table<TagInfo>().
                 Where(x => x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase && x.TagName.Contains(searchTag)).ToList();
-            //Dispatcher.Invoke(() =>
-            //{
             TagMenuList = datalist;
             NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
-            //});
         }
 
         /// <summary>

@@ -20,6 +20,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HandyControl.Data;
+using SmartSQL.Helper;
 
 namespace SmartSQL.UserControl.Tags
 {
@@ -85,6 +87,21 @@ namespace SmartSQL.UserControl.Tags
                 OnPropertyChanged(nameof(TagObjectList));
             }
         }
+
+        /// <summary>
+        /// 标签对象数据分页列表
+        /// </summary>
+        public static readonly DependencyProperty TagObjectPageListProperty = DependencyProperty.Register(
+            "TagObjectPageList", typeof(List<TagObjectDTO>), typeof(UcAddObjects), new PropertyMetadata(default(List<TagObjectDTO>)));
+        public List<TagObjectDTO> TagObjectPageList
+        {
+            get => (List<TagObjectDTO>)GetValue(TagObjectPageListProperty);
+            set
+            {
+                SetValue(TagObjectPageListProperty, value);
+                OnPropertyChanged(nameof(TagObjectPageList));
+            }
+        }
         #endregion
 
         public UcAddObjects()
@@ -103,36 +120,79 @@ namespace SmartSQL.UserControl.Tags
         /// </summary>
         public void LoadPageData()
         {
+            LoadingLine.Visibility = Visibility.Visible;
             UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
+            var selConnection = SelectedConnection;
+            var selDatabase = SelectedDataBase;
+            var selTag = SelectedTag;
+            var list = new List<TagObjectDTO>();
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
                 SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
-            var model = dbInstance.Init();
-            var list = new List<TagObjectDTO>();
-            var sqLiteInstance = SQLiteHelper.GetInstance();
-            foreach (var table in model.Tables)
+            Task.Run(() =>
             {
-                var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
-                    x.ConnectId == SelectedConnection.ID &&
-                    x.DatabaseName == SelectedDataBase &&
-                    x.TagId == SelectedTag.TagId &&
-                    x.ObjectId == table.Value.Id
-                );
-                if (isAny)
+                var model = dbInstance.Init();
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+                foreach (var table in model.Tables)
                 {
-                    continue;
+                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        x.ConnectId == selConnection.ID &&
+                        x.DatabaseName == selDatabase &&
+                        x.TagId == selTag.TagId &&
+                        x.ObjectId == table.Value.Id
+                    );
+                    if (isAny)
+                    {
+                        continue;
+                    }
+                    var tb = new TagObjectDTO()
+                    {
+                        ObjectId = table.Value.Id,
+                        Name = table.Value.Name,
+                        ObjectType = 1,
+                        Comment = table.Value.Comment
+                    };
+                    list.Add(tb);
                 }
-                var tb = new TagObjectDTO()
+                Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    ObjectId = table.Value.Id,
-                    Name = table.Value.Name,
-                    ObjectType = 1,
-                    Comment = table.Value.Comment
-                };
-                list.Add(tb);
-            }
-            MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    TagObjectList = list;
+                    PageData();
+                }));
+            });
+        }
 
-            TagObjectList = list;
+        /// <summary>
+        /// 页码切换事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PageT_OnPageUpdated(object sender, FunctionEventArgs<int> e)
+        {
+            LoadingLine.Visibility = Visibility.Visible;
+            PageData(PageT.PageIndex);
+        }
+
+        /// <summary>
+        /// 分页加载数据
+        /// </summary>
+        /// <param name="pageIndex"></param>
+        private void PageData(int pageIndex = 0)
+        {
+            var tagObjects = TagObjectList;
+            var totalCount = TagObjectList.Count;
+            var pageSize = PageT.DataCountPerPage;
+            Task.Run(() =>
+            {
+                var maxPageCount = (int)Math.Ceiling((decimal)totalCount / pageSize);
+                var pageList = tagObjects.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToList();
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    PageT.MaxPageCount = maxPageCount;
+                    TagObjectPageList = pageList;
+                    LoadingLine.Visibility = Visibility.Hidden;
+                }));
+            });
         }
 
         /// <summary>
@@ -142,31 +202,45 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            var checkedObjects = TagObjectList.Where(x => x.IsChecked == true).ToList();
-            var sqLiteInstance = SQLiteHelper.GetInstance();
+            var selConnection = SelectedConnection;
+            var selDatabase = SelectedDataBase;
+            var selTag = SelectedTag;
             var listObjects = new List<TagObjects>();
-            foreach (var obj in checkedObjects)
+            var checkedObjects = TagObjectList.Where(x => x.IsChecked == true).ToList();
+            LoadingLine.Visibility = Visibility.Visible;
+            Task.Run(() =>
             {
-                var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
-                x.ConnectId == SelectedConnection.ID &&
-                x.DatabaseName == SelectedDataBase &&
-                x.TagId == SelectedTag.TagId &&
-                x.ObjectId == obj.ObjectId
-                );
-                if (!isAny)
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+                foreach (var obj in checkedObjects)
                 {
-                    listObjects.Add(new TagObjects
+                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        x.ConnectId == selConnection.ID &&
+                        x.DatabaseName == selDatabase &&
+                        x.TagId == selTag.TagId &&
+                        x.ObjectId == obj.ObjectId
+                    );
+                    if (!isAny)
                     {
-                        ConnectId = SelectedConnection.ID,
-                        DatabaseName = SelectedDataBase,
-                        ObjectId = obj.ObjectId,
-                        ObjectName = obj.Name,
-                        ObjectType = obj.ObjectType,
-                        TagId = SelectedTag.TagId
-                    });
+                        listObjects.Add(new TagObjects
+                        {
+                            ConnectId = selConnection.ID,
+                            DatabaseName = selDatabase,
+                            ObjectId = obj.ObjectId,
+                            ObjectName = obj.Name,
+                            ObjectType = obj.ObjectType,
+                            TagId = selTag.TagId
+                        });
+                    }
                 }
-            }
-            sqLiteInstance.Add(listObjects);
+                sqLiteInstance.Add(listObjects);
+                selTag.SubCount += listObjects.Count;
+                sqLiteInstance.db.Update(selTag);
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    LoadPageData();
+                    Oops.Success($"成功设置{ listObjects.Count}条数据到标签【{SelectedTag.TagName}】");
+                }));
+            });
         }
 
         /// <summary>
@@ -208,86 +282,234 @@ namespace SmartSQL.UserControl.Tags
             {
                 return;
             }
-            var selItem = (ComboBoxItem)SearchComObjType.SelectedItem;
-            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
-                SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
-            var model = dbInstance.Init();
+            LoadingLine.Visibility = Visibility.Visible;
+            var selConnection = SelectedConnection;
+            var selDatabase = SelectedDataBase;
+            var selTag = SelectedTag;
+            var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
+            Task.Run(() =>
+            {
+                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
+                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
+                var model = dbInstance.Init();
                 var list = new List<TagObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-            if ((string) selItem.Tag == "Table")
-            {
-                foreach (var table in model.Tables)
+                if ((string)selItem == "Table")
                 {
-                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
-                        x.ConnectId == SelectedConnection.ID &&
-                        x.DatabaseName == SelectedDataBase &&
-                        x.TagId == SelectedTag.TagId &&
-                        x.ObjectId == table.Value.Id
-                    );
-                    if (isAny)
+                    #region Table
+                    foreach (var table in model.Tables)
                     {
-                        continue;
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == table.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = table.Value.Id,
+                            Name = table.Value.Name,
+                            ObjectType = 1,
+                            Comment = table.Value.Comment
+                        };
+                        list.Add(tb);
                     }
-                    var tb = new TagObjectDTO()
-                    {
-                        ObjectId = table.Value.Id,
-                        Name = table.Value.Name,
-                        ObjectType = 1,
-                        Comment = table.Value.Comment
-                    };
-                    list.Add(tb);
+                    #endregion
                 }
-            }
-            else if ((string)selItem.Tag == "View")
-            {
-                foreach (var view in model.Views)
+                else if ((string)selItem == "View")
                 {
-                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
-                        x.ConnectId == SelectedConnection.ID &&
-                        x.DatabaseName == SelectedDataBase &&
-                        x.TagId == SelectedTag.TagId &&
-                        x.ObjectId == view.Value.Id
-                    );
-                    if (isAny)
+                    #region View
+                    foreach (var view in model.Views)
                     {
-                        continue;
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == view.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = view.Value.Id,
+                            Name = view.Value.Name,
+                            ObjectType = 1,
+                            Comment = view.Value.Comment
+                        };
+                        list.Add(tb);
                     }
-                    var tb = new TagObjectDTO()
-                    {
-                        ObjectId = view.Value.Id,
-                        Name = view.Value.Name,
-                        ObjectType = 1,
-                        Comment = view.Value.Comment
-                    };
-                    list.Add(tb);
+                    #endregion
                 }
-            }
-            else
-            {
-                foreach (var proc in model.Procedures)
+                else
                 {
-                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
-                        x.ConnectId == SelectedConnection.ID &&
-                        x.DatabaseName == SelectedDataBase &&
-                        x.TagId == SelectedTag.TagId &&
-                        x.ObjectId == proc.Value.Id
-                    );
-                    if (isAny)
+                    #region Proc
+                    foreach (var proc in model.Procedures)
                     {
-                        continue;
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == proc.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = proc.Value.Id,
+                            Name = proc.Value.Name,
+                            ObjectType = 1,
+                            Comment = proc.Value.Comment
+                        };
+                        list.Add(tb);
                     }
-                    var tb = new TagObjectDTO()
-                    {
-                        ObjectId = proc.Value.Id,
-                        Name = proc.Value.Name,
-                        ObjectType = 1,
-                        Comment = proc.Value.Comment
-                    };
-                    list.Add(tb);
+                    #endregion
                 }
-            }
-            MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
-            TagObjectList = list;
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    TagObjectList = list;
+                    PageData();
+                }));
+            });
+        }
+
+        /// <summary>
+        /// 实时搜索
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchObjects_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            LoadingLine.Visibility = Visibility.Visible;
+            var searchText = SearchObjects.Text.Trim();
+            var selConnection = SelectedConnection;
+            var selDatabase = SelectedDataBase;
+            var selTag = SelectedTag;
+            var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
+            Task.Run(() =>
+            {
+                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
+                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
+                var model = dbInstance.Init();
+                var list = new List<TagObjectDTO>();
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+                if ((string)selItem == "Table")
+                {
+                    #region Table
+                    foreach (var table in model.Tables)
+                    {
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == table.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        if (!string.IsNullOrEmpty(searchText))
+                        {
+                            if (!table.Value.Name.ToLower().Contains(searchText.ToLower())&&
+                                !table.Value.Comment.ToLower().Contains(searchText.ToLower()))
+                            {
+                                continue;
+                            }
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = table.Value.Id,
+                            Name = table.Value.Name,
+                            ObjectType = 1,
+                            Comment = table.Value.Comment
+                        };
+                        list.Add(tb);
+                    }
+                    #endregion
+                }
+                else if ((string)selItem == "View")
+                {
+                    #region View
+                    foreach (var view in model.Views)
+                    {
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == view.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        if (!string.IsNullOrEmpty(searchText))
+                        {
+                            if (!view.Value.Name.ToLower().Contains(searchText.ToLower()) &&
+                                !view.Value.Comment.ToLower().Contains(searchText.ToLower()))
+                            {
+                                continue;
+                            }
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = view.Value.Id,
+                            Name = view.Value.Name,
+                            ObjectType = 1,
+                            Comment = view.Value.Comment
+                        };
+                        list.Add(tb);
+                    }
+                    #endregion
+                }
+                else
+                {
+                    #region Proc
+                    foreach (var proc in model.Procedures)
+                    {
+                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                            x.ConnectId == selConnection.ID &&
+                            x.DatabaseName == selDatabase &&
+                            x.TagId == selTag.TagId &&
+                            x.ObjectId == proc.Value.Id
+                        );
+                        if (isAny)
+                        {
+                            continue;
+                        }
+                        if (!string.IsNullOrEmpty(searchText))
+                        {
+                            if (!proc.Value.Name.ToLower().Contains(searchText.ToLower()) &&
+                                !proc.Value.Comment.ToLower().Contains(searchText.ToLower()))
+                            {
+                                continue;
+                            }
+                        }
+                        var tb = new TagObjectDTO()
+                        {
+                            ObjectId = proc.Value.Id,
+                            Name = proc.Value.Name,
+                            ObjectType = 1,
+                            Comment = proc.Value.Comment
+                        };
+                        list.Add(tb);
+                    }
+                    #endregion
+                }
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+                    TagObjectList = list;
+                    PageData();
+                }));
+            });
         }
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)

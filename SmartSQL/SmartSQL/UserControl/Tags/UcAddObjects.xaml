@@ -50,7 +50,8 @@
                     hc:InfoElement.Placeholder="搜索表、视图、存储过程"
                     FontSize="13"
                     ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}" />
+                    Style="{StaticResource SearchBarPlus}"
+                    TextChanged="SearchObjects_OnTextChanged" />
             </Grid>
         </Border>
         <!--  搜索栏  -->
@@ -64,32 +65,23 @@
                 <Grid Margin="10">
                     <DataGrid
                         x:Name="TableGrid"
-                        Margin="0,0,0,35"
+                        Margin="0,0,0,40"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
                         hc:DataGridAttach.ShowRowNumber="True"
                         AutoGenerateColumns="False"
                         Background="#f9f9f9"
                         Cursor="Arrow"
                         HeadersVisibility="All"
-                        ItemsSource="{Binding TagObjectList, Mode=TwoWay}"
+                        ItemsSource="{Binding TagObjectPageList, Mode=TwoWay}"
                         RowHeaderWidth="60"
                         SelectionUnit="FullRow">
                         <DataGrid.Columns>
-                            <DataGridTextColumn
-                                Width="*"
-                                Binding="{Binding Name}"
-                                Header="表名"
-                                IsReadOnly="True" />
-                            <DataGridTextColumn
-                                Width="*"
-                                Binding="{Binding Comment}"
-                                Header="表注释"
-                                IsReadOnly="True" />
-                            <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
+                            <DataGridTemplateColumn Width="150" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
                                 <DataGridTemplateColumn.Header>
                                     <CheckBox
                                         Checked="CheckBox_Checked"
                                         Content="操作"
+                                        Foreground="{StaticResource PrimaryBrush}"
                                         Unchecked="CheckBox_Unchecked" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -103,46 +95,23 @@
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
                             </DataGridTemplateColumn>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Name}"
+                                Header="表名"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Comment}"
+                                Header="表注释"
+                                IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
-                    <Grid>
-                        <hc:Pagination
-                            Margin="5"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Bottom"
-                            IsJumpEnabled="True"
-                            MaxPageCount="10"
-                            MaxPageInterval="3"
-                            Visibility="Collapsed"
-                            PageIndex="5" />
-                        <hc:SimpleStackPanel
-                            Margin="0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
-                            <hc:UniformSpacingPanel Spacing="10">
-                                <Button
-                                    x:Name="BtnSave"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    Click="BtnSave_Click"
-                                    Content="确定"
-                                    Cursor="Hand"
-                                    Style="{StaticResource ButtonPrimary}" />
-                                <Button
-                                    x:Name="BtnReturn"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    BorderThickness="0.4"
-                                    Click="BtnReturn_Click"
-                                    Content="返回"
-                                    Cursor="Hand" />
-                            </hc:UniformSpacingPanel>
-                        </hc:SimpleStackPanel>
-                    </Grid>
                     <!--  暂无数据  -->
                     <Grid
                         x:Name="MainNoDataText"
                         HorizontalAlignment="Stretch"
+                        Background="White"
                         Visibility="Collapsed">
                         <localbase:NoDataArea
                             x:Name="MainNoDataAreaText"
@@ -151,6 +120,44 @@
                             ShowType="All" />
                     </Grid>
                     <!--  暂无数据  -->
+                    <hc:Pagination
+                        Name="PageT"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        AutoHiding="True"
+                        DataCountPerPage="20"
+                        IsJumpEnabled="True"
+                        MaxPageInterval="1"
+                        PageUpdated="PageT_OnPageUpdated" />
+                    <Grid>
+                        <hc:SimpleStackPanel
+                            Margin="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom">
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Button
+                                    x:Name="BtnReturn"
+                                    Padding="20,0,20,0"
+                                    BorderThickness="0.4"
+                                    Click="BtnReturn_Click"
+                                    Content="返回"
+                                    Cursor="Hand" />
+                                <Button
+                                    x:Name="BtnSave"
+                                    Padding="20,0,20,0"
+                                    Click="BtnSave_Click"
+                                    Content="确定"
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </hc:UniformSpacingPanel>
+                        </hc:SimpleStackPanel>
+                    </Grid>
+                    <localbase:Loading
+                        x:Name="LoadingLine"
+                        Margin="-5,-5,-5,35"
+                        BackgroundOpacity="0.1"
+                        Visibility="Hidden" />
                 </Grid>
             </Border>
         </Grid>

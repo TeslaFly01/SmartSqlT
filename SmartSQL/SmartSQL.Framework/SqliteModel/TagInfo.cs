@@ -32,5 +32,9 @@ namespace SmartSQL.Framework.SqliteModel
         /// </summary>
 
         public string TagName { get; set; }
+        /// <summary>
+        /// 对象数量
+        /// </summary>
+        public int SubCount { get; set; }
     }
 }

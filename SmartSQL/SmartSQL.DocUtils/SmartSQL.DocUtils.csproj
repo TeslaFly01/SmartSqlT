@@ -60,6 +60,9 @@
     <Reference Include="itextsharp, Version=5.5.13.2, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
       <HintPath>..\..\packages\iTextSharp.5.5.13.2\lib\itextsharp.dll</HintPath>
     </Reference>
+    <Reference Include="JinianNet.JNTemplate, Version=2.3.1.2, Culture=neutral, PublicKeyToken=2b90a65531efdba4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\JinianNet.JNTemplate.2.3.1\lib\net46\JinianNet.JNTemplate.dll</HintPath>
+    </Reference>
     <Reference Include="jint, Version=3.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\jint.3.0.0-beta-001\lib\net45\jint.dll</HintPath>
     </Reference>
