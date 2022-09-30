@@ -108,8 +108,19 @@ namespace SmartSQL.UserControl.Tags
                 SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
             var model = dbInstance.Init();
             var list = new List<TagObjectDTO>();
+            var sqLiteInstance = SQLiteHelper.GetInstance();
             foreach (var table in model.Tables)
             {
+                var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                    x.ConnectId == SelectedConnection.ID &&
+                    x.DatabaseName == SelectedDataBase &&
+                    x.TagId == SelectedTag.TagId &&
+                    x.ObjectId == table.Value.Id
+                );
+                if (isAny)
+                {
+                    continue;
+                }
                 var tb = new TagObjectDTO()
                 {
                     ObjectId = table.Value.Id,
@@ -119,10 +130,8 @@ namespace SmartSQL.UserControl.Tags
                 };
                 list.Add(tb);
             }
-            if (list.Any())
-            {
-                MainNoDataText.Visibility = Visibility.Collapsed;
-            }
+            MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+
             TagObjectList = list;
         }
 
@@ -205,11 +214,11 @@ namespace SmartSQL.UserControl.Tags
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)
         {
             var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
-            if (selectedItem!=null)
+            if (selectedItem != null)
             {
                 foreach (var item in TagObjectList)
                 {
-                    if (item.ObjectId==selectedItem.ObjectId&&item.Name==selectedItem.Name)
+                    if (item.ObjectId == selectedItem.ObjectId && item.Name == selectedItem.Name)
                     {
                         item.IsChecked = true;
                     }
@@ -220,11 +229,11 @@ namespace SmartSQL.UserControl.Tags
         private void CheckedRow_Unchecked(object sender, RoutedEventArgs e)
         {
             var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
-            if (selectedItem!=null)
+            if (selectedItem != null)
             {
                 foreach (var item in TagObjectList)
                 {
-                    if (item.ObjectId==selectedItem.ObjectId&&item.Name==selectedItem.Name)
+                    if (item.ObjectId == selectedItem.ObjectId && item.Name == selectedItem.Name)
                     {
                         item.IsChecked = false;
                     }

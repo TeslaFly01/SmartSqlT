@@ -71,6 +71,7 @@
                             <MenuItem
                                 x:Name="MenuEdit"
                                 Padding="5,3,5,3"
+                                Click="MenuEdit_OnClick"
                                 VerticalAlignment="Center"
                                 Header="修改">
                                 <MenuItem.Icon>
@@ -85,6 +86,7 @@
                                 x:Name="MenuDelete"
                                 Padding="5,3,5,3"
                                 VerticalAlignment="Center"
+                                Click="MenuDelete_OnClick"
                                 Header="删除">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome

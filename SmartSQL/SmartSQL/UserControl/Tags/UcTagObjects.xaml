@@ -74,11 +74,6 @@
                                 Binding="{Binding ObjectName}"
                                 Header="表名"
                                 IsReadOnly="True" />
-                            <!--<DataGridTextColumn
-                                Width="*"
-                                Binding="{Binding Comment}"
-                                Header="表注释"
-                                IsReadOnly="True" />-->
                             <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock>操作</TextBlock>
@@ -104,8 +99,8 @@
                     <!--  暂无数据  -->
                     <Grid
                         x:Name="MainNoDataText"
-                        Margin="5"
                         HorizontalAlignment="Stretch"
+                        Background="White"
                         Visibility="Visible">
                         <localbase:NoDataArea
                             x:Name="MainNoDataAreaText"

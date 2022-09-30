@@ -23,6 +23,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace SmartSQL.Views.Category
 {
@@ -159,10 +160,10 @@ namespace SmartSQL.Views.Category
                 var ucTagObjects = new UserControl.Tags.UcTagObjects();
                 ucTagObjects.SelectedConnection = conn;
                 ucTagObjects.SelectedDataBase = selectDataBase;
-                ucTagObjects.SelectedTag= tag;
+                ucTagObjects.SelectedTag = tag;
                 ucTagObjects.LoadPageData();
                 MainContent = ucTagObjects;
- 
+
             }
         }
 
@@ -319,6 +320,70 @@ namespace SmartSQL.Views.Category
             TagMenuList = datalist;
             NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
             //});
+        }
+
+        /// <summary>
+        /// 修改标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(ListTag.SelectedItem is TagInfo selectedTag))
+            {
+                Oops.Oh("请选择需要修改的标签.");
+                return;
+            }
+            var tagAdd = new TagAddView();
+            tagAdd.SelectedTag = selectedTag;
+            tagAdd.SelectedConnection = Connection;
+            tagAdd.SelectedDataBase = SelectedDataBase;
+            tagAdd.ChangeRefreshEvent += Tag_ChangeRefreshEvent;
+            tagAdd.Owner = this;
+            tagAdd.ShowDialog();
+        }
+
+        /// <summary>
+        /// 删除标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(ListTag.SelectedItem is TagInfo selectedTag))
+            {
+                Oops.Oh("请选择需要删除的标签.");
+                return;
+            }
+            var msResult = MessageBox.Show("删除标签将会删除该标签下所有表的该标签信息，是否继续？","提示",MessageBoxButton.OKCancel,MessageBoxImage.Asterisk);
+            if (msResult == MessageBoxResult.OK)
+            {
+                var sqlLiteInstance = SQLiteHelper.GetInstance();
+                var selectedDatabase = SelectedDataBase;
+                var connKey = Connection.ID;
+                Task.Run(() =>
+                {
+                    sqlLiteInstance.db.Delete<TagInfo>(selectedTag.TagId);
+                    var datalist = sqlLiteInstance.db.Table<TagInfo>().
+                        Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase).ToList();
+                    var list = sqlLiteInstance.db.Table<TagObjects>().Where(x =>
+                        x.ConnectId == connKey &&
+                        x.DatabaseName == selectedDatabase &&
+                        x.TagId == selectedTag.TagId).ToList();
+                    if (list.Any())
+                    {
+                        foreach (var tagObj in list)
+                        {
+                            sqlLiteInstance.db.Delete<SObjects>(tagObj.Id);
+                        }
+                    }
+                    Dispatcher.Invoke(() =>
+                    {
+                        TagMenuList = datalist;
+                        ReloadMenu();
+                    });
+                });
+            }
         }
     }
 }

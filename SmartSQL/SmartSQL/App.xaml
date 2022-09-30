@@ -37,9 +37,6 @@
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/SkinDefault.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/HandyControl;component/Themes/Theme.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/SmartSQL;component/Resources/Themes/Theme.xaml" />
-                <!--<ResourceDictionary>
-                    <converters:ActiveDocumentConverter x:Key="ActiveDocumentConverter" />
-                </ResourceDictionary>-->
             </ResourceDictionary.MergedDictionaries>
 
         </ResourceDictionary>
