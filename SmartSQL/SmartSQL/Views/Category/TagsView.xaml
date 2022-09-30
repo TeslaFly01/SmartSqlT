@@ -71,8 +71,8 @@
                             <MenuItem
                                 x:Name="MenuEdit"
                                 Padding="5,3,5,3"
-                                Click="MenuEdit_OnClick"
                                 VerticalAlignment="Center"
+                                Click="MenuEdit_OnClick"
                                 Header="修改">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome
@@ -150,7 +150,8 @@
                     Margin="-5"
                     VerticalAlignment="Bottom"
                     Background="#f5f5f5"
-                    CornerRadius="0 0 8 8">
+                    CornerRadius="0 0 8 8"
+                    Visibility="Collapsed">
                     <hc:SimpleStackPanel HorizontalAlignment="Right">
                         <hc:UniformSpacingPanel Spacing="1">
                             <Button

@@ -35,9 +35,9 @@
                     VerticalAlignment="Center"
                     SelectedIndex="0"
                     SelectionChanged="SearchComObjType_SelectionChanged">
-                    <ComboBoxItem Content="表" />
-                    <ComboBoxItem Content="视图" />
-                    <ComboBoxItem Content="存储过程" />
+                    <ComboBoxItem Content="表" Tag="Table" />
+                    <ComboBoxItem Content="视图" Tag="View" />
+                    <ComboBoxItem Content="存储过程" Tag="Proc" />
                 </ComboBox>
                 <hc:SearchBar
                     x:Name="SearchObjects"
@@ -89,7 +89,7 @@
                                 <DataGridTemplateColumn.Header>
                                     <CheckBox
                                         Checked="CheckBox_Checked"
-                                        Content=""
+                                        Content="操作"
                                         Unchecked="CheckBox_Unchecked" />
                                 </DataGridTemplateColumn.Header>
                                 <DataGridTemplateColumn.CellTemplate>
@@ -97,6 +97,7 @@
                                         <CheckBox
                                             x:Name="CheckedRow"
                                             Checked="CheckedRow_Checked"
+                                            Content="添加"
                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
                                             Unchecked="CheckedRow_Unchecked" />
                                     </DataTemplate>

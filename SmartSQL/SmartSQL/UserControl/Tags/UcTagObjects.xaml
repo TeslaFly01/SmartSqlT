@@ -126,20 +126,12 @@
                     VerticalAlignment="Bottom">
                     <hc:UniformSpacingPanel Spacing="10">
                         <Button
-                            x:Name="BtnSave"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            Content="保存"
-                            Cursor="Hand"
-                            IsEnabled="False"
-                            Style="{StaticResource ButtonPrimary}" />
-                        <Button
                             x:Name="BtnCancel"
                             Height="25"
                             Padding="20,0,20,0"
                             BorderThickness="0.4"
                             Click="BtnCancel_Click"
-                            Content="取消"
+                            Content="关闭"
                             Cursor="Hand" />
                     </hc:UniformSpacingPanel>
                 </hc:SimpleStackPanel>

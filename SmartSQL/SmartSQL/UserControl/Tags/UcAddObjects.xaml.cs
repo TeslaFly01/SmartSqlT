@@ -38,15 +38,15 @@ namespace SmartSQL.UserControl.Tags
         }
 
         #region PropertyFiled
-        public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(UcAddObjects), new PropertyMetadata(default(ConnectConfigs)));
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcAddObjects), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
         public ConnectConfigs SelectedConnection
         {
-            get => (ConnectConfigs)GetValue(ConnectionProperty);
-            set => SetValue(ConnectionProperty, value);
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
@@ -204,11 +204,90 @@ namespace SmartSQL.UserControl.Tags
 
         private void SearchComObjType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selItem = (ComboBoxItem)SearchComObjType.SelectedItem;
-            if (selItem.Content == "视图")
+            if (!IsLoaded)
             {
-
+                return;
             }
+            var selItem = (ComboBoxItem)SearchComObjType.SelectedItem;
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
+                SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
+            var model = dbInstance.Init();
+                var list = new List<TagObjectDTO>();
+                var sqLiteInstance = SQLiteHelper.GetInstance();
+            if ((string) selItem.Tag == "Table")
+            {
+                foreach (var table in model.Tables)
+                {
+                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        x.ConnectId == SelectedConnection.ID &&
+                        x.DatabaseName == SelectedDataBase &&
+                        x.TagId == SelectedTag.TagId &&
+                        x.ObjectId == table.Value.Id
+                    );
+                    if (isAny)
+                    {
+                        continue;
+                    }
+                    var tb = new TagObjectDTO()
+                    {
+                        ObjectId = table.Value.Id,
+                        Name = table.Value.Name,
+                        ObjectType = 1,
+                        Comment = table.Value.Comment
+                    };
+                    list.Add(tb);
+                }
+            }
+            else if ((string)selItem.Tag == "View")
+            {
+                foreach (var view in model.Views)
+                {
+                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        x.ConnectId == SelectedConnection.ID &&
+                        x.DatabaseName == SelectedDataBase &&
+                        x.TagId == SelectedTag.TagId &&
+                        x.ObjectId == view.Value.Id
+                    );
+                    if (isAny)
+                    {
+                        continue;
+                    }
+                    var tb = new TagObjectDTO()
+                    {
+                        ObjectId = view.Value.Id,
+                        Name = view.Value.Name,
+                        ObjectType = 1,
+                        Comment = view.Value.Comment
+                    };
+                    list.Add(tb);
+                }
+            }
+            else
+            {
+                foreach (var proc in model.Procedures)
+                {
+                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        x.ConnectId == SelectedConnection.ID &&
+                        x.DatabaseName == SelectedDataBase &&
+                        x.TagId == SelectedTag.TagId &&
+                        x.ObjectId == proc.Value.Id
+                    );
+                    if (isAny)
+                    {
+                        continue;
+                    }
+                    var tb = new TagObjectDTO()
+                    {
+                        ObjectId = proc.Value.Id,
+                        Name = proc.Value.Name,
+                        ObjectType = 1,
+                        Comment = proc.Value.Comment
+                    };
+                    list.Add(tb);
+                }
+            }
+            MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
+            TagObjectList = list;
         }
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)
