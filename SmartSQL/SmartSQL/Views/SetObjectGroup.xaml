@@ -39,7 +39,7 @@
                     Background="#f5f5f5"
                     CornerRadius="8 8 0 0">
                     <TextBlock
-                        Margin="0,8,0,0"
+                        Margin="0,3,0,0"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Foreground="#40485b"

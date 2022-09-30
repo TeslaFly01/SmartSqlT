@@ -18,10 +18,9 @@
     mc:Ignorable="d">
     <Grid Background="#f5f5f5">
         <Border
-            Margin="20"
+            Margin="5"
             Background="White"
-            CornerRadius="8"
-            Effect="{StaticResource EffectShadow5}">
+            CornerRadius="8">
             <hc:SimplePanel>
                 <svgc:SvgViewbox
                     Name="SvgViewboxForkMe"
@@ -34,12 +33,12 @@
                 <Image
                     Width="40"
                     Height="40"
-                    Margin="0,16,0,0"
+                    Margin="0,35,0,0"
                     VerticalAlignment="Top"
                     Source="../favicon.ico"
                     Stretch="Uniform" />
                 <StackPanel
-                    Margin="0,64,0,0"
+                    Margin="0,85,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
                     <TextBlock
@@ -66,7 +65,7 @@
                         Color="#4eb899" />
                     <hc:Shield
                         Margin="5"
-                        Status="Apache"
+                        Status="apache"
                         Subject="license"
                         Color="#d8624c" />
                     <hc:Shield
