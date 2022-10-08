@@ -238,6 +238,8 @@ namespace SmartSQL.UserControl.Tags
                 Dispatcher.Invoke(new Action(() =>
                 {
                     LoadPageData();
+                    var parentWindow = (TagsView)Window.GetWindow(this);
+                    parentWindow.ReloadMenu();
                     Oops.Success($"成功设置{ listObjects.Count}条数据到标签【{SelectedTag.TagName}】");
                 }));
             });
@@ -388,6 +390,7 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void SearchObjects_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            #region MyRegion
             LoadingLine.Visibility = Visibility.Visible;
             var searchText = SearchObjects.Text.Trim();
             var selConnection = SelectedConnection;
@@ -418,7 +421,7 @@ namespace SmartSQL.UserControl.Tags
                         }
                         if (!string.IsNullOrEmpty(searchText))
                         {
-                            if (!table.Value.Name.ToLower().Contains(searchText.ToLower())&&
+                            if (!table.Value.Name.ToLower().Contains(searchText.ToLower()) &&
                                 !table.Value.Comment.ToLower().Contains(searchText.ToLower()))
                             {
                                 continue;
@@ -509,7 +512,8 @@ namespace SmartSQL.UserControl.Tags
                     TagObjectList = list;
                     PageData();
                 }));
-            });
+            }); 
+            #endregion
         }
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)

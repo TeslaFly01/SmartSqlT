@@ -132,7 +132,7 @@ namespace SmartSQL.Views.Category
         /// <summary>
         /// 重新加载标签菜单
         /// </summary>
-        private void ReloadMenu()
+        public void ReloadMenu()
         {
             var sqliteInstance = SQLiteHelper.GetInstance();
             var datalist = sqliteInstance.ToList<TagInfo>(x =>
