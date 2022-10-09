@@ -38,6 +38,7 @@ namespace SmartSQL.UserControl
     public partial class MainContent : BaseUserControl
     {
         private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
+        private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
         private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
@@ -152,10 +153,10 @@ namespace SmartSQL.UserControl
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion
-            //if (!IsLoaded)
-            //{
-            //    return;
-            //}
+            if (!IsLoaded)
+            {
+                return;
+            }
             var selectDatabase = SelectDatabase.SelectedItem;
             if (selectDatabase != null)
             {
@@ -180,8 +181,12 @@ namespace SmartSQL.UserControl
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
+                //分组相关列表
                 var curObjects = new List<SObjectDTO>();
                 var curGroups = new List<ObjectGroup>();
+                //标签相关列表
+                var curTagObjects = new List<MenuTagObjectsDTO>();
+                var curTags = new List<TagInfo>();
                 var itemParentList = new List<TreeNodeItem>();
                 itemList = new List<TreeNodeItem>();
                 var nodeTable = new TreeNodeItem
@@ -283,10 +288,77 @@ namespace SmartSQL.UserControl
                                   }).ToList();
                 }
                 #endregion
+
+                #region 标签业务处理
+                //是否业务标签
+                if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                {
+                    curTags = sqLiteHelper.db.Table<TagInfo>().Where(a =>
+                        a.ConnectId == selectConnection.ID &&
+                        a.DataBaseName == selectDataBase).ToList();
+                    if (curTags.Any())
+                    {
+                        foreach (var tag in curTags)
+                        {
+                            var itemChildList = new List<TreeNodeItem>();
+                            var nodeGroup = new TreeNodeItem
+                            {
+                                ObejcetId = "0",
+                                DisplayName = tag.TagName,
+                                Name = "treeTag",
+                                Icon = TAGICON,
+                                Type = ObjType.Group,
+                                IsShowCount = Visibility.Visible
+                            };
+                            var nodeTable1 = new TreeNodeItem
+                            {
+                                ObejcetId = "0",
+                                DisplayName = "表",
+                                Name = "treeTable",
+                                Icon = TABLEICON,
+                                Parent = nodeGroup,
+                                Type = ObjType.Type,
+                            };
+                            itemChildList.Add(nodeTable1);
+                            var nodeView1 = new TreeNodeItem
+                            {
+                                ObejcetId = "0",
+                                DisplayName = "视图",
+                                Name = "treeView",
+                                Icon = VIEWICON,
+                                Parent = nodeGroup,
+                                Type = ObjType.Type
+                            };
+                            itemChildList.Add(nodeView1);
+                            var nodeProc1 = new TreeNodeItem
+                            {
+                                ObejcetId = "0",
+                                DisplayName = "存储过程",
+                                Name = "treeProc",
+                                Icon = PROCICON,
+                                Parent = nodeGroup,
+                                Type = ObjType.Type
+                            };
+                            itemChildList.Add(nodeProc1);
+                            nodeGroup.Children = itemChildList;
+                            itemParentList.Add(nodeGroup);
+                        }
+                    }
+                    curTagObjects = (from a in sqLiteHelper.db.Table<TagInfo>()
+                                     join b in sqLiteHelper.db.Table<TagObjects>() on a.TagId equals b.TagId
+                                     where a.ConnectId == selectConnection.ID &&
+                                           a.DataBaseName == selectDataBase
+                                     select new MenuTagObjectsDTO
+                                     {
+                                         TagName = a.TagName,
+                                         ObjectName = b.ObjectName
+                                     }).ToList();
+                }
+                #endregion
                 var model = new Model();
                 try
                 {
-                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase),selectDataBase);
+                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase), selectDataBase);
                     model = dbInstance.Init();
                     menuData = model;
                 }
@@ -304,9 +376,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = curObjects.Where(x => x.ObjectName == table.Key).
-                            GroupBy(x => x.GroupName).Select(x => x.Key)
-                            .ToList();
+                                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                                            .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -331,9 +404,46 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    //是否业务标签
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects
+                                            .Where(x => x.ObjectName == table.Key)
+                                            .GroupBy(x => x.TagName)
+                                            .Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
+                                if (ppTag != null)
+                                {
+                                    ppTag.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = table.Value.Id,
+                                        DisplayName = table.Value.DisplayName,
+                                        Name = table.Value.Name,
+                                        Schema = table.Value.SchemaName,
+                                        Comment = table.Value.Comment,
+                                        CreateDate = table.Value.CreateDate,
+                                        ModifyDate = table.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = TABLEICON,
+                                        Type = ObjType.Table
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeTable.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = table.Value.Id,
@@ -347,6 +457,7 @@ namespace SmartSQL.UserControl
                             Icon = TABLEICON,
                             Type = ObjType.Table
                         });
+                        #endregion
                     }
                 }
                 #endregion
@@ -357,9 +468,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = curObjects.Where(x => x.ObjectName == view.Key).
-                            GroupBy(x => x.GroupName).Select(x => x.Key)
-                            .ToList();
+                                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                                            .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -384,9 +496,43 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects.Where(x => x.ObjectName == view.Key).
+                                            GroupBy(x => x.TagName).Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "视图");
+                                if (ppTag != null)
+                                {
+                                    ppTag.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = view.Value.Id,
+                                        DisplayName = view.Value.DisplayName,
+                                        Name = view.Value.Name,
+                                        Schema = view.Value.SchemaName,
+                                        Comment = view.Value.Comment,
+                                        CreateDate = view.Value.CreateDate,
+                                        ModifyDate = view.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = VIEWICON,
+                                        Type = ObjType.View
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeView.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = view.Value.Id,
@@ -400,6 +546,7 @@ namespace SmartSQL.UserControl
                             Icon = VIEWICON,
                             Type = ObjType.View
                         });
+                        #endregion
                     }
                 }
                 #endregion
@@ -410,9 +557,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = curObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
-                            .Select(x => x.Key)
-                            .ToList();
+                                            .Select(x => x.Key)
+                                            .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -437,9 +585,45 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects
+                                            .Where(x => x.ObjectName == proc.Key)
+                                            .GroupBy(x => x.TagName)
+                                            .Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
+                                if (ppTag != null)
+                                {
+                                    ppTag.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = proc.Value.Id,
+                                        DisplayName = proc.Value.DisplayName,
+                                        Name = proc.Value.Name,
+                                        Schema = proc.Value.SchemaName,
+                                        Comment = proc.Value.Comment,
+                                        CreateDate = proc.Value.CreateDate,
+                                        ModifyDate = proc.Value.ModifyDate,
+                                        TextColor = textColor,
+                                        Icon = PROCICON,
+                                        Type = ObjType.Proc
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeProc.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = proc.Value.Id,
@@ -453,6 +637,7 @@ namespace SmartSQL.UserControl
                             Icon = PROCICON,
                             Type = ObjType.Proc
                         });
+                        #endregion
                     }
                 }
                 #endregion
@@ -461,17 +646,17 @@ namespace SmartSQL.UserControl
                 {
                     LoadingLine.Visibility = Visibility.Hidden;
                     //编写获取数据并显示在界面的代码
-                    //是否业务分组
-                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
+                    if (leftMenuType == LeftMenuType.Group.GetHashCode() || leftMenuType == LeftMenuType.Tag.GetHashCode())
                     {
                         if (!itemParentList.Any())
                         {
-                            NoDataAreaText.TipText = "暂无分组，请先建分组";
+                            var tipText = (LeftMenuType)leftMenuType == LeftMenuType.Group ? "暂无分组，请先创建分组" : "暂无标签，请先创建标签";
+                            NoDataAreaText.TipText = tipText;
                             NoDataText.Visibility = Visibility.Visible;
                         }
-                        itemParentList.ForEach(group =>
+                        itemParentList.ForEach(treeItem =>
                         {
-                            group.Children.ForEach(obj =>
+                            treeItem.Children.ForEach(obj =>
                             {
                                 if (!obj.Children.Any())
                                 {
@@ -479,7 +664,7 @@ namespace SmartSQL.UserControl
                                 }
                                 obj.DisplayName += $"（{obj.Children.Count}）";
                             });
-                            group.ChildrenCount = group.Children[0].Children.Count + group.Children[1].Children.Count + group.Children[2].Children.Count;
+                            treeItem.ChildrenCount = treeItem.Children[0].Children.Count + treeItem.Children[1].Children.Count + treeItem.Children[2].Children.Count;
                         });
                         TreeViewData = itemParentList;
                         SearchMenu.Text = string.Empty;
@@ -582,8 +767,12 @@ namespace SmartSQL.UserControl
             var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectedConnection;
+            //分组相关列表
             var currObjects = new List<SObjectDTO>();
             var currGroups = new List<ObjectGroup>();
+            //标签相关列表
+            var curTagObjects = new List<MenuTagObjectsDTO>();
+            var curTags = new List<TagInfo>();
             var itemParentList = new List<TreeNodeItem>();
             #region 分组业务处理
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
@@ -658,6 +847,73 @@ namespace SmartSQL.UserControl
             }
             #endregion
 
+            #region 标签业务处理
+            //是否业务标签
+            if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+            {
+                curTags = sqLiteHelper.db.Table<TagInfo>().Where(a =>
+                    a.ConnectId == selectConnection.ID &&
+                    a.DataBaseName == selectDataBase).ToList();
+                if (curTags.Any())
+                {
+                    foreach (var tag in curTags)
+                    {
+                        var itemChildList = new List<TreeNodeItem>();
+                        var nodeGroup = new TreeNodeItem
+                        {
+                            ObejcetId = "0",
+                            DisplayName = tag.TagName,
+                            Name = "treeTag",
+                            Icon = TAGICON,
+                            Type = ObjType.Group,
+                            IsShowCount = Visibility.Visible
+                        };
+                        var nodeTable1 = new TreeNodeItem
+                        {
+                            ObejcetId = "0",
+                            DisplayName = "表",
+                            Name = "treeTable",
+                            Icon = TABLEICON,
+                            Parent = nodeGroup,
+                            Type = ObjType.Type,
+                        };
+                        itemChildList.Add(nodeTable1);
+                        var nodeView1 = new TreeNodeItem
+                        {
+                            ObejcetId = "0",
+                            DisplayName = "视图",
+                            Name = "treeView",
+                            Icon = VIEWICON,
+                            Parent = nodeGroup,
+                            Type = ObjType.Type
+                        };
+                        itemChildList.Add(nodeView1);
+                        var nodeProc1 = new TreeNodeItem
+                        {
+                            ObejcetId = "0",
+                            DisplayName = "存储过程",
+                            Name = "treeProc",
+                            Icon = PROCICON,
+                            Parent = nodeGroup,
+                            Type = ObjType.Type
+                        };
+                        itemChildList.Add(nodeProc1);
+                        nodeGroup.Children = itemChildList;
+                        itemParentList.Add(nodeGroup);
+                    }
+                }
+                curTagObjects = (from a in sqLiteHelper.db.Table<TagInfo>()
+                                 join b in sqLiteHelper.db.Table<TagObjects>() on a.TagId equals b.TagId
+                                 where a.ConnectId == selectConnection.ID &&
+                                       a.DataBaseName == selectDataBase
+                                 select new MenuTagObjectsDTO
+                                 {
+                                     TagName = a.TagName,
+                                     ObjectName = b.ObjectName
+                                 }).ToList();
+            }
+            #endregion
+
             #region 表
             if (MenuData.Tables != null)
             {
@@ -674,9 +930,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = currObjects.Where(x => x.ObjectName == table.Key).
-                            GroupBy(x => x.GroupName).Select(x => x.Key)
-                            .ToList();
+                                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                                            .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -700,9 +957,44 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects
+                                            .Where(x => x.ObjectName == table.Key)
+                                            .GroupBy(x => x.TagName)
+                                            .Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppGroup = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
+                                if (ppGroup != null)
+                                {
+                                    ppGroup.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = table.Value.Id,
+                                        DisplayName = table.Value.DisplayName,
+                                        Name = table.Value.Name,
+                                        Schema = table.Value.SchemaName,
+                                        Comment = table.Value.Comment,
+                                        CreateDate = table.Value.CreateDate,
+                                        ModifyDate = table.Value.ModifyDate,
+                                        Icon = TABLEICON,
+                                        Type = ObjType.Table
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeTable.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = table.Value.Id,
@@ -715,6 +1007,7 @@ namespace SmartSQL.UserControl
                             Icon = TABLEICON,
                             Type = ObjType.Table
                         });
+                        #endregion
                     }
                 }
             }
@@ -735,9 +1028,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = currObjects.Where(x => x.ObjectName == view.Key).
-                            GroupBy(x => x.GroupName).Select(x => x.Key)
-                            .ToList();
+                                            GroupBy(x => x.GroupName).Select(x => x.Key)
+                                            .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -761,9 +1055,44 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects
+                                            .Where(x => x.ObjectName == view.Key)
+                                            .GroupBy(x => x.TagName)
+                                            .Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "视图");
+                                if (ppTag != null)
+                                {
+                                    ppTag.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = view.Value.Id,
+                                        DisplayName = view.Value.DisplayName,
+                                        Name = view.Value.Name,
+                                        Schema = view.Value.SchemaName,
+                                        Comment = view.Value.Comment,
+                                        CreateDate = view.Value.CreateDate,
+                                        ModifyDate = view.Value.ModifyDate,
+                                        Icon = VIEWICON,
+                                        Type = ObjType.View
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeView.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = view.Value.Id,
@@ -776,6 +1105,7 @@ namespace SmartSQL.UserControl
                             Icon = VIEWICON,
                             Type = ObjType.View
                         });
+                        #endregion
                     }
                 }
             }
@@ -796,9 +1126,10 @@ namespace SmartSQL.UserControl
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
+                        #region MyRegion
                         var hasGroup = currObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
-                            .Select(x => x.Key)
-                            .ToList();
+                                           .Select(x => x.Key)
+                                           .ToList();
                         foreach (var group in hasGroup)
                         {
                             var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
@@ -822,9 +1153,44 @@ namespace SmartSQL.UserControl
                                 }
                             }
                         }
+                        #endregion
+                    }
+                    else if (leftMenuType == LeftMenuType.Tag.GetHashCode())
+                    {
+                        #region MyRegion
+                        var hasTag = curTagObjects
+                                            .Where(x => x.ObjectName == proc.Key)
+                                            .GroupBy(x => x.TagName)
+                                            .Select(x => x.Key)
+                                            .ToList();
+                        foreach (var tag in hasTag)
+                        {
+                            var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
+                            if (pTag != null)
+                            {
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
+                                if (ppTag != null)
+                                {
+                                    ppTag.Children.Add(new TreeNodeItem()
+                                    {
+                                        ObejcetId = proc.Value.Id,
+                                        DisplayName = proc.Value.DisplayName,
+                                        Name = proc.Value.Name,
+                                        Schema = proc.Value.SchemaName,
+                                        Comment = proc.Value.Comment,
+                                        CreateDate = proc.Value.CreateDate,
+                                        ModifyDate = proc.Value.ModifyDate,
+                                        Icon = PROCICON,
+                                        Type = ObjType.Proc
+                                    });
+                                }
+                            }
+                        }
+                        #endregion
                     }
                     else
                     {
+                        #region MyRegion
                         nodeProc.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = proc.Value.Id,
@@ -837,6 +1203,7 @@ namespace SmartSQL.UserControl
                             Icon = PROCICON,
                             Type = ObjType.Proc
                         });
+                        #endregion
                     }
                 }
             }
@@ -894,15 +1261,23 @@ namespace SmartSQL.UserControl
         private void TabLeftType_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion
+            if (!IsLoaded)
+            {
+                return;
+            }
             var sqLiteHelper = new SQLiteHelper();
             var selectedItem = (TabItem)((TabControl)sender).SelectedItem;
             if (selectedItem.Name == "TabAllData")
             {
                 sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "1");
+                //GroupCategory.Visibility = Visibility.Collapsed;
+                //TreeViewTables.Margin = new Thickness(0, 103, 0, 0);
             }
             else if (selectedItem.Name == "TabGroupData")
             {
                 sqLiteHelper.SetSysValue(SysConst.Sys_LeftMenuType, "2");
+                //GroupCategory.Visibility = Visibility.Visible;
+                //TreeViewTables.Margin = new Thickness(0, 135, 0, 0);
             }
             else
             {
@@ -1012,7 +1387,7 @@ namespace SmartSQL.UserControl
             e.Handled = true;
         }
 
-        private void MenuSelectedItem_OnClick(object sender, RoutedEventArgs e)
+        private void MenuCopyName_OnClick(object sender, RoutedEventArgs e)
         {
             if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
             {
@@ -1032,6 +1407,33 @@ namespace SmartSQL.UserControl
                 MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
                 MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
             }
+        }
+
+        private void EventSetter_OnHandler(object sender, MouseButtonEventArgs e)
+        {
+            var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
+            if (treeViewItem != null)
+            {
+                var currentNode = treeViewItem.Header as TreeNodeItem;
+                if (currentNode.ObejcetId == "0")
+                {
+                    TreeContextMenu.Visibility = Visibility.Collapsed;
+                }
+                else
+                {
+                    TreeContextMenu.Visibility = Visibility.Visible;
+                }
+                treeViewItem.Focus();
+                e.Handled = true;
+            }
+        }
+        private DependencyObject VisualUpwardSearch<T>(DependencyObject source)
+        {
+            while (source != null && source.GetType() != typeof(T))
+            {
+                source = VisualTreeHelper.GetParent(source);
+            }
+            return source;
         }
     }
 }

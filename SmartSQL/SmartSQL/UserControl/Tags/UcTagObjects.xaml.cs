@@ -169,7 +169,7 @@ namespace SmartSQL.UserControl.Tags
                 TagObjectItems = tagObjectList;
                 TagObjectList = tagObjectList;
                 var parentWindow = (TagsView)Window.GetWindow(this);
-                parentWindow.ReloadMenu();
+                parentWindow?.ReloadMenu();
             }
         }
 
@@ -181,7 +181,7 @@ namespace SmartSQL.UserControl.Tags
         private void BtnCancel_Click(object sender, RoutedEventArgs e)
         {
             var parentWindow = Window.GetWindow(this);
-            parentWindow.Close();
+            parentWindow?.Close();
         }
 
         /// <summary>

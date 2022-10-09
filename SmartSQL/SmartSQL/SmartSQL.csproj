@@ -125,6 +125,7 @@
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
     <Compile Include="Helper\TruncateLongLines.cs" />
+    <Compile Include="Models\MenuTagObjectsDTO.cs" />
     <Compile Include="Models\PasswordResultDTO.cs" />
     <Compile Include="Models\SysEnum.cs" />
     <Compile Include="Models\MainTabWModel.cs" />
@@ -586,6 +587,7 @@
     <Content Include="hhc.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\tag.svg" />
     <Resource Include="Resources\Img\toolIcon\word-count%402x.png" />
     <Resource Include="Resources\Img\toolIcon\text-insert%402x.png" />
     <Resource Include="Resources\Img\toolIcon\aes%402x.png" />

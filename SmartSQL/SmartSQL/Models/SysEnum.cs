@@ -54,8 +54,8 @@ namespace SmartSQL.Models
         /// </summary>
         Group = 2,
         /// <summary>
-        /// 收藏
+        /// 标签
         /// </summary>
-        Fav = 3
+        Tag = 3
     }
 }

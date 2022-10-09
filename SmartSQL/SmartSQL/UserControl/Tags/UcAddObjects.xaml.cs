@@ -147,7 +147,7 @@ namespace SmartSQL.UserControl.Tags
                     var tb = new TagObjectDTO()
                     {
                         ObjectId = table.Value.Id,
-                        Name = table.Value.Name,
+                        Name = table.Value.DisplayName,
                         ObjectType = 1,
                         Comment = table.Value.Comment
                     };
@@ -239,7 +239,7 @@ namespace SmartSQL.UserControl.Tags
                 {
                     LoadPageData();
                     var parentWindow = (TagsView)Window.GetWindow(this);
-                    parentWindow.ReloadMenu();
+                    parentWindow?.ReloadMenu();
                     Oops.Success($"成功设置{ listObjects.Count}条数据到标签【{SelectedTag.TagName}】");
                 }));
             });
@@ -314,7 +314,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = table.Value.Id,
-                            Name = table.Value.Name,
+                            Name = table.Value.DisplayName,
                             ObjectType = 1,
                             Comment = table.Value.Comment
                         };
@@ -340,7 +340,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = view.Value.Id,
-                            Name = view.Value.Name,
+                            Name = view.Value.DisplayName,
                             ObjectType = 1,
                             Comment = view.Value.Comment
                         };
@@ -366,7 +366,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
-                            Name = proc.Value.Name,
+                            Name = proc.Value.DisplayName,
                             ObjectType = 1,
                             Comment = proc.Value.Comment
                         };
@@ -430,7 +430,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = table.Value.Id,
-                            Name = table.Value.Name,
+                            Name = table.Value.DisplayName,
                             ObjectType = 1,
                             Comment = table.Value.Comment
                         };
@@ -464,7 +464,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = view.Value.Id,
-                            Name = view.Value.Name,
+                            Name = view.Value.DisplayName,
                             ObjectType = 1,
                             Comment = view.Value.Comment
                         };
@@ -498,7 +498,7 @@ namespace SmartSQL.UserControl.Tags
                         var tb = new TagObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
-                            Name = proc.Value.Name,
+                            Name = proc.Value.DisplayName,
                             ObjectType = 1,
                             Comment = proc.Value.Comment
                         };

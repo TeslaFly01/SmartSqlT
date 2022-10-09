@@ -19,7 +19,7 @@
         <KeyBinding Command="Copy" Gesture="Control + C" />
     </Window.InputBindings>-->
     <UserControl.CommandBindings>
-        <CommandBinding Command="Copy" Executed="MenuSelectedItem_OnClick" />
+        <CommandBinding Command="Copy" Executed="MenuCopyName_OnClick" />
     </UserControl.CommandBindings>
     <!--  按键监/命令听绑定  -->
     <Grid>
@@ -127,12 +127,22 @@
                                 Cursor="Hand"
                                 Header="分组"
                                 IsSelected="False" />
+                            <TabItem
+                                x:Name="TabTagData"
+                                Cursor="Hand"
+                                Header="标签"
+                                IsSelected="False" />
                         </TabControl>
-                        <!--<hc:ButtonGroup Margin="0,102,0,0" Style="{StaticResource ButtonGroupSolid}">
+                        <!--<hc:ButtonGroup
+                            x:Name="GroupCategory"
+                            Margin="0,104,0,0"
+                            Style="{StaticResource ButtonGroupSolid}"
+                            Visibility="Collapsed">
                             <RadioButton
                                 Height="28"
                                 Content="分组"
-                                Cursor="Hand" />
+                                Cursor="Hand"
+                                IsChecked="True" />
                             <RadioButton
                                 Height="28"
                                 Content="标签"
@@ -156,6 +166,7 @@
                                     <Setter Property="Cursor" Value="Hand" />
                                     <!--  禁止水平滚动条自动滚动  -->
                                     <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
+                                    <EventSetter Event="PreviewMouseRightButtonDown" Handler="EventSetter_OnHandler" />
                                     <Style.Triggers>
                                         <Trigger Property="IsSelected" Value="True">
                                             <Setter Property="FontWeight" Value="Bold" />
@@ -165,17 +176,17 @@
                             </TreeView.ItemContainerStyle>
                             <TreeView.ContextMenu>
                                 <!--  右键菜单  -->
-                                <ContextMenu Visibility="Visible">
+                                <ContextMenu Name="TreeContextMenu" Visibility="Visible">
                                     <ContextMenu.ItemContainerStyle>
                                         <Style BasedOn="{StaticResource MenuItemBaseStyle}" TargetType="MenuItem">
                                             <Setter Property="Width" Value="180" />
                                         </Style>
                                     </ContextMenu.ItemContainerStyle>
                                     <MenuItem
-                                        x:Name="MenuSelectedItem"
+                                        x:Name="MenuCopyName"
                                         Padding="5,3,5,3"
                                         VerticalAlignment="Center"
-                                        Click="MenuSelectedItem_OnClick"
+                                        Click="MenuCopyName_OnClick"
                                         Header="复制名称">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome
