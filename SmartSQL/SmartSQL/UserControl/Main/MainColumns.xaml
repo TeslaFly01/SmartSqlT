@@ -95,7 +95,7 @@
                                         CanUserResize="False"
                                         CanUserSort="False"
                                         CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
-                                        Header="允许NULL值"
+                                        Header="允许空值"
                                         IsReadOnly="True" />
                                     <DataGridTextColumn
                                         Binding="{Binding DefaultValue}"
