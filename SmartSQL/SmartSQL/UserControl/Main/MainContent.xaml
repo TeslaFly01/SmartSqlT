@@ -196,6 +196,48 @@
                                                 Icon="Copy" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <!--<MenuItem
+                                        x:Name="MenuCopyName1"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Header="导出文档"
+                                        IsEnabled="False">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="Coral"
+                                                Icon="FileExcelOutline" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuCopyNam1e1"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Header="生成SQL"
+                                        IsEnabled="False">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Code" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="Menu2CopyName1"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Header="生成实体"
+                                        IsEnabled="False">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Bug" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>-->
                                 </ContextMenu>
                             </TreeView.ContextMenu>
                             <TreeView.ItemTemplate>

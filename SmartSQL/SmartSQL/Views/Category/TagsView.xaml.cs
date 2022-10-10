@@ -256,6 +256,7 @@ namespace SmartSQL.Views.Category
                     {
                         TagMenuList = datalist;
                         ReloadMenu();
+                        MainContent = new UcTagObjects();
                     });
                 });
             }

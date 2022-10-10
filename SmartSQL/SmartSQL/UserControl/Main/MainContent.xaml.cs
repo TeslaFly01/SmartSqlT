@@ -782,7 +782,7 @@ namespace SmartSQL.UserControl
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
                 {
-                    NoDataAreaText.TipText = "暂无分组，请先建分组";
+                    NoDataAreaText.TipText = "暂无分组，请先创建分组";
                     NoDataText.Visibility = Visibility.Visible;
                     return;
                 }
@@ -854,53 +854,61 @@ namespace SmartSQL.UserControl
                 curTags = sqLiteHelper.db.Table<TagInfo>().Where(a =>
                     a.ConnectId == selectConnection.ID &&
                     a.DataBaseName == selectDataBase).ToList();
-                if (curTags.Any())
+                if (!curTags.Any())
                 {
-                    foreach (var tag in curTags)
+                    NoDataAreaText.TipText = "暂无标签，请先创建标签";
+                    NoDataText.Visibility = Visibility.Visible;
+                    return;
+                }
+                foreach (var tag in curTags)
+                {
+                    var itemChildList = new List<TreeNodeItem>();
+                    var nodeTag = new TreeNodeItem
                     {
-                        var itemChildList = new List<TreeNodeItem>();
-                        var nodeGroup = new TreeNodeItem
-                        {
-                            ObejcetId = "0",
-                            DisplayName = tag.TagName,
-                            Name = "treeTag",
-                            Icon = TAGICON,
-                            Type = ObjType.Group,
-                            IsShowCount = Visibility.Visible
-                        };
-                        var nodeTable1 = new TreeNodeItem
-                        {
-                            ObejcetId = "0",
-                            DisplayName = "表",
-                            Name = "treeTable",
-                            Icon = TABLEICON,
-                            Parent = nodeGroup,
-                            Type = ObjType.Type,
-                        };
-                        itemChildList.Add(nodeTable1);
-                        var nodeView1 = new TreeNodeItem
-                        {
-                            ObejcetId = "0",
-                            DisplayName = "视图",
-                            Name = "treeView",
-                            Icon = VIEWICON,
-                            Parent = nodeGroup,
-                            Type = ObjType.Type
-                        };
-                        itemChildList.Add(nodeView1);
-                        var nodeProc1 = new TreeNodeItem
-                        {
-                            ObejcetId = "0",
-                            DisplayName = "存储过程",
-                            Name = "treeProc",
-                            Icon = PROCICON,
-                            Parent = nodeGroup,
-                            Type = ObjType.Type
-                        };
-                        itemChildList.Add(nodeProc1);
-                        nodeGroup.Children = itemChildList;
-                        itemParentList.Add(nodeGroup);
-                    }
+                        ObejcetId = "0",
+                        DisplayName = tag.TagName,
+                        Name = "treeTable",
+                        Icon = TAGICON,
+                        Type = ObjType.Tag,
+                        IsExpanded = true,
+                        FontWeight = "Bold",
+                        Children = itemChildList
+                    };
+                    var nodeTable1 = new TreeNodeItem
+                    {
+                        ObejcetId = "0",
+                        DisplayName = "表",
+                        Name = "treeTable",
+                        Icon = TABLEICON,
+                        Type = ObjType.Type,
+                        IsExpanded = true,
+                        Parent = nodeTag,
+                    };
+                    itemChildList.Add(nodeTable1);
+                    var nodeView1 = new TreeNodeItem
+                    {
+                        ObejcetId = "0",
+                        DisplayName = "视图",
+                        Name = "treeView",
+                        Icon = VIEWICON,
+                        Type = ObjType.Type,
+                        IsExpanded = true,
+                        Parent = nodeTag
+                    };
+                    itemChildList.Add(nodeView1);
+                    var nodeProc1 = new TreeNodeItem
+                    {
+                        ObejcetId = "0",
+                        DisplayName = "存储过程",
+                        Name = "treeProc",
+                        Icon = PROCICON,
+                        Type = ObjType.Type,
+                        IsExpanded = true,
+                        Parent = nodeTag
+                    };
+                    itemChildList.Add(nodeProc1);
+                    nodeTag.Children = itemChildList;
+                    itemParentList.Add(nodeTag);
                 }
                 curTagObjects = (from a in sqLiteHelper.db.Table<TagInfo>()
                                  join b in sqLiteHelper.db.Table<TagObjects>() on a.TagId equals b.TagId
@@ -921,7 +929,7 @@ namespace SmartSQL.UserControl
                 {
                     var isStartWith = !table.Key.ToLower().StartsWith(searchText, true, null) &&
                                      !table.Value.Name.ToLower().StartsWith(searchText, true, null);
-                    var isContains = !table.Key.ToLower().Contains(searchText) && !table.Key.ToLower().Contains(searchText);
+                    var isContains = !table.Key.ToLower().Contains(searchText) && !table.Value.Name.ToLower().Contains(searchText);
                     var isSearchMode = isLikeSearch ? isContains : isStartWith;
                     if (isSearchMode)
                     {
@@ -972,10 +980,10 @@ namespace SmartSQL.UserControl
                             var pTag = itemParentList.FirstOrDefault(x => x.DisplayName == tag);
                             if (pTag != null)
                             {
-                                var ppGroup = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
-                                if (ppGroup != null)
+                                var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
+                                if (ppTag != null)
                                 {
-                                    ppGroup.Children.Add(new TreeNodeItem()
+                                    ppTag.Children.Add(new TreeNodeItem()
                                     {
                                         ObejcetId = table.Value.Id,
                                         DisplayName = table.Value.DisplayName,
@@ -1019,7 +1027,7 @@ namespace SmartSQL.UserControl
                 foreach (var view in MenuData.Views)
                 {
                     var isStartWith = !view.Key.ToLower().StartsWith(searchText, true, null) && !view.Value.Name.ToLower().StartsWith(searchText, true, null);
-                    var isContains = !view.Key.ToLower().Contains(searchText) && !view.Key.ToLower().Contains(searchText);
+                    var isContains = !view.Key.ToLower().Contains(searchText) && !view.Value.Name.ToLower().Contains(searchText);
                     var isSearchMode = isLikeSearch ? isContains : isStartWith;
                     if (isSearchMode)
                     {
@@ -1117,7 +1125,7 @@ namespace SmartSQL.UserControl
                 foreach (var proc in MenuData.Procedures)
                 {
                     var isStartWith = !proc.Key.ToLower().StartsWith(searchText, true, null) && !proc.Value.Name.ToLower().StartsWith(searchText, true, null);
-                    var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Key.ToLower().Contains(searchText);
+                    var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Value.Name.ToLower().Contains(searchText);
                     var isSearchMode = isLikeSearch ? isContains : isStartWith;
                     if (isSearchMode)
                     {
@@ -1209,15 +1217,15 @@ namespace SmartSQL.UserControl
             }
             #endregion
 
-            if (leftMenuType == LeftMenuType.Group.GetHashCode())
+            if (leftMenuType == LeftMenuType.Group.GetHashCode() || leftMenuType == LeftMenuType.Tag.GetHashCode())
             {
-                itemParentList.ForEach(group =>
+                itemParentList.ForEach(treeItem =>
                 {
-                    if (!group.Children.First(x => x.Name.Equals("treeTable")).Children.Any() && !group.Children.First(x => x.Name.Equals("treeView")).Children.Any() && !group.Children.First(x => x.Name.Equals("treeProc")).Children.Any())
+                    if (!treeItem.Children.First(x => x.Name.Equals("treeTable")).Children.Any() && !treeItem.Children.First(x => x.Name.Equals("treeView")).Children.Any() && !treeItem.Children.First(x => x.Name.Equals("treeProc")).Children.Any())
                     {
-                        group.Visibility = nameof(Visibility.Collapsed);
+                        treeItem.Visibility = nameof(Visibility.Collapsed);
                     }
-                    group.Children.ForEach(obj =>
+                    treeItem.Children.ForEach(obj =>
                     {
                         if (!obj.Children.Any())
                         {

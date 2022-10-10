@@ -162,6 +162,8 @@ namespace SmartSQL.Models
     {
         public const string Group = "Group";
 
+        public const string Tag = "Tag";
+
         public const string Type = "Type";
 
         public const string Table = "Table";
