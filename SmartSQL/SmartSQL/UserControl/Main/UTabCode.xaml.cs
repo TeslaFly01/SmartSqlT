@@ -13,14 +13,17 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
+using JinianNet.JNTemplate;
 using SmartSQL.Framework;
 using SmartSQL.Framework.Exporter;
+using SmartSQL.Framework.Lang;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Framework.Util;
 using SmartSQL.Helper;
 using SmartSQL.Models;
 using SqlSugar;
+using Path = System.IO.Path;
 using UserControlE = System.Windows.Controls.UserControl;
 
 namespace SmartSQL.UserControl
@@ -76,7 +79,7 @@ namespace SmartSQL.UserControl
             InitializeComponent();
             DataContext = this;
             HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
-            TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+            TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             TextCsharpEditor.TextArea.SelectionCornerRadius = 0;
             TextCsharpEditor.TextArea.SelectionBorder = null;
             TextCsharpEditor.TextArea.SelectionForeground = null;
@@ -89,34 +92,54 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
-            TabParentSql.IsSelected = true;
-            TabSelectSql.IsSelected = true;
-            var objE = SelectedObject;
-
-            var list = SelectedTableColunms;
-            
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, objE.DisplayName, list);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
             //建表sql
             var createTableSql = instance.CreateTableSql();
-            TxtCreateSql.SqlText = createTableSql;
-            //建字段sql
-            var alterAdd = instance.AddColumnSql();
-            TxtAddColumnSql.SqlText = alterAdd;
-            //查询sql
-            var selSql = instance.SelectSql();
-            TxtSelectSql.SqlText = selSql;
-            //插入sql
-            var insSql = instance.InsertSql();
-            TxtInsertSql.SqlText = insSql;
-            //更新sql
-            var updSql = instance.UpdateSql();
-            TxtUpdateSql.SqlText = updSql;
-            //删除sql
-            var delSql = instance.DeleteSql();
-            TxtDeleteSql.SqlText = delSql;
-            var langInstance = LangFactory.CreateInstance(LangType.Csharp, objE.Name, list);
-            var csharpEntityCode = langInstance.BuildEntity();
-            TextCsharpEditor.Text = csharpEntityCode;
+            TextCsharpEditor.Text = createTableSql;
+
+        }
+
+        /// <summary>
+        /// 变更语言事件
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ListBoxLanguage_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
+            var selLan = (ListBoxItem)ListBoxLanguage.SelectedItem;
+            switch (selLan.Content)
+            {
+                case "SQL":
+                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
+                    //建表sql
+                    var createTableSql = instance.CreateTableSql();
+                    TextCsharpEditor.Text = createTableSql;
+                    break;
+                case "C#":
+                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+                    var langInstance = LangFactory.CreateInstance(LangType.Csharp, SelectedObject.Name, SelectedObject.Comment, SelectedTableColunms);
+                    TextCsharpEditor.Text = langInstance.BuildEntity();
+                    break;
+                case "Java":
+                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "Java");
+
+                    string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\template\\Csharp.tmpl");
+                    var template = Engine.LoadTemplate(TTF_Path);
+                    template.Set("ClassInfo", SelectedObject);
+                    template.Set("FieldList", SelectedTableColunms);
+                    var result = template.Render();
+                    break;
+                case "PHP":
+                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "PHP"); break;
+                case "C++": break;
+                case "ObjectC": break;
+            }
+
         }
     }
 }

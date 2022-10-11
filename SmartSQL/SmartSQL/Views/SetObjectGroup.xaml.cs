@@ -105,7 +105,6 @@ namespace SmartSQL.Views
                   x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase).ToList();
             if (!list.Any())
             {
-                SelectAllBtn.Visibility = Visibility.Collapsed;
                 return;
             }
             var selectedNames = SelectedObjects.Select(x => x.DisplayName);
@@ -129,7 +128,6 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void SelectAllBtn_OnClick(object sender, RoutedEventArgs e)
         {
-            bool flag = SelectAllBtn.IsChecked == true ? true : false;
             var sqLiteHelper = new SQLiteHelper();
             var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
                 x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase).ToList();
@@ -137,10 +135,6 @@ namespace SmartSQL.Views
             {
                 return;
             }
-            list.ForEach(x =>
-            {
-                x.IsSelected = flag;
-            });
             ObjectGroupList = list;
         }
 

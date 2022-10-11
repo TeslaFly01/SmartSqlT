@@ -64,7 +64,9 @@ namespace SmartSQL
                 ["C#"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("C#")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("SQL")),
                 ["Json"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Json")),
-                ["Text"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Text"))
+                ["Java"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Java")),
+                ["PHP"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("PHP")),
+                ["Python"] = new Lazy<IHighlightingDefinition>(() => HighlightingManager.Instance.GetDefinition("Python"))
             };
         }
     }
@@ -76,10 +78,12 @@ namespace SmartSQL
             Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
             {
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("XML-Dark")),
-                ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Dark")),
+                ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Mode")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL-Dark")),
                 ["Json"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Json")),
-                ["Text"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Text-Mode")),
+                ["Java"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Java-Mode")),
+                ["PHP"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("PHP-Mode")),
+                ["Python"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Python-Mode")),
             };
         }
     }

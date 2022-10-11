@@ -40,8 +40,18 @@ namespace SmartSQL.Framework
 
     public enum LangType
     {
+        SQL = 0,
+
         Csharp = 1,
 
-        Java = 2
+        Java = 2,
+
+        PHP = 3,
+
+        Python = 4,
+
+        C = 5,
+
+        ObjectC = 6
     }
 }

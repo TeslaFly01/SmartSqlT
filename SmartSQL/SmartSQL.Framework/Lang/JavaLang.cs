@@ -9,7 +9,7 @@ namespace SmartSQL.Framework.Lang
 {
     public class JavaLang : Lang
     {
-        public JavaLang(string tableName, List<Column> columns) : base(tableName, columns)
+        public JavaLang(string tbName, string tbComment, List<Column> columns) : base(tbName, tbComment, columns)
         {
 
         }

@@ -211,6 +211,34 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
+                                        x:Name="MenuCopyName1"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Header="设置分组"
+                                        IsEnabled="False">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="Coral"
+                                                Icon="FileExcelOutline" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuCopyName1"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Header="设置标签"
+                                        IsEnabled="False">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="Coral"
+                                                Icon="FileExcelOutline" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
                                         x:Name="MenuCopyNam1e1"
                                         Padding="5,3,5,3"
                                         VerticalAlignment="Center"

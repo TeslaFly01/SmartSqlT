@@ -12,77 +12,70 @@
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="TabCode_OnLoaded"
     mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style
+            x:Key="CodeListBox"
+            BasedOn="{StaticResource ListBoxItemBaseStyle}"
+            TargetType="ListBoxItem">
+            <Setter Property="FontWeight" Value="Bold" />
+            <Style.Triggers>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#1890ff" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
     <Grid>
-        <TabControl
-            Name="TabCode"
-            Margin="5"
-            Loaded="TabCode_OnLoaded"
-            Style="{StaticResource TabControlBaseStyle}"
-            TabStripPlacement="Top">
-            <TabItem Name="TabParentSql" Header="SQL脚本">
-                <Grid>
-                    <TabControl
-                        Name="TabSql"
-                        Margin="5,0,0,0"
-                        Style="{StaticResource TabControlBaseStyle}"
-                        TabStripPlacement="Left">
-                        <TabItem
-                            Name="TabColumnSql"
-                            Header="ADDCOLUMN"
-                            Visibility="Collapsed">
-                            <controls:SqlScript x:Name="TxtAddColumnSql" />
-                        </TabItem>
-                        <TabItem
-                            Name="TabSelectSql"
-                            Header="SELECT"
-                            IsSelected="True">
-                            <controls:SqlScript x:Name="TxtSelectSql" />
-                        </TabItem>
-                        <TabItem Name="TabInsertSql" Header="INSERT">
-                            <controls:SqlScript x:Name="TxtInsertSql" />
-                        </TabItem>
-                        <TabItem Name="TabUpdateSql" Header="UPDATE">
-                            <controls:SqlScript x:Name="TxtUpdateSql" />
-                        </TabItem>
-                        <TabItem Name="TabDeleteSql" Header="DELETE">
-                            <controls:SqlScript x:Name="TxtDeleteSql" />
-                        </TabItem>
-                        <TabItem Name="TabCreateSql" Header="DDL">
-                            <controls:SqlScript x:Name="TxtCreateSql" />
-                        </TabItem>
-                    </TabControl>
-                </Grid>
-            </TabItem>
-            <TabItem Name="TabParentCsharp" Header="C#实体类">
-                <TabControl
-                    Margin="5,0,0,5"
-                    Style="{StaticResource TabControlBaseStyle}"
-                    TabStripPlacement="Left">
-                    <TabItem Header="基础代码" IsSelected="True">
-                        <Grid>
-                            <avalonedit:TextEditor
-                                x:Name="TextCsharpEditor"
-                                Margin="0,0,0,5"
-                                Padding="5,0,0,0"
-                                Background="#272822"
-                                FontFamily="新宋体"
-                                FontSize="12"
-                                Foreground="White"
-                                ShowLineNumbers="True"
-                                WordWrap="True">
-                                <avalonedit:TextEditor.Options>
-                                    <avalonedit:TextEditorOptions ShowSpaces="False">
-                                        <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                            <system:Int32>10</system:Int32>
-                                        </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                    </avalonedit:TextEditorOptions>
-                                </avalonedit:TextEditor.Options>
-                            </avalonedit:TextEditor>
-                        </Grid>
-                    </TabItem>
-                </TabControl>
-            </TabItem>
-        </TabControl>
+        <Grid>
+            <Border
+                Margin="5"
+                HorizontalAlignment="Left"
+                BorderBrush="#e0e0e0"
+                BorderThickness="0.4"
+                CornerRadius="8">
+                <ListBox
+                    Name="ListBoxLanguage"
+                    Width="100"
+                    Margin="0,8,0,5"
+                    HorizontalAlignment="Left"
+                    BorderThickness="0"
+                    SelectionChanged="ListBoxLanguage_OnSelectionChanged">
+                    <ListBoxItem
+                        Content="SQL"
+                        IsSelected="True"
+                        Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="C#" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="Java" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="PHP" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="Python" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="C++" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem Content="ObjectC" Style="{StaticResource CodeListBox}" />
+                </ListBox>
+            </Border>
+            <Border
+                Margin="110,5,5,5"
+                BorderBrush="#E0E0E0"
+                BorderThickness="0.4"
+                CornerRadius="8">
+                <avalonedit:TextEditor
+                    x:Name="TextCsharpEditor"
+                    Margin="5,5,0,5"
+                    FontFamily="新宋体"
+                    FontSize="12"
+                    ShowLineNumbers="True"
+                    WordWrap="True">
+                    <avalonedit:TextEditor.Options>
+                        <avalonedit:TextEditorOptions ShowSpaces="False">
+                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                <system:Int32>10</system:Int32>
+                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                        </avalonedit:TextEditorOptions>
+                    </avalonedit:TextEditor.Options>
+                </avalonedit:TextEditor>
+            </Border>
+        </Grid>
     </Grid>
 </local:BaseUserControl>

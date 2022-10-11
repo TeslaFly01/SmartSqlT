@@ -89,22 +89,14 @@
                     Background="#f5f5f5"
                     CornerRadius="8 8 0 0">
                     <StackPanel Margin="20,10,0,0" HorizontalAlignment="Center">
-                        <TextBlock Foreground="#40485b" Text="所属分组" />
+                        <TextBlock Foreground="#40485b" Text="分组信息" />
                     </StackPanel>
                 </Border>
                 <!--  标题  -->
 
-                <Grid Margin="0,45,5,5">
+                <Grid Margin="0,45,0,5">
                     <ScrollViewer VerticalScrollBarVisibility="Auto">
                         <WrapPanel Name="materialTabItem" Orientation="Horizontal">
-                            <CheckBox
-                                Name="SelectAllBtn"
-                                Margin="8"
-                                Click="SelectAllBtn_OnClick"
-                                Content="全选"
-                                Cursor="Hand"
-                                FontWeight="Bold" />
-
                             <ItemsControl Name="CheckBoxGroups" ItemsSource="{Binding ObjectGroupList, Mode=TwoWay}">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
@@ -113,10 +105,11 @@
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
-                                        <CheckBox
+                                        <RadioButton
                                             Margin="8"
                                             Content="{Binding GroupName, Mode=TwoWay}"
                                             Cursor="Hand"
+                                            GroupName="RadioGroup"
                                             IsChecked="{Binding IsSelected, Mode=TwoWay}" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
