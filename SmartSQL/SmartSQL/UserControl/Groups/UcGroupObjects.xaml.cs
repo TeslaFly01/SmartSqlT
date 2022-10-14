@@ -19,13 +19,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartSQL.Views;
 
 namespace SmartSQL.UserControl.Tags
 {
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class UcTagObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcGroupObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -38,7 +39,7 @@ namespace SmartSQL.UserControl.Tags
 
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(UcTagObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcGroupObjects), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -49,7 +50,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcTagObjects), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(UcGroupObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -59,34 +60,34 @@ namespace SmartSQL.UserControl.Tags
             set => SetValue(SelectedDataBaseProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(UcTagObjects), new PropertyMetadata(default(TagInfo)));
+        public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
+            "SelectedGroup", typeof(ObjectGroup), typeof(UcGroupObjects), new PropertyMetadata(default(ObjectGroup)));
         /// <summary>
-        /// 当前选中标签
+        /// 当前选中分组
         /// </summary>
-        public TagInfo SelectedTag
+        public ObjectGroup SelectedGroup
         {
-            get => (TagInfo)GetValue(SelectedTagProperty);
-            set => SetValue(SelectedTagProperty, value);
+            get => (ObjectGroup)GetValue(SelectedGroupProperty);
+            set => SetValue(SelectedGroupProperty, value);
         }
 
         /// <summary>
-        /// 标签对象数据列表
+        /// 分组对象数据列表
         /// </summary>
-        public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<TagObjects>), typeof(UcTagObjects), new PropertyMetadata(default(List<TagObjects>)));
-        public List<TagObjects> TagObjectList
+        public static readonly DependencyProperty GroupObjectListProperty = DependencyProperty.Register(
+            "GroupObjectList", typeof(List<SObjects>), typeof(UcGroupObjects), new PropertyMetadata(default(List<SObjects>)));
+        public List<SObjects> GroupObjectList
         {
-            get => (List<TagObjects>)GetValue(TagObjectListProperty);
+            get => (List<SObjects>)GetValue(GroupObjectListProperty);
             set
             {
-                SetValue(TagObjectListProperty, value);
-                OnPropertyChanged(nameof(TagObjectList));
+                SetValue(GroupObjectListProperty, value);
+                OnPropertyChanged(nameof(GroupObjectList));
             }
         }
         #endregion
 
-        public UcTagObjects()
+        public UcGroupObjects()
         {
             InitializeComponent();
             DataContext = this;
@@ -99,46 +100,46 @@ namespace SmartSQL.UserControl.Tags
         {
             var conn = SelectedConnection;
             var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
+            var selGroup = SelectedGroup;
 
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                var groupObjectList = sqLiteInstance.ToList<SObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
-                    x.TagId == selTag.TagId);
+                    x.GroupId == selGroup.Id);
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    if (tagObjectList.Any())
+                    if (groupObjectList.Any())
                     {
                         MainNoDataText.Visibility = Visibility.Collapsed;
                     }
-                    TagObjectItems = tagObjectList;
-                    TagObjectList = tagObjectList;
+                    GroupObjectItems = groupObjectList;
+                    GroupObjectList = groupObjectList;
                 }));
             });
         }
-        private List<TagObjects> TagObjectItems;
+        private List<SObjects> GroupObjectItems;
 
         private void SearchObjects_TextChanged(object sender, TextChangedEventArgs e)
         {
-            var searchData = TagObjectItems;
+            var searchData = GroupObjectItems;
             var searchText = SearchObjects.Text.Trim();
             if (!string.IsNullOrEmpty(searchText))
             {
-                var tagObjs = TagObjectItems.Where(x => x.ObjectName.ToLower().Contains(searchText.ToLower()));
+                var tagObjs = GroupObjectItems.Where(x => x.ObjectName.ToLower().Contains(searchText.ToLower()));
                 if (tagObjs.Any())
                 {
                     searchData = tagObjs.ToList();
                 }
                 else
                 {
-                    searchData = new List<TagObjects>();
+                    searchData = new List<SObjects>();
                 }
             }
             MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
-            TagObjectList = searchData;
+            GroupObjectList = searchData;
         }
 
         /// <summary>
@@ -153,23 +154,23 @@ namespace SmartSQL.UserControl.Tags
             {
                 var conn = SelectedConnection;
                 var selDatabase = SelectedDataBase;
-                var selTag = SelectedTag;
+                var selGroup = SelectedGroup;
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 sqLiteInstance.db.Delete(selectedItem);
-                if (selTag.SubCount > 0)
-                {
-                    selTag.SubCount -= 1;
-                    sqLiteInstance.db.Update(selTag);
-                }
-                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                //if (selTag.SubCount > 0)
+                //{
+                //    selTag.SubCount -= 1;
+                //    sqLiteInstance.db.Update(selTag);
+                //}
+                var groupObjectList = sqLiteInstance.ToList<SObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
-                    x.TagId == selTag.TagId);
-                MainNoDataText.Visibility = tagObjectList.Any() ? Visibility.Collapsed : Visibility.Visible;
-                TagObjectItems = tagObjectList;
-                TagObjectList = tagObjectList;
-                var parentWindow = (TagsView)Window.GetWindow(this);
-                parentWindow?.ReloadMenu();
+                    x.GroupId == selGroup.Id);
+                MainNoDataText.Visibility = groupObjectList.Any() ? Visibility.Collapsed : Visibility.Visible;
+                GroupObjectItems = groupObjectList;
+                GroupObjectList = groupObjectList;
+                var parentWindow = (GroupsView)Window.GetWindow(this);
+                //parentWindow?.ReloadMenu();
             }
         }
 
@@ -189,18 +190,18 @@ namespace SmartSQL.UserControl.Tags
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnSetTag_Click(object sender, RoutedEventArgs e)
+        private void BtnSetGroup_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedTag == null)
+            if (SelectedGroup == null)
             {
-                Oops.Oh("请选择标签.");
+                Oops.Oh("请选择分组.");
                 return;
             }
-            var parentWindow = (TagsView)Window.GetWindow(this);
-            var ucAddObjects = new UcAddTagObject();
+            var parentWindow = (GroupsView)Window.GetWindow(this);
+            var ucAddObjects = new UcAddGroupObject();
             ucAddObjects.SelectedConnection = SelectedConnection;
             ucAddObjects.SelectedDataBase = SelectedDataBase;
-            ucAddObjects.SelectedTag = SelectedTag;
+            ucAddObjects.SelectedGroup = SelectedGroup;
             ucAddObjects.LoadPageData();
             parentWindow.MainContent = ucAddObjects;
         }

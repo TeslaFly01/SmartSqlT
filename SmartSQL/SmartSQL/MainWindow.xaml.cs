@@ -126,8 +126,8 @@ namespace SmartSQL
                 Oops.Oh("请选择数据库");
                 return;
             }
-            var group = new GroupManage();
-            group.Connection = SelectendConnection;
+            var group = new GroupsView();
+            group.SelectedConnection = SelectendConnection;
             group.SelectedDataBase = selectDatabase.DbName;
             group.Owner = this;
             group.ChangeRefreshEvent += MainContent.Group_ChangeRefreshEvent;
@@ -148,7 +148,7 @@ namespace SmartSQL
                 return;
             }
             var tags = new TagsView();
-            tags.Connection = SelectendConnection;
+            tags.SelectedConnection = SelectendConnection;
             tags.SelectedDataBase = selectDatabase.DbName;
             tags.Owner = this;
             tags.ShowDialog();

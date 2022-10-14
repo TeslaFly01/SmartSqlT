@@ -22,13 +22,14 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
 using SmartSQL.Helper;
+using SmartSQL.Views;
 
 namespace SmartSQL.UserControl.Tags
 {
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class UcAddObjects : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcAddGroupObject : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -41,7 +42,7 @@ namespace SmartSQL.UserControl.Tags
 
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(UcAddObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcAddGroupObject), new PropertyMetadata(default(ConnectConfigs)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -52,7 +53,7 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcAddObjects), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(UcAddGroupObject), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -62,49 +63,49 @@ namespace SmartSQL.UserControl.Tags
             set => SetValue(SelectedDataBaseProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(UcAddObjects), new PropertyMetadata(default(TagInfo)));
+        public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
+            "SelectedGroup", typeof(ObjectGroup), typeof(UcAddGroupObject), new PropertyMetadata(default(ObjectGroup)));
         /// <summary>
         /// 当前选中标签
         /// </summary>
-        public TagInfo SelectedTag
+        public ObjectGroup SelectedGroup
         {
-            get => (TagInfo)GetValue(SelectedTagProperty);
-            set => SetValue(SelectedTagProperty, value);
+            get => (ObjectGroup)GetValue(SelectedGroupProperty);
+            set => SetValue(SelectedGroupProperty, value);
         }
 
         /// <summary>
         /// 标签对象数据列表
         /// </summary>
-        public static readonly DependencyProperty TagObjectListProperty = DependencyProperty.Register(
-            "TagObjectList", typeof(List<TagObjectDTO>), typeof(UcAddObjects), new PropertyMetadata(default(List<TagObjectDTO>)));
-        public List<TagObjectDTO> TagObjectList
+        public static readonly DependencyProperty GroupObjectListProperty = DependencyProperty.Register(
+            "GroupObjectList", typeof(List<DbObjectDTO>), typeof(UcAddGroupObject), new PropertyMetadata(default(List<DbObjectDTO>)));
+        public List<DbObjectDTO> GroupObjectList
         {
-            get => (List<TagObjectDTO>)GetValue(TagObjectListProperty);
+            get => (List<DbObjectDTO>)GetValue(GroupObjectListProperty);
             set
             {
-                SetValue(TagObjectListProperty, value);
-                OnPropertyChanged(nameof(TagObjectList));
+                SetValue(GroupObjectListProperty, value);
+                OnPropertyChanged(nameof(GroupObjectList));
             }
         }
 
         /// <summary>
         /// 标签对象数据分页列表
         /// </summary>
-        public static readonly DependencyProperty TagObjectPageListProperty = DependencyProperty.Register(
-            "TagObjectPageList", typeof(List<TagObjectDTO>), typeof(UcAddObjects), new PropertyMetadata(default(List<TagObjectDTO>)));
-        public List<TagObjectDTO> TagObjectPageList
+        public static readonly DependencyProperty GroupObjectPageListProperty = DependencyProperty.Register(
+            "GroupObjectPageList", typeof(List<DbObjectDTO>), typeof(UcAddGroupObject), new PropertyMetadata(default(List<DbObjectDTO>)));
+        public List<DbObjectDTO> GroupObjectPageList
         {
-            get => (List<TagObjectDTO>)GetValue(TagObjectPageListProperty);
+            get => (List<DbObjectDTO>)GetValue(GroupObjectPageListProperty);
             set
             {
-                SetValue(TagObjectPageListProperty, value);
-                OnPropertyChanged(nameof(TagObjectPageList));
+                SetValue(GroupObjectPageListProperty, value);
+                OnPropertyChanged(nameof(GroupObjectPageList));
             }
         }
         #endregion
 
-        public UcAddObjects()
+        public UcAddGroupObject()
         {
             InitializeComponent();
             DataContext = this;
@@ -121,11 +122,11 @@ namespace SmartSQL.UserControl.Tags
         public void LoadPageData()
         {
             LoadingLine.Visibility = Visibility.Visible;
-            UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
+            UcTitle.Content = $"设置表/视图/存储过程到分组【{SelectedGroup.GroupName}】";
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
-            var list = new List<TagObjectDTO>();
+            var selGroup = SelectedGroup;
+            var list = new List<DbObjectDTO>();
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
                 SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
             Task.Run(() =>
@@ -134,17 +135,17 @@ namespace SmartSQL.UserControl.Tags
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var table in model.Tables)
                 {
-                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                    var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                         x.ConnectId == selConnection.ID &&
                         x.DatabaseName == selDatabase &&
-                        x.TagId == selTag.TagId &&
+                        x.GroupId == selGroup.Id &&
                         x.ObjectId == table.Value.Id
                     );
                     if (isAny)
                     {
                         continue;
                     }
-                    var tb = new TagObjectDTO()
+                    var tb = new DbObjectDTO()
                     {
                         ObjectId = table.Value.Id,
                         Name = table.Value.DisplayName,
@@ -156,7 +157,7 @@ namespace SmartSQL.UserControl.Tags
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
-                    TagObjectList = list;
+                    GroupObjectList = list;
                     PageData();
                 }));
             });
@@ -179,8 +180,8 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="pageIndex"></param>
         private void PageData(int pageIndex = 0)
         {
-            var tagObjects = TagObjectList;
-            var totalCount = TagObjectList.Count;
+            var tagObjects = GroupObjectList;
+            var totalCount = GroupObjectList.Count;
             var pageSize = PageT.DataCountPerPage;
             Task.Run(() =>
             {
@@ -189,7 +190,7 @@ namespace SmartSQL.UserControl.Tags
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     PageT.MaxPageCount = maxPageCount;
-                    TagObjectPageList = pageList;
+                    GroupObjectPageList = pageList;
                     LoadingLine.Visibility = Visibility.Hidden;
                 }));
             });
@@ -202,47 +203,48 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
-            var listObjects = new List<TagObjects>();
-            var checkedObjects = TagObjectList.Where(x => x.IsChecked == true).ToList();
+            var selGroup = SelectedGroup;
+            var listObjects = new List<SObjects>();
+            var checkedObjects = GroupObjectList.Where(x => x.IsChecked == true).ToList();
             LoadingLine.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var obj in checkedObjects)
                 {
-                    var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                    var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                         x.ConnectId == selConnection.ID &&
                         x.DatabaseName == selDatabase &&
-                        x.TagId == selTag.TagId &&
+                        x.GroupId == selGroup.Id &&
                         x.ObjectId == obj.ObjectId
                     );
                     if (!isAny)
                     {
-                        listObjects.Add(new TagObjects
+                        listObjects.Add(new SObjects
                         {
                             ConnectId = selConnection.ID,
                             DatabaseName = selDatabase,
                             ObjectId = obj.ObjectId,
                             ObjectName = obj.Name,
-                            ObjectType = obj.ObjectType,
-                            TagId = selTag.TagId
+                            GroupId = selGroup.Id
                         });
                     }
                 }
                 sqLiteInstance.Add(listObjects);
-                selTag.SubCount += listObjects.Count;
-                sqLiteInstance.db.Update(selTag);
+                //selGroup.SubCount += listObjects.Count;
+                sqLiteInstance.db.Update(selGroup);
                 Dispatcher.Invoke(new Action(() =>
                 {
                     LoadPageData();
-                    var parentWindow = (TagsView)Window.GetWindow(this);
+                    var parentWindow = (GroupsView)Window.GetWindow(this);
                     parentWindow?.ReloadMenu();
-                    Oops.Success($"成功设置{ listObjects.Count}条数据到标签【{SelectedTag.TagName}】");
+                    Oops.Success($"成功设置{ listObjects.Count}条数据到分组【{SelectedGroup.GroupName}】");
                 }));
-            });
+            }); 
+            #endregion
         }
 
         /// <summary>
@@ -252,19 +254,19 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (TagsView)Window.GetWindow(this);
-            var ucTagObjects = new UcTagObjects();
-            ucTagObjects.SelectedConnection = SelectedConnection;
-            ucTagObjects.SelectedDataBase = SelectedDataBase;
-            ucTagObjects.SelectedTag = SelectedTag;
-            ucTagObjects.LoadPageData();
-            parentWindow.MainContent = ucTagObjects;
+            var parentWindow = (GroupsView)Window.GetWindow(this);
+            var ucGroupObjects = new UcGroupObjects();
+            ucGroupObjects.SelectedConnection = SelectedConnection;
+            ucGroupObjects.SelectedDataBase = SelectedDataBase;
+            ucGroupObjects.SelectedGroup = SelectedGroup;
+            ucGroupObjects.LoadPageData();
+            parentWindow.MainContent = ucGroupObjects;
         }
 
 
         private void CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in TagObjectList)
+            foreach (var item in GroupObjectList)
             {
                 item.IsChecked = true;
             }
@@ -272,7 +274,7 @@ namespace SmartSQL.UserControl.Tags
 
         private void CheckBox_Unchecked(object sender, RoutedEventArgs e)
         {
-            foreach (var item in TagObjectList)
+            foreach (var item in GroupObjectList)
             {
                 item.IsChecked = false;
             }
@@ -280,6 +282,7 @@ namespace SmartSQL.UserControl.Tags
 
         private void SearchComObjType_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -287,31 +290,31 @@ namespace SmartSQL.UserControl.Tags
             LoadingLine.Visibility = Visibility.Visible;
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
+            var selGroup = SelectedGroup;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
                 var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
                     selConnection.SelectedDbConnectString(selDatabase), selDatabase);
                 var model = dbInstance.Init();
-                var list = new List<TagObjectDTO>();
+                var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
                 {
                     #region Table
                     foreach (var table in model.Tables)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == table.Value.Id
                         );
                         if (isAny)
                         {
                             continue;
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
@@ -327,17 +330,17 @@ namespace SmartSQL.UserControl.Tags
                     #region View
                     foreach (var view in model.Views)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == view.Value.Id
                         );
                         if (isAny)
                         {
                             continue;
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
@@ -353,17 +356,17 @@ namespace SmartSQL.UserControl.Tags
                     #region Proc
                     foreach (var proc in model.Procedures)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == proc.Value.Id
                         );
                         if (isAny)
                         {
                             continue;
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
@@ -377,10 +380,11 @@ namespace SmartSQL.UserControl.Tags
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
-                    TagObjectList = list;
+                    GroupObjectList = list;
                     PageData();
                 }));
-            });
+            }); 
+            #endregion
         }
 
         /// <summary>
@@ -395,24 +399,24 @@ namespace SmartSQL.UserControl.Tags
             var searchText = SearchObjects.Text.Trim();
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
-            var selTag = SelectedTag;
+            var selGroup = SelectedGroup;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
                 var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
                     selConnection.SelectedDbConnectString(selDatabase), selDatabase);
                 var model = dbInstance.Init();
-                var list = new List<TagObjectDTO>();
+                var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
                 {
                     #region Table
                     foreach (var table in model.Tables)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == table.Value.Id
                         );
                         if (isAny)
@@ -427,7 +431,7 @@ namespace SmartSQL.UserControl.Tags
                                 continue;
                             }
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
@@ -443,10 +447,10 @@ namespace SmartSQL.UserControl.Tags
                     #region View
                     foreach (var view in model.Views)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == view.Value.Id
                         );
                         if (isAny)
@@ -461,7 +465,7 @@ namespace SmartSQL.UserControl.Tags
                                 continue;
                             }
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
@@ -477,10 +481,10 @@ namespace SmartSQL.UserControl.Tags
                     #region Proc
                     foreach (var proc in model.Procedures)
                     {
-                        var isAny = sqLiteInstance.IsAny<TagObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
-                            x.TagId == selTag.TagId &&
+                            x.GroupId == selGroup.Id &&
                             x.ObjectId == proc.Value.Id
                         );
                         if (isAny)
@@ -495,7 +499,7 @@ namespace SmartSQL.UserControl.Tags
                                 continue;
                             }
                         }
-                        var tb = new TagObjectDTO()
+                        var tb = new DbObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
@@ -509,7 +513,7 @@ namespace SmartSQL.UserControl.Tags
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
                     MainNoDataText.Visibility = list.Any() ? Visibility.Collapsed : Visibility.Visible;
-                    TagObjectList = list;
+                    GroupObjectList = list;
                     PageData();
                 }));
             }); 
@@ -518,32 +522,36 @@ namespace SmartSQL.UserControl.Tags
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
+            #region MyRegion
+            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
             if (selectedItem != null)
             {
-                foreach (var item in TagObjectList)
+                foreach (var item in GroupObjectList)
                 {
                     if (item.ObjectId == selectedItem.ObjectId && item.Name == selectedItem.Name)
                     {
                         item.IsChecked = true;
                     }
                 }
-            }
+            } 
+            #endregion
         }
 
         private void CheckedRow_Unchecked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (TagObjectDTO)TableGrid.SelectedItem;
+            #region MyRegion
+            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
             if (selectedItem != null)
             {
-                foreach (var item in TagObjectList)
+                foreach (var item in GroupObjectList)
                 {
                     if (item.ObjectId == selectedItem.ObjectId && item.Name == selectedItem.Name)
                     {
                         item.IsChecked = false;
                     }
                 }
-            }
+            } 
+            #endregion
         }
     }
 }

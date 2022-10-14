@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SmartSQL.Models
 {
-    public class TagObjectDTO : NotifyPropertyBase
+    public class DbObjectDTO : NotifyPropertyBase
     {
         public string ObjectId { get; set; }
 

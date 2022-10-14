@@ -43,12 +43,12 @@ namespace SmartSQL.Views.Category
         }
 
         #region DependencyProperty
-        public static readonly DependencyProperty ConnectionProperty = DependencyProperty.Register(
-            "Connection", typeof(ConnectConfigs), typeof(TagsView), new PropertyMetadata(default(ConnectConfigs)));
-        public ConnectConfigs Connection
+        public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
+            "SelectedConnection", typeof(ConnectConfigs), typeof(TagsView), new PropertyMetadata(default(ConnectConfigs)));
+        public ConnectConfigs SelectedConnection
         {
-            get => (ConnectConfigs)GetValue(ConnectionProperty);
-            set => SetValue(ConnectionProperty, value);
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
@@ -102,15 +102,14 @@ namespace SmartSQL.Views.Category
 
         private void TagsView_Loaded(object sender, RoutedEventArgs e)
         {
-            Title = $"{Connection.ConnectName} - 标签管理";
-            var conn = Connection;
+            Title = $"{SelectedConnection.ConnectName} - 标签管理";
+            var selConn = SelectedConnection;
             var selectDataBase = SelectedDataBase;
-            var dbConnectionString = conn.DbMasterConnectString;
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 var tagMenuList = sqLiteInstance.ToList<TagInfo>(x =>
-                   x.ConnectId == conn.ID &&
+                   x.ConnectId == selConn.ID &&
                    x.DataBaseName == selectDataBase);
                 Dispatcher.Invoke(() =>
                 {
@@ -136,7 +135,7 @@ namespace SmartSQL.Views.Category
         {
             var sqliteInstance = SQLiteHelper.GetInstance();
             var datalist = sqliteInstance.ToList<TagInfo>(x =>
-                x.ConnectId == Connection.ID &&
+                x.ConnectId == SelectedConnection.ID &&
                 x.DataBaseName == SelectedDataBase
                 );
             TagMenuList = datalist;
@@ -151,14 +150,14 @@ namespace SmartSQL.Views.Category
         private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var listBox = (ListBox)sender;
-            var conn = Connection;
+            var selConn = SelectedConnection;
             var selectDataBase = SelectedDataBase;
             if (listBox.SelectedItems.Count > 0)
             {
                 var tag = (TagInfo)listBox.SelectedItems[0];
 
                 var ucTagObjects = new UserControl.Tags.UcTagObjects();
-                ucTagObjects.SelectedConnection = conn;
+                ucTagObjects.SelectedConnection = selConn;
                 ucTagObjects.SelectedDataBase = selectDataBase;
                 ucTagObjects.SelectedTag = tag;
                 ucTagObjects.LoadPageData();
@@ -175,7 +174,7 @@ namespace SmartSQL.Views.Category
         private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
         {
             var tagAdd = new TagAddView();
-            tagAdd.SelectedConnection = Connection;
+            tagAdd.SelectedConnection = SelectedConnection;
             tagAdd.SelectedDataBase = SelectedDataBase;
             tagAdd.ChangeRefreshEvent += Tag_ChangeRefreshEvent;
             tagAdd.Owner = this;
@@ -192,7 +191,7 @@ namespace SmartSQL.Views.Category
             var searchTag = SearchTag.Text.Trim();
             var sqlLiteInstance = SQLiteHelper.GetInstance();
             var datalist = sqlLiteInstance.db.Table<TagInfo>().
-                Where(x => x.ConnectId == Connection.ID && x.DataBaseName == SelectedDataBase && x.TagName.Contains(searchTag)).ToList();
+                Where(x => x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase && x.TagName.Contains(searchTag)).ToList();
             TagMenuList = datalist;
             NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
@@ -211,7 +210,7 @@ namespace SmartSQL.Views.Category
             }
             var tagAdd = new TagAddView();
             tagAdd.SelectedTag = selectedTag;
-            tagAdd.SelectedConnection = Connection;
+            tagAdd.SelectedConnection = SelectedConnection;
             tagAdd.SelectedDataBase = SelectedDataBase;
             tagAdd.ChangeRefreshEvent += Tag_ChangeRefreshEvent;
             tagAdd.Owner = this;
@@ -235,7 +234,7 @@ namespace SmartSQL.Views.Category
             {
                 var sqlLiteInstance = SQLiteHelper.GetInstance();
                 var selectedDatabase = SelectedDataBase;
-                var connKey = Connection.ID;
+                var connKey = SelectedConnection.ID;
                 Task.Run(() =>
                 {
                     sqlLiteInstance.db.Delete<TagInfo>(selectedTag.TagId);

@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
+using ICSharpCode.AvalonEdit.Highlighting;
 using JinianNet.JNTemplate;
 using SmartSQL.Framework;
 using SmartSQL.Framework.Exporter;
@@ -92,6 +93,7 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
+            ListBoxLanguage.SelectedIndex = 0;
             var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
             //建表sql
             var createTableSql = instance.CreateTableSql();
@@ -112,34 +114,30 @@ namespace SmartSQL.UserControl
             }
             var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
             var selLan = (ListBoxItem)ListBoxLanguage.SelectedItem;
+            var highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             switch (selLan.Content)
             {
                 case "SQL":
-                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
                     //建表sql
                     var createTableSql = instance.CreateTableSql();
                     TextCsharpEditor.Text = createTableSql;
                     break;
                 case "C#":
-                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+                    highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
                     var langInstance = LangFactory.CreateInstance(LangType.Csharp, SelectedObject.Name, SelectedObject.Comment, SelectedTableColunms);
                     TextCsharpEditor.Text = langInstance.BuildEntity();
                     break;
                 case "Java":
-                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "Java");
-
-                    string TTF_Path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources\\template\\Csharp.tmpl");
-                    var template = Engine.LoadTemplate(TTF_Path);
-                    template.Set("ClassInfo", SelectedObject);
-                    template.Set("FieldList", SelectedTableColunms);
-                    var result = template.Render();
+                    highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "Java");
+                    
                     break;
                 case "PHP":
-                    TextCsharpEditor.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "PHP"); break;
+                    highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "PHP"); break;
                 case "C++": break;
                 case "ObjectC": break;
-            }
 
+            }
+            TextCsharpEditor.SyntaxHighlighting = highlightingDefinition;
         }
     }
 }

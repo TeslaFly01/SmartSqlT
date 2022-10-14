@@ -1,0 +1,166 @@
+﻿<UserControl
+    x:Class="SmartSQL.UserControl.Tags.UcAddGroupObject"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl.Tags"
+    xmlns:localbase="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="UserControl_Loaded"
+    mc:Ignorable="d">
+    <Grid>
+        <!--  搜索栏  -->
+        <Border
+            Height="70"
+            Margin="10"
+            VerticalAlignment="Top"
+            Background="#ffffff"
+            CornerRadius="8">
+            <Grid>
+                <hc:Divider
+                    Name="UcTitle"
+                    Margin="15,5,15,0"
+                    HorizontalContentAlignment="Left"
+                    FontWeight="Bold"
+                    Foreground="{StaticResource PrimaryBrush}" />
+                <ComboBox
+                    x:Name="SearchComObjType"
+                    Width="100"
+                    Margin="10,20,10,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    SelectedIndex="0"
+                    SelectionChanged="SearchComObjType_SelectionChanged">
+                    <ComboBoxItem Content="表" Tag="Table" />
+                    <ComboBoxItem Content="视图" Tag="View" />
+                    <ComboBoxItem Content="存储过程" Tag="Proc" />
+                </ComboBox>
+                <hc:SearchBar
+                    x:Name="SearchObjects"
+                    Height="30"
+                    Margin="118,20,10,0"
+                    Padding="5,0,5,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    hc:BorderElement.CornerRadius="5"
+                    hc:InfoElement.Placeholder="搜索表、视图、存储过程"
+                    FontSize="13"
+                    ShowClearButton="True"
+                    Style="{StaticResource SearchBarPlus}"
+                    TextChanged="SearchObjects_OnTextChanged" />
+            </Grid>
+        </Border>
+        <!--  搜索栏  -->
+
+        <!--  内容栏  -->
+        <Grid>
+            <Border
+                Margin="10,90,10,10"
+                Background="#ffffff"
+                CornerRadius="8">
+                <Grid Margin="10">
+                    <DataGrid
+                        x:Name="TableGrid"
+                        Margin="0,0,0,40"
+                        hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                        hc:DataGridAttach.ShowRowNumber="True"
+                        AutoGenerateColumns="False"
+                        Background="#f9f9f9"
+                        Cursor="Arrow"
+                        HeadersVisibility="All"
+                        ItemsSource="{Binding GroupObjectPageList, Mode=TwoWay}"
+                        RowHeaderWidth="60"
+                        SelectionUnit="FullRow">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Width="150" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
+                                <DataGridTemplateColumn.Header>
+                                    <CheckBox
+                                        Checked="CheckBox_Checked"
+                                        Content="操作"
+                                        Foreground="{StaticResource PrimaryBrush}"
+                                        Unchecked="CheckBox_Unchecked" />
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <CheckBox
+                                            x:Name="CheckedRow"
+                                            Checked="CheckedRow_Checked"
+                                            Content="添加"
+                                            IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                            Unchecked="CheckedRow_Unchecked" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Name}"
+                                Header="表名"
+                                IsReadOnly="True" />
+                            <DataGridTextColumn
+                                Width="*"
+                                Binding="{Binding Comment}"
+                                Header="表注释"
+                                IsReadOnly="True" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                    <!--  暂无数据  -->
+                    <Grid
+                        x:Name="MainNoDataText"
+                        HorizontalAlignment="Stretch"
+                        Background="White"
+                        Visibility="Collapsed">
+                        <localbase:NoDataArea
+                            x:Name="MainNoDataAreaText"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            ShowType="All" />
+                    </Grid>
+                    <!--  暂无数据  -->
+                    <hc:Pagination
+                        Name="PageT"
+                        Margin="0,0,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        AutoHiding="True"
+                        DataCountPerPage="20"
+                        IsJumpEnabled="True"
+                        MaxPageInterval="1"
+                        PageUpdated="PageT_OnPageUpdated" />
+                    <Grid>
+                        <hc:SimpleStackPanel
+                            Margin="0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom">
+                            <hc:UniformSpacingPanel Spacing="10">
+                                <Button
+                                    x:Name="BtnReturn"
+                                    Padding="20,0,20,0"
+                                    BorderThickness="0.4"
+                                    Click="BtnReturn_Click"
+                                    Content="返回"
+                                    Cursor="Hand" />
+                                <Button
+                                    x:Name="BtnSave"
+                                    Padding="20,0,20,0"
+                                    Click="BtnSave_Click"
+                                    Content="确定"
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonPrimary}" />
+                            </hc:UniformSpacingPanel>
+                        </hc:SimpleStackPanel>
+                    </Grid>
+                    <localbase:Loading
+                        x:Name="LoadingLine"
+                        Margin="-5,-5,-5,35"
+                        BackgroundOpacity="0.1"
+                        Visibility="Hidden" />
+                </Grid>
+            </Border>
+        </Grid>
+        <!--  内容栏  -->
+    </Grid>
+</UserControl>

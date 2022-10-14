@@ -180,6 +180,7 @@
     <Compile Include="Lang\CsharpLang.cs" />
     <Compile Include="Lang\JavaLang.cs" />
     <Compile Include="Lang\Lang.cs" />
+    <Compile Include="Lang\LangModel.cs" />
     <Compile Include="PhysicalDataModel\BaseTable.cs" />
     <Compile Include="PhysicalDataModel\Column.cs" />
     <Compile Include="PhysicalDataModel\Columns.cs" />

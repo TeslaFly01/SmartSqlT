@@ -166,6 +166,12 @@
     <Compile Include="UserControl\Controls\SqlScript.xaml.cs">
       <DependentUpon>SqlScript.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Groups\UcAddGroupObject.xaml.cs">
+      <DependentUpon>UcAddGroupObject.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Groups\UcGroupObjects.xaml.cs">
+      <DependentUpon>UcGroupObjects.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Main\UcMainDbCompare.xaml.cs">
       <DependentUpon>UcMainDbCompare.xaml</DependentUpon>
     </Compile>
@@ -184,8 +190,8 @@
     <Compile Include="UserControl\Main\UTabCode.xaml.cs">
       <DependentUpon>UTabCode.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Tags\UcAddObjects.xaml.cs">
-      <DependentUpon>UcAddObjects.xaml</DependentUpon>
+    <Compile Include="UserControl\Tags\UcAddTagObject.xaml.cs">
+      <DependentUpon>UcAddTagObject.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
@@ -225,6 +231,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\Category\GroupAddView.xaml.cs">
+      <DependentUpon>GroupAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Category\TagAddView.xaml.cs">
       <DependentUpon>TagAddView.xaml</DependentUpon>
     </Compile>
@@ -255,8 +264,8 @@
     <Compile Include="UserControl\Controls\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\GroupManage.xaml.cs">
-      <DependentUpon>GroupManage.xaml</DependentUpon>
+    <Compile Include="Views\Category\GroupsView.xaml.cs">
+      <DependentUpon>GroupsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ImportMark.xaml.cs">
       <DependentUpon>ImportMark.xaml</DependentUpon>
@@ -383,6 +392,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Groups\UcAddGroupObject.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Groups\UcGroupObjects.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Main\UcMainDbCompare.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -407,7 +424,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Tags\UcAddObjects.xaml">
+    <Page Include="UserControl\Tags\UcAddTagObject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -459,6 +476,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Category\GroupAddView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Category\TagAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -499,7 +520,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\GroupManage.xaml">
+    <Page Include="Views\Category\GroupsView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -730,6 +751,7 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>
