@@ -1,5 +1,5 @@
 ﻿<local:BaseUserControl
-    x:Class="SmartSQL.UserControl.MainColumns"
+    x:Class="SmartSQL.UserControl.UcMainColumns"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
@@ -319,7 +319,7 @@
                 Cursor="Hand"
                 Header="代码">
                 <Grid>
-                    <local:UTabCode x:Name="UTabCode" />
+                    <local:UcTabCode x:Name="UTabCode" />
                 </Grid>
             </TabItem>
         </TabControl>

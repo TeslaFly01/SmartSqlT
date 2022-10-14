@@ -129,6 +129,7 @@ namespace SmartSQL
             var group = new GroupsView();
             group.SelectedConnection = SelectendConnection;
             group.SelectedDataBase = selectDatabase.DbName;
+            group.DbData = MainContent.MenuData;
             group.Owner = this;
             group.ChangeRefreshEvent += MainContent.Group_ChangeRefreshEvent;
             group.ShowDialog();
@@ -150,6 +151,7 @@ namespace SmartSQL
             var tags = new TagsView();
             tags.SelectedConnection = SelectendConnection;
             tags.SelectedDataBase = selectDatabase.DbName;
+            tags.DbData = MainContent.MenuData;
             tags.Owner = this;
             tags.ShowDialog();
         }
@@ -288,24 +290,29 @@ namespace SmartSQL
             {
                 return;
             }
-            DockUcManager.Visibility=Visibility.Visible;
-            DockUcTools.Visibility=Visibility.Collapsed;
-            DockUcDbCompare.Visibility=Visibility.Collapsed;
+            DockUcManager.Visibility = Visibility.Visible;
+            DockUcTools.Visibility = Visibility.Collapsed;
+            DockUcDbCompare.Visibility = Visibility.Collapsed;
         }
 
+        /// <summary>
+        /// 工具箱
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuTool_Selected(object sender, RoutedEventArgs e)
         {
-            UcMainTools.Content=new UcMainTools();
-            DockUcTools.Visibility=Visibility.Visible;
-            DockUcManager.Visibility=Visibility.Collapsed;
-            DockUcDbCompare.Visibility=Visibility.Collapsed;
+            UcMainTools.Content = new UcMainTools();
+            DockUcTools.Visibility = Visibility.Visible;
+            DockUcManager.Visibility = Visibility.Collapsed;
+            DockUcDbCompare.Visibility = Visibility.Collapsed;
         }
 
         private void MenuDbCompare_Selected(object sender, RoutedEventArgs e)
         {
-            DockUcDbCompare.Visibility=Visibility.Visible;
-            DockUcTools.Visibility=Visibility.Collapsed;
-            DockUcManager.Visibility=Visibility.Collapsed;
+            DockUcDbCompare.Visibility = Visibility.Visible;
+            DockUcTools.Visibility = Visibility.Collapsed;
+            DockUcManager.Visibility = Visibility.Collapsed;
         }
     }
 }

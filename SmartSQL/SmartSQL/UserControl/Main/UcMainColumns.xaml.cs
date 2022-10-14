@@ -30,24 +30,24 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// Main.xaml 的交互逻辑
     /// </summary>
-    public partial class MainColumns : BaseUserControl
+    public partial class UcMainColumns : BaseUserControl
     {
         #region Filds
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(TreeNodeItem), typeof(MainColumns), new PropertyMetadata(default(TreeNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(UcMainColumns), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(DataBase), typeof(MainColumns), new PropertyMetadata(default(DataBase)));
+            "SelectedDataBase", typeof(DataBase), typeof(UcMainColumns), new PropertyMetadata(default(DataBase)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(MainColumns), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcMainColumns), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty SourceColunmDataProperty = DependencyProperty.Register(
-            "SourceColunmData", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
+            "SourceColunmData", typeof(List<Column>), typeof(UcMainColumns), new PropertyMetadata(default(List<Column>)));
 
         public static readonly DependencyProperty ObjectColumnsProperty = DependencyProperty.Register(
-            "ObjectColumns", typeof(List<Column>), typeof(MainColumns), new PropertyMetadata(default(List<Column>)));
+            "ObjectColumns", typeof(List<Column>), typeof(UcMainColumns), new PropertyMetadata(default(List<Column>)));
 
         /// <summary>
         /// 当前选中对象
@@ -97,7 +97,7 @@ namespace SmartSQL.UserControl
         }
         #endregion
 
-        public MainColumns()
+        public UcMainColumns()
         {
             InitializeComponent();
             DataContext = this;
@@ -231,7 +231,7 @@ namespace SmartSQL.UserControl
                 UTabCode.SelectedDataBase = SelectedDataBase.DbName;
                 UTabCode.SelectedConnection = SelectedConnection;
                 UTabCode.SelectedObject = SelectedObject;
-                UTabCode.SelectedTableColunms = SourceColunmData;
+                UTabCode.SelectedTableColumns = SourceColunmData;
             }
             #endregion
         }

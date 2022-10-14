@@ -36,26 +36,26 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// MainObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class MainObjects : BaseUserControl
+    public partial class UcMainObjects : BaseUserControl
     {
         #region Filds
         public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(MainObjects), new PropertyMetadata(default(Model)));
+            "MenuData", typeof(Model), typeof(UcMainObjects), new PropertyMetadata(default(Model)));
 
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(TreeNodeItem), typeof(MainObjects), new PropertyMetadata(default(TreeNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(UcMainObjects), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(DataBase), typeof(MainObjects), new PropertyMetadata(default(DataBase)));
+            "SelectedDataBase", typeof(DataBase), typeof(UcMainObjects), new PropertyMetadata(default(DataBase)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(MainObjects), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcMainObjects), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty ObjectsViewDataProperty = DependencyProperty.Register(
-            "ObjectsViewData", typeof(List<TreeNodeItem>), typeof(MainObjects), new PropertyMetadata(default(List<TreeNodeItem>)));
+            "ObjectsViewData", typeof(List<TreeNodeItem>), typeof(UcMainObjects), new PropertyMetadata(default(List<TreeNodeItem>)));
 
         public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.Register(
-            "Placeholder", typeof(string), typeof(MainObjects), new PropertyMetadata(default(string)));
+            "Placeholder", typeof(string), typeof(UcMainObjects), new PropertyMetadata(default(string)));
 
         /// <summary>
         /// 菜单数据
@@ -109,7 +109,7 @@ namespace SmartSQL.UserControl
             }
         }
         #endregion
-        public MainObjects()
+        public UcMainObjects()
         {
             InitializeComponent();
             DataContext = this;

@@ -21,6 +21,6 @@ namespace SmartSQL.Models
         /// <summary>
         /// 选项卡内容控件
         /// </summary>
-        public MainW MainW { get; set; }
+        public UcMainW MainW { get; set; }
     }
 }

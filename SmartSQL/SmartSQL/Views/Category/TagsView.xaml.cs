@@ -45,33 +45,40 @@ namespace SmartSQL.Views.Category
         #region DependencyProperty
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(TagsView), new PropertyMetadata(default(ConnectConfigs)));
-        public ConnectConfigs SelectedConnection
-        {
-            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
-            set => SetValue(SelectedConnectionProperty, value);
-        }
-
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
             "SelectedDataBase", typeof(string), typeof(TagsView), new PropertyMetadata(default(string)));
-        public string SelectedDataBase
-        {
-            get => (string)GetValue(SelectedDataBaseProperty);
-            set => SetValue(SelectedDataBaseProperty, value);
-        }
-
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(TagsView), new PropertyMetadata(default(Model)));
         public new static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
             "Title", typeof(string), typeof(TagsView), new PropertyMetadata(default(string)));
-        public new string Title
-        {
-            get => (string)GetValue(TitleProperty);
-            set => SetValue(TitleProperty, value);
-        }
-
         /// <summary>
         /// 标签菜单数据列表
         /// </summary>
         public static readonly DependencyProperty TagMenuListProperty = DependencyProperty.Register(
             "TagMenuList", typeof(List<TagInfo>), typeof(TagsView), new PropertyMetadata(default(List<TagInfo>)));
+
+        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register(
+            "MainContent", typeof(System.Windows.Controls.UserControl), typeof(TagsView), new PropertyMetadata(default(System.Windows.Controls.UserControl)));
+        public ConnectConfigs SelectedConnection
+        {
+            get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
+            set => SetValue(SelectedConnectionProperty, value);
+        }
+        public string SelectedDataBase
+        {
+            get => (string)GetValue(SelectedDataBaseProperty);
+            set => SetValue(SelectedDataBaseProperty, value);
+        }
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
+        }
+        public new string Title
+        {
+            get => (string)GetValue(TitleProperty);
+            set => SetValue(TitleProperty, value);
+        }
         public List<TagInfo> TagMenuList
         {
             get => (List<TagInfo>)GetValue(TagMenuListProperty);
@@ -81,9 +88,6 @@ namespace SmartSQL.Views.Category
                 OnPropertyChanged(nameof(TagMenuList));
             }
         }
-
-        public static readonly DependencyProperty MainContentProperty = DependencyProperty.Register(
-            "MainContent", typeof(System.Windows.Controls.UserControl), typeof(TagsView), new PropertyMetadata(default(System.Windows.Controls.UserControl)));
         /// <summary>
         /// 主界面用户控件
         /// </summary>
@@ -102,6 +106,7 @@ namespace SmartSQL.Views.Category
 
         private void TagsView_Loaded(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             Title = $"{SelectedConnection.ConnectName} - 标签管理";
             var selConn = SelectedConnection;
             var selectDataBase = SelectedDataBase;
@@ -120,7 +125,8 @@ namespace SmartSQL.Views.Category
                     }
                 });
             });
-            MainContent = new UcTagObjects();
+            MainContent = new UcTagObjects(); 
+            #endregion
         }
 
         public void Tag_ChangeRefreshEvent()
@@ -133,13 +139,15 @@ namespace SmartSQL.Views.Category
         /// </summary>
         public void ReloadMenu()
         {
+            #region MyRegion
             var sqliteInstance = SQLiteHelper.GetInstance();
             var datalist = sqliteInstance.ToList<TagInfo>(x =>
                 x.ConnectId == SelectedConnection.ID &&
                 x.DataBaseName == SelectedDataBase
                 );
             TagMenuList = datalist;
-            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
+            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible; 
+            #endregion
         }
 
         /// <summary>
@@ -159,10 +167,10 @@ namespace SmartSQL.Views.Category
                 var ucTagObjects = new UserControl.Tags.UcTagObjects();
                 ucTagObjects.SelectedConnection = selConn;
                 ucTagObjects.SelectedDataBase = selectDataBase;
+                ucTagObjects.DbData = DbData;
                 ucTagObjects.SelectedTag = tag;
                 ucTagObjects.LoadPageData();
                 MainContent = ucTagObjects;
-
             }
         }
 

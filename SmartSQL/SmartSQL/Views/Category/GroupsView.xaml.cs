@@ -54,18 +54,26 @@ namespace SmartSQL.Views
         #region DependencyProperty
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(GroupsView), new PropertyMetadata(default(ConnectConfigs)));
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(GroupsView), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(GroupsView), new PropertyMetadata(default(Model)));
         public ConnectConfigs SelectedConnection
         {
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(GroupsView), new PropertyMetadata(default(string)));
         public string SelectedDataBase
         {
             get => (string)GetValue(SelectedDataBaseProperty);
             set => SetValue(SelectedDataBaseProperty, value);
+        }
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
         }
 
         public new static readonly DependencyProperty TitleProperty = DependencyProperty.Register(
@@ -157,6 +165,7 @@ namespace SmartSQL.Views
                 var ucGroupObjects = new UcGroupObjects();
                 ucGroupObjects.SelectedConnection = selConn;
                 ucGroupObjects.SelectedDataBase = selectDataBase;
+                ucGroupObjects.DbData = DbData;
                 ucGroupObjects.SelectedGroup = group;
                 ucGroupObjects.LoadPageData();
                 MainContent = ucGroupObjects;

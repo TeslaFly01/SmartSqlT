@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartSQL.Framework.PhysicalDataModel;
 
 namespace SmartSQL.UserControl.Tags
 {
@@ -39,6 +40,12 @@ namespace SmartSQL.UserControl.Tags
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcTagObjects), new PropertyMetadata(default(ConnectConfigs)));
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(UcTagObjects), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(UcTagObjects), new PropertyMetadata(default(Model)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -47,9 +54,6 @@ namespace SmartSQL.UserControl.Tags
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcTagObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -58,7 +62,14 @@ namespace SmartSQL.UserControl.Tags
             get => (string)GetValue(SelectedDataBaseProperty);
             set => SetValue(SelectedDataBaseProperty, value);
         }
-
+        /// <summary>
+        /// 基础数据
+        /// </summary>
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
+        }
         public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
             "SelectedTag", typeof(TagInfo), typeof(UcTagObjects), new PropertyMetadata(default(TagInfo)));
         /// <summary>
@@ -123,6 +134,7 @@ namespace SmartSQL.UserControl.Tags
 
         private void SearchObjects_TextChanged(object sender, TextChangedEventArgs e)
         {
+            #region MyRegion
             var searchData = TagObjectItems;
             var searchText = SearchObjects.Text.Trim();
             if (!string.IsNullOrEmpty(searchText))
@@ -138,7 +150,8 @@ namespace SmartSQL.UserControl.Tags
                 }
             }
             MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
-            TagObjectList = searchData;
+            TagObjectList = searchData; 
+            #endregion
         }
 
         /// <summary>
@@ -148,6 +161,7 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnRowDelete_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             var selectedItem = (TagObjects)TableGrid.SelectedItem;
             if (selectedItem != null)
             {
@@ -170,7 +184,8 @@ namespace SmartSQL.UserControl.Tags
                 TagObjectList = tagObjectList;
                 var parentWindow = (TagsView)Window.GetWindow(this);
                 parentWindow?.ReloadMenu();
-            }
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -200,6 +215,7 @@ namespace SmartSQL.UserControl.Tags
             var ucAddObjects = new UcAddTagObject();
             ucAddObjects.SelectedConnection = SelectedConnection;
             ucAddObjects.SelectedDataBase = SelectedDataBase;
+            ucAddObjects.DbData = DbData;
             ucAddObjects.SelectedTag = SelectedTag;
             ucAddObjects.LoadPageData();
             parentWindow.MainContent = ucAddObjects;

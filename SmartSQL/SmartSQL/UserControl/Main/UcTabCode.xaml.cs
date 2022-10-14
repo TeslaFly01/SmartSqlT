@@ -32,20 +32,22 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// UTabCode.xaml 的交互逻辑
     /// </summary>
-    public partial class UTabCode : BaseUserControl
+    public partial class UcTabCode : BaseUserControl
     {
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(TreeNodeItem), typeof(UTabCode), new PropertyMetadata(default(TreeNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(UcTabCode), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(UTabCode), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcTabCode), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UTabCode), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(UcTabCode), new PropertyMetadata(default(string)));
 
-        public static readonly DependencyProperty SelectedTableColunmsProperty = DependencyProperty.Register(
-            "SelectedTableColunms", typeof(List<Column>), typeof(UTabCode), new PropertyMetadata(default(List<Column>)));
-
+        public static readonly DependencyProperty SelectedTableColumnsProperty = DependencyProperty.Register(
+            "SelectedTableColumns", typeof(List<Column>), typeof(UcTabCode), new PropertyMetadata(default(List<Column>)));
+        /// <summary>
+        /// 当前对象
+        /// </summary>
         public TreeNodeItem SelectedObject
         {
             get => (TreeNodeItem)GetValue(SelectedObjectProperty);
@@ -59,6 +61,9 @@ namespace SmartSQL.UserControl
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
+        /// <summary>
+        /// 当前数据库
+        /// </summary>
         public string SelectedDataBase
         {
             get => (string)GetValue(SelectedDataBaseProperty);
@@ -67,15 +72,13 @@ namespace SmartSQL.UserControl
         /// <summary>
         /// 当前选中表列数据
         /// </summary>
-        public List<Column> SelectedTableColunms
+        public List<Column> SelectedTableColumns
         {
-            get => (List<Column>)GetValue(SelectedTableColunmsProperty);
-            set
-            {
-                SetValue(SelectedTableColunmsProperty, value);
-            }
+            get => (List<Column>)GetValue(SelectedTableColumnsProperty);
+            set => SetValue(SelectedTableColumnsProperty, value);
         }
-        public UTabCode()
+
+        public UcTabCode()
         {
             InitializeComponent();
             DataContext = this;
@@ -94,7 +97,7 @@ namespace SmartSQL.UserControl
                 return;
             }
             ListBoxLanguage.SelectedIndex = 0;
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColumns);
             //建表sql
             var createTableSql = instance.CreateTableSql();
             TextCsharpEditor.Text = createTableSql;
@@ -112,7 +115,7 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColunms);
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColumns);
             var selLan = (ListBoxItem)ListBoxLanguage.SelectedItem;
             var highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             switch (selLan.Content)
@@ -124,7 +127,7 @@ namespace SmartSQL.UserControl
                     break;
                 case "C#":
                     highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
-                    var langInstance = LangFactory.CreateInstance(LangType.Csharp, SelectedObject.Name, SelectedObject.Comment, SelectedTableColunms);
+                    var langInstance = LangFactory.CreateInstance(LangType.Csharp, SelectedObject.Name, SelectedObject.Comment, SelectedTableColumns);
                     TextCsharpEditor.Text = langInstance.BuildEntity();
                     break;
                 case "Java":

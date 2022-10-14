@@ -21,6 +21,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
+using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Helper;
 using SmartSQL.Views;
 
@@ -43,6 +44,15 @@ namespace SmartSQL.UserControl.Tags
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcAddGroupObject), new PropertyMetadata(default(ConnectConfigs)));
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(UcAddGroupObject), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(UcAddGroupObject), new PropertyMetadata(default(Model)));
+
+        public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
+            "SelectedGroup", typeof(GroupInfo), typeof(UcAddGroupObject), new PropertyMetadata(default(GroupInfo)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -51,9 +61,6 @@ namespace SmartSQL.UserControl.Tags
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcAddGroupObject), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -62,9 +69,14 @@ namespace SmartSQL.UserControl.Tags
             get => (string)GetValue(SelectedDataBaseProperty);
             set => SetValue(SelectedDataBaseProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
-            "SelectedGroup", typeof(GroupInfo), typeof(UcAddGroupObject), new PropertyMetadata(default(GroupInfo)));
+        /// <summary>
+        /// 当前选中数据库
+        /// </summary>
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
+        }
         /// <summary>
         /// 当前选中分组
         /// </summary>
@@ -125,13 +137,11 @@ namespace SmartSQL.UserControl.Tags
             UcTitle.Content = $"设置表/视图/存储过程到分组【{SelectedGroup.GroupName}】";
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
+            var model = DbData;
             var selGroup = SelectedGroup;
             var list = new List<DbObjectDTO>();
-            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
-                SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
             Task.Run(() =>
             {
-                var model = dbInstance.Init();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var table in model.Tables)
                 {
@@ -141,15 +151,13 @@ namespace SmartSQL.UserControl.Tags
                         x.GroupId == selGroup.Id &&
                         x.ObjectId == table.Value.Id
                     );
-                    if (isAny)
-                    {
-                        continue;
-                    }
                     var tb = new DbObjectDTO()
                     {
                         ObjectId = table.Value.Id,
                         Name = table.Value.DisplayName,
                         ObjectType = 1,
+                        IsEnable = !isAny,
+                        IsChecked = isAny,
                         Comment = table.Value.Comment
                     };
                     list.Add(tb);
@@ -258,6 +266,7 @@ namespace SmartSQL.UserControl.Tags
             var ucGroupObjects = new UcGroupObjects();
             ucGroupObjects.SelectedConnection = SelectedConnection;
             ucGroupObjects.SelectedDataBase = SelectedDataBase;
+            ucGroupObjects.DbData = DbData;
             ucGroupObjects.SelectedGroup = SelectedGroup;
             ucGroupObjects.LoadPageData();
             parentWindow.MainContent = ucGroupObjects;
@@ -290,13 +299,11 @@ namespace SmartSQL.UserControl.Tags
             LoadingLine.Visibility = Visibility.Visible;
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
+            var model = DbData;
             var selGroup = SelectedGroup;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
-                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
-                var model = dbInstance.Init();
                 var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
@@ -310,15 +317,13 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == table.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = table.Value.Comment
                         };
                         list.Add(tb);
@@ -336,15 +341,13 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == view.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = view.Value.Comment
                         };
                         list.Add(tb);
@@ -362,15 +365,13 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == proc.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = proc.Value.Comment
                         };
                         list.Add(tb);
@@ -399,13 +400,11 @@ namespace SmartSQL.UserControl.Tags
             var searchText = SearchObjects.Text.Trim();
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
+            var model = DbData;
             var selGroup = SelectedGroup;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
-                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
-                var model = dbInstance.Init();
                 var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
@@ -419,10 +418,6 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == table.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!table.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -436,6 +431,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = table.Value.Comment
                         };
                         list.Add(tb);
@@ -453,10 +450,6 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == view.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!view.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -470,6 +463,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = view.Value.Comment
                         };
                         list.Add(tb);
@@ -487,10 +482,6 @@ namespace SmartSQL.UserControl.Tags
                             x.GroupId == selGroup.Id &&
                             x.ObjectId == proc.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!proc.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -504,6 +495,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = proc.Value.Comment
                         };
                         list.Add(tb);

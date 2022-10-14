@@ -16,6 +16,8 @@ namespace SmartSQL.Models
 
         public string Comment { get; set; }
 
+        public bool IsEnable { get; set; }
+
         public bool _IsChecked;
         public bool IsChecked
         {

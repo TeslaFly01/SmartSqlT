@@ -178,17 +178,17 @@
     <Compile Include="UserControl\Main\UcMainTools.xaml.cs">
       <DependentUpon>UcMainTools.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Main\MainContent.xaml.cs">
-      <DependentUpon>MainContent.xaml</DependentUpon>
+    <Compile Include="UserControl\Main\UcMainContent.xaml.cs">
+      <DependentUpon>UcMainContent.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Main\MainObjects.xaml.cs">
-      <DependentUpon>MainObjects.xaml</DependentUpon>
+    <Compile Include="UserControl\Main\UcMainObjects.xaml.cs">
+      <DependentUpon>UcMainObjects.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Main\MainW.xaml.cs">
-      <DependentUpon>MainW.xaml</DependentUpon>
+    <Compile Include="UserControl\Main\UcMainW.xaml.cs">
+      <DependentUpon>UcMainW.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Main\UTabCode.xaml.cs">
-      <DependentUpon>UTabCode.xaml</DependentUpon>
+    <Compile Include="UserControl\Main\UcTabCode.xaml.cs">
+      <DependentUpon>UcTabCode.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tags\UcAddTagObject.xaml.cs">
       <DependentUpon>UcAddTagObject.xaml</DependentUpon>
@@ -261,8 +261,8 @@
     <Compile Include="Views\ExportDoc.xaml.cs">
       <DependentUpon>ExportDoc.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\Main\MainColumns.xaml.cs">
-      <DependentUpon>MainColumns.xaml</DependentUpon>
+    <Compile Include="UserControl\Main\UcMainColumns.xaml.cs">
+      <DependentUpon>UcMainColumns.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Controls\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
@@ -411,19 +411,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Main\MainContent.xaml">
+    <Page Include="UserControl\Main\UcMainContent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Main\MainObjects.xaml">
+    <Page Include="UserControl\Main\UcMainObjects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Main\MainW.xaml">
+    <Page Include="UserControl\Main\UcMainW.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="UserControl\Main\UTabCode.xaml">
+    <Page Include="UserControl\Main\UcTabCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -519,7 +519,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="UserControl\Main\MainColumns.xaml">
+    <Page Include="UserControl\Main\UcMainColumns.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

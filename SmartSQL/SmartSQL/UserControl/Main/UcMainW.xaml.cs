@@ -26,25 +26,25 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// MainW.xaml 的交互逻辑
     /// </summary>
-    public partial class MainW : BaseUserControl
+    public partial class UcMainW : BaseUserControl
     {
-        #region Filds
+        #region Fields
         public event ObjChangeRefreshHandler ObjChangeRefreshEvent;
 
         public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(MainW), new PropertyMetadata(default(Model)));
+            "MenuData", typeof(Model), typeof(UcMainW), new PropertyMetadata(default(Model)));
 
         public static readonly DependencyProperty SelectedObjectProperty = DependencyProperty.Register(
-            "SelectedObject", typeof(TreeNodeItem), typeof(MainW), new PropertyMetadata(default(TreeNodeItem)));
+            "SelectedObject", typeof(TreeNodeItem), typeof(UcMainW), new PropertyMetadata(default(TreeNodeItem)));
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(DataBase), typeof(MainW), new PropertyMetadata(default(DataBase)));
+            "SelectedDataBase", typeof(DataBase), typeof(UcMainW), new PropertyMetadata(default(DataBase)));
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(MainW), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcMainW), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty MainTitleProperty = DependencyProperty.Register(
-            "MainTitle", typeof(string), typeof(MainW), new PropertyMetadata(default(string)));
+            "MainTitle", typeof(string), typeof(UcMainW), new PropertyMetadata(default(string)));
 
         /// <summary>
         /// 菜单数据
@@ -92,7 +92,7 @@ namespace SmartSQL.UserControl
         }
         #endregion
 
-        public MainW()
+        public UcMainW()
         {
             InitializeComponent();
             DataContext = this;

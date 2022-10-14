@@ -35,7 +35,7 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// MainContent.xaml 的交互逻辑
     /// </summary>
-    public partial class MainContent : BaseUserControl
+    public partial class UcMainContent : BaseUserControl
     {
         private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
         private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
@@ -45,17 +45,18 @@ namespace SmartSQL.UserControl
 
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
 
+        #region Fields
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(MainContent), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(UcMainContent), new PropertyMetadata(default(ConnectConfigs)));
 
         public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(MainContent), new PropertyMetadata(default(Model)));
+            "MenuData", typeof(Model), typeof(UcMainContent), new PropertyMetadata(default(Model)));
 
         public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<TreeNodeItem>), typeof(MainContent), new PropertyMetadata(default(List<TreeNodeItem>)));
+            "TreeViewData", typeof(List<TreeNodeItem>), typeof(UcMainContent), new PropertyMetadata(default(List<TreeNodeItem>)));
 
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-            "CornerRadius", typeof(int), typeof(MainContent), new PropertyMetadata(default(int)));
+            "CornerRadius", typeof(int), typeof(UcMainContent), new PropertyMetadata(default(int)));
         /// <summary>
         /// 菜单源数据
         /// </summary>
@@ -94,11 +95,12 @@ namespace SmartSQL.UserControl
         {
             get => (int)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
-        }
+        } 
+        #endregion
 
         public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
 
-        public MainContent()
+        public UcMainContent()
         {
             InitializeComponent();
             CornerRadius = 10;
@@ -110,6 +112,7 @@ namespace SmartSQL.UserControl
         /// </summary>
         public void PageLoad(ConnectConfigs connectConfig)
         {
+            #region MyRegion
             var sqLiteHelper = new SQLiteHelper();
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             TabLeftType.SelectedIndex = leftMenuType - 1;
@@ -142,7 +145,8 @@ namespace SmartSQL.UserControl
                     Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
-            }
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -1355,7 +1359,7 @@ namespace SmartSQL.UserControl
                 {"View", "pack://application:,,,/Resources/svg/view.svg"},
                 {"Proc", "pack://application:,,,/Resources/svg/proc.svg"}
             };
-            var mainW = new MainW
+            var mainW = new UcMainW
             {
                 SelectedConnection = SelectedConnection,
                 SelectedDataBase = selectDatabase,
@@ -1406,6 +1410,7 @@ namespace SmartSQL.UserControl
 
         private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -1414,11 +1419,13 @@ namespace SmartSQL.UserControl
             {
                 MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
                 MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
-            }
+            } 
+            #endregion
         }
 
         private void EventSetter_OnHandler(object sender, MouseButtonEventArgs e)
         {
+            #region MyRegion
             var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
             if (treeViewItem != null)
             {
@@ -1433,7 +1440,8 @@ namespace SmartSQL.UserControl
                 }
                 treeViewItem.Focus();
                 e.Handled = true;
-            }
+            } 
+            #endregion
         }
         private DependencyObject VisualUpwardSearch<T>(DependencyObject source)
         {

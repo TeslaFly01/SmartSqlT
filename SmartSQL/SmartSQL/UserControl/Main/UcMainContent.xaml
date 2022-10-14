@@ -1,5 +1,5 @@
 ﻿<local:BaseUserControl
-    x:Class="SmartSQL.UserControl.MainContent"
+    x:Class="SmartSQL.UserControl.UcMainContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -348,7 +348,7 @@
                         Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg" />
                 </Border>
                 <!--  单选项卡  -->
-                <userControl:MainW x:Name="MainW" Visibility="Collapsed" />
+                <userControl:UcMainW x:Name="MainW" Visibility="Collapsed" />
                 <!--  多选项卡  -->
                 <hc:TabControl
                     Name="MainTabW"

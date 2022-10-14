@@ -74,13 +74,27 @@
                         HeadersVisibility="All"
                         ItemsSource="{Binding GroupObjectPageList, Mode=TwoWay}"
                         RowHeaderWidth="60"
-                        SelectionUnit="FullRow">
+                        SelectionUnit="Cell">
                         <DataGrid.Columns>
-                            <DataGridTemplateColumn Width="150" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
+                            <DataGridTemplateColumn Width="150">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                    <Grid>
+                                                        <ContentPresenter HorizontalAlignment="Center" />
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
                                 <DataGridTemplateColumn.Header>
                                     <CheckBox
                                         Checked="CheckBox_Checked"
                                         Content="操作"
+                                        Cursor="Hand"
                                         Foreground="{StaticResource PrimaryBrush}"
                                         Unchecked="CheckBox_Unchecked" />
                                 </DataGridTemplateColumn.Header>
@@ -90,6 +104,7 @@
                                             x:Name="CheckedRow"
                                             Checked="CheckedRow_Checked"
                                             Content="添加"
+                                            Cursor="Hand"
                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
                                             Unchecked="CheckedRow_Unchecked" />
                                     </DataTemplate>

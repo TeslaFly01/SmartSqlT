@@ -1,5 +1,5 @@
 ﻿<local:BaseUserControl
-    x:Class="SmartSQL.UserControl.MainW"
+    x:Class="SmartSQL.UserControl.UcMainW"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -88,8 +88,8 @@
                         </Border>
                         <Border Grid.Row="1" ClipToBounds="True">
                             <Grid>
-                                <local:MainColumns x:Name="MainColumn" />
-                                <local:MainObjects x:Name="MainObject" Visibility="Collapsed" />
+                                <local:UcMainColumns x:Name="MainColumn" />
+                                <local:UcMainObjects x:Name="MainObject" Visibility="Collapsed" />
                             </Grid>
                         </Border>
                     </Grid>
@@ -98,8 +98,8 @@
         </hc:TransitioningContentControl>
         <!--  多选项卡  -->
         <Grid Name="GridMultiple">
-            <local:MainColumns x:Name="MainColumns" />
-            <local:MainObjects x:Name="MainObjects" Visibility="Collapsed" />
+            <local:UcMainColumns x:Name="MainColumns" />
+            <local:UcMainObjects x:Name="MainObjects" Visibility="Collapsed" />
         </Grid>
     </Grid>
 </local:BaseUserControl>

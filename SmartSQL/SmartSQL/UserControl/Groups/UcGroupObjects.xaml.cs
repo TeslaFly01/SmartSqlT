@@ -19,6 +19,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Views;
 
 namespace SmartSQL.UserControl.Tags
@@ -40,6 +41,12 @@ namespace SmartSQL.UserControl.Tags
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcGroupObjects), new PropertyMetadata(default(ConnectConfigs)));
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(UcGroupObjects), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(UcGroupObjects), new PropertyMetadata(default(Model)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -48,9 +55,6 @@ namespace SmartSQL.UserControl.Tags
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcGroupObjects), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -58,6 +62,14 @@ namespace SmartSQL.UserControl.Tags
         {
             get => (string)GetValue(SelectedDataBaseProperty);
             set => SetValue(SelectedDataBaseProperty, value);
+        }
+        /// <summary>
+        /// 基础数据
+        /// </summary>
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
         }
 
         public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
@@ -201,6 +213,7 @@ namespace SmartSQL.UserControl.Tags
             var ucAddObjects = new UcAddGroupObject();
             ucAddObjects.SelectedConnection = SelectedConnection;
             ucAddObjects.SelectedDataBase = SelectedDataBase;
+            ucAddObjects.DbData = DbData;
             ucAddObjects.SelectedGroup = SelectedGroup;
             ucAddObjects.LoadPageData();
             parentWindow.MainContent = ucAddObjects;

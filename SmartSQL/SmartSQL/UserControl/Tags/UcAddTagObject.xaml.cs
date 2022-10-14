@@ -22,6 +22,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Data;
 using SmartSQL.Helper;
+using SmartSQL.Framework.PhysicalDataModel;
 
 namespace SmartSQL.UserControl.Tags
 {
@@ -42,6 +43,15 @@ namespace SmartSQL.UserControl.Tags
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcAddTagObject), new PropertyMetadata(default(ConnectConfigs)));
+
+        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
+            "SelectedDataBase", typeof(string), typeof(UcAddTagObject), new PropertyMetadata(default(string)));
+
+        public static readonly DependencyProperty DbDataProperty = DependencyProperty.Register(
+            "DbData", typeof(Model), typeof(UcAddTagObject), new PropertyMetadata(default(Model)));
+
+        public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
+            "SelectedTag", typeof(TagInfo), typeof(UcAddTagObject), new PropertyMetadata(default(TagInfo)));
         /// <summary>
         /// 当前选中连接
         /// </summary>
@@ -50,9 +60,6 @@ namespace SmartSQL.UserControl.Tags
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
             set => SetValue(SelectedConnectionProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(UcAddTagObject), new PropertyMetadata(default(string)));
         /// <summary>
         /// 当前选中数据库
         /// </summary>
@@ -61,9 +68,14 @@ namespace SmartSQL.UserControl.Tags
             get => (string)GetValue(SelectedDataBaseProperty);
             set => SetValue(SelectedDataBaseProperty, value);
         }
-
-        public static readonly DependencyProperty SelectedTagProperty = DependencyProperty.Register(
-            "SelectedTag", typeof(TagInfo), typeof(UcAddTagObject), new PropertyMetadata(default(TagInfo)));
+        /// <summary>
+        /// 当前选中数据库
+        /// </summary>
+        public Model DbData
+        {
+            get => (Model)GetValue(DbDataProperty);
+            set => SetValue(DbDataProperty, value);
+        }
         /// <summary>
         /// 当前选中标签
         /// </summary>
@@ -124,13 +136,11 @@ namespace SmartSQL.UserControl.Tags
             UcTitle.Content = $"设置表/视图/存储过程到标签【{SelectedTag.TagName}】";
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
+            var model = DbData;
             var selTag = SelectedTag;
             var list = new List<DbObjectDTO>();
-            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType,
-                SelectedConnection.SelectedDbConnectString(SelectedDataBase), SelectedDataBase);
             Task.Run(() =>
             {
-                var model = dbInstance.Init();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var table in model.Tables)
                 {
@@ -140,15 +150,13 @@ namespace SmartSQL.UserControl.Tags
                         x.TagId == selTag.TagId &&
                         x.ObjectId == table.Value.Id
                     );
-                    if (isAny)
-                    {
-                        continue;
-                    }
                     var tb = new DbObjectDTO()
                     {
                         ObjectId = table.Value.Id,
                         Name = table.Value.DisplayName,
                         ObjectType = 1,
+                        IsEnable = !isAny,
+                        IsChecked = isAny,
                         Comment = table.Value.Comment
                     };
                     list.Add(tb);
@@ -256,6 +264,7 @@ namespace SmartSQL.UserControl.Tags
             var ucTagObjects = new UcTagObjects();
             ucTagObjects.SelectedConnection = SelectedConnection;
             ucTagObjects.SelectedDataBase = SelectedDataBase;
+            ucTagObjects.DbData = DbData;
             ucTagObjects.SelectedTag = SelectedTag;
             ucTagObjects.LoadPageData();
             parentWindow.MainContent = ucTagObjects;
@@ -288,12 +297,10 @@ namespace SmartSQL.UserControl.Tags
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
             var selTag = SelectedTag;
+            var model = DbData;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
-                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
-                var model = dbInstance.Init();
                 var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
@@ -396,12 +403,10 @@ namespace SmartSQL.UserControl.Tags
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
             var selTag = SelectedTag;
+            var model = DbData;
             var selItem = ((ComboBoxItem)SearchComObjType.SelectedItem).Tag;
             Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(selConnection.DbType,
-                    selConnection.SelectedDbConnectString(selDatabase), selDatabase);
-                var model = dbInstance.Init();
                 var list = new List<DbObjectDTO>();
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 if ((string)selItem == "Table")
