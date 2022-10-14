@@ -183,7 +183,7 @@ namespace SmartSQL.UserControl
                 var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
                 //分组相关列表
                 var curObjects = new List<SObjectDTO>();
-                var curGroups = new List<ObjectGroup>();
+                var curGroups = new List<GroupInfo>();
                 //标签相关列表
                 var curTagObjects = new List<MenuTagObjectsDTO>();
                 var curTags = new List<TagInfo>();
@@ -221,7 +221,7 @@ namespace SmartSQL.UserControl
                 //是否业务分组
                 if (leftMenuType == LeftMenuType.Group.GetHashCode())
                 {
-                    curGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
+                    curGroups = sqLiteHelper.db.Table<GroupInfo>().Where(a =>
                         a.ConnectId == selectConnection.ID &&
                         a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                     if (curGroups.Any())
@@ -277,8 +277,8 @@ namespace SmartSQL.UserControl
                             itemParentList.Add(nodeGroup);
                         }
                     }
-                    curObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
-                                  join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
+                    curObjects = (from a in sqLiteHelper.db.Table<GroupInfo>()
+                                  join b in sqLiteHelper.db.Table<GroupObjects>() on a.Id equals b.GroupId
                                   where a.ConnectId == selectConnection.ID &&
                                         a.DataBaseName == selectDataBase
                                   select new SObjectDTO
@@ -769,7 +769,7 @@ namespace SmartSQL.UserControl
             var selectConnection = SelectedConnection;
             //分组相关列表
             var currObjects = new List<SObjectDTO>();
-            var currGroups = new List<ObjectGroup>();
+            var currGroups = new List<GroupInfo>();
             //标签相关列表
             var curTagObjects = new List<MenuTagObjectsDTO>();
             var curTags = new List<TagInfo>();
@@ -777,7 +777,7 @@ namespace SmartSQL.UserControl
             #region 分组业务处理
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
-                currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
+                currGroups = sqLiteHelper.db.Table<GroupInfo>().Where(a =>
                     a.ConnectId == selectConnection.ID &&
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
@@ -835,8 +835,8 @@ namespace SmartSQL.UserControl
                     itemChildList.Add(nodeProc1);
                     itemParentList.Add(nodeGroup);
                 }
-                currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
-                               join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
+                currObjects = (from a in sqLiteHelper.db.Table<GroupInfo>()
+                               join b in sqLiteHelper.db.Table<GroupObjects>() on a.Id equals b.GroupId
                                where a.ConnectId == selectConnection.ID &&
                                      a.DataBaseName == selectDataBase
                                select new SObjectDTO

@@ -411,21 +411,54 @@ namespace SmartSQL.UserControl
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
-            var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
+            var list = sqLiteHelper.db.Table<GroupInfo>().Where(x =>
                 x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
             if (!list.Any())
             {
-                Oops.Oh("暂无分组，请先添加分组");
+                Oops.Oh("暂无分组，请先创建分组");
                 return;
             }
             var mainWindow = System.Windows.Window.GetWindow(this);
-            var group = new SetObjectGroup();
+            var group = new SetGroup();
             group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
-            group.Connection = SelectedConnection;
+            group.SelectedConnection = SelectedConnection;
             group.SelectedDataBase = SelectedDataBase.DbName;
             group.SelectedObjects = new List<TreeNodeItem>() { SelectedObject };
             group.Owner = mainWindow;
             group.ShowDialog();
+            #endregion
+        }
+
+        /// <summary>
+        /// 设置标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnSetTag_OnClick(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            //选中的表对象
+            if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
+            {
+                Oops.Oh("请选择对应的表");
+                return;
+            }
+            var sqLiteHelper = new SQLiteHelper();
+            var list = sqLiteHelper.db.Table<TagInfo>().Where(x =>
+                x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
+            if (!list.Any())
+            {
+                Oops.Oh("暂无标签，请先创建标签");
+                return;
+            }
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            var setTag = new SetTag();
+            setTag.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+            setTag.SelectedConnection = SelectedConnection;
+            setTag.SelectedDataBase = SelectedDataBase.DbName;
+            setTag.SelectedObjects = new List<TreeNodeItem>() { SelectedObject };
+            setTag.Owner = mainWindow;
+            setTag.ShowDialog();
             #endregion
         }
 

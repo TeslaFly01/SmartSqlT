@@ -121,14 +121,6 @@
                 VerticalAlignment="Bottom">
                 <hc:UniformSpacingPanel Spacing="10">
                     <Button
-                        x:Name="BtnSetGroup"
-                        Height="26"
-                        hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
-                        Click="BtnSetGroup_OnClick"
-                        Content="设置分组"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonWarning}" />
-                    <Button
                         x:Name="BtnExport"
                         Height="26"
                         hc:IconElement.Geometry="{StaticResource ExportGeometry}"

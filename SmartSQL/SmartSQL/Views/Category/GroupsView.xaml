@@ -32,7 +32,7 @@
             CornerRadius="8">
             <Grid>
                 <hc:SearchBar
-                    x:Name="SearchTag"
+                    x:Name="SearchGroup"
                     Height="30"
                     Margin="5,5,45,5"
                     Padding="5,0,5,0"
@@ -42,7 +42,8 @@
                     FontSize="13"
                     MaxLength="30"
                     ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}" />
+                    Style="{StaticResource SearchBarPlus}"
+                    TextChanged="SearchTag_OnTextChanged" />
                 <Button
                     Name="BtnAdd"
                     Width="35"
@@ -59,6 +60,7 @@
                 <ListBox
                     Name="ListGroup"
                     Margin="5,40,5,35"
+                    HorizontalContentAlignment="Stretch"
                     AllowDrop="True"
                     BorderThickness="0"
                     Drop="ListGroup_OnDrop"
@@ -103,16 +105,28 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate>
                             <Grid>
-                                <svgc:SvgViewbox
-                                    Width="12"
-                                    Height="12"
-                                    HorizontalAlignment="Left"
-                                    IsHitTestVisible="False"
-                                    Source="pack://application:,,,/Resources/svg/category.svg" />
-                                <TextBlock
-                                    Margin="20,0,0,0"
-                                    Cursor="SizeAll"
-                                    Text="{Binding GroupName}" />
+                                <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                    <svgc:SvgViewbox
+                                        Width="12"
+                                        Height="12"
+                                        HorizontalAlignment="Left"
+                                        IsHitTestVisible="False"
+                                        Source="pack://application:,,,/Resources/svg/category.svg" />
+                                    <TextBlock
+                                        Margin="10,0,0,0"
+                                        Text="{Binding GroupName}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </hc:SimpleStackPanel>
+                                <hc:SimpleStackPanel HorizontalAlignment="Right">
+                                    <Border Background="#fffffe" CornerRadius="3">
+                                        <TextBlock
+                                            Margin="5,1,5,1"
+                                            VerticalAlignment="Center"
+                                            FontWeight="Bold"
+                                            Foreground="{StaticResource ThirdlyTextBrush}"
+                                            Text="{Binding SubCount}" />
+                                    </Border>
+                                </hc:SimpleStackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

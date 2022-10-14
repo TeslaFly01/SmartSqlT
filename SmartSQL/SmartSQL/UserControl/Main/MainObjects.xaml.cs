@@ -329,28 +329,5 @@ namespace SmartSQL.UserControl
                 }
             }
         }
-
-        private void BtnSetGroup_OnClick(object sender, RoutedEventArgs e)
-        {
-            var sqLiteHelper = new SQLiteHelper();
-            var list = sqLiteHelper.db.Table<ObjectGroup>().Where(x =>
-                x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase.DbName).ToList();
-            if (!list.Any())
-            {
-                Oops.Oh("暂无分组，请先添加分组");
-                return;
-            }
-            var mainWindow = System.Windows.Window.GetWindow(this);
-            var group = new SetObjectGroup();
-            //group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
-            group.Connection = SelectedConnection;
-            group.SelectedDataBase = SelectedDataBase.DbName;
-            var groupData = ObjectsViewData.Any(x => x.IsChecked == true)
-                ? ObjectsViewData.Where(x => x.IsChecked == true).ToList()
-                : ObjectsViewData;
-            group.SelectedObjects = groupData;
-            group.Owner = mainWindow;
-            group.ShowDialog();
-        }
     }
 }

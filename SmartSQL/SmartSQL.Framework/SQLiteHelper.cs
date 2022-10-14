@@ -46,9 +46,9 @@ namespace SmartSQL.Framework
             db = new SQLiteConnection(connstr);
             //表已存在不会重复创建
             db.CreateTable<ConnectConfigs>();
-            db.CreateTable<ObjectGroup>();
+            db.CreateTable<GroupInfo>();
             db.CreateTable<TagInfo>();
-            db.CreateTable<SObjects>();
+            db.CreateTable<GroupObjects>();
             db.CreateTable<TagObjects>();
             db.CreateTable<SystemSet>();
             Init();

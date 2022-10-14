@@ -114,7 +114,7 @@
                                         Text="{Binding TagName}"
                                         TextTrimming="CharacterEllipsis" />
                                 </hc:SimpleStackPanel>
-                                <hc:SimpleStackPanel Margin="0,0,8,0" HorizontalAlignment="Right">
+                                <hc:SimpleStackPanel HorizontalAlignment="Right">
                                     <Border Background="#fffffe" CornerRadius="3">
                                         <TextBlock
                                             Margin="5,1,5,1"

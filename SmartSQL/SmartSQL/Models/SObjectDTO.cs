@@ -7,7 +7,7 @@ using SmartSQL.Framework.SqliteModel;
 
 namespace SmartSQL.Models
 {
-    public class SObjectDTO : SObjects
+    public class SObjectDTO : GroupObjects
     {
         public string GroupName { get; set; }
     }

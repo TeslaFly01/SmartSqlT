@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SQLite;
+using SqlSugar;
 
 namespace SmartSQL.Framework.SqliteModel
 {
-    public class ObjectGroup
+    /// <summary>
+    /// 分组信息表
+    /// </summary>
+    public class GroupInfo
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
@@ -31,7 +35,11 @@ namespace SmartSQL.Framework.SqliteModel
         /// 排序标记
         /// </summary>
         public DateTime OrderFlag { get; set; }=DateTime.Now;
-
+        /// <summary>
+        /// 对象数量
+        /// </summary>
+        public int SubCount { get; set; }
+        [Ignore]
         public bool IsSelected { get; set; }
     }
 }

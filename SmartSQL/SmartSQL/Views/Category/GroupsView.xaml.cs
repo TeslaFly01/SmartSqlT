@@ -80,10 +80,10 @@ namespace SmartSQL.Views
         /// 分组菜单数据列表
         /// </summary>
         public static readonly DependencyProperty GroupMenuListProperty = DependencyProperty.Register(
-            "GroupMenuList", typeof(List<ObjectGroup>), typeof(GroupsView), new PropertyMetadata(default(List<ObjectGroup>)));
-        public List<ObjectGroup> GroupMenuList
+            "GroupMenuList", typeof(List<GroupInfo>), typeof(GroupsView), new PropertyMetadata(default(List<GroupInfo>)));
+        public List<GroupInfo> GroupMenuList
         {
-            get => (List<ObjectGroup>)GetValue(GroupMenuListProperty);
+            get => (List<GroupInfo>)GetValue(GroupMenuListProperty);
             set
             {
                 SetValue(GroupMenuListProperty, value);
@@ -111,7 +111,7 @@ namespace SmartSQL.Views
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var groupMenuList = sqLiteHelper.db.Table<ObjectGroup>()
+                var groupMenuList = sqLiteHelper.db.Table<GroupInfo>()
                     .Where(x => x.ConnectId == selConn.ID && x.DataBaseName == selectDataBase)
                     .OrderBy(x => x.OrderFlag).ToList();
                 Dispatcher.Invoke(() =>
@@ -137,7 +137,7 @@ namespace SmartSQL.Views
         public void ReloadMenu()
         {
             var sqliteInstance = SQLiteHelper.GetInstance();
-            var datalist = sqliteInstance.ToList<ObjectGroup>(x =>
+            var datalist = sqliteInstance.ToList<GroupInfo>(x =>
                 x.ConnectId == SelectedConnection.ID &&
                 x.DataBaseName == SelectedDataBase
             );
@@ -152,7 +152,7 @@ namespace SmartSQL.Views
             var selectDataBase = SelectedDataBase;
             if (listBox.SelectedItems.Count > 0)
             {
-                var group = (ObjectGroup)listBox.SelectedItems[0];
+                var group = (GroupInfo)listBox.SelectedItems[0];
 
                 var ucGroupObjects = new UcGroupObjects();
                 ucGroupObjects.SelectedConnection = selConn;
@@ -190,7 +190,7 @@ namespace SmartSQL.Views
                 return;
             }
             //查找元数据
-            if (!(e.Data.GetData(typeof(ObjectGroup)) is ObjectGroup sourceGroup))
+            if (!(e.Data.GetData(typeof(GroupInfo)) is GroupInfo sourceGroup))
             {
                 return;
             }
@@ -200,7 +200,7 @@ namespace SmartSQL.Views
             {
                 return;
             }
-            var targetGroup = listBoxItem.Content as ObjectGroup;
+            var targetGroup = listBoxItem.Content as GroupInfo;
             if (ReferenceEquals(targetGroup, sourceGroup))
             {
                 return;
@@ -210,13 +210,13 @@ namespace SmartSQL.Views
             sourceGroup.OrderFlag = targetOrder;
             targetGroup.OrderFlag = sourceOrder;
             var sqLiteHelper = new SQLiteHelper();
-            var listG = new List<ObjectGroup>()
+            var listG = new List<GroupInfo>()
             {
                 sourceGroup,
                 targetGroup
             };
             sqLiteHelper.db.UpdateAll(listG);
-            var datalist = sqLiteHelper.db.Table<ObjectGroup>().
+            var datalist = sqLiteHelper.db.Table<GroupInfo>().
                 Where(x => x.ConnectId == selConn.ID && x.DataBaseName == selectedDatabase).
                 OrderBy(x => x.OrderFlag).ToList();
             Dispatcher.Invoke(() =>
@@ -247,7 +247,7 @@ namespace SmartSQL.Views
                 {
                     return;
                 }
-                DataObject dataObj = new DataObject(listBoxItem.Content as ObjectGroup);
+                DataObject dataObj = new DataObject(listBoxItem.Content as GroupInfo);
                 DragDrop.DoDragDrop(ListGroup, dataObj, DragDropEffects.Move);
             }
             #endregion
@@ -260,7 +260,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void MenuEdit_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!(ListGroup.SelectedItem is ObjectGroup selectedGroup))
+            if (!(ListGroup.SelectedItem is GroupInfo selectedGroup))
             {
                 Oops.Oh("请选择需要修改的分组.");
                 return;
@@ -282,7 +282,7 @@ namespace SmartSQL.Views
         private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            if (!(ListGroup.SelectedItem is ObjectGroup selectedGroup))
+            if (!(ListGroup.SelectedItem is GroupInfo selectedGroup))
             {
                 Oops.Oh("请选择需要删除的分组.");
                 return;
@@ -295,10 +295,10 @@ namespace SmartSQL.Views
                 var connKey = SelectedConnection.ID;
                 Task.Run(() =>
                 {
-                    sqlLiteInstance.db.Delete<ObjectGroup>(selectedGroup.Id);
-                    var datalist = sqlLiteInstance.db.Table<ObjectGroup>().
+                    sqlLiteInstance.db.Delete<GroupInfo>(selectedGroup.Id);
+                    var datalist = sqlLiteInstance.db.Table<GroupInfo>().
                         Where(x => x.ConnectId == connKey && x.DataBaseName == selectedDatabase).ToList();
-                    var list = sqlLiteInstance.db.Table<SObjects>().Where(x =>
+                    var list = sqlLiteInstance.db.Table<GroupObjects>().Where(x =>
                         x.ConnectId == connKey &&
                         x.DatabaseName == selectedDatabase &&
                         x.GroupId == selectedGroup.Id).ToList();
@@ -306,7 +306,7 @@ namespace SmartSQL.Views
                     {
                         foreach (var groupObj in list)
                         {
-                            sqlLiteInstance.db.Delete<SObjects>(groupObj.Id);
+                            sqlLiteInstance.db.Delete<GroupObjects>(groupObj.Id);
                         }
                     }
                     Dispatcher.Invoke(() =>
@@ -318,6 +318,21 @@ namespace SmartSQL.Views
                 });
             }
             #endregion
+        }
+
+        /// <summary>
+        /// 实时搜索菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTag_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchTag = SearchGroup.Text.Trim();
+            var sqlLiteInstance = SQLiteHelper.GetInstance();
+            var datalist = sqlLiteInstance.db.Table<GroupInfo>().
+                Where(x => x.ConnectId == SelectedConnection.ID && x.DataBaseName == SelectedDataBase && x.GroupName.Contains(searchTag)).ToList();
+            GroupMenuList = datalist;
+            NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 

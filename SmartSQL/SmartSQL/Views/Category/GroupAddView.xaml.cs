@@ -56,10 +56,10 @@ namespace SmartSQL.Views.Category
         }
 
         public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
-            "SelectedGroup", typeof(ObjectGroup), typeof(TagAddView), new PropertyMetadata(default(ObjectGroup)));
-        public ObjectGroup SelectedGroup
+            "SelectedGroup", typeof(GroupInfo), typeof(TagAddView), new PropertyMetadata(default(GroupInfo)));
+        public GroupInfo SelectedGroup
         {
-            get => (ObjectGroup)GetValue(SelectedGroupProperty);
+            get => (GroupInfo)GetValue(SelectedGroupProperty);
             set
             {
                 SetValue(SelectedGroupProperty, value);
@@ -105,7 +105,7 @@ namespace SmartSQL.Views.Category
             var sqLiteInstance = SQLiteHelper.GetInstance();
             if (SelectedGroup == null)
             {
-                var tag = sqLiteInstance.db.Table<ObjectGroup>().FirstOrDefault(x =>
+                var tag = sqLiteInstance.db.Table<GroupInfo>().FirstOrDefault(x =>
                     x.ConnectId == SelectedConnection.ID &&
                     x.DataBaseName == SelectedDataBase &&
                     x.GroupName == groupName);
@@ -114,17 +114,18 @@ namespace SmartSQL.Views.Category
                     Oops.Oh("已存在相同名称的分组.");
                     return;
                 }
-                //插入标签数据
-                sqLiteInstance.db.Insert(new ObjectGroup()
+                //插入分组数据
+                sqLiteInstance.db.Insert(new GroupInfo()
                 {
                     ConnectId = SelectedConnection.ID,
                     DataBaseName = SelectedDataBase,
+                    OpenLevel = CheckCurrent.IsChecked == true ? 1 : (CheckChild.IsChecked == true ? 2 : 0),
                     GroupName = groupName
                 });
             }
             else
             {
-                var tag = sqLiteInstance.db.Table<ObjectGroup>().FirstOrDefault(x =>
+                var tag = sqLiteInstance.db.Table<GroupInfo>().FirstOrDefault(x =>
                     x.ConnectId == SelectedConnection.ID &&
                     x.DataBaseName == SelectedDataBase &&
                     x.Id != SelectedGroup.Id &&
@@ -134,8 +135,9 @@ namespace SmartSQL.Views.Category
                     Oops.Oh("已存在相同名称的分组.");
                     return;
                 }
-                tag = sqLiteInstance.db.Get<ObjectGroup>(x => x.Id == SelectedGroup.Id);
+                tag = sqLiteInstance.db.Get<GroupInfo>(x => x.Id == SelectedGroup.Id);
                 tag.GroupName = groupName;
+                tag.OpenLevel = CheckCurrent.IsChecked == true ? 1 : (CheckChild.IsChecked == true ? 2 : 0);
                 sqLiteInstance.db.Update(tag);
             }
             if (ChangeRefreshEvent != null)

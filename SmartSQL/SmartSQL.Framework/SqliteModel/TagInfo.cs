@@ -36,5 +36,8 @@ namespace SmartSQL.Framework.SqliteModel
         /// 对象数量
         /// </summary>
         public int SubCount { get; set; }
+
+        [Ignore]
+        public bool IsSelected { get; set; }
     }
 }

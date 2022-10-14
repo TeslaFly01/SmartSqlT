@@ -7,7 +7,7 @@ using SQLite;
 
 namespace SmartSQL.Framework.SqliteModel
 {
-    public class SObjects
+    public class GroupObjects
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }

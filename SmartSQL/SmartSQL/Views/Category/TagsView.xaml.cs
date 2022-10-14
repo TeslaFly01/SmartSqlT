@@ -248,7 +248,7 @@ namespace SmartSQL.Views.Category
                     {
                         foreach (var tagObj in list)
                         {
-                            sqlLiteInstance.db.Delete<SObjects>(tagObj.Id);
+                            sqlLiteInstance.db.Delete<GroupObjects>(tagObj.Id);
                         }
                     }
                     Dispatcher.Invoke(() =>

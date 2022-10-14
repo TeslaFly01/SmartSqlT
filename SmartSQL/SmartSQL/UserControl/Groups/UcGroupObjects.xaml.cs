@@ -61,13 +61,13 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
-            "SelectedGroup", typeof(ObjectGroup), typeof(UcGroupObjects), new PropertyMetadata(default(ObjectGroup)));
+            "SelectedGroup", typeof(GroupInfo), typeof(UcGroupObjects), new PropertyMetadata(default(GroupInfo)));
         /// <summary>
         /// 当前选中分组
         /// </summary>
-        public ObjectGroup SelectedGroup
+        public GroupInfo SelectedGroup
         {
-            get => (ObjectGroup)GetValue(SelectedGroupProperty);
+            get => (GroupInfo)GetValue(SelectedGroupProperty);
             set => SetValue(SelectedGroupProperty, value);
         }
 
@@ -75,10 +75,10 @@ namespace SmartSQL.UserControl.Tags
         /// 分组对象数据列表
         /// </summary>
         public static readonly DependencyProperty GroupObjectListProperty = DependencyProperty.Register(
-            "GroupObjectList", typeof(List<SObjects>), typeof(UcGroupObjects), new PropertyMetadata(default(List<SObjects>)));
-        public List<SObjects> GroupObjectList
+            "GroupObjectList", typeof(List<GroupObjects>), typeof(UcGroupObjects), new PropertyMetadata(default(List<GroupObjects>)));
+        public List<GroupObjects> GroupObjectList
         {
-            get => (List<SObjects>)GetValue(GroupObjectListProperty);
+            get => (List<GroupObjects>)GetValue(GroupObjectListProperty);
             set
             {
                 SetValue(GroupObjectListProperty, value);
@@ -105,7 +105,7 @@ namespace SmartSQL.UserControl.Tags
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-                var groupObjectList = sqLiteInstance.ToList<SObjects>(x =>
+                var groupObjectList = sqLiteInstance.ToList<GroupObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.GroupId == selGroup.Id);
@@ -120,7 +120,7 @@ namespace SmartSQL.UserControl.Tags
                 }));
             });
         }
-        private List<SObjects> GroupObjectItems;
+        private List<GroupObjects> GroupObjectItems;
 
         private void SearchObjects_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -135,7 +135,7 @@ namespace SmartSQL.UserControl.Tags
                 }
                 else
                 {
-                    searchData = new List<SObjects>();
+                    searchData = new List<GroupObjects>();
                 }
             }
             MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
@@ -149,7 +149,7 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnRowDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (TagObjects)TableGrid.SelectedItem;
+            var selectedItem = (GroupObjects)TableGrid.SelectedItem;
             if (selectedItem != null)
             {
                 var conn = SelectedConnection;
@@ -157,12 +157,12 @@ namespace SmartSQL.UserControl.Tags
                 var selGroup = SelectedGroup;
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 sqLiteInstance.db.Delete(selectedItem);
-                //if (selTag.SubCount > 0)
-                //{
-                //    selTag.SubCount -= 1;
-                //    sqLiteInstance.db.Update(selTag);
-                //}
-                var groupObjectList = sqLiteInstance.ToList<SObjects>(x =>
+                if (selGroup.SubCount > 0)
+                {
+                    selGroup.SubCount -= 1;
+                    sqLiteInstance.db.Update(selGroup);
+                }
+                var groupObjectList = sqLiteInstance.ToList<GroupObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.GroupId == selGroup.Id);
@@ -170,7 +170,7 @@ namespace SmartSQL.UserControl.Tags
                 GroupObjectItems = groupObjectList;
                 GroupObjectList = groupObjectList;
                 var parentWindow = (GroupsView)Window.GetWindow(this);
-                //parentWindow?.ReloadMenu();
+                parentWindow?.ReloadMenu();
             }
         }
 

@@ -64,13 +64,13 @@ namespace SmartSQL.UserControl.Tags
         }
 
         public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
-            "SelectedGroup", typeof(ObjectGroup), typeof(UcAddGroupObject), new PropertyMetadata(default(ObjectGroup)));
+            "SelectedGroup", typeof(GroupInfo), typeof(UcAddGroupObject), new PropertyMetadata(default(GroupInfo)));
         /// <summary>
-        /// 当前选中标签
+        /// 当前选中分组
         /// </summary>
-        public ObjectGroup SelectedGroup
+        public GroupInfo SelectedGroup
         {
-            get => (ObjectGroup)GetValue(SelectedGroupProperty);
+            get => (GroupInfo)GetValue(SelectedGroupProperty);
             set => SetValue(SelectedGroupProperty, value);
         }
 
@@ -135,7 +135,7 @@ namespace SmartSQL.UserControl.Tags
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var table in model.Tables)
                 {
-                    var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                    var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                         x.ConnectId == selConnection.ID &&
                         x.DatabaseName == selDatabase &&
                         x.GroupId == selGroup.Id &&
@@ -207,7 +207,7 @@ namespace SmartSQL.UserControl.Tags
             var selConnection = SelectedConnection;
             var selDatabase = SelectedDataBase;
             var selGroup = SelectedGroup;
-            var listObjects = new List<SObjects>();
+            var listObjects = new List<GroupObjects>();
             var checkedObjects = GroupObjectList.Where(x => x.IsChecked == true).ToList();
             LoadingLine.Visibility = Visibility.Visible;
             Task.Run(() =>
@@ -215,7 +215,7 @@ namespace SmartSQL.UserControl.Tags
                 var sqLiteInstance = SQLiteHelper.GetInstance();
                 foreach (var obj in checkedObjects)
                 {
-                    var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                    var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                         x.ConnectId == selConnection.ID &&
                         x.DatabaseName == selDatabase &&
                         x.GroupId == selGroup.Id &&
@@ -223,7 +223,7 @@ namespace SmartSQL.UserControl.Tags
                     );
                     if (!isAny)
                     {
-                        listObjects.Add(new SObjects
+                        listObjects.Add(new GroupObjects
                         {
                             ConnectId = selConnection.ID,
                             DatabaseName = selDatabase,
@@ -234,7 +234,7 @@ namespace SmartSQL.UserControl.Tags
                     }
                 }
                 sqLiteInstance.Add(listObjects);
-                //selGroup.SubCount += listObjects.Count;
+                selGroup.SubCount += listObjects.Count;
                 sqLiteInstance.db.Update(selGroup);
                 Dispatcher.Invoke(new Action(() =>
                 {
@@ -304,7 +304,7 @@ namespace SmartSQL.UserControl.Tags
                     #region Table
                     foreach (var table in model.Tables)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&
@@ -330,7 +330,7 @@ namespace SmartSQL.UserControl.Tags
                     #region View
                     foreach (var view in model.Views)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&
@@ -356,7 +356,7 @@ namespace SmartSQL.UserControl.Tags
                     #region Proc
                     foreach (var proc in model.Procedures)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&
@@ -413,7 +413,7 @@ namespace SmartSQL.UserControl.Tags
                     #region Table
                     foreach (var table in model.Tables)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&
@@ -447,7 +447,7 @@ namespace SmartSQL.UserControl.Tags
                     #region View
                     foreach (var view in model.Views)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&
@@ -481,7 +481,7 @@ namespace SmartSQL.UserControl.Tags
                     #region Proc
                     foreach (var proc in model.Procedures)
                     {
-                        var isAny = sqLiteInstance.IsAny<SObjects>(x =>
+                        var isAny = sqLiteInstance.IsAny<GroupObjects>(x =>
                             x.ConnectId == selConnection.ID &&
                             x.DatabaseName == selDatabase &&
                             x.GroupId == selGroup.Id &&

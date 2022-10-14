@@ -201,7 +201,7 @@ namespace SmartSQL.Views
                 var sqLiteHelper = new SQLiteHelper();
                 var leftMenuType = 1; // sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
                 var curObjects = new List<SObjectDTO>();
-                var curGroups = new List<ObjectGroup>();
+                var curGroups = new List<GroupInfo>();
                 var itemParentList = new List<TreeNodeItem>();
                 var itemList = new List<TreeNodeItem>();
                 var nodeTable = new TreeNodeItem
@@ -236,7 +236,7 @@ namespace SmartSQL.Views
                 //是否业务分组
                 if (leftMenuType == LeftMenuType.Group.GetHashCode())
                 {
-                    curGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
+                    curGroups = sqLiteHelper.db.Table<GroupInfo>().Where(a =>
                         a.ConnectId == selectConnection.ID &&
                         a.DataBaseName == selectDataBaseText).OrderBy(x => x.OrderFlag).ToList();
                     if (curGroups.Any())
@@ -291,8 +291,8 @@ namespace SmartSQL.Views
                             itemParentList.Add(nodeGroup);
                         }
                     }
-                    curObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
-                                  join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
+                    curObjects = (from a in sqLiteHelper.db.Table<GroupInfo>()
+                                  join b in sqLiteHelper.db.Table<GroupObjects>() on a.Id equals b.GroupId
                                   where a.ConnectId == selectConnection.ID &&
                                         a.DataBaseName == selectDataBaseText
                                   select new SObjectDTO
@@ -615,13 +615,13 @@ namespace SmartSQL.Views
             var selectConnection = SelectedConnection;
             var menuData = MenuData;
             var currObjects = new List<SObjectDTO>();
-            var currGroups = new List<ObjectGroup>();
+            var currGroups = new List<GroupInfo>();
             var itemParentList = new List<TreeNodeItem>();
             leftMenuType = LeftMenuType.All.GetHashCode();
             #region 分组业务处理
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
-                currGroups = sqLiteHelper.db.Table<ObjectGroup>().Where(a =>
+                currGroups = sqLiteHelper.db.Table<GroupInfo>().Where(a =>
                     a.ConnectId == selectConnection.ID &&
                     a.DataBaseName == selectDataBase).OrderBy(x => x.OrderFlag).ToList();
                 if (!currGroups.Any())
@@ -679,8 +679,8 @@ namespace SmartSQL.Views
                     itemChildList.Add(nodeProc1);
                     itemParentList.Add(nodeGroup);
                 }
-                currObjects = (from a in sqLiteHelper.db.Table<ObjectGroup>()
-                               join b in sqLiteHelper.db.Table<SObjects>() on a.Id equals b.GroupId
+                currObjects = (from a in sqLiteHelper.db.Table<GroupInfo>()
+                               join b in sqLiteHelper.db.Table<GroupObjects>() on a.Id equals b.GroupId
                                where a.ConnectId == selectConnection.ID &&
                                      a.DataBaseName == selectDataBase
                                select new SObjectDTO

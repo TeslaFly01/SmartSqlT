@@ -234,6 +234,9 @@
     <Compile Include="Views\Category\GroupAddView.xaml.cs">
       <DependentUpon>GroupAddView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Category\SetTag.xaml.cs">
+      <DependentUpon>SetTag.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Category\TagAddView.xaml.cs">
       <DependentUpon>TagAddView.xaml</DependentUpon>
     </Compile>
@@ -273,8 +276,8 @@
     <Compile Include="Views\ScriptWindow.xaml.cs">
       <DependentUpon>ScriptWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SetObjectGroup.xaml.cs">
-      <DependentUpon>SetObjectGroup.xaml</DependentUpon>
+    <Compile Include="Views\Category\SetGroup.xaml.cs">
+      <DependentUpon>SetGroup.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -480,6 +483,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\Category\SetTag.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\Category\TagAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -532,7 +539,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\SetObjectGroup.xaml">
+    <Page Include="Views\Category\SetGroup.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -675,6 +682,7 @@
     <Resource Include="Resources\Img\icon\icon_weixin.png" />
     <Resource Include="Resources\Img\icon\icon_tag.png" />
     <Resource Include="Resources\Img\icon\icon_alipay.png" />
+    <Resource Include="Resources\Img\icon_tag.png" />
     <Content Include="Resources\Img\Readme\About.png" />
     <Content Include="Resources\Img\Readme\Column.png" />
     <Content Include="Resources\Img\Readme\Connect.png" />
