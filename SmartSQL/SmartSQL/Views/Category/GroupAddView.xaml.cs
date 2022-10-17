@@ -40,7 +40,7 @@ namespace SmartSQL.Views.Category
         #region DependencyProperty
 
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
-            "SelectedConnection", typeof(ConnectConfigs), typeof(TagAddView), new PropertyMetadata(default(ConnectConfigs)));
+            "SelectedConnection", typeof(ConnectConfigs), typeof(GroupAddView), new PropertyMetadata(default(ConnectConfigs)));
         public ConnectConfigs SelectedConnection
         {
             get => (ConnectConfigs)GetValue(SelectedConnectionProperty);
@@ -48,7 +48,7 @@ namespace SmartSQL.Views.Category
         }
 
         public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(string), typeof(TagAddView), new PropertyMetadata(default(string)));
+            "SelectedDataBase", typeof(string), typeof(GroupAddView), new PropertyMetadata(default(string)));
         public string SelectedDataBase
         {
             get => (string)GetValue(SelectedDataBaseProperty);
@@ -56,7 +56,7 @@ namespace SmartSQL.Views.Category
         }
 
         public static readonly DependencyProperty SelectedGroupProperty = DependencyProperty.Register(
-            "SelectedGroup", typeof(GroupInfo), typeof(TagAddView), new PropertyMetadata(default(GroupInfo)));
+            "SelectedGroup", typeof(GroupInfo), typeof(GroupAddView), new PropertyMetadata(default(GroupInfo)));
         public GroupInfo SelectedGroup
         {
             get => (GroupInfo)GetValue(SelectedGroupProperty);

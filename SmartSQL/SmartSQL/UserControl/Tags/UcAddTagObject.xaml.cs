@@ -320,15 +320,13 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == table.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = table.Value.Comment
                         };
                         list.Add(tb);
@@ -346,15 +344,13 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == view.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = view.Value.Comment
                         };
                         list.Add(tb);
@@ -372,15 +368,13 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == proc.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         var tb = new DbObjectDTO()
                         {
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = proc.Value.Comment
                         };
                         list.Add(tb);
@@ -426,10 +420,6 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == table.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!table.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -443,6 +433,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = table.Value.Id,
                             Name = table.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = table.Value.Comment
                         };
                         list.Add(tb);
@@ -460,10 +452,6 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == view.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!view.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -477,6 +465,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = view.Value.Id,
                             Name = view.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = view.Value.Comment
                         };
                         list.Add(tb);
@@ -494,10 +484,6 @@ namespace SmartSQL.UserControl.Tags
                             x.TagId == selTag.TagId &&
                             x.ObjectId == proc.Value.Id
                         );
-                        if (isAny)
-                        {
-                            continue;
-                        }
                         if (!string.IsNullOrEmpty(searchText))
                         {
                             if (!proc.Value.Name.ToLower().Contains(searchText.ToLower()) &&
@@ -511,6 +497,8 @@ namespace SmartSQL.UserControl.Tags
                             ObjectId = proc.Value.Id,
                             Name = proc.Value.DisplayName,
                             ObjectType = 1,
+                            IsEnable = !isAny,
+                            IsChecked = isAny,
                             Comment = proc.Value.Comment
                         };
                         list.Add(tb);
