@@ -251,7 +251,7 @@ namespace SmartSQL.UserControl.Tags
                     parentWindow?.ReloadMenu();
                     Oops.Success($"成功设置{ listObjects.Count}条数据到分组【{SelectedGroup.GroupName}】");
                 }));
-            }); 
+            });
             #endregion
         }
 
@@ -277,7 +277,10 @@ namespace SmartSQL.UserControl.Tags
         {
             foreach (var item in GroupObjectList)
             {
-                item.IsChecked = true;
+                if (item.IsEnable)
+                {
+                    item.IsChecked = true;
+                }
             }
         }
 
@@ -285,7 +288,10 @@ namespace SmartSQL.UserControl.Tags
         {
             foreach (var item in GroupObjectList)
             {
-                item.IsChecked = false;
+                if (item.IsEnable)
+                {
+                    item.IsChecked = false;
+                }
             }
         }
 
@@ -384,7 +390,7 @@ namespace SmartSQL.UserControl.Tags
                     GroupObjectList = list;
                     PageData();
                 }));
-            }); 
+            });
             #endregion
         }
 
@@ -509,14 +515,14 @@ namespace SmartSQL.UserControl.Tags
                     GroupObjectList = list;
                     PageData();
                 }));
-            }); 
+            });
             #endregion
         }
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
+            var selectedItem = (DbObjectDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 foreach (var item in GroupObjectList)
@@ -526,14 +532,14 @@ namespace SmartSQL.UserControl.Tags
                         item.IsChecked = true;
                     }
                 }
-            } 
+            }
             #endregion
         }
 
         private void CheckedRow_Unchecked(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
+            var selectedItem = (DbObjectDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 foreach (var item in GroupObjectList)
@@ -543,7 +549,7 @@ namespace SmartSQL.UserControl.Tags
                         item.IsChecked = false;
                     }
                 }
-            } 
+            }
             #endregion
         }
     }

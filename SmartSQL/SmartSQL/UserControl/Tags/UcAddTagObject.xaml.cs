@@ -275,7 +275,10 @@ namespace SmartSQL.UserControl.Tags
         {
             foreach (var item in TagObjectList)
             {
-                item.IsChecked = true;
+                if (item.IsEnable)
+                {
+                    item.IsChecked = true;
+                }
             }
         }
 
@@ -283,7 +286,10 @@ namespace SmartSQL.UserControl.Tags
         {
             foreach (var item in TagObjectList)
             {
-                item.IsChecked = false;
+                if (item.IsEnable)
+                {
+                    item.IsChecked = false;
+                }
             }
         }
 
@@ -523,7 +529,7 @@ namespace SmartSQL.UserControl.Tags
 
         private void CheckedRow_Checked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
+            var selectedItem = (DbObjectDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 foreach (var item in TagObjectList)
@@ -538,7 +544,7 @@ namespace SmartSQL.UserControl.Tags
 
         private void CheckedRow_Unchecked(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (DbObjectDTO)TableGrid.SelectedItem;
+            var selectedItem = (DbObjectDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 foreach (var item in TagObjectList)
