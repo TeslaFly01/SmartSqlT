@@ -67,14 +67,27 @@
                         HeadersVisibility="All"
                         ItemsSource="{Binding TagObjectList}"
                         RowHeaderWidth="60"
-                        SelectionUnit="FullRow">
+                        SelectionUnit="Cell">
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 Width="*"
                                 Binding="{Binding ObjectName}"
                                 Header="表名"
                                 IsReadOnly="True" />
-                            <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
+                            <DataGridTemplateColumn Width="120">
+                                <DataGridTemplateColumn.CellStyle>
+                                    <Style TargetType="DataGridCell">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                    <Grid>
+                                                        <ContentPresenter HorizontalAlignment="Center" />
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </Style>
+                                </DataGridTemplateColumn.CellStyle>
                                 <DataGridTemplateColumn.Header>
                                     <TextBlock>操作</TextBlock>
                                 </DataGridTemplateColumn.Header>

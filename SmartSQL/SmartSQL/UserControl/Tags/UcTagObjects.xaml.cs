@@ -162,7 +162,7 @@ namespace SmartSQL.UserControl.Tags
         private void BtnRowDelete_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            var selectedItem = (TagObjects)TableGrid.SelectedItem;
+            var selectedItem = (TagObjects)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 var conn = SelectedConnection;

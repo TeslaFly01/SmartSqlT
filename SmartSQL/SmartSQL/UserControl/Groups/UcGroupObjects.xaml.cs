@@ -161,7 +161,7 @@ namespace SmartSQL.UserControl.Tags
         /// <param name="e"></param>
         private void BtnRowDelete_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (GroupObjects)TableGrid.SelectedItem;
+            var selectedItem = (GroupObjects)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 var conn = SelectedConnection;

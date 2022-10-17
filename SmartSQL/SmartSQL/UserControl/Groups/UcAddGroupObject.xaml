@@ -106,6 +106,7 @@
                                             Content="添加"
                                             Cursor="Hand"
                                             IsChecked="{Binding IsChecked, Mode=TwoWay}"
+                                            IsEnabled="{Binding IsEnable}"
                                             Unchecked="CheckedRow_Unchecked" />
                                     </DataTemplate>
                                 </DataGridTemplateColumn.CellTemplate>
