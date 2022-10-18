@@ -73,6 +73,7 @@
                     <ListBox.ItemContainerStyle>
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
                             <!--<Setter Property="Cursor" Value="Hand" />-->
+                            <Setter Property="Foreground" Value="#444e63" />
                             <Setter Property="Height" Value="40" />
                             <Setter Property="Margin" Value="2" />
                             <Style.Triggers>

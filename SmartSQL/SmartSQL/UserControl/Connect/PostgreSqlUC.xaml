@@ -69,6 +69,9 @@
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入连接名称"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True" />
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -81,6 +84,9 @@
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入服务器地址"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         ShowClearButton="True" />
                     <TextBlock
                         Grid.Column="1"
@@ -92,6 +98,9 @@
                         Height="30"
                         Margin="0,60,20,20"
                         VerticalAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入端口号"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         Maximum="65536"
                         Minimum="0"
                         Value="5432" />
@@ -101,17 +110,26 @@
                     Height="0"
                     Margin="0,100,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入登录名"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True" />
-                <PasswordBox
+                <hc:PasswordBox
                     Name="TextServerPassword"
                     Height="30"
                     Margin="0,140,20,20"
-                    VerticalAlignment="Top" />
+                    VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入密码"
+                    Background="#F4F5F7"
+                    BorderThickness="0" />
                 <hc:TextBox
                     Name="TextDefaultDatabase"
                     Height="0"
                     Margin="0,180,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入默认数据库"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True" />
             </Grid>
         </Grid>

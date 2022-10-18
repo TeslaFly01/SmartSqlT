@@ -73,6 +73,9 @@
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入连接名称"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True"
                     Text="{Binding ConnectConfig.ConnectName}" />
                 <Grid>
@@ -86,6 +89,9 @@
                         Height="30"
                         Margin="0,60,15,20"
                         VerticalAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入服务器地址"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         ShowClearButton="True" />
                     <TextBlock
                         Grid.Column="1"
@@ -97,6 +103,9 @@
                         Height="30"
                         Margin="0,60,20,20"
                         VerticalAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入端口号"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         Maximum="65536"
                         Minimum="0"
                         Value="1433" />
@@ -105,7 +114,9 @@
                     Name="ComboAuthentication"
                     Height="30"
                     Margin="0,100,20,20"
-                    VerticalAlignment="Top">
+                    VerticalAlignment="Top"
+                    Background="#F4F5F7"
+                    BorderThickness="0">
                     <ComboBoxItem Name="SQLServer" IsSelected="True">SQL Server 身份验证</ComboBoxItem>
                     <ComboBoxItem Name="Windows" Visibility="Collapsed">Windows 身份验证</ComboBoxItem>
                 </ComboBox>
@@ -114,13 +125,19 @@
                     Height="0"
                     Margin="0,140,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入登录名"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True"
                     Text="{Binding ConnectConfig.UserName}" />
-                <PasswordBox
+                <hc:PasswordBox
                     Name="TextServerPassword"
                     Height="30"
                     Margin="0,180,20,20"
-                    VerticalAlignment="Top" />
+                    VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入密码"
+                    Background="#F4F5F7"
+                    BorderThickness="0" />
                 <ComboBox
                     x:Name="ComboDefaultDatabase"
                     Height="30"
@@ -129,6 +146,8 @@
                     HorizontalContentAlignment="Stretch"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="请选择默认数据库"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     Cursor="Hand"
                     IsTextSearchEnabled="True"
                     Style="{StaticResource ComboBoxExtend}"

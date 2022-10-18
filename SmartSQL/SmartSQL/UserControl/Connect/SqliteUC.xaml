@@ -57,6 +57,9 @@
                     Height="30"
                     Margin="0,20,20,20"
                     VerticalAlignment="Top"
+                    hc:InfoElement.Placeholder="请输入连接名称"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     ShowClearButton="True"
                     Text="{Binding ConnectConfig.ConnectName}" />
                 <Grid>
@@ -69,6 +72,9 @@
                         Height="30"
                         Margin="0,60,5,20"
                         VerticalAlignment="Top"
+                        hc:InfoElement.Placeholder="请选择sqlite文件"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         ShowClearButton="True" />
                     <Button
                         Name="BtnBrowse"
@@ -77,6 +83,8 @@
                         Margin="0,60,20,0"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         Click="BtnBrowse_OnClick"
                         Content="浏览"
                         Cursor="Hand" />
