@@ -11,6 +11,7 @@
     Title="SmartSQL"
     Width="850"
     Height="500"
+    BorderThickness="0"
     Icon="favicon.ico"
     Loaded="MainWindow_OnLoaded"
     ResizeMode="CanResize"
@@ -154,7 +155,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
-                                Foreground="#FF7C0E"
+                                Foreground="#15c8c4"
                                 Icon="Tags" />
                         </MenuItem.Icon>
                     </MenuItem>
@@ -225,7 +226,7 @@
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
                                 FontSize="16"
-                                Foreground="#40a9ff"
+                                Foreground="#438DF3"
                                 Icon="Book" />
                         </MenuItem.Icon>
                     </MenuItem>

@@ -329,7 +329,7 @@ namespace SmartSQL.Views
                     #endregion
                 }
 
-                var textColor = "#333444";
+                var textColor = "#4f5d79";
                 #region 表
                 foreach (var table in menuData.Tables)
                 {

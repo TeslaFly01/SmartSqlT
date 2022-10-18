@@ -373,7 +373,7 @@ namespace SmartSQL.UserControl
                         Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
                     }));
                 }
-                var textColor = "#333444";
+                var textColor = "#4f5d79";
                 #region 表
                 foreach (var table in model.Tables)
                 {

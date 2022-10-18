@@ -210,7 +210,7 @@
                             <Setter Property="FontWeight" Value="{Binding FontWeight}" />
                             <Setter Property="FontSize" Value="12" />
                             <Setter Property="Visibility" Value="{Binding Visibility}" />
-                            <Setter Property="Foreground" Value="{Binding TextColor}" />
+                            <Setter Property="Foreground" Value="#262e3e" />
                             <Setter Property="Cursor" Value="Hand" />
                             <!--  禁止水平滚动条自动滚动  -->
                             <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
@@ -403,10 +403,10 @@
                             Name="LblFileExtend"
                             Width="55"
                             Height="30"
-                            Background="#F4F5F7"
                             Margin="0,17,20,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
+                            Background="#F4F5F7"
                             BorderThickness="0"
                             Content=".chm" />
                     </Grid>

@@ -119,6 +119,7 @@
                         <TabControl
                             x:Name="TabLeftType"
                             Margin="0,70,0,40"
+                            BorderThickness="0"
                             SelectionChanged="TabLeftType_OnSelectionChanged"
                             Style="{StaticResource TabControlInLine}">
                             <TabItem
@@ -137,21 +138,6 @@
                                 Header="标签"
                                 IsSelected="False" />
                         </TabControl>
-                        <!--<hc:ButtonGroup
-                            x:Name="GroupCategory"
-                            Margin="0,104,0,0"
-                            Style="{StaticResource ButtonGroupSolid}"
-                            Visibility="Collapsed">
-                            <RadioButton
-                                Height="28"
-                                Content="分组"
-                                Cursor="Hand"
-                                IsChecked="True" />
-                            <RadioButton
-                                Height="28"
-                                Content="标签"
-                                Cursor="Hand" />
-                        </hc:ButtonGroup>-->
                         <TreeView
                             x:Name="TreeViewTables"
                             Margin="0,103,0,0"
@@ -166,16 +152,12 @@
                                     <Setter Property="FontSize" Value="12" />
                                     <Setter Property="Padding" Value="0,0,5,0" />
                                     <Setter Property="Visibility" Value="{Binding Visibility}" />
-                                    <Setter Property="Foreground" Value="{Binding TextColor}" />
+                                    <!--<Setter Property="Foreground" Value="{Binding TextColor}" />-->
+                                    <Setter Property="Foreground" Value="#262e3e" />
                                     <Setter Property="Cursor" Value="Hand" />
                                     <!--  禁止水平滚动条自动滚动  -->
                                     <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
                                     <EventSetter Event="PreviewMouseRightButtonDown" Handler="EventSetter_OnHandler" />
-                                    <Style.Triggers>
-                                        <Trigger Property="IsSelected" Value="True">
-                                            <Setter Property="FontWeight" Value="Bold" />
-                                        </Trigger>
-                                    </Style.Triggers>
                                 </Style>
                             </TreeView.ItemContainerStyle>
                             <TreeView.ContextMenu>
@@ -323,10 +305,6 @@
                             Margin="-5"
                             BackgroundOpacity="0.2"
                             Visibility="Collapsed" />
-                        <!--<hc:LoadingLine
-                            x:Name="LoadingLine"
-                            Margin="0,0,0,0"
-                            Visibility="Collapsed" />-->
                     </Grid>
                 </Border>
             </hc:SimplePanel>

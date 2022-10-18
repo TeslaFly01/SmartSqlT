@@ -80,7 +80,6 @@
                                 <Trigger Property="IsSelected" Value="True">
                                     <Setter Property="Background" Value="#E8EBEF" />
                                     <Setter Property="Foreground" Value="#417FF9" />
-                                    <Setter Property="FontWeight" Value="Bold" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#F4F5F7" />

@@ -13,7 +13,7 @@
                 <Setter Property="Height" Value="100" />
                 <Setter Property="CornerRadius" Value="8" />
                 <Setter Property="Margin" Value="10" />
-                <Setter Property="Effect" Value="{StaticResource EffectShadow1}" />
+                <!--<Setter Property="Effect" Value="{StaticResource EffectShadow1}" />-->
                 <Style.Triggers>
                     <MultiTrigger>
                         <MultiTrigger.Conditions>
