@@ -39,6 +39,8 @@
                     VerticalAlignment="Top"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索分组"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     FontSize="13"
                     MaxLength="30"
                     ShowClearButton="True"
@@ -59,7 +61,7 @@
                     ToolTip="新增分组" />
                 <ListBox
                     Name="ListGroup"
-                    Margin="5,40,5,35"
+                    Margin="5,43,5,35"
                     HorizontalContentAlignment="Stretch"
                     AllowDrop="True"
                     BorderThickness="0"

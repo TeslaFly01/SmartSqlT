@@ -33,6 +33,8 @@
                     Margin="10,20,10,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Center"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     SelectedIndex="0"
                     SelectionChanged="SearchComObjType_SelectionChanged">
                     <ComboBoxItem Content="表" Tag="Table" />
@@ -48,6 +50,8 @@
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索表、视图、存储过程"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     FontSize="13"
                     ShowClearButton="True"
                     Style="{StaticResource SearchBarPlus}"

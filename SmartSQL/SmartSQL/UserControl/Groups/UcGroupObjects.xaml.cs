@@ -138,7 +138,7 @@ namespace SmartSQL.UserControl.Tags
         {
             var searchData = GroupObjectItems;
             var searchText = SearchObjects.Text.Trim();
-            if (!string.IsNullOrEmpty(searchText))
+            if (!string.IsNullOrEmpty(searchText) && GroupObjectItems != null)
             {
                 var tagObjs = GroupObjectItems.Where(x => x.ObjectName.ToLower().Contains(searchText.ToLower()));
                 if (tagObjs.Any())
@@ -150,7 +150,7 @@ namespace SmartSQL.UserControl.Tags
                     searchData = new List<GroupObjects>();
                 }
             }
-            MainNoDataText.Visibility = searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
+            MainNoDataText.Visibility = searchData != null && searchData.Any() ? Visibility.Collapsed : Visibility.Visible;
             GroupObjectList = searchData;
         }
 

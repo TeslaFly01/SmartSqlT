@@ -31,16 +31,21 @@
                             Margin="10,22,0,0"
                             VerticalAlignment="Top"
                             Text="导入文件" />
-                        <TextBox
+                        <hc:TextBox
                             Name="TxtPath"
                             Margin="75,15,77,0"
-                            VerticalAlignment="Top" />
+                            VerticalAlignment="Top"
+                            hc:InfoElement.Placeholder="请选择备注文件"
+                            Background="#F4F5F7"
+                            BorderThickness="0" />
                         <Button
                             Name="BtnLookPath"
                             Width="55"
                             Margin="0,15,20,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0"
                             Click="BtnFindFile_OnClick"
                             Content="浏览"
                             Cursor="Hand" />

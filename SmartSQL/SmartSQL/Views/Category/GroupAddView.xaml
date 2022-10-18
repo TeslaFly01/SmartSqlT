@@ -31,6 +31,8 @@
                     VerticalAlignment="Top"
                     hc:InfoElement.Placeholder="请输入分组名称"
                     hc:InfoElement.Title="分组名称"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     MaxLength="30"
                     PreviewKeyUp="TagName_PreviewKeyUp"
                     Text="{Binding SelectedGroup.GroupName}"
@@ -41,10 +43,10 @@
                     Foreground="Red"
                     Text="请输入分组名称"
                     Visibility="Collapsed" />
-                <TextBlock Margin="30,90,0,0" VerticalAlignment="Top">展开节点</TextBlock>
+                <TextBlock Margin="30,100,0,0" VerticalAlignment="Top">展开节点</TextBlock>
                 <UniformGrid
                     Height="80"
-                    Margin="20,110,20,0"
+                    Margin="20,120,20,0"
                     VerticalAlignment="Top"
                     Columns="3"
                     Rows="2">

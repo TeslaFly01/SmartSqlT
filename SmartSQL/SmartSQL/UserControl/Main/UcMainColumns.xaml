@@ -31,6 +31,8 @@
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Left"
                         hc:InfoElement.Placeholder="请输入列名或备注说明"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         FontSize="13"
                         ShowClearButton="True"
                         Style="{StaticResource SearchBarPlus}"

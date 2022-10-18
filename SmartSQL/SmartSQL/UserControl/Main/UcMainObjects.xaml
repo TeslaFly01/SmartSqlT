@@ -21,6 +21,8 @@
             VerticalAlignment="Top"
             HorizontalContentAlignment="Left"
             hc:InfoElement.Placeholder="{Binding Placeholder}"
+            Background="#F4F5F7"
+            BorderThickness="0"
             FontSize="13"
             ShowClearButton="True"
             Style="{StaticResource SearchBarPlus}"
@@ -75,13 +77,13 @@
                             CanUserSort="False"
                             Header="备注说明" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="100"
                             Binding="{Binding CreateDate, StringFormat='yyyy-MM-dd'}"
                             CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                             Header="创建时间"
                             IsReadOnly="True" />
                         <DataGridTextColumn
-                            Width="120"
+                            Width="100"
                             Binding="{Binding ModifyDate, StringFormat='yyyy/MM/dd'}"
                             CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                             Header="更新时间"

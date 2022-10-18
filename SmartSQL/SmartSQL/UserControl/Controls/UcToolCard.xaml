@@ -51,7 +51,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     FontWeight="Bold"
-                    Foreground="#242424"
+                    Foreground="#36425a"
                     Text="{Binding Title}" />
             </StackPanel>
         </Grid>

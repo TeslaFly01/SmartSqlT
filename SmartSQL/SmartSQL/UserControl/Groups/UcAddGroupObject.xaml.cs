@@ -1,4 +1,4 @@
-﻿using SmartSQL.Annotations;
+using SmartSQL.Annotations;
 using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Models;

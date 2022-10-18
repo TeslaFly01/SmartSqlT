@@ -158,6 +158,8 @@
                         HorizontalContentAlignment="Stretch"
                         hc:BorderElement.CornerRadius="5"
                         hc:InfoElement.Placeholder="请选择数据库"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         Cursor="Hand"
                         IsTextSearchEnabled="True"
                         SelectionChanged="SelectDatabase_OnSelectionChanged"
@@ -189,6 +191,8 @@
                     HorizontalContentAlignment="Stretch"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索表/视图/存储过程"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     FontSize="13"
                     ShowClearButton="True"
                     Style="{StaticResource SearchBarPlus}"
@@ -367,13 +371,17 @@
                         <TextBox
                             Name="TxtPath"
                             Margin="85,45,77,0"
-                            VerticalAlignment="Top" />
+                            VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0" />
                         <Button
                             Name="BtnLookPath"
                             Width="55"
                             Margin="0,45,20,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0"
                             Click="BtnLookPath_OnClick"
                             Content="浏览"
                             Cursor="Hand" />
@@ -388,15 +396,17 @@
                             Height="30"
                             Margin="85,18,77,0"
                             VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0"
                             ShowClearButton="True" />
                         <Label
                             Name="LblFileExtend"
                             Width="55"
                             Height="30"
+                            Background="#F4F5F7"
                             Margin="0,17,20,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Background="WhiteSmoke"
                             BorderThickness="0"
                             Content=".chm" />
                     </Grid>

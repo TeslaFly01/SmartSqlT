@@ -29,6 +29,8 @@
                     VerticalAlignment="Center"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索表、视图、存储过程"
+                    Background="#EFEFF3"
+                    BorderThickness="0"
                     FontSize="13"
                     ShowClearButton="True"
                     Style="{StaticResource SearchBarPlus}"

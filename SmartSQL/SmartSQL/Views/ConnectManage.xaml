@@ -41,6 +41,8 @@
                         Height="30"
                         Margin="0,0,40,0"
                         hc:InfoElement.Placeholder="搜索连接"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
                         FontSize="13"
                         MaxLength="20"
                         ShowClearButton="True"
@@ -62,7 +64,8 @@
                 <!--  连接列表  -->
                 <ListBox
                     Name="ListConnects"
-                    Margin="5,45,5,35"
+                    Margin="5,43,5,35"
+                    HorizontalContentAlignment="Stretch"
                     BorderThickness="0"
                     ItemsSource="{Binding DataList}"
                     ScrollViewer.VerticalScrollBarVisibility="Visible"
@@ -71,14 +74,15 @@
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
                             <!--<Setter Property="Cursor" Value="Hand" />-->
                             <Setter Property="Height" Value="40" />
+                            <Setter Property="Margin" Value="2" />
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#EDF0F8" />
-                                    <Setter Property="Foreground" Value="#1890ff" />
+                                    <Setter Property="Background" Value="#E8EBEF" />
+                                    <Setter Property="Foreground" Value="#417FF9" />
                                     <Setter Property="FontWeight" Value="Bold" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#EDF0F8" />
+                                    <Setter Property="Background" Value="#F4F5F7" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -93,10 +97,19 @@
                                     HorizontalAlignment="Left"
                                     IsHitTestVisible="False"
                                     Source="{Binding Icon}" />
-                                <TextBlock
-                                    Margin="22,0,0,0"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding ConnectName}" />
+                                <StackPanel>
+                                    <TextBlock
+                                        Margin="22,0,0,0"
+                                        VerticalAlignment="Top"
+                                        Text="{Binding ConnectName}" />
+                                    <TextBlock
+                                        Margin="22,2,0,0"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="9"
+                                        FontWeight="Normal"
+                                        Foreground="#ccc6cf"
+                                        Text="{Binding ServerAddress}" />
+                                </StackPanel>
                             </Grid>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

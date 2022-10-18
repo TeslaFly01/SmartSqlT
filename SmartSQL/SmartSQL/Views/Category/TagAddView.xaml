@@ -31,6 +31,8 @@
                     VerticalAlignment="Top"
                     hc:InfoElement.Placeholder="请输入标签名称"
                     hc:InfoElement.Title="标签名称"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     MaxLength="30"
                     PreviewKeyUp="TagName_PreviewKeyUp"
                     Text="{Binding SelectedTag.TagName}"

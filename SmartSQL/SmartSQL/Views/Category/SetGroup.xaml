@@ -19,10 +19,10 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Background="{StaticResource CloudDrawingBrush}">
+    <Grid Background="#f8f8f8">
         <Border
             Margin="5"
-            Background="#f8f8f8"
+            Background="White"
             CornerRadius="8">
             <Grid>
                 <hc:SearchBar
@@ -34,12 +34,14 @@
                     VerticalAlignment="Top"
                     hc:BorderElement.CornerRadius="5"
                     hc:InfoElement.Placeholder="搜索分组"
+                    Background="#F4F5F7"
+                    BorderThickness="0"
                     FontSize="13"
                     ShowClearButton="True"
                     Style="{StaticResource SearchBarPlus}" />
                 <Border
                     Margin="10,50,10,45"
-                    Background="#ffffff"
+                    Background="#F4F5F7"
                     CornerRadius="8">
                     <Grid Margin="8">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
