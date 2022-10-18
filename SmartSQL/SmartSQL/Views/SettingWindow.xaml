@@ -31,6 +31,21 @@
                     Margin="8"
                     BorderThickness="0"
                     ScrollViewer.VerticalScrollBarVisibility="Visible">
+                    <ListBox.ItemContainerStyle>
+                        <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
+                            <Setter Property="Foreground" Value="#444e63" />
+                            <Setter Property="Margin" Value="3" />
+                            <Style.Triggers>
+                                <Trigger Property="IsSelected" Value="True">
+                                    <Setter Property="Background" Value="#E8EBEF" />
+                                    <Setter Property="Foreground" Value="#417FF9" />
+                                </Trigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#F4F5F7" />
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
                     <ListBoxItem
                         Name="ListItemRoutine"
                         Focusable="True"

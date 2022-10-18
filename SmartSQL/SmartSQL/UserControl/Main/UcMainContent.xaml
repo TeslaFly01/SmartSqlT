@@ -49,7 +49,7 @@
                         Margin="5"
                         Background="Transparent">
                         <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
-                        <StackPanel>
+                        <StackPanel Margin="3,3,3,0">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="8*" />
