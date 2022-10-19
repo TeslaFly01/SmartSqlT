@@ -42,13 +42,14 @@
                     BeginningEdit="TableGrid_OnBeginningEdit"
                     CellEditEnding="TableGrid_OnCellEditEnding"
                     ColumnWidth="*"
+                    Cursor="Arrow"
                     HeadersVisibility="All"
                     ItemsSource="{Binding ObjectsViewData, Mode=TwoWay}"
                     MouseDoubleClick="TableGrid_OnMouseDoubleClick"
                     MouseLeftButtonUp="TableGrid_OnMouseLeftButtonUp"
                     RowHeaderWidth="60"
                     SelectionUnit="CellOrRowHeader">
-                    <DataGrid.CellStyle>
+                    <!--<DataGrid.CellStyle>
                         <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
                             <Setter Property="VerticalAlignment" Value="Center" />
                             <EventSetter Event="MouseEnter" Handler="DisplayToolTip_MouseEnter" />
@@ -58,7 +59,7 @@
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
-                    </DataGrid.CellStyle>
+                    </DataGrid.CellStyle>-->
 
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn
