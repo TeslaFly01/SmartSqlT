@@ -82,6 +82,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalContentAlignment="Top"
                         hc:InfoElement.Placeholder="请输入加密文本"
+                        BorderThickness="0"
                         Style="{StaticResource TextBoxExtend}"
                         TextWrapping="Wrap" />
                     <StackPanel

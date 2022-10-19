@@ -63,7 +63,7 @@
 
                     <DataGrid.Columns>
                         <DataGridCheckBoxColumn
-                            Width="60"
+                            Width="50"
                             Binding="{Binding IsChecked}"
                             CanUserSort="False"
                             CellStyle="{StaticResource DataGridTextCenterColumnStyle}"

@@ -14,7 +14,7 @@
     BorderThickness="0"
     Icon="../../Resources/Img/icon_group.png"
     Loaded="SetObjectGroup_OnLoaded"
-    ResizeMode="CanResize"
+    ResizeMode="NoResize"
     ShowInTaskbar="False"
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"

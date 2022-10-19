@@ -19,11 +19,15 @@
             x:Key="CodeListBox"
             BasedOn="{StaticResource ListBoxItemBaseStyle}"
             TargetType="ListBoxItem">
-            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="#36425a" />
+            <Setter Property="Margin" Value="5,0,5,5" />
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#1890ff" />
-                    <Setter Property="Foreground" Value="White" />
+                    <Setter Property="Background" Value="#E8EBEF" />
+                    <Setter Property="Foreground" Value="#417FF9" />
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#F4F5F7" />
                 </Trigger>
             </Style.Triggers>
         </Style>

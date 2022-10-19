@@ -214,11 +214,6 @@
                             <Setter Property="Cursor" Value="Hand" />
                             <!--  禁止水平滚动条自动滚动  -->
                             <EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="FontWeight" Value="Bold" />
-                                </Trigger>
-                            </Style.Triggers>
                         </Style>
                     </TreeView.ItemContainerStyle>
                     <TreeView.ItemTemplate>
