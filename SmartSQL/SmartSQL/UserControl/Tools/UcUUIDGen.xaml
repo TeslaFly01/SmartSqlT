@@ -158,24 +158,40 @@
                                 HeadersVisibility="All"
                                 ItemsSource="{Binding UUIDList}"
                                 RowHeaderWidth="60"
-                                SelectionUnit="FullRow"
+                                SelectionUnit="Cell"
                                 VerticalScrollBarVisibility="Auto">
                                 <DataGrid.Columns>
                                     <DataGridTextColumn
                                         Width="*"
                                         Binding="{Binding UUID}"
+                                        CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                                         Header="UUID"
                                         IsReadOnly="True" />
-                                    <DataGridTemplateColumn Width="*" CellStyle="{StaticResource DataGridTextCenterColumnStyle}">
+                                    <DataGridTemplateColumn Width="*">
+                                        <DataGridTemplateColumn.CellStyle>
+                                            <Style TargetType="DataGridCell">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type DataGridCell}">
+                                                            <Grid>
+                                                                <ContentPresenter HorizontalAlignment="Center" />
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </DataGridTemplateColumn.CellStyle>
                                         <DataGridTemplateColumn.Header>
-                                            <TextBlock>复制</TextBlock>
+                                            <TextBlock>操作</TextBlock>
                                         </DataGridTemplateColumn.Header>
                                         <DataGridTemplateColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button
                                                     x:Name="BtnCopyRow"
                                                     Width="80"
-                                                    Height="28"
+                                                    Height="25"
+                                                    Margin="5"
+                                                    Padding="0"
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Bottom"
                                                     hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"

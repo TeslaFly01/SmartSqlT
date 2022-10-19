@@ -26,7 +26,7 @@
             CornerRadius="8">
             <Grid>
                 <hc:SearchBar
-                    x:Name="SearchObjects"
+                    x:Name="SearchTag"
                     Height="30"
                     Margin="10"
                     Padding="5,0,5,0"
@@ -38,7 +38,8 @@
                     BorderThickness="0"
                     FontSize="13"
                     ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}" />
+                    Style="{StaticResource SearchBarPlus}"
+                    TextChanged="SearchTag_TextChanged" />
                 <Border
                     Margin="10,50,10,45"
                     Background="#F4F5F7"

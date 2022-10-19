@@ -126,6 +126,16 @@ namespace SmartSQL.Views
         }
 
         /// <summary>
+        /// 搜索标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchTag_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        /// <summary>
         /// 保存
         /// </summary>
         /// <param name="sender"></param>

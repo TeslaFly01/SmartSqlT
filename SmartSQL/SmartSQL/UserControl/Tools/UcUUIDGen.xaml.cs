@@ -100,7 +100,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnCopyRow_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (UUIDResultDTO)TableGrid.SelectedItem;
+            var selectedItem = (UUIDResultDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 Clipboard.SetDataObject(selectedItem.UUID);

@@ -117,7 +117,7 @@
         <Setter Property="SnapsToDevicePixels" Value="true" />
         <Setter Property="Margin" Value="0,0,0,3" />
         <Setter Property="Padding" Value="0,0" />
-        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="MinHeight" Value="26" />
         <Setter Property="Validation.ErrorTemplate" Value="{x:Null}" />
         <Setter Property="ValidationErrorTemplate">
             <Setter.Value>

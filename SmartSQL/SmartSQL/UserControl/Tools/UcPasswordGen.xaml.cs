@@ -103,7 +103,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnCopyRow_OnClick(object sender, RoutedEventArgs e)
         {
-            var selectedItem = (PasswordResultDTO)TableGrid.SelectedItem;
+            var selectedItem = (PasswordResultDTO)TableGrid.CurrentItem;
             if (selectedItem != null)
             {
                 Clipboard.SetDataObject(selectedItem.Password);
