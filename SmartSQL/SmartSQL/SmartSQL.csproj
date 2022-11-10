@@ -231,6 +231,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\ToolBox.xaml.cs">
+      <DependentUpon>ToolBox.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Category\GroupAddView.xaml.cs">
       <DependentUpon>GroupAddView.xaml</DependentUpon>
     </Compile>
@@ -476,6 +479,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Tools\UcToolMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ToolBox.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -48,32 +48,58 @@ namespace SmartSQL.UserControl
         private void UcToolCard_ClickCard(object sender, RoutedEventArgs e)
         {
             var selCard = (UcToolCard)sender;
-            var parentWindow = (MainWindow)Window.GetWindow(this);
+            var toolBox = new ToolBox();
+            var parentWindow = Window.GetWindow(this);
+            if (parentWindow is ToolBox)
+            {
+                toolBox= (ToolBox)parentWindow;
+            }
             switch (selCard.Tag)
             {
                 case "sqlformatter":
-                    parentWindow.UcMainTools.Content = new UcSqlFormatter(); break;
+                    toolBox.UcBox.Content=new UcSqlFormatter();
+                    //parentWindow.UcMainTools.Content = new UcSqlFormatter();
+                    break;
                 case "jsonformatter":
-                    parentWindow.UcMainTools.Content = new UcJsonFormatter(); break;
+                    toolBox.UcBox.Content=new UcJsonFormatter();
+                    //parentWindow.UcMainTools.Content = new UcJsonFormatter();
+                    break;
                 case "md5":
-                    parentWindow.UcMainTools.Content = new UcMD5(); break;
+                    toolBox.UcBox.Content=new UcMD5();
+                    //parentWindow.UcMainTools.Content = new UcMD5();
+                    break;
                 case "passwordGen":
-                    parentWindow.UcMainTools.Content = new UcPasswordGen(); break;
+                    toolBox.UcBox.Content=new UcPasswordGen();
+                    //parentWindow.UcMainTools.Content = new UcPasswordGen(); 
+                    break;
                 case "uuidGen":
-                    parentWindow.UcMainTools.Content = new UcUUIDGen(); break;
+                    toolBox.UcBox.Content=new UcUUIDGen();
+                    //parentWindow.UcMainTools.Content = new UcUUIDGen(); 
+                    break;
                 case "unixConvert":
-                    parentWindow.UcMainTools.Content = new UcUnixToConvert(); break;
+                    toolBox.UcBox.Content=new UcUnixToConvert();
+                    //parentWindow.UcMainTools.Content = new UcUnixToConvert(); 
+                    break;
                 case "base64":
-                    parentWindow.UcMainTools.Content = new UcBase64(); break;
+                    toolBox.UcBox.Content=new UcBase64();
+                    //parentWindow.UcMainTools.Content = new UcBase64(); 
+                    break;
                 case "nPinYin":
-                    parentWindow.UcMainTools.Content = new UcNPinYin(); break;
+                    toolBox.UcBox.Content=new UcNPinYin();
+                    //parentWindow.UcMainTools.Content = new UcNPinYin(); 
+                    break;
                 case "textInsert":
-                    parentWindow.UcMainTools.Content = new UcTextInsert(); break;
+                    toolBox.UcBox.Content=new UcTextInsert();
+                    //parentWindow.UcMainTools.Content = new UcTextInsert(); 
+                    break;
                 case "wordCount":
-                    parentWindow.UcMainTools.Content = new UcWordCount(); break;
+                    toolBox.UcBox.Content=new UcMD5();
+                    //parentWindow.UcMainTools.Content = new UcWordCount(); 
+                    break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }
+            toolBox.Show();
         }
     }
 }

@@ -60,8 +60,8 @@ namespace SmartSQL.UserControl
 
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (MainWindow)System.Windows.Window.GetWindow(this);
-            parentWindow.UcMainTools.Content = new UcMainTools();
+            var parentWindow = (ToolBox)System.Windows.Window.GetWindow(this);
+            parentWindow.UcBox.Content = new UcMainTools();
         }
 
         private void BtnCopy_Click(object sender, RoutedEventArgs e)
