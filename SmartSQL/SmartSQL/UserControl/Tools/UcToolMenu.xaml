@@ -71,6 +71,11 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/word-count@2x.png"
                     Tag="wordCount" />
                 <localControls:UcToolCard
+                    Title="JWT解码器"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/word-count@2x.png"
+                    Tag="jwt" />
+                <localControls:UcToolCard
                     Title="AES加密/解密"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"

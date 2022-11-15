@@ -196,6 +196,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcJWT.xaml.cs">
+      <DependentUpon>UcJWT.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcWordCount.xaml.cs">
       <DependentUpon>UcWordCount.xaml</DependentUpon>
     </Compile>
@@ -437,6 +440,10 @@
     <Page Include="UserControl\Tags\UcTagObjects.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Tools\UcJWT.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Tools\UcWordCount.xaml">
       <Generator>MSBuild:Compile</Generator>

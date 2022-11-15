@@ -1,0 +1,178 @@
+﻿<local:BaseUserControl
+    x:Class="SmartSQL.UserControl.UcJWT"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border
+        Margin="5"
+        Background="White"
+        CornerRadius="8">
+        <Grid Margin="18">
+            <Grid
+                Height="40"
+                Margin="0,-5,0,0"
+                VerticalAlignment="Top"
+                Background="#f9f9f9">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77"
+                        Icon="Inbox" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        工具箱
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        /
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        JWT解码器
+                    </TextBlock>
+                </StackPanel>
+
+                <TextBlock
+                    Margin="10,10,10,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource TextBlockSubTitleBold}"
+                    Text="JWT解码器" />
+                <Button
+                    x:Name="BtnReturn"
+                    Width="60"
+                    Height="28"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Right"
+                    BorderThickness="0.4"
+                    Click="BtnReturn_Click"
+                    Content="返回"
+                    Cursor="Hand" />
+            </Grid>
+            <Border
+                Margin="0,45,0,45"
+                Background="#f9f9f9"
+                CornerRadius="8">
+                <Grid HorizontalAlignment="Stretch">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="5*" />
+                    </Grid.ColumnDefinitions>
+                    <avalonedit:TextEditor
+                        x:Name="TextInput"
+                        Grid.Column="0"
+                        Margin="10,10,0,10"
+                        Padding="0,5,5,5"
+                        FontFamily="新宋体"
+                        ShowLineNumbers="True"
+                        TextChanged="TextInput_OnTextChanged"
+                        WordWrap="True">
+                        <avalonedit:TextEditor.Options>
+                            <avalonedit:TextEditorOptions ShowSpaces="False">
+                                <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                    <system:Int32>10</system:Int32>
+                                </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                            </avalonedit:TextEditorOptions>
+                        </avalonedit:TextEditor.Options>
+                    </avalonedit:TextEditor>
+                    <Border
+                        Grid.Column="1"
+                        Margin="10"
+                        Background="White"
+                        CornerRadius="8">
+                        <ScrollViewer PanningMode="Both">
+                            <StackPanel Margin="10" VerticalAlignment="Stretch">
+                                <TextBlock
+                                    Margin="0,0,0,3"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource TextBlockDefault}"
+                                    Text="HEADER" />
+                                <Border BorderBrush="#f8f8f8" BorderThickness="1">
+                                    <avalonedit:TextEditor
+                                        x:Name="TextHeader"
+                                        Height="80"
+                                        Margin="0"
+                                        Padding="0"
+                                        FontFamily="新宋体"
+                                        IsHitTestVisible="False"
+                                        WordWrap="True">
+                                        <avalonedit:TextEditor.Options>
+                                            <avalonedit:TextEditorOptions ShowSpaces="False">
+                                                <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                                    <system:Int32>10</system:Int32>
+                                                </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                            </avalonedit:TextEditorOptions>
+                                        </avalonedit:TextEditor.Options>
+                                    </avalonedit:TextEditor>
+                                </Border>
+                                <TextBlock
+                                    Margin="0,5,5,3"
+                                    HorizontalAlignment="Left"
+                                    Style="{StaticResource TextBlockDefault}"
+                                    Text="PAYLOAD" />
+                                <Border BorderBrush="#f8f8f8" BorderThickness="1">
+                                    <avalonedit:TextEditor
+                                        x:Name="TextPayLoad"
+                                        MinHeight="150"
+                                        Margin="0"
+                                        Padding="0"
+                                        VerticalAlignment="Stretch"
+                                        FontFamily="新宋体"
+                                        IsHitTestVisible="False"
+                                        WordWrap="True">
+                                        <avalonedit:TextEditor.Options>
+                                            <avalonedit:TextEditorOptions ShowSpaces="False">
+                                                <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                                    <system:Int32>10</system:Int32>
+                                                </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                            </avalonedit:TextEditorOptions>
+                                        </avalonedit:TextEditor.Options>
+                                    </avalonedit:TextEditor>
+                                </Border>
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Border>
+                </Grid>
+            </Border>
+            <StackPanel
+                Height="30"
+                Margin="0,10,0,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="BtnClear"
+                    Width="80"
+                    Height="28"
+                    Margin="0,0,0,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                    BorderThickness="0.4"
+                    Click="BtnClear_Click"
+                    Content="清空"
+                    Cursor="Hand" />
+            </StackPanel>
+        </Grid>
+    </Border>
+</local:BaseUserControl>

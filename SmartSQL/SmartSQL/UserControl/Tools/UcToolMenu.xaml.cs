@@ -93,7 +93,11 @@ namespace SmartSQL.UserControl
                     //parentWindow.UcMainTools.Content = new UcTextInsert(); 
                     break;
                 case "wordCount":
-                    toolBox.UcBox.Content=new UcMD5();
+                    toolBox.UcBox.Content=new UcWordCount();
+                    //parentWindow.UcMainTools.Content = new UcWordCount(); 
+                    break;
+                case "jwt":
+                    toolBox.UcBox.Content = new UcJWT();
                     //parentWindow.UcMainTools.Content = new UcWordCount(); 
                     break;
                 default:
