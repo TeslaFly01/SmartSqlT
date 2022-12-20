@@ -48,6 +48,9 @@
     <Reference Include="DnsClient, Version=1.6.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
       <HintPath>..\..\packages\DnsClient.1.6.0\lib\net45\DnsClient.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus">
+      <HintPath>..\..\Lib\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Esprima, Version=2.0.0.0, Culture=neutral, PublicKeyToken=2e92ba9c8d81157f, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Esprima.2.0.0-beta-1338\lib\net461\Esprima.dll</HintPath>
     </Reference>
@@ -489,7 +492,6 @@
     <Compile Include="ConfigUtils.cs" />
     <Compile Include="DBDoc\ChmDoc.cs" />
     <Compile Include="DBDoc\Doc.cs" />
-    <Compile Include="DBDoc\ExcelDoc.cs" />
     <Compile Include="DBDoc\HtmlDoc.cs" />
     <Compile Include="DBDoc\JsonDoc.cs" />
     <Compile Include="DBDoc\MarkDownDoc.cs" />
@@ -504,6 +506,7 @@
     <Compile Include="Dtos\TableDto.cs" />
     <Compile Include="Dtos\ViewProDto.cs" />
     <Compile Include="Enums.cs" />
+    <Compile Include="DBDoc\ExcelDoc.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="JS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
