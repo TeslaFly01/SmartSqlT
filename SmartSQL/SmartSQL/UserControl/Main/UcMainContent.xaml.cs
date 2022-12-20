@@ -29,6 +29,8 @@ using ComboBox = System.Windows.Controls.ComboBox;
 using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
+using System.IO;
+using System.Diagnostics;
 
 namespace SmartSQL.UserControl
 {
@@ -95,7 +97,7 @@ namespace SmartSQL.UserControl
         {
             get => (int)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
-        } 
+        }
         #endregion
 
         public ObservableCollection<MainTabWModel> TabItemData = new ObservableCollection<MainTabWModel>();
@@ -145,7 +147,7 @@ namespace SmartSQL.UserControl
                     Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
                     LoadingLine.Visibility = Visibility.Collapsed;
                 }));
-            } 
+            }
             #endregion
         }
 
@@ -1408,6 +1410,31 @@ namespace SmartSQL.UserControl
             Clipboard.SetDataObject(selectedObjects.Name);
         }
 
+        private void MenuCreateTntity_Click(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            string baseDirectoryPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EntityTemp");
+            if (!Directory.Exists(baseDirectoryPath))
+            {
+                Directory.CreateDirectory(baseDirectoryPath);
+            }
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
+            {
+                Oops.Oh("请选择需要生成实体的表");
+                return;
+            }
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            
+            var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.SelectedDbConnectString(selectDatabase.DbName));
+            var TableColumns = exporter.GetColumnInfoById(selectedObjects.ObejcetId);
+            var list = TableColumns.Values.ToList();
+            var filePath = string.Format($"{baseDirectoryPath}\\{selectedObjects.Name}.cs");
+            StrUtil.CreateClass(filePath, selectedObjects.Name, list);
+            Oops.Success("实体生成成功");
+            Process.Start(baseDirectoryPath);
+            #endregion
+        }
+
         private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion
@@ -1419,7 +1446,7 @@ namespace SmartSQL.UserControl
             {
                 MainTabW.ShowCloseButton = MainTabW.Items.Count > 1;
                 MainTabW.ShowContextMenu = MainTabW.Items.Count > 1;
-            } 
+            }
             #endregion
         }
 
@@ -1440,7 +1467,7 @@ namespace SmartSQL.UserControl
                 }
                 treeViewItem.Focus();
                 e.Handled = true;
-            } 
+            }
             #endregion
         }
         private DependencyObject VisualUpwardSearch<T>(DependencyObject source)

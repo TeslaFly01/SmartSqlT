@@ -182,6 +182,20 @@
                                                 Icon="Copy" />
                                         </MenuItem.Icon>
                                     </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuCreateTntity"
+                                        Padding="5,3,5,3"
+                                        VerticalAlignment="Center"
+                                        Click="MenuCreateTntity_Click"
+                                        Header="生成实体">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Inbox" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
                                     <!--<MenuItem
                                         x:Name="MenuCopyName1"
                                         Padding="5,3,5,3"
