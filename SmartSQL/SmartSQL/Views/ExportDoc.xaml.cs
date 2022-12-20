@@ -1095,7 +1095,7 @@ namespace SmartSQL.Views
                         tbDto.TableOrder = orderNo.ToString();
                         tbDto.TableName = node.Name;
                         tbDto.Comment = node.Comment.FilterIllegalDir();
-                        tbDto.DBType = nameof(DbType.SqlServer);
+                        tbDto.DBType = selectedConnection.DbType.ToString();
 
                         var lst_col_dto = new List<ColumnDto>();
                         var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
