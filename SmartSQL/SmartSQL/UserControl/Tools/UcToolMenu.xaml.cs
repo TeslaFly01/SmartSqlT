@@ -52,57 +52,59 @@ namespace SmartSQL.UserControl
             var parentWindow = Window.GetWindow(this);
             if (parentWindow is ToolBox)
             {
-                toolBox= (ToolBox)parentWindow;
+                toolBox = (ToolBox)parentWindow;
             }
+            var title = "";
             switch (selCard.Tag)
             {
                 case "sqlformatter":
-                    toolBox.UcBox.Content=new UcSqlFormatter();
-                    //parentWindow.UcMainTools.Content = new UcSqlFormatter();
+                    toolBox.UcBox.Content = new UcSqlFormatter();
+                    title = "SQL格式化";
                     break;
                 case "jsonformatter":
-                    toolBox.UcBox.Content=new UcJsonFormatter();
-                    //parentWindow.UcMainTools.Content = new UcJsonFormatter();
+                    toolBox.UcBox.Content = new UcJsonFormatter();
+                    title = "Json格式化";
                     break;
                 case "md5":
-                    toolBox.UcBox.Content=new UcMD5();
-                    //parentWindow.UcMainTools.Content = new UcMD5();
+                    toolBox.UcBox.Content = new UcMD5();
+                    title = "MD5文本加密";
                     break;
                 case "passwordGen":
-                    toolBox.UcBox.Content=new UcPasswordGen();
-                    //parentWindow.UcMainTools.Content = new UcPasswordGen(); 
+                    toolBox.UcBox.Content = new UcPasswordGen();
+                    title = "密码生成器";
                     break;
                 case "uuidGen":
-                    toolBox.UcBox.Content=new UcUUIDGen();
-                    //parentWindow.UcMainTools.Content = new UcUUIDGen(); 
+                    toolBox.UcBox.Content = new UcUUIDGen();
+                    title = "UUID生成器";
                     break;
                 case "unixConvert":
-                    toolBox.UcBox.Content=new UcUnixToConvert();
-                    //parentWindow.UcMainTools.Content = new UcUnixToConvert(); 
+                    toolBox.UcBox.Content = new UcUnixToConvert();
+                    title = "Unix时间戳转换";
                     break;
                 case "base64":
-                    toolBox.UcBox.Content=new UcBase64();
-                    //parentWindow.UcMainTools.Content = new UcBase64(); 
+                    toolBox.UcBox.Content = new UcBase64();
+                    title = "Base64编码/解码";
                     break;
                 case "nPinYin":
-                    toolBox.UcBox.Content=new UcNPinYin();
-                    //parentWindow.UcMainTools.Content = new UcNPinYin(); 
+                    toolBox.UcBox.Content = new UcNPinYin();
+                    title = "汉字转拼音";
                     break;
                 case "textInsert":
-                    toolBox.UcBox.Content=new UcTextInsert();
-                    //parentWindow.UcMainTools.Content = new UcTextInsert(); 
+                    toolBox.UcBox.Content = new UcTextInsert();
+                    title = "文本两端插入字符";
                     break;
                 case "wordCount":
-                    toolBox.UcBox.Content=new UcWordCount();
-                    //parentWindow.UcMainTools.Content = new UcWordCount(); 
+                    toolBox.UcBox.Content = new UcWordCount();
+                    title = "字数统计";
                     break;
                 case "jwt":
                     toolBox.UcBox.Content = new UcJWT();
-                    //parentWindow.UcMainTools.Content = new UcWordCount(); 
+                    title = "JWT解码器";
                     break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }
+            toolBox.Title = $"{title} - 开发工具箱";
             toolBox.Show();
         }
     }

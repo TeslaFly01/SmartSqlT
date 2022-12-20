@@ -132,8 +132,13 @@ namespace SmartSQL.Views
         private void ExportDoc_OnLoaded(object sender, RoutedEventArgs e)
         {
             Title = $"{SelectedDataBase.DbName} - {Title}";
-            TxtFileName.Text = SelectedDataBase.DbName + "数据库设计文档";
-            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbMasterConnectString,SelectedDataBase.DbName);
+            var fName = SelectedDataBase.DbName;
+            if (fName.Contains(":"))
+            {
+                fName = fName.Replace(":", "_");
+            }
+            TxtFileName.Text = fName + "数据库设计文档";
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbMasterConnectString, SelectedDataBase.DbName);
             var list = dbInstance.GetDatabases(SelectedDataBase.DbName);
             SelectDatabase.ItemsSource = list;
             HidSelectDatabase.Text = SelectedDataBase.DbName;
@@ -310,7 +315,7 @@ namespace SmartSQL.Views
                     try
                     {
                         var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType,
-                            selectConnection.SelectedDbConnectString(selectDataBaseText),selectDataBase.DbName);
+                            selectConnection.SelectedDbConnectString(selectDataBaseText), selectDataBase.DbName);
                         model = dbInstance.Init();
                         menuData = model;
                     }
@@ -951,7 +956,12 @@ namespace SmartSQL.Views
             }
             if (string.IsNullOrEmpty(TxtFileName.Text))
             {
-                TxtFileName.Text = $"{SelectedDataBase.DbName}数据库设计文档";
+                var fName = SelectedDataBase.DbName;
+                if (fName.Contains(":"))
+                {
+                    fName = fName.Replace(":", "_");
+                }
+                TxtFileName.Text = $"{fName}数据库设计文档";
             }
             //文档标题
             var docTitle = TxtFileName.Text.Trim();
@@ -1011,7 +1021,7 @@ namespace SmartSQL.Views
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
-            var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString,selectedDatabase.DbName);
+            var exporter = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnectionString, selectedDatabase.DbName);
             var objectType = type == "View" ? DbObjectType.View : DbObjectType.Proc;
             var viewPro = new List<ViewProDto>();
             foreach (var group in treeViewData)
@@ -1069,7 +1079,7 @@ namespace SmartSQL.Views
             var tables = new List<TableDto>();
             var groupNo = 1;
             var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
-                selectedConnectionString,selectedDatabase.DbName);
+                selectedConnectionString, selectedDatabase.DbName);
             foreach (var group in treeViewData)
             {
                 if (group.Type == "Type" && group.Name.Equals("treeTable"))

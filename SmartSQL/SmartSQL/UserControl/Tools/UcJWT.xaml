@@ -171,7 +171,8 @@
                     BorderThickness="0.4"
                     Click="BtnClear_Click"
                     Content="清空"
-                    Cursor="Hand" />
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonSuccess}" />
             </StackPanel>
         </Grid>
     </Border>

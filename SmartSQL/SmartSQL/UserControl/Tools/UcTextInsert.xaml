@@ -156,10 +156,10 @@
                             Height="28"
                             Margin="0,0,10,0"
                             hc:IconElement.Geometry="{StaticResource ClearGeometry}"
-                            BorderThickness="0.4"
                             Click="BtnClear_Click"
                             Content="清空"
-                            Cursor="Hand" />
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
                         <TextBlock
                             Margin="0,0,0,3"
                             VerticalAlignment="Bottom"
@@ -177,10 +177,10 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                            BorderThickness="0.4"
                             Click="BtnCopy_OnClick"
                             Content="复制"
-                            Cursor="Hand" />
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonPrimary}" />
                         <TextBox
                             x:Name="TextOutput"
                             Height="150"

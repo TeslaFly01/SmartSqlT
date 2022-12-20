@@ -31,6 +31,10 @@ namespace SmartSQL.DocUtils.DBDoc
             this.Dto = dto;
             this.Filter = filter;
             this.WorkTmpDir = Path.Combine(AppPath, dto.DBType + "_" + dto.DBName);
+            if (WorkTmpDir.Contains(":"))
+            {
+                WorkTmpDir = WorkTmpDir.Replace(":", "");
+            }
             if (ZlpIOHelper.DirectoryExists(this.WorkTmpDir))
             {
                 ZlpIOHelper.DeleteDirectory(this.WorkTmpDir, true);

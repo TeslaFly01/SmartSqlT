@@ -163,7 +163,7 @@
         <!--  主内容  -->
         <DockPanel>
             <Grid Margin="5">
-                <Border Background="#F5F7F9" CornerRadius="10">
+                <Border Background="White" CornerRadius="10">
                     <Grid>
                         <local:UcToolMenu />
                     </Grid>

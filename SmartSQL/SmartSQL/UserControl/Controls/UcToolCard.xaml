@@ -9,7 +9,7 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <Style x:Key="ToolCard" TargetType="Border">
-                <Setter Property="Background" Value="White" />
+                <Setter Property="Background" Value="#f9f9f9" />
                 <Setter Property="Height" Value="100" />
                 <Setter Property="CornerRadius" Value="8" />
                 <Setter Property="Margin" Value="10" />
