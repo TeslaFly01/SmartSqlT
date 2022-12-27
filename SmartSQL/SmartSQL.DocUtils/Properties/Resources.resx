@@ -121,9 +121,6 @@
   <data name="doc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\tplfile\doc\doc.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="excel" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\tplfile\excel\excel.xml;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="hhc" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\tplfile\chm\hhc.cshtml;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

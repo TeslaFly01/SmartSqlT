@@ -101,14 +101,14 @@ namespace SmartSQL.DocUtils.DBDoc
                 row++; // 行号+1
             }
             //  水平居中
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
             //  垂直居中
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
             //  上下左右边框线
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+            overviewTbWorksheet.Cells[1, 1, row - 1, 5].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             overviewTbWorksheet.Column(1).Width = 25;
             overviewTbWorksheet.Column(2).Width = 25;
             overviewTbWorksheet.Column(3).Width = 50;
@@ -200,8 +200,8 @@ namespace SmartSQL.DocUtils.DBDoc
                 tbWorksheet.Cells[rowNum, 1].Value = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 10;
-                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
                 tbWorksheet.Row(rowNum).Height = 16;
                 var colFromHex = System.Drawing.ColorTranslator.FromHtml("#f2f2f2");
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Fill.PatternType = ExcelFillStyle.Solid;
@@ -260,15 +260,15 @@ namespace SmartSQL.DocUtils.DBDoc
                     rowNum++; // 行号+1
                 }
                 //  上下左右边框线
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Top.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Bottom.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                 //  处理空白行，分割用
                 if (count < tables.Count - 1)
                 {
-                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Left.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
-                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Right.Style = OfficeOpenXml.Style.ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
                     tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
                 }
                 rowNum++; // 行号+1
