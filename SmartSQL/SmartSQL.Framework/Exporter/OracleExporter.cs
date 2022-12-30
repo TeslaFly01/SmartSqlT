@@ -234,22 +234,112 @@ namespace SmartSQL.Framework.Exporter
 
         public override string SelectSql()
         {
-            return "";
+            #region MyRegion
+            var strSql = new StringBuilder("SELECT ");
+            var tempCol = new StringBuilder();
+            Columns.ForEach(col =>
+            {
+                tempCol.Append($"{col.Name},");
+            });
+            var tempSql = tempCol.ToString().TrimEnd(',');
+            strSql.Append($"{tempSql} FROM {TableName}");
+            return strSql.ToString();
+            #endregion
         }
 
         public override string InsertSql()
         {
-            return "";
+            #region MyRegion
+            var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"INSERT INTO {TableName} (");
+            var tempCol = new StringBuilder();
+            tempCols.ForEach(col =>
+            {
+                tempCol.Append($"{col.Name},");
+            });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')}) VALUES (");
+            tempCol.Clear();
+            tempCols.ForEach(col =>
+            {
+                if (col.DataType != "int" || col.DataType != "bigint")
+                {
+                    tempCol.Append("''");
+                }
+                tempCol.Append($",");
+            });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')})");
+            return strSql.ToString();
+            #endregion
         }
 
         public override string UpdateSql()
         {
-            return "";
+            #region MyRegion
+            var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
+            var strSql = new StringBuilder($"UPDATE {TableName} SET ");
+            var tempCol = new StringBuilder();
+            tempCols.ForEach(col =>
+            {
+                tempCol.Append($"{col.Name}=");
+                if (col.DataType == "int" || col.DataType == "bigint")
+                {
+                    tempCol.Append("0");
+                }
+                else
+                {
+                    tempCol.Append("''");
+                }
+                tempCol.Append($",");
+            });
+            strSql.Append($"{tempCol.ToString().TrimEnd(',')} WHERE ");
+            tempCol.Clear();
+            var j = 0;
+            Columns.ForEach(col =>
+            {
+                if (j == 0)
+                {
+                    tempCol.Append($"{col.Name}=");
+                    if (col.DataType == "int" || col.DataType == "bigint")
+                    {
+                        tempCol.Append("0");
+                    }
+                    else
+                    {
+                        tempCol.Append("''");
+                    }
+                }
+                j++;
+            });
+            strSql.Append(tempCol);
+            return strSql.ToString();
+            #endregion
         }
 
         public override string DeleteSql()
         {
-            return "";
+            #region MyRegion
+            var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
+            var tempCol = new StringBuilder();
+            var j = 0;
+            Columns.ForEach(col =>
+            {
+                if (j == 0)
+                {
+                    tempCol.Append($"{col.Name}=");
+                    if (col.DataType == "int" || col.DataType == "bigint")
+                    {
+                        tempCol.Append("0");
+                    }
+                    else
+                    {
+                        tempCol.Append("''");
+                    }
+                }
+                j++;
+            });
+            strSql.Append(tempCol);
+            return strSql.ToString();
+            #endregion
         }
 
         public override string AddColumnSql()
