@@ -81,31 +81,28 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Orientation="Horizontal">
-                            <TextBlock VerticalAlignment="Center" Text="最多 " />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontWeight="Bold"
-                                Foreground="#1890ff"
-                                Text="5000" />
-                            <TextBlock VerticalAlignment="Center" Text=" 字，剩余 " />
+                            <TextBlock VerticalAlignment="Center" Text="已输入 " />
                             <TextBlock
                                 Name="TextSurplusNum"
                                 VerticalAlignment="Center"
                                 FontWeight="Bold"
                                 Foreground="#1890ff"
-                                Text="5000" />
+                                Text="0" />
                             <TextBlock
                                 Margin="0,0,10,0"
                                 VerticalAlignment="Center"
-                                Text=" 字" />
-                            <ProgressBar
-                                Name="ProgressBarTextNum"
-                                Width="80"
-                                Height="15"
-                                Margin="0"
+                                Text=" 字," />
+                            <TextBlock VerticalAlignment="Center" Text="共 " />
+                            <TextBlock
+                                Name="TextLine"
                                 VerticalAlignment="Center"
-                                Maximum="2000"
-                                Value="0" />
+                                FontWeight="Bold"
+                                Foreground="#1890ff"
+                                Text="0" />
+                            <TextBlock
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                Text=" 行" />
                         </StackPanel>
                         <TextBox
                             Name="TextInput"
@@ -115,7 +112,6 @@
                             hc:InfoElement.Placeholder="请输入内容文本"
                             hc:InfoElement.Title="请输入内容文本"
                             AcceptsReturn="True"
-                            MaxLength="5000"
                             Style="{StaticResource TextBoxExtend}"
                             TextChanged="TextInput_OnTextChanged"
                             TextWrapping="Wrap" />

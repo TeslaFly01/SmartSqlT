@@ -75,17 +75,15 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void TextInput_OnTextChanged(object sender, TextChangedEventArgs e)
         {
-            var inputTextNums = TextInput.Text.Length;
-            var surplusTextNums = 5000 - inputTextNums;
+            var surplusTextNums = TextInput.Text.Length;
             TextSurplusNum.Text = surplusTextNums.ToString();
-            ProgressBarTextNum.Value = inputTextNums;
 
             if (!string.IsNullOrEmpty(TextInput.Text))
             {
                 var outText = new StringBuilder();
                 var inputText = this.TextInput.Text.Trim();
-
                 string[] lineSplit = inputText.Split(new[] { "\n" }, StringSplitOptions.None);
+                TextLine.Text = lineSplit.Count().ToString();
                 var count = 0;
                 foreach (var item in lineSplit)
                 {
