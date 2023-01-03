@@ -61,23 +61,6 @@ namespace SmartSQL.DocUtils.Properties {
         }
         
         /// <summary>
-        ///   查找类似 &lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;yes&quot;?&gt;
-        ///&lt;?mso-application progid=&quot;Word.Document&quot;?&gt;
-        ///&lt;pkg:package
-        ///    xmlns:pkg=&quot;http://schemas.microsoft.com/office/2006/xmlPackage&quot;&gt;
-        ///  &lt;pkg:part pkg:name=&quot;/_rels/.rels&quot; pkg:contentType=&quot;application/vnd.openxmlformats-package.relationships+xml&quot;&gt;
-        ///    &lt;pkg:xmlData&gt;
-        ///      &lt;Relationships
-        ///          xmlns=&quot;http://schemas.openxmlformats.org/package/2006/relationships&quot;&gt;
-        ///        &lt;Relationship Id=&quot;rId4&quot; Type=&quot;http://schemas.openxmlformats.org/officeDocument/2006/ [字符串的其余部分被截断]&quot;; 的本地化字符串。
-        /// </summary>
-        internal static string doc {
-            get {
-                return ResourceManager.GetString("doc", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
         internal static byte[] hhc {

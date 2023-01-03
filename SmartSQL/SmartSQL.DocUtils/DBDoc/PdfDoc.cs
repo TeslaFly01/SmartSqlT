@@ -82,6 +82,11 @@ namespace SmartSQL.DocUtils.DBDoc
             int chapterNum = 1;
             //  全局字体设置，处理iTextSharp中文不识别显示问题
             Font pdfFont = BaseFont(fontPath, 12, Font.NORMAL);
+            Font tableHeader = BaseFont(fontPath, 9, Font.BOLD);
+            Font tableContent = BaseFont(fontPath, 9, Font.NORMAL);
+
+            var hBackColor = BaseColor.LIGHT_GRAY;
+            var cBackColor = BaseColor.WHITE;
 
             //  log table
             Chapter logChapter = new Chapter(new Paragraph(AppConst.LOG_CHAPTER_NAME, pdfFont), chapterNum);
@@ -95,7 +100,7 @@ namespace SmartSQL.DocUtils.DBDoc
             Chapter dirChapter = new Chapter(new Paragraph(AppConst.TABLE_CHAPTER_NAME, pdfFont), (++chapterNum));
             pdfDocument.Add(dirChapter);
             pdfDocument.Add(new Paragraph("\n", pdfFont)); // 换行
-            CreateOverviewTable(pdfDocument, pdfFont, tables);
+            CreateOverviewTable(pdfDocument, tableHeader, tableContent, tables);
             //  PDF换页
             pdfDocument.NewPage();
 
@@ -127,37 +132,35 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
 
                 //  添加列标题
-                pdfTable.AddCell(CreatePdfPCell("序号", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("列名", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("数据类型", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("长度", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("主键", pdfFont));
+                pdfTable.AddCell(CreatePdfPCell("序号", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("列名", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("数据类型", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("长度", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("主键", tableHeader, hBackColor));
 
                 if (!table.DBType.StartsWith("Oracle"))
                 {
-                    pdfTable.AddCell(CreatePdfPCell("自增", pdfFont));
+                    pdfTable.AddCell(CreatePdfPCell("自增", tableHeader, hBackColor));
                 }
 
-                pdfTable.AddCell(CreatePdfPCell("允许空", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("默认值", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("列说明", pdfFont));
+                pdfTable.AddCell(CreatePdfPCell("允许空", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("默认值", tableHeader, hBackColor));
+                pdfTable.AddCell(CreatePdfPCell("列说明", tableHeader, hBackColor));
                 //  添加数据行,循环数据库表字段
                 foreach (var column in table.Columns)
                 {
-                    pdfTable.AddCell(CreatePdfPCell(column.ColumnOrder, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.ColumnName, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.ColumnTypeName, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.Length, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.IsPK, pdfFont));
-
+                    pdfTable.AddCell(CreatePdfPCell(column.ColumnOrder, tableContent, cBackColor));
+                    pdfTable.AddCell(CreatePdfPCell(column.ColumnName, tableContent, cBackColor, Element.ALIGN_LEFT));
+                    pdfTable.AddCell(CreatePdfPCell(column.ColumnTypeName, tableContent, cBackColor));
+                    pdfTable.AddCell(CreatePdfPCell(column.Length, tableContent, cBackColor));
+                    pdfTable.AddCell(CreatePdfPCell(column.IsPK, tableContent, cBackColor));
                     if (!table.DBType.StartsWith("Oracle"))
                     {
-                        pdfTable.AddCell(CreatePdfPCell(column.IsIdentity, pdfFont));
+                        pdfTable.AddCell(CreatePdfPCell(column.IsIdentity, tableContent, cBackColor));
                     }
-
-                    pdfTable.AddCell(CreatePdfPCell(column.CanNull, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.DefaultVal, pdfFont));
-                    pdfTable.AddCell(CreatePdfPCell(column.Comment, pdfFont));
+                    pdfTable.AddCell(CreatePdfPCell(column.CanNull, tableContent, cBackColor));
+                    pdfTable.AddCell(CreatePdfPCell(column.DefaultVal, tableContent, cBackColor));
+                    pdfTable.AddCell(CreatePdfPCell(column.Comment, tableContent, cBackColor, Element.ALIGN_LEFT));
                 }
 
                 //  设置表格居中
@@ -167,7 +170,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
                 if (!table.DBType.StartsWith("Oracle"))
                 {
-                    pdfTable.SetWidths(new float[] { 40F, 80F, 60F, 50F, 40F, 40F, 40F, 70F, 100F });
+                    pdfTable.SetWidths(new float[] { 40F, 90F, 60F, 40F, 40F, 40F, 40F, 70F, 100F });
                 }
                 else
                 {
@@ -247,21 +250,23 @@ namespace SmartSQL.DocUtils.DBDoc
         {
             //  创建表格
             PdfPTable pdfTable = new PdfPTable(5);
+            var hBackColor = BaseColor.LIGHT_GRAY;
+            var cBackColor = BaseColor.WHITE;
 
             //  添加列标题
-            pdfTable.AddCell(CreatePdfPCell("版本号", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("修订日期", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("修订内容", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("修订人", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("审核人", pdfFont));
+            pdfTable.AddCell(CreatePdfPCell("版本号", pdfFont, hBackColor));
+            pdfTable.AddCell(CreatePdfPCell("修订日期", pdfFont, hBackColor));
+            pdfTable.AddCell(CreatePdfPCell("修订内容", pdfFont, hBackColor));
+            pdfTable.AddCell(CreatePdfPCell("修订人", pdfFont, hBackColor));
+            pdfTable.AddCell(CreatePdfPCell("审核人", pdfFont, hBackColor));
             for (var i = 0; i < 16; i++)
             {
                 //  添加数据行,循环数据库表字段
-                pdfTable.AddCell(CreatePdfPCell("", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("", pdfFont));
-                pdfTable.AddCell(CreatePdfPCell("", pdfFont));
+                pdfTable.AddCell(CreatePdfPCell("", pdfFont, cBackColor));
+                pdfTable.AddCell(CreatePdfPCell("", pdfFont, cBackColor));
+                pdfTable.AddCell(CreatePdfPCell("", pdfFont, cBackColor));
+                pdfTable.AddCell(CreatePdfPCell("", pdfFont, cBackColor));
+                pdfTable.AddCell(CreatePdfPCell("", pdfFont, cBackColor));
             }
 
             //  设置表格居中
@@ -280,21 +285,24 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="pdfDocument"></param>
         /// <param name="pdfFont"></param>
         /// <param name="tables"></param>
-        private static void CreateOverviewTable(Document pdfDocument, Font pdfFont, List<TableDto> tables)
+        private static void CreateOverviewTable(Document pdfDocument, Font headerFont, Font contentFont, List<TableDto> tables)
         {
             //  创建表格
             PdfPTable pdfTable = new PdfPTable(3);
+            var headerBackColor = BaseColor.LIGHT_GRAY;
+            var contentBackColor = BaseColor.WHITE;
 
             //  添加列标题
-            pdfTable.AddCell(CreatePdfPCell("序号", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("表名", pdfFont));
-            pdfTable.AddCell(CreatePdfPCell("说明", pdfFont));
+            pdfTable.AddCell(CreatePdfPCell("序号", headerFont, headerBackColor));
+            pdfTable.AddCell(CreatePdfPCell("表名", headerFont, headerBackColor));
+            pdfTable.AddCell(CreatePdfPCell("说明", headerFont, headerBackColor));
             foreach (var table in tables)
             {
+                var comment = !string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "";
                 //  添加数据行,循环数据库表字段
-                pdfTable.AddCell(CreatePdfPCell(table.TableOrder, pdfFont));
-                pdfTable.AddCell(CreatePdfPCell(table.TableName, pdfFont));
-                pdfTable.AddCell(CreatePdfPCell((!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : ""), pdfFont));
+                pdfTable.AddCell(CreatePdfPCell(table.TableOrder, contentFont, contentBackColor));
+                pdfTable.AddCell(CreatePdfPCell(table.TableName, contentFont, contentBackColor, Element.ALIGN_LEFT));
+                pdfTable.AddCell(CreatePdfPCell(comment, contentFont, contentBackColor, Element.ALIGN_LEFT));
             }
 
             //  设置表格居中
@@ -313,7 +321,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="text"></param>
         /// <param name="pdfFont"></param>
         /// <returns></returns>
-        private static PdfPCell CreatePdfPCell(string text, Font pdfFont, int hAlign = Element.ALIGN_CENTER)
+        private static PdfPCell CreatePdfPCell(string text, Font pdfFont, BaseColor backColor, int hAlign = Element.ALIGN_CENTER)
         {
             Phrase phrase = new Phrase(text, pdfFont);
             PdfPCell pdfPCell = new PdfPCell(phrase);
@@ -321,8 +329,8 @@ namespace SmartSQL.DocUtils.DBDoc
             //  单元格垂直居中显示
             pdfPCell.HorizontalAlignment = hAlign;
             pdfPCell.VerticalAlignment = Element.ALIGN_MIDDLE;
-
-            pdfPCell.MinimumHeight = 30;
+            pdfPCell.BackgroundColor = backColor;
+            pdfPCell.MinimumHeight = 25;
 
             return pdfPCell;
         }

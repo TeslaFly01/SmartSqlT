@@ -51,7 +51,6 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="tables"></param>
         public static void ExportWordByAsposeWords(string fileName, DBDto dto)
         {
-            var databaseName = dto.DBName;
             var tables = dto.Tables;
             var title = dto.DBName + "数据库设计文档";
 
@@ -76,7 +75,7 @@ namespace SmartSQL.DocUtils.DBDoc
             HeaderFooter header = new HeaderFooter(doc, HeaderFooterType.HeaderPrimary);
             doc.FirstSection.HeadersFooters.Add(header);
             header.AppendParagraph("SmartSQL数据库文档工具").ParagraphFormat.Alignment = ParagraphAlignment.Right;
-
+            
             var builder = new DocumentBuilder(doc);
 
             // 文档标题 - 书签

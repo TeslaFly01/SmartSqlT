@@ -564,7 +564,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="TplFile\doc\doc.xml" />
     <Resource Include="TplFile\html\html.cshtml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>
