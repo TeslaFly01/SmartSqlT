@@ -148,13 +148,14 @@ namespace SmartSQL.DocUtils.DBDoc
             row++;
             foreach (var table in tables)
             {
+                var comment = !string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "";
                 //  数据库名称
                 //  添加列标题
                 overviewTbWorksheet.Cells[row, 1].Value = table.TableOrder;
                 overviewTbWorksheet.Cells[row, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                 overviewTbWorksheet.Cells[row, 2].Value = table.TableName;
                 overviewTbWorksheet.Cells[row, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
-                overviewTbWorksheet.Cells[row, 3].Value = (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
+                overviewTbWorksheet.Cells[row, 3].Value = comment;
                 overviewTbWorksheet.Cells[row, 3].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                 overviewTbWorksheet.Row(row).Height = 14.5; // 行高
                 row++; // 行号+1
@@ -192,7 +193,6 @@ namespace SmartSQL.DocUtils.DBDoc
                 {
                     lstName.Remove("自增");
                 }
-
                 var spColCount = lstName.Count;
 
                 //  数据库名称
@@ -215,8 +215,6 @@ namespace SmartSQL.DocUtils.DBDoc
                 // tbWorksheet.Cells[int FromRow, int FromCol, int ToRow, int ToCol]
                 //  列标题字体为粗体
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
-
-
 
                 //  添加列标题
                 for (int j = 0; j < lstName.Count; j++)
@@ -246,17 +244,19 @@ namespace SmartSQL.DocUtils.DBDoc
                         tbWorksheet.Cells[rowNum, 6].Value = column.CanNull;
                         tbWorksheet.Cells[rowNum, 7].Value = column.DefaultVal;
                         tbWorksheet.Cells[rowNum, 8].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     }
                     else
                     {
                         tbWorksheet.Cells[rowNum, 6].Value = column.IsIdentity;
                         tbWorksheet.Cells[rowNum, 7].Value = column.CanNull;
                         tbWorksheet.Cells[rowNum, 8].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                         tbWorksheet.Cells[rowNum, 9].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
                     }
                     tbWorksheet.Cells[rowNum, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     tbWorksheet.Cells[rowNum, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
-                    tbWorksheet.Cells[rowNum, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
                     rowNum++; // 行号+1
                 }
                 //  上下左右边框线

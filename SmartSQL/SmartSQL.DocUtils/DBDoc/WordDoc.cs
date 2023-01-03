@@ -20,14 +20,11 @@ namespace SmartSQL.DocUtils.DBDoc
     {
         public WordDoc(DBDto dto, string filter = "docx files (*.docx)|*.docx") : base(dto, filter)
         {
+
         }
 
         public override bool Build(string filePath)
         {
-            //var docTpl = Resources.doc;
-            //var docContent = docTpl.RazorRender(this.Dto);
-            //ZlpIOHelper.WriteAllText(filePath, docContent, Encoding.UTF8);
-
             WordUtils.ExportWordByAsposeWords(filePath, this.Dto);
             return true;
         }
@@ -75,7 +72,7 @@ namespace SmartSQL.DocUtils.DBDoc
             HeaderFooter header = new HeaderFooter(doc, HeaderFooterType.HeaderPrimary);
             doc.FirstSection.HeadersFooters.Add(header);
             header.AppendParagraph("SmartSQL数据库文档工具").ParagraphFormat.Alignment = ParagraphAlignment.Right;
-            
+
             var builder = new DocumentBuilder(doc);
 
             // 文档标题 - 书签
@@ -216,8 +213,6 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
 
                 // TODO 表格创建完成，结束
-                //asposeTable.PreferredWidth = Tables.PreferredWidth.Auto;
-                //asposeTable.AutoFit(Tables.AutoFitBehavior.AutoFitToContents);
                 builder.EndTable();
 
                 i++;
@@ -229,10 +224,10 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
             }
 
-            // TODO 生成页码
+            // 生成页码
             AutoGenPageNum(doc, builder);
 
-            // TODO 添加水印
+            // 添加水印
             //InsertWatermarkText(doc, "SmartSQL");
 
             doc.Save(fileName);
@@ -248,7 +243,7 @@ namespace SmartSQL.DocUtils.DBDoc
             doc.FirstSection.HeadersFooters.Add(footer);
             // Add a paragraph with text to the footer.
             footer.AppendParagraph("").ParagraphFormat.Alignment = ParagraphAlignment.Center;
-            
+
             // We want to insert a field like this: {PAGE} / {NUMPAGES}
             // TODO Go to the primary footer
             builder.MoveToHeaderFooter(HeaderFooterType.FooterPrimary);
@@ -465,8 +460,8 @@ namespace SmartSQL.DocUtils.DBDoc
             watermark.Width = 500;
             watermark.Height = 100;
             watermark.Rotation = -40;
-            watermark.Fill.Color = System.Drawing.Color.Gray;
-            watermark.StrokeColor = System.Drawing.Color.Gray;
+            watermark.Fill.Color = Color.Gray;
+            watermark.StrokeColor = Color.Gray;
             watermark.RelativeHorizontalPosition = RelativeHorizontalPosition.Page;
             watermark.RelativeVerticalPosition = RelativeVerticalPosition.Page;
             watermark.WrapType = WrapType.None;
