@@ -68,6 +68,18 @@
                                         Binding="{Binding Name}"
                                         Header="列名"
                                         IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding DataType}"
+                                        CanUserSort="False"
+                                        CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                        Header="数据类型"
+                                        IsReadOnly="True" />
+                                    <DataGridTextColumn
+                                        Binding="{Binding LengthName}"
+                                        CanUserSort="False"
+                                        CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                        Header="长度"
+                                        IsReadOnly="True" />
                                     <DataGridCheckBoxColumn
                                         Binding="{Binding IsPrimaryKey}"
                                         CanUserSort="False"
@@ -80,24 +92,13 @@
                                         CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
                                         Header="自增"
                                         IsReadOnly="True" />
-                                    <DataGridTextColumn
-                                        Binding="{Binding DataType}"
-                                        CanUserSort="False"
-                                        Header="数据类型"
-                                        IsReadOnly="True" />
-                                    <DataGridTextColumn
-                                        Binding="{Binding LengthName}"
-                                        CanUserSort="False"
-                                        CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
-                                        Header="长度"
-                                        IsReadOnly="True" />
                                     <DataGridCheckBoxColumn
                                         Width="100"
                                         Binding="{Binding IsNullable}"
                                         CanUserResize="False"
                                         CanUserSort="False"
                                         CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
-                                        Header="允许空值"
+                                        Header="允许空"
                                         IsReadOnly="True" />
                                     <DataGridTextColumn
                                         Binding="{Binding DefaultValue}"
