@@ -76,13 +76,14 @@ namespace SmartSQL.DocUtils.DBDoc
             var builder = new DocumentBuilder(doc);
 
             // 文档标题 - 书签
-            CreateBookmark(builder, ParagraphAlignment.Center, OutlineLevel.Level1, "宋体", 19, asposeBookmark_prefix + "0", title);
+            CreateBookmark(builder, ParagraphAlignment.Center, OutlineLevel.Level1, "宋体", 25, asposeBookmark_prefix + "0", title);
             builder.ParagraphFormat.OutlineLevel = OutlineLevel.BodyText;
 
             // 换行
-            builder.InsertBreak(BreakType.ParagraphBreak);
-            builder.InsertBreak(BreakType.ParagraphBreak);
-            builder.InsertBreak(BreakType.ParagraphBreak);
+            //builder.InsertBreak(BreakType.ParagraphBreak);
+            //builder.InsertBreak(BreakType.ParagraphBreak);
+            //builder.InsertBreak(BreakType.ParagraphBreak);
+            builder.InsertBreak(BreakType.PageBreak);
 
             // 修订日志 - 书签
             CreateBookmark(builder, ParagraphAlignment.Center, OutlineLevel.Level2, "", 13, asposeBookmarkLog, AppConst.LOG_CHAPTER_NAME);
@@ -168,21 +169,25 @@ namespace SmartSQL.DocUtils.DBDoc
                 foreach (var column in table.Columns)
                 {
                     #region 遍历表格数据行写入
+                    builder.CellFormat.ClearFormatting();
+                    builder.CellFormat.VerticalAlignment = CellVerticalAlignment.Center;
                     builder.CellFormat.Shading.BackgroundPatternColor = Color.White;
                     builder.CellFormat.Width = 100.0;
-                    builder.CellFormat.VerticalAlignment = CellVerticalAlignment.Center;
                     builder.RowFormat.Height = 22;
                     builder.RowFormat.HeightRule = HeightRule.AtLeast;
                     builder.InsertCell();
                     builder.Font.Size = 9;
                     builder.Font.Name = "宋体";
                     builder.Font.Bold = false;
+                    builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
                     builder.Write(column.ColumnOrder);      // 序号
 
                     builder.InsertCell();
+                    builder.ParagraphFormat.Alignment = ParagraphAlignment.Left;
                     builder.Write(column.ColumnName);       // 列名
 
                     builder.InsertCell();
+                    builder.ParagraphFormat.Alignment = ParagraphAlignment.Center;
                     builder.Write(column.ColumnTypeName);   // 数据类型
 
                     builder.InsertCell();
@@ -206,6 +211,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
                     builder.InsertCell();
                     builder.Font.Size = 10;
+                    builder.ParagraphFormat.Alignment = ParagraphAlignment.Left;
                     builder.Write(column.Comment);          // 列说明
 
                     builder.EndRow();
@@ -274,7 +280,8 @@ namespace SmartSQL.DocUtils.DBDoc
             // Make the header row.
             builder.InsertCell();
             logTable.Alignment = TableAlignment.Center;
-            logTable.AllowAutoFit = true;
+            logTable.AllowAutoFit = false;
+            logTable.PreferredWidth = PreferredWidth.FromPercent(120);
             builder.RowFormat.Height = 22;
             builder.RowFormat.HeightRule = HeightRule.AtLeast;
             builder.CellFormat.Shading.BackgroundPatternColor = headerColor;
@@ -283,30 +290,34 @@ namespace SmartSQL.DocUtils.DBDoc
             builder.Font.Size = 9;
             builder.Font.Name = "宋体";
             builder.Font.Bold = true;
-            builder.CellFormat.Width = 150.0;
+            builder.CellFormat.Width = 100.0;
             builder.Write("版本号");
 
             builder.InsertCell();
+            builder.CellFormat.Width = 120.0;
             builder.Write("修订日期");
 
             builder.InsertCell();
+            builder.CellFormat.Width = 200.0;
             builder.Write("修订内容");
 
             builder.InsertCell();
+            builder.CellFormat.Width = 100.0;
             builder.Write("修订人");
 
             builder.InsertCell();
+            builder.CellFormat.Width = 100.0;
             builder.Write("审核人");
 
             builder.EndRow();
             #endregion
 
-            for (var i = 0; i < 5; i++)
+            for (var i = 0; i < 15; i++)
             {
                 #region 遍历表格数据行写入
                 // Set features for the other rows and cells.
                 builder.CellFormat.Shading.BackgroundPatternColor = Color.White;
-                builder.CellFormat.Width = 150.0;
+                builder.CellFormat.Width = 100.0;
                 builder.CellFormat.VerticalAlignment = CellVerticalAlignment.Center;
                 // Reset height and define a different height rule for table body
                 builder.RowFormat.Height = 22;
@@ -317,15 +328,19 @@ namespace SmartSQL.DocUtils.DBDoc
                 builder.Write(""); // 版本号
 
                 builder.InsertCell();
+                builder.CellFormat.Width = 120.0;
                 builder.Write(""); // 修订日期
 
                 builder.InsertCell();
+                builder.CellFormat.Width = 200.0;
                 builder.Write(""); // 修订内容
 
                 builder.InsertCell();
+                builder.CellFormat.Width = 100.0;
                 builder.Write(""); // 修订人
 
                 builder.InsertCell();
+                builder.CellFormat.Width = 100.0;
                 builder.Write(""); // 审核人
 
                 builder.EndRow();
@@ -439,7 +454,8 @@ namespace SmartSQL.DocUtils.DBDoc
             builder.StartBookmark(bookmarkName);
             builder.ParagraphFormat.Alignment = alignment;
             builder.ParagraphFormat.OutlineLevel = outlineLevel;
-            builder.ParagraphFormat.SpaceBefore = builder.ParagraphFormat.SpaceAfter = 15;
+            builder.ParagraphFormat.SpaceBefore = 15;
+            builder.ParagraphFormat.SpaceAfter = 15;
             builder.Font.Size = fontSize;
             builder.Font.Name = fontName;
             builder.Font.Bold = true;
