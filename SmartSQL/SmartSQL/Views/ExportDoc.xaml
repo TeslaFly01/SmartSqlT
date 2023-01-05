@@ -266,7 +266,21 @@
             <Grid>
                 <!--  导出参数设置  -->
                 <Grid Margin="0,0,0,35">
-                    <Grid Margin="20,65,20,20">
+                    <Grid Margin="20,30,20,20">
+                        <TextBlock
+                            Margin="0,25,0,0"
+                            VerticalAlignment="Top"
+                            Text="文档名称" />
+                        <hc:TextBox
+                            Name="TxtFileName"
+                            Height="30"
+                            Margin="85,18,67,0"
+                            VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0"
+                            ShowClearButton="True" />
+                    </Grid>
+                    <Grid Margin="20,100,20,20">
                         <TextBlock
                             Margin="0,12,0,0"
                             VerticalAlignment="Top"
@@ -348,31 +362,31 @@
                     </Grid>
                     <Grid
                         x:Name="GridTipMsg"
-                        Margin="105,160,20,20"
-                        Visibility="Collapsed">
+                        Margin="105,200,20,20"
+                        Visibility="Visible">
                         <hc:TransitioningContentControl VerticalAlignment="Top" TransitionMode="Fade">
                             <StackPanel>
                                 <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
-                                    <TextBlock x:Name="TextDocTipMsg" Text="" />
+                                    <TextBlock x:Name="TextDocTipMsg" Text="CHM文档类型支持导出表、视图、存储过程" />
                                 </Border>
                             </StackPanel>
                         </hc:TransitioningContentControl>
                     </Grid>
-                    <Grid Margin="20,175,20,20">
+                    <Grid Margin="20,220,20,20">
                         <TextBlock
                             Margin="0,52,0,0"
                             VerticalAlignment="Top"
                             Text="导出路径" />
                         <TextBox
                             Name="TxtPath"
-                            Margin="85,45,77,0"
+                            Margin="85,45,70,0"
                             VerticalAlignment="Top"
                             Background="#F4F5F7"
                             BorderThickness="0" />
                         <Button
                             Name="BtnLookPath"
-                            Width="55"
-                            Margin="0,45,20,0"
+                            Width="65"
+                            Margin="0,45,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             Background="#F4F5F7"
@@ -380,30 +394,6 @@
                             Click="BtnLookPath_OnClick"
                             Content="浏览"
                             Cursor="Hand" />
-                    </Grid>
-                    <Grid Margin="20,285,20,20">
-                        <TextBlock
-                            Margin="0,25,0,0"
-                            VerticalAlignment="Top"
-                            Text="文档名称" />
-                        <hc:TextBox
-                            Name="TxtFileName"
-                            Height="30"
-                            Margin="85,18,77,0"
-                            VerticalAlignment="Top"
-                            Background="#F4F5F7"
-                            BorderThickness="0"
-                            ShowClearButton="True" />
-                        <Label
-                            Name="LblFileExtend"
-                            Width="55"
-                            Height="30"
-                            Margin="0,17,20,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="#F4F5F7"
-                            BorderThickness="0"
-                            Content=".chm" />
                     </Grid>
                 </Grid>
                 <!--  导出参数设置  -->

@@ -44,6 +44,8 @@ namespace SmartSQL.Views
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        private string fileExt = ".chm";
         private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
         private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
@@ -965,8 +967,6 @@ namespace SmartSQL.Views
             }
             //文档标题
             var docTitle = TxtFileName.Text.Trim();
-            //文件扩展名
-            var fileExt = LblFileExtend.Content;
             //文件名
             var fileName = docTitle + fileExt;
             LoadingG.Visibility = Visibility.Visible;
@@ -1192,11 +1192,11 @@ namespace SmartSQL.Views
             {"chm","CHM文档类型支持导出表、视图、存储过程"},
             {"excel","Excel文档类型仅支持导出表"},
             {"word","Word文档类型仅支持导出表"},
-            {"pdf",""},
+            {"pdf","PDF文档类型支持导出表、视图、存储过程"},
             {"html","Html文档类型仅支持导出表"},
-            {"xml",""},
-            {"md",""},
-            {"json",""}
+            {"xml","XML文档类型支持导出表、视图、存储过程"},
+            {"md","MarkDown文档类型支持导出表、视图、存储过程"},
+            {"json","Json文档类型支持导出表、视图、存储过程"}
         };
 
         /// <summary>
@@ -1240,7 +1240,7 @@ namespace SmartSQL.Views
                 GridTipMsg.Visibility = Visibility.Visible;
                 TextDocTipMsg.Text = tipMsg;
             }
-            LblFileExtend.Content = _docExt[button.Name.ToLower()];
+            fileExt = _docExt[button.Name.ToLower()];
         }
 
         private string DocumentType()
