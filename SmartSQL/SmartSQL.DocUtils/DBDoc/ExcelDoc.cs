@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using SmartSQL.DocUtils;
 using SmartSQL.DocUtils.Dtos;
@@ -40,13 +41,13 @@ namespace SmartSQL.DocUtils.DBDoc
         {
             var tables = dto.Tables;
 
-            System.IO.FileInfo xlsFileInfo = new System.IO.FileInfo(fileName);
+            FileInfo xlsFileInfo = new FileInfo(fileName);
 
             if (xlsFileInfo.Exists)
             {
                 //  注意此处：存在Excel文档即删除再创建一个
                 xlsFileInfo.Delete();
-                xlsFileInfo = new System.IO.FileInfo(fileName);
+                xlsFileInfo = new FileInfo(fileName);
             }
             //  创建并添加Excel文档信息
             using (OfficeOpenXml.ExcelPackage epck = new OfficeOpenXml.ExcelPackage(xlsFileInfo))
@@ -195,9 +196,10 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
                 var spColCount = lstName.Count;
 
-                //  数据库名称
+                // 表名称
+                var comment = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
-                tbWorksheet.Cells[rowNum, 1].Value = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
+                tbWorksheet.Cells[rowNum, 1].Value = comment;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 10;
                 tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
@@ -298,6 +300,5 @@ namespace SmartSQL.DocUtils.DBDoc
             tbWorksheet.Cells.Style.WrapText = true; // 自动换行
             tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
         }
-
     }
 }

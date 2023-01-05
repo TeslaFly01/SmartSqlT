@@ -271,9 +271,9 @@ namespace SmartSQL.DocUtils.DBDoc
 
             //  设置表格居中
             pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfTable.TotalWidth = 540F;
+            pdfTable.TotalWidth = 520F;
             pdfTable.LockedWidth = true;
-            pdfTable.SetWidths(new float[] { 80F, 100F, 200F, 80F, 80F });
+            pdfTable.SetWidths(new float[] { 80F, 100F, 180F, 80F, 80F });
 
             //  添加表格
             pdfDocument.Add(pdfTable);
@@ -307,9 +307,9 @@ namespace SmartSQL.DocUtils.DBDoc
 
             //  设置表格居中
             pdfTable.HorizontalAlignment = Element.ALIGN_CENTER;
-            pdfTable.TotalWidth = 480F;
+            pdfTable.TotalWidth = 520F;
             pdfTable.LockedWidth = true;
-            pdfTable.SetWidths(new float[] { 60F, 210F, 210F });
+            pdfTable.SetWidths(new float[] { 60F, 230F, 230F });
 
             //  添加表格
             pdfDocument.Add(pdfTable);
