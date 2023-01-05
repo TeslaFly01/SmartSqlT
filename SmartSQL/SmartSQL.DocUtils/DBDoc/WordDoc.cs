@@ -105,7 +105,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 string bookmarkName = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
 
                 // 创建书签
-                CreateBookmark(builder, ParagraphAlignment.Left, OutlineLevel.Level3, "", 12, asposeBookmark_prefix + i, table.TableOrder + "." + bookmarkName);
+                CreateBookmark(builder, ParagraphAlignment.Left, OutlineLevel.Level3, "", 12, asposeBookmark_prefix + i, "3." + table.TableOrder + ". " + bookmarkName);
 
                 // 遍历数据库表字段集合
                 // 创建表格
