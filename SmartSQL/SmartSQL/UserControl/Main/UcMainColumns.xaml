@@ -93,7 +93,6 @@
                                         Header="自增"
                                         IsReadOnly="True" />
                                     <DataGridCheckBoxColumn
-                                        Width="100"
                                         Binding="{Binding IsNullable}"
                                         CanUserResize="False"
                                         CanUserSort="False"
