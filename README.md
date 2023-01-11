@@ -141,8 +141,20 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 ![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chm.png)|![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/chmd.png)
 |--|--|
 
-#### HTML文档
-![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)|![HTML文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
+#### Html文档
+![Html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/html.png)|![html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/htmlt.png)
+|--|--|
+
+#### Word文档
+![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/word.png)|![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/wordh.png)
+|--|--|
+
+#### Excel文档
+![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/excel.png)|![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/excelp.png)
+|--|--|
+
+#### PDF文档
+![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/pdf.png)|![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/pdfn.png)
 |--|--|
 
 
