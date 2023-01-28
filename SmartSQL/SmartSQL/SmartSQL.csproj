@@ -199,6 +199,9 @@
     <Compile Include="UserControl\Tools\UcJWT.xaml.cs">
       <DependentUpon>UcJWT.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcDateDiff.xaml.cs">
+      <DependentUpon>UcDateDiff.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcWordCount.xaml.cs">
       <DependentUpon>UcWordCount.xaml</DependentUpon>
     </Compile>
@@ -445,6 +448,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Tools\UcDateDiff.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcWordCount.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -630,6 +637,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\dateDiff%402x.png" />
     <Resource Include="Resources\Img\toolIcon\jwt%402x.png" />
     <None Include="hha.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

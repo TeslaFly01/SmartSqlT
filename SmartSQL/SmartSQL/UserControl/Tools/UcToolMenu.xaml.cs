@@ -101,6 +101,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcJWT();
                     title = "JWT解码器";
                     break;
+                case "dateDiff":
+                    toolBox.UcBox.Content = new UcDateDiff();
+                    title = "时间差计算";
+                    break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }
