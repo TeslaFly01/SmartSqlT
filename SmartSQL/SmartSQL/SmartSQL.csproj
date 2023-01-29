@@ -649,6 +649,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\barCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\qrCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\dateDiff%402x.png" />
     <Resource Include="Resources\Img\toolIcon\jwt%402x.png" />

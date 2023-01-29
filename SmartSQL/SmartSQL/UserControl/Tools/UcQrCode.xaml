@@ -148,7 +148,26 @@
                         Name="ImageResult"
                         Width="180"
                         Height="180"
-                        Visibility="Collapsed" />
+                        Visibility="Collapsed">
+                        <hc:ImageBlock.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem
+                                    x:Name="MenuSaveQrCode"
+                                    Width="150"
+                                    Click="MenuSaveQrCode_OnClick"
+                                    Padding="5,3,5,3"
+                                    VerticalAlignment="Center"
+                                    Header="保存图片">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Icon="Save" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </hc:ImageBlock.ContextMenu>
+                    </hc:ImageBlock>
                 </Grid>
             </Border>
         </Grid>

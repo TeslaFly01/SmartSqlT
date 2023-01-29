@@ -80,6 +80,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "二维码生成";
                     break;
+                case "barCode":
+                    toolBox.UcBox.Content = new UcQrCode();
+                    title = "条形码生成";
+                    break;
                 default:
                     Oops.Oh("敬请期待"); return;
             }

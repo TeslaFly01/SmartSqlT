@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using System.Drawing;
+using System.IO;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,12 +31,14 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using ICSharpCode.AvalonEdit;
+using Microsoft.WindowsAPICodePack.Dialogs;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
 using ZXing.QrCode.Internal;
 using ZXing.Rendering;
 using Color = System.Drawing.Color;
+using Path = System.IO.Path;
 
 namespace SmartSQL.UserControl
 {
@@ -117,6 +120,30 @@ namespace SmartSQL.UserControl
         {
             var parentWindow = (ToolBox)Window.GetWindow(this);
             parentWindow.UcBox.Content = new UcMainTools();
+        }
+
+        /// <summary>
+        /// 保存二维码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuSaveQrCode_OnClick(object sender, RoutedEventArgs e)
+        {
+            var filePath = string.Empty;
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            CommonFileDialogResult result = dialog.ShowDialog();
+            if (result == CommonFileDialogResult.Ok)
+            {
+                filePath = dialog.FileName;
+            }
+            var fileName = $"{DateTime.Now:yyyyMMddHHmmssfff}.png";
+            var encoder = new PngBitmapEncoder();
+            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageResult.Source));
+            var file = new FileStream(Path.Combine(filePath, fileName), FileMode.Create);
+            encoder.Save(file);
+            file.Close();
+            Oops.Success("保存成功");
         }
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]
