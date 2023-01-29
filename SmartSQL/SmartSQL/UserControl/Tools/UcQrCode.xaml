@@ -1,0 +1,156 @@
+﻿<local:BaseUserControl
+    x:Class="SmartSQL.UserControl.UcQrCode"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border
+        Margin="5"
+        Background="White"
+        CornerRadius="8">
+        <Grid Margin="18">
+            <Grid
+                Height="40"
+                Margin="0,-5,0,0"
+                VerticalAlignment="Top"
+                Background="#f9f9f9">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77"
+                        Icon="Inbox" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        工具箱
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        /
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        二维码生成器
+                    </TextBlock>
+                </StackPanel>
+
+                <TextBlock
+                    Margin="10,10,10,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource TextBlockSubTitleBold}"
+                    Text="二维码生成器" />
+                <Button
+                    x:Name="BtnReturn"
+                    Width="60"
+                    Height="28"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Right"
+                    BorderThickness="0.4"
+                    Click="BtnReturn_Click"
+                    Content="返回"
+                    Cursor="Hand" />
+            </Grid>
+
+            <Border
+                Height="150"
+                Margin="0,43,0,0"
+                VerticalAlignment="Top"
+                Background="#f9f9f9"
+                CornerRadius="8">
+                <StackPanel>
+                    <TextBox
+                        Name="TextContent"
+                        Height="80"
+                        Margin="15,10,15,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入编码内容，支持网址、文本、电子邮箱等"
+                        AcceptsReturn="True"
+                        BorderThickness="0"
+                        Style="{StaticResource TextBoxExtend}"
+                        TextWrapping="Wrap" />
+                    <!--<StackPanel
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Label>容错级别</Label>
+                        <ComboBox Width="80" Margin="10,0,0,0">
+                            <ComboBoxItem>最低</ComboBoxItem>
+                            <ComboBoxItem>低</ComboBoxItem>
+                            <ComboBoxItem>中等</ComboBoxItem>
+                            <ComboBoxItem IsSelected="True">高</ComboBoxItem>
+                        </ComboBox>
+                    </StackPanel>-->
+                    <StackPanel
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="BtnGeneration"
+                            Width="120"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            hc:IconElement.Geometry="{StaticResource QrCodeGeometry}"
+                            Click="BtnGeneration_OnClick"
+                            Content="生成二维码"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
+                        <Button
+                            x:Name="BtnClear"
+                            Width="80"
+                            Height="28"
+                            hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                            BorderThickness="0.4"
+                            Click="BtnClear_Click"
+                            Content="清空"
+                            Cursor="Hand" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+            <Border
+                Name="ResultBox"
+                Width="210"
+                Height="210"
+                Margin="0,205,0,0"
+                Background="#f9f9f9"
+                CornerRadius="8">
+                <Grid>
+                    <hc:TextBox
+                        Name="TextTip"
+                        Height="30"
+                        HorizontalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        Foreground="DimGray"
+                        IsReadOnly="True">
+                        此处预览二维码
+                    </hc:TextBox>
+                    <hc:ImageBlock
+                        Name="ImageResult"
+                        Width="180"
+                        Height="180"
+                        Visibility="Collapsed" />
+                </Grid>
+            </Border>
+        </Grid>
+    </Border>
+</local:BaseUserControl>

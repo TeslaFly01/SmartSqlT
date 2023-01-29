@@ -93,6 +93,9 @@
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.116</Version>
     </PackageReference>
+    <PackageReference Include="ZXing.Net">
+      <Version>0.16.8</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="AduSkin">
@@ -106,6 +109,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Xaml">
@@ -120,6 +124,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Helper\BarQrCodeHelper.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\PingYinHelper.cs" />
     <Compile Include="Helper\TextEncryptHelper.cs" />
@@ -201,6 +206,9 @@
     </Compile>
     <Compile Include="UserControl\Tools\UcDateDiff.xaml.cs">
       <DependentUpon>UcDateDiff.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Tools\UcQrCode.xaml.cs">
+      <DependentUpon>UcQrCode.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tools\UcWordCount.xaml.cs">
       <DependentUpon>UcWordCount.xaml</DependentUpon>
@@ -452,6 +460,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Tools\UcQrCode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcWordCount.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -637,6 +649,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\qrCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\dateDiff%402x.png" />
     <Resource Include="Resources\Img\toolIcon\jwt%402x.png" />
     <None Include="hha.dll">
