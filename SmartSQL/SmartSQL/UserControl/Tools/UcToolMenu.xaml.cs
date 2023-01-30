@@ -88,6 +88,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcRgbToHex();
                     title = "RGB颜色转换";
                     break;
+                case "storyOfWords":
+                    toolBox.UcBox.Content = new UcStoryOfWords();
+                    title = "文字物语";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

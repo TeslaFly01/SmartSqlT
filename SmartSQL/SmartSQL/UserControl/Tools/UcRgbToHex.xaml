@@ -71,6 +71,7 @@
             <Border
                 Height="440"
                 Margin="0,43,0,0"
+                HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Background="#f9f9f9"
                 CornerRadius="8">
