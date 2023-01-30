@@ -91,6 +91,11 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/base64ToImg@2x.png"
                     Tag="base64ToImg" />
                 <localControls:UcToolCard
+                    Title="RGB颜色转换"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/rgbToHex@2x.png"
+                    Tag="rgbToHex" />
+                <localControls:UcToolCard
                     Title="条形码生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/barCode@2x.png"

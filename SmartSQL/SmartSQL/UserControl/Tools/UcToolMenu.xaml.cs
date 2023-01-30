@@ -84,6 +84,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcBase64ToImg();
                     title = "图片转base64";
                     break;
+                case "rgbToHex":
+                    toolBox.UcBox.Content = new UcRgbToHex();
+                    title = "RGB颜色转换";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

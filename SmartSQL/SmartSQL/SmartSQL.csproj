@@ -210,6 +210,9 @@
     <Compile Include="UserControl\Tools\UcDateDiff.xaml.cs">
       <DependentUpon>UcDateDiff.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcRgbToHex.xaml.cs">
+      <DependentUpon>UcRgbToHex.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcQrCode.xaml.cs">
       <DependentUpon>UcQrCode.xaml</DependentUpon>
     </Compile>
@@ -467,6 +470,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Tools\UcRgbToHex.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcQrCode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -656,6 +663,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\rgbToHex%402x.png" />
     <Resource Include="Resources\Img\toolIcon\base64ToImg%402x.png" />
     <Resource Include="Resources\Img\toolIcon\barCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\qrCode%402x.png" />
