@@ -129,21 +129,20 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuSaveQrCode_OnClick(object sender, RoutedEventArgs e)
         {
-            var filePath = string.Empty;
             var dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
-            CommonFileDialogResult result = dialog.ShowDialog();
+            var result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
-                filePath = dialog.FileName;
+                var filePath = dialog.FileName;
+                var fileName = $"{DateTime.Now:yyyyMMddHHmmssfff}.png";
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageResult.Source));
+                var file = new FileStream(Path.Combine(filePath, fileName), FileMode.Create);
+                encoder.Save(file);
+                file.Close();
+                Oops.Success("保存成功");
             }
-            var fileName = $"{DateTime.Now:yyyyMMddHHmmssfff}.png";
-            var encoder = new PngBitmapEncoder();
-            encoder.Frames.Add(BitmapFrame.Create((BitmapSource)ImageResult.Source));
-            var file = new FileStream(Path.Combine(filePath, fileName), FileMode.Create);
-            encoder.Save(file);
-            file.Close();
-            Oops.Success("保存成功");
         }
 
         [System.Runtime.InteropServices.DllImport("gdi32.dll")]

@@ -201,6 +201,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcBase64ToImg.xaml.cs">
+      <DependentUpon>UcBase64ToImg.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcJWT.xaml.cs">
       <DependentUpon>UcJWT.xaml</DependentUpon>
     </Compile>
@@ -452,6 +455,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Tools\UcBase64ToImg.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcJWT.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -649,6 +656,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\base64ToImg%402x.png" />
     <Resource Include="Resources\Img\toolIcon\barCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\qrCode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\dateDiff%402x.png" />

@@ -80,6 +80,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "二维码生成";
                     break;
+                case "base64ToImg":
+                    toolBox.UcBox.Content = new UcBase64ToImg();
+                    title = "图片转base64";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

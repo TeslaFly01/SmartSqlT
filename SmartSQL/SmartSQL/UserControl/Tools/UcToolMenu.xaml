@@ -86,6 +86,11 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/qrCode@2x.png"
                     Tag="qrCode" />
                 <localControls:UcToolCard
+                    Title="图片转Base64"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/base64ToImg@2x.png"
+                    Tag="base64ToImg" />
+                <localControls:UcToolCard
                     Title="条形码生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/barCode@2x.png"
