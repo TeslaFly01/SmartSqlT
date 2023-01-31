@@ -83,12 +83,16 @@
                         VerticalAlignment="Top"
                         Background="White"
                         CornerRadius="8">
-                        <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                        <StackPanel
+                            Margin="0,35,0,0"
+                            VerticalAlignment="Center"
+                            Orientation="Vertical">
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock
                                     Margin="0,0,10,45"
                                     VerticalAlignment="Center"
-                                    FontSize="22">
+                                    FontSize="22"
+                                    Foreground="White">
                                     『
                                 </TextBlock>
                                 <TextBlock
@@ -98,21 +102,26 @@
                                     VerticalAlignment="Center"
                                     Background="Transparent"
                                     FontSize="22"
+                                    Foreground="White"
+                                    Text="用代码表达语言的魅力，用代码书写山河的壮丽。"
                                     TextWrapping="WrapWithOverflow" />
                                 <TextBlock
                                     Margin="10,45,0,0"
                                     VerticalAlignment="Center"
-                                    FontSize="22">
+                                    FontSize="22"
+                                    Foreground="White">
                                     』
                                 </TextBlock>
                             </StackPanel>
                             <StackPanel>
                                 <TextBlock
                                     Name="TextAuthor"
-                                    Margin="10,40,50,0"
+                                    Margin="10,30,50,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
-                                    FontSize="18" />
+                                    FontSize="18"
+                                    Foreground="White"
+                                    Text="——zfluok「SmartSQL」" />
                             </StackPanel>
                         </StackPanel>
                     </Border>

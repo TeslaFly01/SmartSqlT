@@ -78,7 +78,7 @@ namespace SmartSQL.UserControl
                         var backgroudColor = Colors[r];
                         BrushConverter brushConverter = new BrushConverter();
                         Brush brush = (Brush)brushConverter.ConvertFromString(backgroudColor);
-                        //Box.Background = brush;
+                        Box.Background = brush;
                     });
                 }
             });
