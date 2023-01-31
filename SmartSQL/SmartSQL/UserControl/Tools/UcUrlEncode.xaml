@@ -1,5 +1,5 @@
 ﻿<local:BaseUserControl
-    x:Class="SmartSQL.UserControl.UcStoryOfWords"
+    x:Class="SmartSQL.UserControl.UcUrlEncode"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -13,7 +13,6 @@
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
     d:DesignHeight="450"
     d:DesignWidth="800"
-    Loaded="UcStoryOfWords_OnLoaded"
     mc:Ignorable="d">
     <Border
         Margin="5"
@@ -47,7 +46,7 @@
                         Margin="5,0,0,0"
                         VerticalAlignment="Center"
                         Foreground="#5c6b77">
-                        文字物语
+                        Url编码/解码
                     </TextBlock>
                 </StackPanel>
 
@@ -56,7 +55,7 @@
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top"
                     Style="{StaticResource TextBlockSubTitleBold}"
-                    Text="文字物语" />
+                    Text="Url编码/解码" />
                 <Button
                     x:Name="BtnReturn"
                     Width="60"
@@ -70,71 +69,63 @@
             </Grid>
 
             <Border
-                Height="440"
                 Margin="0,43,0,0"
-                VerticalAlignment="Top"
+                VerticalAlignment="Stretch"
                 Background="#f9f9f9"
                 CornerRadius="8">
                 <StackPanel>
-                    <Border
-                        Name="Box"
-                        Height="300"
-                        Margin="18"
-                        VerticalAlignment="Top"
-                        Background="#F44336"
-                        CornerRadius="8">
-                        <StackPanel
-                            Margin="0,35,0,0"
-                            VerticalAlignment="Center"
-                            Orientation="Vertical">
-                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                                <TextBlock
-                                    Margin="0,0,10,45"
-                                    VerticalAlignment="Center"
-                                    FontSize="22"
-                                    Foreground="White">
-                                    『
-                                </TextBlock>
-                                <TextBlock
-                                    Name="TextContent"
-                                    Margin="8"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Background="Transparent"
-                                    FontSize="22"
-                                    Foreground="White"
-                                    Text="用代码表达语言的魅力，用代码书写山河的壮丽。"
-                                    TextWrapping="WrapWithOverflow" />
-                                <TextBlock
-                                    Margin="10,45,0,0"
-                                    VerticalAlignment="Center"
-                                    FontSize="22"
-                                    Foreground="White">
-                                    』
-                                </TextBlock>
-                            </StackPanel>
-                            <StackPanel>
-                                <TextBlock
-                                    Name="TextAuthor"
-                                    Margin="10,30,50,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    FontSize="18"
-                                    Foreground="White"
-                                    Text="——zfluok「SmartSQL」" />
-                            </StackPanel>
-                        </StackPanel>
-                    </Border>
-                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                    <TextBox
+                        Name="TextInput"
+                        Height="120"
+                        Margin="15,10,15,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
+                        hc:InfoElement.Placeholder="请输入Url"
+                        hc:InfoElement.Title="请输入要进行编码或解码的Url"
+                        Style="{StaticResource TextBoxExtend}"
+                        TextWrapping="Wrap" />
+                    <StackPanel
+                        Margin="15,15,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
                         <Button
-                            x:Name="BtnReplace"
-                            Width="105"
+                            x:Name="BtnEncode"
+                            Width="115"
                             Height="28"
-                            Click="BtnReplace_OnClick"
-                            Content="换一句"
+                            Margin="0,0,10,0"
+                            Click="BtnEncode_Click"
+                            Content="编码（Encode）"
                             Cursor="Hand"
                             Style="{StaticResource ButtonSuccess}" />
+                        <Button
+                            x:Name="BtnDecode"
+                            Width="115"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            Click="BtnDecode_Click"
+                            Content="解码（Decode）"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonWarning}" />
+                        <Button
+                            x:Name="BtnClear"
+                            Width="80"
+                            Height="28"
+                            hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                            BorderThickness="0.4"
+                            Click="BtnClear_Click"
+                            Content="清空"
+                            Cursor="Hand" />
                     </StackPanel>
+                    <TextBox
+                        x:Name="TextOutput"
+                        Height="120"
+                        Margin="15,10,15,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
+                        hc:InfoElement.Placeholder="转换输出结果"
+                        hc:InfoElement.Title="Url编码或解码后的结果："
+                        Style="{StaticResource TextBoxExtend}"
+                        TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
         </Grid>

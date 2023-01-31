@@ -92,6 +92,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcStoryOfWords();
                     title = "文字物语";
                     break;
+                case "urlEncode":
+                    toolBox.UcBox.Content = new UcUrlEncode();
+                    title = "Url编码/解码";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";
