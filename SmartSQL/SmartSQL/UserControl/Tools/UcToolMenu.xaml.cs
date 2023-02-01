@@ -96,6 +96,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcUrlEncode();
                     title = "Url编码/解码";
                     break;
+                case "mimeType":
+                    toolBox.UcBox.Content = new UcMimeType();
+                    title = "MimeType对照表";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

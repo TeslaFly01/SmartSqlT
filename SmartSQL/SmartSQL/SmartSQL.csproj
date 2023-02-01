@@ -205,6 +205,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcMimeType.xaml.cs">
+      <DependentUpon>UcMimeType.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcUrlEncode.xaml.cs">
       <DependentUpon>UcUrlEncode.xaml</DependentUpon>
     </Compile>
@@ -468,6 +471,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Tools\UcMimeType.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcUrlEncode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -681,6 +688,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\mime-type%402x.png" />
     <Resource Include="Resources\Img\toolIcon\urlEncode%402x.png" />
     <Resource Include="Resources\Img\toolIcon\storyOfWords%402x.png" />
     <Resource Include="Resources\Img\toolIcon\rgbToHex%402x.png" />

@@ -25,7 +25,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (ToolBox)System.Windows.Window.GetWindow(this);
+            var parentWindow = (ToolBox)Window.GetWindow(this);
             parentWindow.UcBox.Content = new UcMainTools();
         }
 
@@ -42,31 +42,26 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnEncode_Click(object sender, RoutedEventArgs e)
         {
-            var inputText = TextInput.Text;
-            if (inputText == string.Empty)
+            if (string.IsNullOrEmpty(TextInput.Text))
             {
                 return;
             }
-            var rText = System.Net.WebUtility.UrlEncode(inputText);
+            var rText = System.Net.WebUtility.UrlEncode(TextInput.Text);
             TextOutput.Text = rText;
         }
 
+        /// <summary>
+        /// 解码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnDecode_Click(object sender, RoutedEventArgs e)
         {
-            var inputText = TextInput.Text;
-            if (inputText == string.Empty)
+            if (string.IsNullOrEmpty(TextInput.Text))
             {
                 return;
             }
-            try
-            {
-                var rText = System.Net.WebUtility.UrlDecode(inputText);
-                TextOutput.Text = rText;
-            }
-            catch (Exception ex)
-            {
-                TextOutput.Text = ex.Message;
-            }
+            TextOutput.Text = System.Net.WebUtility.UrlDecode(TextInput.Text);
         }
     }
 }
