@@ -96,6 +96,11 @@
                         ItemsSource="{Binding ObjectsViewData, Mode=TwoWay}"
                         RowHeaderWidth="60"
                         SelectionUnit="CellOrRowHeader">
+                        <DataGrid.CellStyle>
+                            <Style BasedOn="{StaticResource DataGridCellStyle}" TargetType="DataGridCell">
+                                <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Content.Text}" />
+                            </Style>
+                        </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn
                                 x:Name="ObjHead"

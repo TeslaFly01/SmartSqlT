@@ -111,6 +111,11 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/mime-type@2x.png"
                     Tag="mimeType" />
                 <localControls:UcToolCard
+                    Title="Unicode中文互转"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/unicode@2x.png"
+                    Tag="unicode" />
+                <localControls:UcToolCard
                     Title="条形码生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/barCode@2x.png"

@@ -100,6 +100,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcMimeType();
                     title = "MimeType对照表";
                     break;
+                case "unicode":
+                    toolBox.UcBox.Content = new UcUnicode();
+                    title = "Unicode中文互转";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";
