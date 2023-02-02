@@ -1,37 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using SmartSQL.Framework.PhysicalDataModel;
-using SmartSQL.Models;
-using System.Runtime.CompilerServices;
-using SmartSQL.Framework;
-using SmartSQL.Framework.SqliteModel;
-using SmartSQL.Annotations;
-using SmartSQL.DocUtils;
-using SmartSQL.Framework.Const;
 using SmartSQL.Helper;
-using SmartSQL.UserControl;
 using SmartSQL.Views;
-using ComboBox = System.Windows.Controls.ComboBox;
-using FontAwesome = FontAwesome.WPF.FontAwesome;
-using TabControl = System.Windows.Controls.TabControl;
-using TabItem = System.Windows.Controls.TabItem;
 using HandyControl.Data;
-using HandyControl.Controls;
-using SqlSugar.DistributedSystem.Snowflake;
-using System.Text.Json;
 
 namespace SmartSQL.UserControl
 {
@@ -71,7 +44,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnReturn_Click(object sender, RoutedEventArgs e)
         {
-            var parentWindow = (ToolBox)System.Windows.Window.GetWindow(this);
+            var parentWindow = (ToolBox)Window.GetWindow(this);
             parentWindow.UcBox.Content = new UcMainTools();
         }
 
@@ -91,7 +64,6 @@ namespace SmartSQL.UserControl
         {
             try
             {
-
                 var text = TextInput.Text;
                 if (string.IsNullOrEmpty(text))
                 {
@@ -135,6 +107,5 @@ namespace SmartSQL.UserControl
             }
             return text;
         }
-
     }
 }

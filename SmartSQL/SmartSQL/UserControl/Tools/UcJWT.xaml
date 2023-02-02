@@ -100,18 +100,21 @@
                         Margin="10"
                         Background="White"
                         CornerRadius="8">
-                        <ScrollViewer PanningMode="Both">
+                        <ScrollViewer x:Name="SVBox" PanningMode="Both">
                             <StackPanel Margin="10" VerticalAlignment="Stretch">
                                 <TextBlock
-                                    Margin="0,0,0,3"
+                                    Margin="10,0,0,3"
                                     HorizontalAlignment="Left"
                                     Style="{StaticResource TextBlockDefault}"
                                     Text="HEADER" />
-                                <Border BorderBrush="#f8f8f8" BorderThickness="1">
+                                <Border
+                                    BorderBrush="#f8f8f8"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
                                     <avalonedit:TextEditor
                                         x:Name="TextHeader"
                                         Height="80"
-                                        Margin="0"
+                                        Margin="5"
                                         Padding="0"
                                         FontFamily="新宋体"
                                         IsHitTestVisible="False"
@@ -126,15 +129,18 @@
                                     </avalonedit:TextEditor>
                                 </Border>
                                 <TextBlock
-                                    Margin="0,5,5,3"
+                                    Margin="10,5,5,3"
                                     HorizontalAlignment="Left"
                                     Style="{StaticResource TextBlockDefault}"
                                     Text="PAYLOAD" />
-                                <Border BorderBrush="#f8f8f8" BorderThickness="1">
+                                <Border
+                                    BorderBrush="#f8f8f8"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
                                     <avalonedit:TextEditor
                                         x:Name="TextPayLoad"
                                         MinHeight="150"
-                                        Margin="0"
+                                        Margin="5"
                                         Padding="0"
                                         VerticalAlignment="Stretch"
                                         FontFamily="新宋体"
