@@ -104,6 +104,14 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcUnicode();
                     title = "Unicode中文互转";
                     break;
+                case "hexEncode":
+                    toolBox.UcBox.Content = new UcHex();
+                    title = "Hex编码/解码";
+                    break;
+                case "linuxCommand":
+                    toolBox.UcBox.Content = new UcLinuxCommand();
+                    title = "Linux命令大全";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

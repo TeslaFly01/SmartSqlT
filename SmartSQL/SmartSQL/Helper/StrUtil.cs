@@ -160,7 +160,7 @@ namespace SmartSQL.Helper
         public static string Base46_Encode(string text)
         {
             byte[] bytes = Encoding.Default.GetBytes(text);
-            return Convert.ToBase64String(bytes);
+            return Convert.ToBase64String(bytes);            
         }
 
         /// <summary>
