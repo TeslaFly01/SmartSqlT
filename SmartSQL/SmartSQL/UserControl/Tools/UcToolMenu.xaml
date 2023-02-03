@@ -126,6 +126,11 @@
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/linux-command@2x.png"
                     Tag="linuxCommand" />
                 <localControls:UcToolCard
+                    Title="繁简转换"
+                    ClickCard="UcToolCard_ClickCard"
+                    Icon="/SmartSQL;component/Resources/Img/toolIcon/fanti@2x.png"
+                    Tag="fanti" />
+                <localControls:UcToolCard
                     Title="条形码生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/barCode@2x.png"

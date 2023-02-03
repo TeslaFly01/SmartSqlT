@@ -112,6 +112,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcLinuxCommand();
                     title = "Linux命令大全";
                     break;
+                case "fanti":
+                    toolBox.UcBox.Content = new UcFanTi();
+                    title = "繁简转换";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

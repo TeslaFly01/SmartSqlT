@@ -1,0 +1,171 @@
+﻿<local:BaseUserControl
+    x:Class="SmartSQL.UserControl.UcFanTi"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="clr-namespace:SmartSQL.Models"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    mc:Ignorable="d">
+    <Border
+        Margin="5"
+        Background="White"
+        CornerRadius="8">
+        <Grid Margin="18">
+            <Grid
+                Height="40"
+                Margin="0,-5,0,0"
+                VerticalAlignment="Top"
+                Background="#f9f9f9">
+                <StackPanel Orientation="Horizontal">
+                    <fa:FontAwesome
+                        Margin="10,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77"
+                        Icon="Inbox" />
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        工具箱
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        /
+                    </TextBlock>
+                    <TextBlock
+                        Margin="5,0,0,0"
+                        VerticalAlignment="Center"
+                        Foreground="#5c6b77">
+                        繁简转换
+                    </TextBlock>
+                </StackPanel>
+
+                <TextBlock
+                    Margin="10,10,10,0"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Top"
+                    Style="{StaticResource TextBlockSubTitleBold}"
+                    Text="繁简转换" />
+                <Button
+                    x:Name="BtnReturn"
+                    Width="60"
+                    Height="28"
+                    Margin="0,0,8,0"
+                    HorizontalAlignment="Right"
+                    BorderThickness="0.4"
+                    Click="BtnReturn_Click"
+                    Content="返回"
+                    Cursor="Hand" />
+            </Grid>
+
+            <Border
+                Margin="0,43,0,0"
+                VerticalAlignment="Stretch"
+                Background="#f9f9f9"
+                CornerRadius="8">
+                <StackPanel>
+                    <Grid Margin="15,10,15,0">
+                        <StackPanel
+                            Height="30"
+                            Margin="0,-3,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <TextBlock VerticalAlignment="Center" Text="最多 " />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Foreground="#1890ff"
+                                Text="2000" />
+                            <TextBlock VerticalAlignment="Center" Text=" 字，剩余 " />
+                            <TextBlock
+                                Name="TextSurplusNum"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Foreground="#1890ff"
+                                Text="2000" />
+                            <TextBlock
+                                Margin="0,0,10,0"
+                                VerticalAlignment="Center"
+                                Text=" 字" />
+                            <ProgressBar
+                                Name="ProgressBarTextNum"
+                                Width="80"
+                                Height="15"
+                                Margin="0"
+                                VerticalAlignment="Center"
+                                Maximum="2000"
+                                Value="0" />
+                        </StackPanel>
+                        <TextBox
+                            Name="TextInput"
+                            Height="150"
+                            HorizontalAlignment="Stretch"
+                            VerticalContentAlignment="Top"
+                            hc:InfoElement.Placeholder="请输入文字内容"
+                            hc:InfoElement.Title="请输入要转繁体或简体的文字内容"
+                            AcceptsReturn="True"
+                            MaxLength="5000"
+                            Style="{StaticResource TextBoxExtend}"
+                            TextChanged="TextInput_OnTextChanged"
+                            TextWrapping="Wrap" />
+                    </Grid>
+                    <StackPanel
+                        Margin="15,15,0,0"
+                        HorizontalAlignment="Left"
+                        Orientation="Horizontal">
+                        <Button
+                            x:Name="BtnJToFConvert"
+                            Width="90"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            Click="BtnJToFConvert_Click"
+                            Content="简体转繁体"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
+                        <Button
+                            x:Name="BtnFToJConvert"
+                            Width="90"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            Click="BtnFToJConvert_Click"
+                            Content="繁体转简体"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonWarning}" />
+                        <Button
+                            x:Name="BtnClear"
+                            Width="80"
+                            Height="28"
+                            Margin="0,0,10,0"
+                            hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                            BorderThickness="0.4"
+                            Click="BtnClear_Click"
+                            Content="清空"
+                            Cursor="Hand" />
+                    </StackPanel>
+                    <TextBox
+                        x:Name="TextOutput"
+                        Height="150"
+                        Margin="15,10,15,0"
+                        HorizontalAlignment="Stretch"
+                        VerticalContentAlignment="Top"
+                        hc:InfoElement.Placeholder="转换结果"
+                        hc:InfoElement.Title="转换拼音后的结果："
+                        IsReadOnly="True"
+                        Style="{StaticResource TextBoxExtend}"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Border>
+</local:BaseUserControl>

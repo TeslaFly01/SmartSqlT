@@ -99,6 +99,9 @@
     <PackageReference Include="System.Data.SQLite">
       <Version>1.0.116</Version>
     </PackageReference>
+    <PackageReference Include="ToolGood.Words">
+      <Version>3.0.3.3</Version>
+    </PackageReference>
     <PackageReference Include="ZXing.Net">
       <Version>0.16.8</Version>
     </PackageReference>
@@ -218,6 +221,9 @@
     </Compile>
     <Compile Include="UserControl\Tools\UcLinuxCommand.xaml.cs">
       <DependentUpon>UcLinuxCommand.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Tools\UcFanTi.xaml.cs">
+      <DependentUpon>UcFanTi.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tools\UcUnicode.xaml.cs">
       <DependentUpon>UcUnicode.xaml</DependentUpon>
@@ -496,6 +502,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Tools\UcFanTi.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcUnicode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -717,6 +727,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\fanti%402x.png" />
     <Resource Include="Resources\linux.js" />
     <Resource Include="Resources\Img\toolIcon\linux-command%402x.png" />
     <Resource Include="Resources\Img\toolIcon\hex-encoding%402x.png" />
