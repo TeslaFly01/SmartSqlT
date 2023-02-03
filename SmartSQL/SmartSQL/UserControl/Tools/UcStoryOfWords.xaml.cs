@@ -81,6 +81,13 @@ namespace SmartSQL.UserControl
                         Box.Background = brush;
                     });
                 }
+                else
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        Oops.Oh("网络异常，稍后再试");
+                    });
+                }
             });
         }
     }
