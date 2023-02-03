@@ -76,87 +76,9 @@
                 Background="#f9f9f9"
                 CornerRadius="8">
                 <StackPanel>
-                    <!--<TextBox
-                        Name="TextContent"
-                        Height="80"
-                        Margin="15,10,15,0"
-                        HorizontalAlignment="Stretch"
-                        VerticalContentAlignment="Top"
-                        hc:InfoElement.Placeholder="请输入编码内容，支持网址、文本、电子邮箱等"
-                        AcceptsReturn="True"
-                        BorderThickness="0"
-                        Style="{StaticResource TextBoxExtend}"
-                        TextWrapping="Wrap" />-->
                     <hc:ColorPicker Name="ColorPicker" Margin="12" />
-                    <StackPanel
-                        Margin="0,10,0,0"
-                        HorizontalAlignment="Center"
-                        Orientation="Horizontal">
-                        <Button
-                            x:Name="BtnGeneration"
-                            Width="105"
-                            Height="28"
-                            Margin="0,0,10,0"
-                            hc:IconElement.Geometry="{StaticResource QrCodeGeometry}"
-                            Content="生成二维码"
-                            Cursor="Hand"
-                            Style="{StaticResource ButtonSuccess}" />
-                        <Button
-                            x:Name="BtnClear"
-                            Width="80"
-                            Height="28"
-                            hc:IconElement.Geometry="{StaticResource ClearGeometry}"
-                            BorderThickness="0.4"
-                            Content="清空"
-                            Cursor="Hand" />
-                    </StackPanel>
                 </StackPanel>
             </Border>
-            <!--<Border
-                Name="ResultBox"
-                Width="210"
-                Height="210"
-                Margin="0,205,0,0"
-                Background="#f9f9f9"
-                CornerRadius="8">
-                <Grid>
-                    <hc:TextBox
-                        Name="TextTip"
-                        Height="30"
-                        HorizontalContentAlignment="Center"
-                        Background="Transparent"
-                        BorderThickness="0"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        Foreground="DimGray"
-                        IsReadOnly="True">
-                        此处预览二维码
-                    </hc:TextBox>
-                    <hc:ImageBlock
-                        Name="ImageResult"
-                        Width="180"
-                        Height="180"
-                        Visibility="Collapsed">
-                        <hc:ImageBlock.ContextMenu>
-                            <ContextMenu>
-                                <MenuItem
-                                    x:Name="MenuSaveQrCode"
-                                    Width="150"
-                                    Padding="5,3,5,3"
-                                    VerticalAlignment="Center"
-                                    Header="保存图片">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Icon="Save" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </hc:ImageBlock.ContextMenu>
-                    </hc:ImageBlock>
-                </Grid>
-            </Border>-->
         </Grid>
     </Border>
 </local:BaseUserControl>
