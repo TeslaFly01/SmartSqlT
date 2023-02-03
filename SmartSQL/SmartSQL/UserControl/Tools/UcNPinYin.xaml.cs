@@ -31,56 +31,15 @@ namespace SmartSQL.UserControl
             parentWindow.UcBox.Content = new UcMainTools();
         }
 
+        /// <summary>
+        /// 清理
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnClear_Click(object sender, RoutedEventArgs e)
         {
             TextInput.Text = string.Empty;
             TextOutput.Text = string.Empty;
-        }
-
-        /// <summary>
-        /// 编码
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void BtnEncode_Click(object sender, RoutedEventArgs e)
-        {
-            var inputText = TextInput.Text;
-            if (inputText == string.Empty)
-            {
-                return;
-            }
-            var rText = StrUtil.Base46_Encode(inputText);
-            TextOutput.Text = rText;
-        }
-
-        private void BtnDecode_Click(object sender, RoutedEventArgs e)
-        {
-            var inputText = TextInput.Text;
-            if (inputText == string.Empty)
-            {
-                return;
-            }
-            try
-            {
-                var rText = StrUtil.Base46_Decode(inputText);
-                TextOutput.Text = rText;
-            }
-            catch (Exception ex)
-            {
-                TextOutput.Text = ex.Message;
-            }
-        }
-
-        private void BtnExchange_Click(object sender, RoutedEventArgs e)
-        {
-            var inputText = TextInput.Text;
-            var outputText = TextOutput.Text;
-            if (inputText == string.Empty && outputText == string.Empty)
-            {
-                return;
-            }
-            TextInput.Text = outputText;
-            TextOutput.Text = inputText;
         }
 
         ///// <summary>
