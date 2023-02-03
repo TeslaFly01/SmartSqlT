@@ -86,7 +86,7 @@
                                 VerticalAlignment="Center"
                                 FontWeight="Bold"
                                 Foreground="#1890ff"
-                                Text="2000" />
+                                Text="5000" />
                             <TextBlock VerticalAlignment="Center" Text=" 字，剩余 " />
                             <TextBlock
                                 Name="TextSurplusNum"
