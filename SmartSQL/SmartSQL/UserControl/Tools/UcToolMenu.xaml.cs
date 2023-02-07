@@ -116,6 +116,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcFanTi();
                     title = "繁简转换";
                     break;
+                case "rmb":
+                    toolBox.UcBox.Content = new UcRMB();
+                    title = "人民币大写转换";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

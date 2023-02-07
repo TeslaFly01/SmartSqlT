@@ -216,6 +216,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcRMB.xaml.cs">
+      <DependentUpon>UcRMB.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcHex.xaml.cs">
       <DependentUpon>UcHex.xaml</DependentUpon>
     </Compile>
@@ -494,6 +497,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Tools\UcRMB.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcHex.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -727,6 +734,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\rmb%402x.png" />
     <Resource Include="Resources\Img\toolIcon\fanti%402x.png" />
     <Resource Include="Resources\linux.js" />
     <Resource Include="Resources\Img\toolIcon\linux-command%402x.png" />
