@@ -11,7 +11,7 @@
 <img alt="visual studio 2019" src="https://img.shields.io/badge/Visual Studio-2019-blue.svg">
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-brightgreen.svg">
 <img alt="license" src="https://img.shields.io/badge/license-Apache-blue.svg">
-<img alt="release" src="https://img.shields.io/badge/release-1.0.3.4-green">
+<img alt="release" src="https://img.shields.io/badge/release-1.0.3.7-green">
 </p>
 
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner_01.png)
@@ -174,7 +174,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 |:--:|:--:|
 | QQ交流群：`666483672` | 微信交流群 |
 
- > 由于`微信群`限制`100`人后需群主邀请，如需加群请关注下方公众号获取本人微信拉你入群
+ > 由于`微信群`限制`100`人后需群主邀请，如需加群请扫码上面二维码加好友本人拉你入群
 
  > 公众号也将每日定期分享`有趣`、`有料`、`有用`的开源项目，助力共同成长✌️
 
