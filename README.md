@@ -172,7 +172,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
  ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ContactQQ.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png) 
 |:--:|:--:|
-| QQ交流群：`666483672` | 微信交流群 |
+| QQ交流群：`666483672` | 作者微信号 |
 
  > 由于`微信群`限制`100`人后需群主邀请，如需加群请扫码上面二维码加好友本人拉你入群
 
