@@ -453,7 +453,7 @@ namespace SmartSQL.UserControl
                         nodeTable.Children.Add(new TreeNodeItem()
                         {
                             ObejcetId = table.Value.Id,
-                            DisplayName = table.Value.DisplayName,
+                            DisplayName = table.Value.DisplayName + " " + table.Value.Comment,
                             Name = table.Value.Name,
                             Schema = table.Value.SchemaName,
                             Comment = table.Value.Comment,
@@ -1424,7 +1424,7 @@ namespace SmartSQL.UserControl
                 return;
             }
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            
+
             var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.SelectedDbConnectString(selectDatabase.DbName));
             var TableColumns = exporter.GetColumnInfoById(selectedObjects.ObejcetId);
             var list = TableColumns.Values.ToList();
