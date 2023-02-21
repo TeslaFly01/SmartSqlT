@@ -90,6 +90,13 @@
                         VerticalAlignment="Top"
                         Content="对象名模糊搜索"
                         IsChecked="True" />
+                    <CheckBox
+                        Name="ChkIsContainsObjName"
+                        Margin="36,90,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="左侧表、视图菜单包含表备注说明"
+                        IsChecked="True" />
                 </Grid>
 
                 <!--  操作栏  -->

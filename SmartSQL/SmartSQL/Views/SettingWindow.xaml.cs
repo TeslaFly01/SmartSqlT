@@ -39,11 +39,13 @@ namespace SmartSQL.Views
                         ChkIsMultipleTab.IsChecked = value; break;
                     case "IsLikeSearch":
                         ChkIsLikeSearch.IsChecked = value; break;
+                    case "IsContainsObjName":
+                        ChkIsContainsObjName.IsChecked = value; break;
                 }
             });
         }
 
-        private readonly List<string> KeyList = new List<string> { SysConst.Sys_IsMultipleTab, SysConst.Sys_IsLikeSearch };
+        private readonly List<string> KeyList = new List<string> { SysConst.Sys_IsMultipleTab, SysConst.Sys_IsLikeSearch, SysConst.Sys_IsContainsObjName };
         /// <summary>
         /// 保存
         /// </summary>
@@ -53,6 +55,7 @@ namespace SmartSQL.Views
         {
             var isMultipleTab = ChkIsMultipleTab.IsChecked == true;
             var isLikeSearch = ChkIsLikeSearch.IsChecked == true;
+            var isContainsObjName = ChkIsContainsObjName.IsChecked == true;
             var sqLiteHelper = new SQLiteHelper();
             var sysSets = sqLiteHelper.db.Table<SystemSet>().Where(x => KeyList.Contains(x.Name)).ToList();
             sysSets.ForEach(x =>
@@ -64,6 +67,10 @@ namespace SmartSQL.Views
                 if (x.Name == SysConst.Sys_IsLikeSearch)
                 {
                     x.Value = isLikeSearch.ToString();
+                }
+                if (x.Name == SysConst.Sys_IsContainsObjName)
+                {
+                    x.Value = isContainsObjName.ToString();
                 }
             });
             sqLiteHelper.db.UpdateAll(sysSets);

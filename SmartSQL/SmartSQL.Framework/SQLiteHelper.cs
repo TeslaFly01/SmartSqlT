@@ -59,6 +59,7 @@ namespace SmartSQL.Framework
             new SystemSet{Name = SysConst.Sys_IsGroup,Type = 1,Value = "false"},
             new SystemSet{Name = SysConst.Sys_IsMultipleTab,Type = 1,Value = "false"},
             new SystemSet{Name = SysConst.Sys_IsLikeSearch,Type = 1,Value = "false"},
+            new SystemSet{Name = SysConst.Sys_IsContainsObjName,Type = 1,Value = "false"},
             new SystemSet{Name = SysConst.Sys_LeftMenuType,Type = 2,Value = "1"},
             new SystemSet{Name = SysConst.Sys_SelectedConnection,Type = 3,Value = ""},
             new SystemSet{Name = SysConst.Sys_SelectedDataBase,Type = 3,Value = ""},

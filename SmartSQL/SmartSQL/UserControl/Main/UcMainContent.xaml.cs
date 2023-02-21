@@ -187,6 +187,7 @@ namespace SmartSQL.UserControl
             {
                 var sqLiteHelper = new SQLiteHelper();
                 var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
+                var isContainsObjName = sqLiteHelper.GetSysBool(SysConst.Sys_IsContainsObjName);
                 //分组相关列表
                 var curObjects = new List<SObjectDTO>();
                 var curGroups = new List<GroupInfo>();
@@ -379,6 +380,22 @@ namespace SmartSQL.UserControl
                 #region 表
                 foreach (var table in model.Tables)
                 {
+                    var tableName = !isContainsObjName
+                        ? table.Value.DisplayName
+                        : table.Value.DisplayName + " " + table.Value.Comment;
+                    var tableItem = new TreeNodeItem()
+                    {
+                        ObejcetId = table.Value.Id,
+                        DisplayName = tableName,
+                        Name = table.Value.Name,
+                        Schema = table.Value.SchemaName,
+                        Comment = table.Value.Comment,
+                        CreateDate = table.Value.CreateDate,
+                        ModifyDate = table.Value.ModifyDate,
+                        TextColor = textColor,
+                        Icon = TABLEICON,
+                        Type = ObjType.Table
+                    };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -394,19 +411,7 @@ namespace SmartSQL.UserControl
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = table.Value.Id,
-                                        DisplayName = table.Value.DisplayName,
-                                        Name = table.Value.Name,
-                                        Schema = table.Value.SchemaName,
-                                        Comment = table.Value.Comment,
-                                        CreateDate = table.Value.CreateDate,
-                                        ModifyDate = table.Value.ModifyDate,
-                                        TextColor = textColor,
-                                        Icon = TABLEICON,
-                                        Type = ObjType.Table
-                                    });
+                                    ppGroup.Children.Add(tableItem);
                                 }
                             }
                         }
@@ -429,19 +434,7 @@ namespace SmartSQL.UserControl
                                 var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppTag != null)
                                 {
-                                    ppTag.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = table.Value.Id,
-                                        DisplayName = table.Value.DisplayName,
-                                        Name = table.Value.Name,
-                                        Schema = table.Value.SchemaName,
-                                        Comment = table.Value.Comment,
-                                        CreateDate = table.Value.CreateDate,
-                                        ModifyDate = table.Value.ModifyDate,
-                                        TextColor = textColor,
-                                        Icon = TABLEICON,
-                                        Type = ObjType.Table
-                                    });
+                                    ppTag.Children.Add(tableItem);
                                 }
                             }
                         }
@@ -450,19 +443,7 @@ namespace SmartSQL.UserControl
                     else
                     {
                         #region MyRegion
-                        nodeTable.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = table.Value.Id,
-                            DisplayName = table.Value.DisplayName + " " + table.Value.Comment,
-                            Name = table.Value.Name,
-                            Schema = table.Value.SchemaName,
-                            Comment = table.Value.Comment,
-                            CreateDate = table.Value.CreateDate,
-                            ModifyDate = table.Value.ModifyDate,
-                            TextColor = textColor,
-                            Icon = TABLEICON,
-                            Type = ObjType.Table
-                        });
+                        nodeTable.Children.Add(tableItem);
                         #endregion
                     }
                 }
@@ -471,6 +452,20 @@ namespace SmartSQL.UserControl
                 #region 视图
                 foreach (var view in model.Views)
                 {
+                    var viewName = !isContainsObjName ? view.Value.DisplayName : view.Value.DisplayName + " " + view.Value.Comment;
+                    var viewItem = new TreeNodeItem()
+                    {
+                        ObejcetId = view.Value.Id,
+                        DisplayName = viewName,
+                        Name = view.Value.Name,
+                        Schema = view.Value.SchemaName,
+                        Comment = view.Value.Comment,
+                        CreateDate = view.Value.CreateDate,
+                        ModifyDate = view.Value.ModifyDate,
+                        TextColor = textColor,
+                        Icon = VIEWICON,
+                        Type = ObjType.View
+                    };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -486,19 +481,7 @@ namespace SmartSQL.UserControl
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = view.Value.Id,
-                                        DisplayName = view.Value.DisplayName,
-                                        Name = view.Value.Name,
-                                        Schema = view.Value.SchemaName,
-                                        Comment = view.Value.Comment,
-                                        CreateDate = view.Value.CreateDate,
-                                        ModifyDate = view.Value.ModifyDate,
-                                        TextColor = textColor,
-                                        Icon = VIEWICON,
-                                        Type = ObjType.View
-                                    });
+                                    ppGroup.Children.Add(viewItem);
                                 }
                             }
                         }
@@ -518,19 +501,7 @@ namespace SmartSQL.UserControl
                                 var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppTag != null)
                                 {
-                                    ppTag.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = view.Value.Id,
-                                        DisplayName = view.Value.DisplayName,
-                                        Name = view.Value.Name,
-                                        Schema = view.Value.SchemaName,
-                                        Comment = view.Value.Comment,
-                                        CreateDate = view.Value.CreateDate,
-                                        ModifyDate = view.Value.ModifyDate,
-                                        TextColor = textColor,
-                                        Icon = VIEWICON,
-                                        Type = ObjType.View
-                                    });
+                                    ppTag.Children.Add(viewItem);
                                 }
                             }
                         }
@@ -539,19 +510,7 @@ namespace SmartSQL.UserControl
                     else
                     {
                         #region MyRegion
-                        nodeView.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = view.Value.Id,
-                            DisplayName = view.Value.DisplayName,
-                            Name = view.Value.Name,
-                            Schema = view.Value.SchemaName,
-                            Comment = view.Value.Comment,
-                            CreateDate = view.Value.CreateDate,
-                            ModifyDate = view.Value.ModifyDate,
-                            TextColor = textColor,
-                            Icon = VIEWICON,
-                            Type = ObjType.View
-                        });
+                        nodeView.Children.Add(viewItem);
                         #endregion
                     }
                 }
@@ -726,6 +685,10 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void SearchMenu_OnTextChanged(object sender, TextChangedEventArgs e)
         {
+            if (SelectedConnection == null)
+            {
+                return;
+            }
             SearchMenuBind();
         }
 
@@ -771,6 +734,7 @@ namespace SmartSQL.UserControl
             var sqLiteHelper = new SQLiteHelper();
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
+            var isContainsObjName = sqLiteHelper.GetSysBool(SysConst.Sys_IsContainsObjName);
             var selectDataBase = HidSelectDatabase.Text;
             var selectConnection = SelectedConnection;
             //分组相关列表
@@ -941,6 +905,21 @@ namespace SmartSQL.UserControl
                     {
                         continue;
                     }
+                    var tableName = !isContainsObjName
+                        ? table.Value.DisplayName
+                        : table.Value.DisplayName + " " + table.Value.Comment;
+                    var tableItem = new TreeNodeItem()
+                    {
+                        ObejcetId = table.Value.Id,
+                        DisplayName = tableName,
+                        Name = table.Value.Name,
+                        Schema = table.Value.SchemaName,
+                        Comment = table.Value.Comment,
+                        CreateDate = table.Value.CreateDate,
+                        ModifyDate = table.Value.ModifyDate,
+                        Icon = TABLEICON,
+                        Type = ObjType.Table
+                    };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -956,18 +935,7 @@ namespace SmartSQL.UserControl
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = table.Value.Id,
-                                        DisplayName = table.Value.DisplayName,
-                                        Name = table.Value.Name,
-                                        Schema = table.Value.SchemaName,
-                                        Comment = table.Value.Comment,
-                                        CreateDate = table.Value.CreateDate,
-                                        ModifyDate = table.Value.ModifyDate,
-                                        Icon = TABLEICON,
-                                        Type = ObjType.Table
-                                    });
+                                    ppGroup.Children.Add(tableItem);
                                 }
                             }
                         }
@@ -989,18 +957,7 @@ namespace SmartSQL.UserControl
                                 var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "表");
                                 if (ppTag != null)
                                 {
-                                    ppTag.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = table.Value.Id,
-                                        DisplayName = table.Value.DisplayName,
-                                        Name = table.Value.Name,
-                                        Schema = table.Value.SchemaName,
-                                        Comment = table.Value.Comment,
-                                        CreateDate = table.Value.CreateDate,
-                                        ModifyDate = table.Value.ModifyDate,
-                                        Icon = TABLEICON,
-                                        Type = ObjType.Table
-                                    });
+                                    ppTag.Children.Add(tableItem);
                                 }
                             }
                         }
@@ -1009,18 +966,7 @@ namespace SmartSQL.UserControl
                     else
                     {
                         #region MyRegion
-                        nodeTable.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = table.Value.Id,
-                            DisplayName = table.Value.DisplayName,
-                            Name = table.Value.Name,
-                            Schema = table.Value.SchemaName,
-                            Comment = table.Value.Comment,
-                            CreateDate = table.Value.CreateDate,
-                            ModifyDate = table.Value.ModifyDate,
-                            Icon = TABLEICON,
-                            Type = ObjType.Table
-                        });
+                        nodeTable.Children.Add(tableItem);
                         #endregion
                     }
                 }
@@ -1039,6 +985,22 @@ namespace SmartSQL.UserControl
                     {
                         continue;
                     }
+
+                    var viewName = !isContainsObjName
+                        ? view.Value.DisplayName
+                        : view.Value.DisplayName + " " + view.Value.Comment;
+                    var viewItem = new TreeNodeItem()
+                    {
+                        ObejcetId = view.Value.Id,
+                        DisplayName = viewName,
+                        Name = view.Value.Name,
+                        Schema = view.Value.SchemaName,
+                        Comment = view.Value.Comment,
+                        CreateDate = view.Value.CreateDate,
+                        ModifyDate = view.Value.ModifyDate,
+                        Icon = VIEWICON,
+                        Type = ObjType.View
+                    };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
                     {
@@ -1054,18 +1016,7 @@ namespace SmartSQL.UserControl
                                 var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppGroup != null)
                                 {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = view.Value.Id,
-                                        DisplayName = view.Value.DisplayName,
-                                        Name = view.Value.Name,
-                                        Schema = view.Value.SchemaName,
-                                        Comment = view.Value.Comment,
-                                        CreateDate = view.Value.CreateDate,
-                                        ModifyDate = view.Value.ModifyDate,
-                                        Icon = VIEWICON,
-                                        Type = ObjType.View
-                                    });
+                                    ppGroup.Children.Add(viewItem);
                                 }
                             }
                         }
@@ -1087,18 +1038,7 @@ namespace SmartSQL.UserControl
                                 var ppTag = pTag.Children.FirstOrDefault(x => x.DisplayName == "视图");
                                 if (ppTag != null)
                                 {
-                                    ppTag.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = view.Value.Id,
-                                        DisplayName = view.Value.DisplayName,
-                                        Name = view.Value.Name,
-                                        Schema = view.Value.SchemaName,
-                                        Comment = view.Value.Comment,
-                                        CreateDate = view.Value.CreateDate,
-                                        ModifyDate = view.Value.ModifyDate,
-                                        Icon = VIEWICON,
-                                        Type = ObjType.View
-                                    });
+                                    ppTag.Children.Add(viewItem);
                                 }
                             }
                         }
@@ -1107,18 +1047,7 @@ namespace SmartSQL.UserControl
                     else
                     {
                         #region MyRegion
-                        nodeView.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = view.Value.Id,
-                            DisplayName = view.Value.DisplayName,
-                            Name = view.Value.Name,
-                            Schema = view.Value.SchemaName,
-                            Comment = view.Value.Comment,
-                            CreateDate = view.Value.CreateDate,
-                            ModifyDate = view.Value.ModifyDate,
-                            Icon = VIEWICON,
-                            Type = ObjType.View
-                        });
+                        nodeView.Children.Add(viewItem);
                         #endregion
                     }
                 }
