@@ -956,6 +956,11 @@ namespace SmartSQL.Views
                 Oops.Oh("请选择需要导出的对象");
                 return;
             }
+            if (ffList.Any(x => TxtFileName.Text.Contains(x)))
+            {
+                Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
+                return;
+            }
             if (string.IsNullOrEmpty(TxtFileName.Text))
             {
                 var fName = SelectedDataBase.DbName;
@@ -1275,5 +1280,23 @@ namespace SmartSQL.Views
         {
             e.Handled = true;
         }
+
+        private void TxtFileName_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var fileName = TxtFileName.Text;
+            if (string.IsNullOrEmpty(fileName))
+            {
+                return;
+            }
+            if (ffList.Any(x => fileName.Contains(x)))
+            {
+                Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
+            }
+        }
+
+        private static List<string> ffList = new List<string>
+        {
+           "\\","/", ":","*","?","\"","<",">","|"
+        };
     }
 }
