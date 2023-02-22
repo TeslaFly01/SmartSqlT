@@ -24,6 +24,7 @@ using SmartSQL.Framework.Const;
 using SmartSQL.Helper;
 using SmartSQL.UserControl;
 using SmartSQL.Views;
+using SqlSugar;
 using ComboBox = System.Windows.Controls.ComboBox;
 using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
@@ -42,5 +43,60 @@ namespace SmartSQL.UserControl
             DataContext = this;
         }
 
+        private void UcMainDbCompare_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            var sqLiteHelper = SQLiteHelper.GetInstance();
+            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
+            ComSourceConnect.ItemsSource = null;
+            ComSourceConnect.ItemsSource = connectConfigs;
+            ComTargetConnect.ItemsSource = null;
+            ComTargetConnect.ItemsSource = connectConfigs;
+        }
+
+        /// <summary>
+        /// 选中源连接加载对应数据库
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComSourceConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var selConnectConfig = (ConnectConfigs)((ComboBox)sender).SelectedItem;
+            var dbInstance = ExporterFactory.CreateInstance(selConnectConfig.DbType, selConnectConfig.DbMasterConnectString);
+            var list = dbInstance.GetDatabases(selConnectConfig.DefaultDatabase);
+            ComSourceDatabase.ItemsSource = list;
+            if (selConnectConfig.DbType == DbType.PostgreSQL)
+            {
+                ComSourceDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
+                return;
+            }
+            ComSourceDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
+        }
+
+        /// <summary>
+        /// 选中目标连接加载对应数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComTargetConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            var selConnectConfig = (ConnectConfigs)((ComboBox)sender).SelectedItem;
+            var dbInstance = ExporterFactory.CreateInstance(selConnectConfig.DbType, selConnectConfig.DbMasterConnectString);
+            var list = dbInstance.GetDatabases(selConnectConfig.DefaultDatabase);
+            ComTargetDatabase.ItemsSource = list;
+            if (selConnectConfig.DbType == DbType.PostgreSQL)
+            {
+                ComTargetDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
+                return;
+            }
+            ComTargetDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
+        }
     }
 }

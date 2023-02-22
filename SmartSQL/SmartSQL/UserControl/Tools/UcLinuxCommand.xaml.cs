@@ -47,13 +47,14 @@ namespace SmartSQL.UserControl
         private void SearchText_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             NoDataText.Visibility = Visibility.Collapsed;
+            var linuxJson = Resource.linux;
+            var linuxCommands = System.Text.Json.JsonSerializer.Deserialize<List<LinuxCommand>>(linuxJson);
             var searchText = SearchText.Text;
             if (string.IsNullOrEmpty(searchText))
             {
+                TableGrid.ItemsSource = linuxCommands;
                 return;
             }
-            var linuxJson = Resource.linux;
-            var linuxCommands = System.Text.Json.JsonSerializer.Deserialize<List<LinuxCommand>>(linuxJson);
             var mimeTypes = linuxCommands.Where(x => x.n.Contains(searchText) || x.d.Contains(searchText));
             TableGrid.ItemsSource = mimeTypes;
             if (!mimeTypes.Any())

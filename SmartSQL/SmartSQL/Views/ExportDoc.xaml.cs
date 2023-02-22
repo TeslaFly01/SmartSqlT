@@ -956,7 +956,7 @@ namespace SmartSQL.Views
                 Oops.Oh("请选择需要导出的对象");
                 return;
             }
-            if (ffList.Any(x => TxtFileName.Text.Contains(x)))
+            if (CharacterList.Any(x => TxtFileName.Text.Contains(x)))
             {
                 Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
                 return;
@@ -1261,21 +1261,6 @@ namespace SmartSQL.Views
             return type;
         }
 
-        private string FileExtend(DocType docType)
-        {
-            switch (docType)
-            {
-                case DocType.word: return "docx";
-                case DocType.chm: return "chm";
-                case DocType.excel: return "xlsx";
-                case DocType.html: return "html";
-                case DocType.md: return "md";
-                case DocType.pdf: return "pdf";
-                case DocType.xml: return "xml";
-                default: return "chm";
-            }
-        }
-
         private void EventSetter_OnHandler(object sender, RequestBringIntoViewEventArgs e)
         {
             e.Handled = true;
@@ -1288,13 +1273,16 @@ namespace SmartSQL.Views
             {
                 return;
             }
-            if (ffList.Any(x => fileName.Contains(x)))
+            if (CharacterList.Any(x => fileName.Contains(x)))
             {
                 Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
             }
         }
 
-        private static List<string> ffList = new List<string>
+        /// <summary>
+        /// 特殊符号
+        /// </summary>
+        private static List<string> CharacterList = new List<string>
         {
            "\\","/", ":","*","?","\"","<",">","|"
         };

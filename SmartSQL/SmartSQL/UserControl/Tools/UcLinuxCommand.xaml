@@ -76,7 +76,7 @@
                 <Grid>
                     <hc:SearchBar
                         Name="SearchText"
-                        Margin="20"
+                        Margin="10,10,10,10"
                         VerticalAlignment="Top"
                         hc:InfoElement.Placeholder="输入命令或描述搜索"
                         BorderThickness="0"
@@ -85,7 +85,7 @@
                         TextChanged="SearchText_TextChanged" />
                     <DataGrid
                         x:Name="TableGrid"
-                        Margin="20,60,20,20"
+                        Margin="5,45,5,5"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
                         hc:DataGridAttach.ShowRowNumber="True"
                         AutoGenerateColumns="False"
@@ -116,7 +116,7 @@
                     </DataGrid>
                     <Grid
                         x:Name="NoDataText"
-                        Margin="20,70,20,20"
+                        Margin="10,50,10,10"
                         HorizontalAlignment="Stretch"
                         Background="White"
                         Cursor="Arrow"
