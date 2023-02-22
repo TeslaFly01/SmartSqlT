@@ -32,17 +32,8 @@
         MouseLeftButtonUp="Border_MouseLeftButtonUp"
         Style="{StaticResource ToolCard}">
         <Grid>
-            <!--<TextBlock
-                Height="25"
-                Padding="5"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Foreground="#757575"
-                RenderTransformOrigin=".5,.5">
-                开发中
-            </TextBlock>-->
             <StackPanel VerticalAlignment="Center">
-                <Image
+                <hc:Gravatar
                     Width="40"
                     Height="40"
                     Source="{Binding Icon}" />
@@ -50,7 +41,6 @@
                     Margin="0,5,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    FontWeight="Bold"
                     Foreground="#36425a"
                     Text="{Binding Title}" />
             </StackPanel>

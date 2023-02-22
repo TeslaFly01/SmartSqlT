@@ -79,6 +79,7 @@
                         Margin="10"
                         Padding="0,5,5,5"
                         FontFamily="新宋体"
+                        FontSize="15"
                         ShowLineNumbers="True"
                         WordWrap="True">
                         <avalonedit:TextEditor.Options>
