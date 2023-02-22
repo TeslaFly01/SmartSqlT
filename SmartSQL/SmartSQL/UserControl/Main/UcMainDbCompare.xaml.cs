@@ -37,6 +37,36 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcMainDbCompare : BaseUserControl
     {
+        public static readonly DependencyProperty TreeViewLeftDataProperty = DependencyProperty.Register(
+            "TreeViewLeftData", typeof(List<TreeNodeItem>), typeof(UcMainDbCompare), new PropertyMetadata(default(List<TreeNodeItem>)));
+        /// <summary>
+        /// 左侧菜单数据
+        /// </summary>
+        public List<TreeNodeItem> TreeViewLeftData
+        {
+            get => (List<TreeNodeItem>)GetValue(TreeViewLeftDataProperty);
+            set
+            {
+                SetValue(TreeViewLeftDataProperty, value);
+                OnPropertyChanged(nameof(TreeViewLeftData));
+            }
+        }
+
+        public static readonly DependencyProperty TreeViewRightDataProperty = DependencyProperty.Register(
+            "TreeViewRightData", typeof(List<TreeNodeItem>), typeof(UcMainDbCompare), new PropertyMetadata(default(List<TreeNodeItem>)));
+        /// <summary>
+        /// 左侧菜单数据
+        /// </summary>
+        public List<TreeNodeItem> TreeViewRightData
+        {
+            get => (List<TreeNodeItem>)GetValue(TreeViewRightDataProperty);
+            set
+            {
+                SetValue(TreeViewRightDataProperty, value);
+                OnPropertyChanged(nameof(TreeViewRightData));
+            }
+        }
+
         public UcMainDbCompare()
         {
             InitializeComponent();
@@ -60,6 +90,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void ComSourceConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -74,6 +105,7 @@ namespace SmartSQL.UserControl
                 return;
             }
             ComSourceDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
+            #endregion
         }
 
         /// <summary>
@@ -83,11 +115,23 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void ComTargetConnect_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
             }
+            if (ComSourceConnect.SelectedItem == null)
+            {
+                Oops.Oh("请先选择源数据库");
+                return;
+            }
+            var sourceConnect = (ConnectConfigs)ComSourceConnect.SelectedItem;
             var selConnectConfig = (ConnectConfigs)((ComboBox)sender).SelectedItem;
+            if (selConnectConfig.DbType != sourceConnect.DbType)
+            {
+                Oops.Oh("请选择和源数据库相同类型数据库");
+                return;
+            }
             var dbInstance = ExporterFactory.CreateInstance(selConnectConfig.DbType, selConnectConfig.DbMasterConnectString);
             var list = dbInstance.GetDatabases(selConnectConfig.DefaultDatabase);
             ComTargetDatabase.ItemsSource = list;
@@ -97,6 +141,188 @@ namespace SmartSQL.UserControl
                 return;
             }
             ComTargetDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
+            #endregion
+        }
+
+        /// <summary>
+        /// 开始比较
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnCompare_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (ComSourceDatabase.SelectedItem == null)
+            {
+                Oops.Oh("请选择源数据库");
+                return;
+            }
+            if (ComTargetDatabase.SelectedItem == null)
+            {
+                Oops.Oh("请选择目标数据库");
+                return;
+            }
+            BindLeftMenu();
+            BindRightMenu();
+        }
+
+
+        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
+        private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
+        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
+        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
+        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
+
+        public void BindLeftMenu()
+        {
+            #region MyRegion
+            var selectConnection = (ConnectConfigs)ComSourceConnect.SelectedItem;
+            var selectDataBase = (DataBase)ComSourceDatabase.SelectedItem;
+            var menuData = TreeViewLeftData;
+            Task.Run(() =>
+            {
+                var itemList = new List<TreeNodeItem>();
+                var nodeTable = new TreeNodeItem
+                {
+                    ObejcetId = "0",
+                    DisplayName = "表",
+                    Name = "treeTable",
+                    Icon = TABLEICON,
+                    IsExpanded = true,
+                    Type = ObjType.Type
+                };
+                itemList.Add(nodeTable);
+
+                var model = new Model();
+                try
+                {
+                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase.DbName), selectDataBase.DbName);
+                    model = dbInstance.Init();
+                    //menuData = model;
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
+                    }));
+                }
+                var textColor = "#4f5d79";
+                foreach (var t in model.Tables)
+                {
+                    var tableItem = new TreeNodeItem
+                    {
+                        ObejcetId = t.Value.Id,
+                        DisplayName = t.Value.DisplayName,
+                        Name = t.Value.Name,
+                        Schema = t.Value.SchemaName,
+                        Comment = t.Value.Comment,
+                        CreateDate = t.Value.CreateDate,
+                        ModifyDate = t.Value.ModifyDate,
+                        TextColor = textColor,
+                        Icon = TABLEICON,
+                        Type = ObjType.Table
+                    };
+                    nodeTable.Children.Add(tableItem);
+                }
+
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    itemList.ForEach(obj =>
+                    {
+                        if (!obj.Children.Any())
+                        {
+                            obj.Visibility = nameof(Visibility.Collapsed);
+                        }
+                        obj.DisplayName += $"（{obj.Children.Count}）";
+                    });
+                    TreeViewLeftData = itemList;
+                }));
+            });
+            #endregion
+        }
+
+
+        public void BindRightMenu()
+        {
+            #region MyRegion
+            var selectConnection = (ConnectConfigs)ComTargetConnect.SelectedItem;
+            var selectDataBase = (DataBase)ComTargetDatabase.SelectedItem;
+            var menuData = TreeViewLeftData;
+            Task.Run(() =>
+            {
+                var itemList = new List<TreeNodeItem>();
+                var nodeTable = new TreeNodeItem
+                {
+                    ObejcetId = "0",
+                    DisplayName = "表",
+                    Name = "treeTable",
+                    Icon = TABLEICON,
+                    IsExpanded = true,
+                    Type = ObjType.Type
+                };
+                itemList.Add(nodeTable);
+
+                var model = new Model();
+                try
+                {
+                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase.DbName), selectDataBase.DbName);
+                    model = dbInstance.Init();
+                    //menuData = model;
+                }
+                catch (Exception ex)
+                {
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
+                    }));
+                }
+                var textColor = "#4f5d79";
+                foreach (var t in model.Tables)
+                {
+                    var tableItem = new TreeNodeItem
+                    {
+                        ObejcetId = t.Value.Id,
+                        DisplayName = t.Value.DisplayName,
+                        Name = t.Value.Name,
+                        Schema = t.Value.SchemaName,
+                        Comment = t.Value.Comment,
+                        CreateDate = t.Value.CreateDate,
+                        ModifyDate = t.Value.ModifyDate,
+                        TextColor = textColor,
+                        Icon = TABLEICON,
+                        Type = ObjType.Table
+                    };
+                    nodeTable.Children.Add(tableItem);
+                }
+
+                this.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    itemList.ForEach(obj =>
+                    {
+                        if (!obj.Children.Any())
+                        {
+                            obj.Visibility = nameof(Visibility.Collapsed);
+                        }
+                        obj.DisplayName += $"（{obj.Children.Count}）";
+                    });
+                    TreeViewRightData = itemList;
+                }));
+            });
+            #endregion
+        }
+
+        private void TreeViewSourceTables_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            var selData = (TreeNodeItem)((TreeView)sender).SelectedItem;
+            TreeViewRightData.ForEach(x =>
+            {
+                if (selData.Name == x.Name)
+                {
+                    x.IsChecked = true;
+                }
+            });
+            TreeViewTargetTables.ItemsSource = null;
+            TreeViewTargetTables.ItemsSource = TreeViewRightData;
         }
     }
 }
