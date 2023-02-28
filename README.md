@@ -28,7 +28,10 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
 ##### 🎯下载地址
 
-[![立即下载](https://img.shields.io/badge/download-%E7%AB%8B%E5%8D%B3%E4%B8%8B%E8%BD%BD-blue)](https://gitee.com/izhaofu/SmartSQL/releases)  
+码云： [https://gitee.com/izhaofu/SmartSQL/releases](https://gitee.com/izhaofu/SmartSQL/releases)  
+
+蓝奏云下载：[https://wwoc.lanzoum.com/b04dpvcxe](https://wwoc.lanzoum.com/b04dpvcxe)
+蓝奏云密码：123
 
 > 文件下载解压后，双击运行 `SmartSQL.exe`即可
 
