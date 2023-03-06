@@ -37,3 +37,27 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 > 文件下载解压后，双击运行 `SmartSQL.exe`即可
 
 > 🚀 本项目力求做最方便、快捷的数据库文档查询生成工具！
+
+### 💎 数据库支持
+- ✅ SqlServer
+- ✅ MySQL
+- ✅ Oracle
+- ✅ PostgreSQL
+- ✅ SQLite
+- - [x] DB2
+- - [x] TIDB
+- - [x] 达梦
+- - [x] 瀚高
+- - [x] 人大金仓
+
+### 📖 主要功能 
+
+#### 文档的内容都包含什么？
+- `表` 序号 | 列名 | 主键 | 自增 | 数据类型 | 长度 | 允许NULL值 | 默认值 | 备注说明
+- `视图` 视图内容SQL脚本
+- `存储过程` 存储过程内容SQL脚本
+
+#### 支持导出哪些文档格式？
+![CHM文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/chm.png) | ![Excel文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/excel.png) | ![Word文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/word.png) | ![PDF文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/pdf.png)
+--|--|--|--
+![Html文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/html.png) | ![Xml文档](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/xml.png) | ![Json](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/json.png) | ![MarkDown](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/docImg/icon/markdown.png)
