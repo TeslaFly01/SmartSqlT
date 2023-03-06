@@ -48,7 +48,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 - - [x] TIDB
 - - [x] 达梦
 - - [x] 瀚高
-- - [x] kingbase
+- - [x] 人大金仓
 
 ### 📖 主要功能 
 
@@ -189,7 +189,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
 	你的赞赏就是我前进的动力，如果可以请作者喝
 
-![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/赞赏码.png)
+![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/zanshang.png)
 
 
 ### ❓ 常见问题
