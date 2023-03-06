@@ -295,21 +295,21 @@
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem
-                        x:Name="MenuTool"
-                        IsEnabled="True"
-                        Selected="MenuTool_Selected">
-                        <StackPanel>
-                            <fa:FontAwesome FontSize="16" Icon="Inbox" />
-                            <TextBlock Margin="0,5,0,0" Text="工具" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem
                         x:Name="MenuDbCompare"
                         IsEnabled="True"
                         Selected="MenuDbCompare_Selected">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Compass" />
                             <TextBlock Margin="0,5,0,0" Text="比较" />
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem
+                        x:Name="MenuTool"
+                        IsEnabled="True"
+                        Selected="MenuTool_Selected">
+                        <StackPanel>
+                            <fa:FontAwesome FontSize="16" Icon="Inbox" />
+                            <TextBlock Margin="0,5,0,0" Text="工具" />
                         </StackPanel>
                     </ListBoxItem>
                     <ListBoxItem IsEnabled="False">
