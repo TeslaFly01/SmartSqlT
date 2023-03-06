@@ -172,18 +172,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 	⏳ 计划中：表、视图、存储过程同步功能
 	⏳ ...
 
-### 🔥 沟通交流
-
- ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-ContactQQ.png) | ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Contact1.png) 
-|:--:|:--:|
-| QQ交流群：`666483672` | 作者微信号 |
-
- > 如需加群请扫码上面二维码加好友本人拉你入群
-
- > 公众号也将每日定期分享`有趣`、`有料`、`有用`的开源项目，助力共同
-
-![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-mp.png)
-
 
 ### ❓ 常见问题
 
