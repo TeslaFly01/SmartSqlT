@@ -30,9 +30,7 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
 码云： [https://gitee.com/izhaofu/SmartSQL/releases](https://gitee.com/izhaofu/SmartSQL/releases)  
 
-蓝奏云下载：[https://wwoc.lanzoum.com/b04dpvcxe](https://wwoc.lanzoum.com/b04dpvcxe)
 
-蓝奏云密码：123
 
 > 文件下载解压后，双击运行 `SmartSQL.exe`即可
 
@@ -162,15 +160,6 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 |--|--|
 
 
-### ⚡ 近期计划
-
-	✅ 收集问题，修复完善基础功能
-	✅ C#实体代码生成
-	⏳ 进行中：优化现有Issues中反馈的bug
-	⏳ 计划中：DB2、TIDB、达梦等数据库支持
-	⏳ 计划中：对象结构对比功能
-	⏳ 计划中：表、视图、存储过程同步功能
-	⏳ ...
 
 
 ### ❓ 常见问题
