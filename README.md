@@ -186,11 +186,11 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-mp.png)
 
 
-### 🧧 打赏作者
+### 🧧 赞赏作者
 
-	你的打赏就是我前进的动力，如果可以请作者喝杯咖啡吧!
+	你的赞赏就是我前进的动力，如果可以请作者喝杯咖啡吧!
 
-![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/打赏.png)
+![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/赞赏码.png)
 
 
 ### ❓ 常见问题
