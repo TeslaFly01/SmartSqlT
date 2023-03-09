@@ -217,6 +217,20 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
+                        Name="MenuCheckUpdate"
+                        Command="hc:ControlCommands.OpenLink"
+                        CommandParameter="https://gitee.com/dotnetchina/SmartSQL/releases"
+                        FontWeight="Normal"
+                        Header="检查更新">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#ff6584"
+                                Icon="Diamond" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
                         Name="MenuHelpBook"
                         Command="hc:ControlCommands.OpenLink"
                         CommandParameter="https://gitee.com/dotnetchina/SmartSQL#smartsql"
