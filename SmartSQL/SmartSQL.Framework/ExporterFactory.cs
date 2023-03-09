@@ -23,6 +23,7 @@ namespace SmartSQL.Framework
                 case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString);
                 case DbType.Sqlite: return new SqliteExporter(dbConnectionString);
                 case DbType.Oracle: return new OracleExporter(dbConnectionString);
+                case DbType.Dm: return new DmExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
@@ -36,6 +37,7 @@ namespace SmartSQL.Framework
                 case DbType.PostgreSQL: return new PostgreSqlExporter(dbConnectionString, dbName);
                 case DbType.Sqlite: return new SqliteExporter(dbConnectionString, dbName);
                 case DbType.Oracle: return new OracleExporter(dbConnectionString, dbName);
+                case DbType.Dm: return new DmExporter(dbConnectionString, dbName);
                 default: return new SqlServerExporter(dbConnectionString, dbName);
             }
         }
@@ -49,6 +51,7 @@ namespace SmartSQL.Framework
                 case DbType.PostgreSQL: return new PostgreSqlExporter(tableName, columns);
                 case DbType.Sqlite: return new SqliteExporter(tableName, columns);
                 case DbType.Oracle: return new OracleExporter(tableName, columns);
+                case DbType.Dm: return new DmExporter(tableName, columns);
                 default: return new SqlServerExporter(tableName, columns);
             }
         }

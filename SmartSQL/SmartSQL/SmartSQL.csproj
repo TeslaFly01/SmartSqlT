@@ -159,6 +159,9 @@
     <Compile Include="UserControl\Connect\ConnectMainUC.xaml.cs">
       <DependentUpon>ConnectMainUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Connect\DmUC .xaml.cs">
+      <DependentUpon>DmUC .xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Connect\OracleUC.xaml.cs">
       <DependentUpon>OracleUC.xaml</DependentUpon>
     </Compile>
@@ -418,6 +421,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Connect\ConnectMainUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Connect\DmUC .xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -734,6 +741,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\dameng%4064.svg" />
     <Resource Include="Resources\Img\toolIcon\rmb%402x.png" />
     <Resource Include="Resources\Img\toolIcon\fanti%402x.png" />
     <Resource Include="Resources\linux.js" />

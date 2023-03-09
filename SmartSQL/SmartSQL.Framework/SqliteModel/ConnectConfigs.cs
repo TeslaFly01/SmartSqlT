@@ -67,6 +67,7 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
                     case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
                     case DbType.Oracle: return "/SmartSQL;component/Resources/svg/database/icon_oracle_64.svg";
+                    case DbType.Dm: return "/SmartSQL;component/Resources/svg/dameng.svg";
                     default: return "";
                 }
             }
@@ -98,8 +99,10 @@ namespace SmartSQL.Framework.SqliteModel
                         connectString = $@"DataSource={ServerAddress}";
                         break;
                     case DbType.Oracle:
-                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase,
-                            UserName, Password);
+                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
+                        break;
+                    case DbType.Dm:
+                        connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
                 }
                 return connectString;
@@ -131,8 +134,10 @@ namespace SmartSQL.Framework.SqliteModel
                         connectString = $"DataSource={ServerAddress}";
                         break;
                     case DbType.Oracle:
-                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase,
-                            UserName, Password);
+                        connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
+                        break;
+                    case DbType.Dm:
+                        connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
                 }
                 return connectString;
@@ -164,8 +169,10 @@ namespace SmartSQL.Framework.SqliteModel
                     connectString = $"DataSource={ServerAddress}";
                     break;
                 case DbType.Oracle:
-                    connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, selectedDatabase,
-                        UserName, Password);
+                    connectString = ConnectionStringUtil.OracleString(ServerAddress, ServerPort, selectedDatabase, UserName, Password);
+                    break;
+                case DbType.Dm:
+                    connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, selectedDatabase, UserName, Password);
                     break;
             }
             return connectString;

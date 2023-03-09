@@ -60,6 +60,13 @@
                 DataBaseName="Oracle"
                 IsEnabled="True" />
 
+            <!--  达梦  -->
+            <baseControl:ConnectType
+                ClickCard="ConnectType_OnClickCard"
+                DataBaseIcon="pack://application:,,,/Resources/svg/dameng.svg"
+                DataBaseName="达梦"
+                IsEnabled="True" />
+
             <!--  DB2  -->
             <baseControl:ConnectType
                 ClickCard="ConnectType_OnClickCard"
@@ -72,13 +79,6 @@
                 ClickCard="ConnectType_OnClickCard"
                 DataBaseIcon="pack://application:,,,/Resources/svg/TIDB@64.svg"
                 DataBaseName="TIDB"
-                IsEnabled="False" />
-
-            <!--  达梦  -->
-            <baseControl:ConnectType
-                ClickCard="ConnectType_OnClickCard"
-                DataBaseIcon="pack://application:,,,/Resources/svg/dameng.svg"
-                DataBaseName="达梦"
                 IsEnabled="False" />
 
             <!--  瀚高  -->

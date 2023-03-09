@@ -150,6 +150,12 @@ namespace SmartSQL.Views
                         ucOracle.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucOracle;
                         break;
+                    case DbType.Dm:
+                        var ucDm = new DmUC();
+                        ucDm.ConnectConfig = connect;
+                        ucDm.ChangeRefreshEvent += ChangeRefreshEvent;
+                        MainContent = ucDm;
+                        break;
                 }
             }
             #endregion
@@ -189,6 +195,11 @@ namespace SmartSQL.Views
             if (MainContent is OracleUC ucOracle)
             {
                 ucOracle.SaveForm(isConnect);
+            }
+            //达梦
+            if (MainContent is DmUC ucDm)
+            {
+                ucDm.SaveForm(isConnect);
             }
             #endregion
         }
@@ -294,6 +305,11 @@ namespace SmartSQL.Views
             if (MainContent is OracleUC ucOracle)
             {
                 ucOracle.TestConnect(true);
+            }
+            //测试达梦
+            if (MainContent is DmUC ucDm)
+            {
+                ucDm.TestConnect(true);
             }
             #endregion
         }

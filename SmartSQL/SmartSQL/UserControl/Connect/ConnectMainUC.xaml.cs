@@ -71,6 +71,11 @@ namespace SmartSQL.UserControl.Connect
                     ucOracleUc.ChangeRefreshEvent += ChangeRefreshEvent;
                     mainWindow.MainContent = ucOracleUc;
                     break;
+                case "达梦":
+                    var ucDMUc = new DmUC();
+                    ucDMUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucDMUc;
+                    break;
                 default:
                     return;
             }

@@ -51,7 +51,7 @@ namespace SmartSQL.Framework.Util
                   AllowPublicKeyRetrieval=true;";
             if (!string.IsNullOrEmpty(database))
             {
-                connectString += $@"database ={ database};";
+                connectString += $@"database ={database};";
             }
             return connectString;
         }
@@ -88,6 +88,21 @@ namespace SmartSQL.Framework.Util
         public static string OracleString(string serverAddress, int port, string serviceName, string userName, string password)
         {
             var connectString = $@"Data Source={serverAddress}:{port}/{serviceName};User ID={userName};Password={EncryptHelper.Decode(password)};Pooling=False;";
+            return connectString;
+        }
+
+        /// <summary>
+        /// 达梦数据库字符串
+        /// </summary>
+        /// <param name="serverAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="serviceName"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string DmString(string serverAddress, int port, string serviceName, string userName, string password)
+        {
+            var connectString = $@"HOST={serverAddress};PORT={port};DATABASE={serviceName};USER ID={userName};PASSWORD={EncryptHelper.Decode(password)};";
             return connectString;
         }
     }

@@ -41,6 +41,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="DmProvider">
+      <HintPath>..\..\Lib\DmProvider.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -168,6 +171,7 @@
     <Compile Include="Const\SysConst.cs" />
     <Compile Include="Enum.cs" />
     <Compile Include="ExporterFactory.cs" />
+    <Compile Include="Exporter\DmExporter.cs" />
     <Compile Include="Exporter\Exporter.cs" />
     <Compile Include="Exporter\MySqlExporter.cs" />
     <Compile Include="Exporter\OracleExporter.cs" />
