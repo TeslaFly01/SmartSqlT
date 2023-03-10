@@ -121,13 +121,13 @@
                     </MenuItem>
                 </MenuItem>
 
-                <!--  分组  -->
+                <!--  工具  -->
                 <MenuItem
-                    Name="MenuGroup"
+                    Name="MenuTool"
                     Cursor="Hand"
                     FontWeight="Bold"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
-                    Header="类目">
+                    Header="工具">
                     <MenuItem.Icon>
                         <Path
                             Data="{StaticResource GroupGeometry}"
@@ -159,10 +159,24 @@
                                 Icon="Tags" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Name="MenuSetting"
+                        Click="MenuSetting_OnClick"
+                        FontWeight="Normal"
+                        Header="选项"
+                        IsEnabled="True">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#438df3"
+                                Icon="Cog" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <!--  设置  -->
-                <MenuItem
+                <!--<MenuItem
                     Name="MenuSetting"
                     Click="MenuSetting_OnClick"
                     Cursor="Hand"
@@ -175,7 +189,7 @@
                             Fill="{DynamicResource DarkPrimaryBrush}"
                             Stretch="Uniform" />
                     </MenuItem.Icon>
-                </MenuItem>
+                </MenuItem>-->
 
                 <!--  关于  -->
                 <MenuItem

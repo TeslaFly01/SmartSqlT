@@ -45,8 +45,8 @@ namespace SmartSQL.Framework.Util
             var connectString = $@"server={serverAddress};
                                      port={port};
                                       uid={userName};
-                                      pwd={EncryptHelper.Decode(password)};
-                                  sslmode=none;
+                                      pwd={EncryptHelper.Decode(password)};                                
+                             SslMode=Preferred;
                      Allow User Variables=True;
                   AllowPublicKeyRetrieval=true;";
             if (!string.IsNullOrEmpty(database))
