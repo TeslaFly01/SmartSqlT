@@ -123,7 +123,7 @@
 
                 <!--  工具  -->
                 <MenuItem
-                    Name="MenuTool"
+                    Name="MenuGroup"
                     Cursor="Hand"
                     FontWeight="Bold"
                     Foreground="{DynamicResource DarkPrimaryBrush}"
@@ -174,22 +174,6 @@
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-
-                <!--  设置  -->
-                <!--<MenuItem
-                    Name="MenuSetting"
-                    Click="MenuSetting_OnClick"
-                    Cursor="Hand"
-                    FontWeight="Bold"
-                    Foreground="{DynamicResource DarkPrimaryBrush}"
-                    Header="设置">
-                    <MenuItem.Icon>
-                        <Path
-                            Data="{StaticResource SettingGeometry}"
-                            Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />
-                    </MenuItem.Icon>
-                </MenuItem>-->
 
                 <!--  关于  -->
                 <MenuItem

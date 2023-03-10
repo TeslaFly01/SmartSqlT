@@ -111,6 +111,12 @@
                                 Cursor="Hand"
                                 FontSize="13"
                                 Style="{StaticResource ButtonPrimary}" />
+                            <Border
+                                Margin="0,5,0,0"
+                                Style="{StaticResource BorderTipWarning}"
+                                ToolTip="提示：该功能暂未开发完成，后面将持续完善">
+                                <TextBlock Text="提示：该功能暂未开发完成，后面将持续完善" />
+                            </Border>
                         </StackPanel>
 
                         <!--  目标数据  -->

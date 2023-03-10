@@ -30,6 +30,24 @@ namespace SmartSQL.Framework.Exporter
 
         }
 
+        public override Model Init()
+        {
+            #region MyRegion
+            var model = new Model { Database = "Dm" };
+            try
+            {
+                model.Tables = this.GetTables();
+                model.Views = this.GetViews();
+                model.Procedures = new Procedures();//暂时不支持存储过程 this.GetProcedures();
+                return model;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            #endregion
+        }
+
         /// <summary>
         /// 获取所有模式
         /// </summary>
@@ -53,31 +71,111 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        public override string AddColumnSql()
+        /// <summary>
+        /// 获取所有表
+        /// </summary>
+        /// <returns></returns>
+        private Tables GetTables()
         {
-            throw new NotImplementedException();
+            #region MyRegion
+            var tables = new Tables();
+            var tbSql = $@"SELECT
+                                    a.table_name AS NAME,
+                                    b.comments   AS Description
+                            FROM
+                                    dba_tables AS a
+                            LEFT OUTER JOIN USER_TAB_COMMENTS b
+                            ON
+                                    a.table_name = b.table_name
+                            WHERE
+                                    a.table_name!='HELP'
+                                AND a.table_name NOT LIKE '%$%'
+                                AND a.table_name NOT LIKE 'LOGMNRC_%'
+                                AND a.table_name!='LOGMNRP_CTAS_PART_MAP'
+                                AND a.table_name!='LOGMNR_LOGMNR_BUILDLOG'
+                                AND a.table_name!='SQLPLUS_PRODUCT_PROFILE'
+                                AND a.Owner = '{DbName}'";
+            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var tableList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
+            tableList.ForEach(tb =>
+            {
+                if (tables.ContainsKey(tb.Name))
+                {
+                    return;
+                }
+                var table = new Table
+                {
+                    Id = tb.Name,
+                    Name = tb.Name,
+                    DisplayName = tb.Name,
+                    Comment = tb.Description,
+                    CreateDate = tb.CreateDate,
+                    ModifyDate = tb.ModifyDate
+                };
+                tables.Add(tb.Name, table);
+            });
+            return tables;
+            #endregion
         }
 
-        public override string AlterColumnSql()
+        /// <summary>
+        /// 获取所有视图
+        /// </summary>
+        /// <returns></returns>
+        private Views GetViews()
         {
-            throw new NotImplementedException();
+            #region MyRegion
+            var views = new Views();
+            var tbSql = $@"select
+                                    a.Object_Name as Name       ,
+                                    b.Comments    as Description,
+                                    a.Created     as CreateDate ,
+                                    a.Created     as ModifyDate
+                            from
+                                    dba_objects         as a
+                            left join USER_TAB_COMMENTS as b
+                            on
+                                    a.Object_Name=b.table_name
+                            where
+                                    OWNER      = '{DbName}'
+                                and Object_type='VIEW'";
+            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var viewList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
+            viewList.ForEach(v =>
+            {
+                if (views.ContainsKey(v.Name))
+                {
+                    return;
+                }
+                var view = new View
+                {
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Description,
+                    CreateDate = v.CreateDate,
+                    ModifyDate = v.ModifyDate
+                };
+                views.Add(v.Name, view);
+            });
+            return views;
+            #endregion
         }
 
-        public override string CreateTableSql()
+        /// <summary>
+        /// 获取所有存储过程
+        /// </summary>
+        /// <returns></returns>
+        private Procedures GetProcedures()
         {
-            throw new NotImplementedException();
+            return new Procedures();
         }
 
-        public override string DeleteSql()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override string DropColumnSql()
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// 获取对象所有列信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
         public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
@@ -129,93 +227,59 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
+        /// <summary>
+        /// 获取对象脚本信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <param name="objectType"></param>
+        /// <returns></returns>
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
+        {
+            #region MyRegion
+            var sql = $@"select
+                                view_name as Name,
+                                'View' as Type,
+                                text as definition
+                        from
+                                dba_Views
+                        where
+                                owner = '{DbName}'
+                            and view_name = '{objectId}'";
+            var list = new List<ScriptInfo>();
+
+            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            list = dbClient.SqlQueryable<ScriptInfo>(sql).ToList();
+            if (list.Any())
+            {
+                return list.First().Definition;
+            }
+            return new ScriptInfo().Definition;
+            #endregion
+        }
+
+        public override string AddColumnSql()
         {
             throw new NotImplementedException();
         }
 
-        public override Model Init()
+        public override string AlterColumnSql()
         {
-            var model = new Model { Database = "Dm" };
-            try
-            {
-                model.Tables = this.GetTables();
-                model.Views = new Views();// this.GetViews();
-                model.Procedures = new Procedures();//暂时不支持存储过程 this.GetProcedures();
-                return model;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            throw new NotImplementedException();
         }
 
-        private Tables GetTables()
+        public override string CreateTableSql()
         {
-            #region MyRegion
-            //var tables = new Tables();
-            //var tableList = _dbMaintenance.GetTableInfoList(false);
-            //tableList.ForEach(tb =>
-            //{
-            //    if (tables.ContainsKey(tb.Name))
-            //    {
-            //        return;
-            //    }
-            //    var table = new Table
-            //    {
-            //        Id = tb.Name,
-            //        Name = tb.Name,
-            //        DisplayName = tb.Name,
-            //        Comment = tb.Description,
-            //        CreateDate = tb.CreateDate,
-            //        ModifyDate = tb.ModifyDate
-            //    };
-            //    tables.Add(tb.Name, table);
-            //});
-            //return tables;
+            throw new NotImplementedException();
+        }
 
+        public override string DeleteSql()
+        {
+            throw new NotImplementedException();
+        }
 
-
-            #region MyRegion
-            var tables = new Tables();
-            var tbSql = $@"SELECT
-                                    a.table_name AS NAME,
-                                    b.comments   AS Description
-                            FROM
-                                    dba_tables AS a
-                            LEFT OUTER JOIN USER_TAB_COMMENTS b
-                            ON
-                                    a.table_name = b.table_name
-                            WHERE
-                                    a.table_name!='HELP'
-                                AND a.table_name NOT LIKE '%$%'
-                                AND a.table_name NOT LIKE 'LOGMNRC_%'
-                                AND a.table_name!='LOGMNRP_CTAS_PART_MAP'
-                                AND a.table_name!='LOGMNR_LOGMNR_BUILDLOG'
-                                AND a.table_name!='SQLPLUS_PRODUCT_PROFILE'
-                                AND a.Owner = '{DbName}'";
-            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
-            var tableList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
-            tableList.ForEach(tb =>
-            {
-                if (tables.ContainsKey(tb.Name))
-                {
-                    return;
-                }
-                var table = new Table
-                {
-                    Id = tb.Name,
-                    Name = tb.Name,
-                    DisplayName = tb.Name,
-                    Comment = tb.Description,
-                    CreateDate = tb.CreateDate,
-                    ModifyDate = tb.ModifyDate
-                };
-                tables.Add(tb.Name, table);
-            });
-            return tables;
-            #endregion
-            #endregion
+        public override string DropColumnSql()
+        {
+            throw new NotImplementedException();
         }
 
         public override string InsertSql()

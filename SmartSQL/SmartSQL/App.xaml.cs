@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Navigation;
 using System.Windows.Threading;
 using HandyControl.Controls;
+using SmartSQL.Helper;
 using MessageBox = System.Windows.MessageBox;
 
 namespace SmartSQL
@@ -36,18 +37,22 @@ namespace SmartSQL
             AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
         }
 
-        void App_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
+        void App_DispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
             try
             {
-                e.Handled = true; //把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出
-                                  //Growl.WarningGlobal("UI线程异常:" + e.Exception);
-                Growl.WarningGlobal("程序异常，请稍后再试");
+                //把 Handled 属性设为true，表示此异常已处理，程序可以继续运行，不会强制退出
+                e.Handled = true;
+                if (e.Exception is NotImplementedException)
+                {
+                    Oops.Oh("该功能暂未实现，\r\n请关注公众号【IT搬砖人plus】,\r\n获取后期版本更新通知");
+                    return;
+                }
+                Growl.Warning("程序异常，请稍后再试");
             }
             catch (Exception)
             {
-                //此时程序出现严重异常，将强制结束退出
-                Growl.WarningGlobal("程序异常，请稍后再试");
+                Growl.Warning("程序异常，请稍后再试");
             }
         }
 
