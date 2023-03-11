@@ -14,8 +14,8 @@
 <img alt="release" src="https://img.shields.io/badge/release-1.0.3.9-green">
 </p>
 <p align="center">
-<img alt="框架" src="https://img.shields.io/badge/框架-WPF-blue.svg">
-<img alt=".Net" src="https://img.shields.io/badge/.Net-.Net Framework4.7.2-blue.svg">
+<img alt="框架" src="https://img.shields.io/badge/框架-.Net/WPF-success.svg">
+<img alt=".Net" src="https://img.shields.io/badge/框架版本-.Net 4.7.2-success.svg">
 </p>
 
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner_01.png)
@@ -97,9 +97,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
 > 连接管理中可以对当前添加的连接进行`添加`、`修改`和`删除`等操作。
  
-> 目前支持对`SQLServer`、`MySQL`、`Oracle`、`PostgreSQL`...等5种数据库的支持。
+> 目前支持对`SQLServer`、`MySQL`、`Oracle`、`PostgreSQL`、`达梦`...等6种数据库的支持。
 
-> 对`DB2`、`TIDB`、`达梦`等其他关系型数据库的支持正在进行中。
+> 对`DB2`、`TIDB`、`瀚高`等其他关系型数据库的支持正在进行中。
 
 #### 分组管理
 ![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-Group.png)|![分组管理](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/sshot-GroupObject.png)
@@ -191,9 +191,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 
 ### 🧧 赞赏作者
 
-	你的赞赏就是我前进的动力，
+	你的赞赏就是我前进的动力🏃，
 	如果SmartSQL给你带来了不少便利，
-	那就请作者喝杯咖啡吧。
+	那就请作者喝杯咖啡☕吧。
 
 ![](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/zanshang.png)
 
