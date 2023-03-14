@@ -48,9 +48,9 @@ SmartSQL 是一款方便、快捷的数据库文档查询、导出工具！从�
 - ✅ Oracle
 - ✅ PostgreSQL
 - ✅ SQLite
+- ✅ 达梦
 - - [x] DB2
 - - [x] TIDB
-- - [x] 达梦
 - - [x] 瀚高
 - - [x] kingbase
 
