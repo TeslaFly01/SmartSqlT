@@ -16,7 +16,10 @@
     Loaded="MainWindow_OnLoaded"
     ResizeMode="CanResize"
     ShowTitle="True"
+    ActiveGlowColor="Transparent"
+    SnapsToDevicePixels="True"
     Style="{StaticResource WindowGlow}"
+    UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
     <!--  顶部栏菜单  -->

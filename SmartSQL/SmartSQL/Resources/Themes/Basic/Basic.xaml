@@ -3,6 +3,7 @@
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="Geometries.xaml" />
         <ResourceDictionary Source="Colors/Colors.xaml" />
+        <ResourceDictionary Source="FontAwesome6.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
 </ResourceDictionary>
