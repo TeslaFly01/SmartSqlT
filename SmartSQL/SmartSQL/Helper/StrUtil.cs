@@ -62,7 +62,7 @@ namespace SmartSQL.Helper
                 WriteIndented = true,
 
                 //重新编码，解决中文乱码问题
-                Encoder = JavaScriptEncoder.Create(UnicodeRanges.All)
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
             });
             return formatJson; 
             #endregion
