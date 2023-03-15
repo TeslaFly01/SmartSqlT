@@ -11,12 +11,12 @@
     Title="SmartSQL"
     Width="850"
     Height="500"
+    ActiveGlowColor="Transparent"
     BorderThickness="0"
     Icon="favicon.ico"
     Loaded="MainWindow_OnLoaded"
     ResizeMode="CanResize"
     ShowTitle="True"
-    ActiveGlowColor="Transparent"
     SnapsToDevicePixels="True"
     Style="{StaticResource WindowGlow}"
     UseLayoutRounding="True"
@@ -218,20 +218,6 @@
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
-                        Name="MenuCheckUpdate"
-                        Command="hc:ControlCommands.OpenLink"
-                        CommandParameter="https://gitee.com/dotnetchina/SmartSQL/releases"
-                        FontWeight="Normal"
-                        Header="检查更新">
-                        <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
-                                FontSize="14"
-                                Foreground="#ff6584"
-                                Icon="Diamond" />
-                        </MenuItem.Icon>
-                    </MenuItem>
-                    <MenuItem
                         Name="MenuHelpBook"
                         Command="hc:ControlCommands.OpenLink"
                         CommandParameter="https://gitee.com/dotnetchina/SmartSQL#smartsql"
@@ -243,6 +229,20 @@
                                 FontSize="16"
                                 Foreground="#438DF3"
                                 Icon="Book" />
+                        </MenuItem.Icon>
+                    </MenuItem>
+                    <MenuItem
+                        Name="MenuCheckUpdate"
+                        Command="hc:ControlCommands.OpenLink"
+                        CommandParameter="https://gitee.com/dotnetchina/SmartSQL/releases"
+                        FontWeight="Normal"
+                        Header="检查更新">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#ff6584"
+                                Icon="Diamond" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
