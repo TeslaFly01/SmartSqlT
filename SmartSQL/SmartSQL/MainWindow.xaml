@@ -11,6 +11,7 @@
     Title="SmartSQL"
     Width="850"
     Height="500"
+    hc:Dialog.Token="MainDialog"
     ActiveGlowColor="Transparent"
     BorderThickness="0"
     Icon="favicon.ico"

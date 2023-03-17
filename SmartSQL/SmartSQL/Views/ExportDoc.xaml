@@ -277,9 +277,9 @@
                             Margin="85,18,67,0"
                             VerticalAlignment="Top"
                             Background="#F4F5F7"
-                            TextChanged="TxtFileName_OnTextChanged"
                             BorderThickness="0"
-                            ShowClearButton="True" />
+                            ShowClearButton="True"
+                            TextChanged="TxtFileName_OnTextChanged" />
                     </Grid>
                     <Grid Margin="20,100,20,20">
                         <TextBlock

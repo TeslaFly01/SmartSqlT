@@ -12,6 +12,7 @@ using SmartSQL.Models;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Windows.Data;
+using System.Windows.Media;
 using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Annotations;
@@ -19,6 +20,7 @@ using SmartSQL.DocUtils;
 using SmartSQL.Framework.Const;
 using SmartSQL.Helper;
 using SmartSQL.UserControl;
+using SmartSQL.UserControl.Dialog;
 using SmartSQL.Views;
 using ComboBox = System.Windows.Controls.ComboBox;
 using FontAwesome = FontAwesome.WPF.FontAwesome;
@@ -248,7 +250,18 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void MenuAbout_OnClick(object sender, RoutedEventArgs e)
         {
-            var about = new AboutWindow();
+            //蒙板
+            Grid layer = new Grid() { Background = new SolidColorBrush(Color.FromRgb(132, 132, 132)), Opacity = 0.7 };
+            //父级窗体原来的内容
+            UIElement original = Content as UIElement;//MainWindows父窗体
+            Content = null;
+            //容器Grid
+            Grid container = new Grid();
+            container.Children.Add(original);//放入原来的内容
+            container.Children.Add(layer);//在上面放一层蒙板
+            //将装有原来内容和蒙板的容器赋给父级窗体
+            Content = container;
+            var about = new About();
             about.Owner = this;
             about.ShowDialog();
         }

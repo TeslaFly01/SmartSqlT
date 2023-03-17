@@ -8,14 +8,14 @@
 </div>
 <br>
 <p align="center">
-<img alt="visual studio 2019" src="https://img.shields.io/badge/visual studio-2019/2022-blue.svg">
-<img alt="csharp" src="https://img.shields.io/badge/language-csharp-blueviolet.svg">
+<img alt="visual studio 2019" src="https://img.shields.io/badge/visual studio-2019/2022-blue.svg?logo=Visual%20studio&logoColor=bc8af3">
+<img alt="csharp" src="https://img.shields.io/badge/language-csharp-yellow.svg">
 <img alt="license" src="https://img.shields.io/badge/license-apache-red.svg">
 <img alt="release" src="https://img.shields.io/badge/release-1.0.3.9-green">
 </p>
 <p align="center">
 <img alt="框架" src="https://img.shields.io/badge/框架-.Net/WPF-success.svg">
-<img alt=".Net" src="https://img.shields.io/badge/框架版本-.Net 4.7.2-success.svg">
+<img alt=".Net" src="https://img.shields.io/badge/包版本-.Net 4.7.2-success.svg?logo=nuget&logoColor=24acf2">
 </p>
 
 ![首页](https://gitee.com/izhaofu/SmartSQL/raw/master/Img/Banner_01.png)

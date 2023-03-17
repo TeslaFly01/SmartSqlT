@@ -189,6 +189,9 @@
     <Compile Include="UserControl\Controls\SqlScript.xaml.cs">
       <DependentUpon>SqlScript.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Dialog\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Groups\UcAddGroupObject.xaml.cs">
       <DependentUpon>UcAddGroupObject.xaml</DependentUpon>
     </Compile>
@@ -447,6 +450,10 @@
     <Page Include="UserControl\Controls\SqlScript.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Dialog\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Groups\UcAddGroupObject.xaml">
       <Generator>MSBuild:Compile</Generator>
