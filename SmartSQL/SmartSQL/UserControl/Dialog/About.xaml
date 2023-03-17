@@ -36,7 +36,7 @@
                     Height="60"
                     Margin="0,25,0,0"
                     VerticalAlignment="Top"
-                    Background="Azure"
+                    Background="#1890ff"
                     BorderThickness="1"
                     CornerRadius="8"
                     Effect="{StaticResource EffectShadow1}">
@@ -48,7 +48,7 @@
                         Stretch="Uniform" />
                 </Border>
                 <StackPanel
-                    Margin="0,85,0,0"
+                    Margin="0,100,0,0"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Top">
                     <TextBlock
@@ -63,7 +63,7 @@
                         Margin="0,15,0,0"
                         HorizontalAlignment="Center"
                         FontWeight="Bold"
-                        Foreground="#36425a"
+                        Foreground="#1890ff"
                         Text="{Binding Description}" />
                 </StackPanel>
                 <WrapPanel
