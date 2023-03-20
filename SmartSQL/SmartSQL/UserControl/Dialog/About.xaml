@@ -36,7 +36,7 @@
                     Height="60"
                     Margin="0,25,0,0"
                     VerticalAlignment="Top"
-                    Background="#1890ff"
+                    Background="#ffffff"
                     BorderThickness="1"
                     CornerRadius="8"
                     Effect="{StaticResource EffectShadow1}">
