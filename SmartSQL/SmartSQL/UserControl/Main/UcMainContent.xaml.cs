@@ -1330,6 +1330,11 @@ namespace SmartSQL.UserControl
             e.Handled = true;
         }
 
+        /// <summary>
+        /// 复制名称
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuCopyName_OnClick(object sender, RoutedEventArgs e)
         {
             if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
@@ -1339,7 +1344,12 @@ namespace SmartSQL.UserControl
             Clipboard.SetDataObject(selectedObjects.Name);
         }
 
-        private void MenuCreateTntity_Click(object sender, RoutedEventArgs e)
+        /// <summary>
+        /// 生成实体
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuCreateEntity_Click(object sender, RoutedEventArgs e)
         {
             #region MyRegion
             string baseDirectoryPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EntityTemp");
@@ -1363,7 +1373,7 @@ namespace SmartSQL.UserControl
             Process.Start(baseDirectoryPath);
             #endregion
         }
-
+        
         private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion

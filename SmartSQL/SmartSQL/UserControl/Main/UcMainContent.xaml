@@ -170,7 +170,6 @@
                                     </ContextMenu.ItemContainerStyle>
                                     <MenuItem
                                         x:Name="MenuCopyName"
-                                        Padding="5,3,5,3"
                                         VerticalAlignment="Center"
                                         Click="MenuCopyName_OnClick"
                                         Header="复制名称">
@@ -178,15 +177,62 @@
                                             <fa:FontAwesome
                                                 VerticalAlignment="Center"
                                                 FontSize="14"
-                                                Foreground="#1890ff"
+                                                Foreground="#e9af20"
                                                 Icon="Copy" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
-                                        x:Name="MenuCreateTntity"
-                                        Padding="5,3,5,3"
+                                        x:Name="MenuSetTag"
                                         VerticalAlignment="Center"
-                                        Click="MenuCreateTntity_Click"
+                                        Header="设置标签">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#2db84d"
+                                                Icon="Copy" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuSetGroup"
+                                        VerticalAlignment="Center"
+                                        Header="设置分组">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#2db84d"
+                                                Icon="Copy" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuExportDoc"
+                                        VerticalAlignment="Center"
+                                        Header="导出文档">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#2db84d"
+                                                Icon="Copy" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuCreateSQL"
+                                        VerticalAlignment="Center"
+                                        Header="生成SQL">
+                                        <MenuItem.Icon>
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Inbox" />
+                                        </MenuItem.Icon>
+                                    </MenuItem>
+                                    <MenuItem
+                                        x:Name="MenuCreateEntity"
+                                        VerticalAlignment="Center"
+                                        Click="MenuCreateEntity_Click"
                                         Header="生成实体">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome
