@@ -91,6 +91,7 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void SwitchMenu_Click(object sender, RoutedEventArgs e)
         {
+            LeftMenu.SelectedIndex = 0;
             var menuItem = (MenuItem)sender;
             var connectConfig = (ConnectConfigs)menuItem.DataContext;
             SwitchConnect(connectConfig);

@@ -26,7 +26,7 @@ namespace SmartSQL.DocUtils.DBDoc
         {
             #region MyRegion
             var sb = new StringBuilder();
-            sb.AppendLine("# 数据库表目录");
+            sb.AppendLine("# 📚 数据库表目录");
             var dirMD = this.Dto.Tables.MarkDown("Columns", "DBType");
             dirMD = Regex.Replace(dirMD, @"(.+?\|\s+)([a-zA-Z][a-zA-Z0-9_]+)(\s+\|.+\n?)", $"$1[$2](#$2)$3", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
@@ -35,7 +35,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
             if (this.Dto.Tables.Any())
             {
-                sb.Append("## 表结构");
+                sb.Append("## 📒 表结构");
                 foreach (var dto in this.Dto.Tables)
                 {
                     sb.AppendLine();
@@ -56,11 +56,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
             if (this.Dto.Views.Any())
             {
-                sb.Append("## 视图");
+                sb.Append("## 📰 视图");
                 foreach (var item in this.Dto.Views)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"### {item.ObjectName}");
+                    sb.AppendLine($"### <a name=\"{item.ObjectName}\">{item.ObjectName} {item.Comment}</a>");
                     sb.AppendLine("``` sql");
                     var fmtSql = JS.RunFmtSql(item.Script, this.Dto.DBType);
                     sb.Append(fmtSql);
@@ -71,11 +71,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
             if (this.Dto.Procs.Any())
             {
-                sb.Append("## 存储过程");
+                sb.Append("## 📜 存储过程");
                 foreach (var item in this.Dto.Procs)
                 {
                     sb.AppendLine();
-                    sb.AppendLine($"### {item.ObjectName}");
+                    sb.AppendLine($"### <a name=\"{item.ObjectName}\">{item.ObjectName} {item.Comment}</a>");
                     sb.AppendLine("``` sql");
                     var fmtSql = JS.RunFmtSql(item.Script, this.Dto.DBType);
                     sb.Append(fmtSql);
