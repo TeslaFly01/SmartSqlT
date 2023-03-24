@@ -169,6 +169,7 @@ namespace SmartSQL.Framework.Exporter
                     case "nchar":
                     case "time":
                     case "text":
+                    case "string":
                     case "binary":
                     case "varchar":
                     case "varchar2":

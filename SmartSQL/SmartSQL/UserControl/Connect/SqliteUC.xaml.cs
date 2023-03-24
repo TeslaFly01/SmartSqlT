@@ -244,8 +244,8 @@ namespace SmartSQL.UserControl.Connect
                 {
                     Dispatcher.Invoke(() =>
                     {
+                        Oops.God($"连接失败，原因：" + ex.ToMsg());
                         mainWindow.LoadingG.Visibility = Visibility.Collapsed;
-                        Growl.WarningGlobal(new GrowlInfo { Message = $"连接失败\r" + ex.ToMsg(), WaitTime = 1, ShowDateTime = false });
                     });
                 }
             });
