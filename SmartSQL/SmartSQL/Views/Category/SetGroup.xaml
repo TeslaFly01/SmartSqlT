@@ -54,12 +54,19 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <RadioButton
-                                                Margin="8"
-                                                Content="{Binding GroupName, Mode=TwoWay}"
-                                                Cursor="Hand"
-                                                GroupName="RadioGroup"
-                                                IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                            <Border
+                                                Width="120"
+                                                Margin="0,5,5,0"
+                                                Background="White"
+                                                CornerRadius="6">
+                                                <RadioButton
+                                                    Margin="8"
+                                                    HorizontalAlignment="Left"
+                                                    Content="{Binding GroupName, Mode=TwoWay}"
+                                                    Cursor="Hand"
+                                                    GroupName="RadioGroup"
+                                                    IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                            </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>

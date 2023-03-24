@@ -44,7 +44,7 @@
                     Margin="10,50,10,45"
                     Background="#F4F5F7"
                     CornerRadius="8">
-                    <Grid Margin="8">
+                    <Grid Margin="8,3,8,8">
                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                             <WrapPanel Name="materialTabItem" Orientation="Horizontal">
                                 <ItemsControl Name="CheckBoxGroups" ItemsSource="{Binding TagList, Mode=TwoWay}">
@@ -55,11 +55,17 @@
                                     </ItemsControl.ItemsPanel>
                                     <ItemsControl.ItemTemplate>
                                         <DataTemplate>
-                                            <CheckBox
-                                                Margin="8"
-                                                Content="{Binding TagName, Mode=TwoWay}"
-                                                Cursor="Hand"
-                                                IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                            <Border
+                                                Width="120"
+                                                Margin="0,5,5,0"
+                                                Background="White"
+                                                CornerRadius="6">
+                                                <CheckBox
+                                                    Margin="8"
+                                                    Content="{Binding TagName, Mode=TwoWay}"
+                                                    Cursor="Hand"
+                                                    IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                            </Border>
                                         </DataTemplate>
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
