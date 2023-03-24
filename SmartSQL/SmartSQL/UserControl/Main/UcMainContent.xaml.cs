@@ -1250,7 +1250,7 @@ namespace SmartSQL.UserControl
         {
             #region MyRegion
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            if (!(TreeViewTables.SelectedItem is TreeNodeItem objects) || objects.Type == ObjType.Group || objects.TextColor.Equals("Red"))
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem objects) || objects.Type == ObjType.Group)
             {
                 return;
             }
@@ -1342,6 +1342,142 @@ namespace SmartSQL.UserControl
                 return;
             }
             Clipboard.SetDataObject(selectedObjects.Name);
+            Oops.Success("复制成功");
+        }
+
+        /// <summary>
+        /// 设置标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuSetTag_OnClick(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject) || selectedObject.ObejcetId == "0" || selectedObject.TextColor.Equals("Red"))
+            {
+                Oops.Oh("请选择对应的表");
+                return;
+            }
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            var sqLiteHelper = new SQLiteHelper();
+            var list = sqLiteHelper.db.Table<TagInfo>().Where(x =>
+                x.ConnectId == SelectedConnection.ID && x.DataBaseName == selectDatabase.DbName).ToList();
+            if (!list.Any())
+            {
+                Oops.Oh("暂无标签，请先创建标签");
+                return;
+            }
+            var mainWindow = Window.GetWindow(this);
+            var setTag = new SetTag();
+            //setTag.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+            setTag.SelectedConnection = SelectedConnection;
+            setTag.SelectedDataBase = selectDatabase.DbName;
+            setTag.SelectedObjects = new List<TreeNodeItem>() { selectedObject };
+            setTag.Owner = mainWindow;
+            setTag.ShowDialog();
+            #endregion
+        }
+
+        /// <summary>
+        /// 设置分组
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuSetGroup_OnClick(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject) || selectedObject.ObejcetId == "0")
+            {
+                Oops.Oh("请选择对应的表");
+                return;
+            }
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            var sqLiteHelper = new SQLiteHelper();
+            var list = sqLiteHelper.db.Table<GroupInfo>().Where(x =>
+                x.ConnectId == SelectedConnection.ID && x.DataBaseName == selectDatabase.DbName).ToList();
+            if (!list.Any())
+            {
+                Oops.Oh("暂无分组，请先创建分组");
+                return;
+            }
+            var mainWindow = Window.GetWindow(this);
+            var group = new SetGroup();
+            //group.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
+            group.SelectedConnection = SelectedConnection;
+            group.SelectedDataBase = selectDatabase.DbName;
+            group.SelectedObjects = new List<TreeNodeItem>() { selectedObject };
+            group.Owner = mainWindow;
+            group.ShowDialog();
+            #endregion
+        }
+
+        /// <summary>
+        /// 导出文档
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuExportDoc_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject))
+            {
+                return;
+            }
+            var exportData = selectedObject.Children.Any()
+                ? selectedObject.Children
+                : new List<TreeNodeItem> { selectedObject };
+            if (selectedObject.Type == ObjType.Group || selectedObject.Type == ObjType.Tag)
+            {
+                if (selectedObject.ChildrenCount < 1)
+                {
+                    var textName = selectedObject.Type == ObjType.Group ? "分组" : "标签";
+                    Oops.Oh($"该{textName}无数据，无法导出");
+                    return;
+                }
+                exportData = new List<TreeNodeItem>();
+                selectedObject.Children.ForEach(c =>
+                {
+                    c.Children.ForEach(cz =>
+                    {
+                        exportData.Add(cz);
+                    });
+                });
+            }
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            var mainWindow = Window.GetWindow(this);
+            var exportDoc = new ExportDoc();
+            exportDoc.Owner = mainWindow;
+            exportDoc.MenuData = MenuData;
+            exportDoc.SelectedConnection = SelectedConnection;
+            exportDoc.SelectedDataBase = selectDatabase;
+            exportDoc.ExportData = exportData;
+            exportDoc.ShowDialog();
+        }
+
+        /// <summary>
+        /// 生成SQL
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuCreateSQL_OnClick(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject) || selectedObject.ObejcetId == "0")
+            {
+                Oops.Oh("请选择对应的表");
+                return;
+            }
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.SelectedDbConnectString(selectDatabase.DbName), selectDatabase.DbName);
+            var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
+            var list = tableColumns.Values.ToList();
+            var mainWindow = Window.GetWindow(this);
+            var scriptW = new ScriptWindow();
+            scriptW.SelectedConnection = SelectedConnection;
+            scriptW.SelectedObject = selectedObject;
+            scriptW.SelectedColumns = list;
+            scriptW.Owner = mainWindow;
+            scriptW.ShowDialog();
+            #endregion
         }
 
         /// <summary>
@@ -1373,7 +1509,7 @@ namespace SmartSQL.UserControl
             Process.Start(baseDirectoryPath);
             #endregion
         }
-        
+
         private void MainTabW_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             #region MyRegion
@@ -1392,17 +1528,33 @@ namespace SmartSQL.UserControl
         private void EventSetter_OnHandler(object sender, MouseButtonEventArgs e)
         {
             #region MyRegion
-            var treeViewItem = VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) as TreeViewItem;
-            if (treeViewItem != null)
+            if (VisualUpwardSearch<TreeViewItem>(e.OriginalSource as DependencyObject) is TreeViewItem treeViewItem)
             {
-                var currentNode = treeViewItem.Header as TreeNodeItem;
-                if (currentNode.ObejcetId == "0")
+                var selectedNode = treeViewItem.Header as TreeNodeItem;
+                if (selectedNode == null)
                 {
-                    TreeContextMenu.Visibility = Visibility.Collapsed;
+                    return;
+                }
+                if (selectedNode.ObejcetId == "0")
+                {
+                    MenuCopyName.Visibility = Visibility.Collapsed;
+                    MenuSetGroup.Visibility = Visibility.Collapsed;
+                    MenuSetTag.Visibility = Visibility.Collapsed;
+                    MenuCreateSQL.Visibility = Visibility.Collapsed;
+                    MenuCreateEntity.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
-                    TreeContextMenu.Visibility = Visibility.Visible;
+                    MenuCopyName.Visibility = Visibility.Visible;
+                    MenuSetGroup.Visibility = Visibility.Visible;
+                    MenuSetTag.Visibility = Visibility.Visible;
+                    MenuCreateSQL.Visibility = Visibility.Visible;
+                    MenuCreateEntity.Visibility = Visibility.Visible;
+                    if (selectedNode.Type == ObjType.Proc)
+                    {
+                        MenuCreateSQL.Visibility = Visibility.Collapsed;
+                        MenuCreateEntity.Visibility = Visibility.Collapsed;
+                    }
                 }
                 treeViewItem.Focus();
                 e.Handled = true;

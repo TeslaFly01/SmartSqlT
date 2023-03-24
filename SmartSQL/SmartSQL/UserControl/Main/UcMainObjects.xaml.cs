@@ -120,6 +120,7 @@ namespace SmartSQL.UserControl
         /// </summary>
         public void LoadPageData()
         {
+            #region MyRegion
             ChkAll.IsChecked = false;
             NoDataText.Visibility = Visibility.Collapsed;
             if (SelectedObject.Type == ObjType.Type)
@@ -158,7 +159,8 @@ namespace SmartSQL.UserControl
                 });
                 ObjItems = ObjectsViewData;
                 SearchObject.Text = string.Empty;
-            }
+            } 
+            #endregion
         }
 
         private List<TreeNodeItem> ObjItems;

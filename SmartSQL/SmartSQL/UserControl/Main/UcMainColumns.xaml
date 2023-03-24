@@ -284,6 +284,14 @@
                             VerticalAlignment="Bottom">
                             <hc:UniformSpacingPanel Spacing="10">
                                 <Button
+                                    x:Name="BtnSetTagExt"
+                                    Height="26"
+                                    hc:IconElement.Geometry="{StaticResource TagGeometry}"
+                                    Click="BtnSetTag_OnClick"
+                                    Content="设置标签"
+                                    Cursor="Hand"
+                                    Style="{StaticResource ButtonSuccess}" />
+                                <Button
                                     x:Name="BtnSetGroupExt"
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource SetGroupGeometry}"
