@@ -20,7 +20,7 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
         }
-        public SqlServerExporter(string connectionString,string dbName) : base(connectionString, dbName)
+        public SqlServerExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
         }
@@ -387,7 +387,7 @@ namespace SmartSQL.Framework.Exporter
                 }
                 objectId = tableInfo.Values.First().Id;
             }
-            var colList = _dbMaintenance.GetColumnInfosByTableName(objectId);
+            var colList = _dbMaintenance.GetColumnInfosByTableName(objectId, false);
             colList.ForEach(col =>
             {
                 if (columns.ContainsKey(col.DbColumnName))

@@ -270,7 +270,6 @@
                                                 <TextBlock
                                                     Margin="5,1,5,1"
                                                     VerticalAlignment="Center"
-                                                    FontWeight="Bold"
                                                     Foreground="{StaticResource ThirdlyTextBrush}"
                                                     Text="{Binding ChildrenCount}" />
                                             </Border>

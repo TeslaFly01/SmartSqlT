@@ -202,7 +202,8 @@ namespace SmartSQL.UserControl
                     DisplayName = "表",
                     Name = "treeTable",
                     Icon = TABLEICON,
-                    Type = ObjType.Type
+                    Type = ObjType.Type,
+                    IsShowCount = Visibility.Visible
                 };
                 itemList.Add(nodeTable);
                 var nodeView = new TreeNodeItem
@@ -211,7 +212,8 @@ namespace SmartSQL.UserControl
                     DisplayName = "视图",
                     Name = "treeView",
                     Icon = VIEWICON,
-                    Type = ObjType.Type
+                    Type = ObjType.Type,
+                    IsShowCount = Visibility.Visible
                 };
                 itemList.Add(nodeView);
                 var nodeProc = new TreeNodeItem
@@ -220,7 +222,8 @@ namespace SmartSQL.UserControl
                     DisplayName = "存储过程",
                     Name = "treeProc",
                     Icon = PROCICON,
-                    Type = ObjType.Type
+                    Type = ObjType.Type,
+                    IsShowCount = Visibility.Visible
                 };
                 itemList.Add(nodeProc);
 
@@ -255,7 +258,8 @@ namespace SmartSQL.UserControl
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
-                                IsExpanded = group.OpenLevel == 2
+                                IsExpanded = group.OpenLevel == 2,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeTable1);
                             var nodeView1 = new TreeNodeItem
@@ -266,7 +270,8 @@ namespace SmartSQL.UserControl
                                 Icon = VIEWICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
-                                IsExpanded = group.OpenLevel == 2
+                                IsExpanded = group.OpenLevel == 2,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeView1);
                             var nodeProc1 = new TreeNodeItem
@@ -277,7 +282,8 @@ namespace SmartSQL.UserControl
                                 Icon = PROCICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
-                                IsExpanded = group.OpenLevel == 2
+                                IsExpanded = group.OpenLevel == 2,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeProc1);
                             nodeGroup.Children = itemChildList;
@@ -325,6 +331,7 @@ namespace SmartSQL.UserControl
                                 Icon = TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeTable1);
                             var nodeView1 = new TreeNodeItem
@@ -334,7 +341,8 @@ namespace SmartSQL.UserControl
                                 Name = "treeView",
                                 Icon = VIEWICON,
                                 Parent = nodeGroup,
-                                Type = ObjType.Type
+                                Type = ObjType.Type,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeView1);
                             var nodeProc1 = new TreeNodeItem
@@ -344,7 +352,8 @@ namespace SmartSQL.UserControl
                                 Name = "treeProc",
                                 Icon = PROCICON,
                                 Parent = nodeGroup,
-                                Type = ObjType.Type
+                                Type = ObjType.Type,
+                                IsShowCount = Visibility.Visible
                             };
                             itemChildList.Add(nodeProc1);
                             nodeGroup.Children = itemChildList;
@@ -609,6 +618,7 @@ namespace SmartSQL.UserControl
 
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
+                    #region MyRegion
                     LoadingLine.Visibility = Visibility.Hidden;
                     //编写获取数据并显示在界面的代码
                     if (leftMenuType == LeftMenuType.Group.GetHashCode() || leftMenuType == LeftMenuType.Tag.GetHashCode())
@@ -627,7 +637,8 @@ namespace SmartSQL.UserControl
                                 {
                                     obj.Visibility = nameof(Visibility.Collapsed);
                                 }
-                                obj.DisplayName += $"（{obj.Children.Count}）";
+                                //obj.DisplayName += $"（{obj.Children.Count}）";
+                                obj.ChildrenCount = obj.Children.Count;
                             });
                             treeItem.ChildrenCount = treeItem.Children[0].Children.Count + treeItem.Children[1].Children.Count + treeItem.Children[2].Children.Count;
                         });
@@ -647,12 +658,14 @@ namespace SmartSQL.UserControl
                             {
                                 obj.Visibility = nameof(Visibility.Collapsed);
                             }
-                            obj.DisplayName += $"（{obj.Children.Count}）";
+                            //obj.DisplayName += $"（{obj.Children.Count}）";
+                            obj.ChildrenCount = obj.Children.Count;
                         });
                         TreeViewData = itemList;
                         SearchMenu.Text = string.Empty;
                     }
-                    MenuData = menuData;
+                    MenuData = menuData; 
+                    #endregion
                 }));
             });
             #endregion
@@ -708,7 +721,8 @@ namespace SmartSQL.UserControl
                 Name = "treeTable",
                 Icon = TABLEICON,
                 Type = ObjType.Type,
-                IsExpanded = true
+                IsExpanded = true,
+                IsShowCount = Visibility.Visible
             };
             itemList.Add(nodeTable);
             var nodeView = new TreeNodeItem()
@@ -718,7 +732,8 @@ namespace SmartSQL.UserControl
                 Name = "treeView",
                 Icon = VIEWICON,
                 Type = ObjType.Type,
-                IsExpanded = true
+                IsExpanded = true,
+                IsShowCount = Visibility.Visible
             };
             itemList.Add(nodeView);
             var nodeProc = new TreeNodeItem()
@@ -728,7 +743,8 @@ namespace SmartSQL.UserControl
                 Name = "treeProc",
                 Icon = PROCICON,
                 Type = ObjType.Type,
-                IsExpanded = true
+                IsExpanded = true,
+                IsShowCount = Visibility.Visible
             };
             itemList.Add(nodeProc);
             var sqLiteHelper = new SQLiteHelper();
@@ -768,7 +784,8 @@ namespace SmartSQL.UserControl
                         Type = ObjType.Group,
                         IsExpanded = true,
                         FontWeight = "Bold",
-                        Children = itemChildList
+                        Children = itemChildList,
+                        IsShowCount = Visibility.Visible
                     };
                     var nodeTable1 = new TreeNodeItem
                     {
@@ -778,7 +795,8 @@ namespace SmartSQL.UserControl
                         Icon = TABLEICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
-                        Parent = nodeGroup
+                        Parent = nodeGroup,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeTable1);
                     var nodeView1 = new TreeNodeItem
@@ -789,7 +807,8 @@ namespace SmartSQL.UserControl
                         Icon = VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
-                        Parent = nodeGroup
+                        Parent = nodeGroup,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeView1);
                     var nodeProc1 = new TreeNodeItem
@@ -800,7 +819,8 @@ namespace SmartSQL.UserControl
                         Icon = PROCICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
-                        Parent = nodeGroup
+                        Parent = nodeGroup,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeProc1);
                     itemParentList.Add(nodeGroup);
@@ -853,6 +873,7 @@ namespace SmartSQL.UserControl
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeTag,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeTable1);
                     var nodeView1 = new TreeNodeItem
@@ -863,7 +884,8 @@ namespace SmartSQL.UserControl
                         Icon = VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
-                        Parent = nodeTag
+                        Parent = nodeTag,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeView1);
                     var nodeProc1 = new TreeNodeItem
@@ -874,7 +896,8 @@ namespace SmartSQL.UserControl
                         Icon = PROCICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
-                        Parent = nodeTag
+                        Parent = nodeTag,
+                        IsShowCount = Visibility.Visible
                     };
                     itemChildList.Add(nodeProc1);
                     nodeTag.Children = itemChildList;
@@ -1166,7 +1189,8 @@ namespace SmartSQL.UserControl
                         {
                             obj.Visibility = nameof(Visibility.Collapsed);
                         }
-                        obj.DisplayName = $"{obj.DisplayName}({obj.Children.Count})";
+                        //obj.DisplayName = $"{obj.DisplayName}({obj.Children.Count})";
+                        obj.ChildrenCount = obj.Children.Count;
                     });
                 });
                 if (itemParentList.All(x => x.Visibility != nameof(Visibility.Visible)))
@@ -1184,7 +1208,8 @@ namespace SmartSQL.UserControl
                     {
                         obj.Visibility = nameof(Visibility.Collapsed);
                     }
-                    obj.DisplayName = $"{obj.DisplayName}({obj.Children.Count})";
+                    //obj.DisplayName = $"{obj.DisplayName}({obj.Children.Count})";
+                    obj.ChildrenCount = obj.Children.Count;
                 });
                 if (itemList.All(x => x.Visibility != nameof(Visibility.Visible)))
                 {
