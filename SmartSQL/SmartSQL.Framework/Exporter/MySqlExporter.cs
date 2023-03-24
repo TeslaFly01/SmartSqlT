@@ -19,7 +19,7 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
         }
-        public MySqlExporter(string connectionString,string dbName) : base(connectionString, dbName)
+        public MySqlExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
         }
@@ -179,7 +179,8 @@ namespace SmartSQL.Framework.Exporter
                 }
                 var column = new Column(v.DbColumnName, v.DbColumnName, v.DbColumnName, v.DataType, v.ColumnDescription);
                 column.LengthName = "";
-                switch (v.DataType)
+                var dataType = v.DataType.ToLower();
+                switch (dataType)
                 {
                     case "char":
                     case "nchar":

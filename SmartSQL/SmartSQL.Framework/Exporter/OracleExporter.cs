@@ -171,11 +171,14 @@ namespace SmartSQL.Framework.Exporter
                     case "text":
                     case "binary":
                     case "varchar":
+                    case "varchar2":
                     case "nvarchar":
+                    case "nvarchar2":
                     case "varbinary":
                     case "datetime2":
                     case "datetimeoffset":
                         column.LengthName = $"({v.Length})"; break;
+                    case "number":
                     case "numeric":
                     case "decimal":
                         column.LengthName = $"({v.Length},{v.Scale})"; break;
