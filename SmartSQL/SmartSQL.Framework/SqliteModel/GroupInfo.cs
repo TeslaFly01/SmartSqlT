@@ -34,11 +34,26 @@ namespace SmartSQL.Framework.SqliteModel
         /// <summary>
         /// 排序标记
         /// </summary>
-        public DateTime OrderFlag { get; set; }=DateTime.Now;
+        public DateTime OrderFlag { get; set; } = DateTime.Now;
         /// <summary>
         /// 对象数量
         /// </summary>
-        public int SubCount { get; set; }
+        private int _subCount;
+        public int SubCount
+        {
+            get
+            {
+                var sqLiteHelper = new SQLiteHelper();
+                var groupCount = sqLiteHelper.db
+                    .Table<GroupObjects>()
+                    .Count(x => x.GroupId == Id);
+                return groupCount;
+            }
+            set
+            {
+                _subCount = value;
+            }
+        }
         [Ignore]
         public bool IsSelected { get; set; }
     }

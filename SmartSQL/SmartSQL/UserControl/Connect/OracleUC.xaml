@@ -13,11 +13,12 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid
-            Height="50"
-            VerticalAlignment="Top"
-            Background="#e3e4e7">
-            <Image Source="pack://application:,,,/Resources/Img/connect_bg.png" Stretch="Fill" />
+        <Grid Height="50" VerticalAlignment="Top">
+            <Border BorderThickness="0" CornerRadius="8 8 0 0 ">
+                <Border.Background>
+                    <ImageBrush ImageSource="pack://application:,,,/Resources/Img/connect_bg.png" Stretch="Fill" />
+                </Border.Background>
+            </Border>
             <StackPanel>
                 <TextBlock
                     Margin="20,18"
@@ -36,7 +37,7 @@
                     Source="pack://application:,,,/Resources/svg/oracle@64.svg" />
             </StackPanel>
         </Grid>
-        <Grid Margin="0,50,0,0">
+        <Grid Margin="0,50,0,0" Background="White">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="100" />
                 <ColumnDefinition Width="*" />
