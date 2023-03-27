@@ -120,6 +120,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcRMB();
                     title = "人民币大写转换";
                     break;
+                case "ico":
+                    toolBox.UcBox.Content = new UcIcoToConvert();
+                    title = "Ico图标生成";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

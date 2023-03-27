@@ -225,6 +225,9 @@
     <Compile Include="UserControl\Tags\UcTagObjects.xaml.cs">
       <DependentUpon>UcTagObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcIcoToConvert.xaml.cs">
+      <DependentUpon>UcIcoToConvert.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcRMB.xaml.cs">
       <DependentUpon>UcRMB.xaml</DependentUpon>
     </Compile>
@@ -498,6 +501,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="UserControl\Tools\UcIcoToConvert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcRMB.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -735,6 +742,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\toolIcon\ico%402x.png" />
     <Resource Include="Resources\svg\dameng%4064.svg" />
     <Resource Include="Resources\Img\toolIcon\rmb%402x.png" />
     <Resource Include="Resources\Img\toolIcon\fanti%402x.png" />
