@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -30,7 +31,6 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using System.IO;
-using System.Diagnostics;
 
 namespace SmartSQL.UserControl
 {
@@ -389,13 +389,13 @@ namespace SmartSQL.UserControl
                 #region 表
                 foreach (var table in model.Tables)
                 {
-                    var tableName = !isContainsObjName
-                        ? table.Value.DisplayName
-                        : table.Value.DisplayName + " " + table.Value.Comment;
+                    var isShowComment = !isContainsObjName
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
                     var tableItem = new TreeNodeItem()
                     {
                         ObejcetId = table.Value.Id,
-                        DisplayName = tableName,
+                        DisplayName = table.Value.DisplayName,
                         Name = table.Value.Name,
                         Schema = table.Value.SchemaName,
                         Comment = table.Value.Comment,
@@ -403,7 +403,8 @@ namespace SmartSQL.UserControl
                         ModifyDate = table.Value.ModifyDate,
                         TextColor = textColor,
                         Icon = TABLEICON,
-                        Type = ObjType.Table
+                        Type = ObjType.Table,
+                        IsShowComment = isShowComment
                     };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
@@ -461,11 +462,13 @@ namespace SmartSQL.UserControl
                 #region 视图
                 foreach (var view in model.Views)
                 {
-                    var viewName = !isContainsObjName ? view.Value.DisplayName : view.Value.DisplayName + " " + view.Value.Comment;
+                    var isShowComment = !isContainsObjName
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
                     var viewItem = new TreeNodeItem()
                     {
                         ObejcetId = view.Value.Id,
-                        DisplayName = viewName,
+                        DisplayName = view.Value.DisplayName,
                         Name = view.Value.Name,
                         Schema = view.Value.SchemaName,
                         Comment = view.Value.Comment,
@@ -473,7 +476,8 @@ namespace SmartSQL.UserControl
                         ModifyDate = view.Value.ModifyDate,
                         TextColor = textColor,
                         Icon = VIEWICON,
-                        Type = ObjType.View
+                        Type = ObjType.View,
+                        IsShowComment = isShowComment
                     };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
@@ -664,7 +668,7 @@ namespace SmartSQL.UserControl
                         TreeViewData = itemList;
                         SearchMenu.Text = string.Empty;
                     }
-                    MenuData = menuData; 
+                    MenuData = menuData;
                     #endregion
                 }));
             });
@@ -928,20 +932,21 @@ namespace SmartSQL.UserControl
                     {
                         continue;
                     }
-                    var tableName = !isContainsObjName
-                        ? table.Value.DisplayName
-                        : table.Value.DisplayName + " " + table.Value.Comment;
+                    var isShowComment = !isContainsObjName
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
                     var tableItem = new TreeNodeItem()
                     {
                         ObejcetId = table.Value.Id,
-                        DisplayName = tableName,
+                        DisplayName = table.Value.DisplayName,
                         Name = table.Value.Name,
                         Schema = table.Value.SchemaName,
                         Comment = table.Value.Comment,
                         CreateDate = table.Value.CreateDate,
                         ModifyDate = table.Value.ModifyDate,
                         Icon = TABLEICON,
-                        Type = ObjType.Table
+                        Type = ObjType.Table,
+                        IsShowComment = isShowComment
                     };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())
@@ -1009,20 +1014,21 @@ namespace SmartSQL.UserControl
                         continue;
                     }
 
-                    var viewName = !isContainsObjName
-                        ? view.Value.DisplayName
-                        : view.Value.DisplayName + " " + view.Value.Comment;
+                    var isShowComment = !isContainsObjName
+                        ? Visibility.Collapsed
+                        : Visibility.Visible;
                     var viewItem = new TreeNodeItem()
                     {
                         ObejcetId = view.Value.Id,
-                        DisplayName = viewName,
+                        DisplayName = view.Value.DisplayName,
                         Name = view.Value.Name,
                         Schema = view.Value.SchemaName,
                         Comment = view.Value.Comment,
                         CreateDate = view.Value.CreateDate,
                         ModifyDate = view.Value.ModifyDate,
                         Icon = VIEWICON,
-                        Type = ObjType.View
+                        Type = ObjType.View,
+                        IsShowComment = isShowComment
                     };
                     //是否业务分组
                     if (leftMenuType == LeftMenuType.Group.GetHashCode())

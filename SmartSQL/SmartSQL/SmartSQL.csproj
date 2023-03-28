@@ -137,6 +137,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converts\DisplayNameConvert.cs" />
     <Compile Include="Helper\BarQrCodeHelper.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\PingYinHelper.cs" />
@@ -910,6 +911,7 @@
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>

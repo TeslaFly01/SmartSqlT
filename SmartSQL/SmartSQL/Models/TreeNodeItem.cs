@@ -102,6 +102,11 @@ namespace SmartSQL.Models
         public Visibility IsShowCount { get; set; } = System.Windows.Visibility.Collapsed;
 
         /// <summary>
+        /// 是否显示注释
+        /// </summary>
+        public Visibility IsShowComment { get; set; } = System.Windows.Visibility.Collapsed;
+
+        /// <summary>
         /// 子项菜单
         /// </summary>
         public List<TreeNodeItem> Children { get; set; }

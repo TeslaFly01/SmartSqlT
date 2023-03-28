@@ -2,6 +2,7 @@
     x:Class="SmartSQL.UserControl.UcMainContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:convert="clr-namespace:SmartSQL.Converts"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:hc="https://handyorg.github.io/handycontrol"
@@ -22,6 +23,9 @@
         <CommandBinding Command="Copy" Executed="MenuCopyName_OnClick" />
     </UserControl.CommandBindings>
     <!--  按键监/命令听绑定  -->
+    <UserControl.Resources>
+        <convert:DisplayNameConvert x:Key="DisplayNameConvert" />
+    </UserControl.Resources>
     <Grid>
         <!--  Main布局  -->
         <Grid.RowDefinitions>
@@ -256,11 +260,26 @@
                                                 Margin="0,0,5,0"
                                                 HorizontalAlignment="Left"
                                                 Source="{Binding Icon}" />
+
                                             <TextBlock
+                                                x:Name="TextName"
                                                 VerticalAlignment="Center"
                                                 FontSize="12"
                                                 Text="{Binding DisplayName}"
-                                                ToolTip="{Binding DisplayName}" />
+                                                ToolTip="{Binding DisplayName}"
+                                                Visibility="{Binding IsShowComment, Converter={StaticResource DisplayNameConvert}}" />
+
+                                            <TextBlock
+                                                x:Name="TextNameComment"
+                                                ToolTip="{Binding DisplayName}"
+                                                Visibility="{Binding IsShowComment}">
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0} {1}">
+                                                        <Binding Path="DisplayName" />
+                                                        <Binding Path="Comment" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
                                         </hc:SimpleStackPanel>
                                         <hc:SimpleStackPanel
                                             Margin="0,0,8,0"
