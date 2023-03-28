@@ -92,17 +92,30 @@
                             hc:InfoElement.Title="图标尺寸"
                             hc:InfoElement.TitlePlacement="Left"
                             BorderThickness="0"
+                            SelectionChanged="ComSize_OnSelectionChanged"
                             Style="{StaticResource ComboBoxExtend}">
                             <ComboBoxItem Content="16 x 16" />
                             <ComboBoxItem Content="32 x 32" IsSelected="True" />
                             <ComboBoxItem Content="48 x 48" />
                             <ComboBoxItem Content="64 x 64" />
                             <ComboBoxItem Content="128 x 128" />
+                            <ComboBoxItem Name="ComItemCus" Content="自定义" />
                         </ComboBox>
+                        <hc:NumericUpDown
+                            x:Name="NumWidth"
+                            Width="100"
+                            Height="30"
+                            Margin="0,0,15,0"
+                            BorderThickness="0"
+                            Maximum="255"
+                            Minimum="8"
+                            Style="{StaticResource NumericUpDownExtend}"
+                            Visibility="Collapsed"
+                            Value="80" />
                         <Button
                             x:Name="BtnCreateIcon"
                             Width="115"
-                            Height="28"
+                            Height="30"
                             Click="BtnCreateIcon_OnClick"
                             Content="生成Ico图标"
                             Cursor="Hand"

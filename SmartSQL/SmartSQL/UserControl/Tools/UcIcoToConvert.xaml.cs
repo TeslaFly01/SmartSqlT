@@ -60,6 +60,8 @@ namespace SmartSQL.UserControl
                     widthHeight = 64; break;
                 case "128 x 128":
                     widthHeight = 128; break;
+                case "自定义":
+                    widthHeight = Convert.ToInt32(NumWidth.Value);break;
             }
             var fs = file.LocalPath.Split('\\').Last();
             var filePath = file.LocalPath.Replace(fs, "");
@@ -99,43 +101,64 @@ namespace SmartSQL.UserControl
                 {
                     return false;
                 }
-                var sfd = Image.FromFile(origin);
-                // 把原图并缩放到指定大小
-                Image originResized = new Bitmap(sfd, iconSize.Width, iconSize.Height);
+                //var fileExt = Path.GetExtension(origin);
+                //var fileNewName = $"{DateTime.Now:HHmmssfff}{fileExt}";
+                //var fileDirectory = Path.GetDirectoryName(origin);
+                //var fileNewUrl = Path.Combine(AppPath, fileNewName);
+                //File.Copy(origin, fileNewUrl);
+                var image = Image.FromFile(origin);
+                // 把原图缩放到指定大小
+                Image originResized = new Bitmap(image, iconSize.Width, iconSize.Height);
                 // 存放缩放后的原图的内存流
-                MemoryStream originImageStream = new MemoryStream();
-                // 将缩放后的原图以png格式写入到内存流
-                originResized.Save(originImageStream, ImageFormat.Png);
-                // Icon的文件字节内容
-                List<byte> iconBytes = new List<byte>();
-                // 先加载Icon文件头
-                iconBytes.AddRange(ICON_HEAD_TEMPLATE);
-                // 文件头的第7和8位分别是图标的宽高，修改为设定值，不可大于255
-                iconBytes[6] = (byte)iconSize.Width;
-                iconBytes[7] = (byte)iconSize.Height;
-                // 文件头的第15到第18位是原图片内容部分大小
-                byte[] size = BitConverter.GetBytes((int)originImageStream.Length);
-                iconBytes[14] = size[0];
-                iconBytes[15] = size[1];
-                iconBytes[16] = size[2];
-                iconBytes[17] = size[3];
-                // 追加缩放后原图字节内容
-                iconBytes.AddRange(originImageStream.ToArray());
-                // 利用文件流保存为Icon文件
-                Stream iconFileStream = new FileStream(destination, FileMode.Create);
-                iconFileStream.Write(iconBytes.ToArray(), 0, iconBytes.Count);
-                // 关闭所有流并释放内存
-                iconFileStream.Close();
-                originImageStream.Close();
-                originResized.Dispose();
+                using (MemoryStream originImageStream = new MemoryStream())
+                {
+                    // 将缩放后的原图以png格式写入到内存流
+                    originResized.Save(originImageStream, ImageFormat.Png);
+                    // Icon的文件字节内容
+                    List<byte> iconBytes = new List<byte>();
+                    // 先加载Icon文件头
+                    iconBytes.AddRange(ICON_HEAD_TEMPLATE);
+                    // 文件头的第7和8位分别是图标的宽高，修改为设定值，不可大于255
+                    iconBytes[6] = (byte)iconSize.Width;
+                    iconBytes[7] = (byte)iconSize.Height;
+                    // 文件头的第15到第18位是原图片内容部分大小
+                    byte[] size = BitConverter.GetBytes((int)originImageStream.Length);
+                    iconBytes[14] = size[0];
+                    iconBytes[15] = size[1];
+                    iconBytes[16] = size[2];
+                    iconBytes[17] = size[3];
+                    // 追加缩放后原图字节内容
+                    iconBytes.AddRange(originImageStream.ToArray());
+                    // 利用文件流保存为Icon文件
+                    using (Stream iconFileStream = new FileStream(destination, FileMode.Create))
+                    {
+                        iconFileStream.Write(iconBytes.ToArray(), 0, iconBytes.Count);
+                        // 释放内存
+                        originResized.Dispose();
+                    }
+                }
                 return File.Exists(destination);
             }
             catch (Exception ex)
             {
                 Oops.Oh($"生成失败，原因：{ex.Message}");
                 return false;
-            } 
+            }
             #endregion
+        }
+
+        private void ComSize_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            NumWidth.Visibility = Visibility.Collapsed;
+            var selectedItem = (ComboBoxItem)((ComboBox)sender).SelectedItem;
+            if (selectedItem.Content != null && selectedItem.Content.ToString() == "自定义")
+            {
+                NumWidth.Visibility = Visibility.Visible;
+            }
         }
     }
 }
