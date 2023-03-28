@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using SmartSQL.Helper;
 using SmartSQL.Views;
 using System.Windows.Threading;
@@ -95,14 +96,26 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void BtnUnixConvert_OnClick(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrEmpty(TextUnixTime.Text))
+            try
             {
-                Oops.Oh("请输入Unix时间戳");
-                return;
+                if (string.IsNullOrEmpty(TextUnixTime.Text))
+                {
+                    Oops.Oh("请输入Unix时间戳");
+                    return;
+                }
+                var unixTime = Convert.ToInt64(TextUnixTime.Text + "000");
+                var comUnix = ((ComboBoxItem)ComUnix.SelectedItem).Content.ToString();
+                if (comUnix == "毫秒")
+                {
+                    unixTime = Convert.ToInt64(TextUnixTime.Text);
+                }
+                var datetime = DateTimeHelper.UnixToDateTime(unixTime);
+                TextUnixResult.Text = datetime.ToString("yyyy/MM/dd HH:mm:ss");
             }
-            var unixTime = Convert.ToInt64(TextUnixTime.Text);
-            var datetime = DateTimeHelper.UnixToDateTime(unixTime);
-            TextUnixResult.Text = datetime.ToString("yyyy/MM/dd HH:mm:ss");
+            catch (Exception ex)
+            {
+                Oops.God(ex.Message);
+            }
         }
 
         /// <summary>
@@ -123,6 +136,12 @@ namespace SmartSQL.UserControl
                 return; ;
             }
             var datetime = DateTimeHelper.DateTimeToUnix(bjTime);
+            var comBj = ((ComboBoxItem)ComBj.SelectedItem).Content.ToString();
+            if (comBj == "毫秒")
+            {
+                TextBjResult.Text = datetime.ToString() + "000";
+                return;
+            }
             TextBjResult.Text = datetime.ToString();
         }
     }

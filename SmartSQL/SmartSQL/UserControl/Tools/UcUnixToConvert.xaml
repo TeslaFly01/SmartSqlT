@@ -125,6 +125,7 @@
                         <Grid Margin="20,20,20,0" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -139,19 +140,28 @@
                                 ShowClearButton="True"
                                 Style="{StaticResource TextBoxExtend}"
                                 TextType="Double" />
+                            <ComboBox
+                                x:Name="ComUnix"
+                                Grid.Column="1"
+                                Height="30"
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Top"
+                                BorderThickness="0">
+                                <ComboBoxItem Content="秒" IsSelected="True" />
+                                <ComboBoxItem Content="毫秒" />
+                            </ComboBox>
                             <Button
                                 x:Name="BtnUnixConvert"
-                                Grid.Column="1"
+                                Grid.Column="2"
                                 Width="100"
                                 VerticalAlignment="Top"
-                                hc:IconElement.Geometry="{StaticResource StartGeometry}"
                                 Click="BtnUnixConvert_OnClick"
                                 Content="开始转换"
                                 Cursor="Hand"
                                 Style="{StaticResource ButtonSuccess}" />
                             <TextBox
                                 Name="TextUnixResult"
-                                Grid.Column="2"
+                                Grid.Column="3"
                                 VerticalAlignment="Top"
                                 hc:InfoElement.Title="北京时间"
                                 hc:InfoElement.TitlePlacement="Left"
@@ -172,6 +182,7 @@
                         <Grid Margin="20,20,20,0" HorizontalAlignment="Stretch">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="100" />
                                 <ColumnDefinition Width="120" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -184,19 +195,28 @@
                                 hc:InfoElement.TitlePlacement="Left"
                                 hc:InfoElement.TitleWidth="100"
                                 Style="{StaticResource TextBoxExtend}" />
+                            <ComboBox
+                                x:Name="ComBj"
+                                Grid.Column="1"
+                                Height="30"
+                                Margin="8,0,0,0"
+                                VerticalAlignment="Top"
+                                BorderThickness="0">
+                                <ComboBoxItem Content="秒" IsSelected="True" />
+                                <ComboBoxItem Content="毫秒" />
+                            </ComboBox>
                             <Button
                                 x:Name="BtnBjConvert"
-                                Grid.Column="1"
+                                Grid.Column="2"
                                 Width="100"
                                 VerticalAlignment="Top"
-                                hc:IconElement.Geometry="{StaticResource StartGeometry}"
                                 Click="BtnBjConvert_OnClick"
                                 Content="开始转换"
                                 Cursor="Hand"
                                 Style="{StaticResource ButtonSuccess}" />
                             <TextBox
                                 Name="TextBjResult"
-                                Grid.Column="2"
+                                Grid.Column="3"
                                 VerticalAlignment="Top"
                                 hc:InfoElement.Title="Unix时间戳"
                                 hc:InfoElement.TitlePlacement="Left"

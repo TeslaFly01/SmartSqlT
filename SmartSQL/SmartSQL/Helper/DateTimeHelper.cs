@@ -16,7 +16,7 @@ namespace SmartSQL.Helper
         public static DateTime UnixToDateTime(long timeStamp)
         {
             DateTime dtStart = TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1), TimeZoneInfo.Local); //表示本地时区
-            long lTime = long.Parse(timeStamp.ToString() + "0000000");
+            long lTime = long.Parse(timeStamp.ToString() + "0000");
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
         }
