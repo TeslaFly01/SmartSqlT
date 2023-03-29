@@ -79,7 +79,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="columnInfo"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public abstract bool UpdateColumnRemark(Column columnInfo, string remark);
+        public abstract bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table);
         /// <summary>
         /// 创建表SQL
         /// </summary>
