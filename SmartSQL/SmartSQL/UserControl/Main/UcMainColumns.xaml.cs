@@ -133,7 +133,7 @@ namespace SmartSQL.UserControl
                 var objName = isView ? "视图" : "表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
-                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString,selectedDatabase.DbName);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString, selectedDatabase.DbName);
                 Task.Run(() =>
                 {
                     var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
@@ -173,7 +173,7 @@ namespace SmartSQL.UserControl
                 TabCode.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
-                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString,selectedDatabase.DbName);
+                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString, selectedDatabase.DbName);
                 Task.Run(() =>
                 {
                     var script = dbInstance.GetScriptInfoById(selectedObject.ObejcetId, DbObjectType.Proc);
@@ -218,7 +218,7 @@ namespace SmartSQL.UserControl
             if (selectedItem.Name.Equals("TabData"))
             {
                 var connectionString = SelectedConnection.DbMasterConnectString;
-                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString,SelectedDataBase.DbName);
+                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString, SelectedDataBase.DbName);
                 if (TabData.IsSelected)
                 {
                     SearchTableExt2.Text = "";
@@ -309,8 +309,9 @@ namespace SmartSQL.UserControl
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                     try
                     {
-                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString,SelectedDataBase.DbName);
-                        var editResult = dbInstance.UpdateColumnRemark(selectItem, newValue);
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString, SelectedDataBase.DbName);
+                        var objectType = SelectedObject.Type.Equals(ObjType.Table) ? DbObjectType.Table : (SelectedObject.Type.Equals(ObjType.View) ? DbObjectType.View : DbObjectType.Proc);
+                        var editResult = dbInstance.UpdateColumnRemark(selectItem, newValue, objectType);
                         if (editResult)
                             Oops.Success("修改成功");
                         else

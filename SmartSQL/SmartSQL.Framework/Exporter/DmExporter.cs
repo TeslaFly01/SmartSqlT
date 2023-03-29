@@ -292,7 +292,7 @@ namespace SmartSQL.Framework.Exporter
             throw new NotImplementedException();
         }
 
-        public override bool UpdateColumnRemark(Column columnInfo, string remark)
+        public override bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table)
         {
             throw new NotImplementedException();
         }

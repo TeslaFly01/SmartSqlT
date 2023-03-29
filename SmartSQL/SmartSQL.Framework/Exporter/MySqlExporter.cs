@@ -204,6 +204,7 @@ namespace SmartSQL.Framework.Exporter
                 column.IsNullable = v.IsNullable;
                 column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
                 column.DataType = v.DataType;
+                column.Length = v.Length;
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
                 column.IsPrimaryKey = v.IsPrimarykey;
@@ -256,9 +257,34 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="columnInfo"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(Column columnInfo, string remark)
+        public override bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table)
         {
-            throw new NotSupportedException();
+            var result = false;
+            if (objectType == DbObjectType.Table)
+            {
+                var dbColumn = new DbColumnInfo()
+                {
+                    TableName = columnInfo.ObjectId,
+                    DbColumnName = columnInfo.DisplayName,
+                    IsIdentity = columnInfo.IsIdentity,
+                    IsPrimarykey = columnInfo.IsPrimaryKey,
+                    IsNullable = columnInfo.IsNullable,
+                    Length = columnInfo.Length,
+                    DataType = columnInfo.DataType,
+                    DefaultValue = columnInfo.DefaultValue,
+                    ColumnDescription = remark
+                };
+                result = _dbMaintenance.AddColumnRemark(dbColumn);
+            }
+            if (objectType == DbObjectType.View)
+            {
+                throw new NotSupportedException();
+            }
+            if (objectType == DbObjectType.Proc)
+            {
+                throw new NotSupportedException();
+            }
+            return result;
         }
 
         public override string CreateTableSql()

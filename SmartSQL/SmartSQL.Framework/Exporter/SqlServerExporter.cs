@@ -472,7 +472,7 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="columnInfo"></param>
         /// <param name="remark"></param>
         /// <returns></returns>
-        public override bool UpdateColumnRemark(Column columnInfo, string remark)
+        public override bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table)
         {
             var columnName = columnInfo.Name;
             var tableName = columnInfo.ObjectName;
