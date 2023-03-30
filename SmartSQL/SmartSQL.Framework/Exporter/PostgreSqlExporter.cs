@@ -262,7 +262,20 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
-            throw new NotImplementedException();
+            var result = false;
+            if (objectType == DbObjectType.Table)
+            {
+                result = _dbMaintenance.AddTableRemark(objectName, remark);
+            }
+            if (objectType == DbObjectType.View)
+            {
+                throw new NotSupportedException();
+            }
+            if (objectType == DbObjectType.Proc)
+            {
+                throw new NotSupportedException();
+            }
+            return result;
         }
 
         /// <summary>
