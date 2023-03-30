@@ -52,7 +52,7 @@ namespace SmartSQL.Framework.Exporter
             var list = new List<DataBase>();
             schemaList.ForEach(schema =>
             {
-                if (schema.Equals("pg_toast")|| schema.Equals("pg_catalog") || schema.Equals("information_schema"))
+                if (schema.Equals("pg_toast") || schema.Equals("pg_catalog") || schema.Equals("information_schema"))
                 {
                     return;
                 }
@@ -268,13 +268,34 @@ namespace SmartSQL.Framework.Exporter
         /// <summary>
         /// ¸üÐÂÁÐ×¢ÊÍ
         /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="columnName"></param>
+        /// <param name="columnInfo"></param>
         /// <param name="remark"></param>
+        /// <param name="objectType"></param>
         /// <returns></returns>
         public override bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table)
         {
-            throw new NotImplementedException();
+            var result = false;
+            var dbName = DbName.Split(':')[1];
+            if (objectType == DbObjectType.Table)
+            {
+                var dbColumn = new DbColumnInfo()
+                {
+                    TableName = columnInfo.ObjectId,
+                    DbColumnName = columnInfo.DisplayName,
+                    ColumnDescription = remark,
+                    PropertyName = dbName
+                };
+                result = _dbMaintenance.AddColumnRemark(dbColumn);
+            }
+            if (objectType == DbObjectType.View)
+            {
+                throw new NotSupportedException();
+            }
+            if (objectType == DbObjectType.Proc)
+            {
+                throw new NotSupportedException();
+            }
+            return result;
         }
 
         public override string CreateTableSql()
