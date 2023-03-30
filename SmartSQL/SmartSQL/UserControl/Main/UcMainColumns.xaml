@@ -53,6 +53,7 @@
                                 CellEditEnding="TableGrid_OnCellEditEnding"
                                 Cursor="Arrow"
                                 HeadersVisibility="All"
+                                PreparingCellForEdit="TableGrid_OnPreparingCellForEdit"
                                 ItemsSource="{Binding ObjectColumns}"
                                 RowHeaderWidth="60"
                                 SelectedCellsChanged="TableGrid_OnSelectedCellsChanged"

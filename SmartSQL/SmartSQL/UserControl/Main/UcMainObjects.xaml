@@ -47,6 +47,7 @@
                     ItemsSource="{Binding ObjectsViewData, Mode=TwoWay}"
                     MouseDoubleClick="TableGrid_OnMouseDoubleClick"
                     MouseLeftButtonUp="TableGrid_OnMouseLeftButtonUp"
+                    PreparingCellForEdit="TableGrid_OnPreparingCellForEdit"
                     RowHeaderWidth="60"
                     SelectionUnit="CellOrRowHeader">
                     <!--<DataGrid.CellStyle>

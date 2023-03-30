@@ -216,6 +216,21 @@ namespace SmartSQL.UserControl
             }
         }
 
+        /// <summary>
+        /// 单元格编辑
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TableGrid_OnPreparingCellForEdit(object sender, DataGridPreparingCellForEditEventArgs e)
+        {
+            if (e.EditingElement != null && e.EditingElement is TextBox)
+            {
+                var cell = (DataGridCell)e.EditingElement.Parent;
+                //设置单元格中的TextBox宽度
+                e.EditingElement.Width = cell.ActualWidth - 10;
+            }
+        }
+
         private void TableGrid_OnCellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             #region MyRegion
