@@ -45,6 +45,16 @@ namespace SmartSQL.UserControl
         private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
 
+
+
+        private static readonly Dictionary<string, string> IconDic = new Dictionary<string, string>
+        {
+            {"Type", "pack://application:,,,/Resources/svg/category.svg"},
+            {"Table", "pack://application:,,,/Resources/svg/table.svg"},
+            {"View", "pack://application:,,,/Resources/svg/view.svg"},
+            {"Proc", "pack://application:,,,/Resources/svg/proc.svg"}
+        };
+
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
 
         #region Fields
@@ -120,6 +130,9 @@ namespace SmartSQL.UserControl
             TabLeftType.SelectedIndex = leftMenuType - 1;
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
+            MainW.Visibility = Visibility.Collapsed;
+            MainTabW.Visibility = Visibility.Collapsed;
+            TabItemData.Clear();
             MainTabW.DataContext = TabItemData;
             MainTabW.SetBinding(ItemsControl.ItemsSourceProperty, new Binding());
 
@@ -1310,17 +1323,10 @@ namespace SmartSQL.UserControl
             var curItem = TabItemData.FirstOrDefault(x => x.DisplayName == objects.DisplayName);
             if (curItem != null)
             {
-                MainTabW.SelectedItem = curItem;
-                return;
+                //MainTabW.SelectedItem = curItem;
+                //return;
+                TabItemData.Remove(curItem);
             }
-
-            var dic = new Dictionary<string, string>
-            {
-                {"Type", "pack://application:,,,/Resources/svg/category.svg"},
-                {"Table", "pack://application:,,,/Resources/svg/table.svg"},
-                {"View", "pack://application:,,,/Resources/svg/view.svg"},
-                {"Proc", "pack://application:,,,/Resources/svg/proc.svg"}
-            };
             var mainW = new UcMainW
             {
                 SelectedConnection = SelectedConnection,
@@ -1332,7 +1338,7 @@ namespace SmartSQL.UserControl
             var tabItem = new MainTabWModel
             {
                 DisplayName = objects.DisplayName,
-                Icon = dic[objects.Type],
+                Icon = IconDic[objects.Type],
                 MainW = mainW
             };
             TabItemData.Insert(0, tabItem);
