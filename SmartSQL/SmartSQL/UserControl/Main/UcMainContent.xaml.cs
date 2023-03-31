@@ -31,6 +31,7 @@ using FontAwesome = FontAwesome.WPF.FontAwesome;
 using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using System.IO;
+using SmartSQL.Views.Category;
 
 namespace SmartSQL.UserControl
 {
@@ -642,9 +643,12 @@ namespace SmartSQL.UserControl
                     {
                         if (!itemParentList.Any())
                         {
-                            var tipText = (LeftMenuType)leftMenuType == LeftMenuType.Group ? "暂无分组，请先创建分组" : "暂无标签，请先创建标签";
+                            var typeText = (LeftMenuType)leftMenuType == LeftMenuType.Group ? "分组" : "标签";
+                            var tipText = $"暂无{typeText}，请先创建{typeText}";
                             NoDataAreaText.TipText = tipText;
                             NoDataText.Visibility = Visibility.Visible;
+                            BtnNoData.Content = $"创建{typeText}";
+                            BtnNoData.Visibility = Visibility.Visible;
                         }
                         itemParentList.ForEach(treeItem =>
                         {
@@ -668,6 +672,7 @@ namespace SmartSQL.UserControl
                         {
                             NoDataAreaText.TipText = "暂无数据";
                             NoDataText.Visibility = Visibility.Visible;
+                            BtnNoData.Visibility = Visibility.Collapsed;
                         }
                         itemList.ForEach(obj =>
                         {
@@ -1216,6 +1221,7 @@ namespace SmartSQL.UserControl
                 {
                     NoDataAreaText.TipText = "暂无数据";
                     NoDataText.Visibility = Visibility.Visible;
+                    BtnNoData.Visibility = Visibility.Collapsed;
                 }
                 TreeViewData = itemParentList;
             }
@@ -1234,6 +1240,7 @@ namespace SmartSQL.UserControl
                 {
                     NoDataAreaText.TipText = "暂无数据";
                     NoDataText.Visibility = Visibility.Visible;
+                    BtnNoData.Visibility = Visibility.Collapsed;
                 }
                 TreeViewData = itemList;
             }
@@ -1309,7 +1316,7 @@ namespace SmartSQL.UserControl
                 CornerRadius = 10;
                 MainW.Visibility = Visibility.Visible;
                 MainTabW.Visibility = Visibility.Collapsed;
-                MainW.ObjChangeRefreshEvent += Group_ChangeRefreshEvent;
+                MainW.ObjChangeRefreshEvent += ChangeRefreshMenuEvent;
                 MainW.MenuData = MenuData;
                 MainW.SelectedConnection = SelectedConnection;
                 MainW.SelectedDataBase = selectDatabase;
@@ -1346,12 +1353,43 @@ namespace SmartSQL.UserControl
             #endregion
         }
 
+        private void BtnNoData_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            if (SelectedConnection == null || selectDatabase == null)
+            {
+                Oops.Oh("请选择数据库");
+                return;
+            }
+            var mainWindow = Window.GetWindow(this);
+            if (BtnNoData.Content.ToString() == "创建分组")
+            {
+                var group = new GroupsView();
+                group.SelectedConnection = SelectedConnection;
+                group.SelectedDataBase = selectDatabase.DbName;
+                group.DbData = MenuData;
+                group.Owner = mainWindow;
+                group.ChangeRefreshEvent += ChangeRefreshMenuEvent;
+                group.ShowDialog();
+            }
+            else
+            {
+                var tags = new TagsView();
+                tags.SelectedConnection = SelectedConnection;
+                tags.SelectedDataBase = selectDatabase.DbName;
+                tags.DbData = MenuData;
+                tags.Owner = mainWindow;
+                tags.ChangeRefreshEvent += ChangeRefreshMenuEvent;
+                tags.ShowDialog();
+            }
+        }
+
         /// <summary>
         /// 子窗体刷新左侧菜单
         /// </summary>
-        public void Group_ChangeRefreshEvent()
+        public void ChangeRefreshMenuEvent()
         {
-            if (TabGroupData.IsSelected)
+            if (TabGroupData.IsSelected || TabTagData.IsSelected)
             {
                 MenuBind();
             }

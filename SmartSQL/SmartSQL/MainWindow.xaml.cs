@@ -134,7 +134,7 @@ namespace SmartSQL
             group.SelectedDataBase = selectDatabase.DbName;
             group.DbData = MainContent.MenuData;
             group.Owner = this;
-            group.ChangeRefreshEvent += MainContent.Group_ChangeRefreshEvent;
+            group.ChangeRefreshEvent += MainContent.ChangeRefreshMenuEvent;
             group.ShowDialog();
         }
 

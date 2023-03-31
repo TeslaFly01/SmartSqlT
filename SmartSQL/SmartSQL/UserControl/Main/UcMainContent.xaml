@@ -308,6 +308,15 @@
                                 Margin="0"
                                 HorizontalAlignment="Center"
                                 ShowType="All" />
+                            <Button
+                                x:Name="BtnNoData"
+                                Margin="0,150,0,0"
+                                Background="#f4f5f7"
+                                BorderThickness="0"
+                                Click="BtnNoData_OnClick"
+                                Content="创建分组"
+                                Cursor="Hand"
+                                Visibility="Collapsed" />
                         </Grid>
                         <!--  数据加载Loading  -->
                         <localControls:Loading
