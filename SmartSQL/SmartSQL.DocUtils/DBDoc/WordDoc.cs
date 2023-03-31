@@ -25,16 +25,11 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
-            WordUtils.ExportWordByAsposeWords(filePath, this.Dto);
+            ExportWordByAsposeWords(filePath, this.Dto);
             return true;
         }
-    }
 
-    /// <summary>
-    /// Word处理工具类
-    /// </summary>
-    internal static class WordUtils
-    {
+        #region MyRegion
         private static string asposeBookmark_prefix = "AsposeBookmark";
         private static string asposeBookmarkLog = "asposeBookmarkLog";
         private static string asposeBookmarkOverview = "asposeBookmarkOverview";
@@ -46,7 +41,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// </summary>
         /// <param name="databaseName"></param>
         /// <param name="tables"></param>
-        public static void ExportWordByAsposeWords(string fileName, DBDto dto)
+        public void ExportWordByAsposeWords(string fileName, DBDto dto)
         {
             var tables = dto.Tables;
             var title = dto.DBName + "数据库设计文档";
@@ -228,15 +223,27 @@ namespace SmartSQL.DocUtils.DBDoc
                 {
                     builder.InsertBreak(BreakType.PageBreak);
                 }
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = i,
+                    TotalNum = tables.Count,
+                    BuildName = table.TableName
+                });
             }
-
             // 生成页码
             AutoGenPageNum(doc, builder);
-
             // 添加水印
             //InsertWatermarkText(doc, "SmartSQL");
-
+            // 保存文档
             doc.Save(fileName);
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                BuildNum = i,
+                TotalNum = tables.Count,
+                IsEnd = true
+            });
         }
 
         /// <summary>
@@ -511,6 +518,6 @@ namespace SmartSQL.DocUtils.DBDoc
             // Insert a clone of the watermark into the header.
             header.AppendChild(watermarkPara.Clone(true));
         }
-
+        #endregion
     }
 }

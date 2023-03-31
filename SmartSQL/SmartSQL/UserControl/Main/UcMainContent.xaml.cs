@@ -1353,8 +1353,14 @@ namespace SmartSQL.UserControl
             #endregion
         }
 
+        /// <summary>
+        /// 快捷创建分组、标签
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnNoData_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             if (SelectedConnection == null || selectDatabase == null)
             {
@@ -1381,7 +1387,8 @@ namespace SmartSQL.UserControl
                 tags.Owner = mainWindow;
                 tags.ChangeRefreshEvent += ChangeRefreshMenuEvent;
                 tags.ShowDialog();
-            }
+            } 
+            #endregion
         }
 
         /// <summary>
@@ -1412,7 +1419,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuCopyName_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" )
             {
                 return;
             }
@@ -1493,6 +1500,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject))
             {
                 return;
@@ -1525,7 +1533,8 @@ namespace SmartSQL.UserControl
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = selectDatabase;
             exportDoc.ExportData = exportData;
-            exportDoc.ShowDialog();
+            exportDoc.ShowDialog(); 
+            #endregion
         }
 
         /// <summary>
@@ -1600,6 +1609,11 @@ namespace SmartSQL.UserControl
             #endregion
         }
 
+        /// <summary>
+        /// 右键菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void EventSetter_OnHandler(object sender, MouseButtonEventArgs e)
         {
             #region MyRegion
@@ -1636,6 +1650,7 @@ namespace SmartSQL.UserControl
             }
             #endregion
         }
+
         private DependencyObject VisualUpwardSearch<T>(DependencyObject source)
         {
             while (source != null && source.GetType() != typeof(T))

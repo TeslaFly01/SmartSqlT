@@ -31,7 +31,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// </summary>
         private Encoding Gbk => Encoding.GetEncoding("GB18030");
 
-        private Encoding Utf8 => Encoding.UTF8; 
+        private Encoding Utf8 => Encoding.UTF8;
         #endregion
 
 
@@ -79,13 +79,20 @@ namespace SmartSQL.DocUtils.DBDoc
             ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "chm.hhk"), hhk, Gbk);
 
             ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list, Utf8);
-
+            int count = 0;
             //生成表
             foreach (var tab in this.Dto.Tables)
             {
                 var tablePath = Path.Combine(this.WorkTmpDir, "table", $"{tab.TableName} {tab.Comment}.html");
                 var content = table_tpl.RazorRender(tab);
                 ZlpIOHelper.WriteAllText(tablePath, content, Utf8);
+                count++;
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    BuildName = tab.TableName
+                });
             }
 
             //生成视图
@@ -101,6 +108,13 @@ namespace SmartSQL.DocUtils.DBDoc
                      }
                      );
                 ZlpIOHelper.WriteAllText(viewPath, content, Utf8);
+                count++;
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    BuildName = item.ObjectName
+                });
             }
 
             //生成存储过程
@@ -116,6 +130,13 @@ namespace SmartSQL.DocUtils.DBDoc
                     }
                     );
                 ZlpIOHelper.WriteAllText(procPath, content, Utf8);
+                count++;
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    BuildName = item.ObjectName
+                });
             }
 
             var hhp_Path = Path.Combine(this.WorkTmpDir, "chm.hhp");
@@ -125,7 +146,12 @@ namespace SmartSQL.DocUtils.DBDoc
 
             //开始生成CHM文件
             StartRun(HHCPath, hhp_Path, Encoding.GetEncoding("gbk"));
-            
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                BuildNum = count,
+                IsEnd = true
+            });
             return true;
             #endregion
         }

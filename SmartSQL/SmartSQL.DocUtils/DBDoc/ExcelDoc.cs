@@ -21,23 +21,19 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
-            ExcelUtils.ExportExcelByEpplus(filePath, this.Dto);
+            ExportExcelByEpplus(filePath, this.Dto);
             return true;
         }
-    }
 
-    /// <summary>
-    /// Excel处理工具类
-    /// </summary>
-    internal static class ExcelUtils
-    {
+
+
         /// <summary>
         /// 引用EPPlus.dll导出excel数据库字典文档
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="databaseName"></param>
         /// <param name="tables"></param>
-        public static void ExportExcelByEpplus(string fileName, DBDto dto)
+        public void ExportExcelByEpplus(string fileName, DBDto dto)
         {
             var tables = dto.Tables;
 
@@ -64,6 +60,12 @@ namespace SmartSQL.DocUtils.DBDoc
                 epck.Save(); // 保存excel
                 epck.Dispose();
             }
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                BuildNum = tables.Count,
+                IsEnd = true
+            });
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="epck"></param>
         /// <param name="sheetName"></param>
         /// <param name="tables"></param>
-        private static void CreateLogSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, List<TableDto> tables)
+        private void CreateLogSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, List<TableDto> tables)
         {
             OfficeOpenXml.ExcelWorksheet overviewTbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int row = 1;
@@ -123,7 +125,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="epck"></param>
         /// <param name="sheetName"></param>
         /// <param name="tables"></param>
-        private static void CreateOverviewSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
+        private void CreateOverviewSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
         {
             OfficeOpenXml.ExcelWorksheet overviewTbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int row = 1;
@@ -177,7 +179,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="epck"></param>
         /// <param name="sheetName"></param>
         /// <param name="tables"></param>
-        private static void CreateTableSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
+        private void CreateTableSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
         {
             OfficeOpenXml.ExcelWorksheet tbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int rowNum = 1, fromRow = 0, count = 0; // 行号计数器
@@ -275,6 +277,12 @@ namespace SmartSQL.DocUtils.DBDoc
                 }
                 rowNum++; // 行号+1
                 count++; // 计数器+1
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    BuildName = table.TableName
+                });
             }
 
             tbWorksheet.Column(1).Width = 10;
@@ -300,5 +308,12 @@ namespace SmartSQL.DocUtils.DBDoc
             tbWorksheet.Cells.Style.WrapText = true; // 自动换行
             tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
         }
+    }
+
+    /// <summary>
+    /// Excel处理工具类
+    /// </summary>
+    internal static class ExcelUtils
+    {
     }
 }

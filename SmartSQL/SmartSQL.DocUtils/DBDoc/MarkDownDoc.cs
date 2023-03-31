@@ -32,7 +32,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
             sb.Append(dirMD);
             sb.AppendLine();
-
+            int count = 0;
             if (this.Dto.Tables.Any())
             {
                 sb.Append("## 📒 表结构");
@@ -51,6 +51,13 @@ namespace SmartSQL.DocUtils.DBDoc
                     }
 
                     sb.AppendLine();
+                    count++;
+                    // 更新进度
+                    base.OnProgress(new ChangeRefreshProgressArgs
+                    {
+                        BuildNum = count,
+                        BuildName = dto.TableName
+                    });
                 }
             }
 
@@ -66,6 +73,13 @@ namespace SmartSQL.DocUtils.DBDoc
                     sb.Append(fmtSql);
                     sb.AppendLine("```");
                     sb.AppendLine();
+                    count++;
+                    // 更新进度
+                    base.OnProgress(new ChangeRefreshProgressArgs
+                    {
+                        BuildNum = count,
+                        BuildName = item.ObjectName
+                    });
                 }
             }
 
@@ -81,11 +95,24 @@ namespace SmartSQL.DocUtils.DBDoc
                     sb.Append(fmtSql);
                     sb.AppendLine("```");
                     sb.AppendLine();
+                    count++;
+                    // 更新进度
+                    base.OnProgress(new ChangeRefreshProgressArgs
+                    {
+                        BuildNum = count,
+                        BuildName = item.ObjectName
+                    });
                 }
             }
             var md = sb.ToString();
 
             ZlpIOHelper.WriteAllText(filePath, md, Encoding.UTF8);
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                BuildNum = count,
+                IsEnd = true
+            });
             return true;
             #endregion
         }

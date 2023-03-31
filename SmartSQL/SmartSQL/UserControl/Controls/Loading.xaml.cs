@@ -25,7 +25,7 @@ namespace SmartSQL.UserControl.Controls
             "BackgroundOpacity", typeof(double), typeof(Loading), new PropertyMetadata(default(double)));
 
         /// <summary>
-        /// 当前选中对象
+        /// 背景透明度
         /// </summary>
         public double BackgroundOpacity
         {

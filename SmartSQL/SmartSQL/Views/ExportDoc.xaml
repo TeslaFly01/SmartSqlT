@@ -249,9 +249,9 @@
                         ShowType="All" />
                 </Grid>
                 <!--  数据加载Loading  -->
-                <hc:LoadingLine
+                <localBase:Loading
                     x:Name="LoadingLine"
-                    Margin="0,0,0,0"
+                    BackgroundOpacity="0.1"
                     Visibility="Collapsed" />
             </Grid>
         </Border>
@@ -436,7 +436,7 @@
         <!--  MainContent  -->
 
         <!--  Loading动画  -->
-        <localBase:Loading
+        <localBase:ExportLoading
             x:Name="LoadingG"
             Grid.Column="0"
             Grid.ColumnSpan="2"

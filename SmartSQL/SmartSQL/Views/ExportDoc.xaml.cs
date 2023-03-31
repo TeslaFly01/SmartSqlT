@@ -133,6 +133,7 @@ namespace SmartSQL.Views
 
         private void ExportDoc_OnLoaded(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             Title = $"{SelectedDataBase.DbName} - {Title}";
             var fName = SelectedDataBase.DbName;
             if (fName.Contains(":"))
@@ -146,6 +147,7 @@ namespace SmartSQL.Views
             HidSelectDatabase.Text = SelectedDataBase.DbName;
             SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase.DbName);
             MenuBind();
+            #endregion
         }
 
         private void BtnLookPath_OnClick(object sender, RoutedEventArgs e)
@@ -167,6 +169,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void SelectDatabase_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -177,6 +180,7 @@ namespace SmartSQL.Views
                 HidSelectDatabase.Text = ((DataBase)selectDatabase).DbName;
                 MenuBind(true);
             }
+            #endregion
         }
 
         /// <summary>
@@ -562,6 +566,7 @@ namespace SmartSQL.Views
 
         public bool? ParentIsChecked(TreeNodeItem node)
         {
+            #region MyRegion
             bool? viewIsCheck = null;
             var viewCount = node.Children.Count;
             var viewCheckCount = node.Children.Count(x => x.IsChecked == true);
@@ -574,6 +579,7 @@ namespace SmartSQL.Views
                 viewIsCheck = false;
             }
             return viewIsCheck;
+            #endregion
         }
 
         /// <summary>
@@ -996,6 +1002,7 @@ namespace SmartSQL.Views
                 var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 try
                 {
+                    doc.ChangeRefreshProgressEvent += Doc_ChangeRefreshProgressEvent;
                     var bulResult = doc.Build(filePath);
                     Dispatcher.Invoke(() =>
                     {
@@ -1020,6 +1027,20 @@ namespace SmartSQL.Views
                 }
             }, TaskCreationOptions.LongRunning);
             #endregion
+        }
+
+        /// <summary>
+        /// 导出文档进度信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Doc_ChangeRefreshProgressEvent(object sender, DocUtils.DBDoc.Doc.ChangeRefreshProgressArgs e)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                LoadingG.ProgressTitle = e.BuildName;
+                LoadingG.ProgressNum = double.Parse((e.TotalNum / e.BuildNum).ToString());
+            });
         }
 
         private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
@@ -1226,6 +1247,7 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void Toggle_OnChecked(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             if (!IsLoaded)
             {
                 return;
@@ -1246,6 +1268,7 @@ namespace SmartSQL.Views
                 TextDocTipMsg.Text = tipMsg;
             }
             fileExt = _docExt[button.Name.ToLower()];
+            #endregion
         }
 
         private string DocumentType()

@@ -38,16 +38,12 @@ namespace SmartSQL.DocUtils.DBDoc
             {
                 File.WriteAllBytes(pdf, Resources.msyh);
             }
-            PdfUtils.ExportPdfByITextSharp(filePath, pdf, this.Dto);
+            ExportPdfByITextSharp(filePath, pdf, this.Dto);
             return true;
         }
-    }
 
-    /// <summary>
-    /// Pdf处理工具类
-    /// </summary>
-    internal static class PdfUtils
-    {
+
+
 
         /// <summary>
         /// 引用iTextSharp.dll导出pdf数据库字典文档
@@ -55,7 +51,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="fileName"></param>
         /// <param name="fontPath"></param>
         /// <param name="dto"></param>
-        public static void ExportPdfByITextSharp(string fileName, string fontPath, DBDto dto)
+        private void ExportPdfByITextSharp(string fileName, string fontPath, DBDto dto)
         {
             var databaseName = dto.DBName;
             var tables = dto.Tables;
@@ -110,7 +106,7 @@ namespace SmartSQL.DocUtils.DBDoc
             tableChapter.BookmarkOpen = true;
             pdfDocument.Add(tableChapter);
             pdfDocument.Add(new Paragraph("\n", pdfFont)); // 换行
-
+            int count = 0;
             foreach (var table in tables)
             {
                 string docTableName = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
@@ -176,13 +172,17 @@ namespace SmartSQL.DocUtils.DBDoc
                 {
                     pdfTable.SetWidths(new float[] { 40F, 90F, 70F, 50F, 50F, 50F, 50F, 90F });
                 }
-
-
                 //  添加表格
                 pdfDocument.Add(pdfTable);
-
                 //  PDF换页
                 pdfDocument.NewPage();
+                count++;
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    BuildName = table.TableName
+                });
             }
 
 
@@ -203,9 +203,15 @@ namespace SmartSQL.DocUtils.DBDoc
 
                     Paragraph pgh = new Paragraph(item.Script.Replace("`", ""), pdfFont);
                     pdfDocument.Add(pgh);
-
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
+                    count++;
+                    // 更新进度
+                    base.OnProgress(new ChangeRefreshProgressArgs
+                    {
+                        BuildNum = count,
+                        BuildName = item.ObjectName
+                    });
                 }
                 pdfDocument.NewPage();
             }
@@ -231,13 +237,24 @@ namespace SmartSQL.DocUtils.DBDoc
 
                     // 换行
                     pdfDocument.Add(new Paragraph("\n", pdfFont));
-
+                    count++;
+                    // 更新进度
+                    base.OnProgress(new ChangeRefreshProgressArgs
+                    {
+                        BuildNum = count,
+                        BuildName = item.ObjectName
+                    });
                 }
                 pdfDocument.NewPage();
             }
-
             //  关闭释放PDF文档资源
             pdfDocument.Close();
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                BuildNum =count,
+                IsEnd = true
+            });
         }
 
         /// <summary>

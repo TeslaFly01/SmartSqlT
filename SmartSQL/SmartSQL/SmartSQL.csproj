@@ -184,6 +184,9 @@
     <Compile Include="UserControl\Controls\ConnectType.xaml.cs">
       <DependentUpon>ConnectType.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Controls\ExportLoading.xaml.cs">
+      <DependentUpon>ExportLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Controls\UcToolCard.xaml.cs">
       <DependentUpon>UcToolCard.xaml</DependentUpon>
     </Compile>
@@ -445,6 +448,10 @@
     <Page Include="UserControl\Controls\ConnectType.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Controls\ExportLoading.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Controls\UcToolCard.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -743,6 +750,8 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\undraw\undraw_our_solution_re_8yk6.svg" />
+    <Resource Include="Resources\svg\undraw\undraw_file_manager_re_ms29.svg" />
     <Resource Include="Resources\Img\toolIcon\ico%402x.png" />
     <Resource Include="Resources\svg\dameng%4064.svg" />
     <Resource Include="Resources\Img\toolIcon\rmb%402x.png" />
