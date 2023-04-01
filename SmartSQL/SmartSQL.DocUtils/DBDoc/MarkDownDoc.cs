@@ -33,6 +33,7 @@ namespace SmartSQL.DocUtils.DBDoc
             sb.Append(dirMD);
             sb.AppendLine();
             int count = 0;
+            int count_total = Dto.Tables.Count + Dto.Views.Count + Dto.Procs.Count;
             if (this.Dto.Tables.Any())
             {
                 sb.Append("## 📒 表结构");
@@ -56,6 +57,7 @@ namespace SmartSQL.DocUtils.DBDoc
                     base.OnProgress(new ChangeRefreshProgressArgs
                     {
                         BuildNum = count,
+                        TotalNum = count_total,
                         BuildName = dto.TableName
                     });
                 }
@@ -78,6 +80,7 @@ namespace SmartSQL.DocUtils.DBDoc
                     base.OnProgress(new ChangeRefreshProgressArgs
                     {
                         BuildNum = count,
+                        TotalNum = count_total,
                         BuildName = item.ObjectName
                     });
                 }
@@ -100,6 +103,7 @@ namespace SmartSQL.DocUtils.DBDoc
                     base.OnProgress(new ChangeRefreshProgressArgs
                     {
                         BuildNum = count,
+                        TotalNum = count_total,
                         BuildName = item.ObjectName
                     });
                 }
@@ -111,6 +115,7 @@ namespace SmartSQL.DocUtils.DBDoc
             base.OnProgress(new ChangeRefreshProgressArgs
             {
                 BuildNum = count,
+                TotalNum = count_total,
                 IsEnd = true
             });
             return true;

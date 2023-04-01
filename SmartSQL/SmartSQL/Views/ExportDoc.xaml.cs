@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -984,24 +985,25 @@ namespace SmartSQL.Views
             var dbDto = new DBDto(selectedDatabase.DbName);
             Task.Factory.StartNew(() =>
             {
-                //文档标题
-                dbDto.DocTitle = docTitle;
-                //数据库类型
-                dbDto.DBType = selectedConnection.DbType.ToString();
-                //对象列表
-                dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
-                dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
-                dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
-
-                //判断文档路径是否存在
-                if (!Directory.Exists(floderPath))
-                {
-                    Directory.CreateDirectory(floderPath);
-                }
-                var filePath = Path.Combine(floderPath, fileName);
-                var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
                 try
                 {
+                    //文档标题
+                    dbDto.DocTitle = docTitle;
+                    //数据库类型
+                    dbDto.DBType = selectedConnection.DbType.ToString();
+                    //对象列表
+                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
+                    dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
+                    dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
+
+                    //判断文档路径是否存在
+                    if (!Directory.Exists(floderPath))
+                    {
+                        Directory.CreateDirectory(floderPath);
+                    }
+                    var filePath = Path.Combine(floderPath, fileName);
+                    var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
+
                     doc.ChangeRefreshProgressEvent += Doc_ChangeRefreshProgressEvent;
                     var bulResult = doc.Build(filePath);
                     Dispatcher.Invoke(() =>
@@ -1036,11 +1038,21 @@ namespace SmartSQL.Views
         /// <param name="e"></param>
         private void Doc_ChangeRefreshProgressEvent(object sender, DocUtils.DBDoc.Doc.ChangeRefreshProgressArgs e)
         {
-            Dispatcher.Invoke(() =>
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                LoadingG.ProgressTitle = e.BuildName;
-                LoadingG.ProgressNum = double.Parse((e.TotalNum / e.BuildNum).ToString());
-            });
+                var d = (e.BuildNum * 1.0f / e.TotalNum) * 100;
+                var pNum = double.Parse(d.ToString());
+                LoadingG.ProgressNum = pNum;
+                if (!e.IsEnd)
+                {
+                    LoadingG.ProgressTitle = e.BuildName;
+                }
+                else
+                {
+                    LoadingG.ProgressTitle = "文档生成完毕";
+                }
+            }));
+            Thread.Sleep(50);
         }
 
         private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
@@ -1199,6 +1211,8 @@ namespace SmartSQL.Views
             return tables;
             #endregion
         }
+
+
 
         /// <summary>
         /// 取消

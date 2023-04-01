@@ -1,6 +1,9 @@
-﻿using System;
+﻿using SmartSQL.Annotations;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -19,8 +22,17 @@ namespace SmartSQL.UserControl.Controls
     /// <summary>
     /// Loading.xaml 的交互逻辑
     /// </summary>
-    public partial class ExportLoading : System.Windows.Controls.UserControl
+    public partial class ExportLoading : System.Windows.Controls.UserControl, INotifyPropertyChanged
     {
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public static readonly DependencyProperty BackgroundOpacityProperty = DependencyProperty.Register(
             "BackgroundOpacity", typeof(double), typeof(ExportLoading), new PropertyMetadata(default(double)));
 
@@ -54,7 +66,11 @@ namespace SmartSQL.UserControl.Controls
         public double ProgressNum
         {
             get => (double)GetValue(ProgressNumProperty);
-            set => SetValue(ProgressNumProperty, value);
+            set
+            {
+                SetValue(ProgressNumProperty, value);
+                OnPropertyChanged(nameof(ProgressNum));
+            }
         }
 
         public ExportLoading()
@@ -63,6 +79,11 @@ namespace SmartSQL.UserControl.Controls
             DataContext = this;
             animationTimer = new DispatcherTimer(DispatcherPriority.ContextIdle, Dispatcher);
             animationTimer.Interval = new TimeSpan(0, 0, 0, 0, 90);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ProgressTitle = "正在为您准备导出文档，请耐心等候";
         }
 
         #region Data  
@@ -124,15 +145,21 @@ namespace SmartSQL.UserControl.Controls
             bool isVisible = (bool)e.NewValue;
 
             if (isVisible)
+            {
                 Start();
+            }
             else
+            {
                 Stop();
+                ProgressTitle="正在为您准备导出文档，请耐心等候";
+                ProgressNum=0;
+            }
         }
         #endregion
 
         private void ProgressBar_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            ProgressTitleText.Text = $"正在导出 {ProgressTitle}";
+            //ProgressTitleText.Text = $"正在导出 {ProgressTitle}";
         }
     }
 }

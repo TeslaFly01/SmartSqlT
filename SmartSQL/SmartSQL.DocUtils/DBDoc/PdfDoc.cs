@@ -107,6 +107,7 @@ namespace SmartSQL.DocUtils.DBDoc
             pdfDocument.Add(tableChapter);
             pdfDocument.Add(new Paragraph("\n", pdfFont)); // 换行
             int count = 0;
+            int count_total = tables.Count + dto.Views.Count + dto.Procs.Count ;
             foreach (var table in tables)
             {
                 string docTableName = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
@@ -181,6 +182,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 base.OnProgress(new ChangeRefreshProgressArgs
                 {
                     BuildNum = count,
+                    TotalNum = count_total,
                     BuildName = table.TableName
                 });
             }
@@ -210,6 +212,7 @@ namespace SmartSQL.DocUtils.DBDoc
                     base.OnProgress(new ChangeRefreshProgressArgs
                     {
                         BuildNum = count,
+                        TotalNum = count_total,
                         BuildName = item.ObjectName
                     });
                 }
@@ -242,6 +245,7 @@ namespace SmartSQL.DocUtils.DBDoc
                     base.OnProgress(new ChangeRefreshProgressArgs
                     {
                         BuildNum = count,
+                        TotalNum = count_total,
                         BuildName = item.ObjectName
                     });
                 }
@@ -253,6 +257,7 @@ namespace SmartSQL.DocUtils.DBDoc
             base.OnProgress(new ChangeRefreshProgressArgs
             {
                 BuildNum =count,
+                TotalNum = count_total,
                 IsEnd = true
             });
         }

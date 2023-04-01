@@ -80,6 +80,7 @@ namespace SmartSQL.DocUtils.DBDoc
 
             ZlpIOHelper.WriteAllText(Path.Combine(this.WorkTmpDir, "数据库目录.html"), list, Utf8);
             int count = 0;
+            int count_total = Dto.Tables.Count + Dto.Views.Count + Dto.Procs.Count ;
             //生成表
             foreach (var tab in this.Dto.Tables)
             {
@@ -91,6 +92,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 base.OnProgress(new ChangeRefreshProgressArgs
                 {
                     BuildNum = count,
+                    TotalNum = count_total,
                     BuildName = tab.TableName
                 });
             }
@@ -113,6 +115,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 base.OnProgress(new ChangeRefreshProgressArgs
                 {
                     BuildNum = count,
+                    TotalNum = count_total,
                     BuildName = item.ObjectName
                 });
             }
@@ -135,6 +138,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 base.OnProgress(new ChangeRefreshProgressArgs
                 {
                     BuildNum = count,
+                    TotalNum = count_total,
                     BuildName = item.ObjectName
                 });
             }
@@ -150,6 +154,7 @@ namespace SmartSQL.DocUtils.DBDoc
             base.OnProgress(new ChangeRefreshProgressArgs
             {
                 BuildNum = count,
+                TotalNum = count_total,
                 IsEnd = true
             });
             return true;

@@ -64,6 +64,7 @@ namespace SmartSQL.DocUtils.DBDoc
             base.OnProgress(new ChangeRefreshProgressArgs
             {
                 BuildNum = tables.Count,
+                TotalNum = tables.Count,
                 IsEnd = true
             });
         }
@@ -281,6 +282,7 @@ namespace SmartSQL.DocUtils.DBDoc
                 base.OnProgress(new ChangeRefreshProgressArgs
                 {
                     BuildNum = count,
+                    TotalNum = tables.Count,
                     BuildName = table.TableName
                 });
             }

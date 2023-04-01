@@ -6,6 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     IsVisibleChanged="HandleVisibleChanged"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Background>
         <SolidColorBrush Opacity="{Binding BackgroundOpacity}" Color="Black" />
@@ -32,14 +33,14 @@
             </StackPanel>
             <TextBlock
                 x:Name="ProgressTitleText"
-                Margin="50,30,50,0"
+                Margin="50,40,50,0"
                 HorizontalAlignment="Left"
                 FontSize="10"
                 Foreground="#383c46"
-                Text="正在导出中..." />
+                Text="{Binding ProgressTitle, Mode=TwoWay}" />
             <ProgressBar
                 x:Name="ProgressBar"
-                Margin="50,5,50,0"
+                Margin="50,6,50,0"
                 HorizontalAlignment="Stretch"
                 Orientation="Horizontal"
                 ValueChanged="ProgressBar_OnValueChanged"
