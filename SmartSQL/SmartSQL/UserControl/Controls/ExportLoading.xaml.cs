@@ -39,6 +39,9 @@ namespace SmartSQL.UserControl.Controls
         public static readonly DependencyProperty ProgressTitleProperty = DependencyProperty.Register(
             "ProgressTitle", typeof(string), typeof(ExportLoading), new PropertyMetadata(default(string)));
 
+        public static readonly DependencyProperty ProgressTitleNumProperty = DependencyProperty.Register(
+            "ProgressTitleNum", typeof(string), typeof(ExportLoading), new PropertyMetadata(default(string)));
+
         public static readonly DependencyProperty ProgressNumProperty = DependencyProperty.Register(
             "ProgressNum", typeof(double), typeof(ExportLoading), new PropertyMetadata(default(double)));
 
@@ -58,6 +61,15 @@ namespace SmartSQL.UserControl.Controls
         {
             get => (string)GetValue(ProgressTitleProperty);
             set => SetValue(ProgressTitleProperty, value);
+        }
+
+        /// <summary>
+        /// 进度标题
+        /// </summary>
+        public string ProgressTitleNum
+        {
+            get => (string)GetValue(ProgressTitleNumProperty);
+            set => SetValue(ProgressTitleNumProperty, value);
         }
 
         /// <summary>

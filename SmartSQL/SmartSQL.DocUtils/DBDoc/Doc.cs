@@ -43,6 +43,10 @@ namespace SmartSQL.DocUtils.DBDoc
         public class ChangeRefreshProgressArgs : EventArgs
         {
             /// <summary>
+            /// 当前导出文档类型
+            /// </summary>
+            public DocType Type { get; set; }
+            /// <summary>
             /// 已生成数量
             /// </summary>
             public int BuildNum { get; set; }

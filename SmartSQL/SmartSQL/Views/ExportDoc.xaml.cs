@@ -939,6 +939,7 @@ namespace SmartSQL.Views
             #endregion
         }
 
+        private int curProgressNum = 0;
         /// <summary>
         /// 导出数据
         /// </summary>
@@ -987,14 +988,22 @@ namespace SmartSQL.Views
             {
                 try
                 {
+                    // 导出文档当前进度
+                    curProgressNum = 0;
+                    // 导出文档总进度
+                    var totalProgressNum = ExportTotalProgressNum((DocType)(Enum.Parse(typeof(DocType), doctype)), exportData);
                     //文档标题
                     dbDto.DocTitle = docTitle;
                     //数据库类型
                     dbDto.DBType = selectedConnection.DbType.ToString();
                     //对象列表
-                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase);
-                    dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc");
-                    dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View");
+                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase,totalProgressNum);
+                    var dType = (DocType)(Enum.Parse(typeof(DocType), doctype));
+                    if (dType != DocType.word && dType != DocType.excel)
+                    {
+                        dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View", totalProgressNum);
+                        dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc",totalProgressNum);
+                    }
 
                     //判断文档路径是否存在
                     if (!Directory.Exists(floderPath))
@@ -1010,13 +1019,9 @@ namespace SmartSQL.Views
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
                         if (bulResult)
-                        {
-                            Oops.SuccessGlobal("导出成功.");
-                        }
+                            Oops.Success("导出成功.");
                         else
-                        {
-                            Oops.GodGlobal("导出失败.");
-                        }
+                            Oops.God("导出失败.");
                     });
                 }
                 catch (Exception ex)
@@ -1040,22 +1045,16 @@ namespace SmartSQL.Views
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                var d = (e.BuildNum * 1.0f / e.TotalNum) * 100;
+                var d = ((e.BuildNum + e.TotalNum) * 1.0f / (e.TotalNum * 2)) * 100;
                 var pNum = double.Parse(d.ToString());
                 LoadingG.ProgressNum = pNum;
-                if (!e.IsEnd)
-                {
-                    LoadingG.ProgressTitle = e.BuildName;
-                }
-                else
-                {
-                    LoadingG.ProgressTitle = "文档生成完毕";
-                }
+                LoadingG.ProgressTitleNum = e.BuildNum.ToString() + " / " + e.TotalNum.ToString();
+                LoadingG.ProgressTitle = !e.IsEnd ? "正在生成文档：" + e.BuildName : "文档生成完毕";
             }));
             Thread.Sleep(50);
         }
 
-        private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type)
+        private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type, int totalProgressNum)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
@@ -1089,6 +1088,16 @@ namespace SmartSQL.Views
                                 Comment = item.Comment,
                                 Script = script
                             });
+                            curProgressNum++;
+                            Dispatcher.Invoke(() =>
+                            {
+                                var d = (curProgressNum * 1.0f / (totalProgressNum * 2)) * 100;
+                                var pNum = double.Parse(d.ToString());
+                                var oName = type == "View" ? "视图" : "存储过程";
+                                LoadingG.ProgressNum = pNum;
+                                LoadingG.ProgressTitleNum = curProgressNum.ToString() + " / " + totalProgressNum.ToString();
+                                LoadingG.ProgressTitle = $"正在获取{oName}脚本：" + item.Name;
+                            });
                         }
                     }
                 }
@@ -1110,7 +1119,7 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private List<TableDto> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase)
+        private List<TableDto> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, int totalProgressNum)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
@@ -1166,6 +1175,15 @@ namespace SmartSQL.Views
                         tbDto.Columns = lst_col_dto;
                         tables.Add(tbDto);
                         orderNo++;
+                        curProgressNum++;
+                        Dispatcher.Invoke(() =>
+                        {
+                            var d = (curProgressNum * 1.0f / (totalProgressNum * 2)) * 100;
+                            var pNum = double.Parse(d.ToString());
+                            LoadingG.ProgressNum = pNum;
+                            LoadingG.ProgressTitleNum = curProgressNum.ToString() + " / " + totalProgressNum.ToString();
+                            LoadingG.ProgressTitle = "正在获取表结构：" + node.Name;
+                        });
                     }
                 }
                 if (group.Type == "Table")
@@ -1212,7 +1230,21 @@ namespace SmartSQL.Views
             #endregion
         }
 
-
+        private int ExportTotalProgressNum(DocType dcoType, List<TreeNodeItem> treeNodeItems)
+        {
+            var tableCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeTable").Select(x => x.Children).First().Count(x => x.IsChecked == true);
+            var viewCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeView").Select(x => x.Children).First().Count(x => x.IsChecked == true);
+            var procCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeProc").Select(x => x.Children).First().Count(x => x.IsChecked == true);
+            var sumCount = tableCount + viewCount + procCount;
+            switch (dcoType)
+            {
+                case DocType.excel:
+                case DocType.word:
+                    sumCount = tableCount;
+                    break;
+            }
+            return sumCount;
+        }
 
         /// <summary>
         /// 取消

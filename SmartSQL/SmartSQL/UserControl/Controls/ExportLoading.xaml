@@ -31,16 +31,25 @@
                     Foreground="#3f3d56"
                     Text="正在导出文档，请勿关闭窗口..." />
             </StackPanel>
-            <TextBlock
-                x:Name="ProgressTitleText"
-                Margin="50,40,50,0"
-                HorizontalAlignment="Left"
-                FontSize="10"
-                Foreground="#383c46"
-                Text="{Binding ProgressTitle, Mode=TwoWay}" />
+            <StackPanel Margin="40,40,40,0">
+                <TextBlock
+                    x:Name="ProgressTitleText"
+                    Margin="0,0,0,-50"
+                    HorizontalAlignment="Left"
+                    FontSize="10"
+                    Foreground="#383c46"
+                    Text="{Binding ProgressTitle, Mode=TwoWay}" />
+                <TextBlock
+                    x:Name="ProgressTitleProgressText"
+                    HorizontalAlignment="Right"
+                    FontSize="10"
+                    Foreground="#383c46"
+                    Text="{Binding ProgressTitleNum, Mode=TwoWay}" />
+
+            </StackPanel>
             <ProgressBar
                 x:Name="ProgressBar"
-                Margin="50,6,50,0"
+                Margin="40,6,40,0"
                 HorizontalAlignment="Stretch"
                 Orientation="Horizontal"
                 ValueChanged="ProgressBar_OnValueChanged"
