@@ -19,6 +19,15 @@ namespace SmartSQL.DocUtils.DBDoc
 
         private bool BuildDoc(string filePath)
         {
+            int count_total = Dto.Tables.Count + Dto.Views.Count + Dto.Procs.Count;
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                Type = DocType.html,
+                BuildNum = count_total,
+                TotalNum = count_total,
+                IsEnd = true
+            });
             string xmlContent = this.Dto.SerializeXml();
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(xmlContent);

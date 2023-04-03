@@ -311,11 +311,4 @@ namespace SmartSQL.DocUtils.DBDoc
             tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
         }
     }
-
-    /// <summary>
-    /// Excel处理工具类
-    /// </summary>
-    internal static class ExcelUtils
-    {
-    }
 }

@@ -27,6 +27,15 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <returns></returns>
         private bool BuildDoc(string filePath)
         {
+            int count_total = Dto.Tables.Count + Dto.Views.Count + Dto.Procs.Count;
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                Type = DocType.html,
+                BuildNum = count_total,
+                TotalNum = count_total,
+                IsEnd = true
+            });
             var jsonText = JsonConvert.SerializeObject(this.Dto);
             ZlpIOHelper.WriteAllText(filePath, jsonText, Encoding.UTF8);
             return true;

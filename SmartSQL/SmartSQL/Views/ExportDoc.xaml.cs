@@ -953,6 +953,7 @@ namespace SmartSQL.Views
             var exportData = TreeViewData;
             var floderPath = TxtPath.Text;
             var doctype = DocumentType();
+            var docTypeEnum = (DocType)(Enum.Parse(typeof(DocType), doctype));
             if (string.IsNullOrEmpty(doctype))
             {
                 Oops.Oh("请选择输出文档类型");
@@ -991,18 +992,17 @@ namespace SmartSQL.Views
                     // 导出文档当前进度
                     curProgressNum = 0;
                     // 导出文档总进度
-                    var totalProgressNum = ExportTotalProgressNum((DocType)(Enum.Parse(typeof(DocType), doctype)), exportData);
+                    var totalProgressNum = ExportTotalProgressNum(docTypeEnum, exportData);
                     //文档标题
                     dbDto.DocTitle = docTitle;
                     //数据库类型
                     dbDto.DBType = selectedConnection.DbType.ToString();
                     //对象列表
-                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase,totalProgressNum);
-                    var dType = (DocType)(Enum.Parse(typeof(DocType), doctype));
-                    if (dType != DocType.word && dType != DocType.excel)
+                    dbDto.Tables = Trans2Table(exportData, selectedConnection, selectedDatabase, totalProgressNum, docTypeEnum);
+                    if (docTypeEnum != DocType.word && docTypeEnum != DocType.excel && docTypeEnum != DocType.html)
                     {
-                        dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View", totalProgressNum);
-                        dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc",totalProgressNum);
+                        dbDto.Views = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "View", totalProgressNum, docTypeEnum);
+                        dbDto.Procs = Trans2Dictionary(exportData, selectedConnection, selectedDatabase, "Proc", totalProgressNum, docTypeEnum);
                     }
 
                     //判断文档路径是否存在
@@ -1019,7 +1019,7 @@ namespace SmartSQL.Views
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
                         if (bulResult)
-                            Oops.Success("导出成功.");
+                            Oops.SuccessGlobal("导出成功.");
                         else
                             Oops.God("导出失败.");
                     });
@@ -1045,7 +1045,7 @@ namespace SmartSQL.Views
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                var d = ((e.BuildNum + e.TotalNum) * 1.0f / (e.TotalNum * 2)) * 100;
+                var d = (e.BuildNum + e.TotalNum) * 1.0f / (e.TotalNum * 2) * 100;
                 var pNum = double.Parse(d.ToString());
                 LoadingG.ProgressNum = pNum;
                 LoadingG.ProgressTitleNum = e.BuildNum.ToString() + " / " + e.TotalNum.ToString();
@@ -1054,7 +1054,7 @@ namespace SmartSQL.Views
             Thread.Sleep(50);
         }
 
-        private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type, int totalProgressNum)
+        private List<ViewProDto> Trans2Dictionary(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, string type, int totalProgressNum, DocType docType)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
@@ -1091,7 +1091,12 @@ namespace SmartSQL.Views
                             curProgressNum++;
                             Dispatcher.Invoke(() =>
                             {
-                                var d = (curProgressNum * 1.0f / (totalProgressNum * 2)) * 100;
+                                var tProgressNum = totalProgressNum * 2;
+                                if (docType == DocType.xml || docType == DocType.html || docType == DocType.json)
+                                {
+                                    tProgressNum = totalProgressNum;
+                                }
+                                var d = (curProgressNum * 1.0f / tProgressNum) * 100;
                                 var pNum = double.Parse(d.ToString());
                                 var oName = type == "View" ? "视图" : "存储过程";
                                 LoadingG.ProgressNum = pNum;
@@ -1119,7 +1124,7 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private List<TableDto> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, int totalProgressNum)
+        private List<TableDto> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, int totalProgressNum, DocType docType)
         {
             #region MyRegion
             var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
@@ -1178,7 +1183,12 @@ namespace SmartSQL.Views
                         curProgressNum++;
                         Dispatcher.Invoke(() =>
                         {
-                            var d = (curProgressNum * 1.0f / (totalProgressNum * 2)) * 100;
+                            var tProgressNum = totalProgressNum * 2;
+                            if (docType == DocType.xml || docType == DocType.html || docType == DocType.json)
+                            {
+                                tProgressNum = totalProgressNum;
+                            }
+                            var d = (curProgressNum * 1.0f / tProgressNum) * 100;
                             var pNum = double.Parse(d.ToString());
                             LoadingG.ProgressNum = pNum;
                             LoadingG.ProgressTitleNum = curProgressNum.ToString() + " / " + totalProgressNum.ToString();
@@ -1230,18 +1240,15 @@ namespace SmartSQL.Views
             #endregion
         }
 
-        private int ExportTotalProgressNum(DocType dcoType, List<TreeNodeItem> treeNodeItems)
+        private int ExportTotalProgressNum(DocType docType, List<TreeNodeItem> treeNodeItems)
         {
             var tableCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeTable").Select(x => x.Children).First().Count(x => x.IsChecked == true);
             var viewCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeView").Select(x => x.Children).First().Count(x => x.IsChecked == true);
             var procCount = treeNodeItems.Where(x => x.Type == "Type" && x.Name == "treeProc").Select(x => x.Children).First().Count(x => x.IsChecked == true);
             var sumCount = tableCount + viewCount + procCount;
-            switch (dcoType)
+            if (docType == DocType.excel || docType == DocType.word || docType == DocType.html)
             {
-                case DocType.excel:
-                case DocType.word:
-                    sumCount = tableCount;
-                    break;
+                sumCount = tableCount;
             }
             return sumCount;
         }

@@ -22,6 +22,15 @@ namespace SmartSQL.DocUtils.DBDoc
 
         public override bool Build(string filePath)
         {
+            int count_total = Dto.Tables.Count + Dto.Views.Count + Dto.Procs.Count;
+            // 更新进度
+            base.OnProgress(new ChangeRefreshProgressArgs
+            {
+                Type = DocType.html,
+                BuildNum = count_total,
+                TotalNum = count_total,
+                IsEnd = true
+            });
             var htmlTpl = Encoding.UTF8.GetString(Resources.html);
             var htmlContent = htmlTpl.RazorRender(this.Dto);
             ZlpIOHelper.WriteAllText(filePath, htmlContent, Encoding.UTF8);
