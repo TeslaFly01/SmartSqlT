@@ -1011,7 +1011,7 @@ namespace SmartSQL.Views
                         Directory.CreateDirectory(floderPath);
                     }
                     var filePath = Path.Combine(floderPath, fileName);
-                    var doc = DocFactory.CreateInstance((DocType)(Enum.Parse(typeof(DocType), doctype)), dbDto);
+                    var doc = DocFactory.CreateInstance((DocType)Enum.Parse(typeof(DocType), doctype), dbDto);
 
                     doc.ChangeRefreshProgressEvent += Doc_ChangeRefreshProgressEvent;
                     var bulResult = doc.Build(filePath);
@@ -1019,7 +1019,7 @@ namespace SmartSQL.Views
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
                         if (bulResult)
-                            Oops.SuccessGlobal("导出成功.");
+                            Oops.Success("导出成功.");
                         else
                             Oops.God("导出失败.");
                     });
@@ -1029,7 +1029,7 @@ namespace SmartSQL.Views
                     Dispatcher.Invoke(() =>
                     {
                         LoadingG.Visibility = Visibility.Collapsed;
-                        Oops.GodGlobal($"导出失败，原因：{ex.ToMsg()}");
+                        Oops.God($"导出失败，原因：{ex.ToMsg()}");
                     });
                 }
             }, TaskCreationOptions.LongRunning);

@@ -29,7 +29,7 @@
                 FontSize="14"
                 FontWeight="Bold"
                 Foreground="#FFE3953D"
-                Text="Loading..." />
+                Text="加载中..." />
             <Canvas
                 Width="120"
                 Height="120"

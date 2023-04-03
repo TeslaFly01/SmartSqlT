@@ -32,7 +32,7 @@
                     Foreground="#3f3d56"
                     Text="正在导出文档，请勿关闭窗口..." />
             </StackPanel>
-            <StackPanel Margin="40,40,40,0">
+            <StackPanel Margin="40,40,42,0">
                 <emoji:TextBlock
                     Margin="0,0,0,-13"
                     HorizontalAlignment="Left"
