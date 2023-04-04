@@ -147,6 +147,7 @@
     <Compile Include="Helper\StrUtil.cs" />
     <Compile Include="Helper\TaskHelper.cs" />
     <Compile Include="Helper\TruncateLongLines.cs" />
+    <Compile Include="Models\DiffInfoModel.cs" />
     <Compile Include="Models\MenuTagObjectsDTO.cs" />
     <Compile Include="Models\PasswordResultDTO.cs" />
     <Compile Include="Models\SysEnum.cs" />

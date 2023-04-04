@@ -6,6 +6,7 @@
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SmartSQL.Models"
@@ -114,7 +115,8 @@
                             <Border
                                 Margin="0,5,0,0"
                                 Style="{StaticResource BorderTipWarning}"
-                                ToolTip="提示：该功能暂未开发完成，后面将持续完善">
+                                ToolTip="提示：该功能暂未开发完成，后面将持续完善"
+                                Visibility="Collapsed">
                                 <TextBlock Text="提示：该功能暂未开发完成，后面将持续完善" />
                             </Border>
                         </StackPanel>
@@ -191,143 +193,51 @@
                     Background="White"
                     CornerRadius="10 ">
                     <Grid>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.5*" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="0.5*" />
-                            </Grid.ColumnDefinitions>
-
-                            <!--  源数据信息  -->
-                            <DockPanel Grid.Column="0">
-
-                                <TreeView
-                                    x:Name="TreeViewSourceTables"
-                                    Margin="10"
-                                    VerticalAlignment="Top"
-                                    BorderThickness="0"
-                                    ItemsSource="{Binding TreeViewLeftData}"
-                                    SelectedItemChanged="TreeViewSourceTables_OnSelectedItemChanged">
-                                    <TreeView.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-                                            <Setter Property="FontWeight" Value="{Binding FontWeight}" />
-                                            <Setter Property="FontSize" Value="12" />
-                                            <Setter Property="Padding" Value="0,0,5,0" />
-                                            <Setter Property="Visibility" Value="{Binding Visibility}" />
-                                            <!--<Setter Property="Foreground" Value="{Binding TextColor}" />-->
-                                            <Setter Property="Foreground" Value="#262e3e" />
-                                            <Setter Property="Cursor" Value="Hand" />
-                                            <!--  禁止水平滚动条自动滚动  -->
-                                            <!--<EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
-                                            <EventSetter Event="PreviewMouseRightButtonDown" Handler="EventSetter_OnHandler" />-->
-                                        </Style>
-                                    </TreeView.ItemContainerStyle>
-                                    <TreeView.ItemTemplate>
-                                        <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
-                                            <Grid>
-                                                <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                    <svgc:SvgViewbox
-                                                        Width="12"
-                                                        Height="12"
-                                                        Margin="0,0,5,0"
-                                                        HorizontalAlignment="Left"
-                                                        Source="{Binding Icon}" />
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="12"
-                                                        Text="{Binding DisplayName}"
-                                                        ToolTip="{Binding DisplayName}" />
-                                                </hc:SimpleStackPanel>
-                                                <hc:SimpleStackPanel
-                                                    Margin="0,0,8,0"
-                                                    HorizontalAlignment="Right"
-                                                    Visibility="{Binding IsShowCount}">
-                                                    <Border Background="#fffffe" CornerRadius="3">
-                                                        <TextBlock
-                                                            Margin="5,1,5,1"
-                                                            VerticalAlignment="Center"
-                                                            FontWeight="Bold"
-                                                            Foreground="{StaticResource ThirdlyTextBrush}"
-                                                            Text="{Binding ChildrenCount}" />
-                                                    </Border>
-                                                </hc:SimpleStackPanel>
-                                            </Grid>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.ItemTemplate>
-                                </TreeView>
-                            </DockPanel>
-
-                            <!--  分割线  -->
-                            <GridSplitter
-                                Grid.Row="0"
-                                Grid.Column="1"
-                                Width="5"
-                                Margin="0,15,0,15"
-                                HorizontalAlignment="Center"
-                                VerticalAlignment="Stretch"
-                                hc:BorderElement.CornerRadius="10"
-                                Background="#eeeeee" />
-
-                            <DockPanel Grid.Column="2">
-
-
-                                <TreeView
-                                    x:Name="TreeViewTargetTables"
-                                    Margin="10"
-                                    VerticalAlignment="Top"
-                                    BorderThickness="0"
-                                    ItemsSource="{Binding TreeViewRightData}">
-                                    <TreeView.ItemContainerStyle>
-                                        <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
-                                            <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
-                                            <Setter Property="FontWeight" Value="{Binding FontWeight}" />
-                                            <Setter Property="FontSize" Value="12" />
-                                            <Setter Property="Padding" Value="0,0,5,0" />
-                                            <Setter Property="Visibility" Value="{Binding Visibility}" />
-                                            <!--<Setter Property="Foreground" Value="{Binding TextColor}" />-->
-                                            <Setter Property="Foreground" Value="#262e3e" />
-                                            <Setter Property="Cursor" Value="Hand" />
-                                            <!--  禁止水平滚动条自动滚动  -->
-                                            <!--<EventSetter Event="RequestBringIntoView" Handler="EventSetter_OnHandler" />
-                                            <EventSetter Event="PreviewMouseRightButtonDown" Handler="EventSetter_OnHandler" />-->
-                                        </Style>
-                                    </TreeView.ItemContainerStyle>
-                                    <TreeView.ItemTemplate>
-                                        <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
-                                            <Grid>
-                                                <hc:SimpleStackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                                    <svgc:SvgViewbox
-                                                        Width="12"
-                                                        Height="12"
-                                                        Margin="0,0,5,0"
-                                                        HorizontalAlignment="Left"
-                                                        Source="{Binding Icon}" />
-                                                    <TextBlock
-                                                        VerticalAlignment="Center"
-                                                        FontSize="12"
-                                                        Text="{Binding DisplayName}"
-                                                        ToolTip="{Binding DisplayName}" />
-                                                </hc:SimpleStackPanel>
-                                                <hc:SimpleStackPanel
-                                                    Margin="0,0,8,0"
-                                                    HorizontalAlignment="Right"
-                                                    Visibility="{Binding IsShowCount}">
-                                                    <Border Background="#fffffe" CornerRadius="3">
-                                                        <TextBlock
-                                                            Margin="5,1,5,1"
-                                                            VerticalAlignment="Center"
-                                                            FontWeight="Bold"
-                                                            Foreground="{StaticResource ThirdlyTextBrush}"
-                                                            Text="{Binding ChildrenCount}" />
-                                                    </Border>
-                                                </hc:SimpleStackPanel>
-                                            </Grid>
-                                        </HierarchicalDataTemplate>
-                                    </TreeView.ItemTemplate>
-                                </TreeView>
-                            </DockPanel>
-                        </Grid>
+                        <Border
+                            Margin="8"
+                            Background="#f9f9f9"
+                            CornerRadius="8">
+                            <Grid>
+                                <DataGrid
+                                    x:Name="TableGrid"
+                                    hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                                    hc:DataGridAttach.ShowRowNumber="True"
+                                    AutoGenerateColumns="False"
+                                    Background="Transparent"
+                                    ColumnWidth="*"
+                                    Cursor="Arrow"
+                                    HeadersVisibility="All"
+                                    ItemsSource="{Binding DiffInfoData, Mode=TwoWay}"
+                                    RowHeaderWidth="60"
+                                    SelectionUnit="FullRow">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn
+                                            Binding="{Binding SourceName}"
+                                            Header="源对象名"
+                                            IsReadOnly="True" />
+                                        <DataGridTextColumn
+                                            Binding="{Binding SourceRemark}"
+                                            CanUserSort="False"
+                                            Header="源备注说明"
+                                            IsReadOnly="True" />
+                                        <DataGridTextColumn
+                                            Binding="{Binding TargetName}"
+                                            Header="目标对象名"
+                                            IsReadOnly="True" />
+                                        <DataGridTextColumn
+                                            Binding="{Binding TargetRemark}"
+                                            CanUserSort="False"
+                                            Header="目标备注说明"
+                                            IsReadOnly="True" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <!--  数据加载Loading  -->
+                                <localBase:Loading
+                                    x:Name="LoadingLine"
+                                    BackgroundOpacity="0.1"
+                                    Visibility="Collapsed" />
+                            </Grid>
+                        </Border>
 
                         <!--  暂无数据  -->
                         <Grid Visibility="Collapsed">

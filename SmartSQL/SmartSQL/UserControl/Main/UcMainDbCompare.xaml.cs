@@ -37,6 +37,12 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcMainDbCompare : BaseUserControl
     {
+        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
+        private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
+        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
+        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
+        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
+
         public static readonly DependencyProperty TreeViewLeftDataProperty = DependencyProperty.Register(
             "TreeViewLeftData", typeof(List<TreeNodeItem>), typeof(UcMainDbCompare), new PropertyMetadata(default(List<TreeNodeItem>)));
         /// <summary>
@@ -64,6 +70,21 @@ namespace SmartSQL.UserControl
             {
                 SetValue(TreeViewRightDataProperty, value);
                 OnPropertyChanged(nameof(TreeViewRightData));
+            }
+        }
+
+        public static readonly DependencyProperty DiffInfoDataProperty = DependencyProperty.Register(
+            "DiffInfoData", typeof(List<DiffInfoModel>), typeof(UcMainDbCompare), new PropertyMetadata(default(List<DiffInfoModel>)));
+        /// <summary>
+        /// 差异数据
+        /// </summary>
+        public List<DiffInfoModel> DiffInfoData
+        {
+            get => (List<DiffInfoModel>)GetValue(DiffInfoDataProperty);
+            set
+            {
+                SetValue(DiffInfoDataProperty, value);
+                OnPropertyChanged(nameof(DiffInfoData));
             }
         }
 
@@ -161,82 +182,86 @@ namespace SmartSQL.UserControl
                 Oops.Oh("请选择目标数据库");
                 return;
             }
-            BindLeftMenu();
-            BindRightMenu();
+            BindDiffData();
         }
 
-
-        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
-        private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
-        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
-        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
-        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
-
-        public void BindLeftMenu()
+        /// <summary>
+        /// 绑定差异数据
+        /// </summary>
+        public void BindDiffData()
         {
             #region MyRegion
-            var selectConnection = (ConnectConfigs)ComSourceConnect.SelectedItem;
-            var selectDataBase = (DataBase)ComSourceDatabase.SelectedItem;
-            var menuData = TreeViewLeftData;
+            var selectSourceConnection = (ConnectConfigs)ComSourceConnect.SelectedItem;
+            var selectSourceDataBase = (DataBase)ComSourceDatabase.SelectedItem;
+            var selectTargetConnection = (ConnectConfigs)ComTargetConnect.SelectedItem;
+            var selectTargetDataBase = (DataBase)ComTargetDatabase.SelectedItem;
+            LoadingLine.Visibility = Visibility.Visible;
             Task.Run(() =>
             {
-                var itemList = new List<TreeNodeItem>();
-                var nodeTable = new TreeNodeItem
-                {
-                    ObejcetId = "0",
-                    DisplayName = "表",
-                    Name = "treeTable",
-                    Icon = TABLEICON,
-                    IsExpanded = true,
-                    Type = ObjType.Type
-                };
-                itemList.Add(nodeTable);
-
-                var model = new Model();
+                var diffInfoList = new List<DiffInfoModel>();
                 try
                 {
-                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase.DbName), selectDataBase.DbName);
-                    model = dbInstance.Init();
-                    //menuData = model;
+                    var sourceModel = new Model();
+                    var targetModel = new Model();
+                    var sDbType = selectSourceConnection.DbType;
+                    var sDbName = selectSourceDataBase.DbName;
+                    var dbSourceInstance = ExporterFactory.CreateInstance(sDbType,
+                        selectSourceConnection.SelectedDbConnectString(sDbName), sDbName);
+                    sourceModel = dbSourceInstance.Init();
+                    var tDbType = selectTargetConnection.DbType;
+                    var tDbName = selectTargetDataBase.DbName;
+                    var dbTargetInstance = ExporterFactory.CreateInstance(tDbType,
+                        selectTargetConnection.SelectedDbConnectString(tDbName), tDbName);
+                    targetModel = dbTargetInstance.Init();
+                    foreach (var t in sourceModel.Tables)
+                    {
+                        diffInfoList.Add(new DiffInfoModel
+                        {
+                            SourceName = t.Value.DisplayName,
+                            SourceRemark = t.Value.Comment,
+                            SourceIsExists = true,
+                            TargetIsExists = true,
+                            TargetForeground = null
+                        });
+                    }
+
+                    foreach (var table in targetModel.Tables)
+                    {
+                        var tb = diffInfoList.FirstOrDefault(x => x.SourceName == table.Value.DisplayName);
+                        if (tb != null)
+                        {
+                            tb.TargetName = table.Value.DisplayName;
+                            tb.TargetRemark = table.Value.Comment;
+                            tb.TargetIsExists = true;
+                            tb.TargetForeground = null;
+                            return;
+                        }
+
+                        diffInfoList.Add(new DiffInfoModel
+                        {
+                            SourceIsExists = false,
+                            SourceForeground = new SolidColorBrush(Colors.Red),
+                            TargetName = table.Value.DisplayName,
+                            TargetRemark = table.Value.Comment,
+                            TargetIsExists = true
+                        });
+                    }
                 }
                 catch (Exception ex)
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
+                        Oops.God($"连接失败 {selectSourceConnection.ConnectName}，原因：" + ex.ToMsg());
                     }));
                 }
-                var textColor = "#4f5d79";
-                foreach (var t in model.Tables)
+                finally
                 {
-                    var tableItem = new TreeNodeItem
+                    this.Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        ObejcetId = t.Value.Id,
-                        DisplayName = t.Value.DisplayName,
-                        Name = t.Value.Name,
-                        Schema = t.Value.SchemaName,
-                        Comment = t.Value.Comment,
-                        CreateDate = t.Value.CreateDate,
-                        ModifyDate = t.Value.ModifyDate,
-                        TextColor = textColor,
-                        Icon = TABLEICON,
-                        Type = ObjType.Table
-                    };
-                    nodeTable.Children.Add(tableItem);
+                        DiffInfoData = diffInfoList;
+                        LoadingLine.Visibility = Visibility.Collapsed;
+                    }));
                 }
-
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    itemList.ForEach(obj =>
-                    {
-                        if (!obj.Children.Any())
-                        {
-                            obj.Visibility = nameof(Visibility.Collapsed);
-                        }
-                        obj.DisplayName += $"（{obj.Children.Count}）";
-                    });
-                    TreeViewLeftData = itemList;
-                }));
             });
             #endregion
         }
@@ -321,8 +346,8 @@ namespace SmartSQL.UserControl
                     x.IsChecked = true;
                 }
             });
-            TreeViewTargetTables.ItemsSource = null;
-            TreeViewTargetTables.ItemsSource = TreeViewRightData;
+            //TreeViewTargetTables.ItemsSource = null;
+            //TreeViewTargetTables.ItemsSource = TreeViewRightData;
         }
     }
 }
