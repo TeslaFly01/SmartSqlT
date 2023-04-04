@@ -201,18 +201,14 @@ namespace SmartSQL.UserControl
                 var diffInfoList = new List<DiffInfoModel>();
                 try
                 {
-                    var sourceModel = new Model();
-                    var targetModel = new Model();
                     var sDbType = selectSourceConnection.DbType;
                     var sDbName = selectSourceDataBase.DbName;
-                    var dbSourceInstance = ExporterFactory.CreateInstance(sDbType,
-                        selectSourceConnection.SelectedDbConnectString(sDbName), sDbName);
-                    sourceModel = dbSourceInstance.Init();
                     var tDbType = selectTargetConnection.DbType;
                     var tDbName = selectTargetDataBase.DbName;
-                    var dbTargetInstance = ExporterFactory.CreateInstance(tDbType,
-                        selectTargetConnection.SelectedDbConnectString(tDbName), tDbName);
-                    targetModel = dbTargetInstance.Init();
+                    var dbSourceInstance = ExporterFactory.CreateInstance(sDbType, selectSourceConnection.SelectedDbConnectString(sDbName), sDbName);
+                    var sourceModel = dbSourceInstance.Init();
+                    var dbTargetInstance = ExporterFactory.CreateInstance(tDbType, selectTargetConnection.SelectedDbConnectString(tDbName), tDbName);
+                    var targetModel = dbTargetInstance.Init();
                     foreach (var t in sourceModel.Tables)
                     {
                         diffInfoList.Add(new DiffInfoModel
@@ -224,7 +220,6 @@ namespace SmartSQL.UserControl
                             TargetForeground = null
                         });
                     }
-
                     foreach (var table in targetModel.Tables)
                     {
                         var tb = diffInfoList.FirstOrDefault(x => x.SourceName == table.Value.DisplayName);
@@ -264,90 +259,6 @@ namespace SmartSQL.UserControl
                 }
             });
             #endregion
-        }
-
-
-        public void BindRightMenu()
-        {
-            #region MyRegion
-            var selectConnection = (ConnectConfigs)ComTargetConnect.SelectedItem;
-            var selectDataBase = (DataBase)ComTargetDatabase.SelectedItem;
-            var menuData = TreeViewLeftData;
-            Task.Run(() =>
-            {
-                var itemList = new List<TreeNodeItem>();
-                var nodeTable = new TreeNodeItem
-                {
-                    ObejcetId = "0",
-                    DisplayName = "表",
-                    Name = "treeTable",
-                    Icon = TABLEICON,
-                    IsExpanded = true,
-                    Type = ObjType.Type
-                };
-                itemList.Add(nodeTable);
-
-                var model = new Model();
-                try
-                {
-                    var dbInstance = ExporterFactory.CreateInstance(selectConnection.DbType, selectConnection.SelectedDbConnectString(selectDataBase.DbName), selectDataBase.DbName);
-                    model = dbInstance.Init();
-                    //menuData = model;
-                }
-                catch (Exception ex)
-                {
-                    Dispatcher.BeginInvoke(new Action(() =>
-                    {
-                        Oops.God($"连接失败 {selectConnection.ConnectName}，原因：" + ex.ToMsg());
-                    }));
-                }
-                var textColor = "#4f5d79";
-                foreach (var t in model.Tables)
-                {
-                    var tableItem = new TreeNodeItem
-                    {
-                        ObejcetId = t.Value.Id,
-                        DisplayName = t.Value.DisplayName,
-                        Name = t.Value.Name,
-                        Schema = t.Value.SchemaName,
-                        Comment = t.Value.Comment,
-                        CreateDate = t.Value.CreateDate,
-                        ModifyDate = t.Value.ModifyDate,
-                        TextColor = textColor,
-                        Icon = TABLEICON,
-                        Type = ObjType.Table
-                    };
-                    nodeTable.Children.Add(tableItem);
-                }
-
-                this.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    itemList.ForEach(obj =>
-                    {
-                        if (!obj.Children.Any())
-                        {
-                            obj.Visibility = nameof(Visibility.Collapsed);
-                        }
-                        obj.DisplayName += $"（{obj.Children.Count}）";
-                    });
-                    TreeViewRightData = itemList;
-                }));
-            });
-            #endregion
-        }
-
-        private void TreeViewSourceTables_OnSelectedItemChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
-        {
-            var selData = (TreeNodeItem)((TreeView)sender).SelectedItem;
-            TreeViewRightData.ForEach(x =>
-            {
-                if (selData.Name == x.Name)
-                {
-                    x.IsChecked = true;
-                }
-            });
-            //TreeViewTargetTables.ItemsSource = null;
-            //TreeViewTargetTables.ItemsSource = TreeViewRightData;
         }
     }
 }
