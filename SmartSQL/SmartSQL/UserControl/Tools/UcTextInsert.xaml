@@ -149,13 +149,13 @@
                         <Button
                             x:Name="BtnClear"
                             Width="80"
-                            Height="28"
+                            Height="30"
                             Margin="0,0,10,0"
                             hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                            BorderThickness="0"
                             Click="BtnClear_Click"
                             Content="清空"
-                            Cursor="Hand"
-                            Style="{StaticResource ButtonSuccess}" />
+                            Cursor="Hand" />
                         <TextBlock
                             Margin="0,0,0,3"
                             VerticalAlignment="Bottom"
@@ -166,6 +166,20 @@
                     </StackPanel>
                     <Grid Margin="15,10,15,0">
                         <Button
+                            x:Name="BtnFormat"
+                            Width="80"
+                            Height="28"
+                            Margin="0,-5,80,5"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            hc:IconElement.Geometry="{StaticResource TextFormat}"
+                            hc:IconElement.Height="15"
+                            hc:IconElement.Width="15"
+                            Click="BtnFormat_OnClick"
+                            Content="格式化"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
+                        <Button
                             x:Name="BtnCopy"
                             Width="70"
                             Height="28"
@@ -173,6 +187,8 @@
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
                             hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                            hc:IconElement.Height="12"
+                            hc:IconElement.Width="12"
                             Click="BtnCopy_OnClick"
                             Content="复制"
                             Cursor="Hand"

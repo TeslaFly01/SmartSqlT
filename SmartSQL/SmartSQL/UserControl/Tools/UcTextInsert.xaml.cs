@@ -102,5 +102,20 @@ namespace SmartSQL.UserControl
             Clipboard.SetDataObject(TextOutput.Text);
             Oops.Success("文本已复制到剪切板");
         }
+
+        /// <summary>
+        /// 格式化
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnFormat_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(TextOutput.Text))
+            {
+                return;
+            }
+            TextOutput.Text = TextOutput.Text.Replace("\n", "");
+            TextOutput.SelectAll();
+        }
     }
 }

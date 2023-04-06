@@ -70,13 +70,13 @@
                     Cursor="Hand" />
             </Grid>
             <Border
-                Margin="0,45,0,45"
+                Margin="0,45,0,0"
                 Background="#f9f9f9"
                 CornerRadius="8">
                 <Grid>
                     <avalonedit:TextEditor
                         x:Name="TextEditor"
-                        Margin="10"
+                        Margin="10,10,10,49"
                         Padding="0,5,5,5"
                         FontFamily="新宋体"
                         FontSize="15"
@@ -90,44 +90,46 @@
                             </avalonedit:TextEditorOptions>
                         </avalonedit:TextEditor.Options>
                     </avalonedit:TextEditor>
+
+                    <Grid Margin="10">
+                        <Button
+                            x:Name="BtnFormatter"
+                            Width="80"
+                            Height="28"
+                            Margin="0,0,5,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
+                            Click="BtnFormatter_Click"
+                            Content="格式化"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonSuccess}" />
+                        <Button
+                            x:Name="BtnCopyScript"
+                            Width="80"
+                            Height="28"
+                            Margin="90,0,5,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Bottom"
+                            hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
+                            Click="BtnCopyScript_Click"
+                            Content="复制"
+                            Cursor="Hand"
+                            Style="{StaticResource ButtonPrimary}" />
+                        <Button
+                            x:Name="BtnClear"
+                            Width="80"
+                            Height="28"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            hc:IconElement.Geometry="{StaticResource ClearGeometry}"
+                            BorderThickness="0.4"
+                            Click="BtnClear_Click"
+                            Content="清空"
+                            Cursor="Hand" />
+                    </Grid>
                 </Grid>
             </Border>
-
-            <Button
-                x:Name="BtnFormatter"
-                Width="80"
-                Height="28"
-                Margin="0,0,5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
-                Click="BtnFormatter_Click"
-                Content="格式化"
-                Cursor="Hand"
-                Style="{StaticResource ButtonSuccess}" />
-            <Button
-                x:Name="BtnCopyScript"
-                Width="80"
-                Height="28"
-                Margin="90,0,5,0"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                hc:IconElement.Geometry="{StaticResource WindowRestoreGeometry}"
-                Click="BtnCopyScript_Click"
-                Content="复制"
-                Cursor="Hand"
-                Style="{StaticResource ButtonPrimary}" />
-            <Button
-                x:Name="BtnClear"
-                Width="80"
-                Height="28"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Bottom"
-                hc:IconElement.Geometry="{StaticResource ClearGeometry}"
-                BorderThickness="0.4"
-                Click="BtnClear_Click"
-                Content="清空"
-                Cursor="Hand" />
         </Grid>
     </Border>
 </local:BaseUserControl>
