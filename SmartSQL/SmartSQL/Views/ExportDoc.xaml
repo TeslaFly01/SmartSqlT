@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.Views"
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
@@ -286,6 +287,22 @@
                             Margin="0,12,0,0"
                             VerticalAlignment="Top"
                             Text="文档类型" />
+                        <fa:FontAwesome
+                            Width="15"
+                            Height="15"
+                            Margin="52,12,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            FontSize="15"
+                            Foreground="#faad14"
+                            Icon="QuestionCircleOutline">
+                            <hc:Poptip.Instance>
+                                <hc:Poptip
+                                    Content="Excel、Word、Html文档仅支持导出表，其他文档类型都支持导出"
+                                    Foreground="#36425a"
+                                    PlacementType="Right" />
+                            </hc:Poptip.Instance>
+                        </fa:FontAwesome>
                         <WrapPanel Name="ToggleWarpPanel" Margin="85,5,5,5">
                             <ToggleButton
                                 Name="Chm"

@@ -14,17 +14,16 @@ namespace SmartSQL.DocUtils
         /// <summary>
         /// 修订日志
         /// </summary>
-        public const string LOG_CHAPTER_NAME = "1.修订日志";
+        public const string LOG_CHAPTER_NAME = "修订日志";
 
         /// <summary>
         /// 数据库表目录
         /// </summary>
-        public const string TABLE_CHAPTER_NAME = "2.数据库表目录";
-
+        public const string TABLE_CHAPTER_NAME = "目录";
 
         /// <summary>
         /// 数据库表结构
         /// </summary>
-        public const string TABLE_STRUCTURE_CHAPTER_NAME = "3.数据库表结构";
+        public const string TABLE_STRUCTURE_CHAPTER_NAME = "表";
     }
 }

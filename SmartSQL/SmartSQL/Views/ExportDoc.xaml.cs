@@ -1084,7 +1084,7 @@ namespace SmartSQL.Views
                             var script = exporter.GetScriptInfoById(item.ObejcetId, objectType);
                             viewPro.Add(new ViewProDto
                             {
-                                ObjectName = item.DisplayName,
+                                ObjectName = item.Name,
                                 Comment = item.Comment,
                                 Script = script
                             });
@@ -1113,7 +1113,7 @@ namespace SmartSQL.Views
                         var script = exporter.GetScriptInfoById(group.ObejcetId, objectType);
                         viewPro.Add(new ViewProDto
                         {
-                            ObjectName = group.DisplayName,
+                            ObjectName = group.Name,
                             Comment = group.Comment,
                             Script = script
                         });

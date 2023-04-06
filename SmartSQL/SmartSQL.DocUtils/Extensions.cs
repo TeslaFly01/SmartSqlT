@@ -103,7 +103,14 @@ namespace SmartSQL.DocUtils
             sb.Append(" | ");
             for (int j = 0; j < props.Length - minus; j++)
             {
-                lstTmp.Add(":---:");
+                if (props[j].Name== "TableName"|| props[j].Name == "Comment")
+                {
+                    lstTmp.Add(":---");
+                }
+                else
+                {
+                    lstTmp.Add(":---:");
+                }
             }
             sb.Append(string.Join(" | ", lstTmp));
             sb.Append(" | ");
