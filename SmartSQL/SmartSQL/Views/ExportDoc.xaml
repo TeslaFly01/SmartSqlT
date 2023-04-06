@@ -204,6 +204,7 @@
                     Margin="0,70,0,0"
                     VerticalAlignment="Top"
                     BorderThickness="0"
+                    MouseLeftButtonUp="TreeViewTables_OnMouseLeftButtonUp"
                     ItemsSource="{Binding TreeViewData}">
                     <TreeView.ItemContainerStyle>
                         <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">

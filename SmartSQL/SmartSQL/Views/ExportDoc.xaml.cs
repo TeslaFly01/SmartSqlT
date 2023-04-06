@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 using System.Windows.Media;
 using HandyControl.Controls;
 using HandyControl.Data;
@@ -1362,5 +1363,23 @@ namespace SmartSQL.Views
         {
            "\\","/", ":","*","?","\"","<",">","|"
         };
+
+        private void TreeViewTables_OnMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject) || selectedObject.Type == ObjType.Group)
+            {
+                return;
+            }
+            TreeViewData.ForEach(x =>
+            {
+                x.Children.ForEach(item =>
+                {
+                    if (item.DisplayName == selectedObject.DisplayName)
+                    {
+                        item.IsChecked = !item.IsChecked;
+                    }
+                });
+            });
+        }
     }
 }
