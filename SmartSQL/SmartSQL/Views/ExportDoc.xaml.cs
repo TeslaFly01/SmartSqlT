@@ -1306,7 +1306,7 @@ namespace SmartSQL.Views
             {
                 return;
             }
-            GridTipMsg.Visibility = Visibility.Collapsed;
+            //GridTipMsg.Visibility = Visibility.Collapsed;
             var button = (ToggleButton)sender;
             foreach (ToggleButton toggle in ToggleWarpPanel.Children)
             {
@@ -1318,8 +1318,8 @@ namespace SmartSQL.Views
             var tipMsg = _docTypeTipMsg[button.Name.ToLower()];
             if (!string.IsNullOrEmpty(tipMsg))
             {
-                GridTipMsg.Visibility = Visibility.Visible;
-                TextDocTipMsg.Text = tipMsg;
+                //GridTipMsg.Visibility = Visibility.Visible;
+                //TextDocTipMsg.Text = tipMsg;
             }
             fileExt = _docExt[button.Name.ToLower()];
             #endregion

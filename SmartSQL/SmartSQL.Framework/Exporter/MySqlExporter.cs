@@ -170,7 +170,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
+            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId, false);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))

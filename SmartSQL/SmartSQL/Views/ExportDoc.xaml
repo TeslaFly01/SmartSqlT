@@ -204,8 +204,8 @@
                     Margin="0,70,0,0"
                     VerticalAlignment="Top"
                     BorderThickness="0"
-                    MouseLeftButtonUp="TreeViewTables_OnMouseLeftButtonUp"
-                    ItemsSource="{Binding TreeViewData}">
+                    ItemsSource="{Binding TreeViewData}"
+                    MouseLeftButtonUp="TreeViewTables_OnMouseLeftButtonUp">
                     <TreeView.ItemContainerStyle>
                         <Style BasedOn="{StaticResource TreeViewItemBaseStyle}" TargetType="{x:Type TreeViewItem}">
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded}" />
@@ -379,7 +379,7 @@
                                 Style="{StaticResource ArrowToggleStyle1}" />
                         </WrapPanel>
                     </Grid>
-                    <Grid
+                    <!--<Grid
                         x:Name="GridTipMsg"
                         Margin="105,200,20,20"
                         Visibility="Visible">
@@ -390,7 +390,7 @@
                                 </Border>
                             </StackPanel>
                         </hc:TransitioningContentControl>
-                    </Grid>
+                    </Grid>-->
                     <Grid Margin="20,220,20,20">
                         <TextBlock
                             Margin="0,52,0,0"
