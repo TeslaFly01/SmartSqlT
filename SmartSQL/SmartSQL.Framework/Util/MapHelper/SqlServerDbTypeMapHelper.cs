@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,7 +15,7 @@ namespace SmartSQL.Framework.Util
             string csharpType = "object";
             switch (dbtype)
             {
-                case "bigint": csharpType = "long"; break;
+                case "bigint": csharpType = isNullable ? "long?" : "long"; break;
                 case "binary": csharpType = "byte[]"; break;
                 case "bit": csharpType = isNullable ? "bool?" : "bool"; break;
                 case "char": csharpType = "string"; break;
