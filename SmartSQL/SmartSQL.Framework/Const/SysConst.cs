@@ -15,5 +15,6 @@ namespace SmartSQL.Framework.Const
         public static readonly string Sys_LeftMenuType = "LeftMenuType";
         public static readonly string Sys_SelectedConnection = "SelectedConnection";
         public static readonly string Sys_SelectedDataBase = "SelectedDataBase";
+        public static readonly string Sys_IsShowSaveWin = "IsShowSaveWin";
     }
 }

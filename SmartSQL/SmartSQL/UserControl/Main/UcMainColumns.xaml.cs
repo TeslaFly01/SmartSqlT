@@ -24,6 +24,7 @@ using TextBox = System.Windows.Controls.TextBox;
 using MessageBox = HandyControl.Controls.MessageBox;
 using DbType = SqlSugar.DbType;
 using SmartSQL.DocUtils;
+using SmartSQL.Framework.Const;
 
 namespace SmartSQL.UserControl
 {
@@ -316,12 +317,18 @@ namespace SmartSQL.UserControl
                         return;
                     }
                     var selectItem = (Column)e.Row.Item;
-                    var msgResult = MessageBox.Show($"确认修改{SelectedObject.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
-                    if (msgResult != MessageBoxResult.OK)
+
+                    var isShowSaveWin = new SQLiteHelper().GetSysBool(SysConst.Sys_IsShowSaveWin);
+                    if (isShowSaveWin)
                     {
-                        ((TextBox)e.EditingElement).Text = _cellEditValue;
-                        return;
+                        var msgResult = MessageBox.Show($"确认修改{SelectedObject.DisplayName}的备注为{newValue}？", "温馨提示", MessageBoxButton.OKCancel, MessageBoxImage.Question);
+                        if (msgResult != MessageBoxResult.OK)
+                        {
+                            ((TextBox)e.EditingElement).Text = _cellEditValue;
+                            return;
+                        }
                     }
+
                     var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
                     try
                     {
