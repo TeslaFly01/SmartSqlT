@@ -97,6 +97,13 @@
                         VerticalAlignment="Top"
                         Content="左侧表、视图菜单包含表备注说明"
                         IsChecked="True" />
+                    <CheckBox
+                        Name="ChkIsShowSaveWin"
+                        Margin="36,120,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Content="修改备注时是否弹出保存提示对话框"
+                        IsChecked="True" />
                 </Grid>
 
                 <!--  操作栏  -->
