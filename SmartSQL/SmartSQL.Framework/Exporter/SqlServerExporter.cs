@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -418,7 +418,11 @@ namespace SmartSQL.Framework.Exporter
                 column.ObjectName = col.TableName;
                 column.IsIdentity = col.IsIdentity;
                 column.IsNullable = col.IsNullable;
-                column.DefaultValue = !string.IsNullOrEmpty(col.DefaultValue) && col.DefaultValue.Contains("((") ? col.DefaultValue.Replace("((", "").Replace("))", "") : col.DefaultValue;
+                column.DefaultValue = col.DefaultValue;
+                if (!string.IsNullOrEmpty(col.DefaultValue))
+                {
+                    column.DefaultValue = col.DefaultValue.Replace("(", "").Replace(")", "");
+                }
                 column.DataType = col.DataType;
                 column.OriginalName = col.DbColumnName;
                 column.Comment = col.ColumnDescription;

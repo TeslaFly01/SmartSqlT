@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -202,7 +202,10 @@ namespace SmartSQL.Framework.Exporter
                 column.ObjectName = v.DbColumnName;
                 column.IsIdentity = v.IsIdentity;
                 column.IsNullable = v.IsNullable;
-                column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
+                if (!string.IsNullOrEmpty(v.DefaultValue))
+                {
+                    column.DefaultValue = v.DefaultValue.Replace("(", "").Replace(")", "");
+                }
                 column.DataType = v.DataType;
                 column.Length = v.Length;
                 column.OriginalName = v.DbColumnName;
