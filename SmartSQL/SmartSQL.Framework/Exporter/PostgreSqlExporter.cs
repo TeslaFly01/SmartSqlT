@@ -237,7 +237,10 @@ namespace SmartSQL.Framework.Exporter
                 column.ObjectName = v.DbColumnName;
                 column.IsIdentity = v.IsIdentity;
                 column.IsNullable = v.IsNullable;
-                column.DefaultValue = !string.IsNullOrEmpty(v.DefaultValue) && v.DefaultValue.Contains("((") ? v.DefaultValue.Replace("((", "").Replace("))", "") : v.DefaultValue;
+                if (!string.IsNullOrEmpty(v.DefaultValue))
+                {
+                    column.DefaultValue = v.DefaultValue.Replace("(", "").Replace(")", "");
+                }
                 column.DataType = v.DataType;
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
@@ -255,7 +258,7 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
-        /// ¸üÐÂ±í/ÊÓÍ¼/´æ´¢¹ý³Ì¶ÔÏó×¢ÊÍ
+        /// æ›´æ–°è¡¨/è§†å›¾/å­˜å‚¨è¿‡ç¨‹å¯¹è±¡æ³¨é‡Š
         /// </summary>
         /// <param name="objectName"></param>
         /// <param name="remark"></param>
@@ -279,7 +282,7 @@ namespace SmartSQL.Framework.Exporter
         }
 
         /// <summary>
-        /// ¸üÐÂÁÐ×¢ÊÍ
+        /// æ›´æ–°åˆ—æ³¨é‡Š
         /// </summary>
         /// <param name="columnInfo"></param>
         /// <param name="remark"></param>

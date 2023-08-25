@@ -124,7 +124,7 @@ namespace SmartSQL.Framework.Util
         {
             var dmConnectionStringBuilder = new DmConnectionStringBuilder
             {
-                Host = serverAddress,
+                Server = serverAddress,
                 Port = port,
                 Database = serviceName,
                 User = userName,
