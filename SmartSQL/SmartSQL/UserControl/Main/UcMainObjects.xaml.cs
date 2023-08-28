@@ -159,7 +159,7 @@ namespace SmartSQL.UserControl
                 });
                 ObjItems = ObjectsViewData;
                 SearchObject.Text = string.Empty;
-            } 
+            }
             #endregion
         }
 
@@ -253,7 +253,7 @@ namespace SmartSQL.UserControl
                     if (msgResult == MessageBoxResult.OK)
                     {
                         var dbConnectionString = SelectedConnection.SelectedDbConnectString(SelectedDataBase.DbName);
-                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString,SelectedDataBase.DbName);
+                        var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, dbConnectionString, SelectedDataBase.DbName);
                         try
                         {
                             var objectType = selectItem.Type.Equals(ObjType.Table) ? DbObjectType.Table : (selectItem.Type.Equals(ObjType.View) ? DbObjectType.View : DbObjectType.Proc);
@@ -299,6 +299,26 @@ namespace SmartSQL.UserControl
                 : ObjectsViewData;
             exportDoc.ExportData = exportData;
             exportDoc.ShowDialog();
+        }
+
+        /// <summary>
+        /// 代码生成
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnGenCode_OnClick(object sender, RoutedEventArgs e)
+        {
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            var genCode = new GenCode();
+            genCode.Owner = mainWindow;
+            genCode.MenuData = MenuData;
+            genCode.SelectedConnection = SelectedConnection;
+            genCode.SelectedDataBase = SelectedDataBase;
+            var exportData = ObjectsViewData.Any(x => x.IsChecked == true)
+                ? ObjectsViewData.Where(x => x.IsChecked == true).ToList()
+                : ObjectsViewData;
+            genCode.ExportData = exportData;
+            genCode.ShowDialog();
         }
 
         private void ChkAll_OnClick(object sender, RoutedEventArgs e)

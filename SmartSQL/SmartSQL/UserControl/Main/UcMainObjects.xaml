@@ -164,12 +164,13 @@
                         Content="导出文档"
                         Cursor="Hand"
                         Style="{StaticResource ButtonSuccess}" />
-                    <!--<Button
-                        x:Name="BtnCreateEntity"
+                    <Button
+                        x:Name="BtnGenCode"
                         Height="26"
                         hc:IconElement.Geometry="{StaticResource SaveGeometry}"
-                        Content="生成实体类"
-                        Style="{StaticResource ButtonPrimary}" />-->
+                        Click="BtnGenCode_OnClick"
+                        Content="代码生成"
+                        Style="{StaticResource ButtonPrimary}" />
                 </hc:UniformSpacingPanel>
             </hc:SimpleStackPanel>
         </Grid>

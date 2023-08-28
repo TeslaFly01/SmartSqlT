@@ -200,6 +200,12 @@
     <Compile Include="UserControl\Dialog\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\GenCodes\UcGenTemplate.xaml.cs">
+      <DependentUpon>UcGenTemplate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\GenCodes\UcGenCode.xaml.cs">
+      <DependentUpon>UcGenCode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Groups\UcAddGroupObject.xaml.cs">
       <DependentUpon>UcAddGroupObject.xaml</DependentUpon>
     </Compile>
@@ -307,6 +313,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\GenCode.xaml.cs">
+      <DependentUpon>GenCode.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\ToolBox.xaml.cs">
       <DependentUpon>ToolBox.xaml</DependentUpon>
     </Compile>
@@ -470,6 +479,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\GenCodes\UcGenTemplate.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\GenCodes\UcGenCode.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Groups\UcAddGroupObject.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -607,6 +624,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Tools\UcToolMenu.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\GenCode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
