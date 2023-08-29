@@ -2,13 +2,16 @@
     x:Class="SmartSQL.UserControl.GenCodes.UcGenTemplate"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl.GenCodes"
     xmlns:localbase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:system="clr-namespace:System;assembly=mscorlib"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="UserControl_Loaded"
@@ -32,16 +35,13 @@
                 Margin="5,5,0,5"
                 Background="{DynamicResource RegionBrush}"
                 CornerRadius="8">
-                <Grid
-                    Height="Auto"
-                    Margin="5"
-                    Background="Transparent">
+                <Grid Margin="5" Background="Transparent">
                     <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
 
                     <hc:SearchBar
                         x:Name="SearchMenu"
                         Height="30"
-                        Margin="0,0,0,0"
+                        Margin="0,0,40,0"
                         Padding="5,0,5,0"
                         VerticalAlignment="Top"
                         HorizontalContentAlignment="Stretch"
@@ -52,13 +52,91 @@
                         FontSize="13"
                         ShowClearButton="True"
                         Style="{StaticResource SearchBarPlus}" />
+                    <Button
+                        Name="BtnAdd"
+                        Width="35"
+                        Padding="8,8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                        Background="{StaticResource PrimaryBrush}"
+                        BorderThickness="0"
+                        Foreground="#ffffff"
+                        ToolTip="添加模板" />
+
+
+
+                    <!--  连接列表  -->
+                    <ListBox
+                        Name="ListTemplate"
+                        Margin="0,43,0,35"
+                        HorizontalContentAlignment="Stretch"
+                        BorderThickness="0"
+                        ItemsSource="{Binding DataList}"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible">
+
+                        <!--  右键菜单  -->
+                        <ListBox.ContextMenu>
+                            <ContextMenu Width="150" Visibility="Visible">
+                                <MenuItem
+                                    x:Name="MenuDelete"
+                                    Padding="5,3,5,3"
+                                    VerticalAlignment="Center"
+                                    Click="MenuDelete_OnClick"
+                                    Header="删除">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#1890ff"
+                                            Icon="Remove" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                        <!--  右键菜单  -->
+
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
+                                <Setter Property="Foreground" Value="#444e63" />
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="Margin" Value="0" />
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#E8EBEF" />
+                                        <Setter Property="Foreground" Value="#417FF9" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,0"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding TempName}" />
+                                        <TextBlock
+                                            Margin="0,2,0,0"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="9"
+                                            FontWeight="Normal"
+                                            Foreground="#ccc6cf"
+                                            Text="{Binding Content}" />
+                                    </StackPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
                     <Grid
                         x:Name="NoDataText"
                         Margin="0,100,0,5"
                         HorizontalAlignment="Stretch"
                         Background="White"
-                        Cursor="Arrow">
+                        Cursor="Arrow"
+                        Visibility="Collapsed">
                         <localbase:NoDataArea
                             x:Name="NoDataAreaText"
                             Margin="0"
@@ -93,14 +171,46 @@
                 CornerRadius="8">
                 <Grid>
                     <!--  导出参数设置  -->
-                    <Grid Margin="0,0,0,35" />
+                    <Grid Margin="0,0,0,35">
+                        <hc:TextBox
+                            Name="TextTempName"
+                            Height="30"
+                            Margin="5,5,5,20"
+                            VerticalAlignment="Top"
+                            hc:InfoElement.Placeholder="模板名称"
+                            Background="#F4F5F7"
+                            BorderThickness="0"
+                            ShowClearButton="True"
+                            Text="{Binding ConnectConfig.ConnectName}" />
+
+                        <Border
+                            Margin="5,42,5,5"
+                            Background="#F4f5f7"
+                            CornerRadius="5">
+                            <avalonedit:TextEditor
+                                x:Name="TextContent"
+                                Margin="2"
+                                Padding="5"
+                                Background="#f4f5f7"
+                                FontFamily="新宋体"
+                                FontSize="12"
+                                ShowLineNumbers="True"
+                                Text="asdasdsd"
+                                WordWrap="True">
+                                <avalonedit:TextEditor.Options>
+                                    <avalonedit:TextEditorOptions ShowSpaces="False">
+                                        <avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                            <system:Int32>10</system:Int32>
+                                        </avalonedit:TextEditorOptions.ColumnRulerPosition>
+                                    </avalonedit:TextEditorOptions>
+                                </avalonedit:TextEditor.Options>
+                            </avalonedit:TextEditor>
+                        </Border>
+                    </Grid>
                     <!--  导出参数设置  -->
 
                     <!--  按钮栏  -->
-                    <Border
-                        VerticalAlignment="Bottom"
-                        Background="#f5f5f5"
-                        CornerRadius="0 0 8 8">
+                    <Border VerticalAlignment="Bottom" CornerRadius="0 0 8 8">
                         <Grid>
                             <hc:SimpleStackPanel
                                 Margin="5"
@@ -111,14 +221,15 @@
                                         x:Name="BtnExport"
                                         Height="25"
                                         Padding="20,0,20,0"
-                                        Click="BtnExport_OnClick"
-                                        Content="导出"
+                                        Click="BtnSave_OnClick"
+                                        Content="保存"
                                         Cursor="Hand"
                                         Style="{StaticResource ButtonPrimary}" />
                                     <Button
                                         x:Name="BtnCancel"
                                         Height="25"
                                         Padding="20,0,20,0"
+                                        BorderBrush="#f0f0f0"
                                         BorderThickness="0.4"
                                         Click="BtnCancel_OnClick"
                                         Content="取消"

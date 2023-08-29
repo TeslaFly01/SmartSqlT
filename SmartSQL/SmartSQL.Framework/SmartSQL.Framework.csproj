@@ -215,6 +215,7 @@
     <Compile Include="SqliteModel\TagInfo.cs" />
     <Compile Include="SqliteModel\GroupObjects.cs" />
     <Compile Include="SqliteModel\SystemSet.cs" />
+    <Compile Include="SqliteModel\TemplateInfo.cs" />
     <Compile Include="SugarFactory.cs" />
     <Compile Include="TsqlFormat.cs" />
     <Compile Include="TSqlFormatter\BaseFormatterState.cs" />

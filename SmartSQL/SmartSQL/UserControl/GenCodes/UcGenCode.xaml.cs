@@ -30,6 +30,7 @@ using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Helper;
 using SmartSQL.Views;
 using Path = System.Windows.Shapes.Path;
+using Window = System.Windows.Window;
 
 namespace SmartSQL.UserControl.GenCodes
 {
@@ -136,6 +137,8 @@ namespace SmartSQL.UserControl.GenCodes
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             #region MyRegion
+            var mainWindow = (GenCode)Window.GetWindow(this);
+            mainWindow.Title = "代码生成";
             //Title = $"{SelectedDataBase.DbName} - {Title}";
             var fName = SelectedDataBase.DbName;
             if (fName.Contains(":"))
@@ -235,15 +238,6 @@ namespace SmartSQL.UserControl.GenCodes
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeView);
-                var nodeProc = new TreeNodeItem
-                {
-                    ObejcetId = "0",
-                    DisplayName = "存储过程",
-                    Name = "treeProc",
-                    Icon = PROCICON,
-                    Type = ObjType.Type
-                };
-                itemList.Add(nodeProc);
 
                 #region 分组业务处理
                 //是否业务分组
@@ -289,17 +283,6 @@ namespace SmartSQL.UserControl.GenCodes
                                 IsExpanded = group.OpenLevel == 2
                             };
                             itemChildList.Add(nodeView1);
-                            var nodeProc1 = new TreeNodeItem
-                            {
-                                ObejcetId = "0",
-                                DisplayName = "存储过程",
-                                Name = "treeProc",
-                                Icon = PROCICON,
-                                Parent = nodeGroup,
-                                Type = ObjType.Type,
-                                IsExpanded = group.OpenLevel == 2
-                            };
-                            itemChildList.Add(nodeProc1);
                             nodeGroup.Children = itemChildList;
                             itemParentList.Add(nodeGroup);
                         }
@@ -459,64 +442,6 @@ namespace SmartSQL.UserControl.GenCodes
                 nodeView.IsChecked = ParentIsChecked(nodeView);
                 #endregion
 
-                #region 存储过程
-                foreach (var proc in menuData.Procedures)
-                {
-                    var isChecked = selectData != null && selectData.Any(x => x.DisplayName.Equals(proc.Value.DisplayName));
-                    //是否业务分组
-                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
-                    {
-                        var hasGroup = curObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
-                            .Select(x => x.Key)
-                            .ToList();
-                        foreach (var group in hasGroup)
-                        {
-                            var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
-                            if (pGroup != null)
-                            {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
-                                if (ppGroup != null)
-                                {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = proc.Value.Id,
-                                        Parent = ppGroup,
-                                        DisplayName = proc.Value.DisplayName,
-                                        Name = proc.Value.Name,
-                                        Schema = proc.Value.SchemaName,
-                                        Comment = proc.Value.Comment,
-                                        CreateDate = proc.Value.CreateDate,
-                                        ModifyDate = proc.Value.ModifyDate,
-                                        TextColor = textColor,
-                                        Icon = PROCICON,
-                                        Type = ObjType.Proc
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        nodeProc.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = proc.Value.Id,
-                            Parent = nodeProc,
-                            DisplayName = proc.Value.DisplayName,
-                            Name = proc.Value.Name,
-                            Schema = proc.Value.SchemaName,
-                            Comment = proc.Value.Comment,
-                            CreateDate = proc.Value.CreateDate,
-                            ModifyDate = proc.Value.ModifyDate,
-                            TextColor = textColor,
-                            Icon = PROCICON,
-                            Type = ObjType.Proc,
-                            IsChecked = isChecked
-                        });
-                    }
-                }
-                nodeProc.IsChecked = ParentIsChecked(nodeProc);
-                #endregion
-
                 this.Dispatcher.BeginInvoke(new Action(() =>
                 {
                     LoadingLine.Visibility = Visibility.Hidden;
@@ -595,16 +520,6 @@ namespace SmartSQL.UserControl.GenCodes
                 IsExpanded = true
             };
             itemList.Add(nodeView);
-            var nodeProc = new TreeNodeItem()
-            {
-                ObejcetId = "0",
-                DisplayName = "存储过程",
-                Name = "treeProc",
-                Icon = PROCICON,
-                Type = ObjType.Type,
-                IsExpanded = true
-            };
-            itemList.Add(nodeProc);
             var sqLiteHelper = new SQLiteHelper();
             var leftMenuType = sqLiteHelper.GetSysInt(SysConst.Sys_LeftMenuType);
             var isLikeSearch = sqLiteHelper.GetSysBool(SysConst.Sys_IsLikeSearch);
@@ -663,17 +578,6 @@ namespace SmartSQL.UserControl.GenCodes
                         Parent = nodeGroup
                     };
                     itemChildList.Add(nodeView1);
-                    var nodeProc1 = new TreeNodeItem
-                    {
-                        ObejcetId = "0",
-                        DisplayName = "存储过程",
-                        Name = "treeProc",
-                        Icon = PROCICON,
-                        Type = ObjType.Type,
-                        IsExpanded = true,
-                        Parent = nodeGroup
-                    };
-                    itemChildList.Add(nodeProc1);
                     itemParentList.Add(nodeGroup);
                 }
                 currObjects = (from a in sqLiteHelper.db.Table<GroupInfo>()
@@ -815,69 +719,6 @@ namespace SmartSQL.UserControl.GenCodes
             }
             #endregion
 
-            #region 存储过程
-            if (menuData.Procedures != null)
-            {
-                foreach (var proc in menuData.Procedures)
-                {
-                    var isStartWith = !proc.Key.ToLower().StartsWith(searchText, true, null) && !proc.Value.Name.ToLower().StartsWith(searchText, true, null);
-                    var isContains = !proc.Key.ToLower().Contains(searchText) && !proc.Key.ToLower().Contains(searchText);
-                    var isSearchMode = isLikeSearch ? isContains : isStartWith;
-                    if (isSearchMode)
-                    {
-                        continue;
-                    }
-                    //是否业务分组
-                    if (leftMenuType == LeftMenuType.Group.GetHashCode())
-                    {
-                        var hasGroup = currObjects.Where(x => x.ObjectName == proc.Key).GroupBy(x => x.GroupName)
-                            .Select(x => x.Key)
-                            .ToList();
-                        foreach (var group in hasGroup)
-                        {
-                            var pGroup = itemParentList.FirstOrDefault(x => x.DisplayName == group);
-                            if (pGroup != null)
-                            {
-                                var ppGroup = pGroup.Children.FirstOrDefault(x => x.DisplayName == "存储过程");
-                                if (ppGroup != null)
-                                {
-                                    ppGroup.Children.Add(new TreeNodeItem()
-                                    {
-                                        ObejcetId = proc.Value.Id,
-                                        Parent = ppGroup,
-                                        DisplayName = proc.Value.DisplayName,
-                                        Name = proc.Value.Name,
-                                        Schema = proc.Value.SchemaName,
-                                        Comment = proc.Value.Comment,
-                                        CreateDate = proc.Value.CreateDate,
-                                        ModifyDate = proc.Value.ModifyDate,
-                                        Icon = PROCICON,
-                                        Type = ObjType.Proc
-                                    });
-                                }
-                            }
-                        }
-                    }
-                    else
-                    {
-                        nodeProc.Children.Add(new TreeNodeItem()
-                        {
-                            ObejcetId = proc.Value.Id,
-                            Parent = nodeProc,
-                            DisplayName = proc.Value.DisplayName,
-                            Name = proc.Value.Name,
-                            Schema = proc.Value.SchemaName,
-                            Comment = proc.Value.Comment,
-                            CreateDate = proc.Value.CreateDate,
-                            ModifyDate = proc.Value.ModifyDate,
-                            Icon = PROCICON,
-                            Type = ObjType.Proc
-                        });
-                    }
-                }
-            }
-            #endregion
-
             if (leftMenuType == LeftMenuType.Group.GetHashCode())
             {
                 itemParentList.ForEach(group =>
@@ -953,7 +794,7 @@ namespace SmartSQL.UserControl.GenCodes
                 Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
                 return;
             }
-           
+
             #endregion
         }
 
@@ -964,7 +805,8 @@ namespace SmartSQL.UserControl.GenCodes
         /// <param name="e"></param>
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            //this.Parent.Close();
+            var mainWindow = (GenCode)Window.GetWindow(this);
+            mainWindow?.Close();
         }
 
         private void TxtFileName_OnTextChanged(object sender, TextChangedEventArgs e)

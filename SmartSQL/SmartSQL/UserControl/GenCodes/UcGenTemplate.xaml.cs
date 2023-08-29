@@ -46,7 +46,7 @@ namespace SmartSQL.UserControl.GenCodes
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcGenTemplate), new PropertyMetadata(default(ConnectConfigs)));
@@ -59,62 +59,16 @@ namespace SmartSQL.UserControl.GenCodes
             set => SetValue(SelectedConnectionProperty, value);
         }
 
-        public static readonly DependencyProperty SelectedDataBaseProperty = DependencyProperty.Register(
-            "SelectedDataBase", typeof(DataBase), typeof(UcGenTemplate), new PropertyMetadata(default(DataBase)));
-        /// <summary>
-        /// 当前数据库
-        /// </summary>
-        public DataBase SelectedDataBase
-        {
-            get => (DataBase)GetValue(SelectedDataBaseProperty);
-            set => SetValue(SelectedDataBaseProperty, value);
-        }
 
-        public static readonly DependencyProperty TreeViewDataProperty = DependencyProperty.Register(
-            "TreeViewData", typeof(List<TreeNodeItem>), typeof(UcGenTemplate), new PropertyMetadata(default(List<TreeNodeItem>)));
-        /// <summary>
-        /// 树形对象菜单
-        /// </summary>
-        public List<TreeNodeItem> TreeViewData
+        public static readonly DependencyProperty DataListProperty = DependencyProperty.Register(
+            "DataList", typeof(List<TemplateInfo>), typeof(UcGenTemplate), new PropertyMetadata(default(List<TemplateInfo>)));
+        public List<TemplateInfo> DataList
         {
-            get => (List<TreeNodeItem>)GetValue(TreeViewDataProperty);
+            get => (List<TemplateInfo>)GetValue(DataListProperty);
             set
             {
-                SetValue(TreeViewDataProperty, value);
-                OnPropertyChanged(nameof(TreeViewData));
-            }
-        }
-
-        public static readonly DependencyProperty ExportDataProperty = DependencyProperty.Register(
-            "ExportData", typeof(List<TreeNodeItem>), typeof(UcGenTemplate), new PropertyMetadata(default(List<TreeNodeItem>)));
-        /// <summary>
-        /// 导出目标数据
-        /// </summary>
-        public List<TreeNodeItem> ExportData
-        {
-            get => (List<TreeNodeItem>)GetValue(ExportDataProperty);
-            set
-            {
-                SetValue(ExportDataProperty, value);
-                OnPropertyChanged(nameof(ExportData));
-            }
-        }
-
-        /// <summary>
-        /// 菜单数据
-        /// </summary>
-        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
-            "MenuData", typeof(Model), typeof(UcGenTemplate), new PropertyMetadata(default(Model)));
-        /// <summary>
-        /// 菜单数据
-        /// </summary>
-        public Model MenuData
-        {
-            get => (Model)GetValue(MenuDataProperty);
-            set
-            {
-                SetValue(MenuDataProperty, value);
-                OnPropertyChanged(nameof(MenuData));
+                SetValue(DataListProperty, value);
+                OnPropertyChanged(nameof(DataList));
             }
         }
         #endregion
@@ -123,20 +77,91 @@ namespace SmartSQL.UserControl.GenCodes
         {
             InitializeComponent();
             DataContext = this;
+            HighlightingProvider.Register(SkinType.Dark, new HighlightingProviderDark());
+            TextContent.SyntaxHighlighting = HighlightingProvider.GetDefinition(SkinType.Dark, "C#");
+            TextContent.TextArea.SelectionCornerRadius = 0;
+            TextContent.TextArea.SelectionBorder = null;
+            TextContent.TextArea.SelectionForeground = null;
+            TextContent.TextArea.SelectionBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FFADD6FF"));
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-
+            if (!IsLoaded)
+            {
+                return;
+            }
+            Task.Run(() =>
+            {
+                var sqLiteHelper = new SQLiteHelper();
+                var datalist = sqLiteHelper.db.Table<TemplateInfo>().ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    DataList = datalist;
+                    if (!datalist.Any())
+                    {
+                        NoDataText.Visibility = Visibility.Visible;
+                    }
+                });
+            });
         }
+
+        private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
+        {
+            #region MyRegion
+            if (!(ListTemplate.SelectedItem is TemplateInfo selectedTemp))
+            {
+                Oops.Oh("请选择需要删除的模板.");
+                return;
+            }
+            var sqlLiteInstance = SQLiteHelper.GetInstance();
+            Task.Run(() =>
+            {
+                sqlLiteInstance.db.Delete<TemplateInfo>(selectedTemp.Id);
+                var list = sqlLiteInstance.db.Table<TemplateInfo>().ToList();
+                Dispatcher.Invoke(() =>
+                {
+                    DataList = list;
+                });
+            });
+            #endregion
+        }
+
         /// <summary>
         /// 导出数据
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnExport_OnClick(object sender, RoutedEventArgs e)
+        private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
-
+            var tempName = TextTempName.Text.Trim();
+            var tempContent = TextContent.Text.Trim();
+            var sqLiteHelper = new SQLiteHelper();
+            if (string.IsNullOrEmpty(tempName))
+            {
+                Oops.God("模板名称为空");
+                return;
+            }
+            if (string.IsNullOrEmpty(tempContent))
+            {
+                Oops.God("模板内容为空");
+                return;
+            }
+            if (sqLiteHelper.IsAny<TemplateInfo>(x => x.TempName == tempName))
+            {
+                Oops.God("模板名称出现重复");
+                return;
+            }
+            var temp = new TemplateInfo
+            {
+                TempName = tempName,
+                Content = tempContent
+            };
+            sqLiteHelper.db.Insert(temp);
+            var list = sqLiteHelper.db.Table<TemplateInfo>().ToList();
+            DataList = list;
+            TextTempName.Text = string.Empty;
+            TextContent.Text = string.Empty;
         }
 
         /// <summary>
@@ -146,8 +171,8 @@ namespace SmartSQL.UserControl.GenCodes
         /// <param name="e"></param>
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            //this.Parent.Close();
+            var mainWindow = (GenCode)System.Windows.Window.GetWindow(this);
+            mainWindow?.Close();
         }
-
     }
 }

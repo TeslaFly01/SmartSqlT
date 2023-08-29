@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -51,6 +51,7 @@ namespace SmartSQL.Framework
             db.CreateTable<GroupObjects>();
             db.CreateTable<TagObjects>();
             db.CreateTable<SystemSet>();
+            db.CreateTable<TemplateInfo>();
             Init();
         }
 

@@ -166,10 +166,6 @@ namespace SmartSQL.Views
             }
             var ucGenCode = new UcGenTemplate();
             ucGenCode.SelectedConnection = SelectedConnection;
-            ucGenCode.SelectedDataBase = SelectedDataBase;
-            ucGenCode.TreeViewData = TreeViewData;
-            ucGenCode.ExportData = ExportData;
-            ucGenCode.MenuData = MenuData;
             UcGenMain.Content = ucGenCode;
         }
     }
