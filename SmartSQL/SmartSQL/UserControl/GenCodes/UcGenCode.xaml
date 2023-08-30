@@ -165,21 +165,21 @@
                 <Grid>
                     <!--  导出参数设置  -->
                     <Grid Margin="0,0,0,35">
-                        <Grid Margin="20,0,20,20">
+                        <Grid Margin="10,10,10,20">
                             <TextBlock
-                                Margin="0,52,0,0"
+                                Margin="0,10,0,0"
                                 VerticalAlignment="Top"
                                 Text="保存路径" />
                             <TextBox
                                 Name="TxtPath"
-                                Margin="85,45,70,0"
+                                Margin="65,0,70,0"
                                 VerticalAlignment="Top"
                                 Background="#F4F5F7"
                                 BorderThickness="0" />
                             <Button
                                 Name="BtnLookPath"
                                 Width="65"
-                                Margin="0,45,0,0"
+                                Margin="0,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
                                 Background="#F4F5F7"
@@ -188,14 +188,15 @@
                                 Content="浏览"
                                 Cursor="Hand" />
                         </Grid>
-                        <Grid Margin="20,120,20,20">
+
+                        <Grid Margin="10,50,10,20">
                             <TextBlock
                                 Margin="0,15,0,0"
                                 VerticalAlignment="Top"
                                 Text="生成模板" />
                             <Grid
                                 Height="200"
-                                Margin="80,3,8,8"
+                                Margin="65,3,0,8"
                                 VerticalAlignment="Top">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <WrapPanel Name="MaterialTabItem" Orientation="Horizontal">

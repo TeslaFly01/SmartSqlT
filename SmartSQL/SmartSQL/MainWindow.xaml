@@ -123,6 +123,19 @@
                                 Stretch="Uniform" />
                         </MenuItem.Icon>
                     </MenuItem>
+                    <MenuItem
+                        Name="GenCode"
+                        Click="GenCode_OnClick"
+                        FontWeight="Normal"
+                        Header="生成代码">
+                        <MenuItem.Icon>
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="15"
+                                Foreground="#438df3"
+                                Icon="Codepen" />
+                        </MenuItem.Icon>
+                    </MenuItem>
                 </MenuItem>
 
                 <!--  工具  -->
@@ -146,6 +159,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
+                                FontSize="14"
                                 Foreground="#fdab03"
                                 Icon="Group" />
                         </MenuItem.Icon>
@@ -159,7 +173,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
-                                FontSize="14"
+                                FontSize="15"
                                 Foreground="#15c8c4"
                                 Icon="Tags" />
                         </MenuItem.Icon>

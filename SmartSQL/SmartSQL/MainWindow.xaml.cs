@@ -225,6 +225,29 @@ namespace SmartSQL
         }
 
         /// <summary>
+        /// 生成代码
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void GenCode_OnClick(object sender, RoutedEventArgs e)
+        {
+            var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
+            if (SelectendConnection == null || selectDatabase == null)
+            {
+                Oops.Oh("请选择数据库");
+                return;
+            }
+            var genCode = new GenCode
+            {
+                Owner = this,
+                MenuData = MainContent.MenuData,
+                SelectedConnection = SelectendConnection,
+                SelectedDataBase = selectDatabase
+            };
+            genCode.ShowDialog();
+        }
+
+        /// <summary>
         /// 导入备注
         /// </summary>
         /// <param name="sender"></param>

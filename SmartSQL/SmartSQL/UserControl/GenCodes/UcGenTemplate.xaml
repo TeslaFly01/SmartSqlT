@@ -71,7 +71,7 @@
                     <!--  连接列表  -->
                     <ListBox
                         Name="ListTemplate"
-                        Margin="0,43,0,35"
+                        Margin="0,40,0,35"
                         HorizontalContentAlignment="Stretch"
                         BorderThickness="0"
                         ItemsSource="{Binding DataList}"
@@ -200,6 +200,22 @@
                             <TextBlock
                                 Margin="5,10,0,0"
                                 VerticalAlignment="Top"
+                                Text="名称格式" />
+                            <hc:TextBox
+                                Name="TextFileFormat"
+                                Height="30"
+                                Margin="65,0,0,0"
+                                VerticalAlignment="Top"
+                                hc:InfoElement.Placeholder="名称格式，例如：{0}Service"
+                                Background="#F4F5F7"
+                                BorderThickness="0"
+                                ShowClearButton="True" />
+                        </Grid>
+
+                        <Grid Margin="5,75,5,0">
+                            <TextBlock
+                                Margin="5,10,0,0"
+                                VerticalAlignment="Top"
                                 Text="文件后缀" />
                             <hc:TextBox
                                 Name="TextFileExt"
@@ -212,7 +228,7 @@
                                 ShowClearButton="True" />
                         </Grid>
 
-                        <Grid Margin="5,75,5,5">
+                        <Grid Margin="5,110,5,5">
                             <TextBlock
                                 Margin="5,10,0,0"
                                 VerticalAlignment="Center"
@@ -237,7 +253,7 @@
                                         <hc:Poptip.Content>
                                             <Border
                                                 Width="350"
-                                                Height="400"
+                                                Height="320"
                                                 Background="#ffffff"
                                                 BorderThickness="1"
                                                 CornerRadius="8">
