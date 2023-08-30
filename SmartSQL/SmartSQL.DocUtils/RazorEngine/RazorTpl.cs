@@ -10,6 +10,7 @@ using RazorEngine.Configuration;
 using RazorEngine.Templating;
 using RazorEngine.Text;
 using SmartSQL.DocUtils.Dtos;
+using SmartSQL.DocUtils.Models;
 
 namespace SmartSQL.DocUtils
 {
@@ -58,6 +59,18 @@ namespace SmartSQL.DocUtils
             try
             {
                 return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(TableDto), model);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public static string RazorRender(this string tpl_text, EntitiesGen model)
+        {
+            try
+            {
+                return Engine.Razor.RunCompile(tpl_text, Md5(tpl_text), typeof(EntitiesGen), model);
             }
             catch (Exception ex)
             {

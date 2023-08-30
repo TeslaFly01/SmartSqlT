@@ -165,22 +165,7 @@
                 <Grid>
                     <!--  导出参数设置  -->
                     <Grid Margin="0,0,0,35">
-                        <Grid Margin="20,30,20,20">
-                            <TextBlock
-                                Margin="0,25,0,0"
-                                VerticalAlignment="Top"
-                                Text="文档名称" />
-                            <hc:TextBox
-                                Name="TxtFileName"
-                                Height="30"
-                                Margin="85,18,67,0"
-                                VerticalAlignment="Top"
-                                Background="#F4F5F7"
-                                BorderThickness="0"
-                                ShowClearButton="True"
-                                TextChanged="TxtFileName_OnTextChanged" />
-                        </Grid>
-                        <Grid Margin="20,220,20,20">
+                        <Grid Margin="20,0,20,20">
                             <TextBlock
                                 Margin="0,52,0,0"
                                 VerticalAlignment="Top"
@@ -203,6 +188,43 @@
                                 Content="浏览"
                                 Cursor="Hand" />
                         </Grid>
+                        <Grid Margin="20,120,20,20">
+                            <TextBlock
+                                Margin="0,15,0,0"
+                                VerticalAlignment="Top"
+                                Text="生成模板" />
+                            <Grid
+                                Height="200"
+                                Margin="80,3,8,8"
+                                VerticalAlignment="Top">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                    <WrapPanel Name="MaterialTabItem" Orientation="Horizontal">
+                                        <ItemsControl Name="CheckBoxGroups" ItemsSource="{Binding TagList, Mode=TwoWay}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel Orientation="Horizontal" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+                                                        Margin="0,5,5,0"
+                                                        HorizontalAlignment="Stretch"
+                                                        Background="White"
+                                                        CornerRadius="6">
+                                                        <CheckBox
+                                                            Margin="8"
+                                                            Content="{Binding TempName, Mode=TwoWay}"
+                                                            Cursor="Hand"
+                                                            IsChecked="True" />
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </WrapPanel>
+                                </ScrollViewer>
+                            </Grid>
+                        </Grid>
                     </Grid>
                     <!--  导出参数设置  -->
 
@@ -218,10 +240,10 @@
                                 VerticalAlignment="Bottom">
                                 <hc:UniformSpacingPanel Spacing="10">
                                     <Button
-                                        x:Name="BtnExport"
+                                        x:Name="BtnGen"
                                         Height="25"
                                         Padding="20,0,20,0"
-                                        Click="BtnExport_OnClick"
+                                        Click="BtnGen_OnClick"
                                         Content="生成"
                                         Cursor="Hand"
                                         Style="{StaticResource ButtonPrimary}" />

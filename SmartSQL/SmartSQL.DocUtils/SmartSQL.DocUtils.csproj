@@ -524,6 +524,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="RazorEngine\Model\EntitiesGen.cs" />
     <Compile Include="RazorEngine\RazorReferenceResolver.cs" />
     <Compile Include="RazorEngine\RazorTpl.cs" />
     <Compile Include="XmlAnalyze.cs" />

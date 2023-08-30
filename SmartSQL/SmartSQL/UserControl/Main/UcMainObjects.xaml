@@ -167,9 +167,10 @@
                     <Button
                         x:Name="BtnGenCode"
                         Height="26"
-                        hc:IconElement.Geometry="{StaticResource SaveGeometry}"
+                        hc:IconElement.Geometry="{StaticResource EntityGeometry}"
                         Click="BtnGenCode_OnClick"
-                        Content="代码生成"
+                        Content="生成代码"
+                        Cursor="Hand"
                         Style="{StaticResource ButtonPrimary}" />
                 </hc:UniformSpacingPanel>
             </hc:SimpleStackPanel>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Xml;
@@ -78,7 +78,7 @@ namespace SmartSQL
             Definition = new Dictionary<string, Lazy<IHighlightingDefinition>>
             {
                 ["XML"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("XML-Dark")),
-                ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Mode")),
+                ["C#"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("CSharp-Dark")),
                 ["SQL"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("SQL-Dark")),
                 ["Json"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Json")),
                 ["Java"] = new Lazy<IHighlightingDefinition>(() => LoadDefinition("Java-Mode")),

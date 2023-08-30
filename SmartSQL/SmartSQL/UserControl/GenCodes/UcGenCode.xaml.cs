@@ -29,8 +29,11 @@ using SmartSQL.Framework.Const;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Helper;
 using SmartSQL.Views;
-using Path = System.Windows.Shapes.Path;
 using Window = System.Windows.Window;
+using SmartSQL.Framework.Util;
+using RazorEngine;
+using RazorEngine.Templating;
+using SmartSQL.DocUtils.Models;
 
 namespace SmartSQL.UserControl.GenCodes
 {
@@ -48,11 +51,6 @@ namespace SmartSQL.UserControl.GenCodes
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private string fileExt = ".chm";
-        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
-        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
-        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
-        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcGenCode), new PropertyMetadata(default(ConnectConfigs)));
@@ -145,13 +143,18 @@ namespace SmartSQL.UserControl.GenCodes
             {
                 fName = fName.Replace(":", "_");
             }
-            TxtFileName.Text = fName + "数据库设计文档";
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbMasterConnectString, SelectedDataBase.DbName);
             var list = dbInstance.GetDatabases(SelectedDataBase.DbName);
             SelectDatabase.ItemsSource = list;
             HidSelectDatabase.Text = SelectedDataBase.DbName;
             SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == SelectedDataBase.DbName);
             MenuBind();
+
+
+            var sqLiteHelper = new SQLiteHelper();
+            var templist = sqLiteHelper.db.Table<TemplateInfo>().ToList();
+            CheckBoxGroups.ItemsSource = templist;
+
             #endregion
         }
 
@@ -225,7 +228,7 @@ namespace SmartSQL.UserControl.GenCodes
                     ObejcetId = "0",
                     DisplayName = "表",
                     Name = "treeTable",
-                    Icon = TABLEICON,
+                    Icon = SysConst.Sys_TABLEICON,
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeTable);
@@ -234,7 +237,7 @@ namespace SmartSQL.UserControl.GenCodes
                     ObejcetId = "0",
                     DisplayName = "视图",
                     Name = "treeView",
-                    Icon = VIEWICON,
+                    Icon = SysConst.Sys_VIEWICON,
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeView);
@@ -256,7 +259,7 @@ namespace SmartSQL.UserControl.GenCodes
                                 ObejcetId = "0",
                                 DisplayName = group.GroupName,
                                 Name = "treeGroup",
-                                Icon = GROUPICON,
+                                Icon = SysConst.Sys_GROUPICON,
                                 FontWeight = "Bold",
                                 Type = ObjType.Group,
                                 IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
@@ -266,7 +269,7 @@ namespace SmartSQL.UserControl.GenCodes
                                 ObejcetId = "0",
                                 DisplayName = "表",
                                 Name = "treeTable",
-                                Icon = TABLEICON,
+                                Icon = SysConst.Sys_TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2
@@ -277,7 +280,7 @@ namespace SmartSQL.UserControl.GenCodes
                                 ObejcetId = "0",
                                 DisplayName = "视图",
                                 Name = "treeView",
-                                Icon = VIEWICON,
+                                Icon = SysConst.Sys_VIEWICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2
@@ -355,7 +358,7 @@ namespace SmartSQL.UserControl.GenCodes
                                         CreateDate = table.Value.CreateDate,
                                         ModifyDate = table.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = TABLEICON,
+                                        Icon = SysConst.Sys_TABLEICON,
                                         Type = ObjType.Table
                                     });
                                 }
@@ -375,7 +378,7 @@ namespace SmartSQL.UserControl.GenCodes
                             CreateDate = table.Value.CreateDate,
                             ModifyDate = table.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = TABLEICON,
+                            Icon = SysConst.Sys_TABLEICON,
                             Type = ObjType.Table,
                             IsChecked = isChecked
                         });
@@ -413,7 +416,7 @@ namespace SmartSQL.UserControl.GenCodes
                                         CreateDate = view.Value.CreateDate,
                                         ModifyDate = view.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = VIEWICON,
+                                        Icon = SysConst.Sys_VIEWICON,
                                         Type = ObjType.View
                                     });
                                 }
@@ -433,7 +436,7 @@ namespace SmartSQL.UserControl.GenCodes
                             CreateDate = view.Value.CreateDate,
                             ModifyDate = view.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = VIEWICON,
+                            Icon = SysConst.Sys_VIEWICON,
                             Type = ObjType.View,
                             IsChecked = isChecked
                         });
@@ -505,7 +508,7 @@ namespace SmartSQL.UserControl.GenCodes
                 ObejcetId = "0",
                 DisplayName = "表",
                 Name = "treeTable",
-                Icon = TABLEICON,
+                Icon = SysConst.Sys_TABLEICON,
                 Type = ObjType.Type,
                 IsExpanded = true
             };
@@ -515,7 +518,7 @@ namespace SmartSQL.UserControl.GenCodes
                 ObejcetId = "0",
                 DisplayName = "视图",
                 Name = "treeView",
-                Icon = VIEWICON,
+                Icon = SysConst.Sys_VIEWICON,
                 Type = ObjType.Type,
                 IsExpanded = true
             };
@@ -550,7 +553,7 @@ namespace SmartSQL.UserControl.GenCodes
                         ObejcetId = "0",
                         DisplayName = group.GroupName,
                         Name = "treeTable",
-                        Icon = GROUPICON,
+                        Icon = SysConst.Sys_GROUPICON,
                         Type = ObjType.Group,
                         IsExpanded = true,
                         FontWeight = "Bold",
@@ -561,7 +564,7 @@ namespace SmartSQL.UserControl.GenCodes
                         ObejcetId = "0",
                         DisplayName = "表",
                         Name = "treeTable",
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup
@@ -572,7 +575,7 @@ namespace SmartSQL.UserControl.GenCodes
                         ObejcetId = "0",
                         DisplayName = "视图",
                         Name = "treeView",
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup
@@ -629,7 +632,7 @@ namespace SmartSQL.UserControl.GenCodes
                                         Comment = table.Value.Comment,
                                         CreateDate = table.Value.CreateDate,
                                         ModifyDate = table.Value.ModifyDate,
-                                        Icon = TABLEICON,
+                                        Icon = SysConst.Sys_TABLEICON,
                                         Type = ObjType.Table
                                     });
                                 }
@@ -648,7 +651,7 @@ namespace SmartSQL.UserControl.GenCodes
                             Comment = table.Value.Comment,
                             CreateDate = table.Value.CreateDate,
                             ModifyDate = table.Value.ModifyDate,
-                            Icon = TABLEICON,
+                            Icon = SysConst.Sys_TABLEICON,
                             Type = ObjType.Table
                         });
                     }
@@ -692,7 +695,7 @@ namespace SmartSQL.UserControl.GenCodes
                                         Comment = view.Value.Comment,
                                         CreateDate = view.Value.CreateDate,
                                         ModifyDate = view.Value.ModifyDate,
-                                        Icon = VIEWICON,
+                                        Icon = SysConst.Sys_VIEWICON,
                                         Type = ObjType.View
                                     });
                                 }
@@ -711,7 +714,7 @@ namespace SmartSQL.UserControl.GenCodes
                             Comment = view.Value.Comment,
                             CreateDate = view.Value.CreateDate,
                             ModifyDate = view.Value.ModifyDate,
-                            Icon = VIEWICON,
+                            Icon = SysConst.Sys_VIEWICON,
                             Type = ObjType.View
                         });
                     }
@@ -763,38 +766,123 @@ namespace SmartSQL.UserControl.GenCodes
             #endregion
         }
 
-        private int curProgressNum = 0;
         /// <summary>
-        /// 导出数据
+        /// 生成
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnExport_OnClick(object sender, RoutedEventArgs e)
+        private void BtnGen_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
             var selectedConnection = SelectedConnection;
             var selectedDatabase = SelectedDataBase;
             var exportData = TreeViewData;
-            var floderPath = TxtPath.Text;
-            var doctype = "";// DocumentType();
-            var docTypeEnum = (DocType)(Enum.Parse(typeof(DocType), doctype));
-            if (string.IsNullOrEmpty(doctype))
-            {
-                Oops.Oh("请选择输出文档类型");
-                return;
-            }
             var checkAny = exportData.Count(x => x.Type == "Type" && x.IsChecked == false);
-            if (checkAny == 3)
+            if (checkAny == 2)
             {
-                Oops.Oh("请选择需要导出的对象");
+                Oops.Oh("请选择需要生成的对象");
                 return;
             }
-            if (CharacterList.Any(x => TxtFileName.Text.Contains(x)))
+            var sqLiteHelper = new SQLiteHelper();
+            var templist = sqLiteHelper.db.Table<TemplateInfo>().ToList();
+            //对象列表
+            var tables = Trans2Table(exportData, selectedConnection, selectedDatabase, 0);
+            templist.ForEach(temp =>
             {
-                Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
-                return;
-            }
+                tables.ForEach(tb =>
+                {
+                    var content = temp.Content.RazorRender(tb);
+                });
+            });
+            #endregion
+        }
 
+        private List<EntitiesGen> Trans2Table(List<TreeNodeItem> treeViewData, ConnectConfigs selectedConnection, DataBase selectedDatabase, int totalProgressNum)
+        {
+            #region MyRegion
+            var selectedConnectionString = selectedConnection.SelectedDbConnectString(selectedDatabase.DbName);
+            var entities = new List<EntitiesGen>();
+            var groupNo = 1;
+            var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType,
+                selectedConnectionString, selectedDatabase.DbName);
+            foreach (var group in treeViewData)
+            {
+                if (group.Type == "Type" && group.Name.Equals("treeTable"))
+                {
+                    int orderNo = 1;
+                    foreach (var node in group.Children)
+                    {
+                        if (node.IsChecked == false)
+                        {
+                            continue;
+                        }
+                        var eg = new EntitiesGen();
+                        eg.TableName = node.Name;
+                        eg.Description = node.Comment;
+                        eg.ClassName = node.Name;
+
+                        var columns = dbInstance.GetColumnInfoById(node.ObejcetId);
+                        var columnIndex = 1;
+                        foreach (var col in columns)
+                        {
+                            var pg = new PropertyGen();
+                            pg.PropertyName = col.Value.Name;
+                            pg.DbColumnName = col.Value.Name;
+                            // 长度
+                            pg.Length = col.Value.Length;
+                            // 主键
+                            pg.IsPrimaryKey = col.Value.IsPrimaryKey;
+                            // 自增
+                            pg.IsIdentity = col.Value.IsIdentity;
+                            // 允许空
+                            pg.IsNullable = col.Value.IsNullable;
+                            // 列注释（说明）
+                            pg.Description = col.Value.Comment;
+                            pg.Type = col.Value.CSharpType;
+                            pg.DbType = col.Value.DataType;
+
+                            eg.Properties.Add(pg);
+                            columnIndex++;
+                        }
+                        entities.Add(eg);
+                        orderNo++;
+                    }
+                }
+                if (group.Type == "Table")
+                {
+                    var eg = new EntitiesGen();
+                    eg.TableName = group.Name;
+                    eg.Description = group.Comment;
+                    eg.ClassName = group.Name;
+                    
+                    var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
+                    var columnIndex = 1;
+                    foreach (var col in columns)
+                    {
+                        var pg = new PropertyGen();
+                        pg.PropertyName = col.Value.Name;
+                        pg.DbColumnName = col.Value.Name;
+                        // 长度
+                        pg.Length = col.Value.Length;
+                        // 主键
+                        pg.IsPrimaryKey = col.Value.IsPrimaryKey;
+                        // 自增
+                        pg.IsIdentity = col.Value.IsIdentity;
+                        // 允许空
+                        pg.IsNullable = col.Value.IsNullable;
+                        // 列注释（说明）
+                        pg.Description = col.Value.Comment;
+                        pg.Type = col.Value.CSharpType;
+                        pg.DbType = col.Value.DataType;
+
+                        eg.Properties.Add(pg);
+                        columnIndex++;
+                    }
+                    entities.Add(eg);
+                    groupNo++;
+                }
+            }
+            return entities;
             #endregion
         }
 
@@ -807,19 +895,6 @@ namespace SmartSQL.UserControl.GenCodes
         {
             var mainWindow = (GenCode)Window.GetWindow(this);
             mainWindow?.Close();
-        }
-
-        private void TxtFileName_OnTextChanged(object sender, TextChangedEventArgs e)
-        {
-            var fileName = TxtFileName.Text;
-            if (string.IsNullOrEmpty(fileName))
-            {
-                return;
-            }
-            if (CharacterList.Any(x => fileName.Contains(x)))
-            {
-                Oops.Oh("文档名称不能包含下列任何符号：\\ / : * ? \" < > |");
-            }
         }
 
         /// <summary>

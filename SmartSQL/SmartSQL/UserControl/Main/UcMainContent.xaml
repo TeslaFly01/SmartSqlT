@@ -1,4 +1,4 @@
-﻿<local:BaseUserControl
+<local:BaseUserControl
     x:Class="SmartSQL.UserControl.UcMainContent"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -239,7 +239,7 @@
                                         x:Name="MenuCreateEntity"
                                         VerticalAlignment="Center"
                                         Click="MenuCreateEntity_Click"
-                                        Header="生成实体">
+                                        Header="生成代码">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome
                                                 VerticalAlignment="Center"

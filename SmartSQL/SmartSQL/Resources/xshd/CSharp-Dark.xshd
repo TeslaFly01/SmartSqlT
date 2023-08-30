@@ -1,36 +1,36 @@
-﻿<?xml version="1.0"?>
+<?xml version="1.0"?>
 <SyntaxDefinition name="C#" extensions=".cs" xmlns="http://icsharpcode.net/sharpdevelop/syntaxdefinition/2008">
 	<!-- The named colors 'Comment' and 'String' are used in SharpDevelop to detect if a line is inside a multiline string/comment -->
-	<Color name="Comment" foreground="#84bf6a" exampleText="// comment" />
-	<Color name="String" foreground="#CE9178" exampleText="string text = &quot;Hello, World!&quot;"/>
+	<Color name="Comment" foreground="#008000" exampleText="// comment" />
+	<Color name="String" foreground="#a31515" exampleText="string text = &quot;Hello, World!&quot;"/>
 	<Color name="StringInterpolation" foreground="#b47044" exampleText="string text = $&quot;Hello, {name}!&quot;"/>
 	<Color name="Char" foreground="Magenta" exampleText="char linefeed = '\n';"/>
 	<Color name="Preprocessor" foreground="#84bf6a" exampleText="#region Title" />
 	<Color name="Punctuation" exampleText="a(b.c);" />
 	<!--值类型关键字-->
-	<Color name="ValueTypeKeywords" foreground="#decb6b" exampleText="bool b = true;" />
+	<Color name="ValueTypeKeywords" foreground="#0000ff" exampleText="bool b = true;" />
 	<!--引用类型关键字-->
-	<Color name="ReferenceTypeKeywords" foreground="#decb6b" exampleText="object o;" />
-	<Color name="MethodCall" foreground="#c4c498" fontWeight="bold" exampleText="o.ToString();"/>
+	<Color name="ReferenceTypeKeywords" foreground="#0000ff" exampleText="object o;" />
+	<Color name="MethodCall" foreground="#c4c498" exampleText="o.ToString();"/>
 	<Color name="NumberLiteral" foreground="DarkBlue" exampleText="3.1415f"/>
-	<Color name="ThisOrBaseReference" fontWeight="bold" exampleText="this.Do(); base.Do();"/>
-	<Color name="NullOrValueKeywords" fontWeight="bold" exampleText="if (value == null)"/>
-	<Color name="Keywords" foreground="#f19fff" exampleText="if (a) {} else {}"/>
-	<Color name="GotoKeywords" foreground="#f19fff" exampleText="continue; return null;"/>
-	<Color name="ContextKeywords" foreground="#f19fff" exampleText="var a = from x in y select z;"/>
-	<Color name="ExceptionKeywords" fontWeight="bold" foreground="Teal" exampleText="try {} catch {} finally {}"/>
-	<Color name="CheckedKeyword" fontWeight="bold" foreground="DarkGray" exampleText="checked {}"/>
-	<Color name="UnsafeKeywords" foreground="Olive" exampleText="unsafe { fixed (..) {} }"/>
-	<Color name="OperatorKeywords" fontWeight="bold" foreground="Pink" exampleText="public static implicit operator..."/>
-	<Color name="ParameterModifiers" fontWeight="bold" foreground="DeepPink" exampleText="(ref int a, params int[] b)"/>
-	<Color name="Modifiers" foreground="#f19fff" exampleText="static readonly int a;"/>
-	<Color name="Visibility" foreground="#f19fff" exampleText="public override void ToString();"/>
+	<Color name="ThisOrBaseReference" foreground="#0000ff" exampleText="this.Do(); base.Do();"/>
+	<Color name="NullOrValueKeywords" foreground="#0000ff" exampleText="if (value == null)"/>
+	<Color name="Keywords" foreground="#0000ff" exampleText="if (a) {} else {}"/>
+	<Color name="GotoKeywords" foreground="#0000ff" exampleText="continue; return null;"/>
+	<Color name="ContextKeywords" foreground="#0000ff" exampleText="var a = from x in y select z;"/>
+	<Color name="ExceptionKeywords" foreground="#0000ff" exampleText="try {} catch {} finally {}"/>
+	<Color name="CheckedKeyword" foreground="#0000ff" exampleText="checked {}"/>
+	<Color name="UnsafeKeywords" foreground="#0000ff" exampleText="unsafe { fixed (..) {} }"/>
+	<Color name="OperatorKeywords" foreground="#0000ff" exampleText="public static implicit operator..."/>
+	<Color name="ParameterModifiers" foreground="#0000ff" exampleText="(ref int a, params int[] b)"/>
+	<Color name="Modifiers" foreground="#0000ff" exampleText="static readonly int a;"/>
+	<Color name="Visibility" foreground="#0000ff" exampleText="public override void ToString();"/>
 	<!--命名空间关键字-->
-	<Color name="NamespaceKeywords" foreground="#f19fff" exampleText="namespace A.B { using System; }"/>
-	<Color name="GetSetAddRemove" foreground="#f19fff" exampleText="int Prop { get; set; }"/>
+	<Color name="NamespaceKeywords" foreground="#0000ff" exampleText="namespace A.B { using System; }"/>
+	<Color name="GetSetAddRemove" foreground="#0000ff" exampleText="int Prop { get; set; }"/>
 	<Color name="TrueFalse"  foreground="DarkCyan" exampleText="b = false; a = true;" />
-	<Color name="TypeKeywords"  foreground="#f19fff" exampleText="if (x is int) { a = x as int; type = typeof(int); size = sizeof(int); c = new object(); }"/>
-	<Color name="SemanticKeywords" fontWeight="bold" foreground="DarkCyan" exampleText="if (args == null) throw new ArgumentNullException(nameof(args));" />
+	<Color name="TypeKeywords"  foreground="#0000ff" exampleText="if (x is int) { a = x as int; type = typeof(int); size = sizeof(int); c = new object(); }"/>
+	<Color name="SemanticKeywords" foreground="#0000ff" exampleText="if (args == null) throw new ArgumentNullException(nameof(args));" />
 
 	<Property name="DocCommentMarker" value="///" />
 	

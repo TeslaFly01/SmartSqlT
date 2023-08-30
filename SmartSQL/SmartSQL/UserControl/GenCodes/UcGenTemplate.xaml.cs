@@ -91,17 +91,19 @@ namespace SmartSQL.UserControl.GenCodes
             {
                 return;
             }
+            LoadMenu();
+        }
+
+        private void LoadMenu(string searchName = "")
+        {
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<TemplateInfo>().ToList();
+                var datalist = sqLiteHelper.db.Table<TemplateInfo>().Where(x => x.TempName.Contains(searchName)).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
-                    if (!datalist.Any())
-                    {
-                        NoDataText.Visibility = Visibility.Visible;
-                    }
+                    NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
                 });
             });
         }
@@ -118,11 +120,7 @@ namespace SmartSQL.UserControl.GenCodes
             Task.Run(() =>
             {
                 sqlLiteInstance.db.Delete<TemplateInfo>(selectedTemp.Id);
-                var list = sqlLiteInstance.db.Table<TemplateInfo>().ToList();
-                Dispatcher.Invoke(() =>
-                {
-                    DataList = list;
-                });
+                LoadMenu();
             });
             #endregion
         }
@@ -134,34 +132,47 @@ namespace SmartSQL.UserControl.GenCodes
         /// <param name="e"></param>
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
+            var tempId = Convert.ToInt32(HidId.Text);
             var tempName = TextTempName.Text.Trim();
             var tempContent = TextContent.Text.Trim();
             var sqLiteHelper = new SQLiteHelper();
             if (string.IsNullOrEmpty(tempName))
             {
-                Oops.God("模板名称为空");
+                Oops.Oh("模板名称为空");
                 return;
             }
             if (string.IsNullOrEmpty(tempContent))
             {
-                Oops.God("模板内容为空");
+                Oops.Oh("模板内容为空");
                 return;
             }
-            if (sqLiteHelper.IsAny<TemplateInfo>(x => x.TempName == tempName))
+            if (sqLiteHelper.IsAny<TemplateInfo>(x => x.Id != tempId && x.TempName == tempName))
             {
-                Oops.God("模板名称出现重复");
+                Oops.Oh("模板名称出现重复");
                 return;
             }
             var temp = new TemplateInfo
             {
+                Id = tempId,
                 TempName = tempName,
                 Content = tempContent
             };
-            sqLiteHelper.db.Insert(temp);
-            var list = sqLiteHelper.db.Table<TemplateInfo>().ToList();
-            DataList = list;
-            TextTempName.Text = string.Empty;
-            TextContent.Text = string.Empty;
+            var isSuccess = false;
+            if (tempId > 0)
+            {
+                isSuccess = sqLiteHelper.db.Update(temp) > 0;
+            }
+            else
+            {
+                isSuccess = sqLiteHelper.db.Insert(temp) > 0;
+                TextTempName.Text = string.Empty;
+                TextContent.Text = string.Empty;
+            }
+            if (isSuccess)
+            {
+                Oops.Success("保存成功");
+            }
+            LoadMenu();
         }
 
         /// <summary>
@@ -173,6 +184,31 @@ namespace SmartSQL.UserControl.GenCodes
         {
             var mainWindow = (GenCode)System.Windows.Window.GetWindow(this);
             mainWindow?.Close();
+        }
+
+        private void ListTemplate_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var listBox = (ListBox)sender;
+            if (listBox.SelectedItems.Count > 0)
+            {
+                var tempInfo = (TemplateInfo)listBox.SelectedItems[0];
+                HidId.Text = tempInfo.Id.ToString();
+                TextTempName.Text = tempInfo.TempName;
+                TextContent.Text = tempInfo.Content;
+            }
+        }
+
+        private void SearchMenu_OnTextChanged(object sender, TextChangedEventArgs e)
+        {
+            var searchName = SearchMenu.Text.Trim();
+            LoadMenu(searchName);
+        }
+
+        private void BtnAdd_OnClick(object sender, RoutedEventArgs e)
+        {
+            HidId.Text = "0";
+            TextTempName.Text = "";
+            TextContent.Text = "";
         }
     }
 }
