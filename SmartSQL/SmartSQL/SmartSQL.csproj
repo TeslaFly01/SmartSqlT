@@ -863,6 +863,7 @@
     <Resource Include="Resources\Img\icon\icon_tag.png" />
     <Resource Include="Resources\Img\icon\icon_alipay.png" />
     <Resource Include="Resources\Img\icon_tag.png" />
+    <Resource Include="Resources\Img\icon_gencode.png" />
     <Content Include="Resources\Img\Readme\About.png" />
     <Content Include="Resources\Img\Readme\Column.png" />
     <Content Include="Resources\Img\Readme\Connect.png" />
