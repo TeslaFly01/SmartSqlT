@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -1387,7 +1387,7 @@ namespace SmartSQL.UserControl
                 tags.Owner = mainWindow;
                 tags.ChangeRefreshEvent += ChangeRefreshMenuEvent;
                 tags.ShowDialog();
-            } 
+            }
             #endregion
         }
 
@@ -1419,7 +1419,7 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuCopyName_OnClick(object sender, RoutedEventArgs e)
         {
-            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" )
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0")
             {
                 return;
             }
@@ -1533,7 +1533,7 @@ namespace SmartSQL.UserControl
             exportDoc.SelectedConnection = SelectedConnection;
             exportDoc.SelectedDataBase = selectDatabase;
             exportDoc.ExportData = exportData;
-            exportDoc.ShowDialog(); 
+            exportDoc.ShowDialog();
             #endregion
         }
 
@@ -1565,32 +1565,46 @@ namespace SmartSQL.UserControl
         }
 
         /// <summary>
-        /// 生成实体
+        /// 生成代码
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void MenuCreateEntity_Click(object sender, RoutedEventArgs e)
+        private void MenuGenCode_Click(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            string baseDirectoryPath = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EntityTemp");
-            if (!Directory.Exists(baseDirectoryPath))
+            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObject))
             {
-                Directory.CreateDirectory(baseDirectoryPath);
-            }
-            if (!(TreeViewTables.SelectedItem is TreeNodeItem selectedObjects) || selectedObjects.ObejcetId == "0" || selectedObjects.TextColor.Equals("Red"))
-            {
-                Oops.Oh("请选择需要生成实体的表");
                 return;
             }
+            var exportData = selectedObject.Children.Any()
+                ? selectedObject.Children
+                : new List<TreeNodeItem> { selectedObject };
+            if (selectedObject.Type == ObjType.Group || selectedObject.Type == ObjType.Tag)
+            {
+                if (selectedObject.ChildrenCount < 1)
+                {
+                    var textName = selectedObject.Type == ObjType.Group ? "分组" : "标签";
+                    Oops.Oh($"该{textName}无数据，无法导出");
+                    return;
+                }
+                exportData = new List<TreeNodeItem>();
+                selectedObject.Children.ForEach(c =>
+                {
+                    c.Children.ForEach(cz =>
+                    {
+                        exportData.Add(cz);
+                    });
+                });
+            }
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-
-            var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.SelectedDbConnectString(selectDatabase.DbName));
-            var TableColumns = exporter.GetColumnInfoById(selectedObjects.ObejcetId);
-            var list = TableColumns.Values.ToList();
-            var filePath = string.Format($"{baseDirectoryPath}\\{selectedObjects.Name}.cs");
-            StrUtil.CreateClass(filePath, selectedObjects.Name, list);
-            Oops.Success("实体生成成功");
-            Process.Start(baseDirectoryPath);
+            var mainWindow = Window.GetWindow(this);
+            var gc = new GenCode();
+            gc.Owner = mainWindow;
+            gc.MenuData = MenuData;
+            gc.SelectedConnection = SelectedConnection;
+            gc.SelectedDataBase = selectDatabase;
+            gc.ExportData = exportData;
+            gc.ShowDialog();
             #endregion
         }
 
@@ -1630,20 +1644,14 @@ namespace SmartSQL.UserControl
                     MenuSetGroup.Visibility = Visibility.Collapsed;
                     MenuSetTag.Visibility = Visibility.Collapsed;
                     MenuCreateSQL.Visibility = Visibility.Collapsed;
-                    MenuCreateEntity.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     MenuCopyName.Visibility = Visibility.Visible;
                     MenuSetGroup.Visibility = Visibility.Visible;
                     MenuSetTag.Visibility = Visibility.Visible;
-                    MenuCreateSQL.Visibility = Visibility.Visible;
-                    MenuCreateEntity.Visibility = Visibility.Visible;
-                    if (selectedNode.Type == ObjType.Proc)
-                    {
-                        MenuCreateSQL.Visibility = Visibility.Collapsed;
-                        MenuCreateEntity.Visibility = Visibility.Collapsed;
-                    }
+                    MenuCreateSQL.Visibility = selectedNode.Type == ObjType.Proc ? Visibility.Collapsed : Visibility.Visible;
+                    MenuGenCode.Visibility = selectedNode.Type == ObjType.Proc ? Visibility.Collapsed : Visibility.Visible;
                 }
                 treeViewItem.Focus();
                 e.Handled = true;

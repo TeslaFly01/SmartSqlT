@@ -132,8 +132,8 @@
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
                                 FontSize="15"
-                                Foreground="#438df3"
-                                Icon="Codepen" />
+                                Foreground="#1890ff"
+                                Icon="Cube" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>

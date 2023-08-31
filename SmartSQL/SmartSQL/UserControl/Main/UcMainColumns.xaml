@@ -1,4 +1,4 @@
-﻿<local:BaseUserControl
+<local:BaseUserControl
     x:Class="SmartSQL.UserControl.UcMainColumns"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -161,11 +161,11 @@
                                     Cursor="Hand"
                                     Style="{StaticResource ButtonInfo}" />
                                 <Button
-                                    x:Name="BtnCreateEntity"
+                                    x:Name="BtnGenCode"
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource EntityGeometry}"
-                                    Click="BtnCreateEntity_OnClick"
-                                    Content="生成实体"
+                                    Click="BtnGenCode_OnClick"
+                                    Content="生成代码"
                                     Cursor="Hand"
                                     Style="{StaticResource ButtonPrimary}" />
                             </hc:UniformSpacingPanel>

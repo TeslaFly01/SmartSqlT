@@ -121,6 +121,7 @@ namespace SmartSQL.UserControl
                 {
                     MainColumns.Visibility = Visibility.Visible;
                     MainObjects.Visibility = Visibility.Collapsed;
+                    MainColumns.MenuData = MenuData;
                     MainColumns.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
                     MainColumns.SelectedConnection = SelectedConnection;
                     MainColumns.SelectedDataBase = SelectedDataBase;
@@ -148,6 +149,7 @@ namespace SmartSQL.UserControl
                 {
                     MainColumn.Visibility = Visibility.Visible;
                     MainObject.Visibility = Visibility.Collapsed;
+                    MainColumn.MenuData = MenuData;
                     MainColumn.ObjChangeRefreshEvent += ObjChangeRefreshEvent;
                     MainColumn.SelectedConnection = SelectedConnection;
                     MainColumn.SelectedDataBase = SelectedDataBase;

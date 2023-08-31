@@ -236,9 +236,9 @@
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
-                                        x:Name="MenuCreateEntity"
+                                        x:Name="MenuGenCode"
                                         VerticalAlignment="Center"
-                                        Click="MenuCreateEntity_Click"
+                                        Click="MenuGenCode_Click"
                                         Header="生成代码">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome

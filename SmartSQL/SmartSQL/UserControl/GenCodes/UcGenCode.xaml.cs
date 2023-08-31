@@ -806,6 +806,7 @@ namespace SmartSQL.UserControl.GenCodes
                     }
                 });
             });
+            Oops.Success("生成成功");
             #endregion
         }
 

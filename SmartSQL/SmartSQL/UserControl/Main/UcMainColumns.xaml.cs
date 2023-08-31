@@ -50,6 +50,9 @@ namespace SmartSQL.UserControl
         public static readonly DependencyProperty ObjectColumnsProperty = DependencyProperty.Register(
             "ObjectColumns", typeof(List<Column>), typeof(UcMainColumns), new PropertyMetadata(default(List<Column>)));
 
+        public static readonly DependencyProperty MenuDataProperty = DependencyProperty.Register(
+            "MenuData", typeof(Model), typeof(UcMainColumns), new PropertyMetadata(default(Model)));
+
         /// <summary>
         /// 当前选中对象
         /// </summary>
@@ -95,6 +98,15 @@ namespace SmartSQL.UserControl
                 SetValue(ObjectColumnsProperty, value);
                 OnPropertyChanged(nameof(ObjectColumns));
             }
+        }
+
+        /// <summary>
+        /// 菜单数据
+        /// </summary>
+        public Model MenuData
+        {
+            get => (Model)GetValue(MenuDataProperty);
+            set => SetValue(MenuDataProperty, value);
         }
         #endregion
 
@@ -535,23 +547,24 @@ namespace SmartSQL.UserControl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnCreateEntity_OnClick(object sender, RoutedEventArgs e)
+        private void BtnGenCode_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            string baseDirectoryPath = PathF.Combine(AppDomain.CurrentDomain.BaseDirectory, "EntityTemp");
-            if (!Directory.Exists(baseDirectoryPath))
-            {
-                Directory.CreateDirectory(baseDirectoryPath);
-            }
+            //选中的表对象
             if (SelectedObject == null || SelectedObject.ObejcetId.Equals("0") || SelectedObject.TextColor.Equals("Red"))
             {
-                Oops.Oh("请选择需要生成实体的表");
+                Oops.Oh("请选择对应的表/视图对象");
                 return;
             }
-            var filePath = string.Format($"{baseDirectoryPath}\\{SelectedObject.Name}.cs");
-            StrUtil.CreateClass(filePath, SelectedObject.Name, SourceColunmData);
-            Oops.Success("实体生成成功");
-            Process.Start(baseDirectoryPath);
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            var gc = new GenCode();
+            gc.Owner = mainWindow;
+            gc.MenuData = MenuData;
+            gc.SelectedConnection = SelectedConnection;
+            gc.SelectedDataBase = SelectedDataBase;
+            gc.ExportData = new List<TreeNodeItem>() { SelectedObject }; ;
+            gc.ShowDialog();
+
             #endregion
         }
 
