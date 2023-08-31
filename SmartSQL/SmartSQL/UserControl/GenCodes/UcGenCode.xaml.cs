@@ -129,7 +129,7 @@ namespace SmartSQL.UserControl.GenCodes
         {
             InitializeComponent();
             DataContext = this;
-            TxtPath.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            TextPath.Text = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -165,7 +165,7 @@ namespace SmartSQL.UserControl.GenCodes
             CommonFileDialogResult result = dialog.ShowDialog();
             if (result == CommonFileDialogResult.Ok)
             {
-                TxtPath.Text = dialog.FileName;
+                TextPath.Text = dialog.FileName;
             }
         }
 
@@ -783,6 +783,12 @@ namespace SmartSQL.UserControl.GenCodes
                 Oops.Oh("请选择需要生成的对象");
                 return;
             }
+            var pathDir = TextPath.Text.Trim();
+            var dir = new DirectoryInfo(pathDir);
+            if (!dir.Exists)
+            {
+                dir.Create();
+            }
             var sqLiteHelper = new SQLiteHelper();
             var templist = sqLiteHelper.db.Table<TemplateInfo>().ToList();
             //对象列表
@@ -792,6 +798,12 @@ namespace SmartSQL.UserControl.GenCodes
                 tables.ForEach(tb =>
                 {
                     var content = temp.Content.RazorRender(tb);
+                    //创建服务
+                    using (var fileStream = new FileStream($"{pathDir}\\{string.Format(temp.FileNameFormat, tb.ClassName)}{temp.FileExt}", FileMode.Create))
+                    {
+                        byte[] data = System.Text.Encoding.UTF8.GetBytes(content);//使用ASCII码将字符串转换为字节数据，所以一个字符占用一个字节
+                        fileStream.Write(data, 0, data.Length);
+                    }
                 });
             });
             #endregion
@@ -854,7 +866,7 @@ namespace SmartSQL.UserControl.GenCodes
                     eg.TableName = group.Name;
                     eg.Description = group.Comment;
                     eg.ClassName = group.Name;
-                    
+
                     var columns = dbInstance.GetColumnInfoById(group.ObejcetId);
                     var columnIndex = 1;
                     foreach (var col in columns)

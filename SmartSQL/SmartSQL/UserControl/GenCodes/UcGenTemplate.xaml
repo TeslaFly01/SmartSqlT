@@ -206,7 +206,7 @@
                                 Height="30"
                                 Margin="65,0,0,0"
                                 VerticalAlignment="Top"
-                                hc:InfoElement.Placeholder="名称格式，例如：{0}Service"
+                                hc:InfoElement.Placeholder="名称格式，例如：{0}Service，占位符{0}为类名"
                                 Background="#F4F5F7"
                                 BorderThickness="0"
                                 ShowClearButton="True" />
@@ -255,42 +255,45 @@
                                                 Width="350"
                                                 Height="320"
                                                 Background="#ffffff"
+                                                BorderBrush="#3e3e3e"
                                                 BorderThickness="1"
                                                 CornerRadius="8">
                                                 <StackPanel Margin="20">
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock>命名空间</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.NameSpace</TextBlock>
+                                                        <TextBlock FontWeight="Bold">类参数：</TextBlock>
                                                     </StackPanel>
 
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>类名</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.ClassName</TextBlock>
+                                                        <TextBlock Margin="56,0,0,0">@Model.ClassName</TextBlock>
                                                     </StackPanel>
 
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>表名</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.TableName</TextBlock>
+                                                        <TextBlock Margin="56,0,0,0">@Model.TableName</TextBlock>
                                                     </StackPanel>
 
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>表描述</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.Description</TextBlock>
+                                                        <TextBlock Margin="44,0,0,0">@Model.Description</TextBlock>
                                                     </StackPanel>
 
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>列集合</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.Properties（循环使用）</TextBlock>
+                                                        <TextBlock Margin="44,0,0,0">@Model.Properties（循环使用）</TextBlock>
                                                     </StackPanel>
 
+                                                    <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
+                                                        <TextBlock FontWeight="Bold">属性参数：</TextBlock>
+                                                    </StackPanel>
 
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>类中属性名</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.Properties[i].PropertyName</TextBlock>
+                                                        <TextBlock Margin="19,0,0,0">@Model.Properties[i].PropertyName</TextBlock>
                                                     </StackPanel>
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>类中属性类型</TextBlock>
-                                                        <TextBlock Margin="30,0,0,0">@Model.Properties[i].Type</TextBlock>
+                                                        <TextBlock Margin="7,0,0,0">@Model.Properties[i].Type</TextBlock>
                                                     </StackPanel>
                                                     <StackPanel Margin="0,10,0,0" Orientation="Horizontal">
                                                         <TextBlock>类中备注</TextBlock>

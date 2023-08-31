@@ -135,10 +135,22 @@ namespace SmartSQL.UserControl.GenCodes
             var tempId = Convert.ToInt32(HidId.Text);
             var tempName = TextTempName.Text.Trim();
             var tempContent = TextContent.Text.Trim();
+            var tempFileFormat = TextFileFormat.Text.Trim();
+            var tempFileExt = TextFileExt.Text.Trim();
             var sqLiteHelper = new SQLiteHelper();
             if (string.IsNullOrEmpty(tempName))
             {
                 Oops.Oh("模板名称为空");
+                return;
+            }
+            if (!string.IsNullOrEmpty(tempFileFormat) && !tempFileFormat.Contains("{0}"))
+            {
+                Oops.Oh("名称格式有误，必须包含占位符：{0}");
+                return;
+            }
+            if (string.IsNullOrEmpty(tempFileExt))
+            {
+                Oops.Oh("文件后缀为空");
                 return;
             }
             if (string.IsNullOrEmpty(tempContent))
@@ -155,7 +167,10 @@ namespace SmartSQL.UserControl.GenCodes
             {
                 Id = tempId,
                 TempName = tempName,
-                Content = tempContent
+                FileNameFormat = tempFileFormat ?? "{0}",
+                FileExt = tempFileExt,
+                Content = tempContent,
+                ChangeTime = DateTime.Now
             };
             var isSuccess = false;
             if (tempId > 0)
@@ -194,6 +209,8 @@ namespace SmartSQL.UserControl.GenCodes
                 var tempInfo = (TemplateInfo)listBox.SelectedItems[0];
                 HidId.Text = tempInfo.Id.ToString();
                 TextTempName.Text = tempInfo.TempName;
+                TextFileFormat.Text = tempInfo.FileNameFormat;
+                TextFileExt.Text = tempInfo.FileExt;
                 TextContent.Text = tempInfo.Content;
             }
         }
@@ -209,6 +226,8 @@ namespace SmartSQL.UserControl.GenCodes
             HidId.Text = "0";
             TextTempName.Text = "";
             TextContent.Text = "";
+            TextFileFormat.Text = "";
+            TextFileExt.Text = "";
         }
     }
 }

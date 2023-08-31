@@ -171,7 +171,7 @@
                                 VerticalAlignment="Top"
                                 Text="保存路径" />
                             <TextBox
-                                Name="TxtPath"
+                                Name="TextPath"
                                 Margin="65,0,70,0"
                                 VerticalAlignment="Top"
                                 Background="#F4F5F7"
@@ -194,10 +194,12 @@
                                 Margin="0,15,0,0"
                                 VerticalAlignment="Top"
                                 Text="生成模板" />
-                            <Grid
+                            <Border
                                 Height="200"
                                 Margin="65,3,0,8"
-                                VerticalAlignment="Top">
+                                VerticalAlignment="Top"
+                                Background="#f4f5f7"
+                                CornerRadius="6">
                                 <ScrollViewer VerticalScrollBarVisibility="Auto">
                                     <WrapPanel Name="MaterialTabItem" Orientation="Horizontal">
                                         <ItemsControl Name="CheckBoxGroups" ItemsSource="{Binding TagList, Mode=TwoWay}">
@@ -209,7 +211,7 @@
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <Border
-                                                        Margin="0,5,5,0"
+                                                        Margin="5,5,5,0"
                                                         HorizontalAlignment="Stretch"
                                                         Background="White"
                                                         CornerRadius="6">
@@ -224,7 +226,7 @@
                                         </ItemsControl>
                                     </WrapPanel>
                                 </ScrollViewer>
-                            </Grid>
+                            </Border>
                         </Grid>
                     </Grid>
                     <!--  导出参数设置  -->

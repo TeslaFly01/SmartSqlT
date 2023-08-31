@@ -173,7 +173,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
-                                FontSize="15"
+                                FontSize="14"
                                 Foreground="#15c8c4"
                                 Icon="Tags" />
                         </MenuItem.Icon>
