@@ -954,12 +954,12 @@ namespace SmartSQL.Views
             var exportData = TreeViewData;
             var floderPath = TxtPath.Text;
             var doctype = DocumentType();
-            var docTypeEnum = (DocType)(Enum.Parse(typeof(DocType), doctype));
             if (string.IsNullOrEmpty(doctype))
             {
                 Oops.Oh("请选择输出文档类型");
                 return;
             }
+            var docTypeEnum = (DocType)(Enum.Parse(typeof(DocType), doctype));
             var checkAny = exportData.Count(x => x.Type == "Type" && x.IsChecked == false);
             if (checkAny == 3)
             {

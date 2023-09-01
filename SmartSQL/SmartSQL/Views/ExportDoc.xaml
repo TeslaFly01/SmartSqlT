@@ -22,7 +22,7 @@
     mc:Ignorable="d">
     <Window.Resources>
         <Style x:Key="ArrowToggleStyle1" TargetType="ToggleButton">
-            <Setter Property="Background" Value="WhiteSmoke" />
+            <Setter Property="Background" Value="White" />
             <Setter Property="FontWeight" Value="Bold" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
@@ -45,7 +45,7 @@
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Bottom"
                                     Data="{StaticResource OkGeometry}"
-                                    Fill="WhiteSmoke"
+                                    Fill="White"
                                     Stretch="Uniform"
                                     Visibility="Collapsed" />
                                 <svgc:SvgViewbox
@@ -268,22 +268,23 @@
             <Grid>
                 <!--  导出参数设置  -->
                 <Grid Margin="0,0,0,35">
-                    <Grid Margin="20,30,20,20">
+                    <Grid Margin="10,10,10,20">
                         <TextBlock
-                            Margin="0,25,0,0"
+                            Margin="0,8,0,0"
                             VerticalAlignment="Top"
                             Text="文档名称" />
                         <hc:TextBox
                             Name="TxtFileName"
                             Height="30"
-                            Margin="85,18,67,0"
+                            Margin="65,0,0,0"
                             VerticalAlignment="Top"
                             Background="#F4F5F7"
                             BorderThickness="0"
                             ShowClearButton="True"
                             TextChanged="TxtFileName_OnTextChanged" />
                     </Grid>
-                    <Grid Margin="20,100,20,20">
+
+                    <Grid Margin="10,46,10,20">
                         <TextBlock
                             Margin="0,12,0,0"
                             VerticalAlignment="Top"
@@ -291,7 +292,7 @@
                         <fa:FontAwesome
                             Width="15"
                             Height="15"
-                            Margin="52,12,0,0"
+                            Margin="18,30,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
                             FontSize="15"
@@ -304,101 +305,98 @@
                                     PlacementType="Right" />
                             </hc:Poptip.Instance>
                         </fa:FontAwesome>
-                        <WrapPanel Name="ToggleWarpPanel" Margin="85,5,5,5">
-                            <ToggleButton
-                                Name="Chm"
-                                Width="80"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="CHM"
-                                IsChecked="True"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Excel"
-                                Width="80"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="EXCEL"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Word"
-                                Width="80"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="WORD"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Pdf"
-                                Width="80"
-                                Margin="10,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="PDF"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Html"
-                                Width="80"
-                                Margin="0,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="HTML"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Xml"
-                                Width="80"
-                                Margin="10,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="XML"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="Json"
-                                Width="80"
-                                Margin="10,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="JSON"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                            <ToggleButton
-                                Name="MD"
-                                Width="80"
-                                Margin="10,10,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Top"
-                                Checked="Toggle_OnChecked"
-                                Content="MD"
-                                Style="{StaticResource ArrowToggleStyle1}" />
-                        </WrapPanel>
+                        <Border
+                            Height="130"
+                            Margin="65,3,0,8"
+                            VerticalAlignment="Top"
+                            Background="#f4f5f7"
+                            CornerRadius="6">
+                            <WrapPanel Name="ToggleWarpPanel" Margin="10,10,5,5">
+                                <ToggleButton
+                                    Name="Chm"
+                                    Width="80"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="CHM"
+                                    IsChecked="True"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Excel"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="EXCEL"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Word"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="WORD"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Pdf"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="PDF"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Html"
+                                    Width="80"
+                                    Margin="10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="HTML"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Xml"
+                                    Width="80"
+                                    Margin="0,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="XML"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="Json"
+                                    Width="80"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="JSON"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                                <ToggleButton
+                                    Name="MD"
+                                    Width="80"
+                                    Margin="10,10,0,0"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top"
+                                    Checked="Toggle_OnChecked"
+                                    Content="MD"
+                                    Style="{StaticResource ArrowToggleStyle1}" />
+                            </WrapPanel>
+
+                        </Border>
                     </Grid>
-                    <!--<Grid
-                        x:Name="GridTipMsg"
-                        Margin="105,200,20,20"
-                        Visibility="Visible">
-                        <hc:TransitioningContentControl VerticalAlignment="Top" TransitionMode="Fade">
-                            <StackPanel>
-                                <Border Margin="0,0,10,10" Style="{StaticResource BorderTipWarning}">
-                                    <TextBlock x:Name="TextDocTipMsg" Text="CHM文档类型支持导出表、视图、存储过程" />
-                                </Border>
-                            </StackPanel>
-                        </hc:TransitioningContentControl>
-                    </Grid>-->
-                    <Grid Margin="20,220,20,20">
+
+                    <Grid Margin="10,145,10,20">
                         <TextBlock
                             Margin="0,52,0,0"
                             VerticalAlignment="Top"
-                            Text="导出路径" />
+                            Text="输出路径" />
                         <TextBox
                             Name="TxtPath"
-                            Margin="85,45,70,0"
+                            Margin="65,45,67,0"
                             VerticalAlignment="Top"
                             Background="#F4F5F7"
                             BorderThickness="0" />
@@ -408,7 +406,7 @@
                             Margin="0,45,0,0"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Background="#F4F5F7"
+                            Background="#f0f0f0"
                             BorderThickness="0"
                             Click="BtnLookPath_OnClick"
                             Content="浏览"

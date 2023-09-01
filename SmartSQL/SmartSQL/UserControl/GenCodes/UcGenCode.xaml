@@ -172,7 +172,7 @@
                                 Text="保存路径" />
                             <TextBox
                                 Name="TextPath"
-                                Margin="65,0,70,0"
+                                Margin="65,0,68,0"
                                 VerticalAlignment="Top"
                                 Background="#F4F5F7"
                                 BorderThickness="0" />
@@ -182,14 +182,14 @@
                                 Margin="0,0,0,0"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Top"
-                                Background="#F4F5F7"
+                                Background="#f0f0f0"
                                 BorderThickness="0"
                                 Click="BtnLookPath_OnClick"
                                 Content="浏览"
                                 Cursor="Hand" />
                         </Grid>
 
-                        <Grid Margin="10,50,10,20">
+                        <Grid Margin="10,46,10,20">
                             <TextBlock
                                 Margin="0,15,0,0"
                                 VerticalAlignment="Top"
