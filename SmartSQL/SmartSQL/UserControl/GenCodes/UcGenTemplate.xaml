@@ -128,6 +128,14 @@
                                             Foreground="#ccc6cf"
                                             Text="C#" />
                                     </StackPanel>
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        FontSize="10"
+                                        FontWeight="Normal"
+                                        Foreground="#ccc6cf"
+                                        Text="{Binding ChangeTime, StringFormat='yyyy-MM-dd'}" />
                                 </Grid>
                             </DataTemplate>
                         </ListBox.ItemTemplate>
