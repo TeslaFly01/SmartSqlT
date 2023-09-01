@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -77,6 +77,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="tables"></param>
         private void CreateLogSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, List<TableDto> tables)
         {
+            #region MyRegion
             OfficeOpenXml.ExcelWorksheet overviewTbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int row = 1;
             overviewTbWorksheet.Cells[row, 1, row, 5].Merge = true;
@@ -117,7 +118,8 @@ namespace SmartSQL.DocUtils.DBDoc
             overviewTbWorksheet.Column(2).Width = 25;
             overviewTbWorksheet.Column(3).Width = 50;
             overviewTbWorksheet.Column(4).Width = 25;
-            overviewTbWorksheet.Column(5).Width = 25;
+            overviewTbWorksheet.Column(5).Width = 25; 
+            #endregion
         }
 
         /// <summary>
@@ -128,6 +130,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="tables"></param>
         private void CreateOverviewSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
         {
+            #region MyRegion
             OfficeOpenXml.ExcelWorksheet overviewTbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int row = 1;
             overviewTbWorksheet.Cells[row, 1, row, 3].Value = dto.DocTitle;
@@ -171,7 +174,8 @@ namespace SmartSQL.DocUtils.DBDoc
             overviewTbWorksheet.Cells[1, 1, row - 1, 3].Style.Border.Right.Style = ExcelBorderStyle.Thin;
             overviewTbWorksheet.Column(1).Width = 10;
             overviewTbWorksheet.Column(2).Width = 50;
-            overviewTbWorksheet.Column(3).Width = 50;
+            overviewTbWorksheet.Column(3).Width = 50; 
+            #endregion
         }
 
         /// <summary>
@@ -182,6 +186,7 @@ namespace SmartSQL.DocUtils.DBDoc
         /// <param name="tables"></param>
         private void CreateTableSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
         {
+            #region MyRegion
             OfficeOpenXml.ExcelWorksheet tbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
             int rowNum = 1, fromRow = 0, count = 0; // 行号计数器
                                                     //  循环数据库表名
@@ -308,7 +313,9 @@ namespace SmartSQL.DocUtils.DBDoc
             }
             //  设置表格样式
             tbWorksheet.Cells.Style.WrapText = true; // 自动换行
-            tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小
+            tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小 
+            #endregion
         }
+
     }
 }

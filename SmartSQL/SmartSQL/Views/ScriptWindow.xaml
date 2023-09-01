@@ -1,4 +1,4 @@
-﻿<hc:Window
+<hc:Window
     x:Class="SmartSQL.Views.ScriptWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -51,7 +51,7 @@
             Margin="0,0,10,10"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
-            hc:IconElement.Geometry="{StaticResource CloseGeometry}"
+            BorderBrush="#f0f0f0"
             Click="BtnClose_OnClick"
             Content="关闭"
             Cursor="Hand" />
