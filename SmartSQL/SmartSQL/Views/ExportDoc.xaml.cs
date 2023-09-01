@@ -142,7 +142,7 @@ namespace SmartSQL.Views
             {
                 fName = fName.Replace(":", "_");
             }
-            TxtFileName.Text = fName + "数据库设计文档";
+            TxtFileName.Text = $"{fName}数据库设计文档{DateTime.Now:yyyyMMddHHmmss}";
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.DbMasterConnectString, SelectedDataBase.DbName);
             var list = dbInstance.GetDatabases(SelectedDataBase.DbName);
             SelectDatabase.ItemsSource = list;

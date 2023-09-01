@@ -87,7 +87,8 @@ namespace SmartSQL.DocUtils.DBDoc
 
             // 数据库表目录 - 书签
             CreateBookmark(builder, ParagraphAlignment.Center, OutlineLevel.Level2, "", 13, asposeBookmarkOverview, AppConst.TABLE_CHAPTER_NAME);
-            CreateOverviewTable(builder, tables);
+            builder.InsertTableOfContents("\\o \"1-3\" \\h \\z \\u");
+            //CreateOverviewTable(builder, tables);
             builder.InsertBreak(BreakType.PageBreak);
 
             // 数据库表结构 - 书签
@@ -233,6 +234,8 @@ namespace SmartSQL.DocUtils.DBDoc
             }
             // 生成页码
             AutoGenPageNum(doc, builder);
+            // 更新目录
+            doc.UpdateFields();
             // 添加水印
             //InsertWatermarkText(doc, "SmartSQL");
             // 保存文档
