@@ -317,5 +317,145 @@ namespace SmartSQL.DocUtils.DBDoc
             #endregion
         }
 
+
+
+        /// <summary>
+        /// 创建表结构sheet
+        /// </summary>
+        /// <param name="epck"></param>
+        /// <param name="sheetName"></param>
+        /// <param name="tables"></param>
+        private void CreateTableTabSheet(OfficeOpenXml.ExcelPackage epck, string sheetName, DBDto dto, List<TableDto> tables)
+        {
+            #region MyRegion
+            OfficeOpenXml.ExcelWorksheet tbWorksheet = epck.Workbook.Worksheets.Add(sheetName);
+            int rowNum = 1, fromRow = 0, count = 0; // 行号计数器
+                                                    //  循环数据库表名
+            foreach (var table in tables)   
+            {
+                var lstName = new List<string>
+                {
+                    "序号","列名","数据类型","长度","主键","自增","允许空","默认值","列说明"
+                };
+
+                //oracle不显示 列是否自增
+                if (table.DBType.StartsWith("Oracle"))
+                {
+                    lstName.Remove("自增");
+                }
+                var spColCount = lstName.Count;
+
+                // 表名称
+                var comment = table.TableName + " " + (!string.IsNullOrWhiteSpace(table.Comment) ? table.Comment : "");
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
+                tbWorksheet.Cells[rowNum, 1].Value = comment;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Size = 10;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.VerticalAlignment = ExcelVerticalAlignment.Center;
+                tbWorksheet.Row(rowNum).Height = 16;
+                var colFromHex = System.Drawing.ColorTranslator.FromHtml("#f2f2f2");
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Fill.BackgroundColor.SetColor(colFromHex);
+
+                //  注意：保存起始行号
+                fromRow = rowNum;
+
+                rowNum++; // 行号+1
+
+                // tbWorksheet.Cells[int FromRow, int FromCol, int ToRow, int ToCol]
+                //  列标题字体为粗体
+                tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Font.Bold = true;
+
+                //  添加列标题
+                for (int j = 0; j < lstName.Count; j++)
+                {
+                    tbWorksheet.Cells[rowNum, j + 1].Value = lstName[j];
+                    tbWorksheet.Cells[rowNum, j + 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                }
+
+                rowNum++; // 行号+1
+
+                //  添加数据行,遍历数据库表字段
+                foreach (var column in table.Columns)
+                {
+                    tbWorksheet.Cells[rowNum, 1].Value = column.ColumnOrder;
+                    tbWorksheet.Cells[rowNum, 1].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    tbWorksheet.Cells[rowNum, 2].Value = column.ColumnName;
+                    tbWorksheet.Cells[rowNum, 2].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                    tbWorksheet.Cells[rowNum, 3].Value = column.ColumnTypeName;
+                    tbWorksheet.Cells[rowNum, 4].Value = column.Length;
+                    tbWorksheet.Cells[rowNum, 4].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    tbWorksheet.Cells[rowNum, 5].Value = column.IsPK;
+                    tbWorksheet.Cells[rowNum, 5].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+
+                    //oracle不显示 列是否自增
+                    if (table.DBType.StartsWith("Oracle"))
+                    {
+                        tbWorksheet.Cells[rowNum, 6].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 7].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                    }
+                    else
+                    {
+                        tbWorksheet.Cells[rowNum, 6].Value = column.IsIdentity;
+                        tbWorksheet.Cells[rowNum, 7].Value = column.CanNull;
+                        tbWorksheet.Cells[rowNum, 8].Value = column.DefaultVal;
+                        tbWorksheet.Cells[rowNum, 8].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                        tbWorksheet.Cells[rowNum, 9].Value = column.Comment;
+                        tbWorksheet.Cells[rowNum, 9].Style.HorizontalAlignment = ExcelHorizontalAlignment.Left;
+                    }
+                    tbWorksheet.Cells[rowNum, 6].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    tbWorksheet.Cells[rowNum, 7].Style.HorizontalAlignment = ExcelHorizontalAlignment.Center;
+                    rowNum++; // 行号+1
+                }
+                //  上下左右边框线
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Top.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                tbWorksheet.Cells[fromRow, 1, rowNum - 1, spColCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                //  处理空白行，分割用
+                if (count < tables.Count - 1)
+                {
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                    tbWorksheet.Cells[rowNum, 1, rowNum, spColCount].Merge = true;
+                }
+                rowNum++; // 行号+1
+                count++; // 计数器+1
+                // 更新进度
+                base.OnProgress(new ChangeRefreshProgressArgs
+                {
+                    BuildNum = count,
+                    TotalNum = tables.Count,
+                    BuildName = table.TableName
+                });
+            }
+
+            tbWorksheet.Column(1).Width = 10;
+            tbWorksheet.Column(2).Width = 35;
+            tbWorksheet.Column(3).Width = 15;
+            tbWorksheet.Column(4).Width = 10;
+            tbWorksheet.Column(5).Width = 10;
+            //oracle不显示 列是否自增
+            if (dto.DBType.StartsWith("Oracle"))
+            {
+                tbWorksheet.Column(6).Width = 10;
+                tbWorksheet.Column(7).Width = 10;
+                tbWorksheet.Column(8).Width = 35;
+            }
+            else
+            {
+                tbWorksheet.Column(6).Width = 10;
+                tbWorksheet.Column(7).Width = 10;
+                tbWorksheet.Column(8).Width = 10;
+                tbWorksheet.Column(9).Width = 35;
+            }
+            //  设置表格样式
+            tbWorksheet.Cells.Style.WrapText = true; // 自动换行
+            tbWorksheet.Cells.Style.ShrinkToFit = true; // 单元格自动适应大小 
+            #endregion
+        }
     }
 }

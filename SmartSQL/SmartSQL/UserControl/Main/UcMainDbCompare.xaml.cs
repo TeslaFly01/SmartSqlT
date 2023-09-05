@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -229,17 +229,18 @@ namespace SmartSQL.UserControl
                             tb.TargetRemark = table.Value.Comment;
                             tb.TargetIsExists = true;
                             tb.TargetForeground = null;
-                            return;
                         }
-
-                        diffInfoList.Add(new DiffInfoModel
+                        else
                         {
-                            SourceIsExists = false,
-                            SourceForeground = new SolidColorBrush(Colors.Red),
-                            TargetName = table.Value.DisplayName,
-                            TargetRemark = table.Value.Comment,
-                            TargetIsExists = true
-                        });
+                            diffInfoList.Add(new DiffInfoModel
+                            {
+                                SourceIsExists = false,
+                                SourceForeground = new SolidColorBrush(Colors.Red),
+                                TargetName = table.Value.DisplayName,
+                                TargetRemark = table.Value.Comment,
+                                TargetIsExists = true
+                            });
+                        }
                     }
                 }
                 catch (Exception ex)
