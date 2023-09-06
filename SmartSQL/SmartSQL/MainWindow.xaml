@@ -159,7 +159,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
-                                FontSize="14"
+                                FontSize="13"
                                 Foreground="#fdab03"
                                 Icon="Group" />
                         </MenuItem.Icon>
@@ -285,6 +285,8 @@
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <!--  左边导航菜单  -->
         <DockPanel Grid.Column="0">
             <Border
                 Margin="5,5,0,5"
@@ -353,25 +355,28 @@
                 </ListBox>
             </Border>
         </DockPanel>
+
+        <!--  库表管理  -->
         <DockPanel
             x:Name="DockUcManager"
             Grid.Column="1"
             Visibility="Visible">
-            <!--  库表管理  -->
             <userControl:UcMainContent x:Name="MainContent" />
         </DockPanel>
+
+        <!--  工具箱  -->
         <DockPanel
             x:Name="DockUcTools"
             Grid.Column="1"
             Visibility="Collapsed">
-            <!--  工具箱  -->
             <UserControl x:Name="UcMainTools" />
         </DockPanel>
+
+        <!--  DB比较  -->
         <DockPanel
             x:Name="DockUcDbCompare"
             Grid.Column="1"
             Visibility="Collapsed">
-            <!--  DB比较  -->
             <userControl:UcMainDbCompare />
         </DockPanel>
     </Grid>

@@ -284,7 +284,31 @@
                             TextChanged="TxtFileName_OnTextChanged" />
                     </Grid>
 
-                    <Grid Margin="10,46,10,20">
+                    <Grid Margin="10,5,10,20">
+                        <TextBlock
+                            Margin="0,52,0,0"
+                            VerticalAlignment="Top"
+                            Text="输出路径" />
+                        <TextBox
+                            Name="TxtPath"
+                            Margin="65,45,67,0"
+                            VerticalAlignment="Top"
+                            Background="#F4F5F7"
+                            BorderThickness="0" />
+                        <Button
+                            Name="BtnLookPath"
+                            Width="65"
+                            Margin="0,45,0,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Top"
+                            Background="#f0f0f0"
+                            BorderThickness="0"
+                            Click="BtnLookPath_OnClick"
+                            Content="浏览"
+                            Cursor="Hand" />
+                    </Grid>
+
+                    <Grid Margin="10,87,10,20">
                         <TextBlock
                             Margin="0,12,0,0"
                             VerticalAlignment="Top"
@@ -306,7 +330,7 @@
                             </hc:Poptip.Instance>
                         </fa:FontAwesome>
                         <Border
-                            Height="130"
+                            Height="85"
                             Margin="65,3,0,8"
                             VerticalAlignment="Top"
                             Background="#f4f5f7"
@@ -387,30 +411,6 @@
                             </WrapPanel>
 
                         </Border>
-                    </Grid>
-
-                    <Grid Margin="10,145,10,20">
-                        <TextBlock
-                            Margin="0,52,0,0"
-                            VerticalAlignment="Top"
-                            Text="输出路径" />
-                        <TextBox
-                            Name="TxtPath"
-                            Margin="65,45,67,0"
-                            VerticalAlignment="Top"
-                            Background="#F4F5F7"
-                            BorderThickness="0" />
-                        <Button
-                            Name="BtnLookPath"
-                            Width="65"
-                            Margin="0,45,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="#f0f0f0"
-                            BorderThickness="0"
-                            Click="BtnLookPath_OnClick"
-                            Content="浏览"
-                            Cursor="Hand" />
                     </Grid>
                 </Grid>
                 <!--  导出参数设置  -->

@@ -40,20 +40,12 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcMainContent : BaseUserControl
     {
-        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
-        private static readonly string TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
-        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
-        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
-        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
-
-
-
         private static readonly Dictionary<string, string> IconDic = new Dictionary<string, string>
         {
-            {"Type", "pack://application:,,,/Resources/svg/category.svg"},
-            {"Table", "pack://application:,,,/Resources/svg/table.svg"},
-            {"View", "pack://application:,,,/Resources/svg/view.svg"},
-            {"Proc", "pack://application:,,,/Resources/svg/proc.svg"}
+            { "Type", SysConst.Sys_GROUPICON },
+            { "Table", SysConst.Sys_TABLEICON },
+            { "View", SysConst.Sys_VIEWICON },
+            { "Proc", SysConst.Sys_PROCICON }
         };
 
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
@@ -215,7 +207,7 @@ namespace SmartSQL.UserControl
                     ObejcetId = "0",
                     DisplayName = "表",
                     Name = "treeTable",
-                    Icon = TABLEICON,
+                    Icon = SysConst.Sys_TABLEICON,
                     Type = ObjType.Type,
                     IsShowCount = Visibility.Visible
                 };
@@ -225,7 +217,7 @@ namespace SmartSQL.UserControl
                     ObejcetId = "0",
                     DisplayName = "视图",
                     Name = "treeView",
-                    Icon = VIEWICON,
+                    Icon = SysConst.Sys_VIEWICON,
                     Type = ObjType.Type,
                     IsShowCount = Visibility.Visible
                 };
@@ -235,7 +227,7 @@ namespace SmartSQL.UserControl
                     ObejcetId = "0",
                     DisplayName = "存储过程",
                     Name = "treeProc",
-                    Icon = PROCICON,
+                    Icon = SysConst.Sys_PROCICON,
                     Type = ObjType.Type,
                     IsShowCount = Visibility.Visible
                 };
@@ -258,7 +250,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = group.GroupName,
                                 Name = "treeGroup",
-                                Icon = GROUPICON,
+                                Icon = SysConst.Sys_GROUPICON,
                                 //FontWeight = "Bold",
                                 Type = ObjType.Group,
                                 IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0),
@@ -269,7 +261,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "表",
                                 Name = "treeTable",
-                                Icon = TABLEICON,
+                                Icon = SysConst.Sys_TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2,
@@ -281,7 +273,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "视图",
                                 Name = "treeView",
-                                Icon = VIEWICON,
+                                Icon = SysConst.Sys_VIEWICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2,
@@ -293,7 +285,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "存储过程",
                                 Name = "treeProc",
-                                Icon = PROCICON,
+                                Icon = SysConst.Sys_PROCICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2,
@@ -333,7 +325,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = tag.TagName,
                                 Name = "treeTag",
-                                Icon = TAGICON,
+                                Icon = SysConst.Sys_TAGICON,
                                 Type = ObjType.Group,
                                 IsShowCount = Visibility.Visible
                             };
@@ -342,7 +334,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "表",
                                 Name = "treeTable",
-                                Icon = TABLEICON,
+                                Icon = SysConst.Sys_TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsShowCount = Visibility.Visible
@@ -353,7 +345,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "视图",
                                 Name = "treeView",
-                                Icon = VIEWICON,
+                                Icon = SysConst.Sys_VIEWICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsShowCount = Visibility.Visible
@@ -364,7 +356,7 @@ namespace SmartSQL.UserControl
                                 ObejcetId = "0",
                                 DisplayName = "存储过程",
                                 Name = "treeProc",
-                                Icon = PROCICON,
+                                Icon = SysConst.Sys_PROCICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsShowCount = Visibility.Visible
@@ -416,7 +408,7 @@ namespace SmartSQL.UserControl
                         CreateDate = table.Value.CreateDate,
                         ModifyDate = table.Value.ModifyDate,
                         TextColor = textColor,
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Table,
                         IsShowComment = isShowComment
                     };
@@ -489,7 +481,7 @@ namespace SmartSQL.UserControl
                         CreateDate = view.Value.CreateDate,
                         ModifyDate = view.Value.ModifyDate,
                         TextColor = textColor,
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.View,
                         IsShowComment = isShowComment
                     };
@@ -571,7 +563,7 @@ namespace SmartSQL.UserControl
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -605,7 +597,7 @@ namespace SmartSQL.UserControl
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -626,7 +618,7 @@ namespace SmartSQL.UserControl
                             CreateDate = proc.Value.CreateDate,
                             ModifyDate = proc.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = PROCICON,
+                            Icon = SysConst.Sys_PROCICON,
                             Type = ObjType.Proc
                         });
                         #endregion
@@ -741,7 +733,7 @@ namespace SmartSQL.UserControl
                 ObejcetId = "0",
                 DisplayName = "表",
                 Name = "treeTable",
-                Icon = TABLEICON,
+                Icon = SysConst.Sys_TABLEICON,
                 Type = ObjType.Type,
                 IsExpanded = true,
                 IsShowCount = Visibility.Visible
@@ -752,7 +744,7 @@ namespace SmartSQL.UserControl
                 ObejcetId = "0",
                 DisplayName = "视图",
                 Name = "treeView",
-                Icon = VIEWICON,
+                Icon = SysConst.Sys_VIEWICON,
                 Type = ObjType.Type,
                 IsExpanded = true,
                 IsShowCount = Visibility.Visible
@@ -763,7 +755,7 @@ namespace SmartSQL.UserControl
                 ObejcetId = "0",
                 DisplayName = "存储过程",
                 Name = "treeProc",
-                Icon = PROCICON,
+                Icon = SysConst.Sys_PROCICON,
                 Type = ObjType.Type,
                 IsExpanded = true,
                 IsShowCount = Visibility.Visible
@@ -802,7 +794,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = group.GroupName,
                         Name = "treeTable",
-                        Icon = GROUPICON,
+                        Icon = SysConst.Sys_GROUPICON,
                         Type = ObjType.Group,
                         IsExpanded = true,
                         FontWeight = "Bold",
@@ -814,7 +806,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "表",
                         Name = "treeTable",
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup,
@@ -826,7 +818,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "视图",
                         Name = "treeView",
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup,
@@ -838,7 +830,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "存储过程",
                         Name = "treeProc",
-                        Icon = PROCICON,
+                        Icon = SysConst.Sys_PROCICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup,
@@ -880,7 +872,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = tag.TagName,
                         Name = "treeTable",
-                        Icon = TAGICON,
+                        Icon = SysConst.Sys_TAGICON,
                         Type = ObjType.Tag,
                         IsExpanded = true,
                         FontWeight = "Bold",
@@ -891,7 +883,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "表",
                         Name = "treeTable",
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeTag,
@@ -903,7 +895,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "视图",
                         Name = "treeView",
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeTag,
@@ -915,7 +907,7 @@ namespace SmartSQL.UserControl
                         ObejcetId = "0",
                         DisplayName = "存储过程",
                         Name = "treeProc",
-                        Icon = PROCICON,
+                        Icon = SysConst.Sys_PROCICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeTag,
@@ -962,7 +954,7 @@ namespace SmartSQL.UserControl
                         Comment = table.Value.Comment,
                         CreateDate = table.Value.CreateDate,
                         ModifyDate = table.Value.ModifyDate,
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Table,
                         IsShowComment = isShowComment
                     };
@@ -1044,7 +1036,7 @@ namespace SmartSQL.UserControl
                         Comment = view.Value.Comment,
                         CreateDate = view.Value.CreateDate,
                         ModifyDate = view.Value.ModifyDate,
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.View,
                         IsShowComment = isShowComment
                     };
@@ -1137,7 +1129,7 @@ namespace SmartSQL.UserControl
                                         Comment = proc.Value.Comment,
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -1170,7 +1162,7 @@ namespace SmartSQL.UserControl
                                         Comment = proc.Value.Comment,
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -1190,7 +1182,7 @@ namespace SmartSQL.UserControl
                             Comment = proc.Value.Comment,
                             CreateDate = proc.Value.CreateDate,
                             ModifyDate = proc.Value.ModifyDate,
-                            Icon = PROCICON,
+                            Icon = SysConst.Sys_PROCICON,
                             Type = ObjType.Proc
                         });
                         #endregion
@@ -1584,7 +1576,7 @@ namespace SmartSQL.UserControl
                 if (selectedObject.ChildrenCount < 1)
                 {
                     var textName = selectedObject.Type == ObjType.Group ? "分组" : "标签";
-                    Oops.Oh($"该{textName}无数据，无法导出");
+                    Oops.Oh($"该{textName}无数据，无法生成");
                     return;
                 }
                 exportData = new List<TreeNodeItem>();

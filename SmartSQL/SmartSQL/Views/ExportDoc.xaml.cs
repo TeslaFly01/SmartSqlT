@@ -48,10 +48,6 @@ namespace SmartSQL.Views
         }
 
         private string fileExt = ".chm";
-        private static readonly string GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
-        private static readonly string TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
-        private static readonly string VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
-        private static readonly string PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         #region DependencyProperty
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(ExportDoc), new PropertyMetadata(default(ConnectConfigs)));
@@ -222,7 +218,7 @@ namespace SmartSQL.Views
                     ObejcetId = "0",
                     DisplayName = "表",
                     Name = "treeTable",
-                    Icon = TABLEICON,
+                    Icon = SysConst.Sys_TABLEICON,
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeTable);
@@ -231,7 +227,7 @@ namespace SmartSQL.Views
                     ObejcetId = "0",
                     DisplayName = "视图",
                     Name = "treeView",
-                    Icon = VIEWICON,
+                    Icon = SysConst.Sys_VIEWICON,
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeView);
@@ -240,7 +236,7 @@ namespace SmartSQL.Views
                     ObejcetId = "0",
                     DisplayName = "存储过程",
                     Name = "treeProc",
-                    Icon = PROCICON,
+                    Icon = SysConst.Sys_PROCICON,
                     Type = ObjType.Type
                 };
                 itemList.Add(nodeProc);
@@ -262,7 +258,7 @@ namespace SmartSQL.Views
                                 ObejcetId = "0",
                                 DisplayName = group.GroupName,
                                 Name = "treeGroup",
-                                Icon = GROUPICON,
+                                Icon = SysConst.Sys_GROUPICON,
                                 FontWeight = "Bold",
                                 Type = ObjType.Group,
                                 IsExpanded = !(!group.OpenLevel.HasValue || group.OpenLevel == 0)
@@ -272,7 +268,7 @@ namespace SmartSQL.Views
                                 ObejcetId = "0",
                                 DisplayName = "表",
                                 Name = "treeTable",
-                                Icon = TABLEICON,
+                                Icon = SysConst.Sys_TABLEICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2
@@ -283,7 +279,7 @@ namespace SmartSQL.Views
                                 ObejcetId = "0",
                                 DisplayName = "视图",
                                 Name = "treeView",
-                                Icon = VIEWICON,
+                                Icon = SysConst.Sys_VIEWICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2
@@ -294,7 +290,7 @@ namespace SmartSQL.Views
                                 ObejcetId = "0",
                                 DisplayName = "存储过程",
                                 Name = "treeProc",
-                                Icon = PROCICON,
+                                Icon = SysConst.Sys_PROCICON,
                                 Parent = nodeGroup,
                                 Type = ObjType.Type,
                                 IsExpanded = group.OpenLevel == 2
@@ -372,7 +368,7 @@ namespace SmartSQL.Views
                                         CreateDate = table.Value.CreateDate,
                                         ModifyDate = table.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = TABLEICON,
+                                        Icon = SysConst.Sys_TABLEICON,
                                         Type = ObjType.Table
                                     });
                                 }
@@ -392,7 +388,7 @@ namespace SmartSQL.Views
                             CreateDate = table.Value.CreateDate,
                             ModifyDate = table.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = TABLEICON,
+                            Icon = SysConst.Sys_TABLEICON,
                             Type = ObjType.Table,
                             IsChecked = isChecked
                         });
@@ -430,7 +426,7 @@ namespace SmartSQL.Views
                                         CreateDate = view.Value.CreateDate,
                                         ModifyDate = view.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = VIEWICON,
+                                        Icon = SysConst.Sys_VIEWICON,
                                         Type = ObjType.View
                                     });
                                 }
@@ -450,7 +446,7 @@ namespace SmartSQL.Views
                             CreateDate = view.Value.CreateDate,
                             ModifyDate = view.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = VIEWICON,
+                            Icon = SysConst.Sys_VIEWICON,
                             Type = ObjType.View,
                             IsChecked = isChecked
                         });
@@ -488,7 +484,7 @@ namespace SmartSQL.Views
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
                                         TextColor = textColor,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -508,7 +504,7 @@ namespace SmartSQL.Views
                             CreateDate = proc.Value.CreateDate,
                             ModifyDate = proc.Value.ModifyDate,
                             TextColor = textColor,
-                            Icon = PROCICON,
+                            Icon = SysConst.Sys_PROCICON,
                             Type = ObjType.Proc,
                             IsChecked = isChecked
                         });
@@ -598,7 +594,7 @@ namespace SmartSQL.Views
                 ObejcetId = "0",
                 DisplayName = "表",
                 Name = "treeTable",
-                Icon = TABLEICON,
+                Icon = SysConst.Sys_TABLEICON,
                 Type = ObjType.Type,
                 IsExpanded = true
             };
@@ -608,7 +604,7 @@ namespace SmartSQL.Views
                 ObejcetId = "0",
                 DisplayName = "视图",
                 Name = "treeView",
-                Icon = VIEWICON,
+                Icon = SysConst.Sys_VIEWICON,
                 Type = ObjType.Type,
                 IsExpanded = true
             };
@@ -618,7 +614,7 @@ namespace SmartSQL.Views
                 ObejcetId = "0",
                 DisplayName = "存储过程",
                 Name = "treeProc",
-                Icon = PROCICON,
+                Icon = SysConst.Sys_PROCICON,
                 Type = ObjType.Type,
                 IsExpanded = true
             };
@@ -653,7 +649,7 @@ namespace SmartSQL.Views
                         ObejcetId = "0",
                         DisplayName = group.GroupName,
                         Name = "treeTable",
-                        Icon = GROUPICON,
+                        Icon = SysConst.Sys_GROUPICON,
                         Type = ObjType.Group,
                         IsExpanded = true,
                         FontWeight = "Bold",
@@ -664,7 +660,7 @@ namespace SmartSQL.Views
                         ObejcetId = "0",
                         DisplayName = "表",
                         Name = "treeTable",
-                        Icon = TABLEICON,
+                        Icon = SysConst.Sys_TABLEICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup
@@ -675,7 +671,7 @@ namespace SmartSQL.Views
                         ObejcetId = "0",
                         DisplayName = "视图",
                         Name = "treeView",
-                        Icon = VIEWICON,
+                        Icon = SysConst.Sys_VIEWICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup
@@ -686,7 +682,7 @@ namespace SmartSQL.Views
                         ObejcetId = "0",
                         DisplayName = "存储过程",
                         Name = "treeProc",
-                        Icon = PROCICON,
+                        Icon = SysConst.Sys_PROCICON,
                         Type = ObjType.Type,
                         IsExpanded = true,
                         Parent = nodeGroup
@@ -743,7 +739,7 @@ namespace SmartSQL.Views
                                         Comment = table.Value.Comment,
                                         CreateDate = table.Value.CreateDate,
                                         ModifyDate = table.Value.ModifyDate,
-                                        Icon = TABLEICON,
+                                        Icon = SysConst.Sys_TABLEICON,
                                         Type = ObjType.Table
                                     });
                                 }
@@ -762,7 +758,7 @@ namespace SmartSQL.Views
                             Comment = table.Value.Comment,
                             CreateDate = table.Value.CreateDate,
                             ModifyDate = table.Value.ModifyDate,
-                            Icon = TABLEICON,
+                            Icon = SysConst.Sys_TABLEICON,
                             Type = ObjType.Table
                         });
                     }
@@ -806,7 +802,7 @@ namespace SmartSQL.Views
                                         Comment = view.Value.Comment,
                                         CreateDate = view.Value.CreateDate,
                                         ModifyDate = view.Value.ModifyDate,
-                                        Icon = VIEWICON,
+                                        Icon = SysConst.Sys_VIEWICON,
                                         Type = ObjType.View
                                     });
                                 }
@@ -825,7 +821,7 @@ namespace SmartSQL.Views
                             Comment = view.Value.Comment,
                             CreateDate = view.Value.CreateDate,
                             ModifyDate = view.Value.ModifyDate,
-                            Icon = VIEWICON,
+                            Icon = SysConst.Sys_VIEWICON,
                             Type = ObjType.View
                         });
                     }
@@ -869,7 +865,7 @@ namespace SmartSQL.Views
                                         Comment = proc.Value.Comment,
                                         CreateDate = proc.Value.CreateDate,
                                         ModifyDate = proc.Value.ModifyDate,
-                                        Icon = PROCICON,
+                                        Icon = SysConst.Sys_PROCICON,
                                         Type = ObjType.Proc
                                     });
                                 }
@@ -888,7 +884,7 @@ namespace SmartSQL.Views
                             Comment = proc.Value.Comment,
                             CreateDate = proc.Value.CreateDate,
                             ModifyDate = proc.Value.ModifyDate,
-                            Icon = PROCICON,
+                            Icon = SysConst.Sys_PROCICON,
                             Type = ObjType.Proc
                         });
                     }

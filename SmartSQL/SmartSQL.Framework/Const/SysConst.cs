@@ -22,5 +22,6 @@ namespace SmartSQL.Framework.Const
         public static readonly string Sys_TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         public static readonly string Sys_VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         public static readonly string Sys_PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
+        public static readonly string Sys_TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
     }
 }
