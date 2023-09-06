@@ -24,7 +24,7 @@ namespace SmartSQL.Framework.Exporter
         {
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
         }
-        public SqlServerExporter(string table, List<Column> columns) : base(table, columns)
+        public SqlServerExporter(Table table, List<Column> columns) : base(table, columns)
         {
 
         }
@@ -495,32 +495,35 @@ namespace SmartSQL.Framework.Exporter
         public override string CreateTableSql()
         {
             #region MyRegion
-            if (string.IsNullOrEmpty(TableName) || !Columns.Any())
+            if (string.IsNullOrEmpty(Table.DisplayName) || !Columns.Any())
             {
                 return "";
             }
+            var schema = "dbo";
+            var tableName = Table.DisplayName;
+            if (tableName.Contains("."))
+            {
+                schema = tableName.Split('.')[0];
+                tableName = tableName.Split('.')[1];
+            }
             var sb = new StringBuilder();
-            sb.Append($"CREATE TABLE {TableName}(");
+            sb.Append($"CREATE TABLE [{schema}].[{tableName}](");
             var tempStr = new StringBuilder();
             Columns.ForEach(col =>
             {
                 tempStr.Append(Environment.NewLine);
                 tempStr.Append($"\t{col.DisplayName} {col.DataType}{col.LengthName} ");
-                if (col.IsIdentity)
-                {
-                    tempStr.Append("IDENTITY(1,1) ");
-                }
-                var isNull = col.IsNullable ? "NULL," : "NOT NULL,";
-                tempStr.Append(isNull);
+                tempStr.Append(col.IsIdentity ? "IDENTITY(1,1) " : "");
+                tempStr.Append(col.IsNullable ? "NULL," : "NOT NULL,");
             });
             sb.Append(tempStr.ToString().TrimEnd(','));
-            var primaryKeyList = Columns.FindAll(x => x.IsPrimaryKey);
-            if (primaryKeyList.Any())
+            var pkList = Columns.FindAll(x => x.IsPrimaryKey);
+            if (pkList.Any())
             {
                 sb.Append(Environment.NewLine);
                 sb.Append($",\tPRIMARY KEY (");
                 var sbPriKey = new StringBuilder();
-                foreach (var column in primaryKeyList)
+                foreach (var column in pkList)
                 {
                     sbPriKey.Append($"{column.DisplayName},");
                 }
@@ -529,6 +532,19 @@ namespace SmartSQL.Framework.Exporter
             }
             sb.Append(Environment.NewLine);
             sb.Append(")");
+            Columns.ForEach(col =>
+            {
+                sb.Append(
+                    $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}' , @level0type=N'SCHEMA',@level0name=N'{schema}', @level1type=N'TABLE',@level1name=N'{tableName}', @level2type=N'COLUMN',@level2name=N'{col.OriginalName}'");
+                sb.Append(Environment.NewLine);
+                sb.Append("GO");
+                sb.Append(Environment.NewLine);
+            });
+            sb.Append(
+                $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{Table.Comment}' , @level0type=N'SCHEMA',@level0name=N'{schema}', @level1type=N'TABLE',@level1name=N'{tableName}'");
+            sb.Append(Environment.NewLine);
+            sb.Append("GO");
+            sb.Append(Environment.NewLine);
             return sb.ToString();
             #endregion
         }
@@ -547,7 +563,7 @@ namespace SmartSQL.Framework.Exporter
                 tempCol.Append($"{col.Name},");
             });
             var tempSql = tempCol.ToString().TrimEnd(',');
-            strSql.Append($"{tempSql} FROM {TableName}");
+            strSql.Append($"{tempSql} FROM {Table.DisplayName}");
             return strSql.ToString();
             #endregion
         }
@@ -560,7 +576,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"INSERT INTO {TableName} (");
+            var strSql = new StringBuilder($"INSERT INTO {Table.DisplayName} (");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
                 {
@@ -589,7 +605,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"UPDATE {TableName} SET ");
+            var strSql = new StringBuilder($"UPDATE {Table.DisplayName} SET ");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -635,7 +651,7 @@ namespace SmartSQL.Framework.Exporter
         public override string DeleteSql()
         {
             #region MyRegion
-            var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
+            var strSql = new StringBuilder($"DELETE FROM {Table.DisplayName} WHERE ");
             var tempCol = new StringBuilder();
             var j = 0;
             Columns.ForEach(col =>
@@ -669,7 +685,7 @@ namespace SmartSQL.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER TABLE {TableName} ADD {col.Name} {col.DataType.ToLower()} ");
+                strSql.Append($"ALTER TABLE {Table.DisplayName} ADD {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
                     strSql.Append($"{col.LengthName} ");
@@ -707,7 +723,7 @@ namespace SmartSQL.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER TABLE {TableName} ALTER {col.Name} {col.DataType.ToLower()} ");
+                strSql.Append($"ALTER TABLE {Table.DisplayName} ALTER {col.Name} {col.DataType.ToLower()} ");
                 if (SqlServerDbTypeMapHelper.IsMulObj(col.DataType))
                 {
                     strSql.Append($"{col.LengthName} ");
@@ -745,7 +761,7 @@ namespace SmartSQL.Framework.Exporter
             var strSql = new StringBuilder();
             Columns.ForEach(col =>
             {
-                strSql.Append($"ALTER TABLE {TableName} DROP COLUMN {col.DisplayName}");
+                strSql.Append($"ALTER TABLE {Table.DisplayName} DROP COLUMN {col.DisplayName}");
                 #region 字段注释
                 if (!string.IsNullOrEmpty(col.Comment))
                 {

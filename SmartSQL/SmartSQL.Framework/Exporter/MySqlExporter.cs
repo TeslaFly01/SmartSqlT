@@ -24,7 +24,7 @@ namespace SmartSQL.Framework.Exporter
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.MySql, DbConnectString);
         }
 
-        public MySqlExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        public MySqlExporter(Table table, List<Column> columns) : base(table, columns)
         {
 
         }
@@ -292,12 +292,12 @@ namespace SmartSQL.Framework.Exporter
 
         public override string CreateTableSql()
         {
-            if (string.IsNullOrEmpty(TableName) || !Columns.Any())
+            if (string.IsNullOrEmpty(Table.DisplayName) || !Columns.Any())
             {
                 return "";
             }
             var sb = new StringBuilder();
-            sb.Append($"CREATE TABLE `{TableName}` (");
+            sb.Append($"CREATE TABLE `{Table.DisplayName}` (");
             sb.Append(Environment.NewLine);
             Columns.ForEach(col =>
             {
@@ -340,7 +340,7 @@ namespace SmartSQL.Framework.Exporter
                 tempCol.Append($"{col.Name},");
             });
             var tempSql = tempCol.ToString().TrimEnd(',');
-            strSql.Append($"{tempSql} FROM {TableName}");
+            strSql.Append($"{tempSql} FROM {Table.DisplayName}");
             return strSql.ToString();
         }
 
@@ -351,7 +351,7 @@ namespace SmartSQL.Framework.Exporter
         public override string InsertSql()
         {
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"INSERT INTO {TableName} (");
+            var strSql = new StringBuilder($"INSERT INTO {Table.DisplayName} (");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -378,7 +378,7 @@ namespace SmartSQL.Framework.Exporter
         public override string UpdateSql()
         {
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"UPDATE {TableName} SET ");
+            var strSql = new StringBuilder($"UPDATE {Table.DisplayName} SET ");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -422,7 +422,7 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override string DeleteSql()
         {
-            var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
+            var strSql = new StringBuilder($"DELETE FROM {Table.DisplayName} WHERE ");
             var tempCol = new StringBuilder();
             var j = 0;
             Columns.ForEach(col =>

@@ -65,9 +65,15 @@ namespace SmartSQL.Views
 
         private void ScriptWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            var objectName = SelectedObject.DisplayName;
             var colList = SelectedColumns;
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, objectName, colList);
+            var tb = new Framework.PhysicalDataModel.Table()
+            {
+                DisplayName = SelectedObject.DisplayName,
+                Comment = SelectedObject.Comment,
+                Name = SelectedObject.Name,
+                SchemaName = SelectedObject.Schema
+            };
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, tb, colList);
             if (TabSelectSql.IsSelected)
             {
                 //查询sql

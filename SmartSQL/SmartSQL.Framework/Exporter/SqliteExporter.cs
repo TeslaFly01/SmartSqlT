@@ -26,7 +26,7 @@ namespace SmartSQL.Framework.Exporter
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
         }
 
-        public SqliteExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        public SqliteExporter(Table table, List<Column> columns) : base(table, columns)
         {
         }
 

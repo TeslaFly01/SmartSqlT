@@ -25,7 +25,7 @@ namespace SmartSQL.Framework.Exporter
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Dm, DbConnectString);
         }
 
-        public DmExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        public DmExporter(Table table, List<Column> columns) : base(table, columns)
         {
 
         }

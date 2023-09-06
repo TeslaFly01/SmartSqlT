@@ -21,7 +21,7 @@ namespace SmartSQL.Framework.Exporter
             _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
         }
 
-        public OracleExporter(string tableName, List<Column> columns) : base(tableName, columns)
+        public OracleExporter(Table table, List<Column> columns) : base(table, columns)
         {
 
         }
@@ -250,7 +250,7 @@ namespace SmartSQL.Framework.Exporter
                 tempCol.Append($"{col.Name},");
             });
             var tempSql = tempCol.ToString().TrimEnd(',');
-            strSql.Append($"{tempSql} FROM {TableName}");
+            strSql.Append($"{tempSql} FROM {Table.DisplayName}");
             return strSql.ToString();
             #endregion
         }
@@ -259,7 +259,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"INSERT INTO {TableName} (");
+            var strSql = new StringBuilder($"INSERT INTO {Table.DisplayName} (");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -284,7 +284,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tempCols = Columns.Where(x => x.IsIdentity == false).ToList();
-            var strSql = new StringBuilder($"UPDATE {TableName} SET ");
+            var strSql = new StringBuilder($"UPDATE {Table.DisplayName} SET ");
             var tempCol = new StringBuilder();
             tempCols.ForEach(col =>
             {
@@ -326,7 +326,7 @@ namespace SmartSQL.Framework.Exporter
         public override string DeleteSql()
         {
             #region MyRegion
-            var strSql = new StringBuilder($"DELETE FROM {TableName} WHERE ");
+            var strSql = new StringBuilder($"DELETE FROM {Table.DisplayName} WHERE ");
             var tempCol = new StringBuilder();
             var j = 0;
             Columns.ForEach(col =>

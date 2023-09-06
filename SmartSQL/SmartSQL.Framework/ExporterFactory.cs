@@ -42,17 +42,17 @@ namespace SmartSQL.Framework
             }
         }
 
-        public static Exporter.Exporter CreateInstance(DbType type, string tableName, List<Column> columns)
+        public static Exporter.Exporter CreateInstance(DbType type, Table table, List<Column> columns)
         {
             switch (type)
             {
-                case DbType.SqlServer: return new SqlServerExporter(tableName, columns);
-                case DbType.MySql: return new MySqlExporter(tableName, columns);
-                case DbType.PostgreSQL: return new PostgreSqlExporter(tableName, columns);
-                case DbType.Sqlite: return new SqliteExporter(tableName, columns);
-                case DbType.Oracle: return new OracleExporter(tableName, columns);
-                case DbType.Dm: return new DmExporter(tableName, columns);
-                default: return new SqlServerExporter(tableName, columns);
+                case DbType.SqlServer: return new SqlServerExporter(table, columns);
+                case DbType.MySql: return new MySqlExporter(table, columns);
+                case DbType.PostgreSQL: return new PostgreSqlExporter(table, columns);
+                case DbType.Sqlite: return new SqliteExporter(table, columns);
+                case DbType.Oracle: return new OracleExporter(table, columns);
+                case DbType.Dm: return new DmExporter(table, columns);
+                default: return new SqlServerExporter(table, columns);
             }
         }
     }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
@@ -20,9 +20,9 @@ namespace SmartSQL.Framework.Exporter
             DbConnectString = connectionString;
             DbName = dbName;
         }
-        public Exporter(string tableName, List<Column> columns)
+        public Exporter(Table table, List<Column> columns)
         {
-            TableName = tableName;
+            Table = table;
             Columns = columns;
         }
         /// <summary>
@@ -36,7 +36,7 @@ namespace SmartSQL.Framework.Exporter
         /// <summary>
         /// 表名
         /// </summary>
-        public string TableName { get; set; }
+        public Table Table { get; set; }
         /// <summary>
         /// 表字段
         /// </summary>

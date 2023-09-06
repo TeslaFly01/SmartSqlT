@@ -97,11 +97,17 @@ namespace SmartSQL.UserControl
                 return;
             }
             ListBoxLanguage.SelectedIndex = 0;
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColumns);
+            var tb = new Framework.PhysicalDataModel.Table()
+            {
+                DisplayName = SelectedObject.DisplayName,
+                Comment = SelectedObject.Comment,
+                Name = SelectedObject.Name,
+                SchemaName = SelectedObject.Schema
+            };
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, tb, SelectedTableColumns);
             //建表sql
             var createTableSql = instance.CreateTableSql();
             TextCsharpEditor.Text = createTableSql;
-
         }
 
         /// <summary>
@@ -115,7 +121,14 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
-            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedObject.DisplayName, SelectedTableColumns);
+            var tb = new Framework.PhysicalDataModel.Table()
+            {
+                DisplayName = SelectedObject.DisplayName,
+                Comment = SelectedObject.Comment,
+                Name = SelectedObject.Name,
+                SchemaName = SelectedObject.Schema
+            };
+            var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, tb, SelectedTableColumns);
             var selLan = (ListBoxItem)ListBoxLanguage.SelectedItem;
             var highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "SQL");
             switch (selLan.Content)
@@ -132,7 +145,7 @@ namespace SmartSQL.UserControl
                     break;
                 case "Java":
                     highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "Java");
-                    
+
                     break;
                 case "PHP":
                     highlightingDefinition = HighlightingProvider.GetDefinition(SkinType.Dark, "PHP"); break;
