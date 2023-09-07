@@ -534,6 +534,10 @@ namespace SmartSQL.Framework.Exporter
             sb.Append(")");
             Columns.ForEach(col =>
             {
+                if (string.IsNullOrEmpty(col.Comment))
+                {
+                    return;
+                }
                 sb.Append(
                     $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{col.Comment}' , @level0type=N'SCHEMA',@level0name=N'{schema}', @level1type=N'TABLE',@level1name=N'{tableName}', @level2type=N'COLUMN',@level2name=N'{col.OriginalName}'");
                 sb.Append(Environment.NewLine);

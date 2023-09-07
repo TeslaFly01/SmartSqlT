@@ -126,7 +126,7 @@
                                             FontSize="9"
                                             FontWeight="Normal"
                                             Foreground="#ccc6cf"
-                                            Text="C#" />
+                                            Text="{Binding FileExt}" />
                                     </StackPanel>
                                     <TextBlock
                                         Margin="0,2,0,0"

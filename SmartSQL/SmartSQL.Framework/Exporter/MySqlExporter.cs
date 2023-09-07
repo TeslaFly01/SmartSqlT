@@ -302,12 +302,9 @@ namespace SmartSQL.Framework.Exporter
             Columns.ForEach(col =>
             {
                 sb.Append($" `{col.DisplayName}` {col.DataType}{col.LengthName} ");
-                if (col.IsIdentity)
-                {
-                    sb.Append("IDENTITY(1,1) ");
-                }
-                var isNull = col.IsNullable ? "NULL," : "NOT NULL,";
-                sb.Append(isNull);
+                sb.Append(col.IsNullable ? "NULL " : "NOT NULL ");
+                sb.Append(col.IsIdentity ? "AUTO_INCREMENT " : "");
+                sb.Append(string.IsNullOrEmpty(col.Comment) ? "," : $"COMMENT '{col.Comment}', ");
                 sb.Append(Environment.NewLine);
             });
             var primaryKeyList = Columns.FindAll(x => x.IsPrimaryKey);
