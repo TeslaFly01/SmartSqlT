@@ -63,9 +63,9 @@ namespace SmartSQL.Framework.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
-        internal static byte[] Csharp {
+        internal static byte[] csharp {
             get {
-                object obj = ResourceManager.GetObject("Csharp", resourceCulture);
+                object obj = ResourceManager.GetObject("csharp", resourceCulture);
                 return ((byte[])(obj));
             }
         }

@@ -544,10 +544,13 @@ namespace SmartSQL.Framework.Exporter
                 sb.Append("GO");
                 sb.Append(Environment.NewLine);
             });
-            sb.Append(
-                $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{Table.Comment}' , @level0type=N'SCHEMA',@level0name=N'{schema}', @level1type=N'TABLE',@level1name=N'{tableName}'");
-            sb.Append(Environment.NewLine);
-            sb.Append("GO");
+            if (!string.IsNullOrEmpty(Table.Comment))
+            {
+                sb.Append(
+                    $"EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'{Table.Comment}' , @level0type=N'SCHEMA',@level0name=N'{schema}', @level1type=N'TABLE',@level1name=N'{tableName}'");
+                sb.Append(Environment.NewLine);
+                sb.Append("GO");
+            }
             sb.Append(Environment.NewLine);
             return sb.ToString();
             #endregion

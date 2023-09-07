@@ -9,6 +9,7 @@ using System.Runtime.Serialization.Json;
 using SmartSQL.Framework.Const;
 using SmartSQL.Framework.SqliteModel;
 using SQLite;
+using SmartSQL.Framework.Properties;
 
 namespace SmartSQL.Framework
 {
@@ -54,8 +55,10 @@ namespace SmartSQL.Framework
             db.CreateTable<TemplateInfo>();
             Init();
         }
-
-        public List<SystemSet> InitValue = new List<SystemSet>
+        /// <summary>
+        /// 初始化系统变量
+        /// </summary>
+        private List<SystemSet> InitSysValue = new List<SystemSet>
         {
             new SystemSet{Name = SysConst.Sys_IsGroup,Type = 1,Value = "false"},
             new SystemSet{Name = SysConst.Sys_IsMultipleTab,Type = 1,Value = "false"},
@@ -66,13 +69,43 @@ namespace SmartSQL.Framework
             new SystemSet{Name = SysConst.Sys_SelectedConnection,Type = 3,Value = ""},
             new SystemSet{Name = SysConst.Sys_SelectedDataBase,Type = 3,Value = ""},
         };
-        private void Init()
+        /// <summary>
+        /// 初始化模板
+        /// </summary>
+        public List<TemplateInfo> InitTemplate = new List<TemplateInfo>
+        {
+            new TemplateInfo{
+                TempName = "SqlSugar实体类模板",
+                Type = 1,
+                TypeNo=1,
+                FileNameFormat = "{0}",
+                FileExt = ".cs",
+                Content =  Encoding.UTF8.GetString(Resource.csharp) ,
+                ChangeTime = DateTime.Now
+            }
+        };
+
+        public void Init(bool isInit = true)
         {
             var sysList = db.Table<SystemSet>().ToList();
-            InitValue.ForEach(x =>
+            InitSysValue.ForEach(x =>
             {
                 if (!sysList.Any(m => m.Name.Equals(x.Name)))
                 {
+                    db.Insert(x);
+                }
+            });
+            var tempList = db.Table<TemplateInfo>().Where(x => x.TypeNo == 1).ToList();
+            InitTemplate.ForEach(x =>
+            {
+                var temp = tempList.FirstOrDefault(m => m.TypeNo.Equals(x.TypeNo));
+                if (temp == null)
+                {
+                    db.Insert(x);
+                }
+                if (temp != null && !isInit)
+                {
+                    db.Delete(temp);
                     db.Insert(x);
                 }
             });
@@ -175,17 +208,6 @@ namespace SmartSQL.Framework
             }
             return sysSet.Value;
         }
-
-        //public T GetSysJson<T>(string name)
-        //{
-        //    var sqLiteHelper = new SQLiteHelper();
-        //    var sysSet = sqLiteHelper.db.Table<SystemSet>().FirstOrDefault(x => x.Name.Equals(name) && x.Type == SysDataType.JSON.GetHashCode());
-        //    if (sysSet == null)
-        //    {
-        //        return default(T);
-        //    }
-        //    return sysSet.Value;
-        //}
     }
 
     /// <summary>

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,7 +19,7 @@ namespace SmartSQL.Framework.Lang
 
         public override string BuildEntity()
         {
-            var excelTpl = Encoding.UTF8.GetString(Resource.Csharp);
+            var excelTpl = Encoding.UTF8.GetString(Resource.csharp);
             var template = Engine.CreateTemplate(excelTpl);
             template.Set("ClassName", TableName);
             template.Set("ClassComment", TableComment);

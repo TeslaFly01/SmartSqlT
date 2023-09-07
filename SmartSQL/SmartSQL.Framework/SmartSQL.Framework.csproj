@@ -263,10 +263,10 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
-    <Resource Include="template\Csharp.tmpl" />
-    <None Include="template\Java.tmpl">
+    <Resource Include="template\csharp.tmpl" />
+    <Resource Include="template\java.tmpl">
       <LastGenOutput>Java1.cs</LastGenOutput>
-    </None>
+    </Resource>
   </ItemGroup>
   <ItemGroup>
     <Content Include="sqlite3.dll">

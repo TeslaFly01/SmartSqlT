@@ -1,4 +1,4 @@
-﻿<local:BaseUserControl
+<local:BaseUserControl
     x:Class="SmartSQL.UserControl.UcTabCode"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -51,12 +51,30 @@
                         Content="SQL"
                         IsSelected="True"
                         Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="C#" Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="Java" Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="PHP" Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="Python" Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="C++" Style="{StaticResource CodeListBox}" />
-                    <ListBoxItem Content="ObjectC" Style="{StaticResource CodeListBox}" />
+                    <ListBoxItem
+                        Content="C#"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
+                    <ListBoxItem
+                        Content="Java"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
+                    <ListBoxItem
+                        Content="PHP"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
+                    <ListBoxItem
+                        Content="Python"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
+                    <ListBoxItem
+                        Content="C++"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
+                    <ListBoxItem
+                        Content="ObjectC"
+                        Style="{StaticResource CodeListBox}"
+                        Visibility="Collapsed" />
                 </ListBox>
             </Border>
             <Border

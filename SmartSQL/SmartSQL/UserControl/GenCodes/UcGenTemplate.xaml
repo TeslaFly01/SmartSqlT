@@ -75,12 +75,27 @@
                         HorizontalContentAlignment="Stretch"
                         BorderThickness="0"
                         ItemsSource="{Binding DataList}"
+                        PreviewMouseRightButtonDown="ListTemplate_OnPreviewMouseRightButtonDown"
                         ScrollViewer.VerticalScrollBarVisibility="Visible"
                         SelectionChanged="ListTemplate_OnSelectionChanged">
 
                         <!--  右键菜单  -->
                         <ListBox.ContextMenu>
                             <ContextMenu Width="150" Visibility="Visible">
+                                <MenuItem
+                                    x:Name="MenuReset"
+                                    Padding="5,3,5,3"
+                                    VerticalAlignment="Center"
+                                    Click="MenuReset_OnClick"
+                                    Header="重置默认模板">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#1890ff"
+                                            Icon="Refresh" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
                                 <MenuItem
                                     x:Name="MenuDelete"
                                     Padding="5,3,5,3"
@@ -143,7 +158,7 @@
 
                     <Grid
                         x:Name="NoDataText"
-                        Margin="0,100,0,5"
+                        Margin="0,35,0,5"
                         HorizontalAlignment="Stretch"
                         Background="White"
                         Cursor="Arrow"

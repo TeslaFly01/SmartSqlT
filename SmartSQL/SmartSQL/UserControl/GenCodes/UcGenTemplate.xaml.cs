@@ -94,20 +94,44 @@ namespace SmartSQL.UserControl.GenCodes
             LoadMenu();
         }
 
+        /// <summary>
+        /// 加载菜单
+        /// </summary>
+        /// <param name="searchName"></param>
         private void LoadMenu(string searchName = "")
         {
+            #region MyRegion
             Task.Run(() =>
             {
                 var sqLiteHelper = new SQLiteHelper();
-                var datalist = sqLiteHelper.db.Table<TemplateInfo>().Where(x => x.TempName.Contains(searchName)).ToList();
+                var datalist = sqLiteHelper.db.Table<TemplateInfo>().Where(x => x.TempName.Contains(searchName) && x.IsDel == false).ToList();
                 Dispatcher.Invoke(() =>
                 {
                     DataList = datalist;
                     NoDataText.Visibility = datalist.Any() ? Visibility.Collapsed : Visibility.Visible;
                 });
             });
+            #endregion
         }
 
+        /// <summary>
+        /// 重置系统模板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+
+        private void MenuReset_OnClick(object sender, RoutedEventArgs e)
+        {
+            var sqlLiteInstance = SQLiteHelper.GetInstance();
+            sqlLiteInstance.Init(false);
+            LoadMenu();
+        }
+
+        /// <summary>
+        /// 删除模板
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MenuDelete_OnClick(object sender, RoutedEventArgs e)
         {
             #region MyRegion
@@ -119,7 +143,15 @@ namespace SmartSQL.UserControl.GenCodes
             var sqlLiteInstance = SQLiteHelper.GetInstance();
             Task.Run(() =>
             {
-                sqlLiteInstance.db.Delete<TemplateInfo>(selectedTemp.Id);
+                if (selectedTemp.Type == 1)
+                {
+                    selectedTemp.IsDel = true;
+                    sqlLiteInstance.db.Update(selectedTemp);
+                }
+                else
+                {
+                    sqlLiteInstance.db.Delete<TemplateInfo>(selectedTemp.Id);
+                }
                 LoadMenu();
             });
             #endregion
@@ -132,6 +164,7 @@ namespace SmartSQL.UserControl.GenCodes
         /// <param name="e"></param>
         private void BtnSave_OnClick(object sender, RoutedEventArgs e)
         {
+            #region MyRegion
             var tempId = Convert.ToInt32(HidId.Text);
             var tempName = TextTempName.Text.Trim();
             var tempContent = TextContent.Text.Trim();
@@ -163,22 +196,27 @@ namespace SmartSQL.UserControl.GenCodes
                 Oops.Oh("模板名称出现重复");
                 return;
             }
-            var temp = new TemplateInfo
-            {
-                Id = tempId,
-                TempName = tempName,
-                FileNameFormat = tempFileFormat ?? "{0}",
-                FileExt = tempFileExt,
-                Content = tempContent,
-                ChangeTime = DateTime.Now
-            };
             var isSuccess = false;
+            var temp = sqLiteHelper.FirstOrDefault<TemplateInfo>(x => x.Id == tempId);
             if (tempId > 0)
             {
+                temp.Id = tempId;
+                temp.TempName = tempName;
+                temp.FileNameFormat = tempFileFormat ?? "{0}";
+                temp.FileExt = tempFileExt;
+                temp.Content = tempContent;
                 isSuccess = sqLiteHelper.db.Update(temp) > 0;
             }
             else
             {
+                temp = new TemplateInfo
+                {
+                    Id = tempId,
+                    TempName = tempName,
+                    FileNameFormat = tempFileFormat ?? "{0}",
+                    FileExt = tempFileExt,
+                    Content = tempContent
+                };
                 isSuccess = sqLiteHelper.db.Insert(temp) > 0;
                 TextTempName.Text = string.Empty;
                 TextContent.Text = string.Empty;
@@ -188,6 +226,7 @@ namespace SmartSQL.UserControl.GenCodes
                 Oops.Success("保存成功");
             }
             LoadMenu();
+            #endregion
         }
 
         /// <summary>
@@ -203,6 +242,7 @@ namespace SmartSQL.UserControl.GenCodes
 
         private void ListTemplate_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            #region MyRegion
             var listBox = (ListBox)sender;
             if (listBox.SelectedItems.Count > 0)
             {
@@ -213,6 +253,7 @@ namespace SmartSQL.UserControl.GenCodes
                 TextFileExt.Text = tempInfo.FileExt;
                 TextContent.Text = tempInfo.Content;
             }
+            #endregion
         }
 
         private void SearchMenu_OnTextChanged(object sender, TextChangedEventArgs e)
@@ -228,6 +269,15 @@ namespace SmartSQL.UserControl.GenCodes
             TextContent.Text = "";
             TextFileFormat.Text = "";
             TextFileExt.Text = "";
+        }
+
+        private void ListTemplate_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MenuDelete.Visibility = Visibility.Visible;
+            if (!(ListTemplate.SelectedItem is TemplateInfo selectedTemp))
+            {
+                MenuDelete.Visibility = Visibility.Collapsed;
+            }
         }
     }
 }
