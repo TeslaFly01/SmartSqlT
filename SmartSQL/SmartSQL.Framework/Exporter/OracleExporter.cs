@@ -193,11 +193,11 @@ namespace SmartSQL.Framework.Exporter
                 {
                     column.DefaultValue = v.DefaultValue.Replace("(", "").Replace(")", "");
                 }
-                column.DataType = v.DataType;
+                column.DataType = v.OracleDataType;
                 column.OriginalName = v.DbColumnName;
                 column.Comment = v.ColumnDescription;
                 column.IsPrimaryKey = v.IsPrimarykey;
-                column.CSharpType = OracleDbTypeMapHelper.MapCsharpType(v.DataType, v.IsNullable);
+                column.CSharpType = OracleDbTypeMapHelper.MapCsharpType(v.OracleDataType, v.IsNullable);
                 columns.Add(v.DbColumnName, column);
             });
             return columns;
