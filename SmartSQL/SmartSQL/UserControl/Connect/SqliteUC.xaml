@@ -45,10 +45,12 @@
                 <TextBlock
                     Margin="0,28,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="连接名称" />
                 <TextBlock
                     Margin="0,68,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="DB路径" />
             </Grid>
             <Grid x:Name="MsSqlConnectForm" Grid.Column="1">

@@ -18,25 +18,28 @@ namespace SmartSQL.Framework.Util
         /// </summary>
         /// <param name="serverAddress"></param>
         /// <param name="port"></param>
+        /// <param name="authentication"></param>
         /// <param name="database"></param>
         /// <param name="userName"></param>
         /// <param name="password"></param>
         /// <returns></returns>
-        public static string SqlServerString(string serverAddress, int port, string database, string userName, string password)
+        public static string SqlServerString(string serverAddress, int port, int authentication, string database, string userName, string password)
         {
             var serAddress = $"{serverAddress},{port}";
             if (serverAddress.Equals(".") || serverAddress.Contains(@"\"))
             {
                 serAddress = serverAddress;
             }
-            var sqlConnectionStringBuilder = new SqlConnectionStringBuilder
+            var ssb = new SqlConnectionStringBuilder();
+            ssb.DataSource = serAddress;
+            ssb.InitialCatalog = database;
+            ssb.IntegratedSecurity = authentication == 0;
+            if (!ssb.IntegratedSecurity)
             {
-                DataSource = serAddress,
-                InitialCatalog = database,
-                UserID = userName,
-                Password = EncryptHelper.Decode(password)
-            };
-            return sqlConnectionStringBuilder.ConnectionString;
+                ssb.UserID = userName;
+                ssb.Password = EncryptHelper.Decode(password);
+            }
+            return ssb.ConnectionString;
         }
 
         /// <summary>

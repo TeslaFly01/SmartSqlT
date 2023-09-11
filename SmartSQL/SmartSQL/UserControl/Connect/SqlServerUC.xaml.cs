@@ -70,7 +70,7 @@ namespace SmartSQL.UserControl.Connect
             TextServerAddress.Text = connect.ServerAddress;
             TextServerPort.Value = connect.ServerPort;
             TextServerName.Text = connect.UserName;
-            ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SQLServer : Windows;
+            ComboAuthentication.SelectedItem = connect.Authentication == 1 ? SqlServer : Windows;
             TextServerPassword.Password = pwd;
             ComboDefaultDatabase.ItemsSource = defaultBase;
             ComboDefaultDatabase.SelectedItem = defaultBase.First();
@@ -101,17 +101,20 @@ namespace SmartSQL.UserControl.Connect
             {
                 tipMsg.Append("- 请填写端口号" + Environment.NewLine);
             }
-            if (string.IsNullOrEmpty(userName))
+            if (SqlServer.IsSelected)
             {
-                tipMsg.Append("- 请填写登录名" + Environment.NewLine);
-            }
-            if (string.IsNullOrEmpty(password))
-            {
-                tipMsg.Append("- 请填写密码");
+                if (string.IsNullOrEmpty(userName))
+                {
+                    tipMsg.Append("- 请填写登录名" + Environment.NewLine);
+                }
+                if (string.IsNullOrEmpty(password))
+                {
+                    tipMsg.Append("- 请填写密码");
+                }
             }
             if (tipMsg.ToString().Length > 0)
             {
-                Growl.WarningGlobal(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
+                Growl.Warning(new GrowlInfo { Message = tipMsg.ToString(), WaitTime = 1, ShowDateTime = false });
                 return false;
             }
             return true;
@@ -136,9 +139,10 @@ namespace SmartSQL.UserControl.Connect
             }
             mainWindow.LoadingG.Visibility = Visibility.Visible;
             var connectId = Convert.ToInt32(HidId.Text);
+            var authentication = ComboAuthentication.SelectedValue == SqlServer ? 1 : 0;
             var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
             var connectionString = ConnectionStringUtil.SqlServerString(TextServerAddress.Text.Trim(),
-                Convert.ToInt32(TextServerPort.Value), "master", TextServerName.Text.Trim(), password);
+                Convert.ToInt32(TextServerPort.Value), authentication, "master", TextServerName.Text.Trim(), password);
             Task.Run(() =>
             {
                 try
@@ -200,12 +204,12 @@ namespace SmartSQL.UserControl.Connect
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
             var serverPort = Convert.ToInt32(TextServerPort.Value);
-            var authentication = ComboAuthentication.SelectedValue == SQLServer ? 1 : 0;
+            var authentication = ComboAuthentication.SelectedValue == SqlServer ? 1 : 0;
             var userName = TextServerName.Text.Trim();
             var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
             var defaultDataBase = (DataBase)ComboDefaultDatabase.SelectedItem;
             var connectionString =
-                ConnectionStringUtil.SqlServerString(serverAddress, serverPort, "master", userName, password);
+                ConnectionStringUtil.SqlServerString(serverAddress, serverPort, authentication, "master", userName, password);
             var sqLiteHelper = new SQLiteHelper();
             ConnectConfigs connectConfig;
             mainWindow.LoadingG.Visibility = Visibility.Visible;
@@ -223,20 +227,20 @@ namespace SmartSQL.UserControl.Connect
                         mainWindow.LoadingG.Visibility = Visibility.Collapsed;
                         if (isConnect)
                         {
-                            Growl.SuccessGlobal(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
+                            Growl.Success(new GrowlInfo { Message = $"连接成功", WaitTime = 1, ShowDateTime = false });
                         }
                         if (connectId > 0)
                         {
                             connectConfig = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ID == connectId);
                             if (connectConfig == null)
                             {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
+                                Growl.Warning(new GrowlInfo { Message = $"当前连接不存在或已被删除", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             var connectAny = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName == connectName && x.ID != connectId);
                             if (connectAny != null)
                             {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             connectConfig.ConnectName = connectName;
@@ -254,7 +258,7 @@ namespace SmartSQL.UserControl.Connect
                             var connect = sqLiteHelper.db.Table<ConnectConfigs>().FirstOrDefault(x => x.ConnectName.ToLower() == connectName.ToLower());
                             if (connect != null)
                             {
-                                Growl.WarningGlobal(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
+                                Growl.Warning(new GrowlInfo { Message = $"已存在相同名称的连接名", WaitTime = 1, ShowDateTime = false });
                                 return;
                             }
                             connectConfig = new ConnectConfigs()
@@ -283,7 +287,7 @@ namespace SmartSQL.UserControl.Connect
                                 mainWindow.DataList = datalist;
                                 if (!isConnect)
                                 {
-                                    Growl.SuccessGlobal(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
+                                    Growl.Success(new GrowlInfo { Message = $"保存成功", WaitTime = 1, ShowDateTime = false });
                                 }
                                 if (isConnect && ChangeRefreshEvent != null)
                                 {
@@ -314,6 +318,35 @@ namespace SmartSQL.UserControl.Connect
         private void BtnFresh_OnClick(object sender, RoutedEventArgs e)
         {
             TestConnect(false);
+        }
+
+        /// <summary>
+        /// 身份认证切换
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ComboAuthentication_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!IsLoaded)
+            {
+                return;
+            }
+            TextServerName.Visibility = Visibility.Visible;
+            TextServerPassword.Visibility = Visibility.Visible;
+            TbServerName.Visibility = Visibility.Visible;
+            TbPassword.Visibility = Visibility.Visible;
+            TbDefaultDataBase.Margin = new Thickness(0, 228, 20, 20);
+            GdDefaultDatabase.Margin = new Thickness(0, 220, 0, 20);
+            if (!SqlServer.IsSelected)
+            {
+                TbServerName.Visibility = Visibility.Collapsed;
+                TbPassword.Visibility = Visibility.Collapsed;
+                TextServerName.Visibility = Visibility.Collapsed;
+                TextServerPassword.Visibility = Visibility.Collapsed;
+                TextServerName.Background = TextServerPassword.Background;
+                TbDefaultDataBase.Margin = new Thickness(0, 148, 20, 20);
+                GdDefaultDatabase.Margin = new Thickness(0, 140, 0, 20);
+            }
         }
     }
 }

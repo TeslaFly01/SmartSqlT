@@ -85,7 +85,7 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
-                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, "master",
+                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, Authentication, "master",
                             UserName, Password);
                         break;
                     case DbType.MySql:
@@ -120,7 +120,7 @@ namespace SmartSQL.Framework.SqliteModel
                 switch (DbType)
                 {
                     case DbType.SqlServer:
-                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, DefaultDatabase,
+                        connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, Authentication, DefaultDatabase,
                             UserName, Password);
                         break;
                     case DbType.MySql:
@@ -155,7 +155,7 @@ namespace SmartSQL.Framework.SqliteModel
             switch (DbType)
             {
                 case DbType.SqlServer:
-                    connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, selectedDatabase,
+                    connectString = ConnectionStringUtil.SqlServerString(ServerAddress, ServerPort, Authentication, selectedDatabase,
                         UserName, Password);
                     break;
                 case DbType.MySql:

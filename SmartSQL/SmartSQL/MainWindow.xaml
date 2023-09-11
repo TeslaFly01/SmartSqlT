@@ -22,6 +22,7 @@
     Style="{StaticResource WindowGlow}"
     UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
+    WindowState="Maximized"
     mc:Ignorable="d">
     <!--  顶部栏菜单  -->
     <hc:GlowWindow.NonClientAreaContent>

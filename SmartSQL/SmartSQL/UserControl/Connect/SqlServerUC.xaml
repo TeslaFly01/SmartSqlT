@@ -47,26 +47,35 @@
                 <TextBlock
                     Margin="0,28,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="连接名称" />
                 <TextBlock
                     Margin="0,68,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="服务器地址" />
                 <TextBlock
                     Margin="0,108,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="身份验证" />
                 <TextBlock
+                    x:Name="TbServerName"
                     Margin="0,148,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="登录名" />
                 <TextBlock
+                    x:Name="TbPassword"
                     Margin="0,188,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="密码" />
                 <TextBlock
+                    x:Name="TbDefaultDataBase"
                     Margin="0,228,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="默认数据库" />
             </Grid>
             <Grid x:Name="MsSqlConnectForm" Grid.Column="1">
@@ -101,7 +110,7 @@
                         ShowClearButton="True" />
                     <TextBlock
                         Grid.Column="1"
-                        Margin="0,65,0,20"
+                        Margin="0,68,0,20"
                         Text="端口" />
                     <hc:NumericUpDown
                         Name="TextServerPort"
@@ -122,9 +131,10 @@
                     Margin="0,100,20,20"
                     VerticalAlignment="Top"
                     Background="#F4F5F7"
-                    BorderThickness="0">
-                    <ComboBoxItem Name="SQLServer" IsSelected="True">SQL Server 身份验证</ComboBoxItem>
-                    <ComboBoxItem Name="Windows" Visibility="Collapsed">Windows 身份验证</ComboBoxItem>
+                    BorderThickness="0"
+                    SelectionChanged="ComboAuthentication_OnSelectionChanged">
+                    <ComboBoxItem Name="SqlServer" IsSelected="True">SQL Server 身份验证</ComboBoxItem>
+                    <ComboBoxItem Name="Windows">Windows 身份验证</ComboBoxItem>
                 </ComboBox>
                 <hc:TextBox
                     Name="TextServerName"
@@ -144,49 +154,51 @@
                     hc:InfoElement.Placeholder="请输入密码"
                     Background="#F4F5F7"
                     BorderThickness="0" />
-                <ComboBox
-                    x:Name="ComboDefaultDatabase"
-                    Height="30"
-                    Margin="0,220,55,20"
-                    VerticalAlignment="Top"
-                    HorizontalContentAlignment="Stretch"
-                    hc:BorderElement.CornerRadius="5"
-                    hc:InfoElement.Placeholder="请选择默认数据库"
-                    Background="#F4F5F7"
-                    BorderThickness="0"
-                    Cursor="Hand"
-                    IsTextSearchEnabled="True"
-                    Style="{StaticResource ComboBoxExtend}"
-                    Text="{Binding DbName}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                <Image
-                                    Width="11"
-                                    Height="15"
-                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
-                                <TextBlock
-                                    Margin="5,0,0,0"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Text="{Binding DbName}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <Button
-                    Name="BtnFresh"
-                    Margin="0,220,20,20"
-                    Padding="7"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
-                    BorderThickness="0"
-                    Click="BtnFresh_OnClick"
-                    Cursor="Hand"
-                    Foreground="{DynamicResource PrimaryTextBrush}"
-                    Style="{StaticResource ButtonIconCircular}"
-                    ToolTip="刷新数据库" />
+                <Grid x:Name="GdDefaultDatabase" Margin="0,220,0,20">
+                    <ComboBox
+                        x:Name="ComboDefaultDatabase"
+                        Height="30"
+                        Margin="0,0,55,20"
+                        VerticalAlignment="Top"
+                        HorizontalContentAlignment="Stretch"
+                        hc:BorderElement.CornerRadius="5"
+                        hc:InfoElement.Placeholder="请选择默认数据库"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        IsTextSearchEnabled="True"
+                        Style="{StaticResource ComboBoxExtend}"
+                        Text="{Binding DbName}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                    <Image
+                                        Width="11"
+                                        Height="15"
+                                        Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                    <TextBlock
+                                        Margin="5,0,0,0"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Text="{Binding DbName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button
+                        Name="BtnFresh"
+                        Margin="0,0,20,20"
+                        Padding="7"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                        BorderThickness="0"
+                        Click="BtnFresh_OnClick"
+                        Cursor="Hand"
+                        Foreground="{DynamicResource PrimaryTextBrush}"
+                        Style="{StaticResource ButtonIconCircular}"
+                        ToolTip="刷新数据库" />
+                </Grid>
             </Grid>
         </Grid>
     </Grid>

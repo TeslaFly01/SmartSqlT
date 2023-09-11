@@ -46,22 +46,27 @@
                 <TextBlock
                     Margin="0,28,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="连接名称" />
                 <TextBlock
                     Margin="0,68,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="服务器地址" />
                 <TextBlock
                     Margin="0,108,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="登录名" />
                 <TextBlock
                     Margin="0,148,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="密码" />
                 <TextBlock
                     Margin="0,188,20,20"
                     Cursor="Arrow"
+                    Foreground="#40485b"
                     Text="默认数据库" />
             </Grid>
             <Grid x:Name="MySqlConnectForm" Grid.Column="1">
