@@ -82,6 +82,26 @@ namespace SmartSQL
             {
                 SwitchMenu.Header = @"新建连接";
             }
+            //Task.Factory.StartNew(() =>
+            //{
+            //    Dispatcher.Invoke(new Action(() =>
+            //    {
+            //        //蒙板
+            //        Grid layer = new Grid() { Background = new SolidColorBrush(Color.FromRgb(132, 132, 132)), Opacity = 0.7 };
+            //        //父级窗体原来的内容
+            //        UIElement original = Content as UIElement;//MainWindows父窗体
+            //        Content = null;
+            //        //容器Grid
+            //        Grid container = new Grid();
+            //        container.Children.Add(original);//放入原来的内容
+            //        container.Children.Add(layer);//在上面放一层蒙板
+            //                                      //将装有原来内容和蒙板的容器赋给父级窗体
+            //        Content = container;
+            //        var down = new DownloadView();
+            //        down.Owner = this;
+            //        down.ShowDialog();
+            //    }));
+            //});
         }
 
         /// <summary>

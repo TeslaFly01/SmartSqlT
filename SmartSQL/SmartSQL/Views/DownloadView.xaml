@@ -1,0 +1,78 @@
+<hc:Window
+    x:Class="SmartSQL.Views.DownloadView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    Width="550"
+    Height="350"
+    AllowsTransparency="True"
+    Background="Transparent"
+    BorderThickness="0"
+    Icon="/Resources/Img/donation/caffe.png"
+    ResizeMode="NoResize"
+    ShowInTaskbar="False"
+    ShowTitle="True"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <Border
+        Margin="10"
+        Background="White"
+        CornerRadius="10">
+        <Grid>
+            <Border
+                Height="80"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top">
+                <Border.Background>
+                    <ImageBrush ImageSource="/SmartSQL;component/Resources/Img/bgbox.png" Stretch="Fill" />
+                </Border.Background>
+            </Border>
+            <TextBlock
+                Margin="28,15,0,0"
+                HorizontalAlignment="Left"
+                VerticalAlignment="Top"
+                FontSize="18"
+                Foreground="White"
+                Text="温馨提示" />
+            <TextBlock
+                x:Name="TextContent"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="15"
+                Foreground="#666666"
+                Text="发现有新版本，是否立即下载 ？" />
+
+            <Button
+                x:Name="BtnClose"
+                Width="120"
+                Height="35"
+                Margin="0,0,170,18"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="#f7f7f7"
+                BorderThickness="0"
+                Click="BtnClose_Click"
+                Content="取消"
+                Cursor="Hand"
+                Foreground="#454f68" />
+            <Button
+                x:Name="BtnDownload"
+                Width="120"
+                Height="35"
+                Margin="0,0,30,17"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Background="#5185ff"
+                BorderThickness="0"
+                Content="立即下载"
+                Cursor="Hand"
+                Foreground="White" />
+
+        </Grid>
+    </Border>
+</hc:Window>

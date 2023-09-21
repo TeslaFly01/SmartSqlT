@@ -319,6 +319,9 @@
     </Compile>
     <Compile Include="ViewModels\MainTabWViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\DownloadView.xaml.cs">
+      <DependentUpon>DownloadView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GenCode.xaml.cs">
       <DependentUpon>GenCode.xaml</DependentUpon>
     </Compile>
@@ -633,6 +636,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Views\DownloadView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\GenCode.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -778,6 +785,7 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\Img\bgbox.png" />
     <Resource Include="Resources\svg\undraw\undraw_our_solution_re_8yk6.svg" />
     <Resource Include="Resources\svg\undraw\undraw_file_manager_re_ms29.svg" />
     <Resource Include="Resources\Img\toolIcon\ico%402x.png" />
