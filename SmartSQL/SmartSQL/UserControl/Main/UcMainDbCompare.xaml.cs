@@ -196,6 +196,7 @@ namespace SmartSQL.UserControl
             var selectTargetConnection = (ConnectConfigs)ComTargetConnect.SelectedItem;
             var selectTargetDataBase = (DataBase)ComTargetDatabase.SelectedItem;
             LoadingLine.Visibility = Visibility.Visible;
+            BoxCompareData.Visibility=Visibility.Visible;
             Task.Run(() =>
             {
                 var diffInfoList = new List<DiffInfoModel>();

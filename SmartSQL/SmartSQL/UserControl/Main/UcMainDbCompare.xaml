@@ -193,10 +193,16 @@
                     Background="White"
                     CornerRadius="10 ">
                     <Grid>
+                        <svgc:SvgViewbox
+                            Width="350"
+                            Height="325"
+                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_reviewed_docs_re_9lmr.svg" />
                         <Border
+                            x:Name="BoxCompareData"
                             Margin="8"
                             Background="#f9f9f9"
-                            CornerRadius="8">
+                            CornerRadius="8"
+                            Visibility="Collapsed">
                             <Grid>
                                 <DataGrid
                                     x:Name="TableGrid"

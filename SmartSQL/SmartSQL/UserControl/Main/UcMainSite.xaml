@@ -1,0 +1,256 @@
+﻿<UserControl
+    x:Class="SmartSQL.UserControl.UcMainSite"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Loaded="UserControl_Loaded"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="dsa" Source="{Binding SiteList}">
+            <CollectionViewSource.GroupDescriptions>
+                <PropertyGroupDescription PropertyName="category" />
+            </CollectionViewSource.GroupDescriptions>
+        </CollectionViewSource>
+    </UserControl.Resources>
+    <Grid>
+        <!--  Main布局  -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition
+                Width="3.3*"
+                MinWidth="200"
+                MaxWidth="220" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="6.6*" />
+        </Grid.ColumnDefinitions>
+        <!--  Main布局  -->
+
+        <!--  左侧菜单  -->
+        <DockPanel Grid.Row="0" Grid.Column="0">
+            <hc:SimplePanel>
+                <Border
+                    Margin="5,5,0,5"
+                    Background="{DynamicResource RegionBrush}"
+                    CornerRadius="{Binding CornerRadius}">
+                    <Grid>
+                        <ListBox
+                            Name="ListCategory"
+                            Margin="5,20,5,35"
+                            HorizontalContentAlignment="Stretch"
+                            AllowDrop="True"
+                            BorderThickness="0"
+                            Cursor="Hand"
+                            ItemsSource="{Binding CategoryList}"
+                            ScrollViewer.VerticalScrollBarVisibility="Visible"
+                            SelectionChanged="ListCategory_SelectionChanged">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Height="45">
+                                        <hc:SimpleStackPanel
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                            <Grid Width="20">
+                                                <fa:FontAwesome FontSize="14" Icon="{Binding icon}" />
+                                            </Grid>
+                                            <TextBlock
+                                                Margin="15,0,0,0"
+                                                Text="{Binding categoryName}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </hc:SimpleStackPanel>
+                                        <hc:SimpleStackPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+                                            <Border Background="#fffffe" CornerRadius="3">
+                                                <TextBlock
+                                                    Margin="5,1,5,1"
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{StaticResource ThirdlyTextBrush}"
+                                                    Text="{Binding count}" />
+                                            </Border>
+                                        </hc:SimpleStackPanel>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </Grid>
+                </Border>
+            </hc:SimplePanel>
+        </DockPanel>
+
+        <!--  分割线  -->
+        <GridSplitter
+            Grid.Row="0"
+            Grid.Column="1"
+            Width="5"
+            Margin="0,5,0,5"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Stretch"
+            Background="Transparent" />
+
+        <!--  主内容  -->
+        <DockPanel Grid.Row="0" Grid.Column="2">
+            <Grid Margin="0,5,5,5">
+                <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                    <Grid>
+                        <svgc:SvgViewbox
+                            Width="350"
+                            Height="325"
+                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
+                            Visibility="Collapsed" />
+
+                        <hc:ScrollViewer Margin="0,15,10,15" Visibility="Collapsed">
+                            <ItemsControl x:Name="dasd" ItemsSource="{Binding Source={StaticResource dsa}}">
+                                <ItemsControl.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="12" Orientation="Horizontal">
+                                                    <fa:FontAwesome FontSize="14" Icon="ListUl" />
+                                                    <TextBlock
+                                                        Margin="10,-2.5,0,0"
+                                                        FontSize="14"
+                                                        Text="{Binding Name}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+                                    </GroupStyle>
+                                </ItemsControl.GroupStyle>
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <hc:WaterfallPanel hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}" Groups="4" />
+                                        <!--<WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />-->
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <hc:Card
+                                            MaxWidth="255"
+                                            Margin="0,8,0,8"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            Effect="{StaticResource EffectShadow2}">
+                                            <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
+                                                <hc:Gravatar
+                                                    Width="52"
+                                                    Height="52"
+                                                    Margin="10,0,0,0"
+                                                    Style="{StaticResource GravatarCircleImg}">
+                                                    <Image Source="https://www.haocxy.com/wp-content/uploads/2023/06/baidu-wangpan.png" />
+                                                </hc:Gravatar>
+                                                <StackPanel
+                                                    Width="220"
+                                                    Height="80"
+                                                    Cursor="Hand"
+                                                    Orientation="Vertical">
+                                                    <TextBlock
+                                                        Margin="10,20,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        FontWeight="Bold"
+                                                        Foreground="#282a2d"
+                                                        Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                    <TextBlock
+                                                        Width="170"
+                                                        Margin="10,10,0,0"
+                                                        HorizontalAlignment="Left"
+                                                        Foreground="#727E96"
+                                                        Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </hc:Card>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </hc:ScrollViewer>
+
+                        <hc:TransitioningContentControl Margin="0,0,0,0">
+                            <Grid>
+                                <Border CornerRadius="10">
+                                    <hc:ScrollViewer>
+                                        <ListBox
+                                            x:Name="ProductBox"
+                                            Margin="0,15"
+                                            BorderThickness="0"
+                                            ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"
+                                            ItemsSource="{Binding Source={StaticResource dsa}}"
+                                            PreviewMouseWheel="ProductBox_PreviewMouseWheel"
+                                            Style="{StaticResource WrapPanelHorizontalListBox}">
+                                            <ListBox.GroupStyle>
+                                                <GroupStyle>
+                                                    <GroupStyle.HeaderTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Margin="12" Orientation="Horizontal">
+                                                                <fa:FontAwesome FontSize="14" Icon="ListUl" />
+                                                                <TextBlock
+                                                                    Margin="10,-2.5,0,0"
+                                                                    FontSize="14"
+                                                                    Text="{Binding Name}" />
+                                                            </StackPanel>
+                                                        </DataTemplate>
+                                                    </GroupStyle.HeaderTemplate>
+                                                </GroupStyle>
+                                            </ListBox.GroupStyle>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate DataType="data:CardModel">
+                                                    <hc:Card
+                                                        MaxWidth="255"
+                                                        Margin="8"
+                                                        BorderThickness="0"
+                                                        Cursor="Hand"
+                                                        Effect="{StaticResource EffectShadow2}"
+                                                        ToolTip="{Binding description}">
+                                                        <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
+                                                            <hc:Gravatar
+                                                                Width="52"
+                                                                Height="52"
+                                                                Margin="10,0,0,0"
+                                                                Style="{StaticResource GravatarCircleImg}">
+                                                                <Image Source="{Binding icon}" />
+                                                            </hc:Gravatar>
+                                                            <StackPanel
+                                                                Width="220"
+                                                                Height="80"
+                                                                Cursor="Hand"
+                                                                Orientation="Vertical">
+                                                                <TextBlock
+                                                                    Margin="10,20,0,0"
+                                                                    HorizontalAlignment="Left"
+                                                                    FontWeight="Bold"
+                                                                    Foreground="#282a2d"
+                                                                    IsHitTestVisible="False"
+                                                                    Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                                <TextBlock
+                                                                    Width="170"
+                                                                    Margin="10,10,0,0"
+                                                                    HorizontalAlignment="Left"
+                                                                    Foreground="#727E96"
+                                                                    Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
+                                                                    TextTrimming="CharacterEllipsis"
+                                                                    ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                            </StackPanel>
+                                                        </StackPanel>
+                                                    </hc:Card>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                    </hc:ScrollViewer>
+                                </Border>
+                            </Grid>
+                        </hc:TransitioningContentControl>
+                    </Grid>
+                </Border>
+
+            </Grid>
+        </DockPanel>
+    </Grid>
+</UserControl>

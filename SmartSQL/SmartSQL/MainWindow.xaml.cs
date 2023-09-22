@@ -350,6 +350,7 @@ namespace SmartSQL
             DockUcManager.Visibility = Visibility.Visible;
             DockUcTools.Visibility = Visibility.Collapsed;
             DockUcDbCompare.Visibility = Visibility.Collapsed;
+            DockUcSite.Visibility = Visibility.Collapsed;
         }
 
         /// <summary>
@@ -363,6 +364,7 @@ namespace SmartSQL
             DockUcTools.Visibility = Visibility.Visible;
             DockUcManager.Visibility = Visibility.Collapsed;
             DockUcDbCompare.Visibility = Visibility.Collapsed;
+            DockUcSite.Visibility = Visibility.Collapsed;
         }
 
         private void MenuDbCompare_Selected(object sender, RoutedEventArgs e)
@@ -370,6 +372,15 @@ namespace SmartSQL
             DockUcDbCompare.Visibility = Visibility.Visible;
             DockUcTools.Visibility = Visibility.Collapsed;
             DockUcManager.Visibility = Visibility.Collapsed;
+            DockUcSite.Visibility = Visibility.Collapsed;
+        }
+
+        private void MenuSite_Selected(object sender, RoutedEventArgs e)
+        {
+            DockUcSite.Visibility = Visibility.Visible;
+            DockUcTools.Visibility = Visibility.Collapsed;
+            DockUcManager.Visibility = Visibility.Collapsed;
+            DockUcDbCompare.Visibility = Visibility.Collapsed;
         }
     }
 }

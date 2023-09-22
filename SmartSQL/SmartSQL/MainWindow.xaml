@@ -347,6 +347,15 @@
                             <TextBlock Margin="0,5,0,0" Text="工具" />
                         </StackPanel>
                     </ListBoxItem>
+                    <ListBoxItem
+                        x:Name="MenuSite"
+                        IsEnabled="True"
+                        Selected="MenuSite_Selected">
+                        <StackPanel>
+                            <fa:FontAwesome FontSize="16" Icon="InternetExplorer" />
+                            <TextBlock Margin="0,5,0,0" Text="网站" />
+                        </StackPanel>
+                    </ListBoxItem>
                     <ListBoxItem IsEnabled="False">
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="Heart" />
@@ -379,6 +388,14 @@
             Grid.Column="1"
             Visibility="Collapsed">
             <userControl:UcMainDbCompare />
+        </DockPanel>
+
+        <!--  网站  -->
+        <DockPanel
+            x:Name="DockUcSite"
+            Grid.Column="1"
+            Visibility="Collapsed">
+            <userControl:UcMainSite />
         </DockPanel>
     </Grid>
     <!--  Main区域  -->
