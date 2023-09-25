@@ -13,13 +13,6 @@
     d:DesignWidth="800"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <CollectionViewSource x:Key="dsa" Source="{Binding SiteList}">
-            <CollectionViewSource.GroupDescriptions>
-                <PropertyGroupDescription PropertyName="category" />
-            </CollectionViewSource.GroupDescriptions>
-        </CollectionViewSource>
-    </UserControl.Resources>
     <Grid>
         <!--  Main布局  -->
         <Grid.RowDefinitions>
@@ -44,7 +37,7 @@
                     CornerRadius="{Binding CornerRadius}">
                     <Grid>
                         <ListBox
-                            Name="ListCategory"
+                            Name="MenuCategory"
                             Margin="5,20,5,35"
                             HorizontalContentAlignment="Stretch"
                             AllowDrop="True"
@@ -52,7 +45,7 @@
                             Cursor="Hand"
                             ItemsSource="{Binding CategoryList}"
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
-                            SelectionChanged="ListCategory_SelectionChanged">
+                            SelectionChanged="MenuCategory_SelectionChanged">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="45">
@@ -107,67 +100,168 @@
                             Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
                             Visibility="Collapsed" />
 
-                        <hc:ScrollViewer Margin="0,15,10,15" Visibility="Visible">
-                            <ItemsControl x:Name="dasd" ItemsSource="{Binding Source={StaticResource dsa}}">
-                                <ItemsControl.GroupStyle>
-                                    <GroupStyle>
-                                        <GroupStyle.HeaderTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Margin="12" Orientation="Horizontal">
+                        <hc:ScrollViewer
+                            x:Name="ScrollViewBox"
+                            Margin="0,15,10,15"
+                            CanContentScroll="True"
+                            Visibility="Visible">
+                            <ItemsControl x:Name="CategoryItems" ItemsSource="{Binding CategoryList}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <StackPanel Orientation="Vertical">
+                                                <StackPanel Margin="15,15,15,8" Orientation="Horizontal">
                                                     <fa:FontAwesome FontSize="14" Icon="ListUl" />
                                                     <TextBlock
                                                         Margin="10,-2.5,0,0"
                                                         FontSize="14"
-                                                        Text="{Binding Name}" />
+                                                        Text="{Binding categoryName}" />
                                                 </StackPanel>
-                                            </DataTemplate>
-                                        </GroupStyle.HeaderTemplate>
-                                    </GroupStyle>
-                                </ItemsControl.GroupStyle>
-                                <ItemsControl.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
-                                    </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <hc:Card
-                                            MaxWidth="255"
-                                            Margin="15,8,15,8"
-                                            BorderThickness="0"
-                                            Cursor="Hand"
-                                            Effect="{StaticResource EffectShadow2}"
-                                            ToolTip="{Binding description}">
-                                            <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
-                                                <hc:Gravatar
-                                                    Width="52"
-                                                    Height="52"
-                                                    Margin="10,0,0,0"
-                                                    Style="{StaticResource GravatarCircleImg}">
-                                                    <Image Source="{Binding icon}" />
-                                                </hc:Gravatar>
-                                                <StackPanel
-                                                    Width="220"
-                                                    Height="80"
+                                                <TabControl
+                                                    Margin="0"
+                                                    HorizontalContentAlignment="Left"
+                                                    BorderThickness="0"
                                                     Cursor="Hand"
-                                                    Orientation="Vertical">
-                                                    <TextBlock
-                                                        Margin="10,20,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        FontWeight="Bold"
-                                                        Foreground="#282a2d"
-                                                        Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
-                                                    <TextBlock
-                                                        Width="170"
-                                                        Margin="10,10,0,0"
-                                                        HorizontalAlignment="Left"
-                                                        Foreground="#727E96"
-                                                        Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
-                                                        TextTrimming="CharacterEllipsis"
-                                                        ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
-                                                </StackPanel>
+                                                    ItemsSource="{Binding type}"
+                                                    SelectedItem="{Binding SelectedType}"
+                                                    Style="{StaticResource TabControlCapsuleSolid}">
+                                                    <TabControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock Text="{Binding typeName}" />
+                                                        </DataTemplate>
+                                                    </TabControl.ItemTemplate>
+                                                    <TabControl.ItemContainerStyle>
+                                                        <Style BasedOn="{StaticResource TabItemCapsuleBaseStyle}" TargetType="TabItem">
+                                                            <Setter Property="Margin" Value="0,0,0,10" />
+                                                        </Style>
+                                                    </TabControl.ItemContainerStyle>
+                                                    <TabControl.ContentTemplate>
+                                                        <DataTemplate>
+                                                            <!--  内容绑定到具体的子项  -->
+                                                            <ItemsControl ItemsSource="{Binding sites}">
+                                                                <ItemsControl.ItemContainerStyle>
+                                                                    <Style TargetType="ContentPresenter">
+                                                                        <Setter Property="Margin" Value="0,0,0,0" />
+                                                                        <Style.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="Effect" Value="{StaticResource EffectShadow3}" />
+                                                                            </Trigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+
+                                                                </ItemsControl.ItemContainerStyle>
+                                                                <ItemsControl.ItemsPanel>
+                                                                    <ItemsPanelTemplate>
+                                                                        <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+                                                                    </ItemsPanelTemplate>
+                                                                </ItemsControl.ItemsPanel>
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate>
+                                                                        <hc:Card
+                                                                            MaxWidth="255"
+                                                                            Margin="15,10,15,10"
+                                                                            BorderThickness="0"
+                                                                            Cursor="Hand"
+                                                                            Effect="{StaticResource EffectShadow2}"
+                                                                            MouseLeftButtonUp="Card_MouseLeftButtonUp"
+                                                                            ToolTip="{Binding description}">
+                                                                            <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
+                                                                                <hc:Gravatar
+                                                                                    Width="52"
+                                                                                    Height="52"
+                                                                                    Margin="10,0,0,0"
+                                                                                    Style="{StaticResource GravatarCircleImg}">
+                                                                                    <Image Source="{Binding icon}" />
+                                                                                </hc:Gravatar>
+                                                                                <StackPanel
+                                                                                    Width="220"
+                                                                                    Height="80"
+                                                                                    Cursor="Hand"
+                                                                                    Orientation="Vertical">
+                                                                                    <TextBlock
+                                                                                        Margin="10,20,0,0"
+                                                                                        HorizontalAlignment="Left"
+                                                                                        FontWeight="Bold"
+                                                                                        Foreground="#282a2d"
+                                                                                        Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                                                    <TextBlock
+                                                                                        Width="170"
+                                                                                        Margin="10,10,0,0"
+                                                                                        HorizontalAlignment="Left"
+                                                                                        Foreground="#727E96"
+                                                                                        Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
+                                                                                        TextTrimming="CharacterEllipsis"
+                                                                                        ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                                                </StackPanel>
+                                                                            </StackPanel>
+                                                                        </hc:Card>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+
+                                                        </DataTemplate>
+                                                    </TabControl.ContentTemplate>
+                                                </TabControl>
                                             </StackPanel>
-                                        </hc:Card>
+                                            <ItemsControl ItemsSource="{Binding sites}">
+                                                <ItemsControl.ItemContainerStyle>
+                                                    <Style TargetType="ContentPresenter">
+                                                        <Style.Triggers>
+                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                <Setter Property="Effect" Value="{StaticResource EffectShadow3}" />
+                                                            </Trigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </ItemsControl.ItemContainerStyle>
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <hc:Card
+                                                            MaxWidth="255"
+                                                            Margin="15,8,15,8"
+                                                            BorderThickness="0"
+                                                            Cursor="Hand"
+                                                            Effect="{StaticResource EffectShadow2}"
+                                                            MouseLeftButtonUp="Card_MouseLeftButtonUp"
+                                                            ToolTip="{Binding description}">
+                                                            <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
+                                                                <hc:Gravatar
+                                                                    Width="52"
+                                                                    Height="52"
+                                                                    Margin="10,0,0,0"
+                                                                    Style="{StaticResource GravatarCircleImg}">
+                                                                    <Image Source="{Binding icon}" />
+                                                                </hc:Gravatar>
+                                                                <StackPanel
+                                                                    Width="220"
+                                                                    Height="80"
+                                                                    Cursor="Hand"
+                                                                    Orientation="Vertical">
+                                                                    <TextBlock
+                                                                        Margin="10,20,0,0"
+                                                                        HorizontalAlignment="Left"
+                                                                        FontWeight="Bold"
+                                                                        Foreground="#282a2d"
+                                                                        Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                                    <TextBlock
+                                                                        Width="170"
+                                                                        Margin="10,10,0,0"
+                                                                        HorizontalAlignment="Left"
+                                                                        Foreground="#727E96"
+                                                                        Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
+                                                                        TextTrimming="CharacterEllipsis"
+                                                                        ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
+                                                                </StackPanel>
+                                                            </StackPanel>
+                                                        </hc:Card>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

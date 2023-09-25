@@ -20,11 +20,15 @@ namespace SmartSQL.Models.Api
 
         public List<CategoryApiType> type { get; set; }
 
+        public CategoryApiType SelectedType { get; set; }
+
         public List<SiteApi> sites { get; set; }
     }
 
     public class CategoryApiType
     {
         public string typeName { get; set; }
+
+        public List<SiteApi> sites { get; set; }
     }
 }

@@ -27,6 +27,9 @@ using System.Text.Json;
 using SmartSQL.Models.Api;
 using SmartSQL.Framework.Const;
 using System.Windows.Forms;
+using HandyControl.Controls;
+using System.Diagnostics;
+using System.Web.UI;
 
 namespace SmartSQL.UserControl
 {
@@ -105,7 +108,6 @@ namespace SmartSQL.UserControl
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
             await GetSiteInfo();
-
         }
 
         private async Task GetSiteInfo()
@@ -124,7 +126,21 @@ namespace SmartSQL.UserControl
                         var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
                         categoryList.ForEach(x =>
                         {
+                            int initType = 0;
                             x.count = siteList.Count(t => t.category == x.categoryName);
+                            if (x.type.Any())
+                            {
+                                x.type.ForEach(t =>
+                                {
+                                    if (initType == 0)
+                                    {
+                                        x.SelectedType = t;
+                                    }
+                                    t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
+                                    initType++;
+                                });
+                                return;
+                            }
                             x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
                         });
                         var gtlist = siteList.GroupBy(x => x.category).ToList();
@@ -132,25 +148,32 @@ namespace SmartSQL.UserControl
                         Dispatcher.BeginInvoke(new Action(() =>
                         {
                             CategoryList = categoryList.Where(x => x.isEnable).ToList();
-                            SiteList = siteList;
                         }));
                     }
                 }
             });
         }
 
-        private void ListCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-
+            var site = (SiteApi)((Card)sender).DataContext;
+            Process.Start(site.url);
         }
 
-        private void ProductBox_PreviewMouseWheel(object sender, MouseWheelEventArgs e)
+        /// <summary>
+        /// 选中左侧菜单
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MenuCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var listbox = sender as System.Windows.Controls.ListBox;
-            var eventArg = new MouseWheelEventArgs(e.MouseDevice, e.Timestamp, e.Delta);
-            eventArg.RoutedEvent = UIElement.MouseWheelEvent;
-            eventArg.Source = sender;
-            listbox.RaiseEvent(eventArg);
+            //选中项
+            var selectedItem = (CategoryApi)((System.Windows.Controls.ListBox)sender).SelectedItem;
+            var itemToScrollIntoView = CategoryItems.ItemContainerGenerator.ContainerFromItem(selectedItem) as FrameworkElement;
+            var itemPosition = itemToScrollIntoView.TransformToAncestor(CategoryItems).Transform(new Point(0, 0));
+            // 滚动到item位置
+            ScrollViewBox.ScrollToVerticalOffset(itemPosition.Y);
+            ScrollViewBox.ScrollToHorizontalOffset(itemPosition.X);
         }
     }
 }
