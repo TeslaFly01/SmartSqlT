@@ -112,48 +112,54 @@ namespace SmartSQL.UserControl
 
         private async Task GetSiteInfo()
         {
+            #region MyRegion
             await Task.Run(() =>
-            {
-                var client = new RestClient(CategoryApiUrl);
-                var result = client.Execute(new RestRequest());
-                if (result.StatusCode == HttpStatusCode.OK)
                 {
-                    var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
-                    client = new RestClient(SiteApiUrl);
-                    result = client.Execute(new RestRequest());
+                    var client = new RestClient(CategoryApiUrl);
+                    var result = client.Execute(new RestRequest());
                     if (result.StatusCode == HttpStatusCode.OK)
                     {
-                        var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
-                        categoryList.ForEach(x =>
+                        var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
+                        client = new RestClient(SiteApiUrl);
+                        result = client.Execute(new RestRequest());
+                        if (result.StatusCode == HttpStatusCode.OK)
                         {
-                            int initType = 0;
-                            x.count = siteList.Count(t => t.category == x.categoryName);
-                            if (x.type.Any())
+                            var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
+                            categoryList.ForEach(x =>
                             {
-                                x.type.ForEach(t =>
+                                int initType = 0;
+                                x.count = siteList.Count(t => t.category == x.categoryName);
+                                if (x.type.Any())
                                 {
-                                    if (initType == 0)
+                                    x.type.ForEach(t =>
                                     {
-                                        x.SelectedType = t;
-                                    }
-                                    t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
-                                    initType++;
-                                });
-                                return;
-                            }
-                            x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
-                        });
-                        var gtlist = siteList.GroupBy(x => x.category).ToList();
-
-                        Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            CategoryList = categoryList.Where(x => x.isEnable).ToList();
-                        }));
+                                        if (initType == 0)
+                                        {
+                                            x.SelectedType = t;
+                                        }
+                                        t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
+                                        initType++;
+                                    });
+                                    x.type = x.type.Where(t => t.sites.Count > 0).ToList();
+                                    return;
+                                }
+                                x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                            });
+                            Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                CategoryList = categoryList.Where(x => x.isEnable).ToList();
+                            }));
+                        }
                     }
-                }
-            });
+                });
+            #endregion
         }
 
+        /// <summary>
+        /// 浏览器打开站点
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             var site = (SiteApi)((Card)sender).DataContext;
