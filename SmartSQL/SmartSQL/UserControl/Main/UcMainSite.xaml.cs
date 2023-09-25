@@ -160,7 +160,7 @@ namespace SmartSQL.UserControl
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Card_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        private void Card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             var site = (SiteApi)((Card)sender).DataContext;
             Process.Start(site.url);

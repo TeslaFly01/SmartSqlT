@@ -163,7 +163,7 @@
                                                                             BorderThickness="0"
                                                                             Cursor="Hand"
                                                                             Effect="{StaticResource EffectShadow2}"
-                                                                            MouseLeftButtonUp="Card_MouseLeftButtonUp"
+                                                                            MouseLeftButtonDown="Card_MouseLeftButtonDown"
                                                                             ToolTip="{Binding description}">
                                                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
                                                                                 <hc:Gravatar
@@ -226,7 +226,7 @@
                                                             BorderThickness="0"
                                                             Cursor="Hand"
                                                             Effect="{StaticResource EffectShadow2}"
-                                                            MouseLeftButtonUp="Card_MouseLeftButtonUp"
+                                                            MouseLeftButtonDown="Card_MouseLeftButtonDown"
                                                             ToolTip="{Binding description}">
                                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
                                                                 <hc:Gravatar
