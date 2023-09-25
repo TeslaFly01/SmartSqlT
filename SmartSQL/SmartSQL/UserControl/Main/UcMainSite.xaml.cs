@@ -45,8 +45,13 @@ namespace SmartSQL.UserControl
         }
 
         #region MyRegion
+        private readonly static string CategoryApiUrl = "https://apiv.gitee.io/smartapi/categoryApi.json";
+
+        private readonly static string SiteApiUrl = "https://apiv.gitee.io/smartapi/siteApi.json";
+
+        #region 圆角度数
         public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-    "CornerRadius", typeof(int), typeof(UcMainSite), new PropertyMetadata(default(int)));
+"CornerRadius", typeof(int), typeof(UcMainSite), new PropertyMetadata(default(int)));
 
         /// <summary>
         /// 选项卡圆角度数
@@ -56,9 +61,11 @@ namespace SmartSQL.UserControl
             get => (int)GetValue(CornerRadiusProperty);
             set => SetValue(CornerRadiusProperty, value);
         }
+        #endregion
 
+        #region 分类列表
         public static readonly DependencyProperty CategoryListProperty = DependencyProperty.Register(
-    "CategoryList", typeof(List<CategoryApi>), typeof(UcMainSite), new PropertyMetadata(default(List<CategoryApi>)));
+"CategoryList", typeof(List<CategoryApi>), typeof(UcMainSite), new PropertyMetadata(default(List<CategoryApi>)));
 
         /// <summary>
         /// 分类列表
@@ -68,9 +75,11 @@ namespace SmartSQL.UserControl
             get => (List<CategoryApi>)GetValue(CategoryListProperty);
             set => SetValue(CategoryListProperty, value);
         }
+        #endregion
 
+        #region 站点列表
         public static readonly DependencyProperty SiteListProperty = DependencyProperty.Register(
-    "SiteList", typeof(List<SiteApi>), typeof(UcMainSite), new PropertyMetadata(default(List<SiteApi>)));
+"SiteList", typeof(List<SiteApi>), typeof(UcMainSite), new PropertyMetadata(default(List<SiteApi>)));
 
         /// <summary>
         /// 站点列表
@@ -80,6 +89,7 @@ namespace SmartSQL.UserControl
             get => (List<SiteApi>)GetValue(SiteListProperty);
             set => SetValue(SiteListProperty, value);
         }
+        #endregion
         #endregion
 
         public UcMainSite()
@@ -102,12 +112,12 @@ namespace SmartSQL.UserControl
         {
             await Task.Run(() =>
             {
-                var client = new RestClient("https://apiv.gitee.io/smartapi/categoryApi.json");
+                var client = new RestClient(CategoryApiUrl);
                 var result = client.Execute(new RestRequest());
                 if (result.StatusCode == HttpStatusCode.OK)
                 {
                     var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
-                    client = new RestClient("https://apiv.gitee.io/smartapi/siteApi.json");
+                    client = new RestClient(SiteApiUrl);
                     result = client.Execute(new RestRequest());
                     if (result.StatusCode == HttpStatusCode.OK)
                     {
@@ -123,9 +133,6 @@ namespace SmartSQL.UserControl
                         {
                             CategoryList = categoryList.Where(x => x.isEnable).ToList();
                             SiteList = siteList;
-                            //    ListCategory.ItemsSource = categoryList.Where(x => x.isEnable);
-                            //    ProductBox.ItemsSource = siteList;
-                            //    //ListCategory.ItemsSource = categoryList;
                         }));
                     }
                 }

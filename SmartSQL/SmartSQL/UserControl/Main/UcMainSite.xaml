@@ -107,7 +107,7 @@
                             Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
                             Visibility="Collapsed" />
 
-                        <hc:ScrollViewer Margin="0,15,10,15" Visibility="Collapsed">
+                        <hc:ScrollViewer Margin="0,15,10,15" Visibility="Visible">
                             <ItemsControl x:Name="dasd" ItemsSource="{Binding Source={StaticResource dsa}}">
                                 <ItemsControl.GroupStyle>
                                     <GroupStyle>
@@ -126,25 +126,25 @@
                                 </ItemsControl.GroupStyle>
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <hc:WaterfallPanel hc:PanelElement.FluidMoveBehavior="{StaticResource BehaviorX200}" Groups="4" />
-                                        <!--<WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />-->
+                                        <WrapPanel HorizontalAlignment="Center" Orientation="Horizontal" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <hc:Card
                                             MaxWidth="255"
-                                            Margin="0,8,0,8"
+                                            Margin="15,8,15,8"
                                             BorderThickness="0"
                                             Cursor="Hand"
-                                            Effect="{StaticResource EffectShadow2}">
+                                            Effect="{StaticResource EffectShadow2}"
+                                            ToolTip="{Binding description}">
                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
                                                 <hc:Gravatar
                                                     Width="52"
                                                     Height="52"
                                                     Margin="10,0,0,0"
                                                     Style="{StaticResource GravatarCircleImg}">
-                                                    <Image Source="https://www.haocxy.com/wp-content/uploads/2023/06/baidu-wangpan.png" />
+                                                    <Image Source="{Binding icon}" />
                                                 </hc:Gravatar>
                                                 <StackPanel
                                                     Width="220"
@@ -172,84 +172,8 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </hc:ScrollViewer>
-
-                        <hc:TransitioningContentControl Margin="0,0,0,0">
-                            <Grid>
-                                <Border CornerRadius="10">
-                                    <hc:ScrollViewer>
-                                        <ListBox
-                                            x:Name="ProductBox"
-                                            Margin="0,15"
-                                            BorderThickness="0"
-                                            ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"
-                                            ItemsSource="{Binding Source={StaticResource dsa}}"
-                                            PreviewMouseWheel="ProductBox_PreviewMouseWheel"
-                                            Style="{StaticResource WrapPanelHorizontalListBox}">
-                                            <ListBox.GroupStyle>
-                                                <GroupStyle>
-                                                    <GroupStyle.HeaderTemplate>
-                                                        <DataTemplate>
-                                                            <StackPanel Margin="12" Orientation="Horizontal">
-                                                                <fa:FontAwesome FontSize="14" Icon="ListUl" />
-                                                                <TextBlock
-                                                                    Margin="10,-2.5,0,0"
-                                                                    FontSize="14"
-                                                                    Text="{Binding Name}" />
-                                                            </StackPanel>
-                                                        </DataTemplate>
-                                                    </GroupStyle.HeaderTemplate>
-                                                </GroupStyle>
-                                            </ListBox.GroupStyle>
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate DataType="data:CardModel">
-                                                    <hc:Card
-                                                        MaxWidth="255"
-                                                        Margin="8"
-                                                        BorderThickness="0"
-                                                        Cursor="Hand"
-                                                        Effect="{StaticResource EffectShadow2}"
-                                                        ToolTip="{Binding description}">
-                                                        <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
-                                                            <hc:Gravatar
-                                                                Width="52"
-                                                                Height="52"
-                                                                Margin="10,0,0,0"
-                                                                Style="{StaticResource GravatarCircleImg}">
-                                                                <Image Source="{Binding icon}" />
-                                                            </hc:Gravatar>
-                                                            <StackPanel
-                                                                Width="220"
-                                                                Height="80"
-                                                                Cursor="Hand"
-                                                                Orientation="Vertical">
-                                                                <TextBlock
-                                                                    Margin="10,20,0,0"
-                                                                    HorizontalAlignment="Left"
-                                                                    FontWeight="Bold"
-                                                                    Foreground="#282a2d"
-                                                                    IsHitTestVisible="False"
-                                                                    Text="{Binding DataContext.siteName, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
-                                                                <TextBlock
-                                                                    Width="170"
-                                                                    Margin="10,10,0,0"
-                                                                    HorizontalAlignment="Left"
-                                                                    Foreground="#727E96"
-                                                                    Text="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}"
-                                                                    TextTrimming="CharacterEllipsis"
-                                                                    ToolTip="{Binding DataContext.description, RelativeSource={RelativeSource AncestorType=hc:Card}}" />
-                                                            </StackPanel>
-                                                        </StackPanel>
-                                                    </hc:Card>
-                                                </DataTemplate>
-                                            </ListBox.ItemTemplate>
-                                        </ListBox>
-                                    </hc:ScrollViewer>
-                                </Border>
-                            </Grid>
-                        </hc:TransitioningContentControl>
                     </Grid>
                 </Border>
-
             </Grid>
         </DockPanel>
     </Grid>
