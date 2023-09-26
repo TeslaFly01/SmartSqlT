@@ -167,8 +167,8 @@
                                                                             ToolTip="{Binding description}">
                                                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
                                                                                 <hc:Gravatar
-                                                                                    Width="52"
-                                                                                    Height="52"
+                                                                                    Width="50"
+                                                                                    Height="50"
                                                                                     Margin="10,0,0,0"
                                                                                     Style="{StaticResource GravatarCircleImg}">
                                                                                     <Image Source="{Binding icon}" />

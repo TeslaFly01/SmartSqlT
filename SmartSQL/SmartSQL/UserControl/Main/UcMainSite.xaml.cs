@@ -140,6 +140,12 @@ namespace SmartSQL.UserControl
                                         t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
                                         initType++;
                                     });
+                                    if (x.type.Count(t => t.sites.Count > 0) == 1)
+                                    {
+                                        x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                                        x.type = new List<CategoryApiType>();
+                                        return;
+                                    }
                                     x.type = x.type.Where(t => t.sites.Count > 0).ToList();
                                     return;
                                 }
