@@ -797,7 +797,7 @@ namespace SmartSQL.UserControl
                         Icon = SysConst.Sys_GROUPICON,
                         Type = ObjType.Group,
                         IsExpanded = true,
-                        FontWeight = "Bold",
+                        //FontWeight = "Bold",
                         Children = itemChildList,
                         IsShowCount = Visibility.Visible
                     };
@@ -875,7 +875,7 @@ namespace SmartSQL.UserControl
                         Icon = SysConst.Sys_TAGICON,
                         Type = ObjType.Tag,
                         IsExpanded = true,
-                        FontWeight = "Bold",
+                        //FontWeight = "Bold",
                         Children = itemChildList
                     };
                     var nodeTable1 = new TreeNodeItem

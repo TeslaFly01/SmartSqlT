@@ -171,7 +171,7 @@
                                                                                     Height="50"
                                                                                     Margin="10,0,0,0"
                                                                                     Style="{StaticResource GravatarCircleImg}">
-                                                                                    <Image Source="{Binding icon}" />
+                                                                                    <Image Source="{Binding icon}" Stretch="UniformToFill" />
                                                                                 </hc:Gravatar>
                                                                                 <StackPanel
                                                                                     Width="220"
