@@ -62,11 +62,11 @@ namespace SmartSQL.Framework.SqliteModel
             {
                 switch (DbType)
                 {
-                    case DbType.SqlServer: return "/SmartSQL;component/Resources/svg/sqlserver.svg";
-                    case DbType.MySql: return "/SmartSQL;component/Resources/svg/mysql.svg";
-                    case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/postgresql.svg";
+                    case DbType.SqlServer: return "/SmartSQL;component/Resources/svg/icons/icon-ic_sqlserver.svg";
+                    case DbType.MySql: return "/SmartSQL;component/Resources/svg/icons/icon-ic_mysql.svg";
+                    case DbType.PostgreSQL: return "/SmartSQL;component/Resources/svg/icons/icon-pg1.svg";
                     case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
-                    case DbType.Oracle: return "/SmartSQL;component/Resources/svg/database/icon_oracle_64.svg";
+                    case DbType.Oracle: return "/SmartSQL;component/Resources/svg/icons/icon-oracle.svg";
                     case DbType.Dm: return "/SmartSQL;component/Resources/svg/dameng.svg";
                     default: return "";
                 }
