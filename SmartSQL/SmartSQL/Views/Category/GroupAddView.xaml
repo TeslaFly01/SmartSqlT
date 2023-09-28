@@ -47,33 +47,31 @@
                 <UniformGrid
                     Height="80"
                     Margin="20,120,20,0"
+                    HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Columns="3"
                     Rows="2">
                     <RadioButton
                         Name="CheckCurrent"
-                        Background="{DynamicResource SecondaryRegionBrush}"
                         Content="当前节点"
-                        Style="{StaticResource RadioButtonIcon}" />
+                        Cursor="Hand" />
                     <RadioButton
                         Name="CheckChild"
                         Margin="10,0,0,0"
-                        Background="{DynamicResource SecondaryRegionBrush}"
                         Content="子项节点"
-                        Style="{StaticResource RadioButtonIcon}" />
+                        Cursor="Hand" />
                     <RadioButton
                         Name="CheckNone"
                         Margin="10,0,0,0"
-                        Background="{DynamicResource SecondaryRegionBrush}"
                         Content="不展开"
-                        IsChecked="True"
-                        Style="{StaticResource RadioButtonIcon}" />
+                        Cursor="Hand"
+                        IsChecked="True" />
                 </UniformGrid>
                 <Border
                     VerticalAlignment="Bottom"
                     Background="#f5f5f5"
                     CornerRadius="0 0 8 8">
-                    <Grid>
+                    <Grid Cursor="">
                         <hc:SimpleStackPanel
                             Margin="5"
                             HorizontalAlignment="Right"

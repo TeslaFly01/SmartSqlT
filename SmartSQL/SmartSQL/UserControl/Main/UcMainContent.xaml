@@ -57,7 +57,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="8*" />
-                                    <ColumnDefinition Width="1*" MinWidth="30" />
+                                    <ColumnDefinition Width="1*" MinWidth="35" />
                                 </Grid.ColumnDefinitions>
                                 <ComboBox
                                     x:Name="SelectDatabase"
@@ -76,10 +76,10 @@
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                                                <Image
-                                                    Width="11"
-                                                    Height="15"
-                                                    Source="/SmartSQL;component/Resources/Img/dataBase.ico" />
+                                                <svgc:SvgViewbox
+                                                    Width="12"
+                                                    Height="12"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-ic_database.svg" />
                                                 <TextBlock
                                                     Margin="5,0,0,0"
                                                     HorizontalAlignment="Center"
@@ -92,15 +92,14 @@
                                 <Button
                                     Name="BtnFresh"
                                     Grid.Column="1"
-                                    Margin="0,0,0,0"
-                                    Padding="4"
-                                    VerticalAlignment="Top"
-                                    Background="Transparent"
                                     BorderThickness="0"
                                     Click="BtnFresh_OnClick"
                                     Cursor="Hand">
                                     <Button.Content>
-                                        <Image Source="/SmartSQL;component/Resources/Img/Refresh.png" Stretch="Fill" />
+                                        <fa:FontAwesome
+                                            FontSize="15"
+                                            Foreground="#727E96"
+                                            Icon="Refresh" />
                                     </Button.Content>
                                 </Button>
                             </Grid>
