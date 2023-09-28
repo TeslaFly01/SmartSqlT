@@ -1,0 +1,15 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg t="1658303696471" class="icon" viewBox="0 0 1024 1024" version="1.1"
+    xmlns="http://www.w3.org/2000/svg" p-id="7374" width="32" height="32"
+    xmlns:xlink="http://www.w3.org/1999/xlink">
+   <path d="M128 192a64 64 0 0 1 64-64h640a64 64 0 0 1 64 64v192H128V192z" fill="#1890FF"></path>
+        <path d="M128 384h256v256H128z" fill="#E8F4FF"></path>
+        <path d="M128 640h256v256H192a64 64 0 0 1-64-64v-192z" fill="#A3D3FF"></path>
+        <path d="M384 384h256v256H384z" fill="#D1E9FF"></path>
+        <path d="M384 640h256v256H384z" fill="#8BC7FF"></path>
+        <path d="M640 384h256v256h-256z" fill="#BADEFF"></path>
+        <path d="M640 640h256v192a64 64 0 0 1-64 64h-192v-256z" fill="#74BCFF"></path>
+        <path d="M989.376 763.648C930.112 638.848 840.576 576 720.512 576c-120.128 0-209.664 62.784-268.928 187.712a37.696 37.696 0 0 0 0 32.128c59.264 124.8 148.864 187.648 268.928 187.648 120.128 0 209.6-62.784 268.8-187.648a37.696 37.696 0 0 0 0-32.192z m-341.376 16.128a70.016 70.016 0 1 0 139.968 0 70.016 70.016 0 0 0-139.968 0z m-40 0a110.016 110.016 0 1 1 219.968 0 110.016 110.016 0 0 1-219.968 0z" fill="#2C5CD7"></path>
+    
+</svg>
