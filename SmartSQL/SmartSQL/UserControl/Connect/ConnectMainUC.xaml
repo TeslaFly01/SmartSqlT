@@ -19,7 +19,7 @@
                 </Border.Background>
             </Border>
             <StackPanel Margin="20,12,0,0" HorizontalAlignment="Left">
-                <TextBlock FontWeight="Bold" Foreground="#36425a">选择连接类型</TextBlock>
+                <TextBlock FontWeight="Bold" Foreground="#36425a">选择数据库类型</TextBlock>
             </StackPanel>
         </Grid>
         <ListBox
