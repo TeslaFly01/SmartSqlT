@@ -10,8 +10,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     Title="SQL脚本"
-    Width="600"
-    Height="410"
+    Width="700"
+    Height="450"
     BorderThickness="0"
     Icon="../Resources/Img/sqlScript.ico"
     Loaded="ScriptWindow_OnLoaded"
@@ -19,41 +19,28 @@
     ShowInTaskbar="False"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid>
-        <TabControl
-            Name="TabSql"
+    <Grid Background="#f8f8f8">
+        <Border
             Margin="5"
-            Style="{StaticResource TabControlBaseStyle}"
-            TabStripPlacement="Left">
-            <TabItem
-                Name="TabSelectSql"
-                Header="SELECT"
-                IsSelected="True">
-                <controls:SqlScript x:Name="TxtSelectSql" HasClose="True" />
-            </TabItem>
-            <TabItem Name="TabInsertSql" Header="INSERT">
-                <controls:SqlScript x:Name="TxtInsertSql" HasClose="True" />
-            </TabItem>
-            <TabItem Name="TabUpdateSql" Header="UPDATE">
-                <controls:SqlScript x:Name="TxtUpdateSql" HasClose="True" />
-            </TabItem>
-            <TabItem Name="TabDeleteSql" Header="DELETE">
-                <controls:SqlScript x:Name="TxtDeleteSql" HasClose="True" />
-            </TabItem>
-            <TabItem Name="TabCreateSql" Header="DDL">
-                <controls:SqlScript x:Name="TxtCreateSql" HasClose="True" />
-            </TabItem>
-        </TabControl>
-        <Button
-            x:Name="BtnClose"
-            Width="80"
-            Height="28"
-            Margin="0,0,10,10"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            BorderBrush="#f0f0f0"
-            Click="BtnClose_OnClick"
-            Content="关闭"
-            Cursor="Hand" />
+            Background="White"
+            CornerRadius="8">
+            <Grid>
+                <controls:SqlScript
+                    x:Name="TxtSql"
+                    Margin="5,5,5,0"
+                    HasClose="True" />
+                <Button
+                    x:Name="BtnClose"
+                    Width="80"
+                    Height="28"
+                    Margin="0,0,10,5"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    BorderBrush="#f0f0f0"
+                    Click="BtnClose_OnClick"
+                    Content="关闭"
+                    Cursor="Hand" />
+            </Grid>
+        </Border>
     </Grid>
 </hc:Window>

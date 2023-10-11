@@ -153,14 +153,6 @@
                                     Cursor="Hand"
                                     Style="{StaticResource ButtonWarning}" />
                                 <Button
-                                    x:Name="BtnCreateSqlScript"
-                                    Height="26"
-                                    hc:IconElement.Geometry="{StaticResource CodeEGeometry}"
-                                    Click="BtnCreateSqlScript_OnClick"
-                                    Content="生成SQL"
-                                    Cursor="Hand"
-                                    Style="{StaticResource ButtonInfo}" />
-                                <Button
                                     x:Name="BtnGenCode"
                                     Height="26"
                                     hc:IconElement.Geometry="{StaticResource EntityGeometry}"

@@ -58,6 +58,18 @@ namespace SmartSQL.Views
             get => (List<Column>)GetValue(SelectedColumnsProperty);
             set => SetValue(SelectedColumnsProperty, value);
         }
+
+
+        public static readonly DependencyProperty SqlTagProperty = DependencyProperty.Register(
+            "SqlTag", typeof(string), typeof(ScriptWindow), new PropertyMetadata(default(string)));
+        /// <summary>
+        /// Sql标记
+        /// </summary>
+        public string SqlTag
+        {
+            get => (string)GetValue(SqlTagProperty);
+            set => SetValue(SqlTagProperty, value);
+        }
         public ScriptWindow()
         {
             InitializeComponent();
@@ -73,30 +85,31 @@ namespace SmartSQL.Views
                 Name = SelectedObject.Name,
                 SchemaName = SelectedObject.Schema
             };
+            var sqlTag = SqlTag;
             var instance = ExporterFactory.CreateInstance(SelectedConnection.DbType, tb, colList);
-            if (TabSelectSql.IsSelected)
+
+            var scriptSql = instance.SelectSql();
+            //插入sql
+            if (sqlTag == "Insert")
             {
-                //查询sql
-                var selSql = instance.SelectSql();
-                TxtSelectSql.SqlText = selSql;
+                scriptSql = instance.InsertSql();
             }
-            Task.Run(() =>
+            //更新sql
+            if (sqlTag == "Update")
             {
-                var ddlSql = instance.CreateTableSql();
-                //插入sql
-                var insSql = instance.InsertSql();
-                //更新sql
-                var updSql = instance.UpdateSql();
-                //删除sql
-                var delSql = instance.DeleteSql();
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    TxtCreateSql.SqlText = ddlSql;
-                    TxtInsertSql.SqlText = insSql;
-                    TxtUpdateSql.SqlText = updSql;
-                    TxtDeleteSql.SqlText = delSql;
-                }));
-            });
+                scriptSql = instance.UpdateSql();
+            }
+            //删除sql
+            if (sqlTag == "Delete")
+            {
+                scriptSql = instance.DeleteSql();
+            }
+            //DDL sql
+            if (sqlTag == "DDL")
+            {
+                scriptSql = instance.CreateTableSql();
+            }
+            TxtSql.SqlText = scriptSql;
         }
 
         private void BtnClose_OnClick(object sender, RoutedEventArgs e)

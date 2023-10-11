@@ -166,11 +166,35 @@
                             <TreeView.ContextMenu>
                                 <!--  右键菜单  -->
                                 <ContextMenu Name="TreeContextMenu" Visibility="Visible">
-                                    <ContextMenu.ItemContainerStyle>
+                                    <!--<ContextMenu.Style>
+                                        <Style BasedOn="{StaticResource ContextMenuBaseStyle}" TargetType="{x:Type ContextMenu}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ContextMenu">
+                                                        <Border
+                                                            MaxHeight="{TemplateBinding MaxHeight}"
+                                                            Margin="8"
+                                                            Background="{TemplateBinding Background}"
+                                                            BorderBrush="{DynamicResource BorderBrush}"
+                                                            BorderThickness="1"
+                                                            CornerRadius="{Binding Path=(hc:BorderElement.CornerRadius), RelativeSource={RelativeSource TemplatedParent}}"
+                                                            Effect="{StaticResource EffectShadow2}">
+                                                            <ScrollViewer Margin="{TemplateBinding Padding}" Style="{StaticResource ScrollViewerUpDown}">
+                                                                <ItemsPresenter />
+                                                            </ScrollViewer>
+                                                        </Border>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ContextMenu.Style>-->
+                                    <!--<ContextMenu.ItemContainerStyle>
                                         <Style BasedOn="{StaticResource MenuItemBaseStyle}" TargetType="MenuItem">
                                             <Setter Property="Width" Value="180" />
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                         </Style>
-                                    </ContextMenu.ItemContainerStyle>
+                                    </ContextMenu.ItemContainerStyle>-->
                                     <MenuItem
                                         x:Name="MenuCopyName"
                                         VerticalAlignment="Center"
@@ -224,7 +248,6 @@
                                     <MenuItem
                                         x:Name="MenuCreateSQL"
                                         VerticalAlignment="Center"
-                                        Click="MenuCreateSQL_OnClick"
                                         Header="生成SQL">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome
@@ -233,6 +256,71 @@
                                                 Foreground="#1890ff"
                                                 Icon="Code" />
                                         </MenuItem.Icon>
+                                        <MenuItem
+                                            x:Name="MenuCreate1SQL"
+                                            VerticalAlignment="Center"
+                                            Click="MenuCreateSQL_OnClick"
+                                            Header="查找"
+                                            Tag="Select">
+                                            <MenuItem.Icon>
+                                                <svgc:SvgViewbox
+                                                    Width="14"
+                                                    Height="14"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            x:Name="MenuCreate111SQL"
+                                            VerticalAlignment="Center"
+                                            Click="MenuCreateSQL_OnClick"
+                                            Header="插入"
+                                            Tag="Insert">
+                                            <MenuItem.Icon>
+                                                <svgc:SvgViewbox
+                                                    Width="14"
+                                                    Height="14"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            x:Name="MenuCreate1SQ22L"
+                                            VerticalAlignment="Center"
+                                            Click="MenuCreateSQL_OnClick"
+                                            Header="更新"
+                                            Tag="Update">
+                                            <MenuItem.Icon>
+                                                <svgc:SvgViewbox
+                                                    Width="14"
+                                                    Height="14"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            x:Name="MenuCreate1SQL12"
+                                            VerticalAlignment="Center"
+                                            Click="MenuCreateSQL_OnClick"
+                                            Header="删除"
+                                            Tag="Delete">
+                                            <MenuItem.Icon>
+                                                <svgc:SvgViewbox
+                                                    Width="14"
+                                                    Height="14"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            x:Name="MenuCreate1SQL121"
+                                            VerticalAlignment="Center"
+                                            Click="MenuCreateSQL_OnClick"
+                                            Header="DDL"
+                                            Tag="DDL">
+                                            <MenuItem.Icon>
+                                                <svgc:SvgViewbox
+                                                    Width="14"
+                                                    Height="14"
+                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-ddl.svg" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
                                     </MenuItem>
                                     <MenuItem
                                         x:Name="MenuGenCode"

@@ -1298,6 +1298,7 @@ namespace SmartSQL.UserControl
                 return;
             }
             var sqLiteHelper = new SQLiteHelper();
+            //是否多选项卡
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             if (!isMultipleTab)
             {
@@ -1542,6 +1543,7 @@ namespace SmartSQL.UserControl
                 Oops.Oh("请选择对应的表");
                 return;
             }
+            var menuItem = (System.Windows.Controls.MenuItem)sender;
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
             var dbInstance = ExporterFactory.CreateInstance(SelectedConnection.DbType, SelectedConnection.SelectedDbConnectString(selectDatabase.DbName), selectDatabase.DbName);
             var tableColumns = dbInstance.GetColumnInfoById(selectedObject.ObejcetId);
@@ -1551,6 +1553,7 @@ namespace SmartSQL.UserControl
             scriptW.SelectedConnection = SelectedConnection;
             scriptW.SelectedObject = selectedObject;
             scriptW.SelectedColumns = list;
+            scriptW.SqlTag = menuItem.Tag.ToString();
             scriptW.Owner = mainWindow;
             scriptW.ShowDialog();
             #endregion

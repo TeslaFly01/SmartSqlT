@@ -142,7 +142,7 @@ namespace SmartSQL.UserControl
                 TabData.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
-                BtnCreateSqlScript.IsEnabled = !isView;
+                
                 var objName = isView ? "视图" : "表";
                 TabStruct.Header = objName;
                 TabData.Header = objName;
