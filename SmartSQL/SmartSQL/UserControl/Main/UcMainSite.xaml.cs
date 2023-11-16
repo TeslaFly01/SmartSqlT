@@ -179,9 +179,21 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuCategory_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (!IsLoaded)
+            {
+                return;
+            }
             //选中项
             var selectedItem = (CategoryApi)((System.Windows.Controls.ListBox)sender).SelectedItem;
+            if (selectedItem == null)
+            {
+                return;
+            }
             var itemToScrollIntoView = CategoryItems.ItemContainerGenerator.ContainerFromItem(selectedItem) as FrameworkElement;
+            if (itemToScrollIntoView == null)
+            {
+                return;
+            }
             var itemPosition = itemToScrollIntoView.TransformToAncestor(CategoryItems).Transform(new Point(0, 0));
             // 滚动到item位置
             ScrollViewBox.ScrollToVerticalOffset(itemPosition.Y);

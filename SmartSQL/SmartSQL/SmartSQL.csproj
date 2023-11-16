@@ -88,7 +88,7 @@
       <Version>8.0.30</Version>
     </PackageReference>
     <PackageReference Include="Npgsql">
-      <Version>6.0.3</Version>
+      <Version>7.0.6</Version>
     </PackageReference>
     <PackageReference Include="Oracle.ManagedDataAccess">
       <Version>19.16.0</Version>
