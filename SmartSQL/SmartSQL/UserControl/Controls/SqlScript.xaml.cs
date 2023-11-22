@@ -94,6 +94,8 @@ namespace SmartSQL.UserControl.Controls
         {
             TextEditor.SelectAll();
             Clipboard.SetDataObject(SqlText.SqlFormat());
+            var mainWindow = System.Windows.Window.GetWindow(this);
+            mainWindow.Close();
             Growl.SuccessGlobal(new GrowlInfo { Message = "脚本已复制到剪切板.", WaitTime = 1, ShowDateTime = false });
         }
     }
