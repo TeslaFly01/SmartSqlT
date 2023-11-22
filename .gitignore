@@ -26,3 +26,7 @@ obj/*
 /SmartSQL/SmartSQL.DocUtils/obj/Debug
 /SmartSQL/SmartSQL.Framework/bin/Debug
 /SmartSQL/SmartSQL.Framework/obj/Debug
+/SmartSQL/SmartSQL.DocUtils/bin/Release
+/SmartSQL/SmartSQL.Framework/bin/Release
+/SmartSQL/SmartSQL.Framework/obj/Release
+/SmartSQL/SmartSQL.DocUtils/obj/Release
