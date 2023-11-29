@@ -13,16 +13,16 @@ namespace SmartSQL.Framework.Exporter
     /// </summary>
     public class DmExporter : Exporter, IExporter
     {
-        private readonly IDbMaintenance _dbMaintenance;
+        private readonly SqlSugarClient _dbClient;
 
         public DmExporter(string connectionString) : base(connectionString)
         {
-
+            _dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
         }
 
         public DmExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Dm, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
         }
 
         public DmExporter(Table table, List<Column> columns) : base(table, columns)
@@ -180,7 +180,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
+            var viewList = _dbClient.DbMaintenance.GetColumnInfosByTableName(objectId);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
@@ -250,7 +250,7 @@ namespace SmartSQL.Framework.Exporter
                             and view_name = '{objectId}'";
             var list = new List<ScriptInfo>();
 
-            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
             list = dbClient.SqlQueryable<ScriptInfo>(sql).ToList();
             if (list.Any())
             {
@@ -258,6 +258,13 @@ namespace SmartSQL.Framework.Exporter
             }
             return new ScriptInfo().Definition;
             #endregion
+        }
+
+        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        {
+            int totalNum = 0;
+            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            return (result, totalNum);
         }
 
         public override string AddColumnSql()

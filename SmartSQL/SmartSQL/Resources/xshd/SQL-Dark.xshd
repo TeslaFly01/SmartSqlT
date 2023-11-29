@@ -227,6 +227,8 @@
           <Word>add</Word>
           <Word>key</Word>
           <Word>primary</Word>
+          <Word>break</Word>
+          <Word>execute</Word>
           
           <Word>IF</Word>
           <Word>ELSE</Word>
@@ -288,6 +290,8 @@
           <Word>ADD</Word>
           <Word>KEY</Word>
           <Word>PRIMARY</Word>
+          <Word>BREAK</Word>
+          <Word>EXECUTE</Word>
         </Keywords>
 
         <Keywords color="GotoKeywords">
@@ -311,6 +315,8 @@
           <Word>null</Word>
           <Word>or</Word>
           <Word>exists</Word>
+          <Word>all</Word>
+          <Word>any</Word>
           <Word>IN</Word>
           <Word>IS</Word>
           <Word>LEFT</Word>
@@ -324,6 +330,8 @@
           <Word>NULL</Word>
           <Word>OR</Word>
           <Word>EXISTS</Word>
+          <Word>ALL</Word>
+          <Word>ANY</Word>
           <Word>(</Word>
           <Word>)</Word>
           <Word>'</Word>

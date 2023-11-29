@@ -32,6 +32,11 @@ using TabControl = System.Windows.Controls.TabControl;
 using TabItem = System.Windows.Controls.TabItem;
 using System.IO;
 using SmartSQL.Views.Category;
+using System.Data.Entity.Core.Objects;
+using System.Data.Entity;
+using Org.BouncyCastle.Math.EC.Rfc7748;
+using Org.BouncyCastle.Crypto.Agreement;
+using NLog;
 
 namespace SmartSQL.UserControl
 {
@@ -40,12 +45,14 @@ namespace SmartSQL.UserControl
     /// </summary>
     public partial class UcMainContent : BaseUserControl
     {
+        private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         private static readonly Dictionary<string, string> IconDic = new Dictionary<string, string>
         {
             { "Type", SysConst.Sys_GROUPICON },
             { "Table", SysConst.Sys_TABLEICON },
             { "View", SysConst.Sys_VIEWICON },
-            { "Proc", SysConst.Sys_PROCICON }
+            { "Proc", SysConst.Sys_PROCICON },
+            { "SQL", SysConst.Sys_SQLICON }
         };
 
         private List<TreeNodeItem> itemList = new List<TreeNodeItem>();
@@ -703,6 +710,39 @@ namespace SmartSQL.UserControl
                 return;
             }
             MenuBind();
+        }
+
+        /// <summary>
+        /// 新建查询
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnQuery_Click(object sender, RoutedEventArgs e)
+        {
+            CornerRadius = 0;
+            var selectConnection = SelectedConnection;
+            var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
+            if (selectConnection == null || selectDatabase == null)
+            {
+                Oops.Oh("请选择数据库");
+                return;
+            }
+            MainW.Visibility = Visibility.Collapsed;
+            MainTabW.Visibility = Visibility.Visible;
+            var sqlQueryMain = new UcSqlQueryMain
+            {
+                SelectedConnection = selectConnection,
+                SelectedDataBase = selectDatabase,
+            };
+            var anyCount = TabItemData.Count(x => x.DisplayName.EndsWith($"{selectConnection.ConnectName}@{selectDatabase.DbName}"));
+            var tabItem = new MainTabWModel
+            {
+                DisplayName = $"{anyCount + 1}-{selectConnection.ConnectName}@{selectDatabase.DbName}",
+                Icon = IconDic["SQL"],
+                MainW = sqlQueryMain
+            };
+            TabItemData.Insert(0, tabItem);
+            MainTabW.SelectedItem = TabItemData.First();
         }
 
         /// <summary>

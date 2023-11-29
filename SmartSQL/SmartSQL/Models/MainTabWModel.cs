@@ -21,6 +21,6 @@ namespace SmartSQL.Models
         /// <summary>
         /// 选项卡内容控件
         /// </summary>
-        public UcMainW MainW { get; set; }
+        public System.Windows.Controls.UserControl MainW { get; set; }
     }
 }

@@ -139,13 +139,11 @@ namespace SmartSQL.UserControl
                 var isView = selectedObject.Type == ObjType.View;
                 TabTable.SelectedItem = isView ? TabSql : TabStruct;
                 LoadingG.Visibility = TabStruct.Visibility = Visibility.Visible;
-                TabData.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = isView ? Visibility.Visible : Visibility.Collapsed;
                 TabCode.Visibility = isView ? Visibility.Collapsed : Visibility.Visible;
                 
                 var objName = isView ? "视图" : "表";
                 TabStruct.Header = objName;
-                TabData.Header = objName;
                 var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, dbConnectionString, selectedDatabase.DbName);
                 Task.Run(() =>
                 {
@@ -182,7 +180,6 @@ namespace SmartSQL.UserControl
             else
             {
                 TabStruct.Visibility = Visibility.Collapsed;
-                TabData.Visibility = Visibility.Collapsed;
                 TabCode.Visibility = Visibility.Collapsed;
                 TabSql.Visibility = Visibility.Visible;
                 TabTable.SelectedItem = TabSql;
@@ -200,25 +197,6 @@ namespace SmartSQL.UserControl
             #endregion
         }
 
-
-        /// <summary>
-        /// 表结构绑定
-        /// </summary>
-        /// <param name="exporter"></param>
-        /// <param name="objects"></param>
-        private void BindColumnDataSet(IExporter exporter, TreeNodeItem objects)
-        {
-            //Task.Run(() =>
-            //{
-            //    TableColumns = exporter.GetColumnsExt(Convert.ToInt32(objects.ObejcetId), ConnectionString);
-            //    var list = TableColumns.Values.ToList();
-            //    this.Dispatcher.BeginInvoke(new Action(() =>
-            //    {
-            //        CbTableColumnData.ItemsSource = list;
-            //    }));
-            //});
-        }
-
         //表数据选项卡选中时加载数据
         private void TabTable_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
@@ -227,18 +205,7 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
-            var selectedItem = (System.Windows.Controls.TabItem)((System.Windows.Controls.TabControl)sender).SelectedItem;
-            if (selectedItem.Name.Equals("TabData"))
-            {
-                var connectionString = SelectedConnection.DbMasterConnectString;
-                var exporter = ExporterFactory.CreateInstance(SelectedConnection.DbType, connectionString, SelectedDataBase.DbName);
-                if (TabData.IsSelected)
-                {
-                    SearchTableExt2.Text = "";
-                    BindDataSet(exporter, SelectedObject, string.Empty);
-                    BindColumnDataSet(exporter, SelectedObject);
-                }
-            }
+            var selectedItem = (System.Windows.Controls.TabItem)((System.Windows.Controls.TabControl)sender).SelectedItem;      
             if (selectedItem == TabCode)
             {
                 UTabCode.SelectedDataBase = SelectedDataBase.DbName;
@@ -565,37 +532,6 @@ namespace SmartSQL.UserControl
             gc.ExportData = new List<TreeNodeItem>() { SelectedObject }; ;
             gc.ShowDialog();
 
-            #endregion
-        }
-
-        /// <summary>
-        /// 表数据绑定
-        /// </summary>
-        /// <param name="exporter"></param>
-        /// <param name="objects"></param>
-        /// <param name="strWhere"></param>
-        private void BindDataSet(IExporter exporter, TreeNodeItem objects, string strWhere)
-        {
-            #region MyRegion
-            //LoadingLineTableData.Visibility = Visibility.Visible;
-            //NoDataTextExt.Visibility = Visibility.Collapsed;
-            //var connectionString = SelectedConnection.DbMasterConnectString;
-            //Task.Run(() =>
-            //{
-            //    DataSet dataSet = exporter.GetDataSet(connectionString, objects.DisplayName, strWhere);
-            //    this.Dispatcher.BeginInvoke(new Action(() =>
-            //    {
-            //        TableDataGrid.ItemsSource = null;
-            //        //编写获取数据并显示在界面的代码
-            //        var dataView = dataSet.Tables[0].DefaultView;
-            //        TableDataGrid.ItemsSource = dataView;
-            //        LoadingLineTableData.Visibility = Visibility.Hidden;
-            //        if (dataView.Count < 1)
-            //        {
-            //            NoDataTextExt.Visibility = Visibility.Visible;
-            //        }
-            //    }));
-            //}); 
             #endregion
         }
 

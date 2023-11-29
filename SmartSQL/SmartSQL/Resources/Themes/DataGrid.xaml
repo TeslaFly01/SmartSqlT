@@ -225,7 +225,7 @@
                                 </Grid.ColumnDefinitions>
                                 <ContentPresenter
                                     VerticalAlignment="Center"
-                                    RecognizesAccessKey="True"
+                                    RecognizesAccessKey="False"
                                     SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                                 <ToggleButton
                                     x:Name="ToggleButtonSortDirection"

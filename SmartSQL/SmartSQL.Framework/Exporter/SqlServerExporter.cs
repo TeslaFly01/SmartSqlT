@@ -15,14 +15,14 @@ namespace SmartSQL.Framework.Exporter
 
     public class SqlServerExporter : Exporter, IExporter
     {
-        private readonly IDbMaintenance _dbMaintenance;
+        private readonly SqlSugarClient _dbClient;
         public SqlServerExporter(string connectionString) : base(connectionString)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
         }
         public SqlServerExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.SqlServer, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
         }
         public SqlServerExporter(Table table, List<Column> columns) : base(table, columns)
         {
@@ -373,6 +373,11 @@ namespace SmartSQL.Framework.Exporter
         }
         #endregion
 
+        /// <summary>
+        /// 获取所有列信息
+        /// </summary>
+        /// <param name="objectId"></param>
+        /// <returns></returns>
         public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
@@ -387,7 +392,7 @@ namespace SmartSQL.Framework.Exporter
                 }
                 objectId = tableInfo.Values.First().Id;
             }
-            var colList = _dbMaintenance.GetColumnInfosByTableName(objectId, false);
+            var colList = _dbClient.DbMaintenance.GetColumnInfosByTableName(objectId, false);
             colList.ForEach(col =>
             {
                 if (columns.ContainsKey(col.DbColumnName))
@@ -442,8 +447,10 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
-            var scriptInfo = _dbMaintenance.GetScriptInfo(objectId, objectType);
+            #region MyRegion
+            var scriptInfo = _dbClient.DbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
+            #endregion
         }
 
         /// <summary>
@@ -454,20 +461,22 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override bool UpdateObjectRemark(string objectName, string remark, DbObjectType objectType = DbObjectType.Table)
         {
+            #region MyRegion
             var result = false;
             if (objectType == DbObjectType.Table)
             {
-                result = _dbMaintenance.AddTableRemark(objectName, remark);
+                result = _dbClient.DbMaintenance.AddTableRemark(objectName, remark);
             }
             if (objectType == DbObjectType.View)
             {
-                result = _dbMaintenance.AddViewRemark(objectName, remark);
+                result = _dbClient.DbMaintenance.AddViewRemark(objectName, remark);
             }
             if (objectType == DbObjectType.Proc)
             {
-                result = _dbMaintenance.AddProcRemark(objectName, remark);
+                result = _dbClient.DbMaintenance.AddProcRemark(objectName, remark);
             }
             return result;
+            #endregion
         }
 
         /// <summary>
@@ -478,13 +487,22 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table)
         {
+            #region MyRegion
             var columnName = columnInfo.Name;
             var tableName = columnInfo.ObjectName;
-            if (_dbMaintenance.IsAnyColumnRemark(columnName, tableName))
+            if (_dbClient.DbMaintenance.IsAnyColumnRemark(columnName, tableName))
             {
-                _dbMaintenance.DeleteColumnRemark(columnName, tableName);
+                _dbClient.DbMaintenance.DeleteColumnRemark(columnName, tableName);
             }
-            return _dbMaintenance.AddColumnRemark(columnName, tableName, remark);
+            return _dbClient.DbMaintenance.AddColumnRemark(columnName, tableName, remark);
+            #endregion
+        }
+
+        public override (DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        {
+            int totalNum = 0;
+            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            return (result, totalNum);
         }
 
         #region 获取sql脚本

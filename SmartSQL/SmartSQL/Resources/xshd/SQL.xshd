@@ -303,6 +303,8 @@
           <Word>null</Word>
           <Word>or</Word>
           <Word>exists</Word>
+          <Word>all</Word>
+          <Word>any</Word>
           <Word>IN</Word>
           <Word>IS</Word>
           <Word>LEFT</Word>
@@ -316,6 +318,8 @@
           <Word>NULL</Word>
           <Word>OR</Word>
           <Word>EXISTS</Word>
+          <Word>ALL</Word>
+          <Word>ANY</Word>
           <Word>(</Word>
           <Word>)</Word>
           <Word>'</Word>

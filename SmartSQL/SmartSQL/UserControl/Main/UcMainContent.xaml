@@ -47,7 +47,7 @@
                 <Border
                     Margin="5,5,0,5"
                     Background="{DynamicResource RegionBrush}"
-                    CornerRadius="{Binding CornerRadius}">
+                    CornerRadius="10">
                     <Grid
                         Height="Auto"
                         Margin="5"
@@ -57,6 +57,7 @@
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="8*" />
+                                    <ColumnDefinition Width="1*" MinWidth="35" />
                                     <ColumnDefinition Width="1*" MinWidth="35" />
                                 </Grid.ColumnDefinitions>
                                 <ComboBox
@@ -94,12 +95,27 @@
                                     Grid.Column="1"
                                     BorderThickness="0"
                                     Click="BtnFresh_OnClick"
-                                    Cursor="Hand">
+                                    Cursor="Hand"
+                                    ToolTip="刷新">
                                     <Button.Content>
                                         <fa:FontAwesome
                                             FontSize="15"
                                             Foreground="#727E96"
                                             Icon="Refresh" />
+                                    </Button.Content>
+                                </Button>
+                                <Button
+                                    Name="BtnQuery"
+                                    Grid.Column="2"
+                                    BorderThickness="0"
+                                    Click="BtnQuery_Click"
+                                    Cursor="Hand"
+                                    ToolTip="新建查询">
+                                    <Button.Content>
+                                        <fa:FontAwesome
+                                            FontSize="15"
+                                            Foreground="#727E96"
+                                            Icon="Pencil" />
                                     </Button.Content>
                                 </Button>
                             </Grid>
@@ -429,7 +445,7 @@
         <!--  主内容  -->
         <DockPanel Grid.Row="0" Grid.Column="2">
             <Grid Margin="0,5,5,5">
-                <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                <Border Background="White" CornerRadius="10">
                     <svgc:SvgViewbox
                         Width="350"
                         Height="325"
@@ -440,6 +456,10 @@
                 <!--  多选项卡  -->
                 <hc:TabControl
                     Name="MainTabW"
+                    Margin="5"
+                    hc:BorderElement.CornerRadius="10"
+                    Background="Transparent"
+                    BorderThickness="0"
                     IsAnimationEnabled="True"
                     IsDraggable="True"
                     IsTabFillEnabled="False"
@@ -466,7 +486,9 @@
                     </hc:TabControl.ItemTemplate>
                     <hc:TabControl.ContentTemplate>
                         <DataTemplate>
-                            <UserControl Content="{Binding MainW}" />
+                            <Grid>
+                                <UserControl Content="{Binding MainW}" />
+                            </Grid>
                         </DataTemplate>
                     </hc:TabControl.ContentTemplate>
                 </hc:TabControl>

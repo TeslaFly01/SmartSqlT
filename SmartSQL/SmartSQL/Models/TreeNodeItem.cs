@@ -165,6 +165,8 @@ namespace SmartSQL.Models
 
     public static class ObjType
     {
+        public const string Db = "Db";
+
         public const string Group = "Group";
 
         public const string Tag = "Tag";

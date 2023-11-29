@@ -51,6 +51,10 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="remark"></param>
         /// <returns></returns>
         bool UpdateColumnRemark(Column columnInfo, string remark, DbObjectType objectType = DbObjectType.Table);
+
+
+        (DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize);
+      
         /// <summary>
         /// 创建表SQL
         /// </summary>

@@ -11,14 +11,14 @@ namespace SmartSQL.Framework.Exporter
 {
     public class OracleExporter : Exporter, IExporter
     {
-        private readonly IDbMaintenance _dbMaintenance;
+        private readonly SqlSugarClient _dbClient;
         public OracleExporter(string connectionString) : base(connectionString)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
         }
         public OracleExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Oracle, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
         }
 
         public OracleExporter(Table table, List<Column> columns) : base(table, columns)
@@ -51,7 +51,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var tableList = _dbMaintenance.GetTableInfoList(false);
+            var tableList = _dbClient.DbMaintenance.GetTableInfoList(false);
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -77,7 +77,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var viewList = _dbMaintenance.GetViewInfoList(false);
+            var viewList = _dbClient.DbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
             {
                 if (views.ContainsKey(v.Name))
@@ -103,8 +103,8 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var procDic = new Procedures();
-            var procInfoList = _dbMaintenance.GetProcInfoList(false);
-            var dbName = _dbMaintenance.Context.Ado.Connection.Database;
+            var procInfoList = _dbClient.DbMaintenance.GetProcInfoList(false);
+            var dbName = _dbClient.DbMaintenance.Context.Ado.Connection.Database;
             var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
             procList.ForEach(p =>
             {
@@ -153,7 +153,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId, false);
+            var viewList = _dbClient.DbMaintenance.GetColumnInfosByTableName(objectId, false);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
@@ -207,7 +207,7 @@ namespace SmartSQL.Framework.Exporter
         public override string GetScriptInfoById(string objectId, DbObjectType objectType)
         {
             #region MyRegion
-            var scriptInfo = _dbMaintenance.GetScriptInfo(objectId, objectType);
+            var scriptInfo = _dbClient.DbMaintenance.GetScriptInfo(objectId, objectType);
             return scriptInfo.Definition;
             #endregion
         }
@@ -235,6 +235,12 @@ namespace SmartSQL.Framework.Exporter
             throw new NotImplementedException();
         }
 
+        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        {
+            int totalNum = 0;
+            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            return (result, totalNum);
+        }
         public override string CreateTableSql()
         {
             return "";

@@ -4,26 +4,24 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSQL.Framework.PhysicalDataModel;
+using SmartSQL.Framework.Util;
 using SqlSugar;
-using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Framework.Exporter
 {
-    using PhysicalDataModel;
-    using Util;
     /// <summary>
     /// Sqlite数据库
     /// </summary>
     public class SqliteExporter : Exporter, IExporter
     {
-        private readonly IDbMaintenance _dbMaintenance;
+        private readonly SqlSugarClient _dbClient;
         public SqliteExporter(string connectionString) : base(connectionString)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.Sqlite, DbConnectString);
         }
         public SqliteExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.Sqlite, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.Sqlite, DbConnectString);
         }
 
         public SqliteExporter(Table table, List<Column> columns) : base(table, columns)
@@ -63,7 +61,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var columns = new Columns(500);
-            var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId, false);
+            var viewList = _dbClient.DbMaintenance.GetColumnInfosByTableName(objectId, false);
             viewList.ForEach(v =>
             {
                 if (columns.ContainsKey(v.DbColumnName))
@@ -180,7 +178,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var tables = new Tables();
-            var tableList = _dbMaintenance.GetTableInfoList(false);
+            var tableList = _dbClient.DbMaintenance.GetTableInfoList(false);
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -206,7 +204,7 @@ namespace SmartSQL.Framework.Exporter
         {
             #region MyRegion
             var views = new Views();
-            var viewList = _dbMaintenance.GetViewInfoList(false);
+            var viewList = _dbClient.DbMaintenance.GetViewInfoList(false);
             viewList.ForEach(v =>
             {
                 if (views.ContainsKey(v.Name))
@@ -226,6 +224,13 @@ namespace SmartSQL.Framework.Exporter
             });
             return views;
             #endregion
+        }
+
+        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        {
+            int totalNum = 0;
+            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            return (result, totalNum);
         }
     }
 }

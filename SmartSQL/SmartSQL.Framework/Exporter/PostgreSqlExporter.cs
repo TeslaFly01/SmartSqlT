@@ -11,14 +11,14 @@ namespace SmartSQL.Framework.Exporter
 {
     public class PostgreSqlExporter : Exporter, IExporter
     {
-        private readonly IDbMaintenance _dbMaintenance;
+        private readonly SqlSugarClient _dbClient;
         public PostgreSqlExporter(string connectionString) : base(connectionString)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
         }
         public PostgreSqlExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbMaintenance = SugarFactory.GetDbMaintenance(DbType.PostgreSQL, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
         }
 
         public PostgreSqlExporter(Table table, List<Column> columns) : base(table, columns)
@@ -81,8 +81,7 @@ namespace SmartSQL.Framework.Exporter
                            WHERE
                                     table_schema = '{schema}'
                            AND t.table_name = p.relname";
-            var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            var tableList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
+            var tableList = _dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
             tableList.ForEach(tb =>
             {
                 if (tables.ContainsKey(tb.Name))
@@ -110,7 +109,7 @@ namespace SmartSQL.Framework.Exporter
             var views = new Views();
             try
             {
-                var viewList = _dbMaintenance.GetViewInfoList(false);
+                var viewList = _dbClient.DbMaintenance.GetViewInfoList(false);
                 viewList.ForEach(v =>
                 {
                     if (views.ContainsKey(v.Name))
@@ -143,8 +142,8 @@ namespace SmartSQL.Framework.Exporter
             var procDic = new Procedures();
             try
             {
-                var procInfoList = _dbMaintenance.GetProcInfoList(false);
-                var dbName = _dbMaintenance.Context.Ado.Connection.Database;
+                var procInfoList = _dbClient.DbMaintenance.GetProcInfoList(false);
+                var dbName = _dbClient.DbMaintenance.Context.Ado.Connection.Database;
                 var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
                 procList.ForEach(p =>
                 {
@@ -178,7 +177,6 @@ namespace SmartSQL.Framework.Exporter
             #region MyRegion
             var columns = new Columns(500);
             var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
-            var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
             var sql = $@"select cast (pclass.oid as int4) as TableId,cast(ptables.tablename as varchar) as TableName,
                                 pcolumn.column_name as DbColumnName,pcolumn.udt_name as DataType,
                                 CASE WHEN pcolumn.numeric_scale > 0 THEN pcolumn.numeric_precision ELSE pcolumn.character_maximum_length END   as Length,
@@ -202,7 +200,7 @@ namespace SmartSQL.Framework.Exporter
                                     where pg_constraint.contype = 'p'
                                 ) pkey on pcolumn.table_name = pkey.relname
                                 order by ptables.tablename";
-            var colList = dbClient.SqlQueryable<DbColumnInfo>(sql).ToList();
+            var colList = _dbClient.SqlQueryable<DbColumnInfo>(sql).ToList();
             //var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             colList.ForEach(v =>
             {
@@ -268,7 +266,7 @@ namespace SmartSQL.Framework.Exporter
             var result = false;
             if (objectType == DbObjectType.Table)
             {
-                result = _dbMaintenance.AddTableRemark(objectName, remark);
+                result = _dbClient.DbMaintenance.AddTableRemark(objectName, remark);
             }
             if (objectType == DbObjectType.View)
             {
@@ -301,7 +299,7 @@ namespace SmartSQL.Framework.Exporter
                     ColumnDescription = remark,
                     PropertyName = dbName
                 };
-                result = _dbMaintenance.AddColumnRemark(dbColumn);
+                result = _dbClient.DbMaintenance.AddColumnRemark(dbColumn);
             }
             if (objectType == DbObjectType.View)
             {
@@ -312,6 +310,13 @@ namespace SmartSQL.Framework.Exporter
                 throw new NotSupportedException();
             }
             return result;
+        }
+
+        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        {
+            int totalNum = 0;
+            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            return (result, totalNum);
         }
 
         public override string CreateTableSql()
