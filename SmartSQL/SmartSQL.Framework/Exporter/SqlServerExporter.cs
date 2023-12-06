@@ -11,6 +11,7 @@ using DbType = SqlSugar.DbType;
 namespace SmartSQL.Framework.Exporter
 {
     using PhysicalDataModel;
+    using System.Data.SqlTypes;
     using Util;
 
     public class SqlServerExporter : Exporter, IExporter
@@ -498,11 +499,36 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        public override (DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        public override (DataTable, int) GetDataTable(string sql, string orderBySql, int pageIndex, int pageSize)
         {
             int totalNum = 0;
-            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            var result = new DataTable();
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+
+                result = _dbClient.SqlQueryable<dynamic>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            }
+            else
+            {
+                var dataTable = _dbClient.SqlQueryable<dynamic>(sql).ToDataTable();
+                totalNum = dataTable.Rows.Count;
+                // 使用 LINQ 进行分页
+                var query = (from row in dataTable.AsEnumerable()
+                             select row).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+
+                result = query.CopyToDataTable();
+            }
             return (result, totalNum);
+        }
+
+        /// <summary>
+        /// 执行SQL语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public override int ExecuteSQL(string sql)
+        {
+            return _dbClient.Ado.ExecuteCommand(sql);
         }
 
         #region 获取sql脚本

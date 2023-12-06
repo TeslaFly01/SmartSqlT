@@ -200,6 +200,7 @@
     <Compile Include="Models\PhysicalDataModel\View.cs" />
     <Compile Include="Models\PhysicalDataModel\Procedures.cs" />
     <Compile Include="Models\PhysicalDataModel\Views.cs" />
+    <Compile Include="Models\SqliteModel\SqlQueryHistory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resource.Designer.cs">
       <AutoGen>True</AutoGen>

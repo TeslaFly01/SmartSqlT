@@ -113,7 +113,7 @@ namespace SmartSQL.Views.Category
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-                var tagMenuList = sqLiteInstance.ToList<TagInfo>(x =>
+                var tagMenuList = sqLiteInstance.GetList<TagInfo>(x =>
                    x.ConnectId == selConn.ID &&
                    x.DataBaseName == selectDataBase);
                 Dispatcher.Invoke(() =>
@@ -141,7 +141,7 @@ namespace SmartSQL.Views.Category
         {
             #region MyRegion
             var sqliteInstance = SQLiteHelper.GetInstance();
-            var datalist = sqliteInstance.ToList<TagInfo>(x =>
+            var datalist = sqliteInstance.GetList<TagInfo>(x =>
                 x.ConnectId == SelectedConnection.ID &&
                 x.DataBaseName == SelectedDataBase
                 );

@@ -5,6 +5,7 @@
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
@@ -12,10 +13,8 @@
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
     Loaded="UcSqlQueryMain_Loaded"
+    PreviewKeyDown="UcSqlQueryMain_PreviewKeyDown"
     mc:Ignorable="d">
-    <UserControl.InputBindings>
-        <KeyBinding Key="Z" Modifiers="Control+Alt" />
-    </UserControl.InputBindings>
     <UserControl.Resources>
         <Style
             x:Key="ComboBoxSqlQuery"
@@ -97,6 +96,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -109,6 +109,7 @@
             <RowDefinition Height="5*" MinHeight="80" />
         </Grid.RowDefinitions>
 
+        <!--  按钮面板  -->
         <DockPanel
             Grid.Row="0"
             Grid.Column="0"
@@ -121,6 +122,7 @@
                 BorderBrush="#E0E0E0"
                 BorderThickness="0,0,0,1">
                 <StackPanel Orientation="Horizontal">
+                    <!--  选择连接  -->
                     <ComboBox
                         x:Name="SelectConnets"
                         Width="200"
@@ -153,6 +155,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+
+                    <!--  选择数据库  -->
                     <ComboBox
                         x:Name="SelectDatabase"
                         Width="200"
@@ -184,6 +188,8 @@
                             </DataTemplate>
                         </ComboBox.ItemTemplate>
                     </ComboBox>
+
+                    <!--  执行  -->
                     <Button
                         x:Name="BtnExecute"
                         Height="25"
@@ -192,7 +198,7 @@
                         BorderThickness="0"
                         Click="BtnExecute_Click"
                         Cursor="Hand"
-                        ToolTip="执行（F5）">
+                        ToolTip="执行（Ctrl+Enter）">
                         <StackPanel Orientation="Horizontal">
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -202,10 +208,29 @@
                             <TextBlock Margin="8,-1.2,0,0" Text="执行" />
                         </StackPanel>
                     </Button>
+
+                    <!--  设置  -->
+                    <Button
+                        x:Name="BtnSetting"
+                        Height="25"
+                        Margin="10,0,0,0"
+                        Background="#f4f5f7"
+                        BorderThickness="0"
+                        Cursor="Hand"
+                        ToolTip="设置">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#1890ff"
+                                Icon="Cog" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </Border>
         </DockPanel>
 
+        <!--  SQL编辑器  -->
         <DockPanel
             Grid.Row="1"
             Grid.Column="0"
@@ -225,8 +250,10 @@
                     <avalonedit:TextEditor.ContextMenu>
                         <ContextMenu Name="TreeContextMenu" Visibility="Visible">
                             <MenuItem
-                                x:Name="MenuCopyName"
+                                x:Name="MenuExecute"
                                 VerticalAlignment="Center"
+                                Click="BtnExecute_Click"
+                                Cursor="Hand"
                                 Header="执行">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome
@@ -238,8 +265,10 @@
                             </MenuItem>
                             <Separator Margin="0,0,10,0" />
                             <MenuItem
-                                x:Name="MenuSetTag1"
+                                x:Name="MenuCopy"
                                 VerticalAlignment="Center"
+                                Click="MenuCopy_Click"
+                                Cursor="Hand"
                                 Header="复制">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome
@@ -249,8 +278,10 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem
-                                x:Name="MenuSetTag21"
+                                x:Name="MenuPaste"
                                 VerticalAlignment="Center"
+                                Click="MenuPaste_Click"
+                                Cursor="Hand"
                                 Header="粘贴">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome
@@ -260,24 +291,35 @@
                                 </MenuItem.Icon>
                             </MenuItem>
                             <MenuItem
-                                x:Name="MenuSetTag"
+                                x:Name="MenuFormat"
                                 VerticalAlignment="Center"
+                                Click="MenuFormat_Click"
+                                Cursor="Hand"
                                 Header="格式化">
                                 <MenuItem.Icon>
                                     <fa:FontAwesome
                                         VerticalAlignment="Center"
-                                        Foreground="#fdab03"
+                                        Foreground="ForestGreen"
                                         Icon="FileTextOutline" />
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem
+                                x:Name="MenuSaveAs"
+                                VerticalAlignment="Center"
+                                Click="MenuSaveAs_Click"
+                                Cursor="Hand"
+                                Header="另存为...">
+                                <MenuItem.Icon>
+                                    <fa:FontAwesome
+                                        VerticalAlignment="Center"
+                                        Foreground="#1890ff"
+                                        Icon="Save" />
                                 </MenuItem.Icon>
                             </MenuItem>
                         </ContextMenu>
                     </avalonedit:TextEditor.ContextMenu>
                     <avalonedit:TextEditor.Options>
-                        <avalonedit:TextEditorOptions ShowSpaces="False">
-                            <avalonedit:TextEditorOptions.ColumnRulerPosition>
-                                <system:Int32>10</system:Int32>
-                            </avalonedit:TextEditorOptions.ColumnRulerPosition>
-                        </avalonedit:TextEditorOptions>
+                        <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
                     </avalonedit:TextEditor.Options>
                 </avalonedit:TextEditor>
             </Border>
@@ -291,93 +333,312 @@
             Margin="5,0,5,0"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Center"
-            Background="Transparent" />
+            Background="Transparent">
+            <GridSplitter.Style>
+                <Style TargetType="GridSplitter">
+                    <Setter Property="Foreground" Value="Gray" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridSplitter">
+                                <Grid>
+                                    <Rectangle Fill="{TemplateBinding Background}" />
+                                    <Path
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="M 0 0 L 25 0 M 0 3 L 25 3"
+                                        SnapsToDevicePixels="True"
+                                        Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="1" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GridSplitter.Style>
+        </GridSplitter>
 
+        <!--  输出面板  -->
         <DockPanel Grid.Row="3" Grid.Column="0">
             <hc:TabControl
-                x:Name="TabTable"
+                x:Name="TabResult"
                 Background="#fff"
-                BorderThickness="0"
+                SelectionChanged="TabResult_SelectionChanged"
                 ShowContextMenu="False"
                 Style="{StaticResource TabControlBaseStyle}">
 
                 <hc:TabItem
+                    x:Name="TabLog"
                     Width="90"
                     Cursor="Hand"
                     Header="输出日志"
-                    Style="{StaticResource TabItemInLine}" />
+                    Style="{StaticResource TabItemInLine}">
+                    <Border
+                        Margin="0,5,0,0"
+                        BorderBrush="#f4f5f7"
+                        BorderThickness="2"
+                        CornerRadius="8">
+                        <StackPanel
+                            Margin="10,10,0,0"
+                            HorizontalAlignment="Left"
+                            Orientation="Horizontal">
+                            <fa:FontAwesome
+                                x:Name="TbLogIcon"
+                                FontSize="20"
+                                Foreground="#ff0000"
+                                Icon="TimesCircle"
+                                Visibility="Collapsed" />
+                            <TextBlock x:Name="TbLogMsg" Margin="10,2,0,0" />
+                        </StackPanel>
+                    </Border>
+                </hc:TabItem>
                 <!--  Tab2：表/视图数据  -->
                 <hc:TabItem
                     x:Name="TabData"
                     Width="90"
                     Cursor="Hand"
-                    Header="结果"
+                    Header="执行结果"
                     IsSelected="True"
                     Style="{StaticResource TabItemInLine}">
-                    <Grid Background="#ffffff">
-                        <Border Background="#f5f5f5" CornerRadius="8">
-                            <Grid>
-                                <DataGrid
-                                    x:Name="TableDataGrid"
-                                    Margin="0,5,0,40"
-                                    Padding="5,0,5,0"
-                                    hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
-                                    hc:DataGridAttach.ShowRowNumber="True"
-                                    AutoGenerateColumns="True"
-                                    Background="#f5f5f5"
-                                    ColumnWidth="Auto"
-                                    Cursor="Arrow"
-                                    HeadersVisibility="All"
-                                    HorizontalScrollBarVisibility="Visible"
-                                    IsReadOnly="True"
-                                    RowHeaderWidth="60"
-                                    RowHeight="5"
-                                    SelectionUnit="CellOrRowHeader">
-                                    <DataGrid.Resources>
-                                        <!--<Style BasedOn="{StaticResource ScrollBarBaseStyle}" TargetType="{x:Type ScrollBar}">
-                                            <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
-                                            <Setter Property="Width" Value="50" />
-                                        </Style>-->
-                                    </DataGrid.Resources>
-                                </DataGrid>
+                    <Grid
+                        x:Name="ResultBox"
+                        Margin="0,5,0,0"
+                        Background="#ffffff"
+                        Cursor="Arrow">
+                        <DataGrid
+                            x:Name="DgResult"
+                            Margin="0,0,0,35"
+                            Padding="5"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                            hc:DataGridAttach.ShowRowNumber="True"
+                            AutoGenerateColumns="True"
+                            AutoGeneratingColumn="DgResult_AutoGeneratingColumn"
+                            Background="#f5f5f5"
+                            ColumnWidth="Auto"
+                            HeadersVisibility="All"
+                            IsReadOnly="True"
+                            RowHeaderWidth="60"
+                            RowHeight="5"
+                            SelectionUnit="CellOrRowHeader" />
+                        <Grid Margin="0" VerticalAlignment="Bottom">
+                            <Button
+                                x:Name="BtnExport"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Click="BtnExport_Click"
+                                Cursor="Hand"
+                                ToolTip="导出">
+                                <Button.ContextMenu>
+                                    <ContextMenu
+                                        Name="CMeneExport"
+                                        Width="200"
+                                        Visibility="Visible">
+                                        <MenuItem
+                                            x:Name="MenuCopyN11ame"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            Header="将结果导出为CSV">
+                                            <MenuItem.Icon>
+                                                <Path
+                                                    Data="{StaticResource Fa_Solid_FileCsv}"
+                                                    Fill="ForestGreen"
+                                                    Stretch="Uniform" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem
+                                            x:Name="MenuSetT1ag1"
+                                            VerticalAlignment="Center"
+                                            Cursor="Hand"
+                                            Header="将结果导出为Excel">
+                                            <MenuItem.Icon>
+                                                <fa:FontAwesome
+                                                    VerticalAlignment="Center"
+                                                    FontSize="14"
+                                                    Foreground="ForestGreen"
+                                                    Icon="FileExcelOutline" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </ContextMenu>
+                                </Button.ContextMenu>
+                                <StackPanel Orientation="Horizontal">
+                                    <fa:FontAwesome
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="#1890ff"
+                                        Icon="Download" />
+                                </StackPanel>
+                            </Button>
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Orientation="Horizontal">
                                 <hc:Pagination
                                     x:Name="PageInfo"
-                                    Margin="0,0,5,5"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Bottom"
                                     HorizontalContentAlignment="Stretch"
                                     Background="White"
                                     BorderBrush="Transparent"
-                                    BorderThickness="0"
+                                    Cursor="Hand"
                                     IsJumpEnabled="True"
-                                    MaxPageCount="10"
                                     MaxPageInterval="3"
                                     PageUpdated="PageInfo_PageUpdated"
                                     Visibility="Visible" />
+                                <TextBlock
+                                    Margin="8"
+                                    VerticalAlignment="Center"
+                                    Text="每页" />
+                                <hc:ComboBox
+                                    x:Name="PageSize"
+                                    Width="90"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Right"
+                                    Cursor="Hand">
+                                    <ComboBoxItem
+                                        Content="100"
+                                        Cursor="Hand"
+                                        IsSelected="True" />
+                                    <ComboBoxItem Content="200" Cursor="Hand" />
+                                    <ComboBoxItem Content="500" Cursor="Hand" />
+                                    <ComboBoxItem Content="1000" Cursor="Hand" />
+                                    <ComboBoxItem Content="2000" Cursor="Hand" />
+                                    <ComboBoxItem Content="5000" Cursor="Hand" />
+                                </hc:ComboBox>
+                                <TextBlock VerticalAlignment="Center" Text="条" />
 
-                                <Grid
-                                    x:Name="NoDataTextExt"
-                                    Margin="0"
-                                    HorizontalAlignment="Stretch"
-                                    Background="White"
-                                    Cursor="Arrow">
-                                    <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
-                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                        <Grid
+                            x:Name="NoDataTextExt"
+                            Margin="0"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            Cursor="Arrow">
+                            <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
+                        </Grid>
 
-                                <localBase:Loading
-                                    x:Name="LoadingG"
-                                    BackgroundOpacity="0.1"
-                                    Visibility="Collapsed" />
-                            </Grid>
-                        </Border>
+                        <localBase:Loading
+                            x:Name="LoadingG"
+                            BackgroundOpacity="0.2"
+                            Visibility="Collapsed" />
                     </Grid>
                 </hc:TabItem>
 
                 <hc:TabItem
+                    x:Name="TabSqlQueryHistory"
                     Width="90"
                     Cursor="Hand"
                     Header="查询历史"
-                    Style="{StaticResource TabItemInLine}" />
+                    Style="{StaticResource TabItemInLine}">
+                    <Grid
+                        Margin="0,5,0,0"
+                        Background="#ffffff"
+                        Cursor="Arrow">
+                        <DataGrid
+                            x:Name="DgHistory"
+                            Margin="0,0,0,35"
+                            Padding="5"
+                            hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
+                            hc:DataGridAttach.ShowRowNumber="True"
+                            AutoGenerateColumns="False"
+                            Background="#f5f5f5"
+                            ColumnWidth="Auto"
+                            HeadersVisibility="All"
+                            IsReadOnly="True"
+                            RowHeaderWidth="60"
+                            RowHeight="5"
+                            SelectionUnit="CellOrRowHeader">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn
+                                    Binding="{Binding ConnectName}"
+                                    Header="连接名称"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding DataBaseName}"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                    Header="数据库"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding QueryTime, StringFormat=yyyy-MM-dd HH:mm:ss}"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                    Header="查询时间"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding QuerySql}"
+                                    CanUserSort="False"
+                                    Header="查询SQL"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding BackRows}"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                    Header="影响行数"
+                                    IsReadOnly="True" />
+                                <DataGridTextColumn
+                                    Binding="{Binding TimeConsuming, StringFormat=N2}"
+                                    CanUserSort="False"
+                                    CellStyle="{StaticResource DataGridTextCenterColumnStyle}"
+                                    Header="耗时（毫秒）"
+                                    IsReadOnly="True" />
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Orientation="Horizontal">
+
+                            <hc:Pagination
+                                x:Name="PageInfoLog"
+                                HorizontalContentAlignment="Stretch"
+                                Background="White"
+                                BorderBrush="Transparent"
+                                Cursor="Hand"
+                                IsJumpEnabled="True"
+                                MaxPageInterval="3"
+                                PageUpdated="PageInfoLog_PageUpdated"
+                                Visibility="Visible" />
+                            <TextBlock
+                                Margin="8"
+                                VerticalAlignment="Center"
+                                Text="每页" />
+                            <hc:ComboBox
+                                x:Name="PageSizeLog"
+                                Width="90"
+                                Margin="0,0,8,0"
+                                HorizontalAlignment="Right"
+                                Cursor="Hand">
+                                <ComboBoxItem
+                                    Content="10"
+                                    Cursor="Hand"
+                                    IsSelected="True" />
+                                <ComboBoxItem Content="20" Cursor="Hand" />
+                                <ComboBoxItem Content="50" Cursor="Hand" />
+                                <ComboBoxItem Content="100" Cursor="Hand" />
+                            </hc:ComboBox>
+                            <TextBlock
+                                Margin="0,0,5,0"
+                                VerticalAlignment="Center"
+                                Text="条" />
+
+                        </StackPanel>
+                        <Grid
+                            x:Name="NoDataLog"
+                            Margin="0"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            Cursor="Arrow">
+                            <localBase:NoDataArea Margin="0" HorizontalAlignment="Center" />
+                        </Grid>
+
+                        <localBase:Loading
+                            x:Name="LoadingLog"
+                            BackgroundOpacity="0.2"
+                            Visibility="Collapsed" />
+                    </Grid>
+                </hc:TabItem>
             </hc:TabControl>
         </DockPanel>
     </Grid>

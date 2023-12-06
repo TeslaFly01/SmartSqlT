@@ -97,7 +97,7 @@ namespace SmartSQL.UserControl
         private void UcMainDbCompare_OnLoaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = SQLiteHelper.GetInstance();
-            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
+            var connectConfigs = sqLiteHelper.GetList<ConnectConfigs>();
             ComSourceConnect.ItemsSource = null;
             ComSourceConnect.ItemsSource = connectConfigs;
             ComTargetConnect.ItemsSource = null;

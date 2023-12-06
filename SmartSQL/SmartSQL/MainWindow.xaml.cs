@@ -75,7 +75,7 @@ namespace SmartSQL
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = SQLiteHelper.GetInstance();
-            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
+            var connectConfigs = sqLiteHelper.GetList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
             if (!connectConfigs.Any())
@@ -128,7 +128,7 @@ namespace SmartSQL
             SelectendConnection = connectConfig;
             var sqLiteHelper = SQLiteHelper.GetInstance();
             sqLiteHelper.SetSysValue(SysConst.Sys_SelectedConnection, connectConfig.ConnectName);
-            var connectConfigs = sqLiteHelper.ToList<ConnectConfigs>();
+            var connectConfigs = sqLiteHelper.GetList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
             //加载主界面

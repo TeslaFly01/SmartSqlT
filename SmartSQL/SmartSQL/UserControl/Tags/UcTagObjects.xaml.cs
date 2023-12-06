@@ -115,7 +115,7 @@ namespace SmartSQL.UserControl.Tags
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                var tagObjectList = sqLiteInstance.GetList<TagObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.TagId == selTag.TagId);
@@ -175,7 +175,7 @@ namespace SmartSQL.UserControl.Tags
                     selTag.SubCount -= 1;
                     sqLiteInstance.db.Update(selTag);
                 }
-                var tagObjectList = sqLiteInstance.ToList<TagObjects>(x =>
+                var tagObjectList = sqLiteInstance.GetList<TagObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.TagId == selTag.TagId);

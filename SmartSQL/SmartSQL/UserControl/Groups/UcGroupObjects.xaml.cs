@@ -117,7 +117,7 @@ namespace SmartSQL.UserControl.Tags
             Task.Run(() =>
             {
                 var sqLiteInstance = SQLiteHelper.GetInstance();
-                var groupObjectList = sqLiteInstance.ToList<GroupObjects>(x =>
+                var groupObjectList = sqLiteInstance.GetList<GroupObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.GroupId == selGroup.Id);
@@ -174,7 +174,7 @@ namespace SmartSQL.UserControl.Tags
                     selGroup.SubCount -= 1;
                     sqLiteInstance.db.Update(selGroup);
                 }
-                var groupObjectList = sqLiteInstance.ToList<GroupObjects>(x =>
+                var groupObjectList = sqLiteInstance.GetList<GroupObjects>(x =>
                     x.ConnectId == conn.ID &&
                     x.DatabaseName == selDatabase &&
                     x.GroupId == selGroup.Id);

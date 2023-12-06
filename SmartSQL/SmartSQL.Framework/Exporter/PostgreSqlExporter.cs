@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.Util;
 using SqlSugar;
+using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Framework.Exporter
 {
@@ -312,11 +314,36 @@ namespace SmartSQL.Framework.Exporter
             return result;
         }
 
-        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        public override (System.Data.DataTable, int) GetDataTable(string sql,string orderBySql, int pageIndex, int pageSize)
         {
+            #region MyRegion
             int totalNum = 0;
-            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            var result = new DataTable();
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                result = _dbClient.SqlQueryable<dynamic>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            }
+            else
+            {
+                var dataTable = _dbClient.SqlQueryable<dynamic>(sql).ToDataTable();
+                totalNum = dataTable.Rows.Count;
+                // 使用 LINQ 进行分页
+                var query = (from row in dataTable.AsEnumerable()
+                             select row).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                result = query.CopyToDataTable();
+            }
             return (result, totalNum);
+            #endregion
+        }
+
+        /// <summary>
+        /// 执行SQL语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public override int ExecuteSQL(string sql)
+        {
+            return _dbClient.Ado.ExecuteCommand(sql);
         }
 
         public override string CreateTableSql()

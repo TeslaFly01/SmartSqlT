@@ -145,7 +145,7 @@ namespace SmartSQL.Views
         public void ReloadMenu()
         {
             var sqliteInstance = SQLiteHelper.GetInstance();
-            var datalist = sqliteInstance.ToList<GroupInfo>(x =>
+            var datalist = sqliteInstance.GetList<GroupInfo>(x =>
                 x.ConnectId == SelectedConnection.ID &&
                 x.DataBaseName == SelectedDataBase
             );

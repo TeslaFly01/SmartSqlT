@@ -29,18 +29,28 @@ namespace SmartSQL.Framework.Const
         public static readonly string Sys_ProcIcon = "pack://application:,,,/SmartSQL;component/Resources/Img/icon/icon_proc.png";
         public static readonly string Sys_DatabaseIcon = "pack://application:,,,/SmartSQL;component/Resources/Img/icon/icon_database.png";
 
-
+        /// <summary>
+        /// SQL常用关键字
+        /// </summary>
         public static readonly List<string> Sys_SqlKeywords = new List<string> {
-            "ADD",            "ALL",            "ALTER",            "AND",            "ANY",            "AS",            "ASC",
-            "BACKUP",            "BETWEEN",            "CASE",            "CHECK",            "COLUMN",            "CONSTRAINT",
-            "CREATE",            "DATABASE",            "DEFAULT",            "DELETE",            "DESC",            "DISTINCT",
-            "DROP",            "ELSE",            "EXCEPT",            "EXISTS",            "FOREIGN",            "FROM",            "FULL",
-            "GROUP",            "HAVING",            "IN",            "INDEX",            "INNER",            "INSERT",
-            "INTO",            "IS",            "JOIN",            "LEFT",            "LIKE",            "LIMIT",
-            "NOT",            "NULL",            "OR",            "ORDER",            "OUTER",            "PRIMARY",
-            "REFERENCES",            "RIGHT",            "SELECT",            "SET",            "TABLE",            "TOP",
-            "TRUNCATE",            "UNION",            "UNIQUE",            "UPDATE",            "VALUES",            "VIEW",
-            "WHERE",            "WITH"
+            "ADD",        "ALL",        "ALTER",      "AND",       "ANY",       "AS",        "ASC",
+            "BACKUP",     "BETWEEN",    "BY",         "CASE",      "CHECK",     "COLUMN",    "CONSTRAINT",
+            "CREATE",     "DATABASE",   "DEFAULT",    "DELETE",    "DESC",      "DISTINCT",
+            "DROP",       "ELSE",       "EXCEPT",     "EXISTS",    "FOREIGN",   "FROM",      "FULL",
+            "GROUP",      "HAVING",     "IN",         "INDEX",     "INNER",     "INSERT",
+            "INTO",       "IS",         "JOIN",       "LEFT",      "LIKE",      "LIMIT",
+            "NOT",        "NULL",       "OR",         "ORDER",     "OUTER",     "PRIMARY",
+            "REFERENCES", "RIGHT",      "SELECT",     "SET",       "TABLE",     "TOP",
+            "TRUNCATE",   "UNION",      "UNIQUE",     "UPDATE",    "VALUES",    "VIEW",
+            "WHERE",      "WITH"
             };
+
+        /// <summary>
+        /// SQL常用函数
+        /// </summary>
+        public static readonly List<string> Sys_SqlFuns = new List<string>
+        {
+            "COUNT",   "SUM",   "AVG",  "MIN",  "MAX",  "UPPER",    "LOWER",    "SUBSTRING",    "CONCAT",   "DATEPART"
+        };
     }
 }

@@ -16,9 +16,10 @@ namespace SmartSQL.Helper
 {
     public class SqlCompletionData : ICompletionData
     {
-        public SqlCompletionData(string text, string objType = null)
+        public SqlCompletionData(string text, string objType = null, string desc = null)
         {
             this.Text = text;
+            this.Desc = desc;
             SetItem(objType);
         }
         // 智能提示的文本内容
@@ -31,8 +32,9 @@ namespace SmartSQL.Helper
 
         //设置智能提示的内容
         public object Content { get; private set; }
+        public object Description { get; private set; }
         // 智能提示的描述文本
-        public object Description { get; set; }
+        public string Desc { get; set; }
         // 智能提示的文本颜色
         public SolidColorBrush Foreground { get; private set; }
 
@@ -68,28 +70,56 @@ namespace SmartSQL.Helper
             #region MyRegion
             var black = new SolidColorBrush(Colors.Black);
             var blue = new SolidColorBrush(Colors.Blue);
+            var funColor = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#fd03fd"));
             switch (objType)
             {
                 case ObjType.Table:
-                    this.Image = new BitmapImage(new Uri(SysConst.Sys_TableIcon));
-                    Content= new TextBlock() { Text = this.Text, Foreground = black };
+                    this.Image = new BitmapImage(new Uri(SysConst.Sys_TableIcon));                    
+                    this.Content= ItemGrid();
                     break;
                 case ObjType.View:
                     this.Image = new BitmapImage(new Uri(SysConst.Sys_ViewIcon));
-                    Content= new TextBlock() { Text = this.Text, Foreground = black };
+                    this.Content= new TextBlock() { Text = this.Text, Foreground = black };
                     break;
                 case ObjType.Proc:
                     this.Image = new BitmapImage(new Uri(SysConst.Sys_ProcIcon));
-                    Content= new TextBlock() { Text = this.Text, Foreground = black };
+                    this.Content= new TextBlock() { Text = this.Text, Foreground = black };
                     break;
                 case ObjType.Db:
                     this.Image = new BitmapImage(new Uri(SysConst.Sys_DatabaseIcon));
-                    Content= new TextBlock() { Text = this.Text, Foreground = black };
+                    this.Content= new TextBlock() { Text = this.Text, Foreground = black };
+                    break;
+                case ObjType.Func:
+                    this.Content= new TextBlock() { Text = this.Text, Foreground = funColor };
                     break;
                 default:
-                    Content= new TextBlock() { Text = this.Text, Foreground = blue };
+                    this.Content= new TextBlock() { Text = this.Text, Foreground = blue };
                     break;
             }
+            #endregion
+        }
+
+        private Grid ItemGrid()
+        {
+            #region MyRegion
+            var black = new SolidColorBrush(Colors.Black);
+            var grid = new Grid();
+            grid.Width = 500;
+            grid.Children.Add(new TextBlock()
+            {
+                Text = this.Text,
+                Foreground = black,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Left
+            });
+            grid.Children.Add(new TextBlock()
+            {
+                Text = Desc,
+                Margin= new System.Windows.Thickness(20, 0, 0, 0),
+                Foreground = new SolidColorBrush(Colors.Gray),
+                TextTrimming= System.Windows.TextTrimming.WordEllipsis,
+                HorizontalAlignment = System.Windows.HorizontalAlignment.Right
+            });
+            return grid; 
             #endregion
         }
     }

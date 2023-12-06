@@ -178,5 +178,7 @@ namespace SmartSQL.Models
         public const string View = "View";
 
         public const string Proc = "Proc";
+
+        public const string Func = "Func";
     }
 }

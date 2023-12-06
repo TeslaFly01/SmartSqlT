@@ -3,7 +3,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Data;
 using System.Threading.Tasks;
 
 namespace SmartSQL.Framework.Exporter
@@ -17,12 +17,12 @@ namespace SmartSQL.Framework.Exporter
 
         public DmExporter(string connectionString) : base(connectionString)
         {
-            _dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
         }
 
         public DmExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
-            _dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            _dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
         }
 
         public DmExporter(Table table, List<Column> columns) : base(table, columns)
@@ -56,7 +56,7 @@ namespace SmartSQL.Framework.Exporter
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
-            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
             var dataBaseList = dbClient.Ado.SqlQuery<string>("select distinct object_name from all_objects where object_type = 'SCH';");
             var dbList = new List<DataBase>();
             dataBaseList.ForEach(x =>
@@ -95,7 +95,7 @@ namespace SmartSQL.Framework.Exporter
                                 AND a.table_name!='LOGMNR_LOGMNR_BUILDLOG'
                                 AND a.table_name!='SQLPLUS_PRODUCT_PROFILE'
                                 AND a.Owner = '{DbName}'";
-            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
             var tableList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
             tableList.ForEach(tb =>
             {
@@ -139,7 +139,7 @@ namespace SmartSQL.Framework.Exporter
                             where
                                     OWNER      = '{DbName}'
                                 and Object_type='VIEW'";
-            var dbClient = SugarFactory.GetInstance(DbType.Dm, DbConnectString);
+            var dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
             var viewList = dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
             viewList.ForEach(v =>
             {
@@ -260,11 +260,36 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        public override (System.Data.DataTable, int) GetDataTable(string sql, int pageIndex, int pageSize)
+        public override (System.Data.DataTable, int) GetDataTable(string sql,string orderBySql, int pageIndex, int pageSize)
         {
+            #region MyRegion
             int totalNum = 0;
-            var result = _dbClient.SqlQueryable<object>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            var result = new System.Data.DataTable();
+            if (string.IsNullOrEmpty(orderBySql))
+            {
+                result = _dbClient.SqlQueryable<dynamic>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
+            }
+            else
+            {
+                var dataTable = _dbClient.SqlQueryable<dynamic>(sql).ToDataTable();
+                totalNum = dataTable.Rows.Count;
+                // 使用 LINQ 进行分页
+                var query = (from row in dataTable.AsEnumerable()
+                             select row).Skip((pageIndex - 1) * pageSize).Take(pageSize);
+                result = query.CopyToDataTable();
+            }
             return (result, totalNum);
+            #endregion
+        }
+
+        /// <summary>
+        /// 执行SQL语句
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public override int ExecuteSQL(string sql)
+        {
+            return _dbClient.Ado.ExecuteCommand(sql);
         }
 
         public override string AddColumnSql()

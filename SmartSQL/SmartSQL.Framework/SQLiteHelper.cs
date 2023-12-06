@@ -10,6 +10,7 @@ using SmartSQL.Framework.Const;
 using SmartSQL.Framework.SqliteModel;
 using SQLite;
 using SmartSQL.Framework.Properties;
+using SqlSugar;
 
 namespace SmartSQL.Framework
 {
@@ -53,6 +54,7 @@ namespace SmartSQL.Framework
             db.CreateTable<TagObjects>();
             db.CreateTable<SystemSet>();
             db.CreateTable<TemplateInfo>();
+            db.CreateTable<SqlQueryHistory>();
             Init();
         }
         /// <summary>
@@ -136,14 +138,44 @@ namespace SmartSQL.Framework
             return db.Table<T>().FirstOrDefault(predExpr);
         }
 
-        public List<T> ToList<T>() where T : new()
+        public List<T> GetList<T>() where T : new()
         {
             return db.Table<T>().ToList();
         }
 
-        public List<T> ToList<T>(Expression<Func<T, bool>> predExpr) where T : new()
+        public List<T> GetList<T>(Expression<Func<T, bool>> predExpr) where T : new()
         {
             return db.Table<T>().Where(predExpr).ToList();
+        }
+
+        public (List<T>, int) GetPageList<T>(int pageIndex, int pageSize, Expression<Func<T, object>> orderByExpression = null, OrderByType orderByType = OrderByType.Desc) where T : new()
+        {
+            var result = new List<T>();
+            if (orderByExpression == null)
+            {
+                result = db.Table<T>().Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+            }
+            else
+            {
+                var query = db.Table<T>().Skip((pageIndex-1) * pageSize).Take(pageSize);
+                if (orderByType == OrderByType.Asc)
+                {
+                    result = query.OrderBy(orderByExpression).ToList();
+                }
+                else
+                {
+                    result = query.OrderByDescending(orderByExpression).ToList();
+                }
+            }
+            var totalNum = db.Table<T>().Count();
+            return (result, totalNum);
+        }
+
+        public (List<T>, int) GetPageList<T>(Expression<Func<T, bool>> predExpr, int pageIndex, int pageSize) where T : new()
+        {
+            var result = db.Table<T>().Where(predExpr).Skip((pageIndex-1) * pageSize).Take(pageSize).ToList();
+            var totalNum = result.Count;
+            return (result, totalNum);
         }
 
         public List<T> Query<T>(string sql) where T : new()

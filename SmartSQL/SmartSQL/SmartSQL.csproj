@@ -69,7 +69,7 @@
       <Version>4.7.0.9</Version>
     </PackageReference>
     <PackageReference Include="FontAwesome6.Fonts">
-      <Version>2.3.0</Version>
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>3.2.1</Version>
@@ -88,13 +88,13 @@
       <Version>8.0.30</Version>
     </PackageReference>
     <PackageReference Include="NLog">
-      <Version>5.2.6</Version>
+      <Version>5.2.7</Version>
     </PackageReference>
     <PackageReference Include="Npgsql">
       <Version>7.0.6</Version>
     </PackageReference>
     <PackageReference Include="Oracle.ManagedDataAccess">
-      <Version>19.16.0</Version>
+      <Version>19.21.0</Version>
     </PackageReference>
     <PackageReference Include="RazorEngine">
       <Version>3.10.0</Version>
@@ -163,6 +163,7 @@
     <Compile Include="Models\Api\CategoryApi.cs" />
     <Compile Include="Models\Api\SiteApi.cs" />
     <Compile Include="Models\DiffInfoModel.cs" />
+    <Compile Include="Models\ExecuteSQL.cs" />
     <Compile Include="Models\MenuTagObjectsDTO.cs" />
     <Compile Include="Models\PasswordResultDTO.cs" />
     <Compile Include="Models\SysEnum.cs" />
@@ -427,11 +428,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Resources\Themes\DataGridExt.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Resources\Themes\DataGrid.xaml">
+    <Page Include="Resources\Themes\Styles\DataGrid.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
