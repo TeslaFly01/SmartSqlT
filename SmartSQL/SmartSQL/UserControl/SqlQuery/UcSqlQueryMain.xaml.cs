@@ -421,6 +421,7 @@ namespace SmartSQL.UserControl
                 PageInfo.PageIndex = 1;
                 ExecuteSql(script);
                 // 在这里触发相关事件
+                e.Handled = true; // 防止触发其他按键事件 
                 #endregion
             }
             // Ctrl + S 另存为
@@ -434,9 +435,9 @@ namespace SmartSQL.UserControl
                     var fileName = saveFileDialog.FileName;
                     TextEditor.Save(fileName);
                 }
+                e.Handled = true; // 防止触发其他按键事件 
                 #endregion
             }
-            e.Handled = true; // 防止触发其他按键事件 
             #endregion
         }
 

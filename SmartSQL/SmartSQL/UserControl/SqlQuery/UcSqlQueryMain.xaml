@@ -240,14 +240,15 @@
                 BorderBrush="#E0E0E0"
                 BorderThickness="0.4"
                 CornerRadius="8">
-                <avalonedit:TextEditor
-                    x:Name="TextEditor"
-                    Margin="0,1,0,0"
-                    FontFamily="新宋体"
-                    FontSize="14"
-                    ShowLineNumbers="True"
-                    WordWrap="True">
-                    <avalonedit:TextEditor.ContextMenu>
+                <Grid>
+                    <avalonedit:TextEditor
+                        x:Name="TextEditor"
+                        Margin="0,1,0,0"
+                        FontFamily="新宋体"
+                        FontSize="14"
+                        ShowLineNumbers="True"
+                        WordWrap="True">
+                        <avalonedit:TextEditor.ContextMenu>
                         <ContextMenu Name="TreeContextMenu" Visibility="Visible">
                             <MenuItem
                                 x:Name="MenuExecute"
@@ -318,10 +319,11 @@
                             </MenuItem>
                         </ContextMenu>
                     </avalonedit:TextEditor.ContextMenu>
-                    <avalonedit:TextEditor.Options>
-                        <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
-                    </avalonedit:TextEditor.Options>
-                </avalonedit:TextEditor>
+                        <avalonedit:TextEditor.Options>
+                            <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
+                        </avalonedit:TextEditor.Options>
+                    </avalonedit:TextEditor>
+                </Grid>
             </Border>
         </DockPanel>
 

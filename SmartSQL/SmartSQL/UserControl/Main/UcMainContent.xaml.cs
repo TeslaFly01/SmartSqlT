@@ -722,30 +722,28 @@ namespace SmartSQL.UserControl
         {
             #region MyRegion
             CornerRadius = 0;
-            var sqlQueryMain = new UcSqlQueryMain();
-            var tabItem = new MainTabWModel();
+
             var selectConnection = SelectedConnection;
             var selectDatabase = (DataBase)SelectDatabase.SelectedItem;
-            if (selectConnection != null && selectDatabase != null)
+            if (selectConnection == null || selectDatabase == null)
             {
-                sqlQueryMain.SelectedConnection = selectConnection;
-                sqlQueryMain.SelectedDataBase = selectDatabase;
-                var anyCount = TabItemData.Count(x => x.DisplayName.EndsWith($"{selectConnection.ConnectName}@{selectDatabase.DbName}"));
-
-                tabItem.DisplayName = $"{anyCount + 1}-{selectConnection.ConnectName}@{selectDatabase.DbName}";
-                tabItem.Icon = IconDic["SQL"];
-                tabItem.MainW = sqlQueryMain;
+                Oops.Oh("请选择数据库");
+                return;
             }
-            else
-            {
-                sqlQueryMain.SelectedConnection = selectConnection;
-                sqlQueryMain.SelectedDataBase = selectDatabase;
-                tabItem.DisplayName = "新建查询" + (MainTabW.Items.Count + 1);
-                tabItem.Icon = IconDic["SQL"];
-                tabItem.MainW = sqlQueryMain;
-            };
             MainW.Visibility = Visibility.Collapsed;
             MainTabW.Visibility = Visibility.Visible;
+            var sqlQueryMain = new UcSqlQueryMain
+            {
+                SelectedConnection = selectConnection,
+                SelectedDataBase = selectDatabase
+            };
+            var anyCount = TabItemData.Count(x => x.DisplayName.EndsWith($"{selectConnection.ConnectName}@{selectDatabase.DbName}"));
+            var tabItem = new MainTabWModel
+            {
+                DisplayName = $"{anyCount + 1}-{selectConnection.ConnectName}@{selectDatabase.DbName}",
+                Icon = IconDic["SQL"],
+                MainW = sqlQueryMain
+            };
             TabItemData.Insert(0, tabItem);
             MainTabW.SelectedItem = TabItemData.First();
             #endregion
