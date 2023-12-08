@@ -34,6 +34,7 @@ using TSQL.Tokens;
 using SqlSugar.Extensions;
 using SmartSQL.Framework.Util;
 using System.Data;
+using System.Text.RegularExpressions;
 
 namespace SmartSQL.UserControl
 {
@@ -396,6 +397,26 @@ namespace SmartSQL.UserControl
         }
 
         /// <summary>
+        /// 每页条数更新触发
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void PageSizeResult_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var script = TextEditor.Text;
+            if (string.IsNullOrEmpty(script))
+            {
+                return;
+            }
+            var selectedText = TextEditor.SelectedText;
+            if (!string.IsNullOrEmpty(selectedText))
+            {
+                script = selectedText;
+            }
+            ExecuteSql(script);
+        }
+
+        /// <summary>
         /// 快捷键：F5 | Ctrl + Enter 
         /// 触发执行
         /// </summary>
@@ -452,7 +473,7 @@ namespace SmartSQL.UserControl
             var selConnection = (ConnectConfigs)SelectConnets.SelectedItem;
             var selDatabase = (DataBase)SelectDatabase.SelectedItem;
             var pageIndex = PageInfo.PageIndex -1;
-            var pageSize = Convert.ToInt32(((ComboBoxItem)PageSize.SelectedItem).Content);
+            var pageSize = Convert.ToInt32(((ComboBoxItem)PageSizeResult.SelectedItem).Content);
             var sqLiteInstance = SQLiteHelper.GetInstance();
             var sw = new Stopwatch();
             LoadingG.Visibility= Visibility.Visible;
@@ -472,6 +493,7 @@ namespace SmartSQL.UserControl
                     {
                         selectSql = execSql.ExeSQL.Substring(0, orderByIndex).Trim();
                         orderBySql = execSql.ExeSQL.Substring(orderByIndex).Trim();
+                        orderBySql = Regex.Replace(orderBySql, "ORDER BY", "", RegexOptions.IgnoreCase);
                     }
                     int backRows = 0;
                     //历史查询
@@ -690,7 +712,19 @@ namespace SmartSQL.UserControl
         /// <param name="e"></param>
         private void MenuFormat_Click(object sender, RoutedEventArgs e)
         {
-
+            var sqlScript = TextEditor.Text;
+            if (string.IsNullOrEmpty(sqlScript))
+            {
+                return;
+            }
+            if (string.IsNullOrEmpty(TextEditor.SelectedText))
+            {
+                TextEditor.Text = sqlScript.SqlFormat();
+                return;
+            }
+            var oldSqlScript = TextEditor.SelectedText;
+            sqlScript = TextEditor.SelectedText;
+            TextEditor.Text =  TextEditor.Text.Replace(oldSqlScript, sqlScript.SqlFormat());
         }
 
         /// <summary>

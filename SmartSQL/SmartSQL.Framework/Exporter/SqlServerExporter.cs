@@ -10,6 +10,7 @@ using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Framework.Exporter
 {
+    using FreeSql.Internal.Model;
     using PhysicalDataModel;
     using System.Data.SqlTypes;
     using Util;
@@ -17,13 +18,22 @@ namespace SmartSQL.Framework.Exporter
     public class SqlServerExporter : Exporter, IExporter
     {
         private readonly SqlSugarClient _dbClient;
+        private readonly IFreeSql _FreeSql;
         public SqlServerExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
+            _FreeSql = new FreeSql.FreeSqlBuilder()
+                            .UseConnectionString(FreeSql.DataType.SqlServer, connectionString, typeof(FreeSql.SqlServer.SqlServerProvider<>))
+                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
+                            .Build(); //请务必定义成 Singleton 单例模式
         }
         public SqlServerExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
+            _FreeSql = new FreeSql.FreeSqlBuilder()
+                            .UseConnectionString(FreeSql.DataType.SqlServer, connectionString, typeof(FreeSql.SqlServer.SqlServerProvider<>))
+                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
+                            .Build(); //请务必定义成 Singleton 单例模式
         }
         public SqlServerExporter(Table table, List<Column> columns) : base(table, columns)
         {
@@ -59,19 +69,16 @@ namespace SmartSQL.Framework.Exporter
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             #region MyRegion
-            var sqlCmd = "SELECT name FROM sysdatabases ORDER BY name ASC";
-            SqlDataReader dr = SqlHelper.ExecuteReader(DbConnectString, CommandType.Text, sqlCmd);
+            var dbList = _FreeSql.DbFirst.GetDatabases();
             var list = new List<DataBase>();
-            while (dr.Read())
+            dbList.ForEach(db =>
             {
-                string displayName = dr.GetString(0);
-                var dBase = new DataBase
+                list.Add(new DataBase
                 {
-                    DbName = displayName,
+                    DbName = db,
                     IsSelected = false
-                };
-                list.Add(dBase);
-            }
+                });
+            });
             return list;
             #endregion
         }
@@ -501,24 +508,13 @@ namespace SmartSQL.Framework.Exporter
 
         public override (DataTable, int) GetDataTable(string sql, string orderBySql, int pageIndex, int pageSize)
         {
-            int totalNum = 0;
-            var result = new DataTable();
-            if (string.IsNullOrEmpty(orderBySql))
+            var pageInfo = new BasePagingInfo
             {
-
-                result = _dbClient.SqlQueryable<dynamic>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
-            }
-            else
-            {
-                var dataTable = _dbClient.SqlQueryable<dynamic>(sql).ToDataTable();
-                totalNum = dataTable.Rows.Count;
-                // 使用 LINQ 进行分页
-                var query = (from row in dataTable.AsEnumerable()
-                             select row).Skip((pageIndex - 1) * pageSize).Take(pageSize);
-
-                result = query.CopyToDataTable();
-            }
-            return (result, totalNum);
+                PageNumber = pageIndex,
+                PageSize = pageSize
+            };
+            var result = _FreeSql.Select<object>().WithSql(sql).Page(pageInfo).OrderBy(orderBySql).ToDataTable();
+            return (result, Convert.ToInt32(pageInfo.Count));
         }
 
         /// <summary>

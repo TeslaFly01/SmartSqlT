@@ -208,6 +208,25 @@
                             <TextBlock Margin="8,-1.2,0,0" Text="执行" />
                         </StackPanel>
                     </Button>
+                    <!--  格式化  -->
+                    <Button
+                        x:Name="BtnFormat"
+                        Height="25"
+                        Margin="10,0,0,0"
+                        Background="#f4f5f7"
+                        BorderThickness="0"
+                        Click="MenuFormat_Click"
+                        Cursor="Hand"
+                        ToolTip="格式化">
+                        <StackPanel Orientation="Horizontal">
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                Foreground="#1890ff"
+                                Icon="FileText" />
+                            <TextBlock Margin="8,-1.2,0,0" Text="美化" />
+                        </StackPanel>
+                    </Button>
 
                     <!--  设置  -->
                     <Button
@@ -224,6 +243,7 @@
                                 FontSize="14"
                                 Foreground="#1890ff"
                                 Icon="Cog" />
+                            <TextBlock Margin="8,-1.2,0,0" Text="设置" />
                         </StackPanel>
                     </Button>
                 </StackPanel>
@@ -249,76 +269,76 @@
                         ShowLineNumbers="True"
                         WordWrap="True">
                         <avalonedit:TextEditor.ContextMenu>
-                        <ContextMenu Name="TreeContextMenu" Visibility="Visible">
-                            <MenuItem
-                                x:Name="MenuExecute"
-                                VerticalAlignment="Center"
-                                Click="BtnExecute_Click"
-                                Cursor="Hand"
-                                Header="执行">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="#1890ff"
-                                        Icon="Play" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <Separator Margin="0,0,10,0" />
-                            <MenuItem
-                                x:Name="MenuCopy"
-                                VerticalAlignment="Center"
-                                Click="MenuCopy_Click"
-                                Cursor="Hand"
-                                Header="复制">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        Foreground="#8486f8"
-                                        Icon="Copy" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem
-                                x:Name="MenuPaste"
-                                VerticalAlignment="Center"
-                                Click="MenuPaste_Click"
-                                Cursor="Hand"
-                                Header="粘贴">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        Foreground="#ff8c4c"
-                                        Icon="Paste" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem
-                                x:Name="MenuFormat"
-                                VerticalAlignment="Center"
-                                Click="MenuFormat_Click"
-                                Cursor="Hand"
-                                Header="格式化">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        Foreground="ForestGreen"
-                                        Icon="FileTextOutline" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem
-                                x:Name="MenuSaveAs"
-                                VerticalAlignment="Center"
-                                Click="MenuSaveAs_Click"
-                                Cursor="Hand"
-                                Header="另存为...">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        Foreground="#1890ff"
-                                        Icon="Save" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </avalonedit:TextEditor.ContextMenu>
+                            <ContextMenu Name="TreeContextMenu" Visibility="Visible">
+                                <MenuItem
+                                    x:Name="MenuExecute"
+                                    VerticalAlignment="Center"
+                                    Click="BtnExecute_Click"
+                                    Cursor="Hand"
+                                    Header="执行">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#1890ff"
+                                            Icon="Play" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <Separator Margin="0,0,10,0" />
+                                <MenuItem
+                                    x:Name="MenuCopy"
+                                    VerticalAlignment="Center"
+                                    Click="MenuCopy_Click"
+                                    Cursor="Hand"
+                                    Header="复制">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            Foreground="#8486f8"
+                                            Icon="Copy" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem
+                                    x:Name="MenuPaste"
+                                    VerticalAlignment="Center"
+                                    Click="MenuPaste_Click"
+                                    Cursor="Hand"
+                                    Header="粘贴">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            Foreground="#ff8c4c"
+                                            Icon="Paste" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem
+                                    x:Name="MenuFormat"
+                                    VerticalAlignment="Center"
+                                    Click="MenuFormat_Click"
+                                    Cursor="Hand"
+                                    Header="格式化">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            Foreground="#1890ff"
+                                            Icon="FileText" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem
+                                    x:Name="MenuSaveAs"
+                                    VerticalAlignment="Center"
+                                    Click="MenuSaveAs_Click"
+                                    Cursor="Hand"
+                                    Header="另存为...">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            Foreground="#1890ff"
+                                            Icon="Save" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </avalonedit:TextEditor.ContextMenu>
                         <avalonedit:TextEditor.Options>
                             <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
                         </avalonedit:TextEditor.Options>
@@ -369,6 +389,7 @@
                 ShowContextMenu="False"
                 Style="{StaticResource TabControlBaseStyle}">
 
+                <!--  Tab1：输出日志  -->
                 <hc:TabItem
                     x:Name="TabLog"
                     Width="90"
@@ -394,6 +415,7 @@
                         </StackPanel>
                     </Border>
                 </hc:TabItem>
+
                 <!--  Tab2：表/视图数据  -->
                 <hc:TabItem
                     x:Name="TabData"
@@ -491,11 +513,12 @@
                                     VerticalAlignment="Center"
                                     Text="每页" />
                                 <hc:ComboBox
-                                    x:Name="PageSize"
+                                    x:Name="PageSizeResult"
                                     Width="90"
                                     Margin="0,0,8,0"
                                     HorizontalAlignment="Right"
-                                    Cursor="Hand">
+                                    Cursor="Hand"
+                                    SelectionChanged="PageSizeResult_SelectionChanged">
                                     <ComboBoxItem
                                         Content="100"
                                         Cursor="Hand"
@@ -526,6 +549,7 @@
                     </Grid>
                 </hc:TabItem>
 
+                <!--  Tab3：历史查询  -->
                 <hc:TabItem
                     x:Name="TabSqlQueryHistory"
                     Width="90"

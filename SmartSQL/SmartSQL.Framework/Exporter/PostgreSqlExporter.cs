@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FreeSql.Internal.Model;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.Util;
 using SqlSugar;
@@ -14,13 +15,22 @@ namespace SmartSQL.Framework.Exporter
     public class PostgreSqlExporter : Exporter, IExporter
     {
         private readonly SqlSugarClient _dbClient;
+        private readonly IFreeSql _FreeSql;
         public PostgreSqlExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
+            _FreeSql = new FreeSql.FreeSqlBuilder()
+                            .UseConnectionString(FreeSql.DataType.PostgreSQL, connectionString, typeof(FreeSql.PostgreSQL.PostgreSQLProvider<>))
+                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
+                            .Build(); //请务必定义成 Singleton 单例模式
         }
         public PostgreSqlExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
+            _FreeSql = new FreeSql.FreeSqlBuilder()
+                            .UseConnectionString(FreeSql.DataType.PostgreSQL, connectionString, typeof(FreeSql.PostgreSQL.PostgreSQLProvider<>))
+                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
+                            .Build(); //请务必定义成 Singleton 单例模式
         }
 
         public PostgreSqlExporter(Table table, List<Column> columns) : base(table, columns)
@@ -314,25 +324,16 @@ namespace SmartSQL.Framework.Exporter
             return result;
         }
 
-        public override (System.Data.DataTable, int) GetDataTable(string sql,string orderBySql, int pageIndex, int pageSize)
+        public override (DataTable, int) GetDataTable(string sql,string orderBySql, int pageIndex, int pageSize)
         {
             #region MyRegion
-            int totalNum = 0;
-            var result = new DataTable();
-            if (string.IsNullOrEmpty(orderBySql))
+            var pageInfo = new BasePagingInfo
             {
-                result = _dbClient.SqlQueryable<dynamic>(sql).ToDataTablePage(pageIndex, pageSize, ref totalNum);
-            }
-            else
-            {
-                var dataTable = _dbClient.SqlQueryable<dynamic>(sql).ToDataTable();
-                totalNum = dataTable.Rows.Count;
-                // 使用 LINQ 进行分页
-                var query = (from row in dataTable.AsEnumerable()
-                             select row).Skip((pageIndex - 1) * pageSize).Take(pageSize);
-                result = query.CopyToDataTable();
-            }
-            return (result, totalNum);
+                PageNumber = pageIndex,
+                PageSize = pageSize
+            };
+            var result = _FreeSql.Select<object>().WithSql(sql).Page(pageInfo).OrderBy(orderBySql).ToDataTable();
+            return (result, Convert.ToInt32(pageInfo.Count));
             #endregion
         }
 
