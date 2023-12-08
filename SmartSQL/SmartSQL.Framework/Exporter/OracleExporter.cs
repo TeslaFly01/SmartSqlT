@@ -19,18 +19,13 @@ namespace SmartSQL.Framework.Exporter
         public OracleExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Oracle, connectionString, typeof(FreeSql.Oracle.OracleProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Oracle, connectionString);
         }
+
         public OracleExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.Oracle, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Oracle, connectionString, typeof(FreeSql.Oracle.OracleProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Oracle, connectionString);
         }
 
         public OracleExporter(Table table, List<Column> columns) : base(table, columns)

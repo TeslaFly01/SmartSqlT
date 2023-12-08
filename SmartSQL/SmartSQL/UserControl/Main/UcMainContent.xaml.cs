@@ -38,6 +38,8 @@ using Org.BouncyCastle.Math.EC.Rfc7748;
 using Org.BouncyCastle.Crypto.Agreement;
 using NLog;
 using SmartSQL.ViewModels;
+using System.Windows.Threading;
+using System.ComponentModel;
 
 namespace SmartSQL.UserControl
 {
@@ -139,29 +141,35 @@ namespace SmartSQL.UserControl
 
             LoadingLine.Visibility = Visibility.Visible;
             SelectedConnection = connectConfig;
-            try
+
+            var list = new List<DataBase>();
+            Task.Run(() =>
             {
-                var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
-                var list = dbInstance.GetDatabases(connectConfig.DefaultDatabase);
-                SelectDatabase.ItemsSource = list;
-                HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-                if (connectConfig.DbType == DbType.PostgreSQL)
+                try
                 {
-                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
+                    var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
+                    list = dbInstance.GetDatabases(connectConfig.DefaultDatabase);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            SelectDatabase.ItemsSource = list;
+                            HidSelectDatabase.Text = connectConfig.DefaultDatabase;
+                            DataBase selectedDataBase = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+                            //if (connectConfig.DbType == DbType.PostgreSQL)
+                            //{
+                            //    selectedDataBase= list.FirstOrDefault(x => x.DbName.EndsWith("public"));
+                            //}
+                            SelectDatabase.SelectedItem=selectedDataBase;
+                        }));
                 }
-                else
+                catch (Exception ex)
                 {
-                    SelectDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
+                        LoadingLine.Visibility = Visibility.Collapsed;
+                    }));
                 }
-            }
-            catch (Exception ex)
-            {
-                Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    Oops.God($"连接失败 {connectConfig.ConnectName}，原因：" + ex.ToMsg());
-                    LoadingLine.Visibility = Visibility.Collapsed;
-                }));
-            }
+            });
             #endregion
         }
 

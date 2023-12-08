@@ -22,19 +22,15 @@ namespace SmartSQL.Framework.Exporter
         public SqlServerExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.SqlServer, connectionString, typeof(FreeSql.SqlServer.SqlServerProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.SqlServer, connectionString);
         }
+
         public SqlServerExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.SqlServer, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.SqlServer, connectionString, typeof(FreeSql.SqlServer.SqlServerProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.SqlServer, connectionString);
         }
+
         public SqlServerExporter(Table table, List<Column> columns) : base(table, columns)
         {
 

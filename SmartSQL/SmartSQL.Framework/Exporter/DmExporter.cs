@@ -6,6 +6,7 @@ using System.Linq;
 using System.Data;
 using System.Threading.Tasks;
 using FreeSql.Internal.Model;
+using SmartSQL.Framework.Util;
 
 namespace SmartSQL.Framework.Exporter
 {
@@ -20,19 +21,13 @@ namespace SmartSQL.Framework.Exporter
         public DmExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Dameng, connectionString, typeof(FreeSql.Dameng.DamengProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Dameng, connectionString);
         }
 
         public DmExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(SqlSugar.DbType.Dm, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Dameng, connectionString, typeof(FreeSql.Dameng.DamengProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Dameng, connectionString);
         }
 
         public DmExporter(Table table, List<Column> columns) : base(table, columns)

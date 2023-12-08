@@ -217,7 +217,7 @@
                         BorderThickness="0"
                         Click="MenuFormat_Click"
                         Cursor="Hand"
-                        ToolTip="格式化">
+                        ToolTip="代码美化">
                         <StackPanel Orientation="Horizontal">
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -236,7 +236,8 @@
                         Background="#f4f5f7"
                         BorderThickness="0"
                         Cursor="Hand"
-                        ToolTip="设置">
+                        ToolTip="设置"
+                        Visibility="Collapsed">
                         <StackPanel Orientation="Horizontal">
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -316,7 +317,7 @@
                                     VerticalAlignment="Center"
                                     Click="MenuFormat_Click"
                                     Cursor="Hand"
-                                    Header="格式化">
+                                    Header="美化">
                                     <MenuItem.Icon>
                                         <fa:FontAwesome
                                             VerticalAlignment="Center"

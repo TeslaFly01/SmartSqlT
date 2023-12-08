@@ -105,7 +105,11 @@
                             Margin="0,15,10,15"
                             CanContentScroll="True"
                             Visibility="Visible">
-                            <ItemsControl x:Name="CategoryItems" ItemsSource="{Binding CategoryList}">
+                            <ItemsControl
+                                x:Name="CategoryItems"
+                                ItemsSource="{Binding CategoryList}"
+                                VirtualizingPanel.CacheLengthUnit="Page"
+                                VirtualizingPanel.IsVirtualizing="True">
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate>
                                         <StackPanel Orientation="Vertical">

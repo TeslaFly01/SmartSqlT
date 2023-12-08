@@ -22,18 +22,13 @@ namespace SmartSQL.Framework.Exporter
         public SqliteExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.Sqlite, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Sqlite, connectionString, typeof(FreeSql.Sqlite.SqliteProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Sqlite, connectionString);
         }
+
         public SqliteExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.Sqlite, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.Sqlite, connectionString, typeof(FreeSql.Sqlite.SqliteProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.Sqlite, connectionString);
         }
 
         public SqliteExporter(Table table, List<Column> columns) : base(table, columns)

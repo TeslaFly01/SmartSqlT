@@ -4,7 +4,9 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FreeSql.DatabaseModel;
 using FreeSql.Internal.Model;
+using JinianNet.JNTemplate;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.Util;
 using SqlSugar;
@@ -19,18 +21,13 @@ namespace SmartSQL.Framework.Exporter
         public PostgreSqlExporter(string connectionString) : base(connectionString)
         {
             _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.PostgreSQL, connectionString, typeof(FreeSql.PostgreSQL.PostgreSQLProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.PostgreSQL, connectionString);
         }
+
         public PostgreSqlExporter(string connectionString, string dbName) : base(connectionString, dbName)
         {
             _dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            _FreeSql = new FreeSql.FreeSqlBuilder()
-                            .UseConnectionString(FreeSql.DataType.PostgreSQL, connectionString, typeof(FreeSql.PostgreSQL.PostgreSQLProvider<>))
-                            .UseAutoSyncStructure(false) //自动迁移实体的结构到数据库
-                            .Build(); //请务必定义成 Singleton 单例模式
+            _FreeSql= FreeSqlHelper.GetInstance().FreeBuilder(FreeSql.DataType.PostgreSQL, connectionString);
         }
 
         public PostgreSqlExporter(Table table, List<Column> columns) : base(table, columns)
@@ -43,9 +40,10 @@ namespace SmartSQL.Framework.Exporter
             var model = new Model { Database = "PostgreSql" };
             try
             {
-                model.Tables = this.GetTables();
-                model.Views = this.GetViews();
-                model.Procedures = new Procedures();// this.GetProcedures();
+                var list = _FreeSql.DbFirst.GetTablesByDatabase(DbName);
+                model.Tables = this.GetTables(list);
+                model.Views = this.GetViews(list);
+                model.Procedures = this.GetProcedures(list);
                 return model;
             }
             catch (Exception ex)
@@ -54,48 +52,54 @@ namespace SmartSQL.Framework.Exporter
             }
         }
 
-        public override List<DataBase> GetDatabases(string defaultDatabase = "")
+        public override List<DataBase> GetDatabases(string defaultDb = "")
         {
             #region MyRegion
-            var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
-            var schemaSql = "SELECT nspname AS NspName FROM pg_catalog.pg_namespace order by nspname asc ";
-            var schemaList = dbClient.SqlQueryable<SchemaInfo>(schemaSql).ToList();
-            //var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
+            var dbList = _FreeSql.DbFirst.GetDatabases();
             var list = new List<DataBase>();
-            schemaList.ForEach(schema =>
+            dbList.ForEach(db =>
             {
-                if (schema.Equals("pg_toast") || schema.Equals("pg_catalog") || schema.Equals("information_schema"))
-                {
-                    return;
-                }
                 var dBase = new DataBase
                 {
-                    DbName = $"{defaultDatabase}:{schema.NspName}",
-                    IsSelected = false
+                    DbName = db,
+                    IsSelected = db == defaultDb
                 };
                 list.Add(dBase);
             });
             return list;
+            //var dbClient = SugarFactory.GetInstance(DbType.PostgreSQL, DbConnectString);
+            //var schemaSql = "SELECT nspname AS NspName FROM pg_catalog.pg_namespace order by nspname asc ";
+            //var schemaList = dbClient.SqlQueryable<SchemaInfo>(schemaSql).ToList();
+            ////var dataBaseList = _dbMaintenance.GetDataBaseList(dbClient);
+            //var list = new List<DataBase>();
+            //schemaList.ForEach(schema =>
+            //{
+            //    if (schema.Equals("pg_toast") || schema.Equals("pg_catalog") || schema.Equals("information_schema"))
+            //    {
+            //        return;
+            //    }
+            //    var dBase = new DataBase
+            //    {
+            //        DbName = $"{defaultDatabase}:{schema.NspName}",
+            //        IsSelected = false
+            //    };
+            //    list.Add(dBase);
+            //});
+            //return list;
             #endregion
         }
 
         #region Private
-        private Tables GetTables()
+        private Tables GetTables(List<FreeSql.DatabaseModel.DbTableInfo> tableList)
         {
             #region MyRegion
             var tables = new Tables();
-            var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
-            var tbSql = $@"SELECT DISTINCT
-                                table_name AS Name,
-                                obj_description(oid, 'pg_class') AS Description
-                           FROM
-                                information_schema.tables t,pg_class p
-                           WHERE
-                                    table_schema = '{schema}'
-                           AND t.table_name = p.relname";
-            var tableList = _dbClient.SqlQueryable<DbTableInfo>(tbSql).ToList();
             tableList.ForEach(tb =>
             {
+                if (tb.Type != FreeSql.DatabaseModel.DbTableType.TABLE)
+                {
+                    return;
+                }
                 if (tables.ContainsKey(tb.Name))
                 {
                     return;
@@ -104,10 +108,8 @@ namespace SmartSQL.Framework.Exporter
                 {
                     Id = tb.Name,
                     Name = tb.Name,
-                    DisplayName = tb.Name,
-                    Comment = tb.Description,
-                    CreateDate = tb.CreateDate,
-                    ModifyDate = tb.ModifyDate
+                    DisplayName = tb.Schema + "." + tb.Name,
+                    Comment = tb.Comment
                 };
                 tables.Add(tb.Name, table);
             });
@@ -115,70 +117,56 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
 
-        private Views GetViews()
+        private Views GetViews(List<FreeSql.DatabaseModel.DbTableInfo> viewList)
         {
             #region MyRegion
             var views = new Views();
-            try
+            viewList.ForEach(v =>
             {
-                var viewList = _dbClient.DbMaintenance.GetViewInfoList(false);
-                viewList.ForEach(v =>
+                if (v.Type != FreeSql.DatabaseModel.DbTableType.VIEW)
                 {
-                    if (views.ContainsKey(v.Name))
-                    {
-                        return;
-                    }
-                    var view = new View()
-                    {
-                        Id = v.Name,
-                        Name = v.Name,
-                        DisplayName = v.Name,
-                        Comment = v.Description,
-                        CreateDate = v.CreateDate,
-                        ModifyDate = v.ModifyDate
-                    };
-                    views.Add(v.Name, view);
-                });
-            }
-            catch (Exception ex)
-            {
-
-            }
+                    return;
+                }
+                if (views.ContainsKey(v.Name))
+                {
+                    return;
+                }
+                var view = new View()
+                {
+                    Id = v.Name,
+                    Name = v.Name,
+                    DisplayName = v.Name,
+                    Comment = v.Comment
+                };
+                views.Add(v.Name, view);
+            });
             return views;
             #endregion
         }
 
-        private Procedures GetProcedures()
+        private Procedures GetProcedures(List<FreeSql.DatabaseModel.DbTableInfo> procList)
         {
             #region MyRegion
             var procDic = new Procedures();
-            try
+            procList.ForEach(p =>
             {
-                var procInfoList = _dbClient.DbMaintenance.GetProcInfoList(false);
-                var dbName = _dbClient.DbMaintenance.Context.Ado.Connection.Database;
-                var procList = procInfoList.Where(x => x.Schema == dbName).ToList();
-                procList.ForEach(p =>
+                if (p.Type != FreeSql.DatabaseModel.DbTableType.StoreProcedure)
                 {
-                    if (procDic.ContainsKey(p.Name))
-                    {
-                        return;
-                    }
-                    var proc = new Procedure()
-                    {
-                        Id = p.Name,
-                        Name = p.Name,
-                        DisplayName = p.Name,
-                        Comment = p.Description,
-                        CreateDate = p.CreateDate,
-                        ModifyDate = p.ModifyDate
-                    };
-                    procDic.Add(p.Name, proc);
-                });
-            }
-            catch (Exception ex)
-            {
-
-            }
+                    return;
+                }
+                if (procDic.ContainsKey(p.Name))
+                {
+                    return;
+                }
+                var proc = new Procedure()
+                {
+                    Id = p.Name,
+                    Name = p.Name,
+                    DisplayName = $"{p.Schema}.{p.Name}",
+                    Comment = p.Comment
+                };
+                procDic.Add(p.Name, proc);
+            });
             return procDic;
             #endregion
         }
@@ -187,32 +175,33 @@ namespace SmartSQL.Framework.Exporter
         public override Columns GetColumnInfoById(string objectId)
         {
             #region MyRegion
+            var colList = _dbClient.DbMaintenance.GetColumnInfosByTableName(objectId);
             var columns = new Columns(500);
-            var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
-            var sql = $@"select cast (pclass.oid as int4) as TableId,cast(ptables.tablename as varchar) as TableName,
-                                pcolumn.column_name as DbColumnName,pcolumn.udt_name as DataType,
-                                CASE WHEN pcolumn.numeric_scale > 0 THEN pcolumn.numeric_precision ELSE pcolumn.character_maximum_length END   as Length,
-                                pcolumn.column_default as DefaultValue,
-                                pcolumn.numeric_scale as DecimalDigits,
-                                pcolumn.numeric_scale as Scale,
-                                col_description(pclass.oid, pcolumn.ordinal_position) as ColumnDescription,
-                                case when pkey.colname = pcolumn.column_name
-                                then true else false end as IsPrimaryKey,
-                                case when pcolumn.column_default like 'nextval%'
-                                then true else false end as IsIdentity,
-                                case when pcolumn.is_nullable = 'YES'
-                                then true else false end as IsNullable
-                                 from(select * from pg_tables where upper(tablename) = upper('{objectId}') and schemaname = '{schema}') ptables inner join pg_class pclass
-                                 on ptables.tablename = pclass.relname inner join(SELECT*
-                                 FROM information_schema.columns ) pcolumn on pcolumn.table_name = ptables.tablename
-                                left join(
-                                    select pg_class.relname, pg_attribute.attname as colname from
-                                    pg_constraint inner join pg_class on pg_constraint.conrelid = pg_class.oid
-                                   inner join pg_attribute on pg_attribute.attrelid = pg_class.oid and  pg_attribute.attnum = pg_constraint.conkey[1] inner join pg_type on pg_type.oid = pg_attribute.atttypid 
-                                    where pg_constraint.contype = 'p'
-                                ) pkey on pcolumn.table_name = pkey.relname
-                                order by ptables.tablename";
-            var colList = _dbClient.SqlQueryable<DbColumnInfo>(sql).ToList();
+            //var schema = DbName.Contains(":") ? DbName.Split(':')[1] : DbName;
+            //var sql = $@"select cast (pclass.oid as int4) as TableId,cast(ptables.tablename as varchar) as TableName,
+            //                    pcolumn.column_name as DbColumnName,pcolumn.udt_name as DataType,
+            //                    CASE WHEN pcolumn.numeric_scale > 0 THEN pcolumn.numeric_precision ELSE pcolumn.character_maximum_length END   as Length,
+            //                    pcolumn.column_default as DefaultValue,
+            //                    pcolumn.numeric_scale as DecimalDigits,
+            //                    pcolumn.numeric_scale as Scale,
+            //                    col_description(pclass.oid, pcolumn.ordinal_position) as ColumnDescription,
+            //                    case when pkey.colname = pcolumn.column_name
+            //                    then true else false end as IsPrimaryKey,
+            //                    case when pcolumn.column_default like 'nextval%'
+            //                    then true else false end as IsIdentity,
+            //                    case when pcolumn.is_nullable = 'YES'
+            //                    then true else false end as IsNullable
+            //                     from(select * from pg_tables where upper(tablename) = upper('{objectId}') and schemaname = '{schema}') ptables inner join pg_class pclass
+            //                     on ptables.tablename = pclass.relname inner join(SELECT*
+            //                     FROM information_schema.columns ) pcolumn on pcolumn.table_name = ptables.tablename
+            //                    left join(
+            //                        select pg_class.relname, pg_attribute.attname as colname from
+            //                        pg_constraint inner join pg_class on pg_constraint.conrelid = pg_class.oid
+            //                       inner join pg_attribute on pg_attribute.attrelid = pg_class.oid and  pg_attribute.attnum = pg_constraint.conkey[1] inner join pg_type on pg_type.oid = pg_attribute.atttypid 
+            //                        where pg_constraint.contype = 'p'
+            //                    ) pkey on pcolumn.table_name = pkey.relname
+            //                    order by ptables.tablename";
+            //var colList = _dbClient.SqlQueryable<SqlSugar.DbColumnInfo>(sql).ToList();
             //var viewList = _dbMaintenance.GetColumnInfosByTableName(objectId);
             colList.ForEach(v =>
             {
@@ -304,7 +293,7 @@ namespace SmartSQL.Framework.Exporter
             var dbName = DbName.Split(':')[1];
             if (objectType == DbObjectType.Table)
             {
-                var dbColumn = new DbColumnInfo()
+                var dbColumn = new SqlSugar.DbColumnInfo()
                 {
                     TableName = columnInfo.ObjectId,
                     DbColumnName = columnInfo.DisplayName,
@@ -324,7 +313,7 @@ namespace SmartSQL.Framework.Exporter
             return result;
         }
 
-        public override (DataTable, int) GetDataTable(string sql,string orderBySql, int pageIndex, int pageSize)
+        public override (DataTable, int) GetDataTable(string sql, string orderBySql, int pageIndex, int pageSize)
         {
             #region MyRegion
             var pageInfo = new BasePagingInfo
