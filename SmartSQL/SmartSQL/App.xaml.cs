@@ -11,12 +11,25 @@ using NLog.Config;
 using NLog.Targets;
 using NLog;
 using SmartSQL.Helper;
-using MessageBox = System.Windows.MessageBox;
+using System.Collections.Generic;
+using SmartSQL.Models.Api;
+using RestSharp;
+using System.Net;
+using System.Text.Json;
+using System.Linq;
 
 namespace SmartSQL
 {
     public partial class App
     {
+        #region MyRegion
+        private readonly static string CategoryApiUrl = "https://apiv.gitee.io/smartapi/categoryApi.json";
+        private readonly static string SiteApiUrl = "https://apiv.gitee.io/smartapi/siteApi.json"; 
+        #endregion
+        /// <summary>
+        /// 导航站点信息
+        /// </summary>
+        public static List<CategoryApi> SiteInfo;
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public App()
         {
@@ -27,6 +40,8 @@ namespace SmartSQL
         {
             //初始化日志配置
             ConfigureNLog();
+            //初始化站点信息
+            InitSiteInfo();
             //var splashScreen = new SplashScreen("/Resources/Img/Readme/Cover.png");
             //splashScreen.Show(true);
             //splashScreen.Close(new TimeSpan(0, 0, 23));
@@ -95,6 +110,7 @@ namespace SmartSQL
         /// </summary>
         private void ConfigureNLog()
         {
+            #region MyRegion
             // 创建新的日志配置对象
             var config = new LoggingConfiguration();
             // 创建新的文件日志目标并配置你的需要
@@ -107,6 +123,59 @@ namespace SmartSQL
             config.AddRule(LogLevel.Info, LogLevel.Fatal, logfile);
             // 应用配置设置
             LogManager.Configuration = config;
+            #endregion
+        }
+
+        /// <summary>
+        /// 初始化站点信息
+        /// </summary>
+        /// <returns></returns>
+        private void InitSiteInfo()
+        {
+            #region MyRegion
+            Task.Run(() =>
+               {
+                   var client = new RestClient(CategoryApiUrl);
+                   var result = client.Execute(new RestRequest());
+                   if (result.StatusCode == HttpStatusCode.OK)
+                   {
+                       var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
+                       client = new RestClient(SiteApiUrl);
+                       result = client.Execute(new RestRequest());
+                       if (result.StatusCode == HttpStatusCode.OK)
+                       {
+                           var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
+                           categoryList.ForEach(x =>
+                           {
+                               int initType = 0;
+                               x.count = siteList.Count(t => t.category == x.categoryName);
+                               if (x.type.Any())
+                               {
+                                   x.type.ForEach(t =>
+                                   {
+                                       if (initType == 0)
+                                       {
+                                           x.SelectedType = t;
+                                       }
+                                       t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
+                                       initType++;
+                                   });
+                                   if (x.type.Count(t => t.sites.Count > 0) == 1)
+                                   {
+                                       x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                                       x.type = new List<CategoryApiType>();
+                                       return;
+                                   }
+                                   x.type = x.type.Where(t => t.sites.Count > 0).ToList();
+                                   return;
+                               }
+                               x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                           });
+                           SiteInfo = categoryList.Where(x => x.isEnable).ToList();
+                       }
+                   }
+               }); 
+            #endregion
         }
     }
 }

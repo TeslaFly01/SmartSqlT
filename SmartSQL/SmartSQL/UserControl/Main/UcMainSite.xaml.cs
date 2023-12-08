@@ -102,12 +102,12 @@ namespace SmartSQL.UserControl
             DataContext = this;
         }
 
-        private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = new SQLiteHelper();
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
-            await GetSiteInfo();
+            CategoryList = App.SiteInfo;
         }
 
         private async Task GetSiteInfo()

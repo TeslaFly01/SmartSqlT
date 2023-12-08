@@ -120,11 +120,6 @@ namespace SmartSQL.UserControl
             var dbInstance = ExporterFactory.CreateInstance(selConnectConfig.DbType, selConnectConfig.DbMasterConnectString);
             var list = dbInstance.GetDatabases(selConnectConfig.DefaultDatabase);
             ComSourceDatabase.ItemsSource = list;
-            if (selConnectConfig.DbType == DbType.PostgreSQL)
-            {
-                ComSourceDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
-                return;
-            }
             ComSourceDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
             #endregion
         }
@@ -156,11 +151,6 @@ namespace SmartSQL.UserControl
             var dbInstance = ExporterFactory.CreateInstance(selConnectConfig.DbType, selConnectConfig.DbMasterConnectString);
             var list = dbInstance.GetDatabases(selConnectConfig.DefaultDatabase);
             ComTargetDatabase.ItemsSource = list;
-            if (selConnectConfig.DbType == DbType.PostgreSQL)
-            {
-                ComTargetDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName.EndsWith("public"));
-                return;
-            }
             ComTargetDatabase.SelectedItem = list.FirstOrDefault(x => x.DbName == selConnectConfig.DefaultDatabase);
             #endregion
         }

@@ -150,16 +150,12 @@ namespace SmartSQL.UserControl
                     var dbInstance = ExporterFactory.CreateInstance(connectConfig.DbType, connectConfig.DbMasterConnectString);
                     list = dbInstance.GetDatabases(connectConfig.DefaultDatabase);
                     Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            SelectDatabase.ItemsSource = list;
-                            HidSelectDatabase.Text = connectConfig.DefaultDatabase;
-                            DataBase selectedDataBase = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
-                            //if (connectConfig.DbType == DbType.PostgreSQL)
-                            //{
-                            //    selectedDataBase= list.FirstOrDefault(x => x.DbName.EndsWith("public"));
-                            //}
-                            SelectDatabase.SelectedItem=selectedDataBase;
-                        }));
+                    {
+                        SelectDatabase.ItemsSource = list;
+                        HidSelectDatabase.Text = connectConfig.DefaultDatabase;
+                        DataBase selectedDataBase = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
+                        SelectDatabase.SelectedItem=selectedDataBase;
+                    }));
                 }
                 catch (Exception ex)
                 {
