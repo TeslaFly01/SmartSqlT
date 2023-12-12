@@ -11,7 +11,7 @@
 <img alt="visual studio 2019" src="https://img.shields.io/badge/visual studio-2019/2022-blue.svg?logo=Visual%20studio&logoColor=bc8af3">
 <img alt="csharp" src="https://img.shields.io/badge/language-csharp-yellow.svg?logo=csharp">
 <img alt="license" src="https://img.shields.io/badge/license-apache-red.svg?logo=apache&logoColor=red">
-<img alt="release" src="https://img.shields.io/badge/release-1.0.3.9-green?logo=fontawesome&logoColor=green">
+<img alt="release" src="https://img.shields.io/badge/release-1.0.4.1-green?logo=fontawesome&logoColor=green">
 </p>
 <p align="center">
 <img alt="框架" src="https://img.shields.io/badge/框架-WPF-success.svg?logo=dotnet&logoColor=violet">
