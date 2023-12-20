@@ -29,7 +29,7 @@ namespace SmartSQL
         /// <summary>
         /// 导航站点信息
         /// </summary>
-        public static List<CategoryApi> SiteInfo;
+        public static List<CategoryApi> SiteInfo = new List<CategoryApi>();
         private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
         public App()
         {
@@ -137,42 +137,49 @@ namespace SmartSQL
                {
                    var client = new RestClient(CategoryApiUrl);
                    var result = client.Execute(new RestRequest());
-                   if (result.StatusCode == HttpStatusCode.OK)
+                   try
                    {
-                       var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
-                       client = new RestClient(SiteApiUrl);
-                       result = client.Execute(new RestRequest());
                        if (result.StatusCode == HttpStatusCode.OK)
                        {
-                           var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
-                           categoryList.ForEach(x =>
+                           var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
+                           client = new RestClient(SiteApiUrl);
+                           result = client.Execute(new RestRequest());
+                           if (result.StatusCode == HttpStatusCode.OK)
                            {
-                               int initType = 0;
-                               x.count = siteList.Count(t => t.category == x.categoryName);
-                               if (x.type.Any())
+                               var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
+                               categoryList.ForEach(x =>
                                {
-                                   x.type.ForEach(t =>
+                                   int initType = 0;
+                                   x.count = siteList.Count(t => t.category == x.categoryName);
+                                   if (x.type.Any())
                                    {
-                                       if (initType == 0)
+                                       x.type.ForEach(t =>
                                        {
-                                           x.SelectedType = t;
+                                           if (initType == 0)
+                                           {
+                                               x.SelectedType = t;
+                                           }
+                                           t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
+                                           initType++;
+                                       });
+                                       if (x.type.Count(t => t.sites.Count > 0) == 1)
+                                       {
+                                           x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                                           x.type = new List<CategoryApiType>();
+                                           return;
                                        }
-                                       t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
-                                       initType++;
-                                   });
-                                   if (x.type.Count(t => t.sites.Count > 0) == 1)
-                                   {
-                                       x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
-                                       x.type = new List<CategoryApiType>();
+                                       x.type = x.type.Where(t => t.sites.Count > 0).ToList();
                                        return;
                                    }
-                                   x.type = x.type.Where(t => t.sites.Count > 0).ToList();
-                                   return;
-                               }
-                               x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
-                           });
-                           SiteInfo = categoryList.Where(x => x.isEnable).ToList();
+                                   x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
+                               });
+                               SiteInfo = categoryList.Where(x => x.isEnable).ToList();
+                           }
                        }
+                   }
+                   catch (Exception)
+                   {
+                       Logger.Error("网络连接错误，请检查。");
                    }
                }); 
             #endregion

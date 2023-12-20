@@ -108,57 +108,7 @@ namespace SmartSQL.UserControl
             var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
             CornerRadius = isMultipleTab ? 0 : 10;
             CategoryList = App.SiteInfo;
-        }
-
-        private async Task GetSiteInfo()
-        {
-            #region MyRegion
-            await Task.Run(() =>
-                {
-                    var client = new RestClient(CategoryApiUrl);
-                    var result = client.Execute(new RestRequest());
-                    if (result.StatusCode == HttpStatusCode.OK)
-                    {
-                        var categoryList = JsonSerializer.Deserialize<List<CategoryApi>>(result.Content);
-                        client = new RestClient(SiteApiUrl);
-                        result = client.Execute(new RestRequest());
-                        if (result.StatusCode == HttpStatusCode.OK)
-                        {
-                            var siteList = JsonSerializer.Deserialize<List<SiteApi>>(result.Content);
-                            categoryList.ForEach(x =>
-                            {
-                                int initType = 0;
-                                x.count = siteList.Count(t => t.category == x.categoryName);
-                                if (x.type.Any())
-                                {
-                                    x.type.ForEach(t =>
-                                    {
-                                        if (initType == 0)
-                                        {
-                                            x.SelectedType = t;
-                                        }
-                                        t.sites = siteList.Where(s => s.category == x.categoryName && s.type == t.typeName).ToList();
-                                        initType++;
-                                    });
-                                    if (x.type.Count(t => t.sites.Count > 0) == 1)
-                                    {
-                                        x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
-                                        x.type = new List<CategoryApiType>();
-                                        return;
-                                    }
-                                    x.type = x.type.Where(t => t.sites.Count > 0).ToList();
-                                    return;
-                                }
-                                x.sites = siteList.Where(s => s.category == x.categoryName).ToList();
-                            });
-                            Dispatcher.BeginInvoke(new Action(() =>
-                            {
-                                CategoryList = categoryList.Where(x => x.isEnable).ToList();
-                            }));
-                        }
-                    }
-                });
-            #endregion
+            NoMenuText.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>

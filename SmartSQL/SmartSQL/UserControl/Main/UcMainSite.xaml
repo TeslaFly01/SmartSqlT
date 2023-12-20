@@ -6,6 +6,7 @@
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
+    xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
@@ -74,6 +75,19 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+                        <Grid
+                            x:Name="NoMenuText"
+                            Margin="5"
+                            HorizontalAlignment="Stretch"
+                            Background="White"
+                            Cursor="Arrow"
+                            Visibility="Collapsed">
+                            <localBase:NoDataArea
+                                Margin="0"
+                                HorizontalAlignment="Center"
+                                ShowType="All"
+                                TipText="无数据，请检查网络" />
+                        </Grid>
                     </Grid>
                 </Border>
             </hc:SimplePanel>
