@@ -47,25 +47,6 @@ namespace SmartSQL.UserControl
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        #region MyRegion
-        private readonly static string CategoryApiUrl = "https://apiv.gitee.io/smartapi/categoryApi.json";
-
-        private readonly static string SiteApiUrl = "https://apiv.gitee.io/smartapi/siteApi.json";
-
-        #region 圆角度数
-        public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.Register(
-"CornerRadius", typeof(int), typeof(UcMainSite), new PropertyMetadata(default(int)));
-
-        /// <summary>
-        /// 选项卡圆角度数
-        /// </summary>
-        public int CornerRadius
-        {
-            get => (int)GetValue(CornerRadiusProperty);
-            set => SetValue(CornerRadiusProperty, value);
-        }
-        #endregion
-
         #region 分类列表
         public static readonly DependencyProperty CategoryListProperty = DependencyProperty.Register(
 "CategoryList", typeof(List<CategoryApi>), typeof(UcMainSite), new PropertyMetadata(default(List<CategoryApi>)));
@@ -93,20 +74,16 @@ namespace SmartSQL.UserControl
             set => SetValue(SiteListProperty, value);
         }
         #endregion
-        #endregion
 
         public UcMainSite()
         {
             InitializeComponent();
-            CornerRadius = 10;
             DataContext = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             var sqLiteHelper = new SQLiteHelper();
-            var isMultipleTab = sqLiteHelper.GetSysBool(SysConst.Sys_IsMultipleTab);
-            CornerRadius = isMultipleTab ? 0 : 10;
             CategoryList = App.SiteInfo;
             NoMenuText.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
         }

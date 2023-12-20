@@ -35,7 +35,7 @@
                 <Border
                     Margin="5,5,0,5"
                     Background="{DynamicResource RegionBrush}"
-                    CornerRadius="{Binding CornerRadius}">
+                    CornerRadius="10">
                     <Grid>
                         <ListBox
                             Name="MenuCategory"
@@ -106,7 +106,7 @@
         <!--  主内容  -->
         <DockPanel Grid.Row="0" Grid.Column="2">
             <Grid Margin="0,5,5,5">
-                <Border Background="White" CornerRadius="{Binding CornerRadius}">
+                <Border Background="White" CornerRadius="10">
                     <Grid>
                         <svgc:SvgViewbox
                             Width="350"
