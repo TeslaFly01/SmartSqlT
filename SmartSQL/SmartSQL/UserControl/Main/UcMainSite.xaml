@@ -109,10 +109,11 @@
                 <Border Background="White" CornerRadius="10">
                     <Grid>
                         <svgc:SvgViewbox
+                            x:Name="SvgNoData"
                             Width="350"
                             Height="325"
-                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg"
-                            Visibility="Collapsed" />
+                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_collaborators_re_hont.svg"
+                            Visibility="Visible" />
 
                         <hc:ScrollViewer
                             x:Name="ScrollViewBox"
@@ -156,7 +157,10 @@
                                                     <TabControl.ContentTemplate>
                                                         <DataTemplate>
                                                             <!--  内容绑定到具体的子项  -->
-                                                            <ItemsControl ItemsSource="{Binding sites}">
+                                                            <ItemsControl
+                                                                ItemsSource="{Binding sites}"
+                                                                VirtualizingPanel.CacheLengthUnit="Page"
+                                                                VirtualizingPanel.IsVirtualizing="True">
                                                                 <ItemsControl.ItemContainerStyle>
                                                                     <Style TargetType="ContentPresenter">
                                                                         <Setter Property="Margin" Value="0,0,0,0" />
@@ -178,9 +182,9 @@
                                                                         <hc:Card
                                                                             MaxWidth="255"
                                                                             Margin="15,10,15,10"
+                                                                            Background="#f9f9f9"
                                                                             BorderThickness="0"
                                                                             Cursor="Hand"
-                                                                            Effect="{StaticResource EffectShadow2}"
                                                                             MouseLeftButtonDown="Card_MouseLeftButtonDown"
                                                                             ToolTip="{Binding description}">
                                                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">
@@ -221,7 +225,10 @@
                                                     </TabControl.ContentTemplate>
                                                 </TabControl>
                                             </StackPanel>
-                                            <ItemsControl ItemsSource="{Binding sites}">
+                                            <ItemsControl
+                                                ItemsSource="{Binding sites}"
+                                                VirtualizingPanel.CacheLengthUnit="Page"
+                                                VirtualizingPanel.IsVirtualizing="True">
                                                 <ItemsControl.ItemContainerStyle>
                                                     <Style TargetType="ContentPresenter">
                                                         <Style.Triggers>
@@ -241,9 +248,9 @@
                                                         <hc:Card
                                                             MaxWidth="255"
                                                             Margin="15,8,15,8"
+                                                            Background="#f9f9f9"
                                                             BorderThickness="0"
                                                             Cursor="Hand"
-                                                            Effect="{StaticResource EffectShadow2}"
                                                             MouseLeftButtonDown="Card_MouseLeftButtonDown"
                                                             ToolTip="{Binding description}">
                                                             <StackPanel Margin="0,0,12,0" Orientation="Horizontal">

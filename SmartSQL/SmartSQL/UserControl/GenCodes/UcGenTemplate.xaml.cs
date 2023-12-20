@@ -269,6 +269,7 @@ namespace SmartSQL.UserControl.GenCodes
             TextContent.Text = "";
             TextFileFormat.Text = "";
             TextFileExt.Text = "";
+            ListTemplate.SelectedItem = null;   
         }
 
         private void ListTemplate_OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)

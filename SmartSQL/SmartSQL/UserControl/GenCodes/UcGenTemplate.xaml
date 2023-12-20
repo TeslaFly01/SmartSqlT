@@ -24,7 +24,7 @@
             <ColumnDefinition
                 Width="3.3*"
                 MinWidth="220"
-                MaxWidth="450" />
+                MaxWidth="350" />
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="6.6*" />
         </Grid.ColumnDefinitions>
@@ -87,12 +87,13 @@
                                     Padding="5,3,5,3"
                                     VerticalAlignment="Center"
                                     Click="MenuReset_OnClick"
+                                    Cursor="Hand"
                                     Header="重置默认模板">
                                     <MenuItem.Icon>
                                         <fa:FontAwesome
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Foreground="#1890ff"
+                                            Foreground="#3e4451"
                                             Icon="Refresh" />
                                     </MenuItem.Icon>
                                 </MenuItem>
@@ -101,13 +102,14 @@
                                     Padding="5,3,5,3"
                                     VerticalAlignment="Center"
                                     Click="MenuDelete_OnClick"
+                                    Cursor="Hand"
                                     Header="删除">
                                     <MenuItem.Icon>
                                         <fa:FontAwesome
                                             VerticalAlignment="Center"
                                             FontSize="14"
-                                            Foreground="#1890ff"
-                                            Icon="Remove" />
+                                            Foreground="#3e4451"
+                                            Icon="TrashOutline" />
                                     </MenuItem.Icon>
                                 </MenuItem>
                             </ContextMenu>
@@ -186,7 +188,30 @@
             Margin="0,5,0,5"
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"
-            Background="Transparent" />
+            Background="Transparent">
+            <GridSplitter.Style>
+                <Style TargetType="GridSplitter">
+                    <Setter Property="Foreground" Value="DarkGray" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridSplitter">
+                                <Grid>
+                                    <Rectangle Fill="{TemplateBinding Background}" />
+                                    <Path
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        Data="M 0 0 L 0 20 M 3 0 L 3 20"
+                                        SnapsToDevicePixels="True"
+                                        Stroke="{TemplateBinding Foreground}"
+                                        StrokeThickness="1" />
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </GridSplitter.Style>
+        </GridSplitter>
 
         <!--  MainContent  -->
         <DockPanel Grid.Column="2">

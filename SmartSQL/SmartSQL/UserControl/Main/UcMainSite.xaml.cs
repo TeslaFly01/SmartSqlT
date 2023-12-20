@@ -86,6 +86,7 @@ namespace SmartSQL.UserControl
             var sqLiteHelper = new SQLiteHelper();
             CategoryList = App.SiteInfo;
             NoMenuText.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
+            SvgNoData.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
 
         /// <summary>
