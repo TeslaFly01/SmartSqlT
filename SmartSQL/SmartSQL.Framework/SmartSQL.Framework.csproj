@@ -51,6 +51,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="FreeRedis, Version=1.2.11.0, Culture=neutral, PublicKeyToken=9aa6a3079358d437, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FreeRedis.1.2.11\lib\net451\FreeRedis.dll</HintPath>
+    </Reference>
     <Reference Include="FreeSql, Version=3.2.806.0, Culture=neutral, PublicKeyToken=a33928e5d4a4b39c, processorArchitecture=MSIL">
       <HintPath>..\..\packages\FreeSql.3.2.806-preview20231206\lib\net451\FreeSql.dll</HintPath>
     </Reference>
@@ -226,6 +229,7 @@
     <Compile Include="Exporter\MySqlExporter.cs" />
     <Compile Include="Exporter\OracleExporter.cs" />
     <Compile Include="Exporter\PostgreSqlExporter.cs" />
+    <Compile Include="Exporter\RedisExporter.cs" />
     <Compile Include="Exporter\SqlHelper.cs" />
     <Compile Include="Exporter\SqliteExporter.cs" />
     <Compile Include="Exporter\SqlServerExporter.cs" />

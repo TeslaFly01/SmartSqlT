@@ -87,6 +87,9 @@
     <PackageReference Include="MySql.Data">
       <Version>8.0.30</Version>
     </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
+    </PackageReference>
     <PackageReference Include="NLog">
       <Version>5.2.7</Version>
     </PackageReference>
@@ -183,6 +186,9 @@
     <Compile Include="UserControl\Connect\DmUC .xaml.cs">
       <DependentUpon>DmUC .xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Connect\RedisUC.xaml.cs">
+      <DependentUpon>RedisUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Connect\OracleUC.xaml.cs">
       <DependentUpon>OracleUC.xaml</DependentUpon>
     </Compile>
@@ -260,6 +266,9 @@
     </Compile>
     <Compile Include="UserControl\Tools\UcIcoToConvert.xaml.cs">
       <DependentUpon>UcIcoToConvert.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Tools\UcJson2CSharp.xaml.cs">
+      <DependentUpon>UcJson2CSharp.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Tools\UcRMB.xaml.cs">
       <DependentUpon>UcRMB.xaml</DependentUpon>
@@ -456,6 +465,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Connect\RedisUC.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Connect\OracleUC.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -557,6 +570,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\Tools\UcIcoToConvert.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Tools\UcJson2CSharp.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

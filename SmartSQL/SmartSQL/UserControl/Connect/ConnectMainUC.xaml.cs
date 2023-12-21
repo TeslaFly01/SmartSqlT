@@ -76,6 +76,11 @@ namespace SmartSQL.UserControl.Connect
                     ucDMUc.ChangeRefreshEvent += ChangeRefreshEvent;
                     mainWindow.MainContent = ucDMUc;
                     break;
+                case "Redis":
+                    var ucRedisUc = new RedisUC();
+                    ucRedisUc.ChangeRefreshEvent += ChangeRefreshEvent;
+                    mainWindow.MainContent = ucRedisUc;
+                    break;
                 default:
                     return;
             }

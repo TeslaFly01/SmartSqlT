@@ -140,7 +140,7 @@
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/ico@2x.png"
                     Tag="ico" />
-                <localControls:UcToolCard
+                <!--<localControls:UcToolCard
                     Title="条形码生成器"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/barCode@2x.png"
@@ -150,7 +150,7 @@
                     Title="AES加密/解密"
                     ClickCard="UcToolCard_ClickCard"
                     Icon="/SmartSQL;component/Resources/Img/toolIcon/aes@2x.png"
-                    IsEnabled="False" />
+                    IsEnabled="False" />-->
             </hc:WaterfallPanel>
         </hc:ScrollViewer>
     </Grid>

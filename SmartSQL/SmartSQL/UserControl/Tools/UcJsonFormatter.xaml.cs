@@ -5,6 +5,7 @@ using SmartSQL.Helper;
 using SmartSQL.Views;
 using HandyControl.Data;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace SmartSQL.UserControl
 {
@@ -41,6 +42,8 @@ namespace SmartSQL.UserControl
                     return;
                 }
                 TextEditor.Text = StrUtil.JsonFormatter(TextEditor.Text);
+
+                
             }
             catch (Exception)
             {

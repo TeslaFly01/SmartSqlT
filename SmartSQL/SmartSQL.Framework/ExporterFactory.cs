@@ -24,6 +24,7 @@ namespace SmartSQL.Framework
                 case DbType.Sqlite: return new SqliteExporter(dbConnectionString);
                 case DbType.Oracle: return new OracleExporter(dbConnectionString);
                 case DbType.Dm: return new DmExporter(dbConnectionString);
+                case DbType.Redis: return new RedisExporter(dbConnectionString);
                 default: return new SqlServerExporter(dbConnectionString);
             }
         }
@@ -38,6 +39,7 @@ namespace SmartSQL.Framework
                 case DbType.Sqlite: return new SqliteExporter(dbConnectionString, dbName);
                 case DbType.Oracle: return new OracleExporter(dbConnectionString, dbName);
                 case DbType.Dm: return new DmExporter(dbConnectionString, dbName);
+                case DbType.Redis: return new RedisExporter(dbConnectionString, dbName);
                 default: return new SqlServerExporter(dbConnectionString, dbName);
             }
         }
@@ -52,6 +54,7 @@ namespace SmartSQL.Framework
                 case DbType.Sqlite: return new SqliteExporter(table, columns);
                 case DbType.Oracle: return new OracleExporter(table, columns);
                 case DbType.Dm: return new DmExporter(table, columns);
+                case DbType.Redis: return new RedisExporter(table, columns);
                 default: return new SqlServerExporter(table, columns);
             }
         }

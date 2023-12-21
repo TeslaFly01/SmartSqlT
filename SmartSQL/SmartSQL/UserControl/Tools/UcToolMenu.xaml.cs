@@ -124,6 +124,10 @@ namespace SmartSQL.UserControl
                     toolBox.UcBox.Content = new UcIcoToConvert();
                     title = "Ico图标生成";
                     break;
+                case "json2csharp":
+                    toolBox.UcBox.Content = new UcJson2CSharp();
+                    title = "Json转C#实体";
+                    break;
                 case "barCode":
                     toolBox.UcBox.Content = new UcQrCode();
                     title = "条形码生成";

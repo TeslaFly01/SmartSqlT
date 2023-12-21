@@ -1,4 +1,5 @@
 using Dm;
+using FreeRedis;
 using MySql.Data.MySqlClient;
 using Npgsql;
 using System;
@@ -134,6 +135,28 @@ namespace SmartSQL.Framework.Util
                 Password = EncryptHelper.Decode(password)
             };
             return dmConnectionStringBuilder.ConnectionString;
+        }
+
+
+        /// <summary>
+        /// Redis数据库字符串
+        /// </summary>
+        /// <param name="serverAddress"></param>
+        /// <param name="port"></param>
+        /// <param name="serviceName"></param>
+        /// <param name="userName"></param>
+        /// <param name="password"></param>
+        /// <returns></returns>
+        public static string RedisString(string serverAddress, int port, string serviceName, string userName, string password)
+        {
+            var redisConnectionStringBuilder = new ConnectionStringBuilder
+            {
+                Host = $"{serverAddress}:{port}",
+                Password = password,
+                MaxPoolSize = 10,
+                ClientName = serviceName
+            };
+            return redisConnectionStringBuilder.ToString();
         }
     }
 }
