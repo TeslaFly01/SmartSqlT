@@ -156,6 +156,12 @@ namespace SmartSQL.Views
                         ucDm.ChangeRefreshEvent += ChangeRefreshEvent;
                         MainContent = ucDm;
                         break;
+                    case DbType.Redis:
+                        var ucRedis = new RedisUC();
+                        ucRedis.ConnectConfig = connect;
+                        ucRedis.ChangeRefreshEvent += ChangeRefreshEvent;
+                        MainContent = ucRedis;
+                        break;
                 }
             }
             #endregion
@@ -200,6 +206,11 @@ namespace SmartSQL.Views
             if (MainContent is DmUC ucDm)
             {
                 ucDm.SaveForm(isConnect);
+            }
+            //Redis
+            if (MainContent is RedisUC ucRedis)
+            {
+                ucRedis.SaveForm(isConnect);
             }
             #endregion
         }
@@ -310,6 +321,11 @@ namespace SmartSQL.Views
             if (MainContent is DmUC ucDm)
             {
                 ucDm.TestConnect(true);
+            }
+            //测试达梦
+            if (MainContent is RedisUC ucRedis)
+            {
+                ucRedis.TestConnect(true);
             }
             #endregion
         }

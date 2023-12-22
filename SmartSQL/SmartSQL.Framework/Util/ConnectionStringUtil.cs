@@ -152,7 +152,7 @@ namespace SmartSQL.Framework.Util
             var redisConnectionStringBuilder = new ConnectionStringBuilder
             {
                 Host = $"{serverAddress}:{port}",
-                Password = password,
+                Password = EncryptHelper.Decode(password),
                 MaxPoolSize = 10,
                 ClientName = serviceName
             };

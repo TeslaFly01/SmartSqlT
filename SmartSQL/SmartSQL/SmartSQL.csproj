@@ -234,6 +234,9 @@
     <Compile Include="UserControl\Groups\UcGroupObjects.xaml.cs">
       <DependentUpon>UcGroupObjects.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Main\UcMainRedis.xaml.cs">
+      <DependentUpon>UcMainRedis.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Main\UcMainSite.xaml.cs">
       <DependentUpon>UcMainSite.xaml</DependentUpon>
     </Compile>
@@ -254,6 +257,9 @@
     </Compile>
     <Compile Include="UserControl\Main\UcTabCode.xaml.cs">
       <DependentUpon>UcTabCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Redis\UcRedisFrom.xaml.cs">
+      <DependentUpon>UcRedisFrom.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\SqlQuery\UcSqlQueryMain.xaml.cs">
       <DependentUpon>UcSqlQueryMain.xaml</DependentUpon>
@@ -529,6 +535,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Main\UcMainRedis.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Main\UcMainSite.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -556,6 +566,10 @@
     <Page Include="UserControl\Main\UcTabCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Redis\UcRedisFrom.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\SqlQuery\UcSqlQueryMain.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -822,6 +836,8 @@
     <Content Include="FodyWeavers.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Resources\svg\floder.svg" />
+    <Resource Include="Resources\svg\redis.svg" />
     <Resource Include="Resources\Img\icon\icon_sqlQuery.png" />
     <Resource Include="Resources\svg\sqlQuery.svg" />
     <Resource Include="Resources\svg\icons\icon-AnalyticDB.svg" />

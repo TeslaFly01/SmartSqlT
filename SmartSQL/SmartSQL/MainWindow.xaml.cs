@@ -82,6 +82,8 @@ namespace SmartSQL
             {
                 SwitchMenu.Header = @"新建连接";
             }
+            var contentMain = new UcMainContent();
+            UcMainBox.Content = contentMain;
         }
 
         /// <summary>
@@ -111,8 +113,20 @@ namespace SmartSQL
             var connectConfigs = sqLiteHelper.GetList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
-            //加载主界面
-            MainContent.PageLoad(connectConfig);
+             if (connectConfig.DbType == SqlSugar.DbType.Redis)
+            {
+                var redisMain = new UcMainRedis();
+                //加载主界面
+                redisMain.PageLoad(connectConfig);
+                UcMainBox.Content = redisMain;
+            }
+            else
+            {
+                var contentMain = new UcMainContent();
+                //加载主界面
+                contentMain.PageLoad(connectConfig);
+                UcMainBox.Content = contentMain;
+            }
             #endregion
         }
 

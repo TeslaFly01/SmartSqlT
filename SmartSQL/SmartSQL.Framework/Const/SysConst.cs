@@ -23,6 +23,8 @@ namespace SmartSQL.Framework.Const
         public static readonly string Sys_PROCICON = "pack://application:,,,/Resources/svg/proc.svg";
         public static readonly string Sys_TAGICON = "pack://application:,,,/Resources/svg/tag.svg";
         public static readonly string Sys_SQLICON = "pack://application:,,,/Resources/svg/sqlQuery.svg";
+        public static readonly string Sys_KEYICON = "pack://application:,,,/Resources/svg/icons/icon-key.svg";
+        public static readonly string Sys_FLODERICON = "pack://application:,,,/Resources/svg/floder.svg";
 
         public static readonly string Sys_TableIcon = "pack://application:,,,/SmartSQL;component/Resources/Img/icon/icon_table.png";
         public static readonly string Sys_ViewIcon = "pack://application:,,,/SmartSQL;component/Resources/Img/icon/icon_view.png";

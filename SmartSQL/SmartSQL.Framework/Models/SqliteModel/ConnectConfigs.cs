@@ -68,6 +68,7 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.Sqlite: return "/SmartSQL;component/Resources/svg/sqlite@64.svg";
                     case DbType.Oracle: return "/SmartSQL;component/Resources/svg/icons/icon-oracle.svg";
                     case DbType.Dm: return "/SmartSQL;component/Resources/svg/dameng.svg";
+                    case DbType.Redis: return "/SmartSQL;component/Resources/svg/redis.svg";
                     default: return "";
                 }
             }
@@ -104,6 +105,9 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.Dm:
                         connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
+                    case DbType.Redis:
+                        connectString = ConnectionStringUtil.RedisString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
+                        break;
                 }
                 return connectString;
             }
@@ -139,6 +143,9 @@ namespace SmartSQL.Framework.SqliteModel
                     case DbType.Dm:
                         connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
                         break;
+                    case DbType.Redis:
+                        connectString = ConnectionStringUtil.RedisString(ServerAddress, ServerPort, DefaultDatabase, UserName, Password);
+                        break;
                 }
                 return connectString;
             }
@@ -173,6 +180,9 @@ namespace SmartSQL.Framework.SqliteModel
                     break;
                 case DbType.Dm:
                     connectString = ConnectionStringUtil.DmString(ServerAddress, ServerPort, selectedDatabase, UserName, Password);
+                    break;
+                case DbType.Redis:
+                    connectString = ConnectionStringUtil.RedisString(ServerAddress, ServerPort, selectedDatabase, UserName, Password);
                     break;
             }
             return connectString;
