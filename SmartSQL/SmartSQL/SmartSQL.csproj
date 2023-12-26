@@ -71,6 +71,9 @@
     <PackageReference Include="FontAwesome6.Fonts">
       <Version>2.5.1</Version>
     </PackageReference>
+    <PackageReference Include="FreeRedis">
+      <Version>1.2.11</Version>
+    </PackageReference>
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>3.2.1</Version>
     </PackageReference>

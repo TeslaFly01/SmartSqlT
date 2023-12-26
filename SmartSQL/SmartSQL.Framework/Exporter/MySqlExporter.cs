@@ -5,6 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FreeRedis;
 using FreeSql.Internal.Model;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.Util;
@@ -495,6 +496,16 @@ namespace SmartSQL.Framework.Exporter
         public override string DropColumnSql()
         {
             return "";
+        }
+
+        public override RedisClient.DatabaseHook GetDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RedisServerInfo GetInfo()
+        {
+            throw new NotImplementedException();
         }
     }
 }

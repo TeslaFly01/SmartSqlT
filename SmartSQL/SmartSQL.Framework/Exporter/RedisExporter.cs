@@ -7,6 +7,7 @@ using SqlSugar.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
@@ -15,6 +16,7 @@ namespace SmartSQL.Framework.Exporter
 {
     public class RedisExporter : Exporter, IExporter
     {
+        private readonly string DbPrex = "DB";
         public static RedisClient cli;
         public RedisExporter(string connectionString) : base(connectionString)
         {
@@ -50,7 +52,10 @@ namespace SmartSQL.Framework.Exporter
         public override Model Init()
         {
             var model = new Model();
-            var dbIndex = Convert.ToInt32(DbName.Replace("db", ""));
+            var dbIndex = Convert.ToInt32(DbName.Replace(DbPrex, ""));
+
+            //var ff = cli.Info();
+            //var gg = RedisServerInfoHelper.ParseServerInfo(ff);
             using (var db = cli.GetDatabase(dbIndex))
             {
                 var tables = new Tables(10);
@@ -73,6 +78,11 @@ namespace SmartSQL.Framework.Exporter
             return model;
         }
 
+        /// <summary>
+        /// 获取所有数据库
+        /// </summary>
+        /// <param name="defaultDatabase"></param>
+        /// <returns></returns>
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
             var dbList = new List<DataBase>();
@@ -80,11 +90,30 @@ namespace SmartSQL.Framework.Exporter
             {
                 dbList.Add(new DataBase
                 {
-                    DbName = $"db{i}",
-                    IsSelected = i==0
+                    DbName = $"{DbPrex}{i}",
+                    IsSelected = false
                 });
             }
             return dbList;
+        }
+
+        public override RedisServerInfo GetInfo()
+        {
+            var dbIndex = Convert.ToInt32(DbName.Replace(DbPrex, ""));
+            using (var db = cli.GetDatabase(dbIndex))
+            {
+                var infoString = db.Info();
+                return RedisServerInfoHelper.ParseServerInfo(infoString);
+            }
+        }
+
+        public override RedisClient.DatabaseHook GetDB()
+        {
+            var dbIndex = Convert.ToInt32(DbName.Replace(DbPrex, ""));
+            using (var db = cli.GetDatabase(dbIndex))
+            {
+                return db;
+            }
         }
 
         public override string AddColumnSql()

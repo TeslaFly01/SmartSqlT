@@ -12,7 +12,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:system="clr-namespace:System;assembly=mscorlib"
-    Loaded="UcSqlQueryMain_Loaded"
+    Loaded="BaseUserControl_Loaded"
     mc:Ignorable="d">
     <UserControl.Resources>
         <Style
@@ -119,21 +119,38 @@
                 BorderBrush="#E0E0E0"
                 BorderThickness="0,0,0,0">
                 <StackPanel Orientation="Horizontal">
-
+                    <TextBox
+                        Width="60"
+                        Height="20"
+                        Margin="5,0,0,0"
+                        HorizontalContentAlignment="Center"
+                        Background="#f4f5f7"
+                        BorderThickness="0"
+                        IsReadOnly="True"
+                        Text="{Binding SelectedType}" />
                     <TextBox
                         Width="200"
                         Height="20"
+                        Margin="5,0,0,0"
+                        Background="White"
+                        BorderThickness="1"
+                        Text="{Binding SelectedObject.Name}" />
+                    <TextBox
+                        Width="60"
+                        Height="20"
                         Margin="20,0,0,0"
-                        Background="#F4F5F7"
+                        HorizontalContentAlignment="Center"
+                        Background="#f4f5f7"
                         BorderThickness="0"
-                        Text="" />
+                        IsReadOnly="True"
+                        Text="TTL" />
                     <TextBox
                         Width="200"
                         Height="20"
-                        Margin="20,0,0,0"
-                        Background="#F4F5F7"
-                        BorderThickness="0"
-                        Text="" />
+                        Margin="5,0,0,0"
+                        Background="White"
+                        BorderThickness="1"
+                        Text="{Binding SelectedTtl}" />
 
                     <!--  删除  -->
                     <Button
@@ -170,7 +187,7 @@
                         </StackPanel>
                     </Button>
 
-                    <!--  设置  -->
+                    <!--  复制  -->
                     <Button
                         x:Name="BtnSetting"
                         Height="28"
@@ -178,7 +195,7 @@
                         Background="#1890ff"
                         BorderThickness="0"
                         Cursor="Hand"
-                        ToolTip="设置">
+                        ToolTip="复制">
                         <StackPanel Orientation="Horizontal">
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
@@ -196,96 +213,40 @@
             Grid.Row="1"
             Grid.Column="0"
             Background="#ffffff">
-            <Border
-                Margin="3,0,0,60"
-                Padding="5"
-                BorderBrush="#E0E0E0"
-                BorderThickness="1"
-                CornerRadius="8">
-                <Grid>
-                    <avalonedit:TextEditor
-                        x:Name="TextEditor"
-                        Margin="0,1,0,0"
-                        FontFamily="新宋体"
-                        FontSize="14"
-                        ShowLineNumbers="True"
-                        WordWrap="True">
-                        <avalonedit:TextEditor.ContextMenu>
-                            <ContextMenu Name="TreeContextMenu" Visibility="Visible">
-                                <MenuItem
-                                    x:Name="MenuExecute"
-                                    VerticalAlignment="Center"
-                                    Cursor="Hand"
-                                    Header="执行">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            FontSize="14"
-                                            Foreground="#1890ff"
-                                            Icon="Play" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <Separator Margin="0,0,10,0" />
-                                <MenuItem
-                                    x:Name="MenuCopy"
-                                    VerticalAlignment="Center"
-                                    Click="MenuCopy_Click"
-                                    Cursor="Hand"
-                                    Header="复制">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            Foreground="#8486f8"
-                                            Icon="Copy" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem
-                                    x:Name="MenuPaste"
-                                    VerticalAlignment="Center"
-                                    Click="MenuPaste_Click"
-                                    Cursor="Hand"
-                                    Header="粘贴">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            Foreground="#ff8c4c"
-                                            Icon="Paste" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem
-                                    x:Name="MenuFormat"
-                                    VerticalAlignment="Center"
-                                    Click="MenuFormat_Click"
-                                    Cursor="Hand"
-                                    Header="美化">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            Foreground="#1890ff"
-                                            Icon="FileText" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                                <MenuItem
-                                    x:Name="MenuSaveAs"
-                                    VerticalAlignment="Center"
-                                    Click="MenuSaveAs_Click"
-                                    Cursor="Hand"
-                                    Header="另存为...">
-                                    <MenuItem.Icon>
-                                        <fa:FontAwesome
-                                            VerticalAlignment="Center"
-                                            Foreground="#1890ff"
-                                            Icon="Save" />
-                                    </MenuItem.Icon>
-                                </MenuItem>
-                            </ContextMenu>
-                        </avalonedit:TextEditor.ContextMenu>
-                        <avalonedit:TextEditor.Options>
-                            <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
-                        </avalonedit:TextEditor.Options>
-                    </avalonedit:TextEditor>
-                </Grid>
-            </Border>
+            <Grid>
+                <Border
+                    Margin="3,0,0,60"
+                    Padding="5"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    CornerRadius="8">
+                    <Grid>
+                        <avalonedit:TextEditor
+                            x:Name="TextEditor"
+                            Margin="0,1,0,0"
+                            FontFamily="新宋体"
+                            FontSize="14"
+                            ShowLineNumbers="True"
+                            WordWrap="True">
+                            <avalonedit:TextEditor.Options>
+                                <avalonedit:TextEditorOptions EnableTextDragDrop="True" />
+                            </avalonedit:TextEditor.Options>
+                        </avalonedit:TextEditor>
+                    </Grid>
+                </Border>
+                <Button
+                    x:Name="BtnSe12tting"
+                    Width="60"
+                    Height="28"
+                    Margin="20,0,2,25"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Background="#1890ff"
+                    BorderThickness="0"
+                    Content="保存"
+                    Cursor="Hand"
+                    Foreground="White" />
+            </Grid>
         </DockPanel>
 
     </Grid>

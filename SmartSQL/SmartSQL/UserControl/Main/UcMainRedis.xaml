@@ -12,6 +12,7 @@
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    Loaded="UcMainRedis_OnLoaded"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -60,7 +61,8 @@
                                     <ColumnDefinition Width="5*" MinWidth="35" />
                                 </Grid.ColumnDefinitions>
                                 <ComboBox
-                                    x:Name="SelectDatabase"
+                                    x:Name="ComSelectDatabase"
+                                    Grid.Column="0"
                                     Height="30"
                                     VerticalAlignment="Top"
                                     HorizontalContentAlignment="Stretch"
@@ -70,7 +72,7 @@
                                     BorderThickness="0"
                                     Cursor="Hand"
                                     IsTextSearchEnabled="True"
-                                    SelectionChanged="SelectDatabase_OnSelectionChanged"
+                                    SelectionChanged="ComSelectDatabase_OnSelectionChanged"
                                     Style="{StaticResource ComboBoxExtend}"
                                     Text="{Binding DbName}">
                                     <ComboBox.ItemTemplate>
@@ -89,7 +91,7 @@
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
                                 </ComboBox>
-                                <Button
+                                <!--<Button
                                     Name="BtnFresh"
                                     Grid.Column="1"
                                     BorderThickness="0"
@@ -103,17 +105,19 @@
                                             Foreground="#727E96"
                                             Icon="Refresh" />
                                     </Button.Content>
-                                </Button>
+                                </Button>-->
                                 <Button
                                     Name="BtnQuery"
-                                    Grid.Column="2"
+                                    Grid.Column="1"
+                                    Height="30"
                                     Margin="3,0,0,0"
                                     HorizontalAlignment="Stretch"
+                                    VerticalAlignment="Top"
                                     Background="#F4F5F7"
                                     BorderThickness="0"
                                     Click="BtnQuery_Click"
                                     Cursor="Hand"
-                                    ToolTip="新建查询">
+                                    ToolTip="新增Key">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
                                             <fa:FontAwesome VerticalAlignment="Center" Icon="Plus" />
@@ -135,8 +139,7 @@
                                 BorderThickness="0"
                                 FontSize="13"
                                 ShowClearButton="True"
-                                Style="{StaticResource SearchBarPlus}"
-                                TextChanged="SearchMenu_OnTextChanged" />
+                                Style="{StaticResource SearchBarPlus}" />
                         </StackPanel>
                         <TreeView
                             x:Name="TreeViewTables"
@@ -160,151 +163,6 @@
                                     <EventSetter Event="PreviewMouseRightButtonDown" Handler="EventSetter_OnHandler" />
                                 </Style>
                             </TreeView.ItemContainerStyle>
-                            <TreeView.ContextMenu>
-                                <!--  右键菜单  -->
-                                <ContextMenu Name="TreeContextMenu" Visibility="Visible">
-                                    <MenuItem
-                                        x:Name="MenuCopyName"
-                                        VerticalAlignment="Center"
-                                        Click="MenuCopyName_OnClick"
-                                        Header="复制名称">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#e9af20"
-                                                Icon="Clone" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem
-                                        x:Name="MenuSetTag"
-                                        VerticalAlignment="Center"
-                                        Click="MenuSetTag_OnClick"
-                                        Header="设置标签">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                Foreground="#15c8c4"
-                                                Icon="Tags" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem
-                                        x:Name="MenuSetGroup"
-                                        VerticalAlignment="Center"
-                                        Click="MenuSetGroup_OnClick"
-                                        Header="设置分组">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                Foreground="#fdab03"
-                                                Icon="Group" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem
-                                        x:Name="MenuExportDoc"
-                                        VerticalAlignment="Center"
-                                        Click="MenuExportDoc_OnClick"
-                                        Header="导出文档">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#2db84d"
-                                                Icon="ShareSquareOutline" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                    <MenuItem
-                                        x:Name="MenuCreateSQL"
-                                        VerticalAlignment="Center"
-                                        Header="生成SQL">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#1890ff"
-                                                Icon="Code" />
-                                        </MenuItem.Icon>
-                                        <MenuItem
-                                            x:Name="MenuCreate1SQL"
-                                            VerticalAlignment="Center"
-                                            Click="MenuCreateSQL_OnClick"
-                                            Header="查找"
-                                            Tag="Select">
-                                            <MenuItem.Icon>
-                                                <svgc:SvgViewbox
-                                                    Width="14"
-                                                    Height="14"
-                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem
-                                            x:Name="MenuCreate111SQL"
-                                            VerticalAlignment="Center"
-                                            Click="MenuCreateSQL_OnClick"
-                                            Header="插入"
-                                            Tag="Insert">
-                                            <MenuItem.Icon>
-                                                <svgc:SvgViewbox
-                                                    Width="14"
-                                                    Height="14"
-                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem
-                                            x:Name="MenuCreate1SQ22L"
-                                            VerticalAlignment="Center"
-                                            Click="MenuCreateSQL_OnClick"
-                                            Header="更新"
-                                            Tag="Update">
-                                            <MenuItem.Icon>
-                                                <svgc:SvgViewbox
-                                                    Width="14"
-                                                    Height="14"
-                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem
-                                            x:Name="MenuCreate1SQL12"
-                                            VerticalAlignment="Center"
-                                            Click="MenuCreateSQL_OnClick"
-                                            Header="删除"
-                                            Tag="Delete">
-                                            <MenuItem.Icon>
-                                                <svgc:SvgViewbox
-                                                    Width="14"
-                                                    Height="14"
-                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-sql.svg" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                        <MenuItem
-                                            x:Name="MenuCreate1SQL121"
-                                            VerticalAlignment="Center"
-                                            Click="MenuCreateSQL_OnClick"
-                                            Header="DDL"
-                                            Tag="DDL">
-                                            <MenuItem.Icon>
-                                                <svgc:SvgViewbox
-                                                    Width="14"
-                                                    Height="14"
-                                                    Source="/SmartSQL;component/Resources/svg/icons/icon-ddl.svg" />
-                                            </MenuItem.Icon>
-                                        </MenuItem>
-                                    </MenuItem>
-                                    <MenuItem
-                                        x:Name="MenuGenCode"
-                                        VerticalAlignment="Center"
-                                        Click="MenuGenCode_Click"
-                                        Header="生成代码">
-                                        <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#1890ff"
-                                                Icon="Cube" />
-                                        </MenuItem.Icon>
-                                    </MenuItem>
-                                </ContextMenu>
-                            </TreeView.ContextMenu>
                             <TreeView.ItemTemplate>
                                 <HierarchicalDataTemplate DataType="{x:Type models:TreeNodeItem}" ItemsSource="{Binding Children}">
                                     <Grid>
@@ -363,15 +221,6 @@
                                 Margin="0"
                                 HorizontalAlignment="Center"
                                 ShowType="All" />
-                            <Button
-                                x:Name="BtnNoData"
-                                Margin="0,150,0,0"
-                                Background="#f4f5f7"
-                                BorderThickness="0"
-                                Click="BtnNoData_OnClick"
-                                Content="创建分组"
-                                Cursor="Hand"
-                                Visibility="Collapsed" />
                         </Grid>
                         <!--  数据加载Loading  -->
                         <localControls:Loading

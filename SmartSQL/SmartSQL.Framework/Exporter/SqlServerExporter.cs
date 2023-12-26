@@ -10,6 +10,7 @@ using DbType = SqlSugar.DbType;
 
 namespace SmartSQL.Framework.Exporter
 {
+    using FreeRedis;
     using FreeSql.Internal.Model;
     using PhysicalDataModel;
     using System.Data.SqlTypes;
@@ -822,5 +823,16 @@ namespace SmartSQL.Framework.Exporter
             #endregion
         }
         #endregion
+
+
+        public override RedisClient.DatabaseHook GetDB()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RedisServerInfo GetInfo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

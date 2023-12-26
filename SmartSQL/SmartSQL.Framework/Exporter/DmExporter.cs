@@ -7,6 +7,7 @@ using System.Data;
 using System.Threading.Tasks;
 using FreeSql.Internal.Model;
 using SmartSQL.Framework.Util;
+using FreeRedis;
 
 namespace SmartSQL.Framework.Exporter
 {
@@ -74,6 +75,11 @@ namespace SmartSQL.Framework.Exporter
             });
             return dbList;
             #endregion
+        }
+
+        public override RedisClient.DatabaseHook GetDB()
+        {
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -334,6 +340,11 @@ namespace SmartSQL.Framework.Exporter
         }
 
         public override string UpdateSql()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override RedisServerInfo GetInfo()
         {
             throw new NotImplementedException();
         }

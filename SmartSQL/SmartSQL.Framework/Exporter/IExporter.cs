@@ -7,7 +7,9 @@ using SqlSugar;
 
 namespace SmartSQL.Framework.Exporter
 {
+    using FreeRedis;
     using PhysicalDataModel;
+    using SmartSQL.Framework.Util;
 
     public interface IExporter
     {
@@ -22,6 +24,16 @@ namespace SmartSQL.Framework.Exporter
         /// <param name="defaultDatabase"></param>
         /// <returns></returns>
         List<DataBase> GetDatabases(string defaultDatabase = "");
+        /// <summary>
+        /// 获取数据库信息
+        /// </summary>
+        /// <returns></returns>
+        RedisServerInfo GetInfo();
+        /// <summary>
+        /// 获取RedisDB
+        /// </summary>
+        /// <returns></returns>
+        RedisClient.DatabaseHook GetDB();
         /// <summary>
         /// 获取对象列信息
         /// </summary>

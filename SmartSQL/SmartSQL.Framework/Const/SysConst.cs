@@ -17,7 +17,7 @@ namespace SmartSQL.Framework.Const
         public static readonly string Sys_SelectedDataBase = "SelectedDataBase";
         public static readonly string Sys_IsShowSaveWin = "IsShowSaveWin";
 
-        public static readonly string Sys_GROUPICON = "pack://application:,,,/Resources/svg/category.svg";
+        public static readonly string Sys_GROUPICON = "pack://application:,,,/Resources/svg/floder.svg";
         public static readonly string Sys_TABLEICON = "pack://application:,,,/Resources/svg/table.svg";
         public static readonly string Sys_VIEWICON = "pack://application:,,,/Resources/svg/view.svg";
         public static readonly string Sys_PROCICON = "pack://application:,,,/Resources/svg/proc.svg";

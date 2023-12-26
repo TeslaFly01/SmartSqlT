@@ -309,6 +309,7 @@
     <Compile Include="Util\MapHelper\OracleDbTypeMapHelper.cs" />
     <Compile Include="Util\PathHelper.cs" />
     <Compile Include="Util\MapHelper\PostgreSqlDbTypeMapHelper.cs" />
+    <Compile Include="Util\RedisServerInfoHelper.cs" />
     <Compile Include="Util\SerializeHelper.cs" />
     <Compile Include="Util\MapHelper\SqliteDbTypeMapHelper.cs" />
     <Compile Include="Util\MapHelper\SqlServerDbTypeMapHelper.cs" />

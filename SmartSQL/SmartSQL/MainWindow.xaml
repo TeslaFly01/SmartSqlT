@@ -371,7 +371,6 @@
             x:Name="DockUcManager"
             Grid.Column="1"
             Visibility="Visible">
-            <userControl:UcMainContent x:Name="MainContent" Visibility="Collapsed" />
             <UserControl x:Name="UcMainBox" />
         </DockPanel>
 

@@ -113,11 +113,12 @@ namespace SmartSQL
             var connectConfigs = sqLiteHelper.GetList<ConnectConfigs>();
             SwitchMenu.ItemsSource = null;
             SwitchMenu.ItemsSource = connectConfigs;
-             if (connectConfig.DbType == SqlSugar.DbType.Redis)
+            if (connectConfig.DbType == SqlSugar.DbType.Redis)
             {
                 var redisMain = new UcMainRedis();
+                redisMain.SelectedConnection = connectConfig;
                 //加载主界面
-                redisMain.PageLoad(connectConfig);
+                //redisMain.PageLoad(connectConfig);
                 UcMainBox.Content = redisMain;
             }
             else
@@ -137,6 +138,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void MenuGroup_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!(UcMainBox.Content is UcMainContent))
+            {
+                Oops.Oh("Redis数据库不支持分组管理");
+                return;
+            }
+            var MainContent = ((UcMainContent)UcMainBox.Content);
             var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
@@ -159,6 +166,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void MenuTag_Click(object sender, RoutedEventArgs e)
         {
+            if (!(UcMainBox.Content is UcMainContent))
+            {
+                Oops.Oh("Redis数据库不支持标签管理");
+                return;
+            }
+            var MainContent = ((UcMainContent)UcMainBox.Content);
             var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
@@ -222,6 +235,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void ExportDoc_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!(UcMainBox.Content is UcMainContent))
+            {
+                Oops.Oh("Redis数据库不支持导出文档");
+                return;
+            }
+            var MainContent = ((UcMainContent)UcMainBox.Content);
             var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
@@ -245,6 +264,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void GenCode_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!(UcMainBox.Content is UcMainContent))
+            {
+                Oops.Oh("Redis数据库不支持生成代码");
+                return;
+            }
+            var MainContent = ((UcMainContent)UcMainBox.Content);
             var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
@@ -268,6 +293,12 @@ namespace SmartSQL
         /// <param name="e"></param>
         private void ImportMark_OnClick(object sender, RoutedEventArgs e)
         {
+            if (!(UcMainBox.Content is UcMainContent))
+            {
+                Oops.Oh("Redis数据库不支持导入备注");
+                return;
+            }
+            var MainContent = ((UcMainContent)UcMainBox.Content);
             var selectDatabase = (DataBase)MainContent.SelectDatabase.SelectedItem;
             if (SelectendConnection == null || selectDatabase == null)
             {
