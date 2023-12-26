@@ -1,4 +1,4 @@
-﻿using FreeRedis;
+using FreeRedis;
 using Newtonsoft.Json;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Framework.Util;
@@ -88,11 +88,16 @@ namespace SmartSQL.Framework.Exporter
             var dbList = new List<DataBase>();
             for (int i = 0; i < 16; i++)
             {
-                dbList.Add(new DataBase
+                using (var db = cli.GetDatabase(i))
                 {
-                    DbName = $"{DbPrex}{i}",
-                    IsSelected = false
-                });
+                    var dbSize = db.DbSize();
+                    dbList.Add(new DataBase
+                    {
+                        DbName = $"{DbPrex}{i}",
+                        ItemCount = dbSize,
+                        IsSelected = false
+                    });
+                }
             }
             return dbList;
         }

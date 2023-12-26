@@ -138,6 +138,30 @@ namespace SmartSQL.UserControl
                         HidSelectDatabase.Text = connectConfig.DefaultDatabase;
                         DataBase selectedDataBase = list.FirstOrDefault(x => x.DbName == connectConfig.DefaultDatabase);
                         ComSelectDatabase.SelectedItem=selectedDataBase;
+
+
+
+                        MainTabW.Visibility = Visibility.Visible;
+                        if (TabItemData.Count > 0)
+                        {
+                            var curItem = TabItemData.FirstOrDefault();
+                            TabItemData.Remove(curItem);
+                        }
+                        var mainW = new UcRedisInfo
+                        {
+                            SelectedConnection = SelectedConnection
+                        };
+                        var tabItem = new MainTabWModel
+                        {
+                            DisplayName = SelectedConnection.ConnectName,
+                            Icon = IconDic["Type"],
+                            MainW = mainW
+                        };
+                        TabItemData.Insert(0, tabItem);
+                        MainTabW.SelectedItem = TabItemData.First();
+
+
+
                     }));
                 }
                 catch (Exception ex)

@@ -12,9 +12,9 @@
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
-    Loaded="UcMainRedis_OnLoaded"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Loaded="UcMainRedis_OnLoaded"
     mc:Ignorable="d">
     <!--  按键/命令监听绑定  -->
     <!--<Window.InputBindings>
@@ -26,6 +26,7 @@
     <!--  按键监/命令听绑定  -->
     <UserControl.Resources>
         <convert:DisplayNameConvert x:Key="DisplayNameConvert" />
+        <convert:ShowItemCountConvert x:Key="ShowItemCountConvert" />
     </UserControl.Resources>
     <Grid>
         <!--  Main布局  -->
@@ -54,8 +55,99 @@
                         Margin="5"
                         Background="Transparent">
                         <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
+
+                        <!--  操作栏  -->
                         <StackPanel Margin="3,3,3,0">
-                            <Grid>
+                            <Border Height="30" CornerRadius="3">
+                                <Grid>
+                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#909399"
+                                            Icon="InfoCircle"
+                                            ToolTip="当前库的备注信息" />
+                                        <TextBlock
+                                            Margin="5,0,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Foreground="#5c6b77"
+                                            Text="{Binding ElementName=ComSelectDatabase, Path=SelectedItem.DbName}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        Orientation="Horizontal">
+                                        <Button
+                                            x:Name="BtnEdit"
+                                            Height="25"
+                                            Margin="0,0,2,0"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            ToolTip="修改当前库备注">
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Pencil" />
+                                        </Button>
+                                        <Button
+                                            x:Name="BtnHome"
+                                            Height="25"
+                                            Margin="0,0,2,0"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            ToolTip="首页">
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Home" />
+                                        </Button>
+                                        <Button
+                                            x:Name="BtnTerminal"
+                                            Height="25"
+                                            Margin="0,0,2,0"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            ToolTip="Redis控制台">
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Terminal" />
+                                        </Button>
+                                        <Button
+                                            x:Name="BtnRefresh"
+                                            Height="25"
+                                            Margin="0,0,2,0"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            ToolTip="刷新">
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="Refresh" />
+                                        </Button>
+                                        <Button
+                                            x:Name="BtnMenu"
+                                            Height="25"
+                                            Margin="0,0,0,0"
+                                            BorderThickness="0"
+                                            Cursor="Hand"
+                                            ToolTip="菜单">
+                                            <fa:FontAwesome
+                                                VerticalAlignment="Center"
+                                                FontSize="14"
+                                                Foreground="#1890ff"
+                                                Icon="ThLarge" />
+                                        </Button>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <Grid Margin="0,5,0,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="5*" />
                                     <ColumnDefinition Width="5*" MinWidth="35" />
@@ -87,6 +179,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Text="{Binding DbName}" />
+                                                <TextBlock Text="{Binding ItemCount, StringFormat=（{0}）}" Visibility="{Binding ItemCount, Converter={StaticResource ShowItemCountConvert}}" />
                                             </StackPanel>
                                         </DataTemplate>
                                     </ComboBox.ItemTemplate>
@@ -117,6 +210,7 @@
                                     BorderThickness="0"
                                     Click="BtnQuery_Click"
                                     Cursor="Hand"
+                                    Foreground="#5c6b77"
                                     ToolTip="新增Key">
                                     <Button.Content>
                                         <StackPanel Orientation="Horizontal">
@@ -126,6 +220,8 @@
                                     </Button.Content>
                                 </Button>
                             </Grid>
+
+                            <!--  搜索  -->
                             <hc:SearchBar
                                 x:Name="SearchMenu"
                                 Height="30"
@@ -141,9 +237,11 @@
                                 ShowClearButton="True"
                                 Style="{StaticResource SearchBarPlus}" />
                         </StackPanel>
+
+                        <!--  Key树形菜单  -->
                         <TreeView
                             x:Name="TreeViewTables"
-                            Margin="0,73,0,0"
+                            Margin="0,110,0,0"
                             VerticalAlignment="Top"
                             BorderThickness="0"
                             ItemsSource="{Binding TreeViewData}"
@@ -210,6 +308,8 @@
                                 </HierarchicalDataTemplate>
                             </TreeView.ItemTemplate>
                         </TreeView>
+
+                        <!--  暂无数据  -->
                         <Grid
                             x:Name="NoDataText"
                             Margin="0,105,0,5"
@@ -222,6 +322,7 @@
                                 HorizontalAlignment="Center"
                                 ShowType="All" />
                         </Grid>
+
                         <!--  数据加载Loading  -->
                         <localControls:Loading
                             x:Name="LoadingLine"

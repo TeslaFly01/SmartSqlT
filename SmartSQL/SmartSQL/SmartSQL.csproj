@@ -155,6 +155,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converts\ShowItemCountConvert.cs" />
     <Compile Include="Converts\DisplayNameConvert.cs" />
     <Compile Include="Helper\BarQrCodeHelper.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
@@ -260,6 +261,9 @@
     </Compile>
     <Compile Include="UserControl\Main\UcTabCode.xaml.cs">
       <DependentUpon>UcTabCode.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UserControl\Redis\UcRedisInfo.xaml.cs">
+      <DependentUpon>UcRedisInfo.xaml</DependentUpon>
     </Compile>
     <Compile Include="UserControl\Redis\UcRedisFrom.xaml.cs">
       <DependentUpon>UcRedisFrom.xaml</DependentUpon>
@@ -569,6 +573,10 @@
     <Page Include="UserControl\Main\UcTabCode.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="UserControl\Redis\UcRedisInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="UserControl\Redis\UcRedisFrom.xaml">
       <Generator>MSBuild:Compile</Generator>
