@@ -67,6 +67,11 @@
                     Cursor="Arrow"
                     Foreground="#40485b"
                     Text="连接模式" />
+                <TextBlock
+                    Margin="0,228,20,20"
+                    Cursor="Arrow"
+                    Foreground="#40485b"
+                    Text="SSL" />
             </Grid>
             <Grid x:Name="MySqlConnectForm" Grid.Column="1">
                 <TextBox
@@ -127,6 +132,11 @@
                     <ComboBoxItem Content="哨兵" />
                     <ComboBoxItem Content="集群" />
                 </ComboBox>
+                <CheckBox
+                    x:Name="ChkSSL"
+                    Margin="0,228,55,20"
+                    VerticalAlignment="Top"
+                    Cursor="Hand" />
             </Grid>
         </Grid>
     </Grid>

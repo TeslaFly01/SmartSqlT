@@ -82,7 +82,6 @@ namespace SmartSQL.UserControl.Connect
             var connectName = TextConnectName.Text.Trim();
             var serverAddress = TextServerAddress.Text.Trim();
             var serverPort = TextServerPort.Value;
-            var userName = "";// TextServerName.Text.Trim();
             var password = TextServerPassword.Password.Trim();
             var tipMsg = new StringBuilder();
             if (string.IsNullOrEmpty(connectName))

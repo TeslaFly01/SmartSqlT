@@ -237,7 +237,7 @@
                     <MenuItem
                         Name="MenuHelpBook"
                         Command="hc:ControlCommands.OpenLink"
-                        CommandParameter="https://gitee.com/dotnetchina/SmartSQL#smartsql"
+                        CommandParameter="https://smartsql.gitee.io/"
                         FontWeight="Normal"
                         Header="帮助文档">
                         <MenuItem.Icon>
