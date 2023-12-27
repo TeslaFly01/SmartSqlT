@@ -81,7 +81,7 @@
                             BorderThickness="0">
                             <FlowDocument>
                                 <Paragraph>
-                                    <Run Foreground="#5c6b77" Text="Redis版本：" />
+                                    <Run Foreground="#5c6b77" Text="进程ID：" />
                                     <Run Foreground="ForestGreen" Text="{Binding RedisServerInfo.ProcessId}" />
                                 </Paragraph>
                             </FlowDocument>
@@ -268,7 +268,7 @@
         </Border>
 
         <!--  Redis信息全集  -->
-        <Border
+        <!--<Border
             Margin="10"
             VerticalAlignment="Top"
             BorderBrush="#f4f5f7"
@@ -326,6 +326,6 @@
                     </DataGrid>
                 </Grid>
             </StackPanel>
-        </Border>
+        </Border>-->
     </StackPanel>
 </local:BaseUserControl>

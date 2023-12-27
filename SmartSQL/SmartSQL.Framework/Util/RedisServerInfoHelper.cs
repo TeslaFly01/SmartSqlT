@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -260,10 +260,10 @@ namespace SmartSQL.Framework.Util
                             serverInfo.AofLastCowSize = long.Parse(value);
                             break;
                         case "total_connections_received":
-                            serverInfo.TotalConnectionsReceived = int.Parse(value);
+                            serverInfo.TotalConnectionsReceived = value;
                             break;
                         case "total_commands_processed":
-                            serverInfo.TotalCommandsProcessed = int.Parse(value);
+                            serverInfo.TotalCommandsProcessed = value;
                             break;
                         case "instantaneous_ops_per_sec":
                             serverInfo.InstantaneousOpsPerSec = long.Parse(value);
@@ -512,8 +512,8 @@ namespace SmartSQL.Framework.Util
         public string AofLastBgrewriteStatus { get; set; }
         public string AofLastWriteStatus { get; set; }
         public long AofLastCowSize { get; set; }
-        public int TotalConnectionsReceived { get; set; }
-        public int TotalCommandsProcessed { get; set; }
+        public string TotalConnectionsReceived { get; set; }
+        public string TotalCommandsProcessed { get; set; }
         public long InstantaneousOpsPerSec { get; set; }
         public long TotalNetInputBytes { get; set; }
         public long TotalNetOutputBytes { get; set; }

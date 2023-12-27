@@ -82,8 +82,7 @@ namespace SmartSQL
             {
                 SwitchMenu.Header = @"新建连接";
             }
-            var contentMain = new UcMainContent();
-            UcMainBox.Content = contentMain;
+            UcMainBox.Content = new UcMainContent();
         }
 
         /// <summary>
@@ -115,10 +114,10 @@ namespace SmartSQL
             SwitchMenu.ItemsSource = connectConfigs;
             if (connectConfig.DbType == SqlSugar.DbType.Redis)
             {
-                var redisMain = new UcMainRedis();
-                redisMain.SelectedConnection = connectConfig;
-                //加载主界面
-                //redisMain.PageLoad(connectConfig);
+                var redisMain = new UcMainRedis
+                {
+                    SelectedConnection = connectConfig
+                };
                 UcMainBox.Content = redisMain;
             }
             else

@@ -99,8 +99,15 @@ namespace SmartSQL.UserControl
             }
             try
             {
-                var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnection.DbDefaultConnectString, "DB0");
-                RedisServerInfo = dbInstance.GetInfo();
+                Task.Run(() =>
+                {
+                    var dbInstance = ExporterFactory.CreateInstance(selectedConnection.DbType, selectedConnection.DbDefaultConnectString, "DB0");
+                    var serverInfo = dbInstance.GetInfo();
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        RedisServerInfo = serverInfo;
+                    }));
+                });
             }
             catch (Exception ex)
             {

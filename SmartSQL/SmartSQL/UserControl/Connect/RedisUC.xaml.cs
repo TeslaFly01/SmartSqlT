@@ -182,7 +182,7 @@ namespace SmartSQL.UserControl.Connect
             var serverPort = Convert.ToInt32(TextServerPort.Value);
             var userName = "";// TextServerName.Text.Trim();
             var password = EncryptHelper.Encode(TextServerPassword.Password.Trim());
-            var defaultDataBase = new DataBase { DbName = "db0" };
+            var defaultDataBase = new DataBase { DbName = "DB0" };
             var connectionString = ConnectionStringUtil.RedisString(serverAddress, serverPort, string.Empty, userName, password);
 
             var sqLiteHelper = new SQLiteHelper();

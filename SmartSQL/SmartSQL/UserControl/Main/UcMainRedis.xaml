@@ -163,10 +163,15 @@
                                     Background="#F4F5F7"
                                     BorderThickness="0"
                                     Cursor="Hand"
-                                    IsTextSearchEnabled="True"
+                                    IsTextSearchEnabled="False"
                                     SelectionChanged="ComSelectDatabase_OnSelectionChanged"
                                     Style="{StaticResource ComboBoxExtend}"
                                     Text="{Binding DbName}">
+                                    <ComboBox.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <VirtualizingStackPanel />
+                                        </ItemsPanelTemplate>
+                                    </ComboBox.ItemsPanel>
                                     <ComboBox.ItemTemplate>
                                         <DataTemplate>
                                             <StackPanel VerticalAlignment="Center" Orientation="Horizontal">

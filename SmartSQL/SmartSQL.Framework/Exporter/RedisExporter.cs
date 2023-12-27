@@ -53,9 +53,6 @@ namespace SmartSQL.Framework.Exporter
         {
             var model = new Model();
             var dbIndex = Convert.ToInt32(DbName.Replace(DbPrex, ""));
-
-            //var ff = cli.Info();
-            //var gg = RedisServerInfoHelper.ParseServerInfo(ff);
             using (var db = cli.GetDatabase(dbIndex))
             {
                 var tables = new Tables(10);
@@ -85,31 +82,30 @@ namespace SmartSQL.Framework.Exporter
         /// <returns></returns>
         public override List<DataBase> GetDatabases(string defaultDatabase = "")
         {
+            var dbCount = long.Parse(cli.ConfigGet("databases")["databases"]);
             var dbList = new List<DataBase>();
-            for (int i = 0; i < 16; i++)
+            var dbInfo = GetInfo();
+            for (var i = 0; i < dbCount; i++)
             {
-                using (var db = cli.GetDatabase(i))
+                var keys = 0;
+                if (dbInfo.Databases.ContainsKey(i))
                 {
-                    var dbSize = db.DbSize();
-                    dbList.Add(new DataBase
-                    {
-                        DbName = $"{DbPrex}{i}",
-                        ItemCount = dbSize,
-                        IsSelected = false
-                    });
+                    keys = dbInfo.Databases[i].Keys;
                 }
+                dbList.Add(new DataBase
+                {
+                    DbName = $"{DbPrex}{i}",
+                    ItemCount = keys,
+                    IsSelected = false
+                });
             }
             return dbList;
         }
 
         public override RedisServerInfo GetInfo()
         {
-            var dbIndex = Convert.ToInt32(DbName.Replace(DbPrex, ""));
-            using (var db = cli.GetDatabase(dbIndex))
-            {
-                var infoString = db.Info();
-                return RedisServerInfoHelper.ParseServerInfo(infoString);
-            }
+            var infoString = cli.Info();
+            return RedisServerInfoHelper.ParseServerInfo(infoString);
         }
 
         public override RedisClient.DatabaseHook GetDB()
