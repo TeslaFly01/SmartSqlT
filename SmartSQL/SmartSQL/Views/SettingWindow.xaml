@@ -7,8 +7,8 @@
     xmlns:local="clr-namespace:SmartSQL.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="设置"
-    Width="550"
-    Height="330"
+    Width="650"
+    Height="400"
     BorderThickness="0"
     Icon="../Resources/Img/icon_setting.png"
     ShowInTaskbar="False"
@@ -28,7 +28,7 @@
             <Grid>
                 <ListBox
                     Name="ListGroup"
-                    Margin="8"
+                    Margin="3,5,3,5"
                     BorderThickness="0"
                     ScrollViewer.VerticalScrollBarVisibility="Visible">
                     <ListBox.ItemContainerStyle>
@@ -37,11 +37,11 @@
                             <Setter Property="Margin" Value="3" />
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#E8EBEF" />
+                                    <Setter Property="Background" Value="#f4f5f7" />
                                     <Setter Property="Foreground" Value="#417FF9" />
                                 </Trigger>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter Property="Background" Value="#F4F5F7" />
+                                    <Setter Property="Background" Value="#eeeeee" />
                                 </Trigger>
                             </Style.Triggers>
                         </Style>
@@ -50,6 +50,7 @@
                         Name="ListItemRoutine"
                         Focusable="True"
                         IsSelected="True">
+
                         <StackPanel Orientation="Horizontal">
                             <TextBlock
                                 Width="12"
@@ -75,8 +76,101 @@
             CornerRadius="8">
             <Grid>
                 <!--  内容栏  -->
-                <Grid>
-                    <CheckBox
+                <StackPanel>
+                    <Border
+                        Height="55"
+                        Margin="8,8,8,0"
+                        Background="#f5f5f5"
+                        CornerRadius="6"
+                        Cursor="Hand">
+                        <Grid>
+                            <StackPanel Margin="8,0,0,0" VerticalAlignment="Center">
+                                <TextBlock FontSize="13" Text="多标签" />
+                                <TextBlock
+                                    Margin="0,3,0,0"
+                                    FontSize="12"
+                                    Foreground="#a0a0a0"
+                                    Text="主窗口多标签展示" />
+                            </StackPanel>
+                            <ToggleButton
+                                Name="ChkIsMultipleTab"
+                                Margin="8"
+                                HorizontalAlignment="Right"
+                                BorderThickness="0"
+                                IsChecked="True"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Height="55"
+                        Margin="8,8,8,0"
+                        Background="#f5f5f5"
+                        CornerRadius="6"
+                        Cursor="Hand">
+                        <Grid>
+                            <StackPanel Margin="8,0,0,0" VerticalAlignment="Center">
+                                <TextBlock FontSize="13" Text="模糊搜索" />
+                                <TextBlock
+                                    Margin="0,3,0,0"
+                                    FontSize="12"
+                                    Foreground="#a0a0a0"
+                                    Text="对象名模糊搜索" />
+                            </StackPanel>
+                            <ToggleButton
+                                Name="ChkIsLikeSearch"
+                                Margin="8"
+                                HorizontalAlignment="Right"
+                                IsChecked="True"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Height="55"
+                        Margin="8,8,8,0"
+                        Background="#f5f5f5"
+                        CornerRadius="6"
+                        Cursor="Hand">
+                        <Grid>
+                            <StackPanel Margin="8,0,0,0" VerticalAlignment="Center">
+                                <TextBlock FontSize="13" Text="显示表备注" />
+                                <TextBlock
+                                    Margin="0,3,0,0"
+                                    FontSize="12"
+                                    Foreground="#a0a0a0"
+                                    Text="左侧表、视图菜单包含表备注说明" />
+                            </StackPanel>
+                            <ToggleButton
+                                Name="ChkIsContainsObjName"
+                                Margin="8"
+                                HorizontalAlignment="Right"
+                                IsChecked="True"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                        </Grid>
+                    </Border>
+                    <Border
+                        Height="55"
+                        Margin="8,8,8,0"
+                        Background="#f5f5f5"
+                        CornerRadius="6"
+                        Cursor="Hand">
+                        <Grid>
+                            <StackPanel Margin="8,0,0,0" VerticalAlignment="Center">
+                                <TextBlock FontSize="13" Text="修改备注提示" />
+                                <TextBlock
+                                    Margin="0,3,0,0"
+                                    FontSize="12"
+                                    Foreground="#a0a0a0"
+                                    Text="修改备注时是否弹出保存提示对话框" />
+                            </StackPanel>
+                            <ToggleButton
+                                Name="ChkIsShowSaveWin"
+                                Margin="8"
+                                HorizontalAlignment="Right"
+                                IsChecked="True"
+                                Style="{StaticResource ToggleButtonSwitch}" />
+                        </Grid>
+                    </Border>
+                    <!--<CheckBox
                         Name="ChkIsMultipleTab"
                         Margin="36,30,0,0"
                         HorizontalAlignment="Left"
@@ -103,8 +197,8 @@
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Content="修改备注时是否弹出保存提示对话框"
-                        IsChecked="True" />
-                </Grid>
+                        IsChecked="True" />-->
+                </StackPanel>
 
                 <!--  操作栏  -->
                 <Border
