@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.Views"
     xmlns:localBase="clr-namespace:SmartSQL.UserControl.Controls"
@@ -18,31 +19,6 @@
     Loaded="GenCode_OnLoaded"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Window.Resources>
-        <Style
-            x:Key="GenCodeMenuItemStyle"
-            BasedOn="{StaticResource ListBoxItemBaseStyle}"
-            TargetType="ListBoxItem">
-            <Setter Property="Height" Value="50" />
-            <Setter Property="Margin" Value="4,3,4,3" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="#727E96" />
-            <Setter Property="Background" Value="#ffffff" />
-            <Setter Property="HorizontalAlignment" Value="Stretch" />
-            <Setter Property="HorizontalContentAlignment" Value="Center" />
-            <Style.Triggers>
-                <Trigger Property="IsSelected" Value="True">
-                    <Setter Property="Background" Value="#F4F5F7" />
-                    <Setter Property="Foreground" Value="#417FF9" />
-                </Trigger>
-            </Style.Triggers>
-            <Style.Resources>
-                <Style TargetType="Border">
-                    <Setter Property="CornerRadius" Value="15" />
-                </Style>
-            </Style.Resources>
-        </Style>
-    </Window.Resources>
 
     <Grid Background="White">
         <Grid.ColumnDefinitions>
