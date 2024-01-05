@@ -214,6 +214,9 @@
     <Compile Include="UserControl\Controls\ExportLoading.xaml.cs">
       <DependentUpon>ExportLoading.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Controls\SwitchButton.xaml.cs">
+      <DependentUpon>SwitchButton.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Controls\UcToolCard.xaml.cs">
       <DependentUpon>UcToolCard.xaml</DependentUpon>
     </Compile>
@@ -507,6 +510,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="UserControl\Controls\ExportLoading.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UserControl\Controls\SwitchButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
