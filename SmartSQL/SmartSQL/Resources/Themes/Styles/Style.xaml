@@ -352,7 +352,7 @@
         <Setter Property="Height" Value="50" />
         <Setter Property="Margin" Value="4,3,4,3" />
         <Setter Property="Cursor" Value="Hand" />
-        <Setter Property="Foreground" Value="#595959" />
+        <Setter Property="Foreground" Value="#727e96" />
         <Setter Property="Background" Value="#ffffff" />
         <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -365,7 +365,7 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="10"
+                        CornerRadius="5"
                         SnapsToDevicePixels="true">
                         <!--  Here you can set the corner radius  -->
 

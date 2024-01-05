@@ -12,6 +12,7 @@
     Loaded="ConnectMainUC_OnLoaded"
     mc:Ignorable="d">
     <Grid>
+        <!--  标题  -->
         <Grid Height="40" VerticalAlignment="Top">
             <Border BorderThickness="0" CornerRadius="8 8 0 0 ">
                 <Border.Background>
@@ -22,9 +23,11 @@
                 <TextBlock FontWeight="Bold" Foreground="#36425a">选择数据库类型</TextBlock>
             </StackPanel>
         </Grid>
+
+        <!--  数据库类型  -->
         <ListBox
             Margin="0,40,0,0"
-            Padding="0,20,0,30"
+            Padding="0,30,0,30"
             BorderThickness="0"
             Cursor="Arrow"
             ItemsPanel="{StaticResource FluidMoveBehaviorWrapPanelItemsPanelTemplate}"
