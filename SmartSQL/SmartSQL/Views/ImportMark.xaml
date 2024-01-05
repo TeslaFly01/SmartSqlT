@@ -46,7 +46,7 @@
                         Click="BtnFindFile_OnClick"
                         Content="浏览"
                         Cursor="Hand"
-                        Foreground="#6e7074" />
+                        Foreground="#817075" />
                 </StackPanel>
                 <TextBlock
                     Margin="10,75,0,0"

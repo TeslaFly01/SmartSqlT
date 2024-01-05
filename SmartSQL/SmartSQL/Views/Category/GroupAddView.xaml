@@ -14,91 +14,78 @@
     BorderThickness="0"
     Icon="/Resources/Img/icon_group.png"
     Loaded="Window_Loaded"
-    ResizeMode="CanMinimize"
+    ResizeMode="NoResize"
     ShowInTaskbar="False"
     WindowStartupLocation="CenterOwner"
     mc:Ignorable="d">
-    <Grid Background="{StaticResource CloudDrawingBrush}">
-        <Border
-            Margin="5"
-            Background="#ffffff"
-            CornerRadius="8">
-            <Grid>
-                <hc:TextBox
-                    Name="TextGroupName"
-                    Height="60"
-                    Margin="20"
-                    VerticalAlignment="Top"
-                    hc:InfoElement.Placeholder="请输入分组名称"
-                    hc:InfoElement.Title="分组名称"
-                    Background="#F4F5F7"
-                    BorderThickness="0"
-                    MaxLength="30"
-                    PreviewKeyUp="TagName_PreviewKeyUp"
-                    Text="{Binding SelectedGroup.GroupName}"
-                    TextChanged="TextGroupName_OnTextChanged" />
-                <TextBlock
-                    Name="TextErrorMsg"
-                    Margin="22,83,20,20"
-                    Foreground="Red"
-                    Text="请输入分组名称"
-                    Visibility="Collapsed" />
-                <TextBlock Margin="30,100,0,0" VerticalAlignment="Top">展开节点</TextBlock>
-                <UniformGrid
-                    Height="80"
-                    Margin="20,120,20,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Columns="3"
-                    Rows="2">
-                    <RadioButton
-                        Name="CheckCurrent"
-                        Content="当前节点"
-                        Cursor="Hand" />
-                    <RadioButton
-                        Name="CheckChild"
-                        Margin="10,0,0,0"
-                        Content="子项节点"
-                        Cursor="Hand" />
-                    <RadioButton
-                        Name="CheckNone"
-                        Margin="10,0,0,0"
-                        Content="不展开"
-                        Cursor="Hand"
-                        IsChecked="True" />
-                </UniformGrid>
-                <Border
-                    VerticalAlignment="Bottom"
-                    Background="#f5f5f5"
-                    CornerRadius="0 0 8 8">
-                    <Grid Cursor="">
-                        <hc:SimpleStackPanel
-                            Margin="5"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Bottom">
-                            <hc:UniformSpacingPanel Spacing="10">
-                                <Button
-                                    x:Name="BtnSave"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    Click="BtnSave_Click"
-                                    Content="保存"
-                                    Cursor="Hand"
-                                    Style="{StaticResource ButtonPrimary}" />
-                                <Button
-                                    x:Name="BtnCancel"
-                                    Height="25"
-                                    Padding="20,0,20,0"
-                                    BorderThickness="0.4"
-                                    Click="BtnCancel_Click"
-                                    Content="取消"
-                                    Cursor="Hand" />
-                            </hc:UniformSpacingPanel>
-                        </hc:SimpleStackPanel>
-                    </Grid>
-
-                </Border>
-            </Grid>
-        </Border>
+    <Grid Background="White">
+        <hc:TextBox
+            Name="TextGroupName"
+            Height="60"
+            Margin="20"
+            VerticalAlignment="Top"
+            hc:InfoElement.Placeholder="请输入分组名称"
+            hc:InfoElement.Title="分组名称"
+            Background="#F4F5F7"
+            BorderThickness="0"
+            MaxLength="30"
+            PreviewKeyUp="TagName_PreviewKeyUp"
+            Text="{Binding SelectedGroup.GroupName}"
+            TextChanged="TextGroupName_OnTextChanged" />
+        <TextBlock
+            Name="TextErrorMsg"
+            Margin="22,83,20,20"
+            Foreground="Red"
+            Text="请输入分组名称"
+            Visibility="Collapsed" />
+        <TextBlock Margin="30,100,0,0" VerticalAlignment="Top">展开节点</TextBlock>
+        <UniformGrid
+            Height="80"
+            Margin="20,120,20,0"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Top"
+            Columns="3"
+            Rows="2">
+            <RadioButton
+                Name="CheckCurrent"
+                Content="当前节点"
+                Cursor="Hand" />
+            <RadioButton
+                Name="CheckChild"
+                Margin="18,0,0,0"
+                Content="子项节点"
+                Cursor="Hand" />
+            <RadioButton
+                Name="CheckNone"
+                Margin="18,0,0,0"
+                Content="不展开"
+                Cursor="Hand"
+                IsChecked="True" />
+        </UniformGrid>
+        <Grid VerticalAlignment="Bottom" Background="#f5f5f5">
+            <StackPanel
+                Margin="5"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="BtnSave"
+                    Height="25"
+                    Margin="0,0,10,0"
+                    Padding="20,0,20,0"
+                    Click="BtnSave_Click"
+                    Content="保存"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    x:Name="BtnCancel"
+                    Height="25"
+                    Padding="20,0,20,0"
+                    BorderThickness="0.4"
+                    Click="BtnCancel_Click"
+                    Content="取消"
+                    Cursor="Hand" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </hc:Window>

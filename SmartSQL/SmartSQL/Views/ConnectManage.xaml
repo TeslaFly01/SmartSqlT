@@ -20,7 +20,7 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Background="{StaticResource CloudDrawingBrush}">
+    <Grid Background="#f4f5f7">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="220" MinWidth="240" />
             <ColumnDefinition Width="*" />

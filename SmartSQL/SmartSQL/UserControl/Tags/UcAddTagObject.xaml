@@ -16,14 +16,14 @@
         <!--  搜索栏  -->
         <Border
             Height="70"
-            Margin="10"
+            Margin="5"
             VerticalAlignment="Top"
             Background="#ffffff"
             CornerRadius="8">
             <Grid>
                 <hc:Divider
                     Name="UcTitle"
-                    Margin="15,5,15,0"
+                    Margin="10,5,10,0"
                     HorizontalContentAlignment="Left"
                     FontWeight="Bold"
                     Foreground="{StaticResource PrimaryBrush}" />
@@ -58,12 +58,11 @@
                     TextChanged="SearchObjects_OnTextChanged" />
             </Grid>
         </Border>
-        <!--  搜索栏  -->
 
         <!--  内容栏  -->
         <Grid>
             <Border
-                Margin="10,90,10,10"
+                Margin="5,65,5,5"
                 Background="#ffffff"
                 CornerRadius="8">
                 <Grid Margin="10">
@@ -159,7 +158,7 @@
                                 <Button
                                     x:Name="BtnReturn"
                                     Padding="20,0,20,0"
-                                    BorderThickness="0.4"
+                                    BorderBrush="#f0f0f0"
                                     Click="BtnReturn_Click"
                                     Content="返回"
                                     Cursor="Hand" />

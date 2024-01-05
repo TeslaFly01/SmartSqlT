@@ -281,7 +281,7 @@
     <!--  顶部栏菜单  -->
 
     <!--  Main区域  -->
-    <Grid Background="{StaticResource CloudDrawingBrush}">
+    <Grid Background="#f4f5f7">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60" />
             <ColumnDefinition Width="*" />
@@ -297,35 +297,14 @@
                     x:Name="LeftMenu"
                     Margin="0,10,0,10"
                     Background="Transparent"
-                    BorderThickness="0">
-                    <ListBox.ItemContainerStyle>
-                        <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
-                            <Setter Property="Height" Value="50" />
-                            <Setter Property="Margin" Value="4,3,4,3" />
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Foreground" Value="#727E96" />
-                            <Setter Property="Background" Value="#ffffff" />
-                            <Setter Property="HorizontalAlignment" Value="Stretch" />
-                            <Setter Property="HorizontalContentAlignment" Value="Center" />
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#F4F5F7" />
-                                    <Setter Property="Foreground" Value="#417FF9" />
-                                </Trigger>
-                            </Style.Triggers>
-                            <Style.Resources>
-                                <Style TargetType="Border">
-                                    <Setter Property="CornerRadius" Value="15" />
-                                </Style>
-                            </Style.Resources>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
+                    BorderThickness="0"
+                    ItemContainerStyle="{StaticResource MenuListBoxItemStyle}">
                     <ListBoxItem
                         x:Name="MenuManager"
                         IsSelected="True"
                         Selected="MenuManager_Selected">
                         <StackPanel>
-                            <fa:FontAwesome FontSize="16" Icon="Book" />
+                            <fa:FontAwesome FontSize="16" Icon="Home" />
                             <TextBlock Margin="0,5,0,0" Text="管理" />
                         </StackPanel>
                     </ListBoxItem>
@@ -354,12 +333,6 @@
                         <StackPanel>
                             <fa:FontAwesome FontSize="16" Icon="InternetExplorer" />
                             <TextBlock Margin="0,5,0,0" Text="网站" />
-                        </StackPanel>
-                    </ListBoxItem>
-                    <ListBoxItem IsEnabled="False" Visibility="Collapsed">
-                        <StackPanel>
-                            <fa:FontAwesome FontSize="16" Icon="Heart" />
-                            <TextBlock Margin="0,5,0,0" Text="收藏" />
                         </StackPanel>
                     </ListBoxItem>
                 </ListBox>

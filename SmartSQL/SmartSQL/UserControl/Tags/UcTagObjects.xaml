@@ -13,52 +13,44 @@
     mc:Ignorable="d">
     <Grid>
         <!--  搜索栏  -->
-        <Border
-            Height="60"
-            Margin="10"
-            VerticalAlignment="Top"
-            Background="#ffffff"
-            CornerRadius="8">
-            <Grid>
-                <hc:SearchBar
-                    x:Name="SearchObjects"
-                    Height="30"
-                    Margin="10,0,110,0"
-                    Padding="5,0,5,0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Center"
-                    hc:BorderElement.CornerRadius="5"
-                    hc:InfoElement.Placeholder="搜索表、视图、存储过程"
-                    Background="#EFEFF3"
-                    BorderThickness="0"
-                    FontSize="13"
-                    ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}"
-                    TextChanged="SearchObjects_TextChanged" />
-                <Button
-                    Name="BtnSetTag"
-                    Width="90"
-                    Margin="0,0,10,0"
-                    Padding="8,8"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Center"
-                    hc:IconElement.Geometry="{StaticResource AddGeometry}"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderThickness="0"
-                    Click="BtnSetTag_Click"
-                    Content="标签设置"
-                    Foreground="#ffffff" />
-            </Grid>
-        </Border>
-        <!--  搜索栏  -->
+        <Grid Margin="5,13" VerticalAlignment="Top">
+            <hc:SearchBar
+                x:Name="SearchObjects"
+                Height="30"
+                Margin="10,0,110,0"
+                Padding="5,0,5,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Center"
+                hc:BorderElement.CornerRadius="5"
+                hc:InfoElement.Placeholder="搜索表、视图、存储过程"
+                Background="#f4f5f7"
+                BorderThickness="0"
+                FontSize="13"
+                ShowClearButton="True"
+                Style="{StaticResource SearchBarPlus}"
+                TextChanged="SearchObjects_TextChanged" />
+            <Button
+                Name="BtnSetTag"
+                Width="90"
+                Margin="0,0,10,0"
+                Padding="8,8"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                Background="{StaticResource PrimaryBrush}"
+                BorderThickness="0"
+                Click="BtnSetTag_Click"
+                Content="标签设置"
+                Foreground="#ffffff" />
+        </Grid>
 
         <!--  内容栏  -->
         <Grid>
             <Border
-                Margin="10,80,10,45"
+                Margin="14,55,14,44"
                 Background="#ffffff"
                 CornerRadius="8">
-                <Grid Margin="10">
+                <Grid>
                     <DataGrid
                         x:Name="TableGrid"
                         hc:DataGridAttach.CanUnselectAllWithBlankArea="True"
@@ -111,6 +103,7 @@
                             </DataGridTemplateColumn>
                         </DataGrid.Columns>
                     </DataGrid>
+
                     <!--  暂无数据  -->
                     <Grid
                         x:Name="MainNoDataText"
@@ -123,7 +116,6 @@
                             HorizontalAlignment="Center"
                             ShowType="All" />
                     </Grid>
-                    <!--  暂无数据  -->
                 </Grid>
             </Border>
         </Grid>
@@ -132,26 +124,21 @@
         <!--  操作栏  -->
         <Border
             VerticalAlignment="Bottom"
-            Background="#f5f5f5"
+            Background="#ffffff"
             CornerRadius="0 0 8 8">
             <Grid>
-                <hc:SimpleStackPanel
-                    Margin="5"
+                <Button
+                    x:Name="BtnCancel"
+                    Height="25"
+                    Margin="10,10,13,10"
+                    Padding="20,0,20,0"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom">
-                    <hc:UniformSpacingPanel Spacing="10">
-                        <Button
-                            x:Name="BtnCancel"
-                            Height="25"
-                            Padding="20,0,20,0"
-                            BorderThickness="0.4"
-                            Click="BtnCancel_Click"
-                            Content="关闭"
-                            Cursor="Hand" />
-                    </hc:UniformSpacingPanel>
-                </hc:SimpleStackPanel>
+                    VerticalAlignment="Bottom"
+                    BorderBrush="#f0f0f0"
+                    Click="BtnCancel_Click"
+                    Content="关闭"
+                    Cursor="Hand" />
             </Grid>
         </Border>
-        <!--  操作栏  -->
     </Grid>
 </UserControl>
