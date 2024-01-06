@@ -30,3 +30,5 @@ obj/*
 /SmartSQL/SmartSQL.Framework/bin/Release
 /SmartSQL/SmartSQL.Framework/obj/Release
 /SmartSQL/SmartSQL.DocUtils/obj/Release
+/SmartSQL/SmartSQL/.vs/SmartSQL.csproj.dtbcache.json
+/SmartSQL/SmartSQL.Framework/.vs/SmartSQL.Framework.csproj.dtbcache.json
