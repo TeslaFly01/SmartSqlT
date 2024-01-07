@@ -38,31 +38,25 @@
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="选择连接">
                     <MenuItem.Icon>
-                        <Path
-                            Data="{StaticResource DownGeometry}"
-                            Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />
+                        <fa6:FontAwesome FontSize="15" Icon="Solid_AngleDown" />
                     </MenuItem.Icon>
                     <MenuItem.ItemContainerStyle>
                         <Style BasedOn="{StaticResource MenuItemBaseStyle}" TargetType="MenuItem">
                             <Setter Property="Height" Value="35" />
-                            <Setter Property="Padding" Value="-16,5,0,2" />
+                            <Setter Property="Padding" Value="0,5,0,2" />
                             <Setter Property="Width" Value="250" />
-                            <Setter Property="HorizontalAlignment" Value="Left" />
-                            <Setter Property="VerticalAlignment" Value="Center" />
-                            <Setter Property="Margin" Value="0,0,-55,0" />
+                            <Setter Property="Cursor" Value="Hand" />
                         </Style>
                     </MenuItem.ItemContainerStyle>
                     <MenuItem.ItemTemplate>
-                        <HierarchicalDataTemplate>
+                        <DataTemplate>
                             <MenuItem
-                                Padding="0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Stretch"
+                                Margin="-26,-8,-60,-6"
+                                Padding="10,0,0,0"
+                                HorizontalAlignment="Stretch"
+                                VerticalContentAlignment="Center"
                                 Click="SwitchMenu_Click"
-                                Cursor="Hand"
-                                FontWeight="Normal"
-                                Header="{Binding ConnectName}">
+                                FontWeight="Normal">
                                 <MenuItem.Icon>
                                     <svgc:SvgViewbox
                                         Width="16"
@@ -71,8 +65,11 @@
                                         IsHitTestVisible="False"
                                         Source="{Binding Icon}" />
                                 </MenuItem.Icon>
+                                <MenuItem.Header>
+                                    <TextBlock Margin="0,6,0,0" Text="{Binding ConnectName}" />
+                                </MenuItem.Header>
                             </MenuItem>
-                        </HierarchicalDataTemplate>
+                        </DataTemplate>
                     </MenuItem.ItemTemplate>
                 </MenuItem>
 
@@ -209,7 +206,7 @@
                         <MenuItem.Icon>
                             <fa:FontAwesome
                                 VerticalAlignment="Center"
-                                FontSize="16"
+                                FontSize="15"
                                 Foreground="#faad14"
                                 Icon="Coffee" />
                         </MenuItem.Icon>
