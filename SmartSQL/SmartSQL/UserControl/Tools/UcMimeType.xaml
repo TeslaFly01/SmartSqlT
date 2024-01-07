@@ -111,7 +111,8 @@
                             <DataGridTextColumn
                                 Binding="{Binding Value}"
                                 CanUserSort="False"
-                                Header="Content-Type(Mime-Type)" />
+                                Header="Content-Type(Mime-Type)"
+                                IsReadOnly="True" />
                         </DataGrid.Columns>
                     </DataGrid>
                     <Grid

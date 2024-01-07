@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
@@ -130,11 +131,10 @@
                         FontWeight="Normal"
                         Header="生成代码">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
+                            <fa6:FontAwesome
                                 FontSize="15"
                                 Foreground="#1890ff"
-                                Icon="Cube" />
+                                Icon="Brands_Magento" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>

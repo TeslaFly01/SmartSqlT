@@ -351,6 +351,7 @@
         TargetType="ListBoxItem">
         <Setter Property="Height" Value="50" />
         <Setter Property="Margin" Value="4,3,4,3" />
+        <Setter Property="Padding" Value="0" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="Foreground" Value="#727e96" />
         <Setter Property="Background" Value="#ffffff" />
@@ -368,13 +369,29 @@
                         CornerRadius="5"
                         SnapsToDevicePixels="true">
                         <!--  Here you can set the corner radius  -->
-
-                        <ContentPresenter
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Grid>
+                            <Border
+                                x:Name="BdSelected"
+                                Width="2.8"
+                                Height="20"
+                                HorizontalAlignment="Left"
+                                Background="#417FF9"
+                                CornerRadius="1"
+                                Visibility="Collapsed" />
+                            <ContentPresenter
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#F4F5F7" />
+                            <Setter Property="Foreground" Value="#417FF9" />
+                            <Setter TargetName="BdSelected" Property="Visibility" Value="Visible" />
+                            <!--<Setter TargetName="Bd" Property="BorderBrush" Value="#417FF9" />
+                            <Setter TargetName="Bd" Property="BorderThickness" Value="5,0,0,0" />-->
+                        </Trigger>
                         <!--  Your triggers for visual states like mouse over, selected etc.  -->
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

@@ -29,6 +29,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <TargetFrameworkProfile />
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x64</PlatformTarget>
@@ -286,6 +287,9 @@
     <Compile Include="UserControl\Tools\UcJson2CSharp.xaml.cs">
       <DependentUpon>UcJson2CSharp.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\Tools\UcIcon.xaml.cs">
+      <DependentUpon>UcIcon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="UserControl\Tools\UcRMB.xaml.cs">
       <DependentUpon>UcRMB.xaml</DependentUpon>
     </Compile>
@@ -383,9 +387,6 @@
     </Compile>
     <Compile Include="Views\Contact.xaml.cs">
       <DependentUpon>Contact.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\Fontawesome.xaml.cs">
-      <DependentUpon>Fontawesome.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Donation.xaml.cs">
       <DependentUpon>Donation.xaml</DependentUpon>
@@ -609,6 +610,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="UserControl\Tools\UcIcon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="UserControl\Tools\UcRMB.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -734,10 +739,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Contact.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Views\Fontawesome.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

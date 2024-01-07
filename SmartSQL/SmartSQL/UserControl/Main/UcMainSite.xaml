@@ -47,6 +47,41 @@
                             ItemsSource="{Binding CategoryList}"
                             ScrollViewer.VerticalScrollBarVisibility="Visible"
                             SelectionChanged="MenuCategory_SelectionChanged">
+
+                            <ListBox.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
+                                    <Setter Property="Foreground" Value="#444e63" />
+                                    <Setter Property="Margin" Value="0,3,0,0" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Cursor" Value="Hand" />
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="ListBoxItem">
+                                                <Border
+                                                    x:Name="Bd"
+                                                    Padding="{TemplateBinding Padding}"
+                                                    Background="{TemplateBinding Background}"
+                                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                                    CornerRadius="5"
+                                                    SnapsToDevicePixels="true">
+                                                    <ContentPresenter
+                                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                                </Border>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                    <Style.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" Value="#f4f5f7" />
+                                            <Setter Property="Foreground" Value="#417FF9" />
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListBox.ItemContainerStyle>
+
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid Height="45">

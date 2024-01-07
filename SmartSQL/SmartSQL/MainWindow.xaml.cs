@@ -346,13 +346,6 @@ namespace SmartSQL
             donation.ShowDialog();
         }
 
-        private void MenuFontAwesome_OnClick(object sender, RoutedEventArgs e)
-        {
-            var donation = new Fontawesome();
-            donation.Owner = this;
-            donation.ShowDialog();
-        }
-
         /// <summary>
         /// 联系作者
         /// </summary>

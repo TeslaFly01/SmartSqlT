@@ -64,7 +64,7 @@
                 <!--  连接列表  -->
                 <ListBox
                     Name="ListTemplate"
-                    Margin="0,40,0,35"
+                    Margin="0,35,0,35"
                     HorizontalContentAlignment="Stretch"
                     BorderThickness="0"
                     ItemsSource="{Binding DataList}"
@@ -113,10 +113,30 @@
                         <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
                             <Setter Property="Foreground" Value="#444e63" />
                             <Setter Property="Height" Value="40" />
-                            <Setter Property="Margin" Value="0" />
+                            <Setter Property="Margin" Value="0,3,0,0" />
+                            <Setter Property="Cursor" Value="Hand" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border
+                                            x:Name="Bd"
+                                            Padding="{TemplateBinding Padding}"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="5"
+                                            SnapsToDevicePixels="true">
+                                            <ContentPresenter
+                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
                             <Style.Triggers>
                                 <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#E8EBEF" />
+                                    <Setter Property="Background" Value="#f4f5f7" />
                                     <Setter Property="Foreground" Value="#417FF9" />
                                 </Trigger>
                             </Style.Triggers>

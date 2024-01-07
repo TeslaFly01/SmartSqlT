@@ -16,7 +16,7 @@
     ShowTitle="True"
     WindowStartupLocation="CenterScreen"
     mc:Ignorable="d">
-    <Grid Background="#f5f5f5">
+    <Grid Background="White">
         <Border
             Margin="40,20,0,0"
             Padding="20,20,20,0"
@@ -24,7 +24,7 @@
             VerticalAlignment="Top"
             Background="White"
             CornerRadius="8"
-            Effect="{StaticResource EffectShadow5}">
+            Effect="{StaticResource EffectShadow3}">
             <Image
                 Width="220"
                 Height="300"
@@ -38,7 +38,7 @@
             VerticalAlignment="Top"
             Background="White"
             CornerRadius="8"
-            Effect="{StaticResource EffectShadow5}">
+            Effect="{StaticResource EffectShadow3}">
             <Image
                 Width="220"
                 Height="300"

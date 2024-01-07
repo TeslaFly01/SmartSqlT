@@ -39,7 +39,7 @@
                     IsSelected="True"
                     Selected="MenuGen_OnSelected">
                     <StackPanel>
-                        <fa:FontAwesome FontSize="16" Icon="Book" />
+                        <fa6:FontAwesome FontSize="16" Icon="Brands_Magento" />
                         <TextBlock Margin="0,5,0,0" Text="生成" />
                     </StackPanel>
                 </ListBoxItem>
@@ -48,7 +48,7 @@
                     IsEnabled="True"
                     Selected="MenuTemplate_OnSelected">
                     <StackPanel>
-                        <fa:FontAwesome FontSize="16" Icon="Gift" />
+                        <fa6:FontAwesome FontSize="16" Icon="Solid_Gift" />
                         <TextBlock Margin="0,5,0,0" Text="模板" />
                     </StackPanel>
                 </ListBoxItem>
