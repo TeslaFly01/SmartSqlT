@@ -84,10 +84,7 @@
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="文件">
                     <MenuItem.Icon>
-                        <Path
-                            Data="{StaticResource FileGeometry}"
-                            Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />
+                        <fa6:FontAwesome FontSize="15" Icon="Regular_FolderClosed" />
                     </MenuItem.Icon>
                     <MenuItem
                         Name="AddConnect"
@@ -147,10 +144,11 @@
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="工具">
                     <MenuItem.Icon>
-                        <Path
+                        <!--<Path
                             Data="{StaticResource GroupGeometry}"
                             Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />
+                            Stretch="Uniform" />-->
+                        <fa6:FontAwesome FontSize="15" Icon="Regular_PaperPlane" />
                     </MenuItem.Icon>
                     <MenuItem
                         Name="MenuGroupManage"
@@ -158,11 +156,10 @@
                         FontWeight="Normal"
                         Header="分组管理">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
+                            <fa6:FontAwesome
                                 FontSize="13"
                                 Foreground="#fdab03"
-                                Icon="Group" />
+                                Icon="Regular_FolderOpen" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -172,11 +169,10 @@
                         Header="标签管理"
                         IsEnabled="True">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
+                            <fa6:FontAwesome
                                 FontSize="14"
-                                Foreground="#15c8c4"
-                                Icon="Tags" />
+                                Foreground="#fdab03"
+                                Icon="Solid_Tags" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -186,11 +182,11 @@
                         Header="选项"
                         IsEnabled="True">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
+                            <fa6:FontAwesome
                                 VerticalAlignment="Center"
-                                FontSize="16"
+                                FontSize="15"
                                 Foreground="#438df3"
-                                Icon="Cog" />
+                                Icon="Solid_Gear" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
@@ -203,10 +199,7 @@
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="帮助">
                     <MenuItem.Icon>
-                        <Path
-                            Data="{StaticResource InfoGeometry}"
-                            Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />
+                        <fa6:FontAwesome FontSize="15" Icon="Solid_CircleInfo" />
                     </MenuItem.Icon>
                     <MenuItem
                         Name="MenuDonation"
@@ -227,11 +220,10 @@
                         FontWeight="Normal"
                         Header="联系作者">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
-                                FontSize="14"
+                            <fa6:FontAwesome
+                                FontSize="14.5"
                                 Foreground="#21d86e"
-                                Icon="Wechat" />
+                                Icon="Brands_Weixin" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -241,11 +233,10 @@
                         FontWeight="Normal"
                         Header="帮助文档">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
-                                FontSize="16"
+                            <fa6:FontAwesome
+                                FontSize="14"
                                 Foreground="#438DF3"
-                                Icon="Book" />
+                                Icon="Solid_Book" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -255,11 +246,10 @@
                         FontWeight="Normal"
                         Header="检查更新">
                         <MenuItem.Icon>
-                            <fa:FontAwesome
-                                VerticalAlignment="Center"
-                                FontSize="14"
+                            <fa6:FontAwesome
+                                FontSize="13"
                                 Foreground="#ff6584"
-                                Icon="Diamond" />
+                                Icon="Solid_CloudArrowDown" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem
@@ -268,10 +258,10 @@
                         FontWeight="Normal"
                         Header="关于SmartSQL">
                         <MenuItem.Icon>
-                            <Path
-                                Data="{StaticResource InfoGeometry}"
-                                Fill="#ff9c6e"
-                                Stretch="Uniform" />
+                            <fa6:FontAwesome
+                                FontSize="15"
+                                Foreground="#ff9c6e"
+                                Icon="Solid_CircleInfo" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
