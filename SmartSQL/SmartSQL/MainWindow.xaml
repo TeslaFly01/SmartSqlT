@@ -113,10 +113,11 @@
                         FontWeight="Normal"
                         Header="导出文档">
                         <MenuItem.Icon>
-                            <Path
-                                Data="{StaticResource ExportGeometry}"
-                                Fill="{DynamicResource SuccessBrush}"
-                                Stretch="Uniform" />
+                            <fa:FontAwesome
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Foreground="#2db84d"
+                                Icon="ShareSquareOutline" />
                         </MenuItem.Icon>
                     </MenuItem>
                     <MenuItem

@@ -5,6 +5,7 @@
     xmlns:convert="clr-namespace:SmartSQL.Converts"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
+    xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
     xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
@@ -222,11 +223,7 @@
                                         Click="MenuCopyName_OnClick"
                                         Header="复制名称">
                                         <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#e9af20"
-                                                Icon="Clone" />
+                                            <fa6:FontAwesome Foreground="#fdab03" Icon="Solid_Copy" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
@@ -235,10 +232,7 @@
                                         Click="MenuSetTag_OnClick"
                                         Header="设置标签">
                                         <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                Foreground="#15c8c4"
-                                                Icon="Tags" />
+                                            <fa6:FontAwesome Foreground="#fdab03" Icon="Solid_Tags" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
@@ -247,10 +241,7 @@
                                         Click="MenuSetGroup_OnClick"
                                         Header="设置分组">
                                         <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                Foreground="#fdab03"
-                                                Icon="Group" />
+                                            <fa6:FontAwesome Foreground="#fdab03" Icon="Regular_FolderOpen" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                     <MenuItem
@@ -260,7 +251,6 @@
                                         Header="导出文档">
                                         <MenuItem.Icon>
                                             <fa:FontAwesome
-                                                VerticalAlignment="Center"
                                                 FontSize="14"
                                                 Foreground="#2db84d"
                                                 Icon="ShareSquareOutline" />
@@ -271,11 +261,7 @@
                                         VerticalAlignment="Center"
                                         Header="生成SQL">
                                         <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#1890ff"
-                                                Icon="Code" />
+                                            <fa6:FontAwesome Foreground="#1890ff" Icon="Brands_Magento" />
                                         </MenuItem.Icon>
                                         <MenuItem
                                             x:Name="MenuCreate1SQL"
@@ -349,11 +335,7 @@
                                         Click="MenuGenCode_Click"
                                         Header="生成代码">
                                         <MenuItem.Icon>
-                                            <fa:FontAwesome
-                                                VerticalAlignment="Center"
-                                                FontSize="14"
-                                                Foreground="#1890ff"
-                                                Icon="Cube" />
+                                            <fa6:FontAwesome Foreground="#1890ff" Icon="Brands_Magento" />
                                         </MenuItem.Icon>
                                     </MenuItem>
                                 </ContextMenu>
