@@ -206,7 +206,7 @@
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
         <Setter Property="FontWeight" Value="Bold" />
-        <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+        <Setter Property="Foreground" Value="#656D6D" />
         <Setter Property="Padding" Value="12,1,12,4" />
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="Template">
@@ -236,7 +236,7 @@
                                     VerticalAlignment="Center"
                                     hc:IconSwitchElement.Geometry="{StaticResource DownGeometry}"
                                     hc:IconSwitchElement.GeometrySelected="{StaticResource UpGeometry}"
-                                    Foreground="{DynamicResource PrimaryBrush}"
+                                    Foreground="#656D6D"
                                     IsEnabled="False"
                                     Opacity="1"
                                     Style="{StaticResource ToggleButtonIconTransparent}" />
@@ -267,11 +267,10 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="SortDirection" Value="Ascending">
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                <Setter Property="Foreground" Value="#656D6D" />
             </Trigger>
             <Trigger Property="SortDirection" Value="Descending">
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
-                <Setter Property="Foreground" Value="{DynamicResource PrimaryBrush}" />
+                <Setter Property="Foreground" Value="#656D6D" />
             </Trigger>
         </Style.Triggers>
     </Style>
@@ -536,7 +535,7 @@
                                             MaxHeight="30"
                                             hc:IconElement.Geometry="{StaticResource AllGeometry}"
                                             Command="{x:Static DataGrid.SelectAllCommand}"
-                                            Foreground="{DynamicResource PrimaryBrush}"
+                                            Foreground="#656D6D"
                                             Style="{StaticResource ButtonIcon}">
                                             <Button.Visibility>
                                                 <MultiBinding Converter="{StaticResource DataGridSelectAllButtonVisibilityConverter}">
