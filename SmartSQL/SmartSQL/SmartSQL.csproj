@@ -161,6 +161,7 @@
     <Compile Include="Helper\BarQrCodeHelper.cs" />
     <Compile Include="Helper\DateTimeHelper.cs" />
     <Compile Include="Helper\PingYinHelper.cs" />
+    <Compile Include="Helper\CsharpCompletionData.cs" />
     <Compile Include="Helper\SqlCompletionData.cs" />
     <Compile Include="Helper\TextEncryptHelper.cs" />
     <Compile Include="Helper\Oops.cs" />

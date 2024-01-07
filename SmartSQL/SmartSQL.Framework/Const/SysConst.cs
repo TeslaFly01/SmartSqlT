@@ -54,5 +54,20 @@ namespace SmartSQL.Framework.Const
         {
             "COUNT",   "SUM",   "AVG",  "MIN",  "MAX",  "UPPER",    "LOWER",    "SUBSTRING",    "CONCAT",   "DATEPART"
         };
+
+        public static readonly Dictionary<string,string> Sys_GencodeKeywords = new Dictionary<string,string>
+        {
+            ["Model"] = "",
+            ["ClassName"] = "类名",
+            ["TableName"] = "表名",
+            ["Description"] = "表描述",
+            ["Properties"] = "列集合",
+            ["PropertyName"] = "类中属性名",
+            ["Type"] = "类中的属性类型",
+            ["DbCloumnName"] = "表字段名",
+            ["IsPrimaryKey"] = "是否主键",
+            ["IsIdentity"] = "是否自增",
+            ["IsNullable"] = "是否为空"
+        };
     }
 }
