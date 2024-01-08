@@ -1,0 +1,46 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <Style TargetType="GridSplitter">
+        <Setter Property="Foreground" Value="DarkGray" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridSplitter">
+                    <Grid>
+                        <Rectangle Fill="{TemplateBinding Background}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 0 L 0 20 M 3 0 L 3 20"
+                            SnapsToDevicePixels="True"
+                            Stroke="{TemplateBinding Foreground}"
+                            StrokeThickness="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="GridSplitterHorizontal" TargetType="GridSplitter">
+        <Setter Property="Foreground" Value="Gray" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridSplitter">
+                    <Grid>
+                        <Rectangle Fill="{TemplateBinding Background}" />
+                        <Path
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Data="M 0 0 L 25 0 M 0 3 L 25 3"
+                            SnapsToDevicePixels="True"
+                            Stroke="{TemplateBinding Foreground}"
+                            StrokeThickness="1" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

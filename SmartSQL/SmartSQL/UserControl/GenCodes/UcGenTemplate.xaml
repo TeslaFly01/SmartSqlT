@@ -199,30 +199,7 @@
             Margin="0,5,0,5"
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"
-            Background="Transparent">
-            <GridSplitter.Style>
-                <Style TargetType="GridSplitter">
-                    <Setter Property="Foreground" Value="DarkGray" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="GridSplitter">
-                                <Grid>
-                                    <Rectangle Fill="{TemplateBinding Background}" />
-                                    <Path
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Data="M 0 0 L 0 20 M 3 0 L 3 20"
-                                        SnapsToDevicePixels="True"
-                                        Stroke="{TemplateBinding Foreground}"
-                                        StrokeThickness="1" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </GridSplitter.Style>
-        </GridSplitter>
+            Background="Transparent" />
 
         <!--  MainContent  -->
         <DockPanel Grid.Column="2" Background="White">

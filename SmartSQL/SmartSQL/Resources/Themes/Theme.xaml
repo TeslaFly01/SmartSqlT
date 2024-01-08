@@ -6,5 +6,6 @@
         <ResourceDictionary Source="Basic/Basic.xaml" />
         <ResourceDictionary Source="Styles/Style.xaml" />
         <ResourceDictionary Source="Styles/DataGrid.xaml" />
+        <ResourceDictionary Source="Styles/GridSplitter.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:fa6="http://schemas.fontawesome.com/icons/fonts"
+    xmlns:fa6p="http://schemas.fontawesome.com/icons/fonts/properties"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:SmartSQL.UserControl"
     xmlns:localControls="clr-namespace:SmartSQL.UserControl.Controls"
@@ -99,31 +100,23 @@
                                 <Button
                                     Name="BtnFresh"
                                     Grid.Column="1"
+                                    fa6p:FontAwesome.Icon="Solid_ArrowsRotate"
                                     BorderThickness="0"
                                     Click="BtnFresh_OnClick"
                                     Cursor="Hand"
-                                    ToolTip="刷新">
-                                    <Button.Content>
-                                        <fa:FontAwesome
-                                            FontSize="15"
-                                            Foreground="#417FF9"
-                                            Icon="Refresh" />
-                                    </Button.Content>
-                                </Button>
+                                    FontSize="14"
+                                    Foreground="#417ff9"
+                                    ToolTip="刷新" />
                                 <Button
                                     Name="BtnQuery"
                                     Grid.Column="2"
+                                    fa6p:FontAwesome.Icon="Solid_PenToSquare"
                                     BorderThickness="0"
                                     Click="BtnQuery_Click"
                                     Cursor="Hand"
-                                    ToolTip="新建查询">
-                                    <Button.Content>
-                                        <fa:FontAwesome
-                                            FontSize="15"
-                                            Foreground="#417FF9"
-                                            Icon="Pencil" />
-                                    </Button.Content>
-                                </Button>
+                                    FontSize="14"
+                                    Foreground="#417ff9"
+                                    ToolTip="新建查询" />
                             </Grid>
                             <hc:SearchBar
                                 x:Name="SearchMenu"
@@ -427,30 +420,7 @@
             Margin="0,5,0,5"
             HorizontalAlignment="Center"
             VerticalAlignment="Stretch"
-            Background="Transparent">
-            <GridSplitter.Style>
-                <Style TargetType="GridSplitter">
-                    <Setter Property="Foreground" Value="DarkGray" />
-                    <Setter Property="Background" Value="Transparent" />
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="GridSplitter">
-                                <Grid>
-                                    <Rectangle Fill="{TemplateBinding Background}" />
-                                    <Path
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        Data="M 0 0 L 0 20 M 3 0 L 3 20"
-                                        SnapsToDevicePixels="True"
-                                        Stroke="{TemplateBinding Foreground}"
-                                        StrokeThickness="1" />
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </GridSplitter.Style>
-        </GridSplitter>
+            Background="Transparent" />
 
         <!--  主内容  -->
         <DockPanel Grid.Row="0" Grid.Column="2">
@@ -476,6 +446,7 @@
                     ItemsSource="{Binding TabItemData}"
                     SelectionChanged="MainTabW_OnSelectionChanged"
                     ShowCloseButton="True"
+                    Style="{StaticResource TabControlPlusBaseStyle}"
                     Visibility="Collapsed">
                     <hc:TabControl.ItemTemplate>
                         <DataTemplate>
