@@ -1658,10 +1658,9 @@ namespace SmartSQL.UserControl
             {
                 return;
             }
-            if (MainTabW.Items.Count == 0)
-            {
-                MainTabW.Visibility = Visibility.Collapsed;
-            }
+            var tabItems = MainTabW.Items.Count;
+            TabHeader.Visibility = tabItems > 0 ? Visibility.Visible : Visibility.Collapsed;
+            MainTabW.Visibility = tabItems > 0 ? Visibility.Visible : Visibility.Collapsed;      
             #endregion
         }
 

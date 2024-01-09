@@ -7,5 +7,6 @@
         <ResourceDictionary Source="Styles/Style.xaml" />
         <ResourceDictionary Source="Styles/DataGrid.xaml" />
         <ResourceDictionary Source="Styles/GridSplitter.xaml" />
+        <ResourceDictionary Source="Styles/ToggleButton.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

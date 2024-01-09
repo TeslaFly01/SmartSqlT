@@ -3,6 +3,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:avalonedit="http://icsharpcode.net/sharpdevelop/avalonedit"
     xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:interactivity="clr-namespace:HandyControl.Interactivity;assembly=HandyControl"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/">
 
     <ResourceDictionary.MergedDictionaries>
@@ -89,77 +90,6 @@
         TargetType="ListBox">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="ItemContainerStyle" Value="{StaticResource ListBoxItemSmart}" />
-    </Style>
-
-    <Style
-        x:Key="ListBoxItemNew"
-        BasedOn="{StaticResource ListBoxItemTransparent}"
-        TargetType="ListBoxItem">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="ListBoxItem">
-                    <Border
-                        x:Name="Bd"
-                        Padding="{TemplateBinding Padding}"
-                        Background="{TemplateBinding Background}"
-                        BorderBrush="{TemplateBinding BorderBrush}"
-                        BorderThickness="{TemplateBinding BorderThickness}"
-                        SnapsToDevicePixels="true">
-                        <StackPanel Orientation="Horizontal">
-                            <ContentPresenter
-                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                            <Path
-                                Width="30"
-                                Height="14"
-                                Margin="10,0,0,0"
-                                VerticalAlignment="Center"
-                                Data="{StaticResource NewGeometry}"
-                                Fill="{DynamicResource DangerBrush}"
-                                Stretch="Uniform" />
-                        </StackPanel>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Style.Triggers>
-            <Trigger Property="hc:EdgeElement.ShowEdgeContent" Value="true">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ListBoxItem">
-                            <Border
-                                x:Name="Bd"
-                                Padding="{TemplateBinding Padding}"
-                                Background="{TemplateBinding Background}"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                SnapsToDevicePixels="true">
-                                <StackPanel Orientation="Horizontal">
-                                    <ContentControl
-                                        Width="16"
-                                        Height="16"
-                                        Content="{Binding Path=(hc:EdgeElement.LeftContent), RelativeSource={RelativeSource TemplatedParent}}" />
-                                    <ContentPresenter
-                                        Margin="6,0,0,0"
-                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                        SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                    <Path
-                                        Width="30"
-                                        Height="14"
-                                        Margin="10,0,0,0"
-                                        VerticalAlignment="Center"
-                                        Data="{StaticResource NewGeometry}"
-                                        Fill="{DynamicResource DangerBrush}"
-                                        Stretch="Uniform" />
-                                </StackPanel>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </Style.Triggers>
     </Style>
 
     <Style
@@ -405,114 +335,117 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="DocTypeToggleStyle" TargetType="ToggleButton">
-        <Setter Property="Background" Value="White" />
-        <Setter Property="FontWeight" Value="Bold" />
+
+    <Style x:Key="TabItemPlusBaseStyle" TargetType="{x:Type hc:TabItem}">
+        <Setter Property="FrameworkElement.FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}" />
+        <Setter Property="Background" Value="{DynamicResource SecondaryRegionBrush}" />
+        <Setter Property="BorderThickness" Value="1,0,0,0" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BorderBrush}" />
+        <Setter Property="Margin" Value="0,0,0,0" />
+        <Setter Property="Padding" Value="10,0,0,0" />
         <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="hc:TabItem.Menu" Value="{StaticResource TabItemMenu}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="ToggleButton">
-                    <Border Background="{TemplateBinding Background}" CornerRadius="5">
-                        <Grid>
-                            <svgc:SvgViewbox
-                                x:Name="leftArrowImg"
-                                Width="18"
-                                Height="18"
-                                Margin="5"
-                                HorizontalAlignment="Left"
-                                IsHitTestVisible="False" />
-                            <Path
-                                x:Name="OkImg"
-                                Width="15"
-                                Height="15"
-                                Margin="5,5,1,1"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Data="{StaticResource OkGeometry}"
-                                Fill="White"
-                                Stretch="Uniform"
+                <ControlTemplate TargetType="{x:Type hc:TabItem}">
+                    <Grid
+                        Name="templateRoot"
+                        ContextMenu="{TemplateBinding Menu}"
+                        SnapsToDevicePixels="true">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Border
+                            Name="mainBorder"
+                            Grid.ColumnSpan="3"
+                            Margin="0,0,0,0"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <Border
+                                Name="InnerBorder"
+                                Margin="0,0,0,-1"
+                                Background="{DynamicResource RegionBrush}"
                                 Visibility="Collapsed" />
-                            <svgc:SvgViewbox
-                                x:Name="rightArrowImg"
-                                Width="18"
-                                Height="18"
-                                Margin="5"
-                                HorizontalAlignment="Left"
-                                IsHitTestVisible="False" />
-                            <ContentPresenter
-                                x:Name="content1"
-                                Margin="30,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}" />
-                            <ContentPresenter
-                                x:Name="content2"
-                                Margin="30,0,0,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                Content="{TemplateBinding Content}" />
-                        </Grid>
-                    </Border>
+                        </Border>
+                        <Path
+                            Name="PathMain"
+                            Grid.Column="0"
+                            Width="{TemplateBinding Width}"
+                            Height="{TemplateBinding Height}"
+                            Margin="10,0,0,0"
+                            Fill="{TemplateBinding Foreground}"
+                            SnapsToDevicePixels="True"
+                            Stretch="Uniform" />
+                        <ContentPresenter
+                            Name="contentPresenter"
+                            Grid.Column="1"
+                            Margin="{TemplateBinding Padding}"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Center"
+                            ContentSource="Header"
+                            Focusable="False"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        <Border
+                            Name="BorderMask"
+                            Grid.Column="1"
+                            Width="20"
+                            Margin="0,0,1,1"
+                            HorizontalAlignment="Right"
+                            Background="{TemplateBinding Background}">
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Offset="1" Color="White" />
+                                    <GradientStop Offset="0" />
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                        </Border>
+                        <Button
+                            x:Name="PART_Close"
+                            Grid.Column="2"
+                            Width="18"
+                            Height="18"
+                            Margin="0,0,5,0"
+                            Padding="0"
+                            hc:BorderElement.CornerRadius="17"
+                            Command="interactivity:ControlCommands.Close"
+                            Focusable="False"
+                            Style="{StaticResource ButtonCustom}"
+                            Visibility="{TemplateBinding ShowCloseButton,
+                                                         Converter={StaticResource Boolean2VisibilityConverter}}">
+                            <Path
+                                Width="8"
+                                Height="8"
+                                Fill="{DynamicResource PrimaryTextBrush}"
+                                Style="{StaticResource ClosePathStyle}" />
+                        </Button>
+                    </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Background" Value="{StaticResource PrimaryBrush}" />
-                            <Setter Property="Foreground" Value="White" />
-                            <Setter TargetName="OkImg" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="leftArrowImg" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="rightArrowImg" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="content1" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="content2" Property="Visibility" Value="Visible" />
+                        <Trigger Property="TabItem.IsSelected" Value="true">
+                            <Setter Property="Panel.ZIndex" Value="1" />
+                            <Setter TargetName="InnerBorder" Property="Visibility" Value="Visible" />
+                            <Setter TargetName="InnerBorder" Property="CornerRadius" Value="8 8 0 0" />
+                            <Setter TargetName="BorderMask" Property="Background" Value="{DynamicResource RegionBrush}" />
+                            <Setter Property="BorderThickness" Value="0" />
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="False">
-                            <Setter Property="Foreground" Value="#424245" />
-                            <Setter TargetName="leftArrowImg" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="rightArrowImg" Property="Visibility" Value="Hidden" />
-                            <Setter TargetName="content1" Property="Visibility" Value="Visible" />
-                            <Setter TargetName="content2" Property="Visibility" Value="Hidden" />
+                        <Trigger Property="hc:IconElement.Geometry" Value="{x:Null}">
+                            <Setter TargetName="PathMain" Property="Visibility" Value="Collapsed" />
                         </Trigger>
-                        <MultiTrigger>
-                            <MultiTrigger.Conditions>
-                                <Condition Property="IsChecked" Value="False" />
-                                <Condition Property="IsMouseOver" Value="True" />
-                            </MultiTrigger.Conditions>
-                            <Setter Property="Background" Value="Gainsboro" />
-                        </MultiTrigger>
-                        <Trigger Property="Content" Value="WORD">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_word.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_word.svg" />
+                        <Trigger Property="hc:TabItem.ShowCloseButton" Value="True">
+                            <Setter TargetName="BorderMask" Property="Margin" Value="0,0,0,1" />
                         </Trigger>
-                        <Trigger Property="Content" Value="EXCEL">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_excel.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_excel.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="PDF">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_pdf.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_pdf.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="HTML">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_html.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_html.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="CHM">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_chm.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_chm.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="XML">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_xml.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_xml.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="JSON">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_json.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_json.svg" />
-                        </Trigger>
-                        <Trigger Property="Content" Value="MD">
-                            <Setter TargetName="leftArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_md.svg" />
-                            <Setter TargetName="rightArrowImg" Property="Source" Value="pack://application:,,,/Resources/svg/doc_md.svg" />
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter TargetName="contentPresenter" Property="UIElement.Opacity" Value="0.4" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-
 </ResourceDictionary>

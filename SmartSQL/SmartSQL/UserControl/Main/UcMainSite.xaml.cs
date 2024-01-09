@@ -36,17 +36,8 @@ namespace SmartSQL.UserControl
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class UcMainSite : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcMainSite : BaseUserControl
     {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #region 分类列表
         public static readonly DependencyProperty CategoryListProperty = DependencyProperty.Register(
 "CategoryList", typeof(List<CategoryApi>), typeof(UcMainSite), new PropertyMetadata(default(List<CategoryApi>)));
@@ -85,7 +76,7 @@ namespace SmartSQL.UserControl
         {
             var sqLiteHelper = new SQLiteHelper();
             CategoryList = App.SiteInfo;
-            NoMenuText.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
+        //    NoMenuText.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
             SvgNoData.Visibility = CategoryList.Any() ? Visibility.Collapsed : Visibility.Visible;
         }
 

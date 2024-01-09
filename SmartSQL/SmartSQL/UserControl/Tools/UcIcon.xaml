@@ -12,6 +12,7 @@
     xmlns:models="clr-namespace:SmartSQL.Models"
     xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
     xmlns:userControl="clr-namespace:SmartSQL.UserControl"
+    xmlns:wpftk="clr-namespace:WpfToolkit.Controls;assembly=VirtualizingWrapPanel"
     d:DesignHeight="450"
     d:DesignWidth="800"
     Loaded="BaseUserControl_Loaded"
@@ -130,6 +131,7 @@
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
                         </ListBox>
+
                         <ListBox
                             Margin="0,50,0,0"
                             Background="Transparent"
@@ -140,9 +142,16 @@
                             VirtualizingPanel.IsContainerVirtualizable="True"
                             VirtualizingPanel.IsVirtualizing="True"
                             VirtualizingPanel.VirtualizationMode="Recycling">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <wpftk:VirtualizingWrapPanel Orientation="Vertical" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Border
+                                        Width="170"
+                                        Height="60"
                                         Margin="10"
                                         VerticalAlignment="Center"
                                         Background="#ffffff"
@@ -150,13 +159,21 @@
                                         Cursor="Hand"
                                         MouseLeftButtonUp="UIElement_OnMouseLeftButtonUp"
                                         ToolTip="{Binding}">
-                                        <fa6:FontAwesome
-                                            Width="30"
-                                            Margin="5,10"
-                                            FontSize="15"
-                                            Foreground="#417FF9"
-                                            Icon="{Binding}"
-                                            ToolTip="{Binding}" />
+                                        <StackPanel>
+                                            <fa6:FontAwesome
+                                                Width="30"
+                                                Margin="5,12,5,5"
+                                                FontSize="18"
+                                                Foreground="#417FF9"
+                                                Icon="{Binding}" />
+                                            <TextBlock
+                                                Margin="3"
+                                                HorizontalAlignment="Center"
+                                                FontSize="10"
+                                                Foreground="#666"
+                                                Text="{Binding}"
+                                                TextWrapping="Wrap" />
+                                        </StackPanel>
                                     </Border>
                                 </DataTemplate>
                             </ListBox.ItemTemplate>
@@ -171,13 +188,12 @@
                         <hc:TextBox
                             x:Name="TxtFont"
                             Height="30"
-                            Margin="30,0,30,0"
+                            Margin="10,0,10,0"
                             BorderThickness="0" />
                         <Button
                             x:Name="BtnCopy"
-                            Margin="3,3,30,3"
+                            Margin="3,3,10,3"
                             HorizontalAlignment="Right"
-                            Background="#eeeeee"
                             BorderThickness="0"
                             Click="BtnCopy_Click"
                             Cursor="Hand">

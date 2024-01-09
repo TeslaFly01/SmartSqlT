@@ -142,10 +142,6 @@
                     Foreground="{DynamicResource DarkPrimaryBrush}"
                     Header="工具">
                     <MenuItem.Icon>
-                        <!--<Path
-                            Data="{StaticResource GroupGeometry}"
-                            Fill="{DynamicResource DarkPrimaryBrush}"
-                            Stretch="Uniform" />-->
                         <fa6:FontAwesome FontSize="15" Icon="Regular_PaperPlane" />
                     </MenuItem.Icon>
                     <MenuItem

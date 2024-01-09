@@ -426,10 +426,19 @@
         <DockPanel Grid.Row="0" Grid.Column="2">
             <Grid Margin="0,5,5,5">
                 <Border Background="White" CornerRadius="10">
-                    <svgc:SvgViewbox
-                        Width="350"
-                        Height="325"
-                        Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg" />
+                    <Grid>
+                        <Border
+                            x:Name="TabHeader"
+                            Height="35"
+                            VerticalAlignment="Top"
+                            Background="#eeeeee"
+                            CornerRadius="10 10 0 0"
+                            Visibility="Collapsed" />
+                        <svgc:SvgViewbox
+                            Width="350"
+                            Height="325"
+                            Source="/SmartSQL;component/Resources/svg/undraw/undraw_project_team_lc5a.svg" />
+                    </Grid>
                 </Border>
                 <!--  单选项卡  -->
                 <userControl:UcMainW x:Name="MainW" Visibility="Collapsed" />
@@ -438,11 +447,12 @@
                     Name="MainTabW"
                     Margin="5"
                     hc:BorderElement.CornerRadius="10"
-                    Background="Transparent"
+                    Background="#eeeeee"
                     BorderThickness="0"
                     IsAnimationEnabled="True"
                     IsDraggable="True"
                     IsTabFillEnabled="False"
+                    ItemContainerStyle="{StaticResource TabItemPlusBaseStyle}"
                     ItemsSource="{Binding TabItemData}"
                     SelectionChanged="MainTabW_OnSelectionChanged"
                     ShowCloseButton="True"
