@@ -17,193 +17,197 @@
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
     <Grid Background="#f4f5f7">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition
-                Width="3.3*"
-                MinWidth="220"
-                MaxWidth="350" />
-            <ColumnDefinition Width="5" />
-            <ColumnDefinition Width="6.6*" />
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="45" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="3.3*"
+                    MinWidth="220"
+                    MaxWidth="350" />
+                <ColumnDefinition Width="5" />
+                <ColumnDefinition Width="6.6*" />
+            </Grid.ColumnDefinitions>
 
-        <!--  左侧菜单  -->
-        <DockPanel Grid.Column="0" Background="White">
-            <Grid Margin="5,10,5,5" Background="Transparent">
-                <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
+            <!--  左侧菜单  -->
+            <DockPanel Grid.Column="0" Background="White">
+                <Grid Margin="5,10,5,5" Background="Transparent">
+                    <TextBox x:Name="HidSelectDatabase" Visibility="Hidden" />
 
-                <hc:SearchBar
-                    x:Name="SearchMenu"
-                    Height="30"
-                    Margin="0,0,40,0"
-                    Padding="5,0,5,0"
-                    VerticalAlignment="Top"
-                    HorizontalContentAlignment="Stretch"
-                    hc:BorderElement.CornerRadius="5"
-                    hc:InfoElement.Placeholder="搜索模板"
-                    Background="#F4F5F7"
-                    BorderThickness="0"
-                    FontSize="13"
-                    ShowClearButton="True"
-                    Style="{StaticResource SearchBarPlus}"
-                    TextChanged="SearchMenu_OnTextChanged" />
-                <Button
-                    Name="BtnAdd"
-                    Width="35"
-                    Padding="8,8"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    hc:IconElement.Geometry="{StaticResource AddGeometry}"
-                    Background="{StaticResource PrimaryBrush}"
-                    BorderThickness="0"
-                    Click="BtnAdd_OnClick"
-                    Foreground="#ffffff"
-                    ToolTip="添加模板" />
+                    <hc:SearchBar
+                        x:Name="SearchMenu"
+                        Height="30"
+                        Margin="0,0,40,0"
+                        Padding="5,0,5,0"
+                        VerticalAlignment="Top"
+                        HorizontalContentAlignment="Stretch"
+                        hc:BorderElement.CornerRadius="5"
+                        hc:InfoElement.Placeholder="搜索模板"
+                        hc:InfoElement.ShowClearButton="True"
+                        Background="#F4F5F7"
+                        BorderThickness="0"
+                        FontSize="13"
+                        Style="{StaticResource SearchBarPlus}"
+                        TextChanged="SearchMenu_OnTextChanged" />
+                    <Button
+                        Name="BtnAdd"
+                        Width="35"
+                        Padding="8,8"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top"
+                        hc:IconElement.Geometry="{StaticResource AddGeometry}"
+                        Background="{StaticResource PrimaryBrush}"
+                        BorderThickness="0"
+                        Click="BtnAdd_OnClick"
+                        Foreground="#ffffff"
+                        ToolTip="添加模板" />
 
 
 
-                <!--  连接列表  -->
-                <ListBox
-                    Name="ListTemplate"
-                    Margin="0,35,0,35"
-                    HorizontalContentAlignment="Stretch"
-                    BorderThickness="0"
-                    ItemsSource="{Binding DataList}"
-                    PreviewMouseRightButtonDown="ListTemplate_OnPreviewMouseRightButtonDown"
-                    ScrollViewer.VerticalScrollBarVisibility="Visible"
-                    SelectionChanged="ListTemplate_OnSelectionChanged">
+                    <!--  连接列表  -->
+                    <ListBox
+                        Name="ListTemplate"
+                        Margin="0,35,0,35"
+                        HorizontalContentAlignment="Stretch"
+                        BorderThickness="0"
+                        ItemsSource="{Binding DataList}"
+                        PreviewMouseRightButtonDown="ListTemplate_OnPreviewMouseRightButtonDown"
+                        ScrollViewer.VerticalScrollBarVisibility="Visible"
+                        SelectionChanged="ListTemplate_OnSelectionChanged">
 
-                    <!--  右键菜单  -->
-                    <ListBox.ContextMenu>
-                        <ContextMenu Width="150" Visibility="Visible">
-                            <MenuItem
-                                x:Name="MenuReset"
-                                Padding="5,3,5,3"
-                                VerticalAlignment="Center"
-                                Click="MenuReset_OnClick"
-                                Cursor="Hand"
-                                Header="重置默认模板">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="#3e4451"
-                                        Icon="Refresh" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                            <MenuItem
-                                x:Name="MenuDelete"
-                                Padding="5,3,5,3"
-                                VerticalAlignment="Center"
-                                Click="MenuDelete_OnClick"
-                                Cursor="Hand"
-                                Header="删除">
-                                <MenuItem.Icon>
-                                    <fa:FontAwesome
-                                        VerticalAlignment="Center"
-                                        FontSize="14"
-                                        Foreground="#3e4451"
-                                        Icon="TrashOutline" />
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </ListBox.ContextMenu>
-                    <!--  右键菜单  -->
+                        <!--  右键菜单  -->
+                        <ListBox.ContextMenu>
+                            <ContextMenu Width="150" Visibility="Visible">
+                                <MenuItem
+                                    x:Name="MenuReset"
+                                    Padding="5,3,5,3"
+                                    VerticalAlignment="Center"
+                                    Click="MenuReset_OnClick"
+                                    Cursor="Hand"
+                                    Header="重置默认模板">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#3e4451"
+                                            Icon="Refresh" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                                <MenuItem
+                                    x:Name="MenuDelete"
+                                    Padding="5,3,5,3"
+                                    VerticalAlignment="Center"
+                                    Click="MenuDelete_OnClick"
+                                    Cursor="Hand"
+                                    Header="删除">
+                                    <MenuItem.Icon>
+                                        <fa:FontAwesome
+                                            VerticalAlignment="Center"
+                                            FontSize="14"
+                                            Foreground="#3e4451"
+                                            Icon="TrashOutline" />
+                                    </MenuItem.Icon>
+                                </MenuItem>
+                            </ContextMenu>
+                        </ListBox.ContextMenu>
+                        <!--  右键菜单  -->
 
-                    <ListBox.ItemContainerStyle>
-                        <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
-                            <Setter Property="Foreground" Value="#444e63" />
-                            <Setter Property="Height" Value="40" />
-                            <Setter Property="Margin" Value="0,3,0,0" />
-                            <Setter Property="Cursor" Value="Hand" />
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="ListBoxItem">
-                                        <Border
-                                            x:Name="Bd"
-                                            Padding="{TemplateBinding Padding}"
-                                            Background="{TemplateBinding Background}"
-                                            BorderBrush="{TemplateBinding BorderBrush}"
-                                            BorderThickness="{TemplateBinding BorderThickness}"
-                                            CornerRadius="5"
-                                            SnapsToDevicePixels="true">
-                                            <ContentPresenter
-                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                                SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
-                                        </Border>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                            <Style.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
-                                    <Setter Property="Background" Value="#f4f5f7" />
-                                    <Setter Property="Foreground" Value="#417FF9" />
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Grid>
-                                <StackPanel>
-                                    <TextBlock
-                                        Margin="0,0,0,0"
-                                        VerticalAlignment="Top"
-                                        Text="{Binding TempName}" />
+                        <ListBox.ItemContainerStyle>
+                            <Style BasedOn="{StaticResource ListBoxItemBaseStyle}" TargetType="ListBoxItem">
+                                <Setter Property="Foreground" Value="#444e63" />
+                                <Setter Property="Height" Value="40" />
+                                <Setter Property="Margin" Value="0,3,0,0" />
+                                <Setter Property="Cursor" Value="Hand" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border
+                                                x:Name="Bd"
+                                                Padding="{TemplateBinding Padding}"
+                                                Background="{TemplateBinding Background}"
+                                                BorderBrush="{TemplateBinding BorderBrush}"
+                                                BorderThickness="{TemplateBinding BorderThickness}"
+                                                CornerRadius="5"
+                                                SnapsToDevicePixels="true">
+                                                <ContentPresenter
+                                                    HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                    VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                    SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#f4f5f7" />
+                                        <Setter Property="Foreground" Value="#417FF9" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,0,0,0"
+                                            VerticalAlignment="Top"
+                                            Text="{Binding TempName}" />
+                                        <TextBlock
+                                            Margin="0,2,0,0"
+                                            VerticalAlignment="Bottom"
+                                            FontSize="9"
+                                            FontWeight="Normal"
+                                            Foreground="#ccc6cf"
+                                            Text="{Binding FileExt}" />
+                                    </StackPanel>
                                     <TextBlock
                                         Margin="0,2,0,0"
-                                        VerticalAlignment="Bottom"
-                                        FontSize="9"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Center"
+                                        FontSize="10"
                                         FontWeight="Normal"
                                         Foreground="#ccc6cf"
-                                        Text="{Binding FileExt}" />
-                                </StackPanel>
-                                <TextBlock
-                                    Margin="0,2,0,0"
-                                    HorizontalAlignment="Right"
-                                    VerticalAlignment="Center"
-                                    FontSize="10"
-                                    FontWeight="Normal"
-                                    Foreground="#ccc6cf"
-                                    Text="{Binding ChangeTime, StringFormat='yyyy-MM-dd'}" />
-                            </Grid>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
+                                        Text="{Binding ChangeTime, StringFormat='yyyy-MM-dd'}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
 
-                <Grid
-                    x:Name="NoDataText"
-                    Margin="0,35,0,5"
-                    HorizontalAlignment="Stretch"
-                    Background="White"
-                    Cursor="Arrow"
-                    Visibility="Collapsed">
-                    <localbase:NoDataArea
-                        x:Name="NoDataAreaText"
-                        Margin="0"
-                        HorizontalAlignment="Center"
-                        ShowType="All" />
+                    <Grid
+                        x:Name="NoDataText"
+                        Margin="0,35,0,5"
+                        HorizontalAlignment="Stretch"
+                        Background="White"
+                        Cursor="Arrow"
+                        Visibility="Collapsed">
+                        <localbase:NoDataArea
+                            x:Name="NoDataAreaText"
+                            Margin="0"
+                            HorizontalAlignment="Center"
+                            ShowType="All" />
+                    </Grid>
+                    <!--  数据加载Loading  -->
+                    <localbase:Loading
+                        x:Name="LoadingLine"
+                        BackgroundOpacity="0.1"
+                        Visibility="Collapsed" />
                 </Grid>
-                <!--  数据加载Loading  -->
-                <localbase:Loading
-                    x:Name="LoadingLine"
-                    BackgroundOpacity="0.1"
-                    Visibility="Collapsed" />
-            </Grid>
-        </DockPanel>
+            </DockPanel>
 
-        <!--  分割线  -->
-        <GridSplitter
-            Grid.Column="1"
-            Width="5"
-            Margin="0,5,0,5"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Stretch"
-            Background="Transparent" />
+            <!--  分割线  -->
+            <GridSplitter
+                Grid.Column="1"
+                Width="5"
+                Margin="0,5,0,5"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Stretch"
+                Background="Transparent" />
 
-        <!--  MainContent  -->
-        <DockPanel Grid.Column="2" Background="White">
-            <Grid>
+            <!--  MainContent  -->
+            <DockPanel Grid.Column="2" Background="White">
                 <!--  导出参数设置  -->
                 <Grid Margin="0,5,5,40">
                     <Grid Margin="5,5,5,0">
@@ -222,46 +226,46 @@
                             Margin="65,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="模板名称"
+                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0"
-                            ShowClearButton="True" />
+                            BorderThickness="0" />
                     </Grid>
 
-                    <Grid Margin="5,40,5,0">
+                    <Grid Margin="10,40,5,0">
                         <TextBlock
-                            Margin="5,10,0,0"
+                            Margin="0,10,0,0"
                             VerticalAlignment="Top"
                             Text="名称格式" />
                         <hc:TextBox
                             Name="TextFileFormat"
                             Height="30"
-                            Margin="65,0,0,0"
+                            Margin="60,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="名称格式，例如：{0}Service，占位符{0}为类名"
+                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0"
-                            ShowClearButton="True" />
+                            BorderThickness="0" />
                     </Grid>
 
-                    <Grid Margin="5,75,5,0">
+                    <Grid Margin="10,75,5,0">
                         <TextBlock
-                            Margin="5,10,0,0"
+                            Margin="0,10,0,0"
                             VerticalAlignment="Top"
                             Text="文件后缀" />
                         <hc:TextBox
                             Name="TextFileExt"
                             Height="30"
-                            Margin="65,0,0,0"
+                            Margin="60,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="文件后缀，例如：.cs"
+                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0"
-                            ShowClearButton="True" />
+                            BorderThickness="0" />
                     </Grid>
 
-                    <Grid Margin="5,110,5,5">
+                    <Grid Margin="10,110,5,5">
                         <TextBlock
-                            Margin="5,10,0,0"
+                            Margin="0,10,0,0"
                             VerticalAlignment="Center"
                             Text="模板内容" />
                         <fa:FontAwesome
@@ -354,7 +358,7 @@
                         </fa:FontAwesome>
 
                         <Border
-                            Margin="65,0,0,0"
+                            Margin="60,0,0,0"
                             Background="#F4f5f7"
                             CornerRadius="5">
                             <avalonedit:TextEditor
@@ -377,43 +381,43 @@
                         </Border>
                     </Grid>
                 </Grid>
+            </DockPanel>
 
-                <!--  按钮栏  -->
-                <StackPanel
-                    Margin="10"
-                    HorizontalAlignment="Right"
-                    VerticalAlignment="Bottom"
-                    Orientation="Horizontal">
-                    <Button
-                        x:Name="BtnExport"
-                        Height="25"
-                        Margin="0,0,10,0"
-                        Padding="20,0,20,0"
-                        Click="BtnSave_OnClick"
-                        Content="保存"
-                        Cursor="Hand"
-                        Style="{StaticResource ButtonPrimary}" />
-                    <Button
-                        x:Name="BtnCancel"
-                        Height="25"
-                        Padding="20,0,20,0"
-                        BorderBrush="#f0f0f0"
-                        Click="BtnCancel_OnClick"
-                        Content="取消"
-                        Cursor="Hand" />
-                </StackPanel>
-                <!--  按钮栏  -->
-            </Grid>
-        </DockPanel>
+            <!--  Loading动画  -->
+            <localbase:ExportLoading
+                x:Name="LoadingG"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="-5"
+                BackgroundOpacity="0.3"
+                Visibility="Collapsed" />
+        </Grid>
 
-        <!--  Loading动画  -->
-        <localbase:ExportLoading
-            x:Name="LoadingG"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            Margin="-5"
-            BackgroundOpacity="0.3"
-            Visibility="Collapsed" />
-        <!--  Loading动画  -->
+        <Grid Grid.Row="1" Background="White">
+            <!--  按钮栏  -->
+            <StackPanel
+                Margin="10"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="BtnExport"
+                    Height="25"
+                    Margin="0,0,10,0"
+                    Padding="20,0,20,0"
+                    Click="BtnSave_OnClick"
+                    Content="保存"
+                    Cursor="Hand"
+                    Style="{StaticResource ButtonPrimary}" />
+                <Button
+                    x:Name="BtnCancel"
+                    Height="25"
+                    Padding="20,0,20,0"
+                    BorderBrush="#f0f0f0"
+                    Click="BtnCancel_OnClick"
+                    Content="取消"
+                    Cursor="Hand" />
+            </StackPanel>
+        </Grid>
     </Grid>
 </local:BaseUserControl>

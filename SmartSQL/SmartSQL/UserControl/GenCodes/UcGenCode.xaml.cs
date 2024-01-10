@@ -40,17 +40,8 @@ namespace SmartSQL.UserControl.GenCodes
     /// <summary>
     /// TagObjects.xaml 的交互逻辑
     /// </summary>
-    public partial class UcGenCode : System.Windows.Controls.UserControl, INotifyPropertyChanged
+    public partial class UcGenCode : BaseUserControl
     {
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         #region PropertyFiled
         public static readonly DependencyProperty SelectedConnectionProperty = DependencyProperty.Register(
             "SelectedConnection", typeof(ConnectConfigs), typeof(UcGenCode), new PropertyMetadata(default(ConnectConfigs)));
