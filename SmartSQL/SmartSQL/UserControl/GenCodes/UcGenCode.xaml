@@ -131,10 +131,10 @@
                         HorizontalContentAlignment="Stretch"
                         hc:BorderElement.CornerRadius="5"
                         hc:InfoElement.Placeholder="搜索表/视图"
-                        hc:InfoElement.ShowClearButton="True"
                         Background="#F4F5F7"
                         BorderThickness="0"
                         FontSize="13"
+                        ShowClearButton="True"
                         Style="{StaticResource SearchBarPlus}"
                         TextChanged="SearchMenu_OnTextChanged" />
 
@@ -304,13 +304,5 @@
                     Cursor="Hand" />
             </StackPanel>
         </Grid>
-        <!--  Loading动画  -->
-        <localbase:ExportLoading
-            x:Name="LoadingG"
-            Grid.Column="0"
-            Grid.ColumnSpan="2"
-            BackgroundOpacity="0.3"
-            Visibility="Collapsed" />
-        <!--  Loading动画  -->
     </Grid>
 </local:BaseUserControl>

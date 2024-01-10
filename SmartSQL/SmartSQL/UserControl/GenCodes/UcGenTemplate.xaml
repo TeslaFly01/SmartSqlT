@@ -45,10 +45,10 @@
                         HorizontalContentAlignment="Stretch"
                         hc:BorderElement.CornerRadius="5"
                         hc:InfoElement.Placeholder="搜索模板"
-                        hc:InfoElement.ShowClearButton="True"
                         Background="#F4F5F7"
                         BorderThickness="0"
                         FontSize="13"
+                        ShowClearButton="True"
                         Style="{StaticResource SearchBarPlus}"
                         TextChanged="SearchMenu_OnTextChanged" />
                     <Button
@@ -226,9 +226,9 @@
                             Margin="65,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="模板名称"
-                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            ShowClearButton="True" />
                     </Grid>
 
                     <Grid Margin="10,40,5,0">
@@ -242,9 +242,9 @@
                             Margin="60,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="名称格式，例如：{0}Service，占位符{0}为类名"
-                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            ShowClearButton="True" />
                     </Grid>
 
                     <Grid Margin="10,75,5,0">
@@ -258,9 +258,9 @@
                             Margin="60,0,0,0"
                             VerticalAlignment="Top"
                             hc:InfoElement.Placeholder="文件后缀，例如：.cs"
-                            hc:InfoElement.ShowClearButton="True"
                             Background="#F4F5F7"
-                            BorderThickness="0" />
+                            BorderThickness="0"
+                            ShowClearButton="True" />
                     </Grid>
 
                     <Grid Margin="10,110,5,5">
@@ -382,15 +382,6 @@
                     </Grid>
                 </Grid>
             </DockPanel>
-
-            <!--  Loading动画  -->
-            <localbase:ExportLoading
-                x:Name="LoadingG"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Margin="-5"
-                BackgroundOpacity="0.3"
-                Visibility="Collapsed" />
         </Grid>
 
         <Grid Grid.Row="1" Background="White">

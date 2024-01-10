@@ -78,7 +78,7 @@
     <PackageReference Include="gong-wpf-dragdrop">
       <Version>3.2.1</Version>
     </PackageReference>
-    <PackageReference Include="HandyControl" Version="3.4.0" />
+    <PackageReference Include="HandyControl" Version="3.3.0" />
     <PackageReference Include="hyjiacan.pinyin4net">
       <Version>4.1.1</Version>
     </PackageReference>
@@ -276,6 +276,7 @@
     <Compile Include="UserControl\Redis\UcRedisFrom.xaml.cs">
       <DependentUpon>UcRedisFrom.xaml</DependentUpon>
     </Compile>
+    <Compile Include="UserControl\SlidingTabContainer.cs" />
     <Compile Include="UserControl\SqlQuery\UcSqlQueryMain.xaml.cs">
       <DependentUpon>UcSqlQueryMain.xaml</DependentUpon>
     </Compile>

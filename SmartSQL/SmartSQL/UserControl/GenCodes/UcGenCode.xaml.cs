@@ -1,38 +1,22 @@
-using SmartSQL.Annotations;
 using SmartSQL.Framework;
 using SmartSQL.Framework.SqliteModel;
 using SmartSQL.Models;
-using SmartSQL.Views.Category;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using HandyControl.Controls;
 using HandyControl.Data;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using SmartSQL.DocUtils;
-using SmartSQL.DocUtils.Dtos;
 using SmartSQL.Framework.Const;
 using SmartSQL.Framework.PhysicalDataModel;
 using SmartSQL.Helper;
 using SmartSQL.Views;
-using Window = System.Windows.Window;
-using SmartSQL.Framework.Util;
-using RazorEngine;
-using RazorEngine.Templating;
 using SmartSQL.DocUtils.Models;
 
 namespace SmartSQL.UserControl.GenCodes
@@ -126,7 +110,7 @@ namespace SmartSQL.UserControl.GenCodes
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             #region MyRegion
-            var mainWindow = (GenCode)Window.GetWindow(this);
+            var mainWindow = (GenCode)System.Windows.Window.GetWindow(this);
             mainWindow.Title = "代码生成";
             //Title = $"{SelectedDataBase.DbName} - {Title}";
             var fName = SelectedDataBase.DbName;
@@ -897,7 +881,7 @@ namespace SmartSQL.UserControl.GenCodes
         /// <param name="e"></param>
         private void BtnCancel_OnClick(object sender, RoutedEventArgs e)
         {
-            var mainWindow = (GenCode)Window.GetWindow(this);
+            var mainWindow = (GenCode)System.Windows.Window.GetWindow(this);
             mainWindow?.Close();
         }
 
