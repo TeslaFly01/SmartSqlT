@@ -69,15 +69,12 @@
                     ShowClearButton="True"
                     Text="{Binding ConnectConfig.ConnectName}" />
                 <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="9*" />
-                        <ColumnDefinition Width="85" />
-                    </Grid.ColumnDefinitions>
                     <hc:TextBox
                         Name="TextServerAddress"
                         Height="30"
-                        Margin="0,60,5,20"
+                        Margin="0,60,80,20"
                         VerticalAlignment="Top"
+                        hc:BorderElement.CornerRadius="5 0 0 5"
                         hc:InfoElement.Placeholder="请选择sqlite文件"
                         Background="#F4F5F7"
                         BorderThickness="0"
@@ -85,15 +82,17 @@
                     <Button
                         Name="BtnBrowse"
                         Grid.Column="1"
-                        Width="65"
+                        Width="60"
                         Margin="0,60,20,0"
-                        HorizontalAlignment="Left"
+                        HorizontalAlignment="Right"
                         VerticalAlignment="Top"
-                        Background="#F4F5F7"
+                        hc:BorderElement.CornerRadius="0 5 5 0"
+                        Background="{StaticResource PrimaryBrush}"
                         BorderThickness="0"
                         Click="BtnBrowse_OnClick"
                         Content="浏览"
-                        Cursor="Hand" />
+                        Cursor="Hand"
+                        Foreground="White" />
                 </Grid>
             </Grid>
         </Grid>

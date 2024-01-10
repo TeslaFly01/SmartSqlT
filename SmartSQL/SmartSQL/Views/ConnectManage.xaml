@@ -164,7 +164,8 @@
                     HorizontalAlignment="Right"
                     BorderBrush="#f0f0f0"
                     Click="BtnDelete_OnClick"
-                    Cursor="Hand">
+                    Cursor="Hand"
+                    ToolTip="删除连接">
                     <fa:FontAwesome
                         VerticalAlignment="Center"
                         FontSize="14"

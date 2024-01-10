@@ -144,10 +144,10 @@
                 <ComboBox
                     x:Name="ComboDefaultDatabase"
                     Height="30"
-                    Margin="0,180,55,20"
+                    Margin="0,180,80,20"
                     VerticalAlignment="Top"
                     HorizontalContentAlignment="Stretch"
-                    hc:BorderElement.CornerRadius="5"
+                    hc:BorderElement.CornerRadius="5 0 0 5"
                     hc:InfoElement.Placeholder="请选择默认数据库"
                     Background="#F4F5F7"
                     BorderThickness="0"
@@ -173,16 +173,18 @@
                 </ComboBox>
                 <Button
                     Name="BtnFresh"
+                    Width="60"
                     Margin="0,180,20,20"
                     Padding="7"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
-                    hc:IconElement.Geometry="{StaticResource RotateRightGeometry}"
+                    hc:BorderElement.CornerRadius="0 5 5 0"
+                    hc:IconElement.Geometry="{StaticResource Fa_Solid_Rotate}"
+                    Background="{StaticResource PrimaryBrush}"
                     BorderThickness="0"
                     Click="BtnFresh_OnClick"
                     Cursor="Hand"
-                    Foreground="{DynamicResource PrimaryTextBrush}"
-                    Style="{StaticResource ButtonIconCircular}"
+                    Foreground="White"
                     ToolTip="刷新数据库" />
             </Grid>
         </Grid>
