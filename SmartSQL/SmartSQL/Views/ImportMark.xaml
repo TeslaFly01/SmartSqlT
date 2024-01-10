@@ -25,28 +25,24 @@
                     Margin="10,22,0,0"
                     VerticalAlignment="Top"
                     Orientation="Horizontal">
-
                     <TextBlock VerticalAlignment="Center" Text="导入文件" />
-                    <hc:TextBox
-                        Name="TxtPath"
-                        Width="410"
-                        Margin="10,0,0,0"
-                        Padding="6,0,65,0"
-                        hc:InfoElement.Placeholder="请选择备注文件"
-                        Background="#f4f5f7"
-                        BorderThickness="0" />
-                    <Button
-                        Name="BtnLookPath"
-                        Width="60"
-                        Margin="-65,0,0,0"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Background="#f4f5f7"
-                        BorderThickness="0"
-                        Click="BtnFindFile_OnClick"
-                        Content="浏览"
-                        Cursor="Hand"
-                        Foreground="#817075" />
+                    <hc:ElementGroup Margin="10,0,0,0" Orientation="Horizontal">
+                        <hc:TextBox
+                            Name="TxtPath"
+                            Width="350"
+                            hc:InfoElement.Placeholder="请选择备注文件"
+                            Background="#f4f5f7"
+                            BorderThickness="0" />
+                        <Button
+                            Name="BtnLookPath"
+                            MinWidth="60"
+                            Background="{StaticResource PrimaryBrush}"
+                            BorderThickness="0"
+                            Click="BtnFindFile_OnClick"
+                            Content="浏览"
+                            Cursor="Hand"
+                            Foreground="White" />
+                    </hc:ElementGroup>
                 </StackPanel>
                 <TextBlock
                     Margin="10,75,0,0"

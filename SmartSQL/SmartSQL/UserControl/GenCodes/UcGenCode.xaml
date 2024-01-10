@@ -213,27 +213,25 @@
                 <Grid>
                     <!--  导出参数设置  -->
                     <Grid Margin="0,5,5,40">
-                        <Grid Margin="10,5,5,20">
-                            <TextBlock
-                                Margin="0,10,0,0"
-                                VerticalAlignment="Top"
-                                Text="生成路径" />
+                        <Grid Margin="10,5,5,20" VerticalAlignment="Top">
+                            <TextBlock Margin="0,10,0,0" Text="生成路径" />
                             <TextBox
                                 Name="TextPath"
-                                Margin="60,0,68,0"
-                                VerticalAlignment="Top"
+                                Margin="60,0,65,0"
+                                hc:BorderElement.CornerRadius="5 0 0 5"
                                 Background="#F4F5F7"
                                 BorderThickness="0" />
                             <Button
                                 Name="BtnLookPath"
                                 Width="65"
                                 HorizontalAlignment="Right"
-                                VerticalAlignment="Top"
-                                Background="#f0f0f0"
+                                hc:BorderElement.CornerRadius="0 5 5 0"
+                                Background="{StaticResource PrimaryBrush}"
                                 BorderThickness="0"
                                 Click="BtnLookPath_OnClick"
                                 Content="浏览"
-                                Cursor="Hand" />
+                                Cursor="Hand"
+                                Foreground="White" />
                         </Grid>
 
                         <Grid Margin="10,40,5,20">

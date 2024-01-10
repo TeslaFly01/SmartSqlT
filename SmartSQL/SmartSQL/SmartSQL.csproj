@@ -276,7 +276,6 @@
     <Compile Include="UserControl\Redis\UcRedisFrom.xaml.cs">
       <DependentUpon>UcRedisFrom.xaml</DependentUpon>
     </Compile>
-    <Compile Include="UserControl\SlidingTabContainer.cs" />
     <Compile Include="UserControl\SqlQuery\UcSqlQueryMain.xaml.cs">
       <DependentUpon>UcSqlQueryMain.xaml</DependentUpon>
     </Compile>

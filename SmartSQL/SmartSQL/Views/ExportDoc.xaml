@@ -178,23 +178,30 @@
                             Margin="0,52,0,0"
                             VerticalAlignment="Top"
                             Text="输出路径" />
-                        <TextBox
-                            Name="TxtPath"
-                            Margin="65,45,67,0"
+
+                        <hc:ElementGroup
+                            Height="30"
+                            Margin="65,45,0,0"
                             VerticalAlignment="Top"
-                            Background="#F4F5F7"
-                            BorderThickness="0" />
-                        <Button
-                            Name="BtnLookPath"
-                            Width="65"
-                            Margin="0,45,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="Top"
-                            Background="#f0f0f0"
-                            BorderThickness="0"
-                            Click="BtnLookPath_OnClick"
-                            Content="浏览"
-                            Cursor="Hand" />
+                            Orientation="Horizontal">
+                            <TextBox
+                                Name="TxtPath"
+                                Width="393"
+                                VerticalAlignment="Top"
+                                Background="#F4F5F7"
+                                BorderThickness="0" />
+                            <Button
+                                Name="BtnLookPath"
+                                Width="65"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Background="{StaticResource PrimaryBrush}"
+                                BorderThickness="0"
+                                Click="BtnLookPath_OnClick"
+                                Content="浏览"
+                                Cursor="Hand"
+                                Foreground="White" />
+                        </hc:ElementGroup>
                     </Grid>
 
                     <Grid Margin="10,87,10,20">
